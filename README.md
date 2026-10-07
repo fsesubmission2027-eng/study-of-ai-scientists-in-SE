@@ -7,9 +7,6 @@ specifications derived from ICSE / FSE / ASE / ISSTA 2025 papers, (3) the multi-
 evaluation pipeline, and (4) the aggregated evaluation results and per-run evaluation
 reports reported in the paper.
 
-> All identifying information has been removed for double-blind review. Absolute host
-> paths were rewritten to `~/...`; no API keys or tokens are included.
-
 ---
 
 ## 1. Repository layout
@@ -45,10 +42,6 @@ reports reported in the paper.
     ├── evaluations/<task>/<run>/evaluation.json   # full per-run evaluation reports
     └── evaluations/<task>/*.json        # task-level references shared by all frameworks
 ```
-
-Generated agent outputs (ideas, code, result files, papers) are **not** redistributed in
-this package. The evaluation reports under `results/evaluations/` record the scores and
-the relative paths of the artifacts that were scored.
 
 ## 2. Benchmark at a glance
 
