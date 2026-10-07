@@ -120,9 +120,9 @@ per-run config files written by `integrations/`.
 | AI-Researcher | https://github.com/HKUDS/AI-Researcher | commit `f9a6f84` |
 | ARIS | https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep | commit `dd1ee32` |
 | AutoResearchClaw | https://github.com/aiming-lab/AutoResearchClaw | commit `ea77ec1` |
-| DeepScientist | npm `@researai/deepscientist` (with `opencode-ai`) | 1.6.0 (opencode 1.17.8) |
-| EvoScientist | https://github.com/EvoScientist/EvoScientist (PyPI `EvoScientist`) | 0.1.7 |
-| TinyScientist | PyPI `tiny-scientist` | 0.1.3 |
+| DeepScientist | https://github.com/ResearAI/DeepScientist | 1.6.0 (opencode 1.17.8) |
+| EvoScientist | https://github.com/EvoScientist/EvoScientist | 0.1.7 |
+| TinyScientist | https://github.com/ulab-uiuc/tiny-scientist | 0.1.3 |
 
 Clone the git-based frameworks into the home directory (e.g. `~/AI-Scientist-v2`,
 `~/Auto-claude-code-research-in-sleep`, `~/AutoResearchClaw`, `~/AI-Researcher`), which is
