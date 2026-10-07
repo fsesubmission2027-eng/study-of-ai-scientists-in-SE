@@ -1,7 +1,6 @@
 # AI Scientist Benchmark for Software Engineering Research
 
-This repository is the anonymized replication package accompanying our submission.
-It contains (1) the benchmark harness used to run end-to-end "AI Scientist" systems on
+This repository contains (1) the benchmark harness used to run end-to-end "AI Scientist" systems on
 software-engineering research tasks inside Docker sandboxes, (2) the task
 specifications derived from ICSE / FSE / ASE / ISSTA 2025 papers, (3) the multi-axis
 evaluation pipeline, and (4) the aggregated evaluation results and per-run evaluation
