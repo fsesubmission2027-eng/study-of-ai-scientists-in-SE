@@ -1,4 +1,4 @@
-# AI Scientist Benchmark for Software Engineering Research (Anonymous Artifact)
+# AI Scientist Benchmark for Software Engineering Research
 
 This repository is the anonymized replication package accompanying our submission.
 It contains (1) the benchmark harness used to run end-to-end "AI Scientist" systems on
