@@ -1,0 +1,1245 @@
+{
+  "generated_at": "2026-09-25T02:27:15",
+  "run_dir": "~/ai_scientist_inputs/ICSE-2025-013_cross_language_static_analysis_for_java/workspace/researchclaw_2026-09-11_10-33-09",
+  "task_dir": "~/ai_scientist_inputs/ICSE-2025-013_cross_language_static_analysis_for_java",
+  "framework": "researchclaw",
+  "fairness_audit": [
+    {
+      "axis": "completeness",
+      "was_unfair": "Required both paper.tex AND paper.pdf; any tool missing one failed equally.",
+      "fix": "Paper gate: PDF=1.0; TeX-only=0.5; ``complete`` requires PDF."
+    },
+    {
+      "axis": "completeness",
+      "was_unfair": "``results`` counted stub/seed JSON (dataset_candidate/metrics.json).",
+      "fix": "``results`` requires substantive numeric results via results_normalize."
+    },
+    {
+      "axis": "experiment_success",
+      "was_unfair": "Only metrics.json; ignored results.json / experiment_results.txt.",
+      "fix": "Framework-ordered result candidates + normalized loaders."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Penalized tools with no bib; airesearcher has no workspace references.",
+      "fix": "literature_applicable=false → status not_applicable; excluded from fair aggregate."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "related_work.json subset as gold made recall hard to interpret.",
+      "fix": "Coverage gold is original paper REFERENCES from mineru; related_work only enriches metadata/fallback."
+    },
+    {
+      "axis": "peer_review",
+      "was_unfair": "Missing Stanford report looked like evaluation failure.",
+      "fix": "status not_provided; optional axis, never counts as tool failure."
+    },
+    {
+      "axis": "paths/find_results",
+      "was_unfair": "Picked downloads/** and sandbox noise (e.g. airesearcher LLVM tree).",
+      "fix": "Exclude downloads/, seeds/, dataset_candidate/, sandbox junk paths."
+    },
+    {
+      "axis": "paths/framework_noise",
+      "was_unfair": "DeepScientist .deepscientist_npm / runtime / skills templates counted as code/paper/results.",
+      "fix": "FRAMEWORK_NOISE_DIRS+markers; quest worktree + eval_output results; paper md drafts; reject template tex."
+    },
+    {
+      "axis": "paths/paper_tex",
+      "was_unfair": "tiny_scientist / ACL runs store paper under latex/*.tex; evaluator only looked at paper/main.tex.",
+      "fix": "latex/**/*.tex with substantive-body heuristic; find_paper_document uses same rules."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Entire custom.bib (300+ anthology entries) verified when paper had zero \\cite commands.",
+      "fix": "collect_agent_references filters bib to in-text cite keys; skips uncited bulk bib (>40 entries)."
+    },
+    {
+      "axis": "paths/ai_scientist_summaries",
+      "was_unfair": "AI Scientist can persist substantive results and paper-like drafts in *_summary.json logs rather than paper/main.tex or results/**/*.json.",
+      "fix": "Treat draft_summary/research_summary as weak paper documents and summary JSONs as result candidates."
+    },
+    {
+      "axis": "framework/ai_scientist_v2",
+      "was_unfair": "Manifest framework ``ai_scientist_v2`` fell through to profile ``unknown``, skipping AI-Scientist idea/result path priorities.",
+      "fix": "Normalize ``ai_scientist_v2`` (and common aliases) to profile key ``ai_scientist``."
+    },
+    {
+      "axis": "idea_generation",
+      "was_unfair": "plan.md/todos.md weak proxies scored same as structured idea.json.",
+      "fix": "Framework idea_priority tried first; missing idea → not_applicable where appropriate."
+    }
+  ],
+  "axes": [
+    "alignment",
+    "completeness",
+    "experiment_analysis",
+    "idea_generation",
+    "literature_review",
+    "peer_review"
+  ],
+  "results": {
+    "completeness": {
+      "framework": "researchclaw",
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-013_cross_language_static_analysis_for_java/workspace/researchclaw_2026-09-11_10-33-09",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-013_cross_language_static_analysis_for_java",
+      "complete": false,
+      "required_score": 0.5,
+      "bonus_score": 0.09,
+      "overall_score": 0.4,
+      "missing": [
+        "results",
+        "paper"
+      ],
+      "required": {
+        "idea": {
+          "path": "artifacts/idea.json",
+          "bytes": 4585,
+          "via": "candidate"
+        },
+        "code": {
+          "count": 7,
+          "files": [
+            {
+              "path": "artifacts/code/jni_spec.py",
+              "bytes": 1106,
+              "via": "glob"
+            },
+            {
+              "path": "artifacts/code/main.py",
+              "bytes": 4047,
+              "via": "glob"
+            },
+            {
+              "path": "stage-10/agent_runs/attempt_001/main.py",
+              "bytes": 6795,
+              "via": "glob"
+            },
+            {
+              "path": "stage-10/agent_sandbox/_docker_project_1/experiment_harness.py",
+              "bytes": 4239,
+              "via": "glob"
+            },
+            {
+              "path": "stage-10/agent_sandbox/_docker_project_1/main.py",
+              "bytes": 6795,
+              "via": "glob"
+            },
+            {
+              "path": "stage-10/experiment/jni_spec.py",
+              "bytes": 1106,
+              "via": "glob"
+            },
+            {
+              "path": "stage-10/experiment/main.py",
+              "bytes": 4047,
+              "via": "glob"
+            }
+          ]
+        },
+        "results": {
+          "substantive": false,
+          "normalized_path": null,
+          "numeric_leaf_count": 0,
+          "discovered_files": [],
+          "metrics_keys_sample": []
+        },
+        "paper": {
+          "tex": null,
+          "pdf": null,
+          "md": null,
+          "json": null,
+          "status": "missing",
+          "score": 0.0
+        }
+      },
+      "bonus": {
+        "experiment_plan": {
+          "path": "stage-09/exp_plan.yaml",
+          "bytes": 2568,
+          "via": "candidate"
+        },
+        "experiment_log": {
+          "path": "researchclaw_run.log",
+          "bytes": 5760,
+          "via": "glob"
+        },
+        "review": null,
+        "readme": null,
+        "narrative": null,
+        "bib": {
+          "path": "stage-04/references.bib",
+          "bytes": 9371,
+          "via": "glob"
+        }
+      },
+      "manifest_status": {
+        "pipeline": false,
+        "idea": true,
+        "code": true,
+        "results": false,
+        "paper": false
+      },
+      "gate_scores": {
+        "idea": 1.0,
+        "code": 1.0,
+        "results": 0.0,
+        "paper": 0.0
+      },
+      "fairness": {
+        "gates": [
+          "idea",
+          "code",
+          "results",
+          "paper"
+        ],
+        "paper_gate_rule": "PDF=1.0; TeX-only/md_only/json_only=0.5; complete requires PDF",
+        "results_gate_rule": "substantive numeric results via framework-aware normalize_results",
+        "audit_ref": "framework_profile.FAIRNESS_AUDIT"
+      },
+      "notes": [
+        "Required: idea, code, substantive results, paper (PDF full; TeX/markdown/JSON draft half).",
+        "Stub/seed metrics (e.g. dataset_candidate/metrics.json) do not satisfy results.",
+        "Framework noise (.deepscientist_npm, skills/templates, runtime) is excluded from code/results/paper.",
+        "Manifest status is informational; disk presence is authoritative."
+      ]
+    },
+    "idea_generation": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-013_cross_language_static_analysis_for_java/workspace/researchclaw_2026-09-11_10-33-09",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-013_cross_language_static_analysis_for_java",
+      "idea_path": "~/ai_scientist_inputs/ICSE-2025-013_cross_language_static_analysis_for_java/workspace/researchclaw_2026-09-11_10-33-09/artifacts/idea.json",
+      "status": "ok",
+      "dimensions": {
+        "novelty": {
+          "score": 1.0,
+          "justification": "The idea text contains no core method or hypothesis: it states 'the content for all three sections is blank.' It asks for missing inputs rather than offering any innovation, so no novel contribution can be assessed relative to the Solution Space.",
+          "rubric": "Existing: the idea's core method is already clearly present or solved in the Solution Space; only tiny parameter / test-case changes.",
+          "category": "Existing",
+          "nearest_solution_space_ids": [],
+          "differentiation": "None; the artifact does not propose a method or result, so there is nothing to differentiate from the Solution Space."
+        },
+        "feasibility": {
+          "score": 1.0,
+          "justification": "There is no implementable plan, experiment, or evaluation design. The artifact explicitly says 'I can’t synthesize the perspectives into final hypotheses yet,' so nothing can be built or tested from it.",
+          "rubric": "Theoretically infeasible / compute catastrophe: NP-hard-scale computation, must dynamically reproduce extremely complex system-level vulnerability environments, or depends on unavailable closed-source model internal weights; not doable by a single person."
+        },
+        "clarity": {
+          "score": 1.0,
+          "justification": "The artifact is an incomplete template response rather than a research proposal. It lacks problem definition, method, and evaluation details, asking the user to 'paste the actual hypotheses or bullet points from each perspective.'",
+          "rubric": "Vague concept: full of empty buzzwords; problem undefined; method only gives a high-level direction with little substance."
+        }
+      },
+      "overall_score": 1.0,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "novelty",
+        "feasibility",
+        "clarity"
+      ],
+      "solution_space": {
+        "status": "ok",
+        "paper_count": 30,
+        "entry_count": 30,
+        "cache_hit": true,
+        "source_file": "~/ai_scientist_inputs/ICSE-2025-013_cross_language_static_analysis_for_java/mineru_sections.json",
+        "stats": {
+          "papers": 30,
+          "extracted": 30,
+          "usable_abstracts": 19,
+          "citation_meta_abstracts": 0,
+          "missing_abstracts": 11,
+          "mineru_titles": 29,
+          "related_work_titles": 24,
+          "abstracts_attached": 19,
+          "related_work_extras": 1,
+          "batches": 2
+        },
+        "error": null
+      },
+      "notes": [
+        "Scores the intermediate idea artifact (not the final paper).",
+        "Dimensions: novelty, feasibility, clarity (each 1-5). Excitement removed.",
+        "Novelty is scored against a Solution Space built from mineru REFERENCES titles (+ related_work.json abstracts when matched)."
+      ],
+      "idea_via": "candidate",
+      "idea_relative": "artifacts/idea.json",
+      "summary": "The submitted artifact is an incomplete AI response rather than a research idea. It states that the Innovator, Pragmatist, and Contrarian sections are blank and asks for the missing hypotheses. Consequently, it has no method, novelty, feasibility plan, or evaluation design to assess.",
+      "strengths": [
+        "It clearly acknowledges the missing content rather than fabricating hypotheses."
+      ],
+      "weaknesses": [
+        "Contains no actual research idea or method",
+        "No evaluation or experimental plan",
+        "Cannot be mapped to any Solution Space entry",
+        "Not actionable or implementable"
+      ],
+      "llm_meta": {
+        "model": "deepseek-v4-pro-0813",
+        "base_url": "https://api-sg.umodelverse.ai/v1",
+        "usage": {
+          "completion_tokens": 1771,
+          "completion_tokens_details": {
+            "reasoning_tokens": 1389
+          },
+          "prompt_tokens": 3751,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "total_tokens": 5522
+        },
+        "attempt": 1
+      }
+    },
+    "peer_review": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-013_cross_language_static_analysis_for_java/workspace/researchclaw_2026-09-11_10-33-09",
+      "review_report": null,
+      "paper_pdf": null,
+      "paper_tex": null,
+      "status": "not_provided",
+      "dimensions": {},
+      "overall_score": null,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "soundness",
+        "significance",
+        "novelty",
+        "presentation",
+        "credibility"
+      ],
+      "notes": [
+        "Stanford Agentic Reviewer (paperreview.ai): manual download to artifacts/peer_review/stanford_apr.md, or pass --auto-paperreview.",
+        "Dimensions: soundness, significance, novelty, presentation, credibility (each 1-5)."
+      ],
+      "paperreview": {
+        "status": "skipped",
+        "reason": "no_pdf"
+      },
+      "optional": true,
+      "hint": "Optional external review (Stanford APR). Upload paper/main.pdf to https://paperreview.ai/ , save review to ~/ai_scientist_inputs/ICSE-2025-013_cross_language_static_analysis_for_java/workspace/researchclaw_2026-09-11_10-33-09/artifacts/peer_review/stanford_apr.md"
+    },
+    "alignment": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-013_cross_language_static_analysis_for_java/workspace/researchclaw_2026-09-11_10-33-09",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-013_cross_language_static_analysis_for_java",
+      "status": "missing_agent_paper_or_metrics",
+      "original": {
+        "status": "ok",
+        "task_dir": "~/ai_scientist_inputs/ICSE-2025-013_cross_language_static_analysis_for_java",
+        "paper_title": "Interactive Cross-Language Pointer Analysis for Resolving Native Code in Java Programs",
+        "task_id": "ICSE-2025-013",
+        "selection": {
+          "num_blocks": 7,
+          "total_chars": 31998,
+          "inferred_roles": {
+            "abstract": 1,
+            "introduction": 1,
+            "experiment": 4,
+            "conclusion": 1
+          },
+          "mineru_raw_keys": {
+            "field:abstract": 1,
+            "field:introduction": 1,
+            "field:experiment": 1,
+            "other": 3,
+            "conclusion": 1
+          },
+          "infer_reasons": {
+            "top_level_field": 3,
+            "body_override": 2,
+            "title": 2
+          },
+          "rescued_from_other": 3,
+          "note": "mineru key is unreliable; blocks are selected by title/body/inheritance. rescued_from_other counts sections labeled other but treated as typed roles."
+        },
+        "claims": [
+          {
+            "id": "C1",
+            "statement": "JNIFER is the first interactive cross-language pointer analysis for resolving native code in Java programs, integrating Java and C pointer analyses.",
+            "direction": "neutral",
+            "metric_names": [],
+            "evidence_quote": "we introduce JNIFER, the first interactive cross-language pointer analysis for resolving native code in Java programs.",
+            "confidence": 0.98
+          },
+          {
+            "id": "C2",
+            "statement": "JNIFER significantly outperforms state-of-the-art analyzers JN-Sum and Native-Scanner in soundness, achieving 91.6%"
+          }
+        ],
+        "metrics": [],
+        "overall_conclusion": null,
+        "comparable_notes": null,
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 776,
+            "completion_tokens_details": {
+              "reasoning_tokens": 653
+            },
+            "prompt_tokens": 13525,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 14301
+          },
+          "attempt": 1
+        },
+        "cache_hit": true
+      },
+      "agent": {
+        "status": "missing_agent_paper_or_metrics",
+        "run_dir": "~/ai_scientist_inputs/ICSE-2025-013_cross_language_static_analysis_for_java/workspace/researchclaw_2026-09-11_10-33-09"
+      }
+    },
+    "experiment_analysis": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-013_cross_language_static_analysis_for_java/workspace/researchclaw_2026-09-11_10-33-09",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-013_cross_language_static_analysis_for_java",
+      "status": "ok",
+      "metrics_path": null,
+      "experiment_success": {
+        "status": "failed_or_incomplete",
+        "success": false,
+        "metrics_path": null,
+        "absolute_metrics_path": null,
+        "checks": {
+          "has_results_file": false,
+          "non_stub": false,
+          "numeric_leaf_count": 0,
+          "min_numeric_ok": false
+        },
+        "manifest_hints": {
+          "status": {
+            "pipeline": false,
+            "idea": true,
+            "code": true,
+            "results": false,
+            "paper": false
+          },
+          "returncode": 1,
+          "benchmark_complete": null,
+          "artifacts_metrics_flag": false
+        },
+        "warnings": [
+          "manifest.returncode=1"
+        ],
+        "suspicious_values": [],
+        "note": "success=true requires substantive results (framework-aware path) with >=3 numeric leaves. Supports metrics.json, results.json, experiment_results.txt, etc. Manifest returncode/benchmark_complete are soft warnings only."
+      },
+      "idea_code_consistency": {
+        "status": "ok",
+        "idea_path": "artifacts/idea.json",
+        "code_files": [
+          "stage-10/experiment/main.py"
+        ],
+        "score_scale": "1-5",
+        "score": 1.0,
+        "label": "severe_mismatch",
+        "justification": "The IDEA text is not a research idea or hypothesis set; it explicitly states that the Innovator, Pragmatist, and Contrarian sections are blank and asks for the actual hypotheses. The EXPERIMENT CODE implements a cross-language taint analysis benchmark configuration and validation scaffold, which is unrelated to the empty/meta content of the idea. There is no hypothesis, method, or evaluation protocol in the idea that the code could implement.",
+        "matched_elements": [],
+        "missing_or_divergent_elements": [
+          "Research hypotheses or perspectives are absent from the idea",
+          "No method, prediction, or failure condition is specified",
+          "Code implements an unrelated cross-language taint analysis benchmark scaffold",
+          "No evaluation protocol or metrics in the idea corresponding to the code"
+        ],
+        "rubric": "Severe mismatch: code implements a different problem/method than the idea, or is unrelated boilerplate.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 376,
+            "completion_tokens_details": {
+              "reasoning_tokens": 189
+            },
+            "prompt_tokens": 1410,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 1786
+          },
+          "attempt": 1
+        }
+      },
+      "setup_coverage": {
+        "status": "ok",
+        "overall_coverage": 0.45555555555555555,
+        "datasets": {
+          "gold_count": 5,
+          "hit_count": 1,
+          "miss_count": 4,
+          "coverage": 0.2,
+          "hits": [
+            "tomcat-native-1.2.23"
+          ],
+          "misses": [
+            "OpenJDK 8",
+            "aspectj-1.6.9",
+            "lucene-4.3.0",
+            "log4j-1.2.16"
+          ]
+        },
+        "baselines": {
+          "gold_count": 2,
+          "hit_count": 1,
+          "miss_count": 1,
+          "coverage": 0.5,
+          "hits": [
+            "Native-Scanner"
+          ],
+          "misses": [
+            "JN-Sum"
+          ]
+        },
+        "metrics": {
+          "gold_count": 3,
+          "hit_count": 2,
+          "miss_count": 1,
+          "coverage": 0.6666666666666666,
+          "hits": [
+            "Soundness (Recall)",
+            "Precision"
+          ],
+          "misses": [
+            "Efficiency"
+          ]
+        },
+        "agent_protocol": {},
+        "gold_protocol": {},
+        "dataset_dirs": [
+          "dataset_candidate"
+        ],
+        "flags": {
+          "weaker_baseline_suspected": true,
+          "weak_protocol": [],
+          "synthetic_data": "unexpected_synthetic_or_local_only_data",
+          "gold_allows_synthetic": false
+        },
+        "gold_sources": [
+          "~/ai_scientist_inputs/ICSE-2025-013_cross_language_static_analysis_for_java/task.md",
+          "~/ai_scientist_inputs/ICSE-2025-013_cross_language_static_analysis_for_java/metadata.json"
+        ],
+        "note": "Coverage is name/alias matching against task.md Datasets/Baselines/Metrics. weak_protocol flags large reductions in trials/timeout vs Constraints. Synthetic corpora are not penalized when the task itself requires synthesis."
+      },
+      "ablation_significance": {
+        "status": "ok",
+        "idea_path": "artifacts/idea.json",
+        "significance_signals_rule_based": {
+          "signals": [],
+          "artifact_paths": [],
+          "has_any_significance_artifact": false
+        },
+        "evidence_format": null,
+        "study_type": "other",
+        "components": [],
+        "ablation_coverage_score": 1.0,
+        "overall_ablation_ok": true,
+        "overall_significance_ok": true,
+        "summary": "The run is incomplete: hypotheses_md contains only a request for missing perspectives, and no experiment evidence or final results are provided. No key method components can be extracted, so no ablations or significance tests are expected or assessable. Coverage is vacuously 1.0, but the study is not experimentally evaluable.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 1870,
+            "completion_tokens_details": {
+              "reasoning_tokens": 1748
+            },
+            "prompt_tokens": 1483,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 3353
+          },
+          "attempt": 0
+        }
+      },
+      "results_paper_consistency": {
+        "status": "missing_metrics"
+      },
+      "scores": {
+        "experiment_success": false,
+        "idea_code_score": 1.0,
+        "setup_coverage": 0.45555555555555555,
+        "ablation_coverage_score": 1.0,
+        "overall_ablation_ok": true,
+        "overall_significance_ok": true,
+        "results_paper_score": null,
+        "hiding_unfavorable_suspected": null
+      },
+      "notes": [
+        "Axes 1,2,3,4,6 in experiment_analysis (figures excluded).",
+        "setup_coverage matches task.md Datasets/Baselines/Metrics; weak_protocol flags reductions vs Constraints.",
+        "Axis 6: final normalized results vs paper; interim run logs not used as ground truth."
+      ]
+    },
+    "literature_review": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-013_cross_language_static_analysis_for_java/workspace/researchclaw_2026-09-11_10-33-09",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-013_cross_language_static_analysis_for_java",
+      "status": "ok",
+      "as_of_year": 2026,
+      "agent_ref_count": 33,
+      "sources": [
+        {
+          "path": "~/ai_scientist_inputs/ICSE-2025-013_cross_language_static_analysis_for_java/workspace/researchclaw_2026-09-11_10-33-09/stage-05/shortlist.jsonl",
+          "kind": "shortlist"
+        },
+        {
+          "path": "~/ai_scientist_inputs/ICSE-2025-013_cross_language_static_analysis_for_java/workspace/researchclaw_2026-09-11_10-33-09/stage-04/references.bib",
+          "kind": "bib"
+        }
+      ],
+      "collection_audit": {
+        "cited_keys_count": 0,
+        "filter_mode": "non_bib_sources",
+        "bib_total_before_filter": 33,
+        "bib_after_filter": 0,
+        "uncited_bib_skipped": 33,
+        "agent_ref_count": 33
+      },
+      "fabrication": {
+        "status": "ok",
+        "scholarly_count": 33,
+        "verified_count": 24,
+        "fake_count": 0,
+        "lookup_failed_count": 9,
+        "non_paper_count": 0,
+        "fabrication_rate": 0.0,
+        "items": [
+          {
+            "title": "SVF: interprocedural static value-flow analysis in LLVM",
+            "doi": "10.1145/2892208.2892235",
+            "arxiv_id": "",
+            "year": 2016,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "SVF: interprocedural static value-flow analysis in LLVM",
+            "resolved_year": 2016,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "sui2016interprocedural",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "In defense of soundiness",
+            "doi": "10.1145/2644805",
+            "arxiv_id": "",
+            "year": 2015,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated."
+            ],
+            "cite_key": "livshits2015defense",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Pointer Analysis",
+            "doi": "10.1561/2500000014",
+            "arxiv_id": "",
+            "year": 2015,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Pointer Analysis",
+            "resolved_year": 2015,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "smaragdakis2015pointer",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Precision-guided context sensitivity for pointer analysis",
+            "doi": "10.1145/3276511",
+            "arxiv_id": "",
+            "year": 2018,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Precision-guided context sensitivity for pointer analysis",
+            "resolved_year": 2018,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "li2018precisionguided",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "JN-SAF",
+            "doi": "10.1145/3243734.3243835",
+            "arxiv_id": "",
+            "year": 2018,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "JN-SAF: Precise and Efficient NDK/JNI-aware Inter-language Static Analysis Framework for Security Vetting of Android Applications with Native Code",
+            "resolved_year": 2018,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "wei2018jnsaf",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "A Principled Approach to Selective Context Sensitivity for Pointer Analysis",
+            "doi": "10.1145/3381915",
+            "arxiv_id": "",
+            "year": 2020,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "A Principled Approach to Selective Context Sensitivity for Pointer Analysis",
+            "resolved_year": 2020,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "li2020principled",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Making pointer analysis more precise by unleashing the power of selective context sensitivity",
+            "doi": "10.1145/3485524",
+            "arxiv_id": "",
+            "year": 2021,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Making pointer analysis more precise by unleashing the power of selective context sensitivity",
+            "resolved_year": 2021,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "tan2021making",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Tai-e: A Developer-Friendly Static Analysis Framework for Java by Harnessing the Good Designs of Classics",
+            "doi": "10.1145/3597926.3598120",
+            "arxiv_id": "",
+            "year": 2023,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Tai-e: A Developer-Friendly Static Analysis Framework for Java by Harnessing the Good Designs of Classics",
+            "resolved_year": 2023,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "tan2023taie",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Scalability-first pointer analysis with self-tuning context-sensitivity",
+            "doi": "10.1145/3236024.3236041",
+            "arxiv_id": "",
+            "year": 2018,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Scalability-first pointer analysis with self-tuning context-sensitivity",
+            "resolved_year": 2018,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "li2018scalabilityfirst",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Finding bugs in exceptional situations of JNI programs",
+            "doi": "10.1145/1653662.1653716",
+            "arxiv_id": "",
+            "year": 2009,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Finding bugs in exceptional situations of JNI programs",
+            "resolved_year": 2009,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "li2009finding",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Understanding and Analyzing Java Reflection",
+            "doi": "10.1145/3295739",
+            "arxiv_id": "",
+            "year": 2019,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Understanding and Analyzing Java Reflection",
+            "resolved_year": 2017,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "li2019understanding",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Finding bugs in java native interface programs",
+            "doi": "10.1145/1390630.1390645",
+            "arxiv_id": "",
+            "year": 2008,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Finding bugs in java native interface programs",
+            "resolved_year": 2008,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "kondoh2008finding",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Jinn",
+            "doi": "10.1145/1806596.1806601",
+            "arxiv_id": "",
+            "year": 2010,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "DOI resolved to unrelated title ('Jinn: synthesizing dynamic bug detectors for foreign language interfaces'); continuing other lookups.",
+              "API errors prevented a conclusive existence check; not counted as fabricated."
+            ],
+            "cite_key": "lee2010jinn",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "JuCify",
+            "doi": "10.1145/3510003.3512766",
+            "arxiv_id": "",
+            "year": 2022,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated."
+            ],
+            "cite_key": "samhi2022jucify",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Fast and Precise Handling of Positive Weight Cycles for Field-Sensitive Pointer Analysis",
+            "doi": "10.1007/978-3-030-32304-2_3",
+            "arxiv_id": "",
+            "year": 2019,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Fast and Precise Handling of Positive Weight Cycles for Field-Sensitive Pointer Analysis",
+            "resolved_year": 2019,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "lei2019fast",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Context Sensitivity without Contexts: A Cut-Shortcut Approach to Fast and Precise Pointer Analysis",
+            "doi": "10.1145/3591242",
+            "arxiv_id": "",
+            "year": 2023,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Context Sensitivity without Contexts: A Cut-Shortcut Approach to Fast and Precise Pointer Analysis",
+            "resolved_year": 2023,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "ma2023context",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Declarative static analysis for multilingual programs using CodeQL",
+            "doi": "10.1002/spe.3199",
+            "arxiv_id": "",
+            "year": 2023,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated."
+            ],
+            "cite_key": "youn2023declarative",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Static Analysis of JNI Programs via Binary Decompilation",
+            "doi": "10.1109/tse.2023.3241639",
+            "arxiv_id": "",
+            "year": 2023,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Static Analysis of JNI Programs via Binary Decompilation",
+            "resolved_year": 2023,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "park2023static",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "NCScope: hardware-assisted analyzer for native code in Android apps",
+            "doi": "10.1145/3533767.3534410",
+            "arxiv_id": "",
+            "year": 2022,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "NCScope: hardware-assisted analyzer for native code in Android apps",
+            "resolved_year": 2022,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "zhou2022ncscope",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Compacting points-to sets through object clustering",
+            "doi": "10.1145/3485547",
+            "arxiv_id": "",
+            "year": 2021,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Compacting points-to sets through object clustering",
+            "resolved_year": 2021,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "barbar2021compacting",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Polymorphic Type Inference for the JNI",
+            "doi": "10.1007/11693024_21",
+            "arxiv_id": "",
+            "year": 2006,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Polymorphic Type Inference for the JNI",
+            "resolved_year": 2006,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "furr2006polymorphic",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Ilea",
+            "doi": "10.1145/1297027.1297031",
+            "arxiv_id": "",
+            "year": 2007,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "DOI resolved to unrelated title ('Ilea: inter-language analysis across java and c'); continuing other lookups.",
+              "API errors prevented a conclusive existence check; not counted as fabricated."
+            ],
+            "cite_key": "tan2007ilea",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Identifying Java calls in native code via binary scanning",
+            "doi": "10.1145/3395363.3397368",
+            "arxiv_id": "",
+            "year": 2020,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated."
+            ],
+            "cite_key": "fourtounis2020identifying",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Exception analysis in the Java Native Interface",
+            "doi": "10.1016/j.scico.2014.01.018",
+            "arxiv_id": "",
+            "year": 2014,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Exception analysis in the Java Native Interface",
+            "resolved_year": 2014,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "li2014exception",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "LibDroid: Summarizing information flow of android native libraries via static analysis",
+            "doi": "10.1016/j.fsidi.2022.301405",
+            "arxiv_id": "",
+            "year": 2022,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "LibDroid: Summarizing information flow of android native libraries via static analysis",
+            "resolved_year": 2022,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "chen2022libdroid",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "CHERI JNI",
+            "doi": "10.1145/3093337.3037725",
+            "arxiv_id": "",
+            "year": 2017,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated.",
+              "Saw 1 conclusive miss(es) mixed with 2 API error(s)."
+            ],
+            "cite_key": "chisnall2017cheri",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "μDep: Mutation-Based Dependency Generation for Precise Taint Analysis on Android Native Code",
+            "doi": "10.1109/tdsc.2022.3155693",
+            "arxiv_id": "2112.06702",
+            "year": 2022,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "μDep: Mutation-Based Dependency Generation for Precise Taint Analysis on Android Native Code",
+            "resolved_year": 2021,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "sun2022mutationbased",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Cross-Language Taint Analysis: Generating Caller-Sensitive Native Code Specification for Java",
+            "doi": "10.1109/tse.2024.3392254",
+            "arxiv_id": "",
+            "year": 2024,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Cross-Language Taint Analysis: Generating Caller-Sensitive Native Code Specification for Java",
+            "resolved_year": 2024,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "kan2024crosslanguage",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "JGRE: An Analysis of JNI Global Reference Exhaustion Vulnerabilities in Android",
+            "doi": "10.1109/dsn.2017.40",
+            "arxiv_id": "",
+            "year": 2017,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "JGRE: An Analysis of JNI Global Reference Exhaustion Vulnerabilities in Android",
+            "resolved_year": 2017,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "gu2017jgre",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Reach Me if You Can: On Native Vulnerability Reachability in Android Apps",
+            "doi": "10.1007/978-3-031-17143-7_34",
+            "arxiv_id": "",
+            "year": 2022,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Reach Me if You Can: On Native Vulnerability Reachability in Android Apps",
+            "resolved_year": 2022,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "borzacchiello2022reach",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Towards bridging the gap between Dalvik bytecode and native code during static analysis of Android applications",
+            "doi": "10.1109/iwcmc.2015.7289149",
+            "arxiv_id": "",
+            "year": 2015,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated."
+            ],
+            "cite_key": "lantz2015bridging",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "JNI Global References Are Still Vulnerable: Attacks and Defenses",
+            "doi": "10.1109/tdsc.2020.2995542",
+            "arxiv_id": "",
+            "year": 2020,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated."
+            ],
+            "cite_key": "he2020global",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Hash Consed Points-To Sets",
+            "doi": "10.1007/978-3-030-88806-0_2",
+            "arxiv_id": "",
+            "year": 2021,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Hash Consed Points-To Sets",
+            "resolved_year": 2021,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "barbar2021hash",
+            "source_kind": "shortlist"
+          }
+        ],
+        "cache_path": "~/ai_scientist_evals/ICSE-2025-013_cross_language_static_analysis_for_java/reference_verify_cache.json",
+        "override_path": "~/ai_scientist_evals/ICSE-2025-013_cross_language_static_analysis_for_java/reference_verify_overrides.json",
+        "note": "fabrication_rate = fake / (verified + fake); lookup_failed (API errors) excluded. GitHub/docs/tool URLs are non_paper and excluded from the rate. To manually correct a false negative, edit reference_verify_overrides.json (key=normalized title / doi / cite_key; value=\"verified\" or a result dict), then re-run."
+      },
+      "coverage": {
+        "status": "ok",
+        "gold_source": "~/ai_scientist_inputs/ICSE-2025-013_cross_language_static_analysis_for_java/mineru_sections.json",
+        "gold_count": 29,
+        "gold_is_original_paper_references": true,
+        "gold_is_openalex_subset": false,
+        "agent_count": 33,
+        "intersection_size": 23,
+        "recall": 0.7931034482758621,
+        "precision": 0.696969696969697,
+        "matched_gold_keys": [
+          "barbar2021compacting",
+          "barbar2021hash",
+          "borzacchiello2022reach",
+          "chen2022libdroid",
+          "chisnall2017cheri",
+          "fourtounis2020identifying",
+          "furr2006polymorphic",
+          "he2020global",
+          "kan2024crosslanguage",
+          "kondoh2008finding",
+          "lantz2015bridging",
+          "lei2019fast",
+          "li2009finding",
+          "li2014exception",
+          "li2018precisionguided",
+          "li2019understanding",
+          "li2020principled",
+          "livshits2015defense",
+          "ma2023context",
+          "park2023static",
+          "smaragdakis2015pointer",
+          "tan2021making",
+          "youn2023declarative"
+        ],
+        "primary_metric": "recall",
+        "note": "Primary metric is recall against the original paper bibliography (titles from mineru_sections.json REFERENCES; related_work.json used only to enrich DOI/year or as fallback if mineru titles are empty). Denominator = |original paper references|. Precision is secondary (agent may cite valid extra papers)."
+      },
+      "recency": {
+        "status": "ok",
+        "dated_count": 33,
+        "unknown_year_count": 0,
+        "year_histogram": {
+          "2006": 1,
+          "2007": 1,
+          "2008": 1,
+          "2009": 1,
+          "2010": 1,
+          "2014": 1,
+          "2015": 3,
+          "2016": 1,
+          "2017": 3,
+          "2018": 3,
+          "2019": 1,
+          "2020": 3,
+          "2021": 4,
+          "2022": 4,
+          "2023": 4,
+          "2024": 1
+        },
+        "windows": {
+          "3": {
+            "years": 3,
+            "cutoff_year_inclusive": 2023,
+            "recent_count": 5,
+            "recent_ratio": 0.15151515151515152
+          },
+          "5": {
+            "years": 5,
+            "cutoff_year_inclusive": 2021,
+            "recent_count": 13,
+            "recent_ratio": 0.3939393939393939
+          }
+        }
+      },
+      "scores": {
+        "fabrication_rate": 0.0,
+        "coverage_recall": 0.7931034482758621,
+        "coverage_precision": 0.696969696969697,
+        "recency_ratio_3y": 0.15151515151515152,
+        "recency_ratio_5y": 0.3939393939393939
+      }
+    }
+  },
+  "scores": {
+    "completeness": {
+      "complete": false,
+      "overall_score": 0.4,
+      "required_score": 0.5,
+      "bonus_score": 0.09
+    },
+    "peer_review": {
+      "status": "not_provided",
+      "optional": true,
+      "overall_score": null,
+      "score_scale": "1-5",
+      "scoring_method": null
+    },
+    "idea_generation": {
+      "status": "ok",
+      "overall_score": 1.0,
+      "dimensions": {
+        "novelty": 1.0,
+        "feasibility": 1.0,
+        "clarity": 1.0
+      },
+      "novelty_category": "Existing",
+      "solution_space_status": "ok"
+    },
+    "alignment": {
+      "status": "missing_agent_paper_or_metrics",
+      "direction_consistency": null,
+      "overall_alignment_score": null
+    },
+    "literature_review": {
+      "fabrication_rate": 0.0,
+      "coverage_recall": 0.7931034482758621,
+      "coverage_precision": 0.696969696969697,
+      "recency_ratio_3y": 0.15151515151515152,
+      "recency_ratio_5y": 0.3939393939393939
+    },
+    "experiment_analysis": {
+      "experiment_success": false,
+      "idea_code_score": 1.0,
+      "setup_coverage": 0.45555555555555555,
+      "ablation_coverage_score": 1.0,
+      "overall_ablation_ok": true,
+      "overall_significance_ok": true,
+      "results_paper_score": null,
+      "hiding_unfavorable_suspected": null
+    }
+  },
+  "fair_scores": {
+    "applicable_axes": [
+      "completeness",
+      "idea_generation",
+      "literature_review",
+      "experiment_analysis"
+    ],
+    "skipped_axes": [
+      {
+        "axis": "peer_review",
+        "reason": "optional_external_review"
+      }
+    ],
+    "fair_mean_0_1": 0.3917,
+    "note": "fair_mean_0_1 averages only applicable axes; optional peer review and framework-inapplicable literature are excluded from the denominator."
+  },
+  "evals_root": "~/ai_scientist_evals",
+  "claims_cache": "~/ai_scientist_evals/ICSE-2025-013_cross_language_static_analysis_for_java/original_claims.json",
+  "solution_space_cache": "~/ai_scientist_evals/ICSE-2025-013_cross_language_static_analysis_for_java/solution_space.json"
+}

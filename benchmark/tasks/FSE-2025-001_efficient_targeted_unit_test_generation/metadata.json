@@ -1,0 +1,159 @@
+{
+  "id": "FSE-2025-001",
+  "paper_id": "11993258bfa5c51f1127b706795c120aa6907250",
+  "title": "UnitCon: Synthesizing Targeted Unit Tests for Java Runtime Exceptions",
+  "abstract": "We present UnitCon, a system for synthesizing targeted unit testsfor runtime exceptions in Java programs. Targeted unit tests aim to reveal a bug at a specific location in the program under test. This capability benefits various tasks in software development, such as patch testing, crash reproduction, or static analysis alarm inspection. However, conventional unit test generation tools are mainly designed for regression tests by maximizing code coverage; hence they are not effective at such target-specific tasks. In this paper, we propose a novel synthesis technique that effectively guides the search for targeted unit tests. The key idea is to use static analysis to prune and prioritize the search space by estimating the semantics of candidate test cases. This allows us to efficiently focus on promising unit tests that are likely to trigger runtime exceptions at the target location. According to our experiments on a suite of Java programs, our approach outperforms the state-of-the-art unit test generation tools. We also applied UnitCon for inspecting static analysis alarms for null pointer exceptions (NPEs) in 51 open-source projects and discovered 21 previously unknown NPE bugs.",
+  "year": 2025,
+  "citation_count": 2,
+  "venue": "ACM International Conference on the Foundations of Software Engineering (FSE 2025)",
+  "venue_short": "FSE 2025",
+  "authors": [
+    "Sujin Jang",
+    "Yeonhee Ryou",
+    "Heewon Lee",
+    "Kihong Heo"
+  ],
+  "pdf_url": "",
+  "paper_url": "https://www.semanticscholar.org/paper/11993258bfa5c51f1127b706795c120aa6907250",
+  "paper_type": "tool",
+  "award": "ACM SIGSOFT Distinguished Paper Award",
+  "subfield_label": "Automated Testing & Test Generation",
+  "introduction": "Automatic generation of unit tests is an important task in software engineering. Unit tests are used to validate the correctness of individual units of code, such as methods or classes. They are essential for ensuring the quality of software systems and are widely used in practice. Since writing unit tests is labor-intensive, researchers have developed various techniques for automatic unit test generation, such as Randoop [Pacheco and Ernst 2007] and EvoSuite [Fraser and Arcuri 2011].\n\nHowever, existing unit test generation is not well suited for generating targeted tests. Conventional untargeted unit test generation mainly aims to generate regression tests that exercise various paths of the program to check the overall correctness. On the other hand, the goal of targeted test generation is to expose bugs at a specific program location (e.g., line). Such targeted tests are useful for various tasks in practice, such as continuous integration, patch testing [Böhme et al. 2013;Marinescu and Cadar 2013], crash reproduction [Jin and Orso 2012;Pham et al. 2015], or static analysis alarm inspection [Christakis et al. 2016].\n\nIn real-world, the central challenge of targeted spaceofcandidateunittests.Eventhoughatarget unittestsisstillenormous.Suchunittestsrequirea state to reach the target location and trigger the candidate unit tests exponentially large. Thus it with a naive approach.\n\nIn this paper, we present Unit Con, the first sys runtime exceptions Unit Con is designed to trigger location where a potential exception may occur the exception at the location. The synthesis algo candidates written in our domain-specific langua\n\nOur key idea is to leverage static analysis to static analysis to infer the preconditions to reach t used to prioritize candidate unit tests that are like analysis to estimate the semantic equivalence of c used to prune redundant candidates from the sea\n\nWe implemented Unit Con using Facebook’s In its effectiveness on a suite of Java programs compr as null pointer exceptions, index out of bounds 2014; Lee et al. 2022]. The results show that Unit exceptions at the target locations. We compare unit test generation tools: Randoop, Evo Suite, E experiments, Unit Con consistently outperform of the target exceptions. Unit Con discovers 104 than the baselines within 10 minutes, on average of Unit Con as an alarm inspection tool for static open-source projects for inspecting the null point 21 new bugs.\n\nWe summarize our contributions below: • Wepresent Unit Con,anewsystemfortargeted Java unit tests to trigger runtime exceptions gi • We present an efficient algorithm to synthesi algorithm uses static analysis to prioritize can candidate unit tests. • Wedemonstratetheeffectivenessof Unit Conin outperforms the baselines in terms of the num • We applied Unit Con to real-world open-source",
+  "experiment": "",
+  "section_quality": {
+    "has_abstract": true,
+    "has_introduction": true,
+    "has_experiment": true,
+    "intro_chars": 2843,
+    "experiment_chars": 19047
+  },
+  "introduction_source": "grobid+pdf_gap_fill",
+  "experiment_source": "pdf_fallback",
+  "background_source": "introduction",
+  "experiment_source_used": "not_available",
+  "task_title": "Efficient Targeted Unit Test Generation for Runtime Exception Exposure in Java",
+  "background": "Automatic unit test generation is crucial for software quality, but existing tools like Randoop and EvoSuite primarily aim to maximize code coverage for regression testing. They are ineffective for generating targeted tests that trigger specific runtime exceptions at a given program location—a capability needed for tasks such as patch testing, crash reproduction, and static analysis alarm verification. The fundamental challenge is the vast search space of possible unit tests that can reach a target location and produce a specific exception; naive enumeration is infeasible. This motivates the need for a practical system that efficiently synthesizes unit tests to expose runtime exceptions at user-specified locations.",
+  "research_question": "How can a system efficiently generate Java unit tests that trigger a runtime exception at a specific target location in a program, despite the enormous search space of candidate test inputs and method sequences?",
+  "experiment_setup": {
+    "datasets": [
+      {
+        "name": "Java Defect Benchmark Suite (e.g., Defects4J)",
+        "source": "https://github.com/rjust/defects4j",
+        "description": "A collection of real Java programs with known bugs and exception-triggering locations, commonly used to evaluate test generation and fault localization.",
+        "access": "open"
+      },
+      {
+        "name": "Real-world Open-Source Java Projects",
+        "source": "GitHub (constructable by selecting Java projects with static analysis alarms)",
+        "description": "A set of 51 open-source Java projects used to evaluate the system's ability to inspect null-pointer exception alarms and discover unknown bugs.",
+        "access": "constructable"
+      }
+    ],
+    "baselines": [
+      {
+        "name": "Randoop",
+        "reference": "Pacheco and Ernst, OOPSLA 2007; https://randoop.github.io/randoop/"
+      },
+      {
+        "name": "EvoSuite",
+        "reference": "Fraser and Arcuri, ESEC/FSE 2011; https://www.evosuite.org/"
+      }
+    ],
+    "metrics": [
+      {
+        "name": "Target Exception Triggering Rate",
+        "definition": "Ratio of target exception locations for which a test is generated that triggers the specified runtime exception within the time limit."
+      },
+      {
+        "name": "Number of Triggered Exceptions",
+        "definition": "Total count of distinct runtime exception occurrences triggered across all targets."
+      },
+      {
+        "name": "Real Bug Discovery",
+        "definition": "Number of previously unknown null-pointer exception bugs discovered when applying the system to inspect static analysis alarms in open-source projects."
+      }
+    ],
+    "rqs": [
+      "RQ1: How does the system perform in terms of triggering exceptions at target locations compared to Randoop and EvoSuite?",
+      "RQ2: How many previously unknown bugs does the system uncover when used to inspect static analysis null-pointer exception alarms in open-source projects?"
+    ],
+    "target_subject": "Java programs that contain potential runtime exceptions such as null pointer exceptions, index out of bounds, and class cast exceptions. Examples: open-source Java libraries and applications from GitHub or the Defects4J benchmark.",
+    "constraints": "The system must work without modifying the source code of the program under test. It must operate within a per-target time budget (e.g., 10 minutes). It should not require manual annotations or test scaffolding beyond providing the classpath of the target program."
+  },
+  "expected_artifacts": [
+    "idea",
+    "code",
+    "experiment_results",
+    "paper"
+  ],
+  "feasibility_notes": "Both Randoop and EvoSuite are publicly available and can be used as baselines. The Defects4J benchmark is open-source and widely used. The additional open-source projects can be selected from GitHub, though collecting and setting up 51 projects requires automation. The computational demands are moderate; experiments can be conducted on a standard multi-core workstation. The main difficulty lies in efficiently exploring the combinatorial search space of method sequences and inputs, a problem that requires non-trivial engineering but is feasible with modern static analysis and test generation tools.",
+  "difficulty": "hard",
+  "seed_papers": [
+    {
+      "title": "Naphthalene Diimide-Functionalized Half-Sandwich Ru(II) Complexes as Mitochondria-Targeted Anticancer and Antimetastatic Agents.",
+      "year": 2023,
+      "authors": [
+        "Yuliang Yang",
+        "Xiaofeng Zou",
+        "Yanyan Sun"
+      ],
+      "doi": "10.1021/acs.inorgchem.3c01125",
+      "arxiv_id": null,
+      "pdf_url": "",
+      "citation_count": 24
+    },
+    {
+      "title": "The Burden of Sepsis and Septic Shock in the Intensive Care Unit",
+      "year": 2025,
+      "authors": [
+        "L. La Via",
+        "A. Maniaci",
+        "M. Lentini"
+      ],
+      "doi": "10.3390/jcm14196691",
+      "arxiv_id": null,
+      "pdf_url": "",
+      "citation_count": 21
+    },
+    {
+      "title": "A new lysosome-targeted fluorescent probe for hydrogen peroxide based on a benzothiazole derivative.",
+      "year": 2023,
+      "authors": [
+        "Nannan Zhu",
+        "Junhong Xu",
+        "Qiujuan Ma"
+      ],
+      "doi": "10.1016/j.ymeth.2023.05.005",
+      "arxiv_id": null,
+      "pdf_url": "",
+      "citation_count": 17
+    },
+    {
+      "title": "Decoupled Doubly Contrastive Learning for Cross-Domain Facial Action Unit Detection",
+      "year": 2025,
+      "authors": [
+        "Yong Li",
+        "Menglin Liu",
+        "Zhen Cui"
+      ],
+      "doi": "10.1109/TIP.2025.3546479",
+      "arxiv_id": "2503.08977",
+      "pdf_url": "",
+      "citation_count": 10
+    },
+    {
+      "title": "A Friend's Eye is A Good Mirror: Synthesizing MCU Peripheral Models from Peripheral Drivers",
+      "year": 2024,
+      "authors": [
+        "Chongqing Lei",
+        "Zhen Ling",
+        "Yue Zhang"
+      ],
+      "doi": null,
+      "arxiv_id": null,
+      "pdf_url": "",
+      "citation_count": 9
+    }
+  ],
+  "paper_title": "UnitCon: Synthesizing Targeted Unit Tests for Java Runtime Exceptions"
+}

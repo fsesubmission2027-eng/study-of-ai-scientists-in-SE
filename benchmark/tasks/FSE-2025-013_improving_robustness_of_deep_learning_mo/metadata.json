@@ -1,0 +1,187 @@
+{
+  "id": "FSE-2025-013",
+  "paper_id": "6dee7d4c16ce6cb74be62dc524fc9ffa814bbe98",
+  "title": "A Causal Learning Framework for Enhancing Robustness of Source Code Models",
+  "abstract": "Deep Learning (DL) models are useful for many software engineering tasks. However, these models are susceptible to adversarial attacks, partly because they learn spurious features that incur spurious correlations between these features and model predictions. In this paper, we tackle the problem with a novel causal learning framework, dubbed CausalCode, which leverages causal inference principles to mitigate spurious correlations. At a high level, CausalCode can be characterized as follows: (i) it uses causal data augmentation to generate intervention examples to disrupt spurious correlations; (ii) it leverages regularization to learn invariant representations that prefer causal features to spurious features; (iii) it can enhance the robustness of multiple DL models for source code-based software engineering tasks because it is task-agnostic and model-agnostic. To evaluate its effectiveness, we conduct comprehensive experiments on two models (i.e., CodeBERT and GraphCodeBERT), with respect to four software engineering tasks (i.e., defect detection, functionality classification, code translation, and code repair). Experimental results show that CausalCode outperforms the state-of-the-art approaches in enhancing the robustness of these models.",
+  "year": 2025,
+  "citation_count": 0,
+  "venue": "ACM International Conference on the Foundations of Software Engineering (FSE 2025)",
+  "venue_short": "FSE 2025",
+  "authors": [
+    "Junyao Ye",
+    "Zhen Li",
+    "Xi Tang",
+    "Deqing Zou",
+    "Shouhuai Xu",
+    "Qiang Weizhong",
+    "Hai Jin"
+  ],
+  "pdf_url": "",
+  "paper_url": "https://www.semanticscholar.org/paper/6dee7d4c16ce6cb74be62dc524fc9ffa814bbe98",
+  "paper_type": "methodology",
+  "award": "ACM SIGSOFT Distinguished Paper Award",
+  "subfield_label": "AI/ML System Testing",
+  "introduction": "Deep Learning (DL) models have been widely used in many software engineering tasks, such as code defect detection, code function identification, code refinement, and code translation [17,18,26,32,41,43]. However, studies show that adversarial attacks can easily deceive or evade these DL models [10,14,[51][52][53], by reducing their accuracy from over 90% to 10% or less [14,46,51]. This susceptibility of DL models to adversarial attacks stems from the following fundamental limitation of DL models in learning from code: Rather than capturing the true causal relationships between the semantic properties that determine program behavior and model predictions, they often learn the spurious correlations between superficial syntactic patterns and model predictions, namely statistically significant but causally irrelevant associations. For instance, in software vulnerability detection, models might incorrectly associate specific variable naming patterns with vulnerabilities, rather than capturing unsafe API usage patterns or improper error handling that causally determine code vulnerability. As a consequence, these models can be easily evaded by simply manipulating the values of spurious features without affecting the code's semantics or functionality.\n\nThe robustness problem mentioned above has attracted a fair amount of attention. In general, there are two approaches: (i) adversarial training, which incorporates adversarial examples into the training data [7,15,16,37,38,46,47,52], and (ii) contrastive learning, which employs an unsupervised contrastive pre-training step [9,19]. However, these approaches have three limitations: (i) they extend the distributions of training data rather than eliminating spurious correlations; (ii) their perturbation strategies lack theoretical foundations that can be leveraged to distinguish between causal features and spurious features; and (iii) they have demonstrated limited effectiveness (e.g., [51] shows that attacks can still achieve over 70% success rate against DL classifiers that are fortified by adversarial training). This calls for new approaches to make DL models robust against adversarial attacks. In principle, causal learning can address the preceding three limitations because they exhibit the following two unique properties: (i) it can leverage program semantics, as reflected by Abstract Syntax Trees (ASTs) and Control Flow Graphs (CFGs), to capture relationships between code elements and identify causal features; and (ii) it can leverage the hierarchical structure of code to naturally distinguish semantic features (e.g., control flow and data dependencies) from stylistic features (e.g., naming and formatting), which allows us to use semantic equivalence transformations to perform precise causal interventions. Our contributions. The limited success of these approaches motivates us to explore a novel perspective: leveraging causal learning to enhance the robustness of DL models in software engineering tasks. While causal learning has shown promise in other domains such as image recognition and natural language processing [2,22,33,50], its application to software engineering presents unique challenges and opportunities.\n\nIn this paper, we make two contributions. First, we propose a new approach to enhancing the robustness of DL-based software engineering models, based on the notion of causality [27]. Specifically, we propose a causal learning framework, dubbed CausalCode, to enhance the robustness of DL models for source code tasks. At a high level, our approach can cope with the problem of spurious features, which is suffered by the state-of-the-art approaches (i.e., adversarial training and contrastive learning). While the idea may sound simple, we encounter two technical challenges.\n\n• The first challenge is to elucidate and leverage the relationships between features and DL model predictions (e.g., labels) in software engineering tasks. These tasks encounter a unique challenge imposed by program semantics and structure, which has no counterpart in the other settings mentioned above (e.g., image recognition). To address this challenge, we leverage causal learning to learn causal features, which have a direct influence on DL model predictions and thus can enhance their robustness, while recalling that spurious features can be exploited by attackers to craft adversarial examples to evade DL models. Specifically, we propose a novel data augmentation method to eliminate spurious features. This method differs from adversarial training because it leverages the do-operator in causal analysis to generate intervention examples, which can eliminate spurious correlations between code samples and prediction results. • The second challenge is to reduce the impact of spurious features while amplifying the significance of causal features in source code models. By leveraging the idea of d-separation in causal analysis, we show that when a model uniformly represents all the intervention examples associated with a given example (in the original training set), the model learns invariant representations by disregarding spurious features and accentuates causal features. This leads to a regularization technique that minimizes the representational distance between original examples and their intervention counterparts. This strategy not only enhances the performance of code models but also improves their robustness against perturbation and adversarial attacks. Second, we evaluate the effectiveness of CausalCode by conducting experiments on two widely investigated source code classification tasks, function classification and defect detection, as well as two code generation tasks, code repair and code translation. These experiments primarily use two extensively employed Pre-trained Language Models (PrLMs) for code: CodeBERT [4] and Graph-CodeBERT [6], with additional experiments demonstrating feasibility on StarCoder [12]. These models are state-of-the-art DL models for understanding and processing source code. Experimental results show that CausalCode significantly improves the robustness and performance of these models, while outperforming the existing approaches to enhancing robustness (i.e., adversarial learning and contrastive learning). Moreover, we investigate the impact of three elements on the model's performance and robustness: intervention examples generation, regularization strategy, and dataset size. We demonstrate that these elements collectively enhance model performance and reduce the attack success rate. We have made the source code of CausalCode publicly available at https://github.com/CGCL-codes/CausalCode. Paper outline. Section 2 reviews preliminary knowledge. Section 3 explores the application of causal learning to code models. Section 4 describes the CausalCode framework in detail. Section 5 presents our experimental results. Section 6 reviews related prior studies. Section 7 discusses the limitations of the present study. Section 8 concludes the paper.",
+  "experiment": "Our experiments target four Research Questions (RQs): • RQ1: Can CausalCode enhance robustness against adversarial attacks? • RQ2: Can CausalCode learn causal features? • RQ3: Which elements of CausalCode contribute to improving a model's robustness? • RQ4: Can CausalCode be extended to addressing code generation tasks?\n\nDatasets. We consider four datasets that are widely used and publicly available. Each example in these datasets ensures semantic correctness, a crucial requirement for conducting semanticspreserving transformations.\n\n• POJ-104 [26]. This dataset comprises 51,976 programs categorized into 104 distinct functionalities.\n\nIt is tailored for the task of function classification, aiding in the classification of programs according to their functionalities. • CodeChef [51]. This dataset is introduced for defect detection and includes 33,822 programs categorized into four categories: \"OK\" (code without defects, passing all test cases), \"WA\" (incorrect output for test cases), \"TLE\" (execution timeout), and \"RE\" (runtime error). • CodeTrans [21]. This dataset includes parallel functions between Java and C#, comprising a total of 11,800 paired functions. It is designed for code conversion between programming languages, with an average sequence length of 38.51 tokens for Java functions and 46.16 for C# functions.\n\n• Bugs2fixs [39]. This dataset comprises 65,454 Java functions, consisting of parallel pairs of buggy and corrected code. The objective is to transform erroneous code into its correct version. Models. For each source code-based task, we consider the following two deep learning models.\n\n• CodeBERT [4]. It is a pre-trained model based on transformer architecture, intended to process Natural Language and Programming Language (NL-PL) pairs as input. It is a multi-programminglingual model pre-trained on NL-PL pairs in 6 programming languages (Python, Java, JavaScript, PHP, Ruby, and Go). CodeBERT has achieved state-of-the-art performance in various downstream tasks, including natural language code search, NL-PL Probing, and code documentation generation.\n\n• GraphCodeBERT [6]. It is a pre-trained model designed to take a graph representation of code as input, where nodes represent variables and edges represent data flows. It is chosen for its success in achieving state-of-the-art results across various code-related downstream tasks. • StarCoder2 [20]. It is a decoder-only model available in 3B, 7B, and 15B parameter variants, pre-trained on the Stack v2 dataset covering 619 programming languages. For classification tasks, we adapt it by adding a classification head on top of the last hidden state. Attacks. The robustness of these models has been evaluated against random perturbation attacks and state-of-the-art adversarial attacks. We limited the maximum number of attack attempts per sample to 40 for both types of attacks, following the approach of Zhang et al. [51]. The adversarial attacks employed in our experiments include the Metropolis-Hastings sampling-based identifier renaming attack (MHM) [52], the attack utilizing gradient information for source code manipulation (CARROT) [51]. CARROT encompasses two subtypes: manipulation of identifiers (C-Identifier) and insertion of dead code (C-DeadCode). Additionally, an approach employing black-box attacks by identifying vulnerable tokens (CodeAttack) [10]. These attacks are used in our experiments. It is important to note that both CARROT and MHM are adversarial attacks for code classification tasks, while CodeAttack focuses on adversarial attacks for code generation tasks.\n\nModel training. For the classification task, we divide the dataset into training, testing, and validation sets following the same ratios (64%: 20%: 16%) as used by CARROT [51]. For generation tasks, we adhere to the configurations established by CodeAttack [10]. Specifically, for the code translation task, we utilize a total of 11,800 paired functions, allocating 1,000 for testing and the remaining for training and validation. For the code repair task, we employ a smaller dataset comprising 46,680 training samples, 5,835 for validation, and 5,835 for testing. To mitigate potential biases, we repeat the adversarial attack on a 20% uniformly sampled subset of the test set five times and report the average results. . The higher the ASR, the more effective the attack.\n\nFor code generation tasks, we use CodeBLEU [31] to gauge the quality of the generated code relative to the ground truth. CodeBLEU provides a multifaceted evaluation of code quality by assessing the syntactic correctness, semantic accuracy, and data-flow correctness of generated code snippets. Following CodeAttack [10], we employ the Δ 𝑑𝑟𝑜𝑝 metric to measure the difference between a model's performance before and after waging adversarial attacks, namely Δ 𝑑𝑟𝑜𝑝 = CodeBLEU before -CodeBLEU after . Experimental configurations. In terms of code classification, we use the Adam optimizer with batch size 64, a maximum number of iterations 𝑖𝑡𝑒𝑟 𝑚𝑎𝑥 30, and weight decay 3𝑒 -5. Both kinds of classifiers are trained for 28 epochs with an early stopping criterion being set to 3 epochs. In terms of code generation, for a code translation task, we configure both the maximum source length and the target length as 512 tokens, and use a beam search with size 10, and 𝑖𝑡𝑒𝑟 𝑚𝑎𝑥 10; for a code refinement task, we set the maximum source length and the target length to be 256 tokens with a reduced beam size 5, and 𝑖𝑡𝑒𝑟 𝑚𝑎𝑥 20. Both tasks are trained for a maximum of 36 epochs with early stopping after 3 epochs and a learning rate of 5𝑒 -5. For RQ1, RQ2, and RQ4, we augment the training set with one additional training set and the starting epoch number 𝑁 𝑠 for CausalCode loss calculation being set to 3. For StarCoder2-3B, we employ mixed precision training with bfloat16, using a batch size of 64 and a learning rate of 3e-4 with linear warmup over 10% steps. More information about the parameters is described in our open-source repository mentioned above. We conduct experiments on a server with an Intel(R) Xeon(R) Gold 6226R CPU at 2.90GHz and NVIDIA RTX A6000 GPUs with 48 GB memory, running Ubuntu 22.04. Selecting other robustness-enhancement methods for comparison purposes. For comparison purposes, we consider four baseline defense methods. The first two methods belong to the adversarial training approach, namely CARROT-T [51] and ALERT-T [46], which are selected (from a number of candidate methods including [7,14,52]) because of their effectiveness across various code tasks and models. The third method belongs to a contrastive learning approach. While both ContraCode [9] and ContraBERT [19] leverage contrastive learning to conduct unsupervised training to enhance the robustness of pre-trained models, we note that ContraCode is pre-trained and only experimented with the JavaScript language and that ContraBERT is trained on a diverse set of languages and experimented with adversarial attacks. Thus, we select ContraBERT. We summarize the defense methods as follows. The fourth method represents the first application of causal learning in software engineering models, which is closely related to our research.\n\nAccuracy improvement and robustness against perturbation attacks on classification tasks. Table 1 summarizes the accuracy and Attack Success Rate (ASR) of CodeBERT and GraphCodeBERT on two classification tasks under random perturbation attacks. Function classification classifiers demonstrate superior performance, achieving approximately 19% higher accuracy and a 24.93% lower ASR compared to defect detection classifiers. This discrepancy may be attributed to the nature of the datasets: the POJ-104 dataset contains 104 types of functionally identical code, while the CodeChef dataset encompasses limited defect types with high semantic variety. For the same code task, these models exhibit similar effectiveness. On average, the five methods achieve a modest 0.50% increase in accuracy and an 8.05% decrease in ASR for function classification. For defect detection, they yield a 1.12% accuracy increase and a more substantial 16.06% ASR reduction. Notably, CausalCode demonstrates the most significant improvements, with an accuracy increase of 1.25% and an ASR reduction of 31.95% compared to the baseline. CausalVul performs slightly weaker than CausalCode, while ContraBERT achieves an average accuracy increase of 0.76% while robustness decreases. Between the two adversarial learning strategies, ALERT-T outperforms CARROT-T, achieving a 1.16% increase in accuracy and demonstrating superior ASR reduction. the most effective approach for enhancing model robustness among all tested enhancements. (iv) The robustness enhancement effect is stronger for dead code insertion type attacks compared to identifier type attacks. CausalCode can reduce the ASR by more than two-thirds for dead code insertion attacks. For defect detection, we observe similar phenomena. Our method is the most effective among all evaluated approaches in reducing the ASR. This suggests that learning invariant features helps enhance model robustness by minimizing the learned spurious features.\n\nExperimental results with adversarial attacks on LLMs. We evaluate our approach on the state-of-the-art code LLM, StarCoder2, revealing its susceptibility to adversarial attacks. For defect detection, StarCoder's accuracy drops from 77.60% to 3.80% under the strongest attack (CARROT-I), with performance declines between 45.70% and 73.80% across various attacks. Notably, CausalCode mitigates these vulnerabilities, significantly reducing performance degradation, with a 39.38 percentage point improvement against CARROT-I. Interestingly, we observe that these LLMs exhibit strong natural robustness against adversarial attacks in the context of function classification, with a performance degradation limited to only 10%. This phenomenon can be attributed to two factors. First, the function classification dataset (POJ-104) is included in the CodeXGLUE benchmark, which was explicitly incorporated into these models' pre-training data. This direct exposure in the pre-training process enables a resulting model to develop particularly robust representations for this task. Second, the pre-training strategy uses the Fill-in-the-Middle (FIM) objectives, which inherently enhance robustness against local perturbations to known data patterns. However, this observation reinforces the importance of our approach, especially in settings where models encounter previously unseen tasks or data patterns, because in these settings the models remain susceptible to adversarial attacks.\n\nInsight 1. CausalCode outperforms the state-of-the-art methods in enhancing model performance (i.e., effectiveness) and robustness in code classification tasks.\n\nWe validate CausalCode's ability in enhancing model robustness via the code representation spaces learned by different models. For this purpose, we use the POJ-104 dataset because it allows us to inspect the similarity between semantically-equivalent programs. This dataset comprises 104 classes, each containing 500 semantically equivalent programs in different implementations. Since the semantics of all programs under the same problem are the same, the code representations (i.e., vectors) of the programs with equal semantics should be closer to each other than those programs with different semantics. We randomly select 5 classes, with 100 adversarial examples in each class that can evade CodeBERT. The vector marked with the \"[CLS]\" token serves as the representative of the entire sequence in models like BERT for classification tasks. We apply the T-SNE technique [40] to reduce the vectors to a two-dimensional space for a better visualization effect. We use the models that are learned via the methods described in Table 4 to process both an original example 𝑥 𝑖 and an adversarial example 𝑥 ′ 𝑖 derived from 𝑥 𝑖 , obtaining a learned feature vector for each example. The top-1-overlap rate measures the fraction of the original examples that are the nearest neighbors to their respective adversarial examples in the feature space. Similarly, the top-10-overlap rate measures the fraction of the original examples that are among the top 10 closest neighbors of their respective adversarial examples. A higher overlap rate indicates a greater ability to learn invariant representations because a higher overlap rate means a model can maintain a high similarity between semantically equivalent examples in the feature space despite adversarial perturbations. This means that such a model learns causal features that are robust against adversarial attacks. Table 4 summarizes the results. We observe that with respect to the POJ-104 dataset, CausalCodeenhanced models achieve a top-1-overlap rate of 93.32%, which is 45.74% higher than the other methods on average. \"Distance\" column shows the average distance in the feature space between the original examples and their adversarial examples with respect to the five methods. We observe that CausalCode learns features from the original examples and their adversarial examples with a smaller disparity than other methods. This means that CausalCode effectively accomplishes its design objective: examples with similar semantics are close to each other in the feature space and thus enhances classifier robustness against adversarial examples.\n\nInsight 2. CausalCode enables DL models to learn improved code representations such that in the feature space, examples with the same causal feature are clustered together.\n\nTo demonstrate the contribution of elements in improving the model's robustness, we compare three key elements in CausalCode: intervention examples generation, regularization strategy, and dataset size. For intervention example generation, we contrast our approach with two alternative strategies (see details in Section 3): a random perturbation method, which randomly selects samples from all examples generated through random perturbations, and an adversarial method, which specifically focuses on adversarial examples. Regarding regularization strategy, we analyze the impact of removing the regularizer from CausalCode, training solely with the expanded samples selected by CausalCode's strategy. Additionally, we compare this approach with a contrastive learning loss. For dataset size, we augment 2-4 training sets, surpassing other models that are limited to expanding just one dataset. Table 5 summarizes the experimental results. We observe three key findings: (i) The random selection method leads to an average decrease in the Attack Success Rate (ASR) of 9.30%, whereas the adversarial method achieves an average reduction of 16.70%. Notably, the CausalCode strategy outperforms both, with a significant reduction in ASR by 38.18% on average. (ii) Absence of the causal learning-derived regularizer results in a marginal improvement in accuracy by 0.46%. However, this comes at the cost of increased vulnerability to adversarial attacks, evidenced by a 21.32% increase in ASR compared to the Causal loss regularizer. The contrastive learning regularizer reduces the ASR, but 33.19% less effectively than the Causal loss regularizer. (iii) Increasing the size of expanded datasets improves the classifier's accuracy and reduces the ASR, but this improvement has limitations. distance between the examples augmented from different examples. This approach can employ an unsupervised contrastive pre-training task to pre-train a neural network [9,19]. This approach consumes a lot of resources in retraining large models while still achieving a limited capability against adversarial attacks.\n\nThe preceding limitations highlight the importance to seek new approaches, making a case for the causal learning approach proposed in this study. Considering the causal relationships between a model's input and output (i.e., predictions) allows models to learn causal features to enhance robustness against adversarial attacks. Thus, CausalCode initiates a new approach by harnessing causal analysis and causal learning. The causal learning we propose is different from existing contrastive learning because it uses distinct data generation strategies and employs a new form of regularization that is different from the one used in contrastive learning [9]. Prior studies on causal learning. Causal learning can enhance the interpretability and robustness of DL models, by capturing the cause-effect relationships hidden in data. Notable results include Pearl's seminal framework for causal inference [27] and recent advancements [34,36]. These studies lay a foundation for applying causal principles to improve machine learning reliability and generalizability, as demonstrated in image recognition and natural language processing [5,25]. To our knowledge, the only study that introduces causal learning to source code models is [30], which uses weighted average to cope with spurious features and perturbation attacks. However, this approach achieves limited success in coping with adversarial attacks because it cannot learn invariant representations and thus cannot adequately eliminate spurious features. Whereas, our causal learning technique, which is built upon [8,24], uses the do-operator to eliminate spurious correlations between code features and model predictions, while learning invariant representations despite the presence of spurious features.\n\nThis study has several limitations, which need to be addressed in future studies. (i) Our selection of interventions is based on multiple iterations of random sampling in the direction of gradient descent. What would be the other sampling techniques? (ii) Defending against different kinds of adversarial attacks remains a challenge [29,51]. (iii) It is intuitive that causal learning can improve model interpretability. It is interesting to explore how CausalCode may improve model robustness and interpretability at the same time.",
+  "section_quality": {
+    "has_abstract": true,
+    "has_introduction": true,
+    "has_experiment": true,
+    "intro_chars": 7022,
+    "experiment_chars": 18006
+  },
+  "introduction_source": "grobid_tei",
+  "experiment_source": "grobid_tei",
+  "background_source": "introduction",
+  "experiment_source_used": "experiment_section",
+  "task_title": "Improving Robustness of Deep Learning Models for Code by Mitigating Spurious Correlations",
+  "background": "Deep learning models are increasingly applied to software engineering tasks such as defect detection, code classification, code translation, and code repair. However, adversarial attacks can severely degrade their performance, often reducing accuracy from over 90% to less than 10%. A root cause is that these models frequently learn spurious correlations between superficial syntactic patterns (e.g., variable naming) and predicted labels, rather than capturing the true causal relationships that determine program behavior. Existing defenses, including adversarial training and contrastive learning, extend the training distribution but do not systematically eliminate spurious correlations; they lack a theoretical foundation to distinguish causal features from spurious ones, and they have shown limited effectiveness against advanced attacks. There is a need for defense mechanisms that can identify and rely on semantically meaningful, causally relevant features of code.",
+  "research_question": "How can spurious correlations between superficial code features and model predictions be eliminated to improve the robustness of deep learning models for software engineering tasks?",
+  "experiment_setup": {
+    "datasets": [
+      {
+        "name": "POJ-104",
+        "source": "https://github.com/microsoft/CodeBERT/tree/master/GraphCodeBERT/codesearch/poj-104/data",
+        "description": "51,976 programs categorized into 104 distinct functionalities for function classification.",
+        "access": "open"
+      },
+      {
+        "name": "CodeChef",
+        "source": "https://github.com/zhangxinchen1996/CARROT",
+        "description": "33,822 programs for defect detection, labeled as OK, WA, TLE, RE.",
+        "access": "open"
+      },
+      {
+        "name": "CodeTrans",
+        "source": "https://github.com/microsoft/CodeXGLUE/tree/main/Code-Code/code-to-code-trans",
+        "description": "11,800 paired Java–C# functions for code translation.",
+        "access": "open"
+      },
+      {
+        "name": "Bugs2Fix",
+        "source": "https://github.com/microsoft/CodeXGLUE/tree/main/Code-Code/code-refinement",
+        "description": "65,454 pairs of buggy and corrected Java functions for code repair.",
+        "access": "open"
+      }
+    ],
+    "baselines": [
+      {
+        "name": "CARROT-T",
+        "reference": "CARROT: An adversarial robustness evaluation toolkit for source code (USENIX Security 2022)"
+      },
+      {
+        "name": "ALERT-T",
+        "reference": "Adversarial training method for code models (see reference [46] in the original paper)"
+      },
+      {
+        "name": "ContraBERT",
+        "reference": "Contrastive learning approach for code representation (see reference [19] in the original paper)"
+      },
+      {
+        "name": "SemanticDefense",
+        "reference": "Prior defense method that leverages program semantics to eliminate spurious correlations (see original evaluation section for citation)"
+      }
+    ],
+    "metrics": [
+      {
+        "name": "Attack Success Rate (ASR)",
+        "definition": "Fraction of test examples where an adversarial attack causes the model to output an incorrect label (for classification) or significantly degrades output quality (for generation)."
+      },
+      {
+        "name": "Accuracy",
+        "definition": "Standard classification accuracy on clean (unattacked) test samples."
+      },
+      {
+        "name": "CodeBLEU",
+        "definition": "A metric that evaluates generated code by comparing syntactic AST match, semantic data-flow match, and exact token overlap against a reference."
+      },
+      {
+        "name": "Δ_drop",
+        "definition": "The difference between a model's CodeBLEU score before and after an adversarial attack, measuring robustness impact."
+      }
+    ],
+    "rqs": [
+      "RQ1: How effectively can the defense method reduce the success rate of adversarial attacks on code classification models?",
+      "RQ2: To what extent does the defense cause the model to rely on causal features rather than spurious ones?",
+      "RQ3: Which components of the defense strategy are most responsible for improving robustness?",
+      "RQ4: Can the defense method be applied to code generation tasks (e.g., translation and repair) and still provide robustness?"
+    ],
+    "target_subject": "Pre-trained language models for source code (e.g., CodeBERT, GraphCodeBERT, StarCoder) fine-tuned on downstream tasks: function classification, defect detection, code translation, and code repair. Attacks include Metropolis-Hastings identifier renaming (MHM), CARROT (identifier manipulation and dead code insertion), and CodeAttack (black-box token manipulation).",
+    "constraints": "Training dataset splits: classification 64%/20%/16% train/val/test; generation tasks use standard splits (e.g., 1000 test for translation, 5835 for repair). Attack evaluation: maximum 40 attack attempts per sample, repeated on a 20% uniform subset of the test set 5 times, averaging results. Models must be fine-tuned from publicly available pre-trained checkpoints. Training hyperparameters: Adam optimizer, batch size 64, max epochs 28-36, early stopping 3, learning rate 5e-5 (classification) / 5e-5 (generation). For generation, beam search with size 5-10. Defense must be model- and task-agnostic, without access to attack algorithms’ internals."
+  },
+  "expected_artifacts": [
+    "idea",
+    "code",
+    "experiment_results",
+    "paper"
+  ],
+  "feasibility_notes": "All datasets are openly available. Pre-trained model checkpoints (CodeBERT, GraphCodeBERT, StarCoder) are accessible from Hugging Face. Adversarial attack implementations (CARROT, MHM, CodeAttack) exist in open-source repositories, enabling reproducibility. Training and evaluation require multi-GPU setups (e.g., RTX A6000 48GB) and can take several hours to days per model/task due to large dataset sizes and repeated attack evaluations. The main technical challenge is designing a defense that effectively eliminates spurious feature reliance without prior knowledge of the attack type, while remaining compatible across different model architectures and task types.",
+  "difficulty": "hard",
+  "seed_papers": [
+    {
+      "title": "A Model-Agnostic Causal Learning Framework for Recommendation using Search Data",
+      "year": 2022,
+      "authors": [
+        "Zihua Si",
+        "Xue-Fen Han",
+        "Xiao Zhang"
+      ],
+      "doi": "10.1145/3485447.3511951",
+      "arxiv_id": "2202.04514",
+      "pdf_url": "https://arxiv.org/pdf/2202.04514",
+      "citation_count": 58
+    },
+    {
+      "title": "Enhancing Recommendation with Search Data in a Causal Learning Manner",
+      "year": 2023,
+      "authors": [
+        "Zihua Si",
+        "ZhongXiang Sun",
+        "Xiaoxue Zang"
+      ],
+      "doi": "10.1145/3582425",
+      "arxiv_id": null,
+      "pdf_url": "https://doi.org/10.1145/3582425",
+      "citation_count": 19
+    },
+    {
+      "title": "Symmetry-Aware Causal-Inference-Driven Web Performance Modeling: A Structure-Aware Framework for Predictive Analysis and Actionable Optimization",
+      "year": 2025,
+      "authors": [
+        "Han Lin",
+        "Wenhe Liu"
+      ],
+      "doi": "10.3390/sym17122058",
+      "arxiv_id": null,
+      "pdf_url": "",
+      "citation_count": 12
+    },
+    {
+      "title": "CEGRL-TKGR: A Causal Enhanced Graph Representation Learning Framework for Temporal Knowledge Graph Reasoning",
+      "year": 2024,
+      "authors": [
+        "Jinze Sun",
+        "Yongpan Sheng",
+        "Lirong He"
+      ],
+      "doi": null,
+      "arxiv_id": "2408.07911",
+      "pdf_url": "",
+      "citation_count": 7
+    },
+    {
+      "title": "Meta-path-guided causal inference for hierarchical feature alignment and policy optimization in enhancing resilience of UWSoS",
+      "year": 2025,
+      "authors": [
+        "Kexin Wang",
+        "Dingrui Xue",
+        "Yingdong Gou"
+      ],
+      "doi": "10.1007/s11227-024-06848-6",
+      "arxiv_id": null,
+      "pdf_url": "",
+      "citation_count": 6
+    }
+  ],
+  "paper_title": "A Causal Learning Framework for Enhancing Robustness of Source Code Models"
+}

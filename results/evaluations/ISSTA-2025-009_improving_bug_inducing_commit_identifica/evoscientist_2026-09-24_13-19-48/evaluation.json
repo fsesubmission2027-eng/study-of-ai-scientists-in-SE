@@ -1,0 +1,1303 @@
+{
+  "run_dir": "~/ai_scientist_inputs/ISSTA-2025-009_improving_bug_inducing_commit_identifica/workspace/evoscientist_2026-09-24_13-19-48",
+  "task_dir": "~/ai_scientist_inputs/ISSTA-2025-009_improving_bug_inducing_commit_identifica",
+  "framework": "evoscientist",
+  "fairness_audit": [
+    {
+      "axis": "completeness",
+      "was_unfair": "Required both paper.tex AND paper.pdf; any tool missing one failed equally.",
+      "fix": "Paper gate: PDF=1.0; TeX-only=0.5; ``complete`` requires PDF."
+    },
+    {
+      "axis": "completeness",
+      "was_unfair": "``results`` counted stub/seed JSON (dataset_candidate/metrics.json).",
+      "fix": "``results`` requires substantive numeric results via results_normalize."
+    },
+    {
+      "axis": "experiment_success",
+      "was_unfair": "Only metrics.json; ignored results.json / experiment_results.txt.",
+      "fix": "Framework-ordered result candidates + normalized loaders."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Penalized tools with no bib; airesearcher has no workspace references.",
+      "fix": "literature_applicable=false → status not_applicable; excluded from fair aggregate."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "related_work.json subset as gold made recall hard to interpret.",
+      "fix": "Coverage gold is original paper REFERENCES from mineru; related_work only enriches metadata/fallback."
+    },
+    {
+      "axis": "peer_review",
+      "was_unfair": "Missing Stanford report looked like evaluation failure.",
+      "fix": "status not_provided; optional axis, never counts as tool failure."
+    },
+    {
+      "axis": "paths/find_results",
+      "was_unfair": "Picked downloads/** and sandbox noise (e.g. airesearcher LLVM tree).",
+      "fix": "Exclude downloads/, seeds/, dataset_candidate/, sandbox junk paths."
+    },
+    {
+      "axis": "paths/framework_noise",
+      "was_unfair": "DeepScientist .deepscientist_npm / runtime / skills templates counted as code/paper/results.",
+      "fix": "FRAMEWORK_NOISE_DIRS+markers; quest worktree + eval_output results; paper md drafts; reject template tex."
+    },
+    {
+      "axis": "paths/paper_tex",
+      "was_unfair": "tiny_scientist / ACL runs store paper under latex/*.tex; evaluator only looked at paper/main.tex.",
+      "fix": "latex/**/*.tex with substantive-body heuristic; find_paper_document uses same rules."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Entire custom.bib (300+ anthology entries) verified when paper had zero \\cite commands.",
+      "fix": "collect_agent_references filters bib to in-text cite keys; skips uncited bulk bib (>40 entries)."
+    },
+    {
+      "axis": "paths/ai_scientist_summaries",
+      "was_unfair": "AI Scientist can persist substantive results and paper-like drafts in *_summary.json logs rather than paper/main.tex or results/**/*.json.",
+      "fix": "Treat draft_summary/research_summary as weak paper documents and summary JSONs as result candidates."
+    },
+    {
+      "axis": "framework/ai_scientist_v2",
+      "was_unfair": "Manifest framework ``ai_scientist_v2`` fell through to profile ``unknown``, skipping AI-Scientist idea/result path priorities.",
+      "fix": "Normalize ``ai_scientist_v2`` (and common aliases) to profile key ``ai_scientist``."
+    },
+    {
+      "axis": "idea_generation",
+      "was_unfair": "plan.md/todos.md weak proxies scored same as structured idea.json.",
+      "fix": "Framework idea_priority tried first; missing idea → not_applicable where appropriate."
+    }
+  ],
+  "generated_at": "2026-10-01T13:29:06",
+  "axes": [
+    "alignment",
+    "completeness",
+    "experiment_analysis",
+    "idea_generation",
+    "literature_review",
+    "peer_review"
+  ],
+  "results": {
+    "completeness": {
+      "framework": "evoscientist",
+      "run_dir": "~/ai_scientist_inputs/ISSTA-2025-009_improving_bug_inducing_commit_identifica/workspace/evoscientist_2026-09-24_13-19-48",
+      "task_dir": "~/ai_scientist_inputs/ISSTA-2025-009_improving_bug_inducing_commit_identifica",
+      "complete": true,
+      "required_score": 1.0,
+      "bonus_score": 0.13,
+      "overall_score": 0.8521,
+      "missing": [],
+      "required": {
+        "idea": {
+          "path": "plan.md",
+          "bytes": 2582,
+          "via": "candidate"
+        },
+        "code": {
+          "count": 14,
+          "files": [
+            {
+              "path": "project/candidates.py",
+              "bytes": 4746,
+              "via": "glob"
+            },
+            {
+              "path": "project/common.py",
+              "bytes": 5558,
+              "via": "glob"
+            },
+            {
+              "path": "project/evaluate.py",
+              "bytes": 3610,
+              "via": "glob"
+            },
+            {
+              "path": "project/llm4szz_ensemble.py",
+              "bytes": 5314,
+              "via": "glob"
+            },
+            {
+              "path": "project/make_figures.py",
+              "bytes": 6751,
+              "via": "glob"
+            },
+            {
+              "path": "project/reconstruct_llm4szz.py",
+              "bytes": 5078,
+              "via": "glob"
+            },
+            {
+              "path": "project/run_experiments.py",
+              "bytes": 5896,
+              "via": "glob"
+            },
+            {
+              "path": "project/src/candidates.py",
+              "bytes": 4746,
+              "via": "glob"
+            },
+            {
+              "path": "project/src/common.py",
+              "bytes": 5558,
+              "via": "glob"
+            },
+            {
+              "path": "project/src/evaluate.py",
+              "bytes": 3610,
+              "via": "glob"
+            },
+            {
+              "path": "project/src/llm4szz_ensemble.py",
+              "bytes": 5314,
+              "via": "glob"
+            },
+            {
+              "path": "project/src/make_figures.py",
+              "bytes": 6751,
+              "via": "glob"
+            },
+            {
+              "path": "project/src/reconstruct_llm4szz.py",
+              "bytes": 5078,
+              "via": "glob"
+            },
+            {
+              "path": "project/src/run_experiments.py",
+              "bytes": 5896,
+              "via": "glob"
+            }
+          ]
+        },
+        "results": {
+          "substantive": true,
+          "normalized_path": "results/metrics.json",
+          "numeric_leaf_count": 27,
+          "discovered_files": [
+            {
+              "path": "results/metrics.json",
+              "bytes": 1187,
+              "via": "candidate"
+            }
+          ],
+          "metrics_keys_sample": [
+            "method",
+            "primary_dataset",
+            "precision",
+            "recall",
+            "f1_score",
+            "baseline_llm4szz",
+            "datasets"
+          ]
+        },
+        "paper": {
+          "tex": {
+            "path": "paper/main.tex",
+            "bytes": 8543,
+            "via": "candidate"
+          },
+          "pdf": {
+            "path": "paper/main.pdf",
+            "bytes": 202233,
+            "via": "candidate"
+          },
+          "md": {
+            "path": "paper/main.md",
+            "bytes": 14619,
+            "via": "candidate"
+          },
+          "json": null,
+          "status": "pdf",
+          "score": 1.0
+        }
+      },
+      "bonus": {
+        "experiment_plan": {
+          "path": "plan.md",
+          "bytes": 2582,
+          "via": "candidate"
+        },
+        "experiment_log": {
+          "path": "evoscientist_run.log",
+          "bytes": 45717,
+          "via": "glob"
+        },
+        "review": {
+          "path": "artifacts/peer_review/stanford_apr.md",
+          "bytes": 12199,
+          "via": "glob"
+        },
+        "readme": {
+          "path": "README.md",
+          "bytes": 3302,
+          "via": "candidate"
+        },
+        "narrative": null,
+        "bib": null
+      },
+      "manifest_status": {
+        "research_request": true,
+        "plan": true,
+        "metrics": true,
+        "paper_tex": true,
+        "paper_pdf": false,
+        "readme": true
+      },
+      "gate_scores": {
+        "idea": 1.0,
+        "code": 1.0,
+        "results": 1.0,
+        "paper": 1.0
+      },
+      "fairness": {
+        "gates": [
+          "idea",
+          "code",
+          "results",
+          "paper"
+        ],
+        "paper_gate_rule": "PDF=1.0; TeX-only/md_only/json_only=0.5; complete requires PDF",
+        "results_gate_rule": "substantive numeric results via framework-aware normalize_results",
+        "audit_ref": "framework_profile.FAIRNESS_AUDIT"
+      },
+      "notes": [
+        "Required: idea, code, substantive results, paper (PDF full; TeX/markdown/JSON draft half).",
+        "Stub/seed metrics (e.g. dataset_candidate/metrics.json) do not satisfy results.",
+        "Framework noise (.deepscientist_npm, skills/templates, runtime) is excluded from code/results/paper.",
+        "Manifest status is informational; disk presence is authoritative."
+      ]
+    },
+    "idea_generation": {
+      "run_dir": "~/ai_scientist_inputs/ISSTA-2025-009_improving_bug_inducing_commit_identifica/workspace/evoscientist_2026-09-24_13-19-48",
+      "task_dir": "~/ai_scientist_inputs/ISSTA-2025-009_improving_bug_inducing_commit_identifica",
+      "idea_path": "~/ai_scientist_inputs/ISSTA-2025-009_improving_bug_inducing_commit_identifica/workspace/evoscientist_2026-09-24_13-19-48/plan.md",
+      "status": "ok",
+      "dimensions": {
+        "novelty": {
+          "score": 3.0,
+          "justification": "The idea states its core method as 'candidate-level confidence = s2-confirmation + statement support + recency; confidence-ranked selection with abstention (PR curve)'. This is a meaningful extension of prior SZZ/Neural-SZZ work such as R48 and R39, but it does not overturn the prevailing SZZ-style candidate selection approach; it optimizes and calibrates an existing LLM4SZZ pipeline.",
+          "rubric": "Incremental: a meaningful extension or optimization of prior baseline work that fixes a concrete prior limitation, but the core paradigm is unchanged.",
+          "category": "Incremental",
+          "nearest_solution_space_ids": [
+            "R48",
+            "R39",
+            "R44",
+            "R11"
+          ],
+          "differentiation": "CAL-SZZ adds candidate-level confidence calibration and abstention based on s2-confirmation, statement support, and recency to existing LLM/neural SZZ candidate selection, rather than proposing a fundamentally new bug-inducing commit identification paradigm."
+        },
+        "feasibility": {
+          "score": 3.0,
+          "justification": "The plan lists concrete implementation files and claims a 'deterministic end-to-end run from raw save_logs/ to metrics'. This is moderate research engineering: datasets are public but may require contacting authors, and baselines include multiple SZZ implementations plus NeuralSZZ on large repositories, creating nontrivial but manageable workload.",
+          "rubric": "Moderate workload (sweet spot): needs nontrivial coding such as scripting existing open-source tools (parsers, CFG extractors) or building a custom graph-processing pipeline; standard research engineering effort."
+        },
+        "clarity": {
+          "score": 3.0,
+          "justification": "The plan presents a clear goal, staged workflow, baselines, datasets, RQs, and artifacts. However, the key mechanism is only summarized as 's2-confirmation + statement support + recency' with 'confidence-ranked selection with abstention', and the exact computation of these signals and calibration procedure is not defined.",
+          "rubric": "Complete frame but missing details: What/Why/How are present, yet key technical execution details or specific comparison plans are underspecified."
+        }
+      },
+      "overall_score": 3.0,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "novelty",
+        "feasibility",
+        "clarity"
+      ],
+      "solution_space": {
+        "status": "ok",
+        "paper_count": 77,
+        "entry_count": 77,
+        "cache_hit": true,
+        "source_file": "~/ai_scientist_inputs/ISSTA-2025-009_improving_bug_inducing_commit_identifica/mineru_sections.json",
+        "stats": {
+          "papers": 77,
+          "extracted": 77,
+          "usable_abstracts": 27,
+          "citation_meta_abstracts": 0,
+          "missing_abstracts": 50,
+          "mineru_titles": 66,
+          "related_work_titles": 39,
+          "abstracts_attached": 27,
+          "related_work_extras": 11,
+          "batches": 5
+        },
+        "error": null
+      },
+      "notes": [
+        "Scores the intermediate idea artifact (not the final paper).",
+        "Dimensions: novelty, feasibility, clarity (each 1-5). Excitement removed.",
+        "Novelty is scored against a Solution Space built from mineru REFERENCES titles (+ related_work.json abstracts when matched)."
+      ],
+      "idea_via": "candidate",
+      "idea_relative": "plan.md",
+      "summary": "CAL-SZZ proposes a calibrated confidence-ranking layer for LLM-based SZZ candidate selection, combining s2-confirmation, statement support, and recency with abstention. It evaluates against SZZ variants, NeuralSZZ, and LLM4SZZ on Linux, GitHub, and Apache datasets, including ablations and PR-curve analysis. The plan is concrete and reproducible at a high level, but the confidence mechanism is underspecified and the contribution is incremental relative to existing SZZ/neural-SZZ research.",
+      "strengths": [
+        "Clear staged plan with success signals and artifacts",
+        "Concrete baselines, datasets, and evaluation metrics",
+        "Addresses precision/recall tradeoff through calibrated confidence and abstention",
+        "Includes ablation and PR-curve analysis for component evaluation"
+      ],
+      "weaknesses": [
+        "Confidence signals such as s2-confirmation and statement support are not technically defined",
+        "Core contribution is incremental over existing LLM4SZZ/Neural-SZZ pipelines",
+        "Results are reported as already obtained without detailed methodology for the calibration",
+        "Data access depends on contacting prior authors and running multiple SZZ baselines"
+      ],
+      "llm_meta": {
+        "model": "deepseek-v4-pro-0813",
+        "base_url": "https://api-sg.umodelverse.ai/v1",
+        "usage": {
+          "completion_tokens": 2224,
+          "completion_tokens_details": {
+            "reasoning_tokens": 1587
+          },
+          "prompt_tokens": 6866,
+          "prompt_tokens_details": {
+            "cached_tokens": 5888
+          },
+          "total_tokens": 9090
+        },
+        "attempt": 0
+      }
+    },
+    "peer_review": {
+      "run_dir": "~/ai_scientist_inputs/ISSTA-2025-009_improving_bug_inducing_commit_identifica/workspace/evoscientist_2026-09-24_13-19-48",
+      "review_report": "~/ai_scientist_inputs/ISSTA-2025-009_improving_bug_inducing_commit_identifica/workspace/evoscientist_2026-09-24_13-19-48/artifacts/peer_review/stanford_apr.md",
+      "paper_pdf": "~/ai_scientist_inputs/ISSTA-2025-009_improving_bug_inducing_commit_identifica/workspace/evoscientist_2026-09-24_13-19-48/paper/main.pdf",
+      "paper_tex": "~/ai_scientist_inputs/ISSTA-2025-009_improving_bug_inducing_commit_identifica/workspace/evoscientist_2026-09-24_13-19-48/paper/main.tex",
+      "status": "ok",
+      "dimensions": {},
+      "overall_score": 5.8,
+      "score_scale": "1-10",
+      "dimension_order": [],
+      "notes": [
+        "Scored from paperreview.ai (Stanford APR) native ratings; benchmark 5-dimension LLM rubric skipped.",
+        "Overall scale: 1-10."
+      ],
+      "paperreview": {
+        "status": "cached",
+        "hint": "Cached APR score found; no re-upload."
+      },
+      "scoring_method": "paperreview_apr",
+      "scoring_source": "paperreview_json",
+      "apr_dimensions": {},
+      "summary": "",
+      "red_flags": []
+    },
+    "alignment": {
+      "run_dir": "~/ai_scientist_inputs/ISSTA-2025-009_improving_bug_inducing_commit_identifica/workspace/evoscientist_2026-09-24_13-19-48",
+      "task_dir": "~/ai_scientist_inputs/ISSTA-2025-009_improving_bug_inducing_commit_identifica",
+      "status": "ok",
+      "original": {
+        "paper_title": "LLM4SZZ: Enhancing SZZ Algorithm with Context-Enhanced Assessment on Large Language Models",
+        "selection": {
+          "num_blocks": 7,
+          "total_chars": 31998,
+          "inferred_roles": {
+            "abstract": 1,
+            "introduction": 1,
+            "experiment": 4,
+            "conclusion": 1
+          },
+          "mineru_raw_keys": {
+            "field:abstract": 1,
+            "field:introduction": 1,
+            "field:experiment": 1,
+            "other": 3,
+            "conclusion": 1
+          },
+          "infer_reasons": {
+            "top_level_field": 3,
+            "title": 4
+          },
+          "rescued_from_other": 3,
+          "note": "mineru key is unreliable; blocks are selected by title/body/inheritance. rescued_from_other counts sections labeled other but treated as typed roles."
+        },
+        "claims": [
+          {
+            "id": "C1",
+            "statement": "LLM4SZZ outperforms all baselines across three datasets, improving F1-score by 6.9% to 16.0% without significantly sacrificing recall.",
+            "direction": "improves",
+            "metric_names": [
+              "F1-score"
+            ],
+            "evidence_quote": "LLM4SZZ outperforms all baselines across three datasets, improving F1-score by 6.9% to 16.0% without significantly sacrificing recall.",
+            "confidence": 0.97
+          },
+          {
+            "id": "C2",
+            "statement": "LLM4SZZ improves precision over all baselines by 2.4% to 9.2% across the evaluated datasets.",
+            "direction": "improves",
+            "metric_names": [
+              "Precision"
+            ],
+            "evidence_quote": "with an increase in precision from 2.4% to 9.2%.",
+            "confidence": 0.96
+          },
+          {
+            "id": "C3",
+            "statement": "LLM4SZZ identifies bug-inducing commits that baselines miss, accounting for 7.8%, 7.4%, and 2.5% of total bug-inducing commits across the three datasets, respectively.",
+            "direction": "improves",
+            "metric_names": [
+              "identified bug-inducing commits"
+            ],
+            "evidence_quote": "accounting for 7.8%, 7.4% and 2.5% of the total bug-inducing commits across three datasets, respectively.",
+            "confidence": 0.9
+          },
+          {
+            "id": "C4",
+            "statement": "LLM4SZZ has more consistent cross-dataset performance; even in the worst case, it outperforms other baselines by at least 6.9% in F1-score.",
+            "direction": "improves",
+            "metric_names": [
+              "F1-score"
+            ],
+            "evidence_quote": "In the worst scenario, it can still outperform other baselines by 6.9% in F1-score.",
+            "confidence": 0.92
+          },
+          {
+            "id": "C5",
+            "statement": "LLM4SZZ improves precision and F1-score without substantial recall loss, achieving higher recall than all baselines except B-SZZ in all three datasets.",
+            "direction": "improves",
+            "metric_names": [
+              "Precision",
+              "F1-score",
+              "Recall"
+            ],
+            "evidence_quote": "LLM4SZZ improves both precision and F1-score without a substantial sacrifice in recall. In all three datasets, LLM4SZZ achieves a higher recall than all other baselines, except for the B-SZZ algorithm.",
+            "confidence": 0.93
+          }
+        ],
+        "metrics": [],
+        "overall_conclusion": null,
+        "comparable_notes": null,
+        "cache_hit": true
+      },
+      "agent": {
+        "status": "ok",
+        "run_dir": "~/ai_scientist_inputs/ISSTA-2025-009_improving_bug_inducing_commit_identifica/workspace/evoscientist_2026-09-24_13-19-48",
+        "claims": [
+          {
+            "id": "A1",
+            "statement": "CAL-SZZ improves F1 and recall on DS_LINUX top-1 relative to LLM4SZZ official, raising F1 from 0.588 to 0.597 and recall by +2.3pp.",
+            "direction": "improves",
+            "metric_names": [
+              "f1_score",
+              "recall"
+            ],
+            "evidence_quote": "On DS_LINUX (1,500 commits), CAL-SZZ raises F1 from 0.588 to 0.597 and recall by +2.3pp",
+            "confidence": 0.95
+          },
+          {
+            "id": "A2",
+            "statement": "At matched recall on DS_LINUX, CAL-SZZ improves precision by +1.7pp from 0.628 to 0.645 over LLM4SZZ.",
+            "direction": "improves",
+            "metric_names": [
+              "precision"
+            ],
+            "evidence_quote": "at matched recall improves precision by +1.7pp (0.628 to 0.645)",
+            "confidence": 0.9
+          },
+          {
+            "id": "A3",
+            "statement": "CAL-SZZ's PR curve reaches an F1 of 0.610 on DS_LINUX, +2.2pp above LLM4SZZ's point.",
+            "direction": "improves",
+            "metric_names": [
+              "f1_score"
+            ],
+            "evidence_quote": "best F1 0.610 (+2.2pp)",
+            "confidence": 0.9
+          },
+          {
+            "id": "A4",
+            "statement": "On DS_GITHUB, CAL-SZZ top-1 F1 is lower than LLM4SZZ official F1.",
+            "direction": "degrades",
+            "metric_names": [
+              "f1_score"
+            ],
+            "evidence_quote": "on DS_GITHUB it loses",
+            "confidence": 0.85
+          },
+          {
+            "id": "A5",
+            "statement": "On DS_APACHE, CAL-SZZ top-1 F1 matches LLM4SZZ official F1.",
+            "direction": "no_difference",
+            "metric_names": [
+              "f1_score"
+            ],
+            "evidence_quote": "on DS_APACHE it matches",
+            "confidence": 0.85
+          },
+          {
+            "id": "A6",
+            "statement": "Statement support is the strongest single ablation signal on DS_LINUX, while the recency prior alone is weakest.",
+            "direction": "improves",
+            "metric_names": [
+              "f1_score"
+            ],
+            "evidence_quote": "Statement support is the strongest single signal; the recency prior alone is weakest",
+            "confidence": 0.85
+          },
+          {
+            "id": "A7",
+            "statement": "In s1-fallback cases, statement support beats the latest-commit prior by +6pp on Linux and +20pp on GitHub in top-1 accuracy.",
+            "direction": "improves",
+            "metric_names": [
+              "top1_accuracy"
+            ],
+            "evidence_quote": "In s1-fallback cases statement support beats the latest-commit prior by +6pp (Linux) to +20pp (GitHub) top-1 accuracy",
+            "confidence": 0.8
+          }
+        ],
+        "metrics": [
+          {
+            "name": "DS_LINUX precision",
+            "value": 0.620594,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "DS_LINUX top-1 micro-averaged",
+            "is_sota_or_best": false,
+            "baseline_name": "LLM4SZZ official precision",
+            "baseline_value": 0.6277004965548231,
+            "evidence_quote": "DS_LINUX precision 0.620594; LLM4SZZ official precision 0.6277004965548231",
+            "confidence": 0.95
+          },
+          {
+            "name": "DS_LINUX recall",
+            "value": 0.574904,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "DS_LINUX top-1 micro-averaged",
+            "is_sota_or_best": true,
+            "baseline_name": "LLM4SZZ official recall",
+            "baseline_value": 0.5522833973538198,
+            "evidence_quote": "DS_LINUX recall 0.574904; LLM4SZZ official recall 0.5522833973538198",
+            "confidence": 0.95
+          },
+          {
+            "name": "DS_LINUX F1",
+            "value": 0.596876,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "DS_LINUX top-1 micro-averaged",
+            "is_sota_or_best": true,
+            "baseline_name": "LLM4SZZ official F1",
+            "baseline_value": 0.5875797178851542,
+            "evidence_quote": "DS_LINUX F1 0.596876; LLM4SZZ official F1 0.5875797178851542",
+            "confidence": 0.95
+          },
+          {
+            "name": "DS_LINUX precision at matched recall",
+            "value": 0.645,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "DS_LINUX matched recall",
+            "is_sota_or_best": true,
+            "baseline_name": "LLM4SZZ official precision",
+            "baseline_value": 0.628,
+            "evidence_quote": "precision 0.645 at matched recall (+1.7pp)",
+            "confidence": 0.9
+          },
+          {
+            "name": "DS_LINUX recall at matched precision",
+            "value": 0.572,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "DS_LINUX matched precision",
+            "is_sota_or_best": true,
+            "baseline_name": "LLM4SZZ official recall",
+            "baseline_value": 0.552,
+            "evidence_quote": "recall 0.572 at matched precision (+2.0pp)",
+            "confidence": 0.9
+          },
+          {
+            "name": "DS_LINUX PR curve best F1",
+            "value": 0.609668,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "DS_LINUX PR curve",
+            "is_sota_or_best": true,
+            "baseline_name": "LLM4SZZ official F1",
+            "baseline_value": 0.5875797178851542,
+            "evidence_quote": "DS_LINUX pr_curve_best_f1 0.609668",
+            "confidence": 0.95
+          },
+          {
+            "name": "DS_GITHUB precision",
+            "value": 0.633238,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "DS_GITHUB top-1 micro-averaged",
+            "is_sota_or_best": false,
+            "baseline_name": "LLM4SZZ official precision",
+            "baseline_value": 0.6706007615415294,
+            "evidence_quote": "DS_GITHUB precision 0.633238; LLM4SZZ official precision 0.6706007615415294",
+            "confidence": 0.95
+          },
+          {
+            "name": "DS_GITHUB recall",
+            "value": 0.610497,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "DS_GITHUB top-1 micro-averaged",
+            "is_sota_or_best": false,
+            "baseline_name": "LLM4SZZ official recall",
+            "baseline_value": 0.6261510128913443,
+            "evidence_quote": "DS_GITHUB recall 0.610497; LLM4SZZ official recall 0.6261510128913443",
+            "confidence": 0.95
+          },
+          {
+            "name": "DS_GITHUB F1",
+            "value": 0.62166,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "DS_GITHUB top-1 micro-averaged",
+            "is_sota_or_best": false,
+            "baseline_name": "LLM4SZZ official F1",
+            "baseline_value": 0.6476131253523452,
+            "evidence_quote": "DS_GITHUB F1 0.62166; LLM4SZZ official F1 0.6476131253523452",
+            "confidence": 0.95
+          },
+          {
+            "name": "DS_GITHUB PR curve best F1",
+            "value": 0.634006,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "DS_GITHUB PR curve",
+            "is_sota_or_best": false,
+            "baseline_name": "LLM4SZZ official F1",
+            "baseline_value": 0.6476131253523452,
+            "evidence_quote": "DS_GITHUB pr_curve_best_f1 0.634006",
+            "confidence": 0.95
+          },
+          {
+            "name": "DS_APACHE precision",
+            "value": 0.599156,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "DS_APACHE top-1 micro-averaged",
+            "is_sota_or_best": false,
+            "baseline_name": "LLM4SZZ official precision",
+            "baseline_value": 0.6103784687742708,
+            "evidence_quote": "DS_APACHE precision 0.599156; LLM4SZZ official precision 0.6103784687742708",
+            "confidence": 0.95
+          },
+          {
+            "name": "DS_APACHE recall",
+            "value": 0.40113,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "DS_APACHE top-1 micro-averaged",
+            "is_sota_or_best": true,
+            "baseline_name": "LLM4SZZ official recall",
+            "baseline_value": 0.3983050847457627,
+            "evidence_quote": "DS_APACHE recall 0.40113; LLM4SZZ official recall 0.3983050847457627",
+            "confidence": 0.95
+          },
+          {
+            "name": "DS_APACHE F1",
+            "value": 0.480541,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "DS_APACHE top-1 micro-averaged",
+            "is_sota_or_best": false,
+            "baseline_name": "LLM4SZZ official F1",
+            "baseline_value": 0.4820463736518718,
+            "evidence_quote": "DS_APACHE F1 0.480541; LLM4SZZ official F1 0.4820463736518718",
+            "confidence": 0.95
+          },
+          {
+            "name": "DS_APACHE PR curve best F1",
+            "value": 0.472362,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "DS_APACHE PR curve",
+            "is_sota_or_best": false,
+            "baseline_name": "LLM4SZZ official F1",
+            "baseline_value": 0.4820463736518718,
+            "evidence_quote": "DS_APACHE pr_curve_best_f1 0.472362",
+            "confidence": 0.95
+          }
+        ],
+        "overall_conclusion": "CAL-SZZ converts LLM4SZZ's hard candidate selection into a tunable confidence-calibrated decision using cross-run confirmation, statement-level blame support, and recency. It improves F1 and recall on DS_LINUX and provides a precision-recall operating curve, with smaller or absent gains on DS_GITHUB and DS_APACHE.",
+        "sources": {
+          "metrics_path": "results/metrics.json",
+          "paper_tex_path": "paper/main.tex"
+        },
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 9692,
+            "completion_tokens_details": {
+              "reasoning_tokens": 6935
+            },
+            "prompt_tokens": 3284,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 12976
+          },
+          "attempt": 0
+        }
+      },
+      "comparison": {
+        "status": "ok",
+        "claim_alignment": [
+          {
+            "original_claim_id": "C1",
+            "agent_claim_id": "A1",
+            "label": "incomparable",
+            "rationale": "C1 claims LLM4SZZ improves F1 over all baselines across three datasets, whereas A1 reports CAL-SZZ improvement over LLM4SZZ official only on DS_LINUX; different method and comparison protocol."
+          },
+          {
+            "original_claim_id": "C2",
+            "agent_claim_id": "A2",
+            "label": "incomparable",
+            "rationale": "C2 is about LLM4SZZ precision gains over all baselines, while A2 reports CAL-SZZ precision improvement at matched recall on DS_LINUX relative to LLM4SZZ; not the same original comparison."
+          },
+          {
+            "original_claim_id": "C3",
+            "agent_claim_id": null,
+            "label": "incomparable",
+            "rationale": "C3 concerns novel bug-inducing commits missed by baselines; the agent does not evaluate that original comparison and instead reports CAL-SZZ versus LLM4SZZ official metrics."
+          },
+          {
+            "original_claim_id": "C4",
+            "agent_claim_id": "A3",
+            "label": "incomparable",
+            "rationale": "C4 claims worst-case LLM4SZZ F1 exceeds all baselines by at least 6.9%; A3 reports a DS_LINUX PR-curve F1 gain for CAL-SZZ over LLM4SZZ, not original baseline comparisons."
+          },
+          {
+            "original_claim_id": "C5",
+            "agent_claim_id": "A1",
+            "label": "incomparable",
+            "rationale": "C5 compares LLM4SZZ recall and precision/F1 against all baselines except B-SZZ; A1 reports CAL-SZZ recall/F1 changes relative to LLM4SZZ official, so the protocol differs."
+          }
+        ],
+        "metric_alignment": [
+          {
+            "original_metric": "F1-score",
+            "agent_metric": "DS_LINUX F1; DS_GITHUB F1; DS_APACHE F1; DS_LINUX PR curve best F1",
+            "comparable": false,
+            "original_value": null,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Agent F1 values compare CAL-SZZ to LLM4SZZ official, not LLM4SZZ to the original baselines."
+          },
+          {
+            "original_metric": "Precision",
+            "agent_metric": "DS_LINUX precision; DS_LINUX precision at matched recall; DS_GITHUB precision; DS_APACHE precision",
+            "comparable": false,
+            "original_value": null,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Precision is assessed for CAL-SZZ against LLM4SZZ official under different settings, not for original LLM4SZZ against all baselines."
+          },
+          {
+            "original_metric": "Recall",
+            "agent_metric": "DS_LINUX recall; DS_GITHUB recall; DS_APACHE recall; DS_LINUX recall at matched precision",
+            "comparable": false,
+            "original_value": null,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Agent recall values are CAL-SZZ versus LLM4SZZ official, not the original recall comparison against baselines except B-SZZ."
+          },
+          {
+            "original_metric": "identified bug-inducing commits",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": null,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "The agent does not report counts or percentages of additional bug-inducing commits identified relative to original baselines."
+          }
+        ],
+        "summary": {
+          "direction_consistency": "same_direction_incomparable",
+          "consistent_claim_ratio": 0.0,
+          "has_comparable_metrics": false,
+          "sota_improvement_summary": "N/A: agent does not compare original LLM4SZZ against the original baselines; it compares a derivative CAL-SZZ method against LLM4SZZ official.",
+          "overall_alignment_score": 0.4,
+          "score_rationale": "All original LLM4SZZ-vs-baselines claims are incomparable because the agent evaluates a derivative CAL-SZZ method against LLM4SZZ official, though it addresses the same SZZ research problem."
+        },
+        "warnings": [
+          "Original paper metrics list is empty; metric_alignment was inferred from metric names mentioned in original claims.",
+          "Agent run uses CAL-SZZ comparisons against LLM4SZZ official rather than the original all-baseline protocol.",
+          "DS_LINUX gains should not be interpreted as confirmation of original LLM4SZZ SOTA claims."
+        ],
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 7624,
+            "completion_tokens_details": {
+              "reasoning_tokens": 6424
+            },
+            "prompt_tokens": 4252,
+            "prompt_tokens_details": {
+              "cached_tokens": 4096
+            },
+            "total_tokens": 11876
+          },
+          "attempt": 2
+        }
+      },
+      "overall_alignment_score": 0.4,
+      "direction_consistency": "same_direction_incomparable"
+    },
+    "experiment_analysis": {
+      "run_dir": "~/ai_scientist_inputs/ISSTA-2025-009_improving_bug_inducing_commit_identifica/workspace/evoscientist_2026-09-24_13-19-48",
+      "task_dir": "~/ai_scientist_inputs/ISSTA-2025-009_improving_bug_inducing_commit_identifica",
+      "status": "ok",
+      "metrics_path": "results/metrics.json",
+      "experiment_success": {
+        "status": "ok",
+        "success": true,
+        "metrics_path": "results/metrics.json",
+        "absolute_metrics_path": "~/ai_scientist_inputs/ISSTA-2025-009_improving_bug_inducing_commit_identifica/workspace/evoscientist_2026-09-24_13-19-48/results/metrics.json",
+        "checks": {
+          "has_results_file": true,
+          "non_stub": true,
+          "numeric_leaf_count": 27,
+          "min_numeric_ok": true
+        },
+        "manifest_hints": {
+          "status": {
+            "research_request": true,
+            "plan": true,
+            "metrics": true,
+            "paper_tex": true,
+            "paper_pdf": false,
+            "readme": true
+          },
+          "returncode": 0,
+          "benchmark_complete": true,
+          "artifacts_metrics_flag": false
+        },
+        "warnings": [],
+        "suspicious_values": [],
+        "note": "success=true requires substantive results (framework-aware path) with >=3 numeric leaves. Supports metrics.json, results.json, experiment_results.txt, etc. Manifest returncode/benchmark_complete are soft warnings only."
+      },
+      "idea_code_consistency": {
+        "status": "ok",
+        "idea_path": "idea.md",
+        "code_files": [
+          "project/run_experiments.py"
+        ],
+        "score_scale": "1-5",
+        "score": 4.0,
+        "label": "strong",
+        "justification": "The code implements CAL-SZZ's core calibration layer: cached candidate features, weighted votes/support/recency scoring, default and leave-one-dataset-out calibration, top-1 metrics, LLM",
+        "matched_elements": [],
+        "missing_or_divergent_elements": [],
+        "rubric": "Strong alignment: code largely implements the idea's method and evaluation; only minor omissions or declared simplifications.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 997,
+            "completion_tokens_details": {
+              "reasoning_tokens": 943
+            },
+            "prompt_tokens": 2264,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 3261
+          },
+          "attempt": 0
+        }
+      },
+      "setup_coverage": {
+        "status": "ok",
+        "overall_coverage": 0.6666666666666666,
+        "datasets": {
+          "gold_count": 3,
+          "hit_count": 3,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "DS_LINUX",
+            "DS_GITHUB",
+            "DS_APACHE"
+          ],
+          "misses": []
+        },
+        "baselines": {
+          "gold_count": 7,
+          "hit_count": 0,
+          "miss_count": 7,
+          "coverage": 0.0,
+          "hits": [],
+          "misses": [
+            "B-SZZ",
+            "AG-SZZ",
+            "MA-SZZ",
+            "L-SZZ",
+            "R-SZZ",
+            "RA-SZZ",
+            "NeuralSZZ"
+          ]
+        },
+        "metrics": {
+          "gold_count": 3,
+          "hit_count": 3,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "Precision",
+            "Recall",
+            "F1-score"
+          ],
+          "misses": []
+        },
+        "agent_protocol": {},
+        "gold_protocol": {},
+        "dataset_dirs": [
+          "dataset_candidate"
+        ],
+        "flags": {
+          "weaker_baseline_suspected": true,
+          "weak_protocol": [],
+          "synthetic_data": "unexpected_synthetic_or_local_only_data",
+          "gold_allows_synthetic": false
+        },
+        "gold_sources": [
+          "~/ai_scientist_inputs/ISSTA-2025-009_improving_bug_inducing_commit_identifica/task.md",
+          "~/ai_scientist_inputs/ISSTA-2025-009_improving_bug_inducing_commit_identifica/metadata.json"
+        ],
+        "note": "Coverage is name/alias matching against task.md Datasets/Baselines/Metrics. weak_protocol flags large reductions in trials/timeout vs Constraints. Synthetic corpora are not penalized when the task itself requires synthesis."
+      },
+      "ablation_significance": {
+        "status": "ok",
+        "idea_path": "idea.md",
+        "significance_signals_rule_based": {
+          "signals": [],
+          "artifact_paths": [],
+          "has_any_significance_artifact": false
+        },
+        "evidence_format": "raw_json",
+        "study_type": null,
+        "components": [],
+        "ablation_coverage_score": null,
+        "overall_ablation_ok": null,
+        "overall_significance_ok": null,
+        "summary": "",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 3500,
+            "completion_tokens_details": {
+              "reasoning_tokens": 3500
+            },
+            "prompt_tokens": 3612,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 7112
+          },
+          "attempt": 0
+        }
+      },
+      "results_paper_consistency": {
+        "status": "ok",
+        "paper_tex": "paper/main.tex",
+        "paper_kind": "paper_tex",
+        "results_format": "raw_json",
+        "digest_hint": {
+          "unfavorable_count": 0,
+          "trial_fail_count": 0,
+          "trial_success_count": 0,
+          "metadata": {}
+        },
+        "score_scale": "1-5",
+        "method": "Direct LLM comparison: agent's FINAL results artifact (metrics.json summary) vs paper Results/Discussion/Conclusion. Interim failed runs are NOT evidence unless still present in the final metrics file.",
+        "score": 4.0,
+        "consistency_label": null,
+        "hiding_unfavorable_suspected": false,
+        "hiding_confidence": null,
+        "justification": "",
+        "supported_claims": [],
+        "unsupported_or_overstated_claims": [],
+        "numeric_mismatches": [],
+        "unfavorable_in_final_results": [],
+        "unfavorable_acknowledged_in_paper": [],
+        "unfavorable_missing_from_paper": [],
+        "rubric": "Mostly consistent: reported conclusions track the metrics; negative/failed settings are acknowledged with only minor gaps.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 1896,
+            "completion_tokens_details": {
+              "reasoning_tokens": 1796
+            },
+            "prompt_tokens": 2764,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 4660
+          },
+          "attempt": 3
+        }
+      },
+      "scores": {
+        "experiment_success": true,
+        "idea_code_score": 4.0,
+        "setup_coverage": 0.6666666666666666,
+        "ablation_coverage_score": null,
+        "overall_ablation_ok": null,
+        "overall_significance_ok": null,
+        "results_paper_score": 4.0,
+        "hiding_unfavorable_suspected": false
+      },
+      "notes": [
+        "Axes 1,2,3,4,6 in experiment_analysis (figures excluded).",
+        "setup_coverage matches task.md Datasets/Baselines/Metrics; weak_protocol flags reductions vs Constraints.",
+        "Axis 6: final normalized results vs paper; interim run logs not used as ground truth."
+      ]
+    },
+    "literature_review": {
+      "run_dir": "~/ai_scientist_inputs/ISSTA-2025-009_improving_bug_inducing_commit_identifica/workspace/evoscientist_2026-09-24_13-19-48",
+      "task_dir": "~/ai_scientist_inputs/ISSTA-2025-009_improving_bug_inducing_commit_identifica",
+      "status": "ok",
+      "as_of_year": 2026,
+      "agent_ref_count": 5,
+      "sources": [
+        {
+          "path": "~/ai_scientist_inputs/ISSTA-2025-009_improving_bug_inducing_commit_identifica/workspace/evoscientist_2026-09-24_13-19-48/paper/main.tex",
+          "kind": "thebibliography"
+        }
+      ],
+      "collection_audit": {
+        "cited_keys_count": 5,
+        "filter_mode": "paper_cite_keys",
+        "bib_total_before_filter": 0,
+        "bib_after_filter": 0,
+        "uncited_bib_skipped": 0,
+        "cited_keys_sample": [
+          "figshare",
+          "llm4szz",
+          "neural",
+          "rosa",
+          "szz"
+        ],
+        "thebibliography_after_filter": 5,
+        "agent_ref_count": 5
+      },
+      "fabrication": {
+        "status": "ok",
+        "scholarly_count": 5,
+        "verified_count": 3,
+        "fake_count": 0,
+        "lookup_failed_count": 2,
+        "insufficient_metadata_count": 0,
+        "non_paper_count": 0,
+        "fabrication_rate": 0.0,
+        "items": [
+          {
+            "title": "When do changes induce fixes? MSR 2005",
+            "doi": "10.1145/1082983.1083147",
+            "arxiv_id": "",
+            "year": 2005,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "When do changes induce fixes?",
+            "resolved_year": 2005,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "szz",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "Evaluating SZZ Implementations Through a Developer-Informed Oracle",
+            "doi": "",
+            "arxiv_id": "",
+            "year": 2021,
+            "status": "verified",
+            "matched_via": "arxiv_title",
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "rosa",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "Neural-SZZ (CodeBERT + HAN + RankNet)",
+            "doi": "",
+            "arxiv_id": "",
+            "year": null,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated.",
+              "Saw 1 conclusive miss(es) mixed with 1 API error(s)."
+            ],
+            "cite_key": "neural",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "LLM4SZZ: Enhancing SZZ algorithm with context-enhanced assessment on large language models",
+            "doi": "10.1145/3728885",
+            "arxiv_id": "2504.01404",
+            "year": 2025,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "LLM4SZZ: Enhancing SZZ Algorithm with Context-Enhanced Assessment on Large Language Models",
+            "resolved_year": 2025,
+            "notes": [],
+            "cache_hit": true,
+            "cite_key": "llm4szz",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "Figshare DOI 10.6084/m9.figshare.27418236.v1",
+            "doi": "10.6084/m9.figshare.27418236.v1",
+            "arxiv_id": "",
+            "year": null,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated.",
+              "Saw 2 conclusive miss(es) mixed with 1 API error(s)."
+            ],
+            "cite_key": "figshare",
+            "source_kind": "thebibliography"
+          }
+        ],
+        "cache_path": "~/ai_scientist_evals/ISSTA-2025-009_improving_bug_inducing_commit_identifica/reference_verify_cache.json",
+        "override_path": "~/ai_scientist_evals/ISSTA-2025-009_improving_bug_inducing_commit_identifica/reference_verify_overrides.json",
+        "note": "fabrication_rate = fake / (verified + fake). lookup_failed (API errors) and insufficient_metadata are excluded and retried or skipped. GitHub/docs/tool URLs are non_paper and excluded from the rate. To manually correct a false negative, edit reference_verify_overrides.json (key=normalized title / doi / cite_key; value=\"verified\" or a result dict), then re-run."
+      },
+      "coverage": {
+        "status": "ok",
+        "gold_source": "~/ai_scientist_inputs/ISSTA-2025-009_improving_bug_inducing_commit_identifica/mineru_sections.json",
+        "gold_count": 66,
+        "gold_is_original_paper_references": true,
+        "gold_is_openalex_subset": false,
+        "agent_count": 5,
+        "intersection_size": 2,
+        "recall": 0.030303030303030304,
+        "precision": 0.4,
+        "matched_gold_keys": [
+          "lyu2023evaluating",
+          "mineru_ref_18"
+        ],
+        "primary_metric": "recall",
+        "note": "Primary metric is recall against the original paper bibliography (titles from mineru_sections.json REFERENCES; related_work.json used only to enrich DOI/year or as fallback if mineru titles are empty). Denominator = |original paper references|. Precision is secondary (agent may cite valid extra papers)."
+      },
+      "recency": {
+        "status": "ok",
+        "dated_count": 3,
+        "unknown_year_count": 2,
+        "year_histogram": {
+          "2005": 1,
+          "2021": 1,
+          "2025": 1
+        },
+        "windows": {
+          "3": {
+            "years": 3,
+            "cutoff_year_inclusive": 2023,
+            "recent_count": 1,
+            "recent_ratio": 0.3333333333333333
+          },
+          "5": {
+            "years": 5,
+            "cutoff_year_inclusive": 2021,
+            "recent_count": 2,
+            "recent_ratio": 0.6666666666666666
+          }
+        }
+      },
+      "scores": {
+        "fabrication_rate": 0.0,
+        "coverage_recall": 0.030303030303030304,
+        "coverage_precision": 0.4,
+        "recency_ratio_3y": 0.3333333333333333,
+        "recency_ratio_5y": 0.6666666666666666
+      }
+    }
+  },
+  "scores": {
+    "completeness": {
+      "complete": true,
+      "overall_score": 0.8521,
+      "required_score": 1.0,
+      "bonus_score": 0.13
+    },
+    "peer_review": {
+      "status": "ok",
+      "optional": false,
+      "overall_score": 5.8,
+      "score_scale": "1-10",
+      "scoring_method": "paperreview_apr"
+    },
+    "idea_generation": {
+      "status": "ok",
+      "overall_score": 3.0,
+      "dimensions": {
+        "novelty": 3.0,
+        "feasibility": 3.0,
+        "clarity": 3.0
+      },
+      "novelty_category": "Incremental",
+      "solution_space_status": "ok"
+    },
+    "alignment": {
+      "status": "ok",
+      "direction_consistency": "same_direction_incomparable",
+      "overall_alignment_score": 0.4
+    },
+    "literature_review": {
+      "fabrication_rate": 0.0,
+      "coverage_recall": 0.030303030303030304,
+      "coverage_precision": 0.4,
+      "recency_ratio_3y": 0.3333333333333333,
+      "recency_ratio_5y": 0.6666666666666666
+    },
+    "experiment_analysis": {
+      "experiment_success": true,
+      "idea_code_score": 4.0,
+      "setup_coverage": 0.6666666666666666,
+      "ablation_coverage_score": null,
+      "overall_ablation_ok": null,
+      "overall_significance_ok": null,
+      "results_paper_score": 4.0,
+      "hiding_unfavorable_suspected": false
+    }
+  },
+  "fair_scores": {
+    "applicable_axes": [
+      "completeness",
+      "idea_generation",
+      "peer_review",
+      "alignment",
+      "literature_review",
+      "experiment_analysis"
+    ],
+    "skipped_axes": [],
+    "fair_mean_0_1": 0.6419,
+    "note": "fair_mean_0_1 averages only applicable axes; optional peer review and framework-inapplicable literature are excluded from the denominator."
+  },
+  "evals_root": "~/ai_scientist_evals",
+  "claims_cache": "~/ai_scientist_evals/ISSTA-2025-009_improving_bug_inducing_commit_identifica/original_claims.json",
+  "solution_space_cache": "~/ai_scientist_evals/ISSTA-2025-009_improving_bug_inducing_commit_identifica/solution_space.json"
+}

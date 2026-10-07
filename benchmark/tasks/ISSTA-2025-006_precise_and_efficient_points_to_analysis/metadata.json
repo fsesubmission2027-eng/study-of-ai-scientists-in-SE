@@ -1,0 +1,182 @@
+{
+  "id": "ISSTA-2025-006",
+  "paper_id": "eb4e64aa7bc1f4b85a979119bd25659746077093",
+  "title": "BinDSA: Efficient, Precise Binary-Level Pointer Analysis with Context-Sensitive Heap Reconstruction",
+  "abstract": "Pointer analysis serves as a fundamental component in the realm of binary code reverse engineering. It can be leveraged to reconstruct a binary program's call graph and can be further applied to various security analyses. However, the absence of symbols and type information within binary code presents formidable challenges to effective pointer analysis. Existing works often apply approximations when performing pointer analysis on binary. Nevertheless, these methods tend to be inefficient and produce numerous false positive targets. In this paper, we propose BinDSA, a novel model tailored for binary pointer analysis. BinDSA prioritizes precision and efficiency over soundness. It is field- and context-sensitive, employing unification-based techniques and reconstructing a context-sensitive heap. It jointly recovers data structure and points-to relations so that precision can be further improved. In evaluation, we demonstrate that BinDSA is 5 times more efficient and notably more precise than the current state-of-the-art technique without significantly sacrificing soundness. We also apply BinDSA on CVE reachability analysis and vulnerability detection, demonstrating its effective application to security tasks.",
+  "year": 2025,
+  "citation_count": 5,
+  "venue": "ACM SIGSOFT International Symposium on Software Testing and Analysis (ISSTA 2025)",
+  "venue_short": "ISSTA 2025",
+  "authors": [
+    "L. Gao",
+    "H. Yin"
+  ],
+  "pdf_url": "",
+  "paper_url": "https://www.semanticscholar.org/paper/eb4e64aa7bc1f4b85a979119bd25659746077093",
+  "paper_type": "methodology",
+  "award": "ACM SIGSOFT Distinguished Paper Award",
+  "subfield_label": "Program Analysis & Verification",
+  "introduction": "Pointer analysis is essential in binary code reverse engineering. It is the foundation of reconstructing a complete call graph and value flow of a given binary program. Recovering points-to relations precisely and efficiently holds immense value for various downstream analyses such as binary code diffing [14,16,27], static taint analysis [11,15], and bug detection [21,22,42].\n\nHowever, pointer analysis on binary code is very challenging. When dealing with stripped binaries, source-level information such as variables and types is lost. Consequently, it becomes imperative to pre-identify the variable-like entities in order to facilitate subsequent static analysis of the binaries. Additionally, since types are missing, every register or memory location can potentially be a pointer, and the presence of type casts in binary code introduces additional complexities. Moreover, memory can be accessed indirectly through pointer arithmetics in binary code, further complicating the analysis process.\n\nExisting works that focus on pointer analysis or indirect call target recovery indicate the challenge of simultaneously attaining precision, soundness, and efficiency. Arity-based approaches such as TypeArmor [41] and τ CFI [30] treat all functions as potential targets and filter out false positive function targets by checking the compatibility of parameters (e.g., number of parameters) between the call sites and potential targets. They are sound and efficient but suffer low precision. Deeplearning-based approaches such as Callee [47] leverages deep neural networks to learn patterns concerning indirect calls to predict indirect call targets. Callee is promising in terms of precision and efficiency, but it is unsound. There also exists a path-sampling-based approach BDA [46] that leverages a path sampling algorithm to extract and combine the memory dependency among each path to infer the points-to relations. It is more precise but unsound since the algorithm cannot cover all paths.\n\nAnother line of work employs program-analysis-based approaches [7,23,24] that conduct sophisticated static analysis (listed in Table 1). Value-set Analysis [7] (VSA) identifies potential values stored at abstract locations (a-locs) to determine pointer targets. However, it is imprecise and inefficient due to imprecise tracking of pointer arithmetic. BPA [23] and BinPointer [24] address the limitations of VSA by employing a block memory model to avoid pointer arithmetic within the block. However, some of their design decisions compromise precision. BinPointer enhances BPA by tracking 0-based dereferences. However, its functionality remains constrained, as non-0-based dereferences revert to block memory modeling. In general, BPA and BinPointer are sound but not precise and efficient enough. More discussions can be found in §2.2. Considering the difficulties in achieving precision, soundness, and efficiency simultaneously, we propose to prioritize precision and efficiency rather than soundness since complete soundness is not always required in security tasks. Precision is more crucial because it minimizes false positives and significantly reduces the workload of subsequent analyses. To this end, we propose a soundy [33] approach that sacrifices soundness only in limited situations (discussed in §7) to ensure high precision.\n\nSpecifically, we propose a program-analysis-based approach with several enhancements. First, we jointly recover data structure and points-to relations so that they can enhance each other. The recovery of data structures contributes to a field-sensitive pointer analysis, thereby increasing precision. Conversely, the points-to relations enable more complete type propagation during the recovery of data structures. Second, we conduct context-sensitive analysis and model the heap region to be context-sensitive (a.k.a., heap cloning) to further elevate precision. Moreover, we adopt a unification-based algorithm (a.k.a., Steensgaard's style [36]) to enhance efficiency. To mitigate the inherent imprecision associated with unification-based algorithms, we adopt a conservative strategy during the unification process. Specifically, we leverage the recovered type information as a filter to systematically eliminate conflicts. While this approach sacrifices soundness to some extent, it is necessary to ensure greater precision through conflict filtering.\n\nTo validate the feasibility of our approach, we implement a system prototype called BinDSA. Our evaluation results show that BinDSA achieves an average precision improvement of 4.9% and 14.9% over BinPointer in global and heap object access evaluations, and a 25% improvement over BPA in resolving indirect call targets, as reflected in profiling-based evaluation results. Additionally, BinDSA successfully recovers over 90% of memory accesses and indirect call targets. Furthermore, BinDSA demonstrates strong efficiency in both processing speed and memory usage. Specifically, it requires only 26 minutes and 29GB of memory to analyze 403.gcc from the SPEC2006 benchmark suite, whereas BPA takes approximately seven hours on a machine with 350GB of RAM. To further illustrate its effectiveness, we conduct a case study on the CVE reachability problem, demonstrating BinDSA 's ability to identify unreachable vulnerable functions within software programs. Additionally, we successfully apply BinDSA to detect use-after-free and double-free vulnerabilities in the Juliet Test Suite [1].\n\nContributions. This paper makes the following contributions:\n\n• We introduce BinDSA, a novel algorithm that combines field-and context-sensitive unificationbased pointer analysis (with heap cloning) and the data structure type recovery to tackle the challenges of binary pointer analysis. • We evaluate BinDSA on SPEC 2006 benchmarks and real-world programs and show that it outperforms existing state-of-the-art solutions in both precision and efficiency without sacrificing soundness significantly. • We conduct case studies showcasing the effectiveness of BinDSA in CVE reachability analysis and vulnerability detection.",
+  "experiment": "In this section, we start by describing the experimental setup. Then we assess the performance of BinDSA by measuring its precision and recall in recovering memory access targets. Next, we evaluate the application of BinDSA in indirect-call target recovery by examining the average indirect-call target (AICT) metric and the profiling-based precision and recall. Additionally, we evaluate the efficiency of BinDSA according to the execution time and memory consumption. Lastly, we demonstrate two case studies of BinDSA: one focused on CVE reachability analysis and the other on vulnerability detection.\n\nThe experiments are conducted on a server equipped with a Ryzen 3900X CPU running at 3.80 GHz with 12 cores, accompanied by 64 GB of memory and a 500 GB SSD. It is installed with GCC-9.2, Clang-13.0, and Java-11.0. Our analysis algorithms are implemented utilizing the APIs of Ghidra version 11.0.1.\n\nWe use the same dataset as the prior studies [23,24,47] and construct the SPEC2006's C benchmarks that contain indirect calls, along with five security-critical applications: thttpd-2.29, memcached-1.5.4, lighttpd-1.4.48, exim-4.89, and nginx-1.10. These binaries are compiled by GCC-9.2 with optimization level -O2. For testing SVF [37], we compile the source code using clang version 13.0 and then provide the resulting intermediate representations (IRs) to SVF for processing.\n\n6.1.2 Baselines. We compare our work with BinPointer [24] regarding pointer analysis results, and compare our indirect call recovery results with several state-of-the-art binary level solutions including BPA [23], BinPointer [24], and Callee [47]. We directly adopt their results from their papers since BPA and BinPointer are not open-sourced, while Callee is a deep-learning-based approach and a doc2vec model is missing in its repository. We also include a source code points-toanalysis framework SVF [37]. Specifically, we execute the sparse flow-sensitive pointer analysis algorithm [9,10] in SVF.\n\nWe first analyze the precision and soundness of the pointer analysis performed by BinDSA. In this experiment, we mainly compare with BinPointer [24] since it is much more precise than BPA and VSA according to their evaluation. Besides, we evaluate the same programs in SPEC2006 as BinPointer. Given the difficulty in obtaining ground truth for points-to relations, we adopt a similar evaluation approach as previous studies [24], leveraging profiling outcomes collected by Intel's Pin [29]. Moreover, we compare the collected runtime memory traces of benchmark programs with the memory access targets recovered by BinDSA to compute the precision and recall metrics. In order to compare them effectively, we follow the same approach as BinPointer to dynamically convert the memory access in runtime memory traces to an abstract location in the heap, stack, and global regions. Same as BinPointer, for an instruction i that accesses memory address a, we convert it to the form (i, b, o). Specifically, i is the memory access instruction, b is a block in heap, stack, or global, and o is the offset. Blocks in the heap are differentiated by allocation site. During the profiling, we record the allocation site, allocated address, and the size of the block to convert a into b and o. Blocks in the stack are represented by their stack frame (named according to the function name) and their offsets on the stack frame. We first map the accessed memory address a to the corresponding stack frame and offset by maintaining a call stack. Then the accessed offsets on the stack frame can be converted to b and o according to block partitions of the stack frame generated by BinDSA. Moreover, blocks in the global region are represented by the global memory addresses. Similar to stack objects, we leverage the partition generated by BinDSA to decide the b and o of an accessed address a. More implementation details of the Pin tool plugin can be found in the BinPointer [24] paper.\n\nWe then obtain the set of (i, b, o) triplets from the DSGraph generated after the top-down phase to compare with the profiling results. Specifically, during the local analysis phase, we record all the instructions that access a cell and the blocks that a DSNode represents. This information is propagated during the merging. After the top-down phase, we go over the Cells that are accessed by an instruction to print out the block information and the offset o can be calculated according to the field offset of a Cell. Then we calculate the precision and recall using the same metric as BinPointer. Note that our analysis is performed on high-level IR, thus some of the memory access instructions (especially the accesses to the stack) have been optimized out. Therefore, we only consider the instructions that are available on both the profiling results and the results of BinDSA. Additionally, as also mentioned in BinPointer, the profiling-based memory accesses are a subset of the ground truth. Therefore, in this experiment, the precision is underestimated, and the recall is overestimated.\n\nTable 3 presents the profiling-based precision of BinPointer and BinDSA. n/a in the table indicates there are no memory references for that memory block type. As shown, the precision of BinDSA is 4.9% and 14.9% higher than BinPointer for global and heap accesses. This improvement can be attributed, in part, to the expanded fieldtracking capabilities inherent to BinDSA compared to BinPointer. BinPointer only tracks 0-based dereferences so it falls back to block memory modeling and loses the field sensitivity for non-0-based dereferences (e.g., the example in Figure 1). One additional reason behind the efficacy of BinDSA lies in its implementation of heap cloning. For example, the precision of BinPointer is lower than BinDSA in hmmer on heap object since there is a wrapper function for malloc in the program, resulting in numerous heap objects sharing the same allocation site. It is noteworthy that our evaluation metric for heap access precision does not distinguish between heap objects originating from distinct calling contexts. However, the observed enhancements in precision facilitated by BinDSA can be attributed to its heap cloning approach. Table 4 presents the profiling-based recall of BinDSA. BinDSA reaches a recall rate of 97.8%, 95.3%, and 92.3% for stack, global, and heap accesses on average. Note that we omit the recall of BinPointer in this table as it maintains soundness. Several instances of unsoundness arise due to the failure to track pointer arithmetic or the inaccurate identification of block boundaries, leading to the loss of points-to relationships. Nevertheless, a holistic evaluation of both precision and recall reveals that BinDSA significantly improves precision while maintaining a satisfactory level of soundness.\n\n6.3 Indirect-Call Targets Recovery 6.3.1 AICT Comparison. We utilize the traditional metric AICT (average indirect-call targets) for measuring the precision of our recovered call graph and comparing it with the state-of-theart solutions. The results are shown in Table 5. Since we directly adopt the numbers of existing approaches from their paper, the programs we built are different and the total number of indirect call sites is slightly different. So we listed both the number of indirect call sites (denoted as iCallsites) and the AICT results in the table. Note that the #iCallsites are the same between BinDSA and SVF. It is also the same between BPA and BinPointer since they come from the same authors. The 482.sphinx3 program we built has no indirect call site, therefore we are unable to provide results for it. BinPointer only reports their results for 464.h264ref and nginx, thus data of other programs is unavailable. We also listed the number of solved indirect call sites of BinDSA which reflect the recall. The AICT we present for BinDSA is based only on the solved indirect call sites.\n\nAs shown, BinDSA has a significantly lower AICT compared to the existing approaches in most of the programs. For instance, it has a lower AICT than BPA on 401.bzip2 since it is field-sensitive. It is significantly more precise than BPA and BinPointer on 433.milc, 464.h264ref, and 445.gobmk because it is context-sensitive. Our heap cloning strategy is found effective on nginx because nginx encapsulates heap allocation into specific functions and heaps are allocated by calling these functions, which means heap objects cannot be differentiated solely by the allocation site. Moreover, our algorithm successfully filters out the incompatible type mergings in nginx that are caused by errors in the lifted IR. Besides, our strategy of filtering out incompatible callees also contributes to the lower AICT of our results. Regarding recall, BinDSA has recovered all the indirect call sites within all of the programs except for 400.perlbench, 403.gcc, nginx, and lighttpd. It is because the precision-focused design choices in BinDSA can sometimes compromise soundness. Many of the unsound cases are caused by failing to track the pointer arithmetic, which results in the loss of points-to relationships. BinDSA resolves fewer indirect call sites on nginx due to its conservative merging strategy and certain data structures in nginx incorporate a void * field designed to point to various types of data structures.\n\nWe also present the CDF distribution of indirect call sites based on the number of targets discovered by SVF in Figure 14, to examine the prevalence of complex indirect calls in the dataset. As shown, approximately 30% to 70% of indirect call sites in nginx, gcc, perlbench, and gobmk exhibit greater complexity, potentially invoking over 50 targets. After further analysis, we find that the recall of BinDSA in handling complex indirect call sites with over 50 potential targets is 100% for gobmk, 33% for nginx, 54% for gcc, and 87% for perlbench. A common scenario involves function pointers being stored in an array and invoked within a loop. BinDSA is equipped to handle this case effectively. However, there are cases in nginx where a single void * pointer references different data structures, each containing function pointers that may be invoked, resembling virtual calls in C++. These cases cannot be handled properly by BinDSA when the type-filtering strategy prevents merging, leading to a loss of recall. These identified targets are then considered as a reference to estimate the precision and recall of BinDSA. We adopt the same evaluation approach and metrics as BPA [23] when conducting this experiment. Specifically, we utilize the existing reference dataset in the SPEC CPU2006 benchmarks as the test cases and leverage the Pin tool to record the indirect targets at the runtime. Since these targets are a subset of the ground truth, the precision calculated based on it is lower than the real precision and the recall calculated is higher than the real recall, as also mentioned in BPA [23]. Note that we omit the 482.sphinx3 program since the program we built has no indirect call site.\n\nAs shown in Table 6, BinDSA achieves equal or higher precision than BPA across all cases. Besides, BinDSA reaches a 0.93 recall on average. It resolves all indirect call sites according to\n\nThe execution time and memory consumption results are presented in Table 7. We list all the reported numbers from the BPA and BinPointer paper. As shown, BinDSA exhibits notably reduced execution time and memory usage compared to BPA and BinPointer, especially for larger programs such as 403.gcc. Comparing the programs with reported results available both from BinDSA and BPA, BinDSA's average execution time is 5 times smaller than BPA, and memory consumption is 13 times smaller than BPA. This demonstrates that the unification-based aggregation strategy and the type filtering technique adopted in BinDSA have significantly improved the runtime and memory efficiency of points-to analysis.\n\n6.5 Case Study 6.5.1 CVE Reachability. We further conduct a case study on CVE reachability, showcasing the practical application of BinDSA. CVE reachability analysis allows security researchers to assess the potential impact of identified vulnerabilities within software systems so that they can prioritize their patching efforts effectively. It's worth noting that we prefer conducting this analysis on binaries, even when the library is open-source. This preference arises due to inherent limitations of source code level analysis, such as potential modifications by vendors and the presence of various configuration options influencing the produced binary. Therefore, relying solely on source code analysis may not always be reliable. Our analysis is on the Windows version of Zoom [5] (v5.9.7.3931), scrutinizing three vulnerabilities previously identified in the work of SigmaDiff [16], namely CVE-2020-13790, CVE-2021-38291, and CVE-2020-22037. Specifically, we first locate the vulnerable function of the CVE. Since the vulnerabilities reside in third-party libraries, the vulnerable functions are located within either turbojpeg.dll or avcodec-58.dll. Next, we run BinDSA on the two programs to generate the call graph, identifying API functions that will eventually call the vulnerable function. Then we check the reachability of these API functions in the other executables of Zoom in a similar manner. We continue this process iteratively until a main executable of Zoom is reached. However, pinpointing the precise resolution of this indirect call within tjLoadImage is challenging. Figure 15 provides the pseudocode outlining the functions related to resolving this indirect call. alloc_small is a function that allocates small memory objects for the library and it is responsible for managing memory resources efficiently. We extract and simplify the logic of memory allocation in this function. At line 3, it calls jpeg_get_small, which internally calls the malloc function to allocate a heap object and returns the pointer to it. In the end, alloc_small returns the pointer to the allocated heap object plus an offset. The jinit_read_ppm function calls the alloc_small function indirectly (at line 10) and the function pointer of start_input_ppm is assigned to a field of the allocated heap object (at line 11). This pointer is invoked at line 19 in tjLoadImage which eventually calls the vulnerable function. Since jpeg_get_small encapsulates the malloc function, differentiating heap objects solely by allocation site is not precise enough and BinDSA enables heap cloning to handle this. Besides, the dereferences based on puVar8 are non-0-based dereferences, thus BinPointer would lose its field sensitivity in this example. BinAbsInspector implements a variant of value-set analysis on Ghidra IR to scan vulnerabilities in binaries and it leverages Z3 solver to solve path constraints. CWE Checker, on the other hand, utilizes simple heuristics and abstract interpretation-based dataflow analysis to identify potential vulnerabilities. In BinDSA, we enhance the bottom-up analysis stage by merging callees of a function in the order of their corresponding callsites, to improve accuracy while preserving the efficiency of the analysis. This enables us to effectively identify whether a pointer is subject to double-free or use-after-free issues.\n\nDespite the absence of path sensitivity in our approach, the results (shown in Table 8) demonstrate that BinDSA performs on par with BinAbsInspector (denoted as BAI in Table 8) in terms of false positive rate (FPR) and false negative rate (FNR). Moreover, BinDSA has significantly lower FNR compared to CWE Checker (denoted as CC in Table 8), as the data-flow analysis in CWE Checker may lose the points-to relationship during analysis. Notably, one of the key advantages of our approach is its efficiency. BinDSA is approximately 2.5 times faster than BinAbsInspector, offering a substantial improvement in analysis speed.\n\nLoss of Soundness. The unsoundness inherent in our approach can be attributed primarily to three key factors. First, our methodology is limited in its ability to track pointer arithmetic operations. In our current framework, we only consider pointer arithmetic involving constant numerical values and handle simple cases of array access. Consequently, BinDSA overlooks scenarios where arrays are manipulated using variable or undetermined indices. Unlike BinPointer, which can revert to the block memory model when faced with failed pointer arithmetic, our approach is unification-based. If we fall back to the block model, the algorithm will merge all untracked fields together and inevitably compromise precision to a significant extent. Therefore, a trade-off must be made.\n\nSecond, the conflict-type filtering strategy we take could compromise the soundness. While this strategy effectively filters out erroneous merges resulting from mistakes in the lifting process and accurately excludes incorrect indirect callees, it also runs the risk of overlooking correct merges. For instance, situations may arise where two objects of incompatible types are both referenced by a void * pointer. In such cases, the filtering strategy might erroneously discard these merges, potentially leading to incomplete analysis outcomes.\n\nThird, the current variable boundary is estimated by first identifying the base pointer and then inferring the data structure size based on memory access patterns from the base pointer. However, the size can be underestimated, causing a single variable to be split into multiple variables. Additionally, due to optimization, the base pointer is not always the start of a variable. These issues compromise soundness. We will systematically consider and solve these problems in future work.\n\nThe choice of the DSA algorithm [25], which employs a unification-based approach to points-to analysis, could sacrifice precision due to its inherent flow-insensitivity and the lack of context-sensitivity within Strongly Connected Components (SCCs). This limitation may lead to over-approximation and merging unrelated pointer variables, thereby reducing the granularity of the analysis and potentially impacting its effectiveness in scenarios requiring finegrained pointer tracking.\n\nFor example, the effectiveness of BinDSA is limited in analyzing C++ virtual tables and multiple inheritance structures. Even though we added support for C++ libraries in order to work with the Juliet Test Suite in the case study, these programs are much simpler than real-world C++ programs. In C++, it is common for a single pointer to reference objects of two different classes, which can result in incorrect merging of their corresponding virtual tables during analysis. As a potential direction for future work, we plan to investigate hybrid approaches that combine the benefits of Steensgaard's algorithm with Andersen's, aiming to balance efficiency with precision while maximizing the recovery of type information.",
+  "section_quality": {
+    "has_abstract": true,
+    "has_introduction": true,
+    "has_experiment": true,
+    "intro_chars": 6113,
+    "experiment_chars": 18956
+  },
+  "introduction_source": "grobid_tei",
+  "experiment_source": "grobid_tei",
+  "background_source": "introduction",
+  "experiment_source_used": "experiment_section",
+  "task_title": "Precise and Efficient Points-to Analysis for Stripped Binary Executables",
+  "background": "Pointer analysis is a cornerstone of binary reverse engineering, enabling critical tasks such as call graph reconstruction, value flow analysis, and security vulnerability detection. In stripped binaries, source-level types and symbols are absent, forcing analysis to treat every register and memory location as a potential pointer and to account for pointer arithmetic and type casts. Existing approaches range from arity-based and machine-learning-based to program-analysis-based techniques (e.g., VSA, BPA, BinPointer), but none simultaneously deliver high precision, high efficiency, and acceptable soundness. Current methods are either too imprecise, producing many false positives, or too slow to scale to large programs. This gap calls for a binary pointer analysis that prioritises precision and efficiency while remaining soundy—sacrificing soundness only in controlled, limited circumstances.",
+  "research_question": "How can we design a binary pointer analysis that achieves high precision and high efficiency while sacrificing soundness only in limited, well-defined situations?",
+  "experiment_setup": {
+    "datasets": [
+      {
+        "name": "SPEC CPU2006 C benchmarks",
+        "source": "https://www.spec.org/cpu2006/",
+        "description": "C benchmarks from SPEC CPU2006 that contain indirect calls, including programs like 403.gcc, 464.h264ref, and 482.sphinx3. Compiled with GCC-9.2 at -O2, stripped.",
+        "access": "restricted"
+      },
+      {
+        "name": "Open-source server applications",
+        "source": "official project websites for thttpd-2.29, memcached-1.5.4, lighttpd-1.4.48, exim-4.89, nginx-1.10",
+        "description": "Five real-world, security-critical C applications compiled with GCC-9.2 at -O2 and stripped. Used to evaluate indirect call recovery and scalability.",
+        "access": "open"
+      }
+    ],
+    "baselines": [
+      {
+        "name": "BinPointer",
+        "reference": "Prior state-of-the-art binary pointer analysis tool (not open-sourced, see reference [24] in the original paper)."
+      },
+      {
+        "name": "BPA",
+        "reference": "Binary Pointer Analysis, an earlier program-analysis-based method (not open-sourced, see reference [23])."
+      },
+      {
+        "name": "Callee",
+        "reference": "Deep-learning-based indirect call target predictor (model not publicly available, see reference [47])."
+      },
+      {
+        "name": "SVF",
+        "reference": "Sparse flow-sensitive pointer analysis framework for source code LLVM IR (open-source, https://github.com/SVF-tools/SVF)."
+      }
+    ],
+    "metrics": [
+      {
+        "name": "Profiling-based precision (memory access targets)",
+        "definition": "Fraction of statically recovered memory access triples (instruction, block, offset) that match the targets observed during dynamic profiling with Intel Pin. TP / (TP + FP)."
+      },
+      {
+        "name": "Profiling-based recall (memory access targets)",
+        "definition": "Fraction of dynamically observed memory access triples that are correctly recovered by the analysis. TP / (total profiled triples)."
+      },
+      {
+        "name": "AICT (Average Indirect-Call Targets)",
+        "definition": "Mean number of possible call targets per indirect call site; lower values indicate higher precision."
+      },
+      {
+        "name": "Profiling-based precision (indirect calls)",
+        "definition": "Fraction of statically predicted indirect call targets that correspond to the actual callee seen during execution (using Pin)."
+      },
+      {
+        "name": "Profiling-based recall (indirect calls)",
+        "definition": "Fraction of dynamically executed indirect calls whose target is correctly identified by the analysis."
+      },
+      {
+        "name": "Execution time",
+        "definition": "Wall-clock time (in minutes) to complete the pointer analysis on a given binary."
+      },
+      {
+        "name": "Memory usage",
+        "definition": "Peak memory consumption (in GB) during the analysis."
+      }
+    ],
+    "rqs": [
+      "RQ1: What is the profiling-based precision and recall of memory access target recovery compared to BinPointer?",
+      "RQ2: How does the approach compare to BPA, BinPointer, Callee, and SVF on indirect call target recovery in terms of AICT and profiling-based precision/recall?",
+      "RQ3: What are the execution time and memory consumption of the approach across the benchmark programs?"
+    ],
+    "target_subject": "Stripped x86-64 binary executables compiled from C programs with non-trivial pointer usage and indirect calls, including both synthetic benchmarks (SPEC CPU2006 C benchmarks like 403.gcc, 464.h264ref) and real-world server software (nginx, lighttpd, thttpd, etc.)",
+    "constraints": "Binaries must be stripped of all debug symbols and compiled with GCC-9.2 at -O2. The analysis must operate directly on the binary without access to source code or intermediate representations. No dynamic or runtime information may be used during the analysis."
+  },
+  "expected_artifacts": [
+    "idea",
+    "code",
+    "experiment_results",
+    "paper"
+  ],
+  "feasibility_notes": "SPEC CPU2006 requires a license and may not be freely distributable; the five open-source applications are freely available. Baseline tools BinPointer and BPA are not open-source, complicating direct comparison unless reimplemented. Callee’s trained model is missing from its repository. Implementing the analysis likely requires substantial development on top of Ghidra APIs (v11.0.1). Profiling with Intel Pin is feasible but adds engineering overhead. A server with at least 64 GB RAM and a 12-core CPU is recommended; execution times may range from minutes to several hours.",
+  "difficulty": "hard",
+  "seed_papers": [
+    {
+      "title": "Novel decision-level fusion strategies combined with hyperspectral imaging for the detection of soybean protein content.",
+      "year": 2024,
+      "authors": [
+        "Jing Zhang",
+        "Zhenyi Guo",
+        "Chengye Ma"
+      ],
+      "doi": "10.1016/j.foodchem.2024.142552",
+      "arxiv_id": null,
+      "pdf_url": "",
+      "citation_count": 16
+    },
+    {
+      "title": "Efficient binary-level coverage analysis",
+      "year": 2020,
+      "authors": [
+        "M. Ammar Ben Khadra",
+        "D. Stoffel",
+        "W. Kunz"
+      ],
+      "doi": "10.1145/3368089.3409694",
+      "arxiv_id": "2004.14191",
+      "pdf_url": "https://arxiv.org/pdf/2004.14191",
+      "citation_count": 15
+    },
+    {
+      "title": "Microheater hotspot engineering for spatially resolved and repeatable multi-level switching in foundry-processed phase change silicon photonics",
+      "year": 2025,
+      "authors": [
+        "Hongyi Sun",
+        "Chuanyu Lian",
+        "F. Vásquez-Aza"
+      ],
+      "doi": "10.1038/s41467-025-59399-6",
+      "arxiv_id": null,
+      "pdf_url": "https://doi.org/10.1038/s41467-025-59399-6",
+      "citation_count": 15
+    },
+    {
+      "title": "Enhanced hybrid capacitive performance for efficient and selective potassium extraction from wastewater: Insights from regulating electrode potential.",
+      "year": 2025,
+      "authors": [
+        "Xuan Zhao",
+        "Dan Li",
+        "Lin‐Long Deng"
+      ],
+      "doi": "10.1016/j.watres.2025.123570",
+      "arxiv_id": null,
+      "pdf_url": "",
+      "citation_count": 10
+    },
+    {
+      "title": "A feature‐based pavement image registration method for precise pavement deterioration monitoring",
+      "year": 2024,
+      "authors": [
+        "Zhongyu Yang",
+        "Mohsen Mohammadi",
+        "Haolin Wang"
+      ],
+      "doi": "10.1111/mice.13407",
+      "arxiv_id": null,
+      "pdf_url": "https://doi.org/10.1111/mice.13407",
+      "citation_count": 7
+    }
+  ],
+  "paper_title": "BinDSA: Efficient, Precise Binary-Level Pointer Analysis with Context-Sensitive Heap Reconstruction"
+}

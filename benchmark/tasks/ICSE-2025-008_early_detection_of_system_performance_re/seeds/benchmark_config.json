@@ -1,0 +1,36 @@
+{
+  "forbid_synthetic_pilot": true,
+  "agent_data_note": "Use mounted TeaStore + TrainTicket at `dataset_candidate/perf-regression-early-detect/`. Prefer component-level unit-test timing + architectural (QPN) model propagation for early regression prediction. System-level JMeter/Podman-or-Docker load tests are oracle-only and may require host container daemon access. Follow paper protocol intensities (Low/Medium/High) and locations (L1–L3) when feasible; report reduced protocols explicitly.",
+  "required_metrics": [
+    "response_time_mpd",
+    "cpu_usage_mpd",
+    "detection_outcome"
+  ],
+  "benchmark_rules": [
+    "Read `dataset_candidate/dataset_paths.json` and env `PERF_REGRESSION_EARLY_DETECT_HOME` / `TEASTORE_HOME` / `TRAINTICKET_HOME` / `JMETER_HOME`.",
+    "Subjects: TeaStore and TrainTicket microservice benchmarks (open GitHub sources).",
+    "Collect local performance via existing unit tests (30 reps when following the paper) after busy-wait regression injection.",
+    "Propagate component deviations into an architectural performance model (QPN models may be in Zenodo replication/) to predict end-to-end response time / CPU impact.",
+    "Do not use system-level test data of the new version as input to the predictor; system tests are oracle/ground truth only.",
+    "Primary metrics: response-time MPD + Cliff's Delta effect size; CPU MPD; TP/TN/FP/FN vs oracle.",
+    "Shared mount is read-only. Copy subjects under `project/` before instrumentation or busy-wait edits; write logs/metrics under `project/` or `results/`.",
+    "If Zenodo replication is missing, reconstruct QPN models from documented structure or download https://doi.org/10.5281/zenodo.13135986 into replication/."
+  ],
+  "non_goals": [
+    "Claiming full two-machine Podman reproduction without matching hardware/daemon access",
+    "Using system-level measurements of the updated version as predictor features",
+    "Inventing synthetic microservice call graphs unrelated to TeaStore/TrainTicket"
+  ],
+  "dataset_env": {
+    "PERF_REGRESSION_EARLY_DETECT_HOME": "dataset_candidate/perf-regression-early-detect",
+    "TEASTORE_HOME": "dataset_candidate/perf-regression-early-detect/TeaStore",
+    "TRAINTICKET_HOME": "dataset_candidate/perf-regression-early-detect/train-ticket",
+    "JMETER_HOME": "dataset_candidate/perf-regression-early-detect/tools/apache-jmeter"
+  },
+  "exclude_from_agent": [
+    "container_setup.sh",
+    "README.md",
+    "benchmark_config.json",
+    "requirements.txt"
+  ]
+}

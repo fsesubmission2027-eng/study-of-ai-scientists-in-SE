@@ -1,0 +1,694 @@
+{
+  "generated_at": "2026-09-30T07:11:01",
+  "run_dir": "~/ai_scientist_inputs/ISSTA-2025-009_improving_bug_inducing_commit_identifica/workspace/ai_scientist_2026-09-25_04-51-02",
+  "task_dir": "~/ai_scientist_inputs/ISSTA-2025-009_improving_bug_inducing_commit_identifica",
+  "framework": "ai_scientist",
+  "fairness_audit": [
+    {
+      "axis": "completeness",
+      "was_unfair": "Required both paper.tex AND paper.pdf; any tool missing one failed equally.",
+      "fix": "Paper gate: PDF=1.0; TeX-only=0.5; ``complete`` requires PDF."
+    },
+    {
+      "axis": "completeness",
+      "was_unfair": "``results`` counted stub/seed JSON (dataset_candidate/metrics.json).",
+      "fix": "``results`` requires substantive numeric results via results_normalize."
+    },
+    {
+      "axis": "experiment_success",
+      "was_unfair": "Only metrics.json; ignored results.json / experiment_results.txt.",
+      "fix": "Framework-ordered result candidates + normalized loaders."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Penalized tools with no bib; airesearcher has no workspace references.",
+      "fix": "literature_applicable=false → status not_applicable; excluded from fair aggregate."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "related_work.json subset as gold made recall hard to interpret.",
+      "fix": "Coverage gold is original paper REFERENCES from mineru; related_work only enriches metadata/fallback."
+    },
+    {
+      "axis": "peer_review",
+      "was_unfair": "Missing Stanford report looked like evaluation failure.",
+      "fix": "status not_provided; optional axis, never counts as tool failure."
+    },
+    {
+      "axis": "paths/find_results",
+      "was_unfair": "Picked downloads/** and sandbox noise (e.g. airesearcher LLVM tree).",
+      "fix": "Exclude downloads/, seeds/, dataset_candidate/, sandbox junk paths."
+    },
+    {
+      "axis": "paths/framework_noise",
+      "was_unfair": "DeepScientist .deepscientist_npm / runtime / skills templates counted as code/paper/results.",
+      "fix": "FRAMEWORK_NOISE_DIRS+markers; quest worktree + eval_output results; paper md drafts; reject template tex."
+    },
+    {
+      "axis": "paths/paper_tex",
+      "was_unfair": "tiny_scientist / ACL runs store paper under latex/*.tex; evaluator only looked at paper/main.tex.",
+      "fix": "latex/**/*.tex with substantive-body heuristic; find_paper_document uses same rules."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Entire custom.bib (300+ anthology entries) verified when paper had zero \\cite commands.",
+      "fix": "collect_agent_references filters bib to in-text cite keys; skips uncited bulk bib (>40 entries)."
+    },
+    {
+      "axis": "paths/ai_scientist_summaries",
+      "was_unfair": "AI Scientist can persist substantive results and paper-like drafts in *_summary.json logs rather than paper/main.tex or results/**/*.json.",
+      "fix": "Treat draft_summary/research_summary as weak paper documents and summary JSONs as result candidates."
+    },
+    {
+      "axis": "framework/ai_scientist_v2",
+      "was_unfair": "Manifest framework ``ai_scientist_v2`` fell through to profile ``unknown``, skipping AI-Scientist idea/result path priorities.",
+      "fix": "Normalize ``ai_scientist_v2`` (and common aliases) to profile key ``ai_scientist``."
+    },
+    {
+      "axis": "idea_generation",
+      "was_unfair": "plan.md/todos.md weak proxies scored same as structured idea.json.",
+      "fix": "Framework idea_priority tried first; missing idea → not_applicable where appropriate."
+    }
+  ],
+  "axes": [
+    "alignment",
+    "completeness",
+    "experiment_analysis",
+    "idea_generation",
+    "literature_review",
+    "peer_review"
+  ],
+  "results": {
+    "completeness": {
+      "framework": "ai_scientist",
+      "run_dir": "~/ai_scientist_inputs/ISSTA-2025-009_improving_bug_inducing_commit_identifica/workspace/ai_scientist_2026-09-25_04-51-02",
+      "task_dir": "~/ai_scientist_inputs/ISSTA-2025-009_improving_bug_inducing_commit_identifica",
+      "complete": false,
+      "required_score": 0.5,
+      "bonus_score": 0.03,
+      "overall_score": 0.4,
+      "missing": [
+        "results",
+        "paper"
+      ],
+      "required": {
+        "idea": {
+          "path": "session/idea.json",
+          "bytes": 10687,
+          "via": "candidate"
+        },
+        "code": {
+          "count": 1,
+          "files": [
+            {
+              "path": "experiments/2026-09-25_04-57-53_improving_bug_inducing_commit_identification_wit_attempt_0/logs/0-run/stage_1_initial_implementation_1_preliminary/best_solution_9bd9b45b06da4a2aab05f560b697b969.py",
+              "bytes": 15028,
+              "via": "glob"
+            }
+          ]
+        },
+        "results": {
+          "substantive": false,
+          "normalized_path": null,
+          "numeric_leaf_count": 0,
+          "discovered_files": [
+            {
+              "path": "session/data/metrics.json",
+              "bytes": 242,
+              "via": "candidate"
+            }
+          ],
+          "metrics_keys_sample": []
+        },
+        "paper": {
+          "tex": null,
+          "pdf": null,
+          "md": null,
+          "json": null,
+          "status": "missing",
+          "score": 0.0
+        }
+      },
+      "bonus": {
+        "experiment_plan": null,
+        "experiment_log": {
+          "path": "ai_scientist_run.log",
+          "bytes": 125092,
+          "via": "glob"
+        },
+        "review": null,
+        "readme": null,
+        "narrative": null,
+        "bib": null
+      },
+      "manifest_status": {
+        "pipeline": false
+      },
+      "gate_scores": {
+        "idea": 1.0,
+        "code": 1.0,
+        "results": 0.0,
+        "paper": 0.0
+      },
+      "fairness": {
+        "gates": [
+          "idea",
+          "code",
+          "results",
+          "paper"
+        ],
+        "paper_gate_rule": "PDF=1.0; TeX-only/md_only/json_only=0.5; complete requires PDF",
+        "results_gate_rule": "substantive numeric results via framework-aware normalize_results",
+        "audit_ref": "framework_profile.FAIRNESS_AUDIT"
+      },
+      "notes": [
+        "Required: idea, code, substantive results, paper (PDF full; TeX/markdown/JSON draft half).",
+        "Stub/seed metrics (e.g. dataset_candidate/metrics.json) do not satisfy results.",
+        "Framework noise (.deepscientist_npm, skills/templates, runtime) is excluded from code/results/paper.",
+        "Manifest status is informational; disk presence is authoritative."
+      ]
+    },
+    "idea_generation": {
+      "run_dir": "~/ai_scientist_inputs/ISSTA-2025-009_improving_bug_inducing_commit_identifica/workspace/ai_scientist_2026-09-25_04-51-02",
+      "task_dir": "~/ai_scientist_inputs/ISSTA-2025-009_improving_bug_inducing_commit_identifica",
+      "idea_path": "~/ai_scientist_inputs/ISSTA-2025-009_improving_bug_inducing_commit_identifica/workspace/ai_scientist_2026-09-25_04-51-02/session/idea.json",
+      "status": "ok",
+      "dimensions": {
+        "novelty": {
+          "score": 1.0,
+          "justification": "The artifact states gaps such as existing approaches overlooking commit messages, assuming only deleted lines cause bugs, and ignoring unmodified patch context, but offers no method to address them. The title and abstract merely restate SZZ limitations already connected to solution-space entries such as R48 and R39, with context and diff concerns related to R29 and R55.",
+          "rubric": "Existing: the idea's core method is already clearly present or solved in the Solution Space; only tiny parameter / test-case changes.",
+          "category": "Existing",
+          "nearest_solution_space_ids": [
+            "R48",
+            "R39",
+            "R29",
+            "R55"
+          ],
+          "differentiation": "No concrete mechanism is specified beyond repeating the task background; the only substantive claims are generic problem statements about commit messages and patch context."
+        },
+        "feasibility": {
+          "score": 3.0,
+          "justification": "The evaluation plan is practically concrete: datasets are listed, baseline SZZ implementations and NeuralSZZ are specified, and metrics and research questions are given. Reproducing multiple SZZ variants and training NeuralSZZ is nontrivial but likely manageable with existing artifacts.",
+          "rubric": "Moderate workload (sweet spot): needs nontrivial coding such as scripting existing open-source tools (parsers, CFG extractors) or building a custom graph-processing pipeline; standard research engineering effort."
+        },
+        "clarity": {
+          "score": 1.0,
+          "justification": "The proposal lacks a proposed method, algorithm, architecture, or component design. It contains background, research questions, datasets, baselines, metrics, and constraints, but the actual idea is absent, leaving only the vague direction of leveraging commit messages and full patch context.",
+          "rubric": "Vague concept: full of empty buzzwords; problem undefined; method only gives a high-level direction with little substance."
+        }
+      },
+      "overall_score": 1.5,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "novelty",
+        "feasibility",
+        "clarity"
+      ],
+      "solution_space": {
+        "status": "ok",
+        "paper_count": 77,
+        "entry_count": 77,
+        "cache_hit": false,
+        "source_file": "~/ai_scientist_inputs/ISSTA-2025-009_improving_bug_inducing_commit_identifica/mineru_sections.json",
+        "stats": {
+          "papers": 77,
+          "extracted": 77,
+          "usable_abstracts": 27,
+          "citation_meta_abstracts": 0,
+          "missing_abstracts": 50,
+          "mineru_titles": 66,
+          "related_work_titles": 39,
+          "abstracts_attached": 27,
+          "related_work_extras": 11,
+          "batches": 5
+        },
+        "error": null
+      },
+      "notes": [
+        "Scores the intermediate idea artifact (not the final paper).",
+        "Dimensions: novelty, feasibility, clarity (each 1-5). Excitement removed.",
+        "Novelty is scored against a Solution Space built from mineru REFERENCES titles (+ related_work.json abstracts when matched)."
+      ],
+      "idea_via": "candidate",
+      "idea_relative": "session/idea.json",
+      "summary": "The artifact is essentially a task specification and evaluation plan, not a research idea. It lacks any concrete proposed method beyond reusing title and abstract language about commit messages and patch context. The experimental setup is detailed but cannot support novelty or clarity because the mechanism is undefined. Consequently, novelty and clarity are very low while feasibility is moderate.",
+      "strengths": [
+        "Detailed experimental setup with datasets, baselines, metrics, and research questions",
+        "Clear problem context and constraints",
+        "Reproducible evaluation references for SZZ and NeuralSZZ"
+      ],
+      "weaknesses": [
+        "No concrete proposed method or implementation details",
+        "Only echoes background and task description rather than presenting an actual idea",
+        "Novelty is unsubstantiated relative to existing solution-space work"
+      ],
+      "llm_meta": {
+        "model": "deepseek-v4-pro-0813",
+        "base_url": "https://api-sg.umodelverse.ai/v1",
+        "usage": {
+          "completion_tokens": 1923,
+          "completion_tokens_details": {
+            "reasoning_tokens": 1433
+          },
+          "prompt_tokens": 2776,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "total_tokens": 4699
+        },
+        "attempt": 0
+      }
+    },
+    "peer_review": {
+      "run_dir": "~/ai_scientist_inputs/ISSTA-2025-009_improving_bug_inducing_commit_identifica/workspace/ai_scientist_2026-09-25_04-51-02",
+      "review_report": null,
+      "paper_pdf": null,
+      "paper_tex": null,
+      "status": "not_provided",
+      "dimensions": {},
+      "overall_score": null,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "soundness",
+        "significance",
+        "novelty",
+        "presentation",
+        "credibility"
+      ],
+      "notes": [
+        "Stanford Agentic Reviewer (paperreview.ai): manual download to artifacts/peer_review/stanford_apr.md, or pass --auto-paperreview.",
+        "Dimensions: soundness, significance, novelty, presentation, credibility (each 1-5)."
+      ],
+      "paperreview": {
+        "status": "skipped",
+        "reason": "no_pdf"
+      },
+      "optional": true,
+      "hint": "Optional external review (Stanford APR). Upload paper/main.pdf to https://paperreview.ai/ , save review to ~/ai_scientist_inputs/ISSTA-2025-009_improving_bug_inducing_commit_identifica/workspace/ai_scientist_2026-09-25_04-51-02/artifacts/peer_review/stanford_apr.md"
+    },
+    "alignment": {
+      "run_dir": "~/ai_scientist_inputs/ISSTA-2025-009_improving_bug_inducing_commit_identifica/workspace/ai_scientist_2026-09-25_04-51-02",
+      "task_dir": "~/ai_scientist_inputs/ISSTA-2025-009_improving_bug_inducing_commit_identifica",
+      "status": "missing_agent_paper_or_metrics",
+      "original": {
+        "status": "ok",
+        "task_dir": "~/ai_scientist_inputs/ISSTA-2025-009_improving_bug_inducing_commit_identifica",
+        "paper_title": "LLM4SZZ: Enhancing SZZ Algorithm with Context-Enhanced Assessment on Large Language Models",
+        "task_id": "ISSTA-2025-009",
+        "selection": {
+          "num_blocks": 7,
+          "total_chars": 31998,
+          "inferred_roles": {
+            "abstract": 1,
+            "introduction": 1,
+            "experiment": 4,
+            "conclusion": 1
+          },
+          "mineru_raw_keys": {
+            "field:abstract": 1,
+            "field:introduction": 1,
+            "field:experiment": 1,
+            "other": 3,
+            "conclusion": 1
+          },
+          "infer_reasons": {
+            "top_level_field": 3,
+            "title": 4
+          },
+          "rescued_from_other": 3,
+          "note": "mineru key is unreliable; blocks are selected by title/body/inheritance. rescued_from_other counts sections labeled other but treated as typed roles."
+        },
+        "claims": [
+          {
+            "id": "C1",
+            "statement": "LLM4SZZ outperforms all baselines across three datasets, improving F1-score by 6.9% to 16.0% without significantly sacrificing recall.",
+            "direction": "improves",
+            "metric_names": [
+              "F1-score"
+            ],
+            "evidence_quote": "LLM4SZZ outperforms all baselines across three datasets, improving F1-score by 6.9% to 16.0% without significantly sacrificing recall.",
+            "confidence": 0.97
+          },
+          {
+            "id": "C2",
+            "statement": "LLM4SZZ improves precision over all baselines by 2.4% to 9.2% across the evaluated datasets.",
+            "direction": "improves",
+            "metric_names": [
+              "Precision"
+            ],
+            "evidence_quote": "with an increase in precision from 2.4% to 9.2%.",
+            "confidence": 0.96
+          },
+          {
+            "id": "C3",
+            "statement": "LLM4SZZ identifies bug-inducing commits that baselines miss, accounting for 7.8%, 7.4%, and 2.5% of total bug-inducing commits across the three datasets, respectively.",
+            "direction": "improves",
+            "metric_names": [
+              "identified bug-inducing commits"
+            ],
+            "evidence_quote": "accounting for 7.8%, 7.4% and 2.5% of the total bug-inducing commits across three datasets, respectively.",
+            "confidence": 0.9
+          },
+          {
+            "id": "C4",
+            "statement": "LLM4SZZ has more consistent cross-dataset performance; even in the worst case, it outperforms other baselines by at least 6.9% in F1-score.",
+            "direction": "improves",
+            "metric_names": [
+              "F1-score"
+            ],
+            "evidence_quote": "In the worst scenario, it can still outperform other baselines by 6.9% in F1-score.",
+            "confidence": 0.92
+          },
+          {
+            "id": "C5",
+            "statement": "LLM4SZZ improves precision and F1-score without substantial recall loss, achieving higher recall than all baselines except B-SZZ in all three datasets.",
+            "direction": "improves",
+            "metric_names": [
+              "Precision",
+              "F1-score",
+              "Recall"
+            ],
+            "evidence_quote": "LLM4SZZ improves both precision and F1-score without a substantial sacrifice in recall. In all three datasets, LLM4SZZ achieves a higher recall than all other baselines, except for the B-SZZ algorithm.",
+            "confidence": 0.93
+          }
+        ],
+        "metrics": [],
+        "overall_conclusion": null,
+        "comparable_notes": null,
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 1618,
+            "completion_tokens_details": {
+              "reasoning_tokens": 1011
+            },
+            "prompt_tokens": 864,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 2482
+          },
+          "attempt": 1
+        },
+        "cache_hit": false
+      },
+      "agent": {
+        "status": "missing_agent_paper_or_metrics",
+        "run_dir": "~/ai_scientist_inputs/ISSTA-2025-009_improving_bug_inducing_commit_identifica/workspace/ai_scientist_2026-09-25_04-51-02"
+      }
+    },
+    "experiment_analysis": {
+      "run_dir": "~/ai_scientist_inputs/ISSTA-2025-009_improving_bug_inducing_commit_identifica/workspace/ai_scientist_2026-09-25_04-51-02",
+      "task_dir": "~/ai_scientist_inputs/ISSTA-2025-009_improving_bug_inducing_commit_identifica",
+      "status": "ok",
+      "metrics_path": null,
+      "experiment_success": {
+        "status": "failed_or_incomplete",
+        "success": false,
+        "metrics_path": null,
+        "absolute_metrics_path": null,
+        "checks": {
+          "has_results_file": false,
+          "non_stub": false,
+          "numeric_leaf_count": 0,
+          "min_numeric_ok": false
+        },
+        "manifest_hints": {
+          "status": {
+            "pipeline": false
+          },
+          "returncode": 1,
+          "benchmark_complete": null,
+          "artifacts_metrics_flag": false
+        },
+        "warnings": [
+          "manifest.returncode=1"
+        ],
+        "suspicious_values": [],
+        "note": "success=true requires substantive results (framework-aware path) with >=3 numeric leaves. Supports metrics.json, results.json, experiment_results.txt, etc. Manifest returncode/benchmark_complete are soft warnings only."
+      },
+      "idea_code_consistency": {
+        "status": "ok",
+        "idea_path": "session/idea.json",
+        "code_files": [
+          "experiments/2026-09-25_04-57-53_improving_bug_inducing_commit_identification_wit_attempt_0/logs/0-run/stage_1_initial_implementation_1_preliminary/best_solution_9bd9b45b06da4a2aab05f560b697b969.py"
+        ],
+        "score_scale": "1-5",
+        "score": 3.0,
+        "label": "partial",
+        "justification": "The visible code is clearly aligned with the paper's main direction: it loads the stated datasets and extracts commit messages, patches, and labels for bug-inducing commit identification, and it imports precision/recall/F1 metrics. However, the provided excerpt ends at preprocessing and does not show the model architecture, training/evaluation loop, SZZ/NeuralSZZ baselines, 1,500-commit sampling, or repeated experimental protocol.",
+        "matched_elements": [
+          "Dataset paths for DS_LINUX, DS_GITHUB, and DS_APACHE",
+          "Commit message and patch feature extraction",
+          "Bug-inducing commit label parsing",
+          "Imports for precision, recall, and F1 evaluation metrics"
+        ],
+        "missing_or_divergent_elements": [
+          "No model architecture or training loop shown",
+          "No SZZ/AG-SZZ/MA-SZZ/L-SZZ/R-SZZ/RA-SZZ/NeuralSZZ baselines implemented or clearly called",
+          "No random 1,500-commit sampling procedure visible",
+          "No repeated evaluation protocol or ablation/component analysis visible"
+        ],
+        "rubric": "Partial alignment: main direction matches, but important components from the idea (baselines, metrics, protocol, subjects) are dropped or altered without clear mapping.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 415,
+            "completion_tokens_details": {
+              "reasoning_tokens": 156
+            },
+            "prompt_tokens": 2263,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 2678
+          },
+          "attempt": 0
+        }
+      },
+      "setup_coverage": {
+        "status": "ok",
+        "overall_coverage": 0.6666666666666666,
+        "datasets": {
+          "gold_count": 3,
+          "hit_count": 3,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "DS_LINUX",
+            "DS_GITHUB",
+            "DS_APACHE"
+          ],
+          "misses": []
+        },
+        "baselines": {
+          "gold_count": 7,
+          "hit_count": 0,
+          "miss_count": 7,
+          "coverage": 0.0,
+          "hits": [],
+          "misses": [
+            "B-SZZ",
+            "AG-SZZ",
+            "MA-SZZ",
+            "L-SZZ",
+            "R-SZZ",
+            "RA-SZZ",
+            "NeuralSZZ"
+          ]
+        },
+        "metrics": {
+          "gold_count": 3,
+          "hit_count": 3,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "Precision",
+            "Recall",
+            "F1-score"
+          ],
+          "misses": []
+        },
+        "agent_protocol": {},
+        "gold_protocol": {},
+        "dataset_dirs": [
+          "dataset_candidate"
+        ],
+        "flags": {
+          "weaker_baseline_suspected": true,
+          "weak_protocol": [],
+          "synthetic_data": "unexpected_synthetic_or_local_only_data",
+          "gold_allows_synthetic": false
+        },
+        "gold_sources": [
+          "~/ai_scientist_inputs/ISSTA-2025-009_improving_bug_inducing_commit_identifica/task.md",
+          "~/ai_scientist_inputs/ISSTA-2025-009_improving_bug_inducing_commit_identifica/metadata.json"
+        ],
+        "note": "Coverage is name/alias matching against task.md Datasets/Baselines/Metrics. weak_protocol flags large reductions in trials/timeout vs Constraints. Synthetic corpora are not penalized when the task itself requires synthesis."
+      },
+      "ablation_significance": {
+        "status": "ok",
+        "idea_path": "session/idea.json",
+        "significance_signals_rule_based": {
+          "signals": [],
+          "artifact_paths": [],
+          "has_any_significance_artifact": false
+        },
+        "evidence_format": null,
+        "study_type": "new_method",
+        "components": [
+          {
+            "name": "Commit message analysis",
+            "role": "module",
+            "ablation_expected": true,
+            "significance_expected": false,
+            "ablation_status": "missing",
+            "ablation_evidence": "RQ2 explicitly asks for individual component contribution, but no final metrics or code path comparing with vs without commit message analysis is present; the available code only reaches initial data loading/preprocessing.",
+            "significance_status": "not_required",
+            "significance_evidence": "No component-level statistical test is required for this module ablation; absence is descriptive."
+          },
+          {
+            "name": "Patch context",
+            "role": "module",
+            "ablation_expected": true,
+            "significance_expected": false,
+            "ablation_status": "missing",
+            "ablation_evidence": "RQ2 calls for patch context contribution, but the provided code and empty final metrics do not include a no/reduced patch context comparison.",
+            "significance_status": "not_required",
+            "significance_evidence": "No component-level statistical test is required for this module ablation."
+          }
+        ],
+        "ablation_coverage_score": null,
+        "overall_ablation_ok": null,
+        "overall_significance_ok": null,
+        "summary": "",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 1222,
+            "completion_tokens_details": {
+              "reasoning_tokens": 964
+            },
+            "prompt_tokens": 549,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 1771
+          },
+          "attempt": 0
+        }
+      },
+      "results_paper_consistency": {
+        "status": "missing_metrics"
+      },
+      "scores": {
+        "experiment_success": false,
+        "idea_code_score": 3.0,
+        "setup_coverage": 0.6666666666666666,
+        "ablation_coverage_score": null,
+        "overall_ablation_ok": null,
+        "overall_significance_ok": null,
+        "results_paper_score": null,
+        "hiding_unfavorable_suspected": null
+      },
+      "notes": [
+        "Axes 1,2,3,4,6 in experiment_analysis (figures excluded).",
+        "setup_coverage matches task.md Datasets/Baselines/Metrics; weak_protocol flags reductions vs Constraints.",
+        "Axis 6: final normalized results vs paper; interim run logs not used as ground truth."
+      ]
+    },
+    "literature_review": {
+      "run_dir": "~/ai_scientist_inputs/ISSTA-2025-009_improving_bug_inducing_commit_identifica/workspace/ai_scientist_2026-09-25_04-51-02",
+      "task_dir": "~/ai_scientist_inputs/ISSTA-2025-009_improving_bug_inducing_commit_identifica",
+      "status": "not_applicable",
+      "as_of_year": 2026,
+      "agent_ref_count": 0,
+      "sources": [],
+      "collection_audit": {
+        "cited_keys_count": 0,
+        "filter_mode": "none",
+        "bib_total_before_filter": 0,
+        "bib_after_filter": 0,
+        "uncited_bib_skipped": 0
+      },
+      "fabrication": null,
+      "coverage": null,
+      "recency": null,
+      "reason": "no_reference_artifacts",
+      "hint": "No literature artifacts found (bib / thebibliography / shortlist / related_work.txt / arxiv index). Marked not_applicable rather than failure — tool may not emit references in-run."
+    }
+  },
+  "scores": {
+    "completeness": {
+      "complete": false,
+      "overall_score": 0.4,
+      "required_score": 0.5,
+      "bonus_score": 0.03
+    },
+    "peer_review": {
+      "status": "not_provided",
+      "optional": true,
+      "overall_score": null,
+      "score_scale": "1-5",
+      "scoring_method": null
+    },
+    "idea_generation": {
+      "status": "ok",
+      "overall_score": 1.5,
+      "dimensions": {
+        "novelty": 1.0,
+        "feasibility": 3.0,
+        "clarity": 1.0
+      },
+      "novelty_category": "Existing",
+      "solution_space_status": "ok"
+    },
+    "alignment": {
+      "status": "missing_agent_paper_or_metrics",
+      "direction_consistency": null,
+      "overall_alignment_score": null
+    },
+    "literature_review": {
+      "fabrication_rate": null,
+      "coverage_recall": null,
+      "recency_ratio_3y": null,
+      "recency_ratio_5y": null
+    },
+    "experiment_analysis": {
+      "experiment_success": false,
+      "idea_code_score": 3.0,
+      "setup_coverage": 0.6666666666666666,
+      "ablation_coverage_score": null,
+      "overall_ablation_ok": null,
+      "overall_significance_ok": null,
+      "results_paper_score": null,
+      "hiding_unfavorable_suspected": null
+    }
+  },
+  "fair_scores": {
+    "applicable_axes": [
+      "completeness",
+      "idea_generation",
+      "experiment_analysis"
+    ],
+    "skipped_axes": [
+      {
+        "axis": "peer_review",
+        "reason": "optional_external_review"
+      },
+      {
+        "axis": "literature_review",
+        "reason": "not_applicable"
+      }
+    ],
+    "fair_mean_0_1": 0.4074,
+    "note": "fair_mean_0_1 averages only applicable axes; optional peer review and framework-inapplicable literature are excluded from the denominator."
+  },
+  "evals_root": "~/ai_scientist_evals",
+  "claims_cache": "~/ai_scientist_evals/ISSTA-2025-009_improving_bug_inducing_commit_identifica/original_claims.json",
+  "solution_space_cache": "~/ai_scientist_evals/ISSTA-2025-009_improving_bug_inducing_commit_identifica/solution_space.json"
+}

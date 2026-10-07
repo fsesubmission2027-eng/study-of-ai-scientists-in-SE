@@ -1,0 +1,32 @@
+FROM ubuntu:22.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+ENV LANG=C.UTF-8
+ENV PYTHONUNBUFFERED=1
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    git curl wget vim tmux tree jq unzip \
+    build-essential gcc g++ make cmake \
+    openjdk-17-jdk maven \
+    python3 python3-pip python3-venv \
+    texlive-latex-base texlive-latex-extra texlive-bibtex-extra biber \
+    libnss3 libnspr4 libatk1.0-0 libatk-bridge2.0-0 libatspi2.0-0 \
+    libcups2 libdrm2 libxkbcommon0 libxcomposite1 libxdamage1 \
+    libxfixes3 libxrandr2 libgbm1 libasound2 libpango-1.0-0 libcairo2 \
+    libx11-xcb1 libxcb-dri3-0 fonts-liberation \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY requirements-base.txt /tmp/requirements-base.txt
+RUN pip3 install --no-cache-dir -r /tmp/requirements-base.txt
+
+RUN useradd -m -s /bin/bash agent \
+    && mkdir -p /workspace /task/input /task/seeds \
+    && chown -R agent:agent /workspace /task
+
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
+WORKDIR /workspace
+USER agent
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+CMD ["sleep", "infinity"]

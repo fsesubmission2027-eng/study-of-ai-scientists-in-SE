@@ -1,0 +1,1310 @@
+{
+  "generated_at": "2026-09-23T09:04:01",
+  "run_dir": "~/ai_scientist_inputs/ICSE-2025-010_verification_of_heterogeneous_programs_w/workspace/researchclaw_2026-09-10_12-17-37",
+  "task_dir": "~/ai_scientist_inputs/ICSE-2025-010_verification_of_heterogeneous_programs_w",
+  "framework": "researchclaw",
+  "fairness_audit": [
+    {
+      "axis": "completeness",
+      "was_unfair": "Required both paper.tex AND paper.pdf; any tool missing one failed equally.",
+      "fix": "Paper gate: PDF=1.0; TeX-only=0.5; ``complete`` requires PDF."
+    },
+    {
+      "axis": "completeness",
+      "was_unfair": "``results`` counted stub/seed JSON (dataset_candidate/metrics.json).",
+      "fix": "``results`` requires substantive numeric results via results_normalize."
+    },
+    {
+      "axis": "experiment_success",
+      "was_unfair": "Only metrics.json; ignored results.json / experiment_results.txt.",
+      "fix": "Framework-ordered result candidates + normalized loaders."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Penalized tools with no bib; airesearcher has no workspace references.",
+      "fix": "literature_applicable=false → status not_applicable; excluded from fair aggregate."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "related_work.json subset as gold made recall hard to interpret.",
+      "fix": "Coverage gold is original paper REFERENCES from mineru; related_work only enriches metadata/fallback."
+    },
+    {
+      "axis": "peer_review",
+      "was_unfair": "Missing Stanford report looked like evaluation failure.",
+      "fix": "status not_provided; optional axis, never counts as tool failure."
+    },
+    {
+      "axis": "paths/find_results",
+      "was_unfair": "Picked downloads/** and sandbox noise (e.g. airesearcher LLVM tree).",
+      "fix": "Exclude downloads/, seeds/, dataset_candidate/, sandbox junk paths."
+    },
+    {
+      "axis": "paths/framework_noise",
+      "was_unfair": "DeepScientist .deepscientist_npm / runtime / skills templates counted as code/paper/results.",
+      "fix": "FRAMEWORK_NOISE_DIRS+markers; quest worktree + eval_output results; paper md drafts; reject template tex."
+    },
+    {
+      "axis": "paths/paper_tex",
+      "was_unfair": "tiny_scientist / ACL runs store paper under latex/*.tex; evaluator only looked at paper/main.tex.",
+      "fix": "latex/**/*.tex with substantive-body heuristic; find_paper_document uses same rules."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Entire custom.bib (300+ anthology entries) verified when paper had zero \\cite commands.",
+      "fix": "collect_agent_references filters bib to in-text cite keys; skips uncited bulk bib (>40 entries)."
+    },
+    {
+      "axis": "paths/ai_scientist_summaries",
+      "was_unfair": "AI Scientist can persist substantive results and paper-like drafts in *_summary.json logs rather than paper/main.tex or results/**/*.json.",
+      "fix": "Treat draft_summary/research_summary as weak paper documents and summary JSONs as result candidates."
+    },
+    {
+      "axis": "framework/ai_scientist_v2",
+      "was_unfair": "Manifest framework ``ai_scientist_v2`` fell through to profile ``unknown``, skipping AI-Scientist idea/result path priorities.",
+      "fix": "Normalize ``ai_scientist_v2`` (and common aliases) to profile key ``ai_scientist``."
+    },
+    {
+      "axis": "idea_generation",
+      "was_unfair": "plan.md/todos.md weak proxies scored same as structured idea.json.",
+      "fix": "Framework idea_priority tried first; missing idea → not_applicable where appropriate."
+    }
+  ],
+  "axes": [
+    "alignment",
+    "completeness",
+    "experiment_analysis",
+    "idea_generation",
+    "literature_review",
+    "peer_review"
+  ],
+  "results": {
+    "completeness": {
+      "framework": "researchclaw",
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-010_verification_of_heterogeneous_programs_w/workspace/researchclaw_2026-09-10_12-17-37",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-010_verification_of_heterogeneous_programs_w",
+      "complete": false,
+      "required_score": 0.5,
+      "bonus_score": 0.09,
+      "overall_score": 0.4,
+      "missing": [
+        "results",
+        "paper"
+      ],
+      "required": {
+        "idea": {
+          "path": "artifacts/idea.json",
+          "bytes": 5255,
+          "via": "candidate"
+        },
+        "code": {
+          "count": 2,
+          "files": [
+            {
+              "path": "artifacts/code/main.py",
+              "bytes": 485,
+              "via": "glob"
+            },
+            {
+              "path": "stage-10/experiment/main.py",
+              "bytes": 485,
+              "via": "glob"
+            }
+          ]
+        },
+        "results": {
+          "substantive": false,
+          "normalized_path": null,
+          "numeric_leaf_count": 0,
+          "discovered_files": [],
+          "metrics_keys_sample": []
+        },
+        "paper": {
+          "tex": null,
+          "pdf": null,
+          "md": null,
+          "json": null,
+          "status": "missing",
+          "score": 0.0
+        }
+      },
+      "bonus": {
+        "experiment_plan": {
+          "path": "stage-09/exp_plan.yaml",
+          "bytes": 3484,
+          "via": "candidate"
+        },
+        "experiment_log": {
+          "path": "researchclaw_run.log",
+          "bytes": 6206,
+          "via": "glob"
+        },
+        "review": null,
+        "readme": null,
+        "narrative": null,
+        "bib": {
+          "path": "stage-04/references.bib",
+          "bytes": 8784,
+          "via": "glob"
+        }
+      },
+      "manifest_status": {
+        "pipeline": false,
+        "idea": true,
+        "code": true,
+        "results": false,
+        "paper": false
+      },
+      "gate_scores": {
+        "idea": 1.0,
+        "code": 1.0,
+        "results": 0.0,
+        "paper": 0.0
+      },
+      "fairness": {
+        "gates": [
+          "idea",
+          "code",
+          "results",
+          "paper"
+        ],
+        "paper_gate_rule": "PDF=1.0; TeX-only/md_only/json_only=0.5; complete requires PDF",
+        "results_gate_rule": "substantive numeric results via framework-aware normalize_results",
+        "audit_ref": "framework_profile.FAIRNESS_AUDIT"
+      },
+      "notes": [
+        "Required: idea, code, substantive results, paper (PDF full; TeX/markdown/JSON draft half).",
+        "Stub/seed metrics (e.g. dataset_candidate/metrics.json) do not satisfy results.",
+        "Framework noise (.deepscientist_npm, skills/templates, runtime) is excluded from code/results/paper.",
+        "Manifest status is informational; disk presence is authoritative."
+      ]
+    },
+    "idea_generation": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-010_verification_of_heterogeneous_programs_w/workspace/researchclaw_2026-09-10_12-17-37",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-010_verification_of_heterogeneous_programs_w",
+      "idea_path": "~/ai_scientist_inputs/ICSE-2025-010_verification_of_heterogeneous_programs_w/workspace/researchclaw_2026-09-10_12-17-37/artifacts/idea.json",
+      "status": "ok",
+      "dimensions": {
+        "novelty": {
+          "score": 1.0,
+          "justification": "The artifact explicitly states \"Your message shows empty sections for innovator, pragmatist, and contrarian, so there are no hypotheses to synthesize.\" It contains no core method or verification approach, so no novelty can be established relative to Solution Space entries such as R6, R16, R26, or R33.",
+          "rubric": "Existing: the idea's core method is already clearly present or solved in the Solution Space; only tiny parameter / test-case changes.",
+          "category": "Existing",
+          "nearest_solution_space_ids": [],
+          "differentiation": "No technical idea, method, or hypothesis is present, so there is nothing to differentiate from any Solution Space entry."
+        },
+        "feasibility": {
+          "score": 1.0,
+          "justification": "The text is not a research plan; it says \"Please paste the actual hypotheses under each perspective.\" No tools, pipeline, datasets, or implementation steps are defined, so the idea cannot be executed or evaluated as presented.",
+          "rubric": "Theoretically infeasible / compute catastrophe: NP-hard-scale computation, must dynamically reproduce extremely complex system-level vulnerability environments, or depends on unavailable closed-source model internal weights; not doable by a single person."
+        },
+        "clarity": {
+          "score": 1.0,
+          "justification": "The artifact is a placeholder requesting missing input rather than a research idea. It contains no defined problem, method, experiments, baselines, metrics, or evaluation plan. The only concrete content is the instruction to provide missing hypotheses.",
+          "rubric": "Vague concept: full of empty buzzwords; problem undefined; method only gives a high-level direction with little substance."
+        }
+      },
+      "overall_score": 1.0,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "novelty",
+        "feasibility",
+        "clarity"
+      ],
+      "solution_space": {
+        "status": "ok",
+        "paper_count": 42,
+        "entry_count": 42,
+        "cache_hit": true,
+        "source_file": "~/ai_scientist_inputs/ICSE-2025-010_verification_of_heterogeneous_programs_w/mineru_sections.json",
+        "stats": {
+          "papers": 42,
+          "extracted": 42,
+          "usable_abstracts": 19,
+          "citation_meta_abstracts": 0,
+          "missing_abstracts": 23,
+          "mineru_titles": 38,
+          "related_work_titles": 26,
+          "abstracts_attached": 19,
+          "related_work_extras": 4,
+          "batches": 3
+        },
+        "error": null
+      },
+      "notes": [
+        "Scores the intermediate idea artifact (not the final paper).",
+        "Dimensions: novelty, feasibility, clarity (each 1-5). Excitement removed.",
+        "Novelty is scored against a Solution Space built from mineru REFERENCES titles (+ related_work.json abstracts when matched)."
+      ],
+      "idea_via": "candidate",
+      "idea_relative": "artifacts/idea.json",
+      "summary": "The provided idea artifact is incomplete and contains no research idea. It states that the innovator, pragmatist, and contrarian sections are empty and asks for the actual hypotheses to be pasted. There is no method, research question, experimental design, or technical contribution to score against the Solution Space. Consequently, novelty, feasibility, and clarity are all minimal. This artifact cannot serve as an AI-scientist research idea without substantial revision.",
+      "strengths": [
+        "Clearly identifies that the required sections are missing.",
+        "Uses explicit instructions about what information would be needed."
+      ],
+      "weaknesses": [
+        "Contains no actual research hypothesis or method.",
+        "Does not define a verification approach, baseline comparison, or evaluation plan.",
+        "Cannot be implemented or empirically tested as written.",
+        "No connection to any Solution Space reference or prior work."
+      ],
+      "llm_meta": {
+        "model": "deepseek-v4-pro-0813",
+        "base_url": "https://api-sg.umodelverse.ai/v1",
+        "usage": {
+          "completion_tokens": 1134,
+          "completion_tokens_details": {
+            "reasoning_tokens": 668
+          },
+          "prompt_tokens": 4721,
+          "prompt_tokens_details": {
+            "cached_tokens": 4096
+          },
+          "total_tokens": 5855
+        },
+        "attempt": 0
+      }
+    },
+    "peer_review": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-010_verification_of_heterogeneous_programs_w/workspace/researchclaw_2026-09-10_12-17-37",
+      "review_report": null,
+      "paper_pdf": null,
+      "paper_tex": null,
+      "status": "not_provided",
+      "dimensions": {},
+      "overall_score": null,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "soundness",
+        "significance",
+        "novelty",
+        "presentation",
+        "credibility"
+      ],
+      "notes": [
+        "Stanford Agentic Reviewer (paperreview.ai): manual download to artifacts/peer_review/stanford_apr.md, or pass --auto-paperreview.",
+        "Dimensions: soundness, significance, novelty, presentation, credibility (each 1-5)."
+      ],
+      "paperreview": {
+        "status": "skipped",
+        "reason": "no_pdf"
+      },
+      "optional": true,
+      "hint": "Optional external review (Stanford APR). Upload paper/main.pdf to https://paperreview.ai/ , save review to ~/ai_scientist_inputs/ICSE-2025-010_verification_of_heterogeneous_programs_w/workspace/researchclaw_2026-09-10_12-17-37/artifacts/peer_review/stanford_apr.md"
+    },
+    "alignment": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-010_verification_of_heterogeneous_programs_w/workspace/researchclaw_2026-09-10_12-17-37",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-010_verification_of_heterogeneous_programs_w",
+      "status": "missing_agent_paper_or_metrics",
+      "original": {
+        "status": "ok",
+        "task_dir": "~/ai_scientist_inputs/ICSE-2025-010_verification_of_heterogeneous_programs_w",
+        "paper_title": "Hetrify: Efficient Verification of Heterogeneous Programs on RISC-V",
+        "task_id": "ICSE-2025-010",
+        "selection": {
+          "num_blocks": 12,
+          "total_chars": 31998,
+          "inferred_roles": {
+            "abstract": 1,
+            "introduction": 1,
+            "experiment": 6,
+            "method": 1,
+            "discussion": 2,
+            "conclusion": 1
+          },
+          "mineru_raw_keys": {
+            "field:abstract": 1,
+            "field:introduction": 1,
+            "field:experiment": 1,
+            "other": 7,
+            "discussion": 1,
+            "conclusion": 1
+          },
+          "infer_reasons": {
+            "top_level_field": 3,
+            "body_override": 2,
+            "title": 5,
+            "inherited": 2
+          },
+          "rescued_from_other": 7,
+          "note": "mineru key is unreliable; blocks are selected by title/body/inheritance. rescued_from_other counts sections labeled other but treated as typed roles."
+        },
+        "claims": [
+          {
+            "id": "C1",
+            "statement": "Hetrify achieves 100% correct verification rate for correct RISC-V assembly programs at unwind factor 20.",
+            "direction": "improves",
+            "metric_names": [
+              "correct_rate"
+            ],
+            "evidence_quote": "For correct programs, a 100% success rate was achieved at an unwind factor of 20",
+            "confidence": 0.95
+          },
+          {
+            "id": "C2",
+            "statement": "Hetrify reaches 96% correct rate and 0% error rate for incorrect RISC-V assembly programs with no unwind limit.",
+            "direction": "improves",
+            "metric_names": [
+              "correct_rate",
+              "error_rate"
+            ],
+            "evidence_quote": "reaching 96% with no unwind limit",
+            "confidence": 0.95
+          },
+          {
+            "id": "C3",
+            "statement": "Post-conversion verification of large heterogeneous programs with missing source functions reaches 100% correct rate with no errors.",
+            "direction": "improves",
+            "metric_names": [
+              "correct_rate",
+              "error_rate"
+            ],
+            "evidence_quote": "post-conversion verification achieved a perfect correctness rate of 100% with no errors",
+            "confidence": 0.95
+          }
+        ],
+        "metrics": [
+          {
+            "name": "correct_rate",
+            "value": 100.0,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "RISC-V assembly verification, correct programs, unwind factor 20",
+            "is_sota_or_best": true,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "Correct Rate 100%",
+            "confidence": 0.95
+          },
+          {
+            "name": "correct_rate",
+            "value": 96.0,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "RISC-V assembly verification, incorrect programs, no unwind limit",
+            "is_sota_or_best": true,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "Correct Rate 96%",
+            "confidence": 0.95
+          },
+          {
+            "name": "error_rate",
+            "value": 0.0,
+            "unit": "%",
+            "higher_is_better": false,
+            "setting": "RISC-V assembly verification, incorrect programs, no unwind limit",
+            "is_sota_or_best": true,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "Error Rate 0%",
+            "confidence": 0.95
+          }
+        ],
+        "overall_conclusion": "Hetrify enables effective RISC-V low-level and heterogeneous program verification by converting binaries and assembly into verifiable C code, achieving high verification rates and zero verification errors in key experimental settings.",
+        "comparable_notes": "Experiments used CBMC v5.95 on Ubuntu 22.04 with a 3000-second timeout. Assembly programs came from SV-COMP 2024, and large heterogeneous programs from SV-COMP 2024/2023. Correct programs used fixed unwind factors while incorrect programs used higher or no unwind bounds.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 1687,
+            "completion_tokens_details": {
+              "reasoning_tokens": 964
+            },
+            "prompt_tokens": 10423,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 12110
+          },
+          "attempt": 1
+        },
+        "cache_hit": true
+      },
+      "agent": {
+        "status": "missing_agent_paper_or_metrics",
+        "run_dir": "~/ai_scientist_inputs/ICSE-2025-010_verification_of_heterogeneous_programs_w/workspace/researchclaw_2026-09-10_12-17-37"
+      }
+    },
+    "experiment_analysis": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-010_verification_of_heterogeneous_programs_w/workspace/researchclaw_2026-09-10_12-17-37",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-010_verification_of_heterogeneous_programs_w",
+      "status": "ok",
+      "metrics_path": null,
+      "experiment_success": {
+        "status": "failed_or_incomplete",
+        "success": false,
+        "metrics_path": null,
+        "absolute_metrics_path": null,
+        "checks": {
+          "has_results_file": false,
+          "non_stub": false,
+          "numeric_leaf_count": 0,
+          "min_numeric_ok": false
+        },
+        "manifest_hints": {
+          "status": {
+            "pipeline": false,
+            "idea": true,
+            "code": true,
+            "results": false,
+            "paper": false
+          },
+          "returncode": 1,
+          "benchmark_complete": null,
+          "artifacts_metrics_flag": false
+        },
+        "warnings": [
+          "manifest.returncode=1"
+        ],
+        "suspicious_values": [],
+        "note": "success=true requires substantive results (framework-aware path) with >=3 numeric leaves. Supports metrics.json, results.json, experiment_results.txt, etc. Manifest returncode/benchmark_complete are soft warnings only."
+      },
+      "idea_code_consistency": {
+        "status": "ok",
+        "idea_path": "artifacts/idea.json",
+        "code_files": [
+          "stage-10/experiment/main.py"
+        ],
+        "score_scale": "1-5",
+        "score": 1.0,
+        "label": "severe_mismatch",
+        "justification": "The IDEA contains no actual research hypothesis or method; it only notes that hypothesis sections are empty and asks for them to be provided. The CODE defines a generic classification experiment plan with logistic regression and accuracy on toy datasets, which does not correspond to any stated hypothesis, problem, or evaluation protocol in the IDEA.",
+        "matched_elements": [],
+        "missing_or_divergent_elements": [
+          "No research hypothesis is present in the IDEA",
+          "No method or model rationale is specified to match the logistic regression setup",
+          "No evaluation protocol or metrics are derived from the IDEA",
+          "The datasets and models in CODE are unrelated to any stated research idea"
+        ],
+        "rubric": "Severe mismatch: code implements a different problem/method than the idea, or is unrelated boilerplate.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 315,
+            "completion_tokens_details": {
+              "reasoning_tokens": 152
+            },
+            "prompt_tokens": 752,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 1067
+          },
+          "attempt": 0
+        }
+      },
+      "setup_coverage": {
+        "status": "ok",
+        "overall_coverage": 0.1111111111111111,
+        "datasets": {
+          "gold_count": 3,
+          "hit_count": 1,
+          "miss_count": 2,
+          "coverage": 0.3333333333333333,
+          "hits": [
+            "RISC-V Assembly Programs from SV-COMP"
+          ],
+          "misses": [
+            "Large Heterogeneous C Programs with Missing Functions",
+            "RISC-V Binary Programs"
+          ]
+        },
+        "baselines": {
+          "gold_count": 3,
+          "hit_count": 0,
+          "miss_count": 3,
+          "coverage": 0.0,
+          "hits": [],
+          "misses": [
+            "Direct CBMC verification",
+            "IDA Pro",
+            "Ghidra"
+          ]
+        },
+        "metrics": {
+          "gold_count": 2,
+          "hit_count": 0,
+          "miss_count": 2,
+          "coverage": 0.0,
+          "hits": [],
+          "misses": [
+            "Correctness Rate",
+            "Error Rate"
+          ]
+        },
+        "agent_protocol": {},
+        "gold_protocol": {},
+        "dataset_dirs": [
+          "dataset_candidate"
+        ],
+        "flags": {
+          "weaker_baseline_suspected": true,
+          "weak_protocol": [],
+          "synthetic_data": "synthetic_allowed_by_task",
+          "gold_allows_synthetic": true
+        },
+        "gold_sources": [
+          "~/ai_scientist_inputs/ICSE-2025-010_verification_of_heterogeneous_programs_w/task.md",
+          "~/ai_scientist_inputs/ICSE-2025-010_verification_of_heterogeneous_programs_w/metadata.json"
+        ],
+        "note": "Coverage is name/alias matching against task.md Datasets/Baselines/Metrics. weak_protocol flags large reductions in trials/timeout vs Constraints. Synthetic corpora are not penalized when the task itself requires synthesis."
+      },
+      "ablation_significance": {
+        "status": "ok",
+        "idea_path": "artifacts/idea.json",
+        "significance_signals_rule_based": {
+          "signals": [],
+          "artifact_paths": [],
+          "has_any_significance_artifact": false
+        },
+        "evidence_format": null,
+        "study_type": "empirical_comparison",
+        "components": [
+          {
+            "name": "Classifier comparison (majority, logistic, ridge, knn)",
+            "role": "baseline/comparison",
+            "ablation_expected": false,
+            "significance_expected": true,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "Baselines are the comparison in an empirical model-comparison design; removing individual classifiers is not a module ablation.",
+            "significance_status": "missing",
+            "significance_evidence": "No confidence intervals, bootstrap, p-values, or statistical tests found in code or metrics; metrics.json is empty."
+          },
+          {
+            "name": "Datasets (blobs, moons, checkerboard)",
+            "role": "benchmark/dataset split",
+            "ablation_expected": false,
+            "significance_expected": false,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "Datasets define the evaluation conditions, not removable method components.",
+            "significance_status": "not_required",
+            "significance_evidence": "Dataset choice does not itself require a significance test."
+          },
+          {
+            "name": "Primary metric (held-out accuracy)",
+            "role": "instrumentation",
+            "ablation_expected": false,
+            "significance_expected": false,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "Metric selection is instrumentation, not an ablative component.",
+            "significance_status": "not_required",
+            "significance_evidence": "Metric choice is descriptive; no separate significance test is expected for the metric itself."
+          },
+          {
+            "name": "Split seeds (0, 1, 2)",
+            "role": "reproducibility/instrumentation",
+            "ablation_expected": false,
+            "significance_expected": false,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "Seeds support repeated splits but are not a method component to ablate.",
+            "significance_status": "not_required",
+            "significance_evidence": "Seed selection is not separately significance-tested."
+          }
+        ],
+        "ablation_coverage_score": 1.0,
+        "overall_ablation_ok": true,
+        "overall_significance_ok": false,
+        "summary": "This is an empirical classifier comparison across synthetic datasets and split seeds. No removable method-module ablations are expected, so ablation coverage is complete by design. However, statistical significance is missing: the available code and empty metrics provide no confidence intervals, bootstrap, p-values, or other tests for comparing classifiers.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 2095,
+            "completion_tokens_details": {
+              "reasoning_tokens": 1505
+            },
+            "prompt_tokens": 1059,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 3154
+          },
+          "attempt": 0
+        }
+      },
+      "results_paper_consistency": {
+        "status": "missing_metrics"
+      },
+      "scores": {
+        "experiment_success": false,
+        "idea_code_score": 1.0,
+        "setup_coverage": 0.1111111111111111,
+        "ablation_coverage_score": 1.0,
+        "overall_ablation_ok": true,
+        "overall_significance_ok": false,
+        "results_paper_score": null,
+        "hiding_unfavorable_suspected": null
+      },
+      "notes": [
+        "Axes 1,2,3,4,6 in experiment_analysis (figures excluded).",
+        "setup_coverage matches task.md Datasets/Baselines/Metrics; weak_protocol flags reductions vs Constraints.",
+        "Axis 6: final normalized results vs paper; interim run logs not used as ground truth."
+      ]
+    },
+    "literature_review": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-010_verification_of_heterogeneous_programs_w/workspace/researchclaw_2026-09-10_12-17-37",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-010_verification_of_heterogeneous_programs_w",
+      "status": "ok",
+      "as_of_year": 2026,
+      "agent_ref_count": 31,
+      "sources": [
+        {
+          "path": "~/ai_scientist_inputs/ICSE-2025-010_verification_of_heterogeneous_programs_w/workspace/researchclaw_2026-09-10_12-17-37/stage-05/shortlist.jsonl",
+          "kind": "shortlist"
+        },
+        {
+          "path": "~/ai_scientist_inputs/ICSE-2025-010_verification_of_heterogeneous_programs_w/workspace/researchclaw_2026-09-10_12-17-37/stage-04/references.bib",
+          "kind": "bib"
+        }
+      ],
+      "collection_audit": {
+        "cited_keys_count": 0,
+        "filter_mode": "non_bib_sources",
+        "bib_total_before_filter": 31,
+        "bib_after_filter": 0,
+        "uncited_bib_skipped": 31,
+        "agent_ref_count": 31
+      },
+      "fabrication": {
+        "status": "ok",
+        "scholarly_count": 31,
+        "verified_count": 17,
+        "fake_count": 0,
+        "lookup_failed_count": 14,
+        "non_paper_count": 0,
+        "fabrication_rate": 0.0,
+        "items": [
+          {
+            "title": "A Tool for Checking ANSI-C Programs",
+            "doi": "10.1007/978-3-540-24730-2_15",
+            "arxiv_id": "",
+            "year": 2004,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated.",
+              "Saw 1 conclusive miss(es) mixed with 2 API error(s)."
+            ],
+            "cite_key": "clarke2004tool",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "CIL: Intermediate Language and Tools for Analysis and Transformation of C Programs",
+            "doi": "10.1007/3-540-45937-5_16",
+            "arxiv_id": "",
+            "year": 2002,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "CIL: Intermediate Language and Tools for Analysis and Transformation of C Programs",
+            "resolved_year": 2002,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "necula2002intermediate",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "The S <scp>LAM</scp> project",
+            "doi": "10.1145/503272.503274",
+            "arxiv_id": "",
+            "year": 2002,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated.",
+              "Saw 1 conclusive miss(es) mixed with 1 API error(s)."
+            ],
+            "cite_key": "ball2002scplamscp",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Case Study Research in Software Engineering",
+            "doi": "10.1002/9781118181034",
+            "arxiv_id": "",
+            "year": 2012,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Case Study Research in Software Engineering - Guidelines and Examples",
+            "resolved_year": 2012,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "runeson2012case",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "The social structure of free and open source software development",
+            "doi": "10.5210/fm.v10i2.1207",
+            "arxiv_id": "",
+            "year": 2005,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated.",
+              "Saw 1 conclusive miss(es) mixed with 2 API error(s)."
+            ],
+            "cite_key": "crowston2005social",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Automatic predicate abstraction of C programs",
+            "doi": "10.1145/378795.378846",
+            "arxiv_id": "",
+            "year": 2001,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Automatic predicate abstraction of C programs",
+            "resolved_year": 2001,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "ball2001automatic",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Asm2Vec: Boosting Static Representation Robustness for Binary Clone Search against Code Obfuscation and Compiler Optimization",
+            "doi": "10.1109/sp.2019.00003",
+            "arxiv_id": "",
+            "year": 2019,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated.",
+              "Saw 1 conclusive miss(es) mixed with 2 API error(s)."
+            ],
+            "cite_key": "ding2019asmvec",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "CBMC – C Bounded Model Checker",
+            "doi": "10.1007/978-3-642-54862-8_26",
+            "arxiv_id": "",
+            "year": 2014,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "CBMC - C Bounded Model Checker - (Competition Contribution)",
+            "resolved_year": 2014,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "kroening2014cbmc",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Belief &amp; evidence in empirical software engineering",
+            "doi": "10.1145/2884781.2884812",
+            "arxiv_id": "",
+            "year": 2016,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Belief & Evidence in Empirical Software Engineering",
+            "resolved_year": 2016,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "devanbu2016belief",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "State of the Art in Software Verification and Witness Validation: SV-COMP 2024",
+            "doi": "10.1007/978-3-031-57256-2_15",
+            "arxiv_id": "",
+            "year": 2024,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated.",
+              "Saw 1 conclusive miss(es) mixed with 2 API error(s)."
+            ],
+            "cite_key": "beyer2024state",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Competition on Software Verification and Witness Validation: SV-COMP 2023",
+            "doi": "10.1007/978-3-031-30820-8_29",
+            "arxiv_id": "",
+            "year": 2023,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated."
+            ],
+            "cite_key": "beyer2023competition",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "CompCertM: CompCert with C-assembly linking and lightweight modular verification",
+            "doi": "10.1145/3371091",
+            "arxiv_id": "",
+            "year": 2019,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated.",
+              "Saw 1 conclusive miss(es) mixed with 2 API error(s)."
+            ],
+            "cite_key": "song2019compcertm",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "LLM4Decompile: Decompiling Binary Code with Large Language Models",
+            "doi": "10.18653/v1/2024.emnlp-main.203",
+            "arxiv_id": "",
+            "year": 2024,
+            "status": "verified",
+            "matched_via": "arxiv_title",
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "tan2024llmdecompile",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "SLaDe: A Portable Small Language Model Decompiler for Optimized Assembly",
+            "doi": "10.1109/cgo57630.2024.10444788",
+            "arxiv_id": "",
+            "year": 2024,
+            "status": "verified",
+            "matched_via": "arxiv_title",
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "armengolestape2024slade",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Bounded Model Checking of Software Using SMT Solvers Instead of SAT Solvers",
+            "doi": "10.1007/11691617_9",
+            "arxiv_id": "",
+            "year": 2006,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated.",
+              "Saw 2 conclusive miss(es) mixed with 1 API error(s)."
+            ],
+            "cite_key": "armando2006bounded",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Simple relational correctness proofs for static analyses and program transformations",
+            "doi": "10.1145/982962.964003",
+            "arxiv_id": "",
+            "year": 2004,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated.",
+              "Saw 1 conclusive miss(es) mixed with 2 API error(s)."
+            ],
+            "cite_key": "benton2004simple",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Neutron: an attention-based neural decompiler",
+            "doi": "10.1186/s42400-021-00070-0",
+            "arxiv_id": "",
+            "year": 2021,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Neutron: an attention-based neural decompiler",
+            "resolved_year": 2021,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "liang2021neutron",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Beyond the C: Retargetable Decompilation using Neural Machine Translation",
+            "doi": "10.14722/bar.2022.23009",
+            "arxiv_id": "",
+            "year": 2022,
+            "status": "verified",
+            "matched_via": "arxiv_title",
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "hosseini2022beyond",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Advanced Embedded System Modeling and Simulation in an Open Source RISC-V Virtual Prototype",
+            "doi": "10.3390/jlpea12040052",
+            "arxiv_id": "",
+            "year": 2022,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Advanced Embedded System Modeling and Simulation in an Open Source RISC-V Virtual Prototype",
+            "resolved_year": 2022,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "pieper2022advanced",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "WaDec: Decompiling WebAssembly Using Large Language Model",
+            "doi": "10.1145/3691620.3695020",
+            "arxiv_id": "",
+            "year": 2024,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "WaDec: Decompiling WebAssembly Using Large Language Model",
+            "resolved_year": 2024,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "she2024wadec",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Machine-Code Verification for Multiple Architectures - An Application of Decompilation into Logic",
+            "doi": "10.1109/fmcad.2008.ecp.24",
+            "arxiv_id": "",
+            "year": 2008,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated.",
+              "Saw 1 conclusive miss(es) mixed with 2 API error(s)."
+            ],
+            "cite_key": "myreen2008machinecode",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Formal Methods",
+            "doi": "10.1007/978-3-030-05156-3",
+            "arxiv_id": "",
+            "year": 2019,
+            "status": "verified",
+            "matched_via": "arxiv_title",
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "nielson2019formal",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Proving and Disproving Equivalence of Functional Programming Assignments",
+            "doi": "10.1145/3591258",
+            "arxiv_id": "",
+            "year": 2023,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Proving and Disproving Equivalence of Functional Programming Assignments",
+            "resolved_year": 2023,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "milovancevic2023proving",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Program Translation via Code Distillation",
+            "doi": "10.18653/v1/2023.emnlp-main.672",
+            "arxiv_id": "",
+            "year": 2023,
+            "status": "verified",
+            "matched_via": "arxiv_title",
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "huang2023program",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Integrated Semantics of Intermediate-Language C and Macro-Assembler for Pervasive Formal Verification of Operating Systems and Hypervisors from VerisoftXT",
+            "doi": "10.1007/978-3-642-27705-4_3",
+            "arxiv_id": "",
+            "year": 2012,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated.",
+              "Saw 1 conclusive miss(es) mixed with 2 API error(s)."
+            ],
+            "cite_key": "schmaltz2012integrated",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Some Assembly Required - Program Analysis of Embedded System Code",
+            "doi": "10.1109/scam.2008.15",
+            "arxiv_id": "",
+            "year": 2008,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Some Assembly Required - Program Analysis of Embedded System Code",
+            "resolved_year": 2008,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "fehnker2008some",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "K Semantics for Assembly Languages: A Case Study",
+            "doi": "10.1016/j.entcs.2014.05.006",
+            "arxiv_id": "",
+            "year": 2014,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated.",
+              "Saw 1 conclusive miss(es) mixed with 2 API error(s)."
+            ],
+            "cite_key": "asavoae2014semantics",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Highly Automated Formal Proofs over Memory Usage of Assembly Code",
+            "doi": "10.1007/978-3-030-45237-7_6",
+            "arxiv_id": "",
+            "year": 2020,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated.",
+              "Saw 1 conclusive miss(es) mixed with 2 API error(s)."
+            ],
+            "cite_key": "verbeek2020highly",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Verification Method of Safety Properties of Embedded Assembly Program by Combining SMT-Based Bounded Model Checking and Reduction of Interrupt Handler Executions",
+            "doi": "10.3390/electronics9071060",
+            "arxiv_id": "",
+            "year": 2020,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Verification Method of Safety Properties of Embedded Assembly Program by Combining SMT-Based Bounded Model Checking and Reduction of Interrupt Handler Executions",
+            "resolved_year": 2020,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "yamane2020verification",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Modular Verification of SPARCv8 Code",
+            "doi": "10.1007/s11390-020-0536-9",
+            "arxiv_id": "",
+            "year": 2020,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated.",
+              "Saw 1 conclusive miss(es) mixed with 2 API error(s)."
+            ],
+            "cite_key": "zha2020modular",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "The RISC-V Instruction Set Manual. Volume 1: User-Level ISA, Version 2.0",
+            "doi": "10.21236/ada605735",
+            "arxiv_id": "",
+            "year": 2014,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "The RISC-V Instruction Set Manual. Volume 1: User-Level ISA, Version 2.0",
+            "resolved_year": 2014,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "waterman2014riscv",
+            "source_kind": "shortlist"
+          }
+        ],
+        "cache_path": "~/ai_scientist_evals/ICSE-2025-010_verification_of_heterogeneous_programs_w/reference_verify_cache.json",
+        "override_path": "~/ai_scientist_evals/ICSE-2025-010_verification_of_heterogeneous_programs_w/reference_verify_overrides.json",
+        "note": "fabrication_rate = fake / (verified + fake); lookup_failed (API errors) excluded. GitHub/docs/tool URLs are non_paper and excluded from the rate. To manually correct a false negative, edit reference_verify_overrides.json (key=normalized title / doi / cite_key; value=\"verified\" or a result dict), then re-run."
+      },
+      "coverage": {
+        "status": "ok",
+        "gold_source": "~/ai_scientist_inputs/ICSE-2025-010_verification_of_heterogeneous_programs_w/mineru_sections.json",
+        "gold_count": 38,
+        "gold_is_original_paper_references": true,
+        "gold_is_openalex_subset": false,
+        "agent_count": 31,
+        "intersection_size": 23,
+        "recall": 0.6052631578947368,
+        "precision": 0.7419354838709677,
+        "matched_gold_keys": [
+          "armando2006bounded",
+          "asavoae2014semantics",
+          "ball2001automatic",
+          "benton2004simple",
+          "beyer2023competition",
+          "beyer2024state",
+          "clarke2004tool",
+          "crowston2005social",
+          "fehnker2008some",
+          "hosseini2022beyond",
+          "huang2023program",
+          "kroening2014cbmc",
+          "milovancevic2023proving",
+          "mineru_ref_3",
+          "myreen2008machinecode",
+          "pieper2022advanced",
+          "schmaltz2012integrated",
+          "song2019compcertm",
+          "tan2024llmdecompile",
+          "verbeek2020highly",
+          "waterman2014riscv",
+          "yamane2020verification",
+          "zha2020modular"
+        ],
+        "primary_metric": "recall",
+        "note": "Primary metric is recall against the original paper bibliography (titles from mineru_sections.json REFERENCES; related_work.json used only to enrich DOI/year or as fallback if mineru titles are empty). Denominator = |original paper references|. Precision is secondary (agent may cite valid extra papers)."
+      },
+      "recency": {
+        "status": "ok",
+        "dated_count": 31,
+        "unknown_year_count": 0,
+        "year_histogram": {
+          "2001": 1,
+          "2002": 2,
+          "2004": 2,
+          "2005": 1,
+          "2006": 1,
+          "2008": 2,
+          "2012": 2,
+          "2014": 3,
+          "2016": 1,
+          "2019": 3,
+          "2020": 3,
+          "2021": 1,
+          "2022": 2,
+          "2023": 3,
+          "2024": 4
+        },
+        "windows": {
+          "3": {
+            "years": 3,
+            "cutoff_year_inclusive": 2023,
+            "recent_count": 7,
+            "recent_ratio": 0.22580645161290322
+          },
+          "5": {
+            "years": 5,
+            "cutoff_year_inclusive": 2021,
+            "recent_count": 10,
+            "recent_ratio": 0.3225806451612903
+          }
+        }
+      },
+      "scores": {
+        "fabrication_rate": 0.0,
+        "coverage_recall": 0.6052631578947368,
+        "coverage_precision": 0.7419354838709677,
+        "recency_ratio_3y": 0.22580645161290322,
+        "recency_ratio_5y": 0.3225806451612903
+      }
+    }
+  },
+  "scores": {
+    "completeness": {
+      "complete": false,
+      "overall_score": 0.4,
+      "required_score": 0.5,
+      "bonus_score": 0.09
+    },
+    "peer_review": {
+      "status": "not_provided",
+      "optional": true,
+      "overall_score": null,
+      "score_scale": "1-5",
+      "scoring_method": null
+    },
+    "idea_generation": {
+      "status": "ok",
+      "overall_score": 1.0,
+      "dimensions": {
+        "novelty": 1.0,
+        "feasibility": 1.0,
+        "clarity": 1.0
+      },
+      "novelty_category": "Existing",
+      "solution_space_status": "ok"
+    },
+    "alignment": {
+      "status": "missing_agent_paper_or_metrics",
+      "direction_consistency": null,
+      "overall_alignment_score": null
+    },
+    "literature_review": {
+      "fabrication_rate": 0.0,
+      "coverage_recall": 0.6052631578947368,
+      "coverage_precision": 0.7419354838709677,
+      "recency_ratio_3y": 0.22580645161290322,
+      "recency_ratio_5y": 0.3225806451612903
+    },
+    "experiment_analysis": {
+      "experiment_success": false,
+      "idea_code_score": 1.0,
+      "setup_coverage": 0.1111111111111111,
+      "ablation_coverage_score": 1.0,
+      "overall_ablation_ok": true,
+      "overall_significance_ok": false,
+      "results_paper_score": null,
+      "hiding_unfavorable_suspected": null
+    }
+  },
+  "fair_scores": {
+    "applicable_axes": [
+      "completeness",
+      "idea_generation",
+      "literature_review",
+      "experiment_analysis"
+    ],
+    "skipped_axes": [
+      {
+        "axis": "peer_review",
+        "reason": "optional_external_review"
+      }
+    ],
+    "fair_mean_0_1": 0.3535,
+    "note": "fair_mean_0_1 averages only applicable axes; optional peer review and framework-inapplicable literature are excluded from the denominator."
+  },
+  "evals_root": "~/ai_scientist_evals",
+  "claims_cache": "~/ai_scientist_evals/ICSE-2025-010_verification_of_heterogeneous_programs_w/original_claims.json",
+  "solution_space_cache": "~/ai_scientist_evals/ICSE-2025-010_verification_of_heterogeneous_programs_w/solution_space.json"
+}

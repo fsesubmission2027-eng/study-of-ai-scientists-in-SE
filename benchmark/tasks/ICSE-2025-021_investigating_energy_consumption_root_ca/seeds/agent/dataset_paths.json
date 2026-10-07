@@ -1,0 +1,62 @@
+{
+  "layout": "icse2025_energydebug_redis_energy_root_cause",
+  "layout_note": "ICSE 2025 AE artifact for EnergyDebug: energy + uftrace analysis methodology demonstrated on Redis (Alpine/musl vs Ubuntu/glibc), with PostgreSQL and memcpy microbench support data.",
+  "workspace_symlink": "dataset_candidate/energydebug-icse2025",
+  "paper_title": "Unveiling the Energy Vampires: A Methodology for Debugging Software Energy Consumption",
+  "paper_venue": "ICSE 2025",
+  "paper_doi": "10.1109/ICSE55347.2025.00118",
+  "paper_arxiv": "https://arxiv.org/abs/2412.10063",
+  "paper_zenodo": "https://doi.org/10.5281/zenodo.14856317",
+  "paper_zenodo_concept": "https://doi.org/10.5281/zenodo.14718382",
+  "paper_github": "https://github.com/enriquebarba97/EnergyDebug",
+  "read_only": true,
+  "copy_note": "Shared mount is read-only. Copy energydebug.ipynb / analysis scripts under project/ before edits. Write derived tables/plots under project/ or results/.",
+  "data_roots": {
+    "artifact_root": "dataset_candidate/energydebug-icse2025",
+    "data": "dataset_candidate/energydebug-icse2025/data",
+    "docker_templates": "dataset_candidate/energydebug-icse2025/docker",
+    "notebook": "dataset_candidate/energydebug-icse2025/energydebug.ipynb",
+    "reference_html": "dataset_candidate/energydebug-icse2025/reference.html",
+    "archives": "dataset_candidate/energydebug-icse2025/archives",
+    "meta": "dataset_candidate/energydebug-icse2025/.artifact_meta.txt",
+    "data_readme": "dataset_candidate/energydebug-icse2025/docs/README_DATA.txt"
+  },
+  "instance_counts": {
+    "zenodo_zip_bytes": 2460883191,
+    "zenodo_zip_gib": "~2.29 GiB (≈2.5 GB marketing size)",
+    "subjects": ["Redis", "PostgreSQL", "memcpy"],
+    "paper_machine": "AMD Ryzen 9 7900X + 64GB RAM + RTX 4090 (measurement); notebook analysis is CPU-only",
+    "paper_redis_finding": "up to ~20.2% power / ~8.6% energy (Alpine/musl vs Ubuntu/glibc after controls)",
+    "note": "On-disk size after extract — see .artifact_meta.txt / du -sh."
+  },
+  "dataset_env": {
+    "ENERGYDEBUG_HOME": "dataset_candidate/energydebug-icse2025",
+    "ENERGYDEBUG_DATA_HOME": "dataset_candidate/energydebug-icse2025/data",
+    "ENERGYDEBUG_NOTEBOOK": "dataset_candidate/energydebug-icse2025/energydebug.ipynb",
+    "ENERGYDEBUG_DOCKER_HOME": "dataset_candidate/energydebug-icse2025/docker"
+  },
+  "python_environment": {
+    "python": "/opt/icse-2025-021-venv/bin/python",
+    "activation": "source /opt/icse-2025-021-venv/bin/activate",
+    "note": "numpy/pandas/scipy/statsmodels/seaborn + jupyter/nbconvert for notebook execution."
+  },
+  "toolchain": {
+    "analysis_entry": "energydebug.ipynb",
+    "energy_fields": "CPU_ENERGY, CORE*_ENERGY, CPU_USAGE_*, frequency/voltage via EnergiBridge CSV",
+    "trace_tool": "uftrace (text dumps under data/*/tracing)",
+    "measurement_templates": "docker/ (docker-energy workload examples)"
+  },
+  "paper_protocol": {
+    "rq": "Locate root causes of energy regressions across Docker base images / libc implementations",
+    "primary_metrics": [
+      "total_energy_joules",
+      "average_power_watts",
+      "execution_time_seconds"
+    ],
+    "key_controls": "Redis 7.2.4, GCC 12.3, single-core pin, 6min warmup, 30 randomized repeats (measurement protocol)"
+  },
+  "not_provided": {
+    "privileged_energibridge_in_sandbox": "New bare-metal collection usually unavailable; reuse mounted data/",
+    "gpu_requirement": "Analysis path is CPU-only; paper GPU was on the measurement host only"
+  }
+}

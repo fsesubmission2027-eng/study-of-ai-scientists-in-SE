@@ -1,0 +1,167 @@
+{
+  "id": "ASE-2025-021",
+  "paper_id": "7081c197bc58070a2af8507eb9b3a798941f8f0f",
+  "title": "Finding Bugs in MLIR Compiler Infrastructure via Lowering Space Exploration",
+  "abstract": "MLIR is a widely adopted compiler infrastructure that supports multi-level IRs and reusable components. Ensuring its correctness is critical, as bugs can propagate to downstream systems. MLIR provides a lowering mechanism that transforms high-level programs into low-level representations through configurable sequences of passes, and allows multiple valid lowering paths for a given program. This gives rise to a lowering equivalence property: all valid lowering paths for the same MLIR program should produce semantically equivalent results. In this paper, we leverage this property and propose lowering space exploration, to effectively test the MLIR infrastructure. Our approach dynamically constructs diverse lowering paths in an adaptive, stepwise manner using a feedback-based scheduling mechanism. It finds bugs by comparing the execution results across these paths. Any inconsistencies indicate potential bugs in the MLIR infrastructure. To the best of our knowledge, this is the first work to test MLIR from the perspective of exploring its compilation space. We implement our approach in a tool named LOBE and evaluate it on latest MLIR versions. LOBE discovers 38 previously unknown bugs, including 8 miscompilations and 30 crash bugs, with 25 confirmed/fixed.",
+  "year": 2025,
+  "citation_count": 0,
+  "venue": "40th IEEE/ACM International Conference on Automated Software Engineering (ASE 2025)",
+  "venue_short": "ASE 2025",
+  "authors": [
+    "Jingjing Liang",
+    "Shan Huang",
+    "Ting Su"
+  ],
+  "pdf_url": "",
+  "paper_url": "https://www.semanticscholar.org/paper/7081c197bc58070a2af8507eb9b3a798941f8f0f",
+  "paper_type": "methodology",
+  "award": "ACM SIGSOFT Distinguished Paper Award",
+  "subfield_label": "Compilers & Program Optimization",
+  "introduction": "",
+  "experiment": "To evaluate LOBE, we address the following research questions:\n\n• RQ1: How effective is LOBE in detecting previously unknown bugs in the MLIR infrastructure? • RQ2: How effective is LOBE compared to state-of-theart technique in testing the MLIR infrastructure? • RQ3: To what extent do the two key components contribute to the successful construction of lowering paths?\n\nTo answer RQ1, we applied LOBE to fuzz recent MLIR revisions, covering commits from 0a44b24 to ba63150. For RQ2 and RQ3, we fixed the MLIR version to 449e2f5, the latest at the start of our experiments. By default, we set the maximum number of lowering attempts per path (maxStep) to 30, allocate a 30-minute time budget for each input program, and initialize each operation's priority to 10, with a penalty of 1 applied for failed conversions. We evaluate the appropriateness of the maxStep setting in RQ3. The remaining parameters are empirically chosen to balance exploration depth and runtime efficiency. To reduce randomness, each 12-hour experiment was repeated five times. All experiments are executed on a server equipped with an Intel(R) Xeon(R) Gold 6354 CPU @ 3.00GHz, and 500GB of memory, running Ubuntu 20.04.\n\nCompared Work. For RQ2, we compare LOBE with testing based on the predefined fixed lowering path. Specifically, we use Ratte [14] as the baseline, as it is the only state-of-the-art MLIR testing technique capable of detecting both miscompilations and crashes. Ratte generates UB-free programs with semantic for each variable, i.e., the expected output values, executes the programs using a predefined fixed lowering path, and detects bugs by comparing the actual execution results against the expected output. Currently, Ratte supports three MLIR dialects: arith, linalg and tensor. We compare LOBE against Ratte using generators: LOBE TOSASmith with our tosa generator, and LOBE Ratte which reuses Ratte's generator. While both LOBE Ratte and Ratte share the same generator, they differ in how the lowering path is constructed: Ratte relies on the predefined fixed lowering paths, identical to the one used in their original work, whereas LOBE Ratte employs our lowering space exploration approach to construct multiple diverse lowering paths.\n\nFor RQ3, we first evaluate the impact of different maxStep settings on the construction of lowering paths. We configure maxStep to {20, 30, 40, 50} and measure both the number of successful lowering paths and the lowering success rate. Next, to evaluate the contribution of atomic lowering rules and feedback-based scheduling to the successful construction of lowering paths, we constructed two ablation variants of LOBE, each omitting one of the components. Without atomic lowering rules, LOBE randomly selects a pass from the full set of optimization or conversion passes during the respective phases. Without feedback-based scheduling, the conversion phase randomly selects an operation without considering operation priorities. Evaluation Metrics. We evaluate the effectiveness of LOBE using the following four metrics:\n\n• Number of Detected Bugs: For RQ1, we count confirmed and fixed bugs based on developer feedback and patch merges. For RQ2, we compare the number of bugs within a fixed time budget, deduplicating crash bugs by assertion and stack trace, and miscompilations by the faulty pass. where #Success is the number of programs successfully lowered and executed, and #Fail is the number that failed to lower within maxStep .\n\nTable I summarizes the previously unknown bugs detected by LOBE, including the Bug Id, the pass where the bug occurred, the symptom, and the bug status. In total, LOBE detected 38 previously unknown bugs, including 30 crash bugs and 8 miscompilations. Among them, 6 bugs have been confirmed, and 19 have been fixed. These results demonstrate LOBE's effectiveness in uncovering both miscompilation and crash bugs. Analyzing the passes where the bug occurred, we find that 31 bugs were triggered in dialect-specific optimization passes, 3 bugs in general optimization passes, 3 bugs in conversion passes, and 1 bug in bufferization pass. This highlights the capability of our approach to find bugs across all kinds of passes.\n\nWe analyzed the miscompilation cases and identified two representative examples: one consistently produces incorrect results, while the other yields randomized values. Both stem from lowering an MLIR programs consisting of tosa, where faulty passes introduce incorrect IR. These issues only arise after long, specific lowering paths (18 and 25 passes), and disappear if the pass order is changed. This demonstrates that such bugs are unlikely to be exposed by fixed lowering paths, highlighting the effectiveness of lowering space exploration. Fig. 4: Bug #130257: Buggy IR snippet after applying \"-affinedata-copy-generate\"\n\nFigure 3 shows a miscompilation case where the \"linalg-specialize-generic-ops\" pass incorrectly rewrites a linalg.generic into a linalg.copy, causing a semantic mismatch. Originally, %19 is used to compute a result stored in %24 (Figure 3a), but after transformation, %19 is directly copied to %24 (Figure 3b). As a result, %24 holds an incorrect value, i.e., %19, leading to a deterministic miscompilation. Figure 4 illustrates a miscompilation case resulting in a randomized incorrect value. After applying the \"-affine-datacopy-generate\" pass, the compiler produces an incorrect IR, as shown in the generated snippet. Specifically, the varible %alloc_16 is deallocated (line 2) before it is subsequently accessed by an affine.load operation (line 4). As a result, the loaded value %3 may contain undefined data. This introduces use-after-deallocation, leading to random behavior across multiple executions.\n\nRQ1: In total, LOBE uncovered 38 previously unknown bugs, comprising 8 miscompilations and 30 crash bugs. Of these, 25 have been confirmed or fixed. II shows the number of bugs detected by LOBE and Ratte. Notably, Ratte fails to detect any bugs. In contrast, LOBE, using two generators, detects a total of 39 bugs with 18 of them commonly detected by both generators. Moreover, 10 bugs detected by LOBE Ratte are not captured by LOBE TOSASmith . This is because TOSA programs generated by TOSASmith exercise only a subset of the operations from the three dialects (arith, linalg, and tensor) that are covered by programs generated by Ratte. Thus, LOBE TOSASmith is able to expose only a subset of the bugs detected by LOBE Ratte . These results underscore the effectiveness of LOBE in enhancing existing testing by systematically exploring diverse lowering paths. To further understand the underlying reasons for this improvement, we analyze the dialect/operation and code coverage achieved by each technique.\n\nFigure 5 shows the dialect and operation coverage for LOBE TOSASmith , LOBE Ratte , and Ratte. At the dialect level (Figure 5a), LOBE TOSASmith covers all dialects reached by the others and identifies three unique ones. This demonstrates that, with a high-level dialect generator and our lowering space exploration approach, it is possible to achieve broad dialect coverage. At the operation level (Figure 5b), LOBE Ratte fully subsumes Ratte, indicating that lowering space exploration is more effective than relying on a fixed lowering path, when using the same generator. While LOBE TOSASmith covers most operations reached by the others (about 80% of LOBE Ratte and 90% of Ratte), it misses a few low-level operations. This suggests that not all low-level operations are necessarily invoked during the lowering process from high-level dialects. Therefore, combining multiple generators or increasing the diversity of initial programs can be beneficial for improving operation-level coverage. (17) 4 (1) 29 (18) LOBE Ratte 26 (17) 2 (1) 28 (18) Figure 6 shows the evolution of line and branch coverage. As observed, both line and branch coverage exhibit similar trends across the techniques. LOBE TOSASmith consistently achieves the highest coverage throughout the experiment. We use Mann Whitney U test [22] to assess the statistical significance of coverage results. Specifically, for line coverage, LOBE TOSASmith achieves a final coverage of 48,294 lines, while LOBE Ratte reaches 45,417 lines, representing 81.05% and 70.27% improvements over Ratte, respectively. These improvements are statistically significant (both p = 0.008 < 0.05). For branch coverage, LOBE TOSASmith covers 14,539 branches, while LOBE Ratte covers 14,007, representing 90.33% and 83.36% improvements over Ratte, respectively. Both improvements are statistically significant (p = 0.016 and p = 0.008, respectively). These results indicate that lowering space exploration is more effective than using a fixed lowering path, as it enables broader coverage by dynamically adapting to the semantics of the input program. This expanded coverage potentially increases the opportunity to uncover bugs.\n\nComparing the results of LOBE Ratte and Ratte, we observe that with the same generator, lowering space exploration used in LOBE Ratte achieves significantly broader coverage than the fixed lowering path used in Ratte. In particular, Ratte shows minimal improvement over time, suggesting that merely increasing the diversity of input programs, without varying the lowering path, provides limited testing capability. In contrast, exploring multiple lowering paths by reordering conversions and injecting additional optimizations enables more diverse transformations and leads to more effective testing.\n\nRQ2: Within a five repated 12-hour budget, LOBE with two generators detects 39 bugs, whereas Ratte with a predefined fixed lowering path detects none. Additionally, LOBE improves line coverage by 81.05% and branch coverage by 90.33%.\n\nFigure 7 shows the impact of different maxStep settings on the number of successful lowering paths (bar chart) and the overall lowering success rate (line chart). We observe that setting maxStep to 30 achieves a good balance between these two metrics. While increasing maxStep generally improves the success rate, it also reduces the total number of successful lowering paths due to increased time spent on failing paths. Based on this insight, we set maxStep to 30 as the default configuration in our experiments.\n\nTable III shows the effectiveness of feedback-based scheduling and atomic lowering rules in lowering path construction. We report the number of successful (#Success) lowering paths and the success rate (Rate). As shown in the table, enabling feedback-based scheduling improves the overall lowering success rate by 18.17% and increases the number of successful lowering paths by 37.32%. In contrast, enabling atomic lower-ing rules leads to a dramatic improvement, boosting the lowering success rate by 161,850% and the number of successful lowering paths by 218,930%. Without atomic lowering rules, it is nearly impossible to construct valid lowering paths.\n\nNotably, the benefit of feedback-based scheduling is more pronounced in LOBE TOSASmith , as tosa is a higher-level dialect than those in LOBE Ratte (i.e., arith, linalg, tensor). Upon inspecting the lowering logs, we found that lowering from tosa to llvm requires more steps on average (18 vs. 6/11/10), leading to a larger and more sensitive exploration space. In such cases, the feedback-based scheduling effectively guides the search by dynamically adjusting operation priorities, avoiding inefficient exploration and improving efficiency. VI. DISCUSSION Floating-point Roundoff Error. Our approach is theoretically free of false positives, as the lowering equivalence property should always hold. However, in practice, certain optimizations in MLIR, such as \"-arith-emulate-unsupportedfloats\", may introduce floating-point roundoff errors, potentially leading to false positives. To address this, we follow prior work [23] and report a miscompilation only when the output deviation exceeds a threshold (set to 1 in our experiments). We also manually inspect such cases to ensure correctness. Parameter Configuration. Our approach involves several parameters, including maxStep, time budget, and the initial priority of operation and penalty values. For maxStep, we have empirically validated that setting it to 30 offers a good balance between lowering success rate and the number of successful lowering path (as shown in Figure 7). The other parameters are set empirically in our experiments. Regarding the 30-minute time budget per input program, we observe that it enables the exploration of an average of 600 lowering paths, which already constitutes a substantial search effort in practice. The initial priority (10) and penalty (1) guide the scheduling based on compilation feedback. In the worst case, the process falls back to random selection, which can still successfully construct paths by exploring the lowering space. Difficulties in fixing Miscompilations. Compared to crash bugs, miscompilations are significantly more difficult to diagnose and fix. Identifying the faulty pass requires analyzing a long sequence of transformations to locate where the semantic deviation is introduced. In our reported cases, most miscompilation bugs involve more than 15 passes, making it difficult to trace the root cause. Without a clear indication of which pass introduced the error, developers are often unable to determine who is responsible for the issue. Moreover, many of the miscompilations we discovered are related to complex memory allocation and bufferization logic. As illustrated in Figure 4, resolving such issues often requires non-trivial modifications to the transformation logic, making them considerably more challenging and time-consuming to address.\n\nMLIR Testing. In recent years, significant progress has been made in MLIR testing, with most efforts focusing on test program generation. These approaches generally fall into two categories: generating UB-free programs to detect both miscompilations and crashes [14], [24], and producing diverse programs to uncover crash bugs [10], [11], [25]. For the first category, Ratte [14] adopts an iterative process that alternates between program generation and semantic evaluation to construct well-defined programs. The final generated program includes the interpreted values of variables, which are then compared against the values obtained after applying a predefined, fixed lowering path followed by execution. DESIL [24] defines a set of UB-elimination rules to sanitize existing programs, and then predefines a lowering path based on the operations present in the program. Different optimization passes are inserted along this path to compare execution results and check for inconsistency. For the second category, MLIRSmith [10] is a grammar-based generator that randomly produces syntactically valid MLIR programs. Building on this, MLIRod [11] introduces operation-dependency coverage to guide the mutation of existing programs, aiming to uncover more bugs. To further reduce manual effort, SynthFuzz [25] automatically derives mutation strategies from existing programs and leverages them to generate new programs.\n\nOur approach detects both miscompilations and crashes, but differs significantly from existing techniques. Rather than focusing on generating UB-free programs and executing them along predefined fixed lowering paths, LOBE leverages the multi-level architecture of the MLIR framework to dynamically construct multiple lowering paths. This enables broader and deeper exploration of the lowering space, leading to more comprehensive testing of the MLIR infrastructure.\n\nDifferential Testing for Compiler. Our approach can be categorized into differential testing [26], which provides a strong oracle for detecting bugs. The core idea is to compile and execute the same input program across different settings, such as different compiler implementations [23], [27]- [29], optimization levels [30], [31], or hardware backends [32], and check for behavioral inconsistencies. For example, Csmith [33] randomly generates C programs and detects miscompilations by comparing their execution results across GCC and LLVM. HirGen [32] generates diverse computational graphs to test whether the compiled results produced by the TVM framework yield consistent execution outputs across different hardware platforms, such as CPU and GPU. Debug 2 [31] detects debug location bugs by comparing the debugging behavior of programs compiled with and without optimizations.\n\nUsing different compiler implementations as an oracle is not applicable to MLIR, as there are no equivalent alternative implementations for MLIR. LOBE proposes a novel oracle based on the consistency of execution results across different lowering paths-a capability uniquely enabled by MLIR's multi-level IR architecture. In this context, traditional optimization levels can be seen as a subset of the lowering space explored by our approach, while hardware backends are orthogonal and can be integrated as an extra testing dimension.\n\nBoth JoNM [34] and our approach explore the compilation space to uncover bugs. However, JoNM focuses on validating JIT compilers by enumerating all possible compilation paths at the function level, choosing between compilation and interpretation for each function. In contrast, our approach constructs diverse lowering paths by systematically exploring different passes and their application orders in the compilation pipeline. Since exhaustively enumerating all possible lowering sequences in MLIR is infeasible due to the vastness of the space, our contribution lies in dynamically constructing lowering paths based on the operations present in the current program, and adaptively selecting the next operation to lower based on compilation feedback. This technique efficiently explores the lowering space, enabling scalable and systematic testing of the MLIR infrastructure.\n\nIn this paper, we propose lowering space exploration, a novel approach to automatically finding bugs in MLIR infrastructure. Our approach dynamically constructs lowering paths based on compilation feedback. By comparing the execution results across these different paths, we can effectively identify inconsistencies that signal bugs.\n\nWe implemented our approach in a tool called LOBE. Our evaluation demonstrates the effectiveness of LOBE: it discovered 38 previously unknown bugs (including 8 miscompilations and 30 crash bugs), with 25 already confirmed or fixed. Comparison with the state-of-the-art shows that lowering space exploration significantly improves bug detection and coverage. LOBE detected 39 bugs, while Ratte found none. It achieved full dialect and operation coverage relative to Ratte and further increased line coverage by 81.05% and branch coverage by 90.33%. Our ablation results show both feedbackbased scheduling and atomic lowering rules are essential to lowering path construction.",
+  "section_quality": {
+    "has_abstract": true,
+    "has_introduction": false,
+    "has_experiment": true,
+    "intro_chars": 0,
+    "experiment_chars": 18917
+  },
+  "introduction_source": "none",
+  "experiment_source": "grobid_tei",
+  "background_source": "abstract_fallback",
+  "experiment_source_used": "experiment_section",
+  "task_title": "Testing MLIR Compiler Correctness by Systematically Exploring Lowering Paths",
+  "background": "MLIR is a widely adopted compiler infrastructure that enables multi-level intermediate representations and reusable components. Its correctness is critical, as bugs in MLIR lowering passes can propagate to all downstream compilers. The MLIR lowering mechanism transforms high-level programs into low-level representations via configurable sequences of passes, and multiple valid lowering paths exist for the same program. An inherent property is that all valid paths should produce semantically equivalent results. Current testing techniques for MLIR typically rely on a single, predefined lowering path per program, missing bugs that appear only under alternative valid pass sequences. There is a gap in systematic exploration of the diverse lowering space to uncover such hidden correctness issues.",
+  "research_question": "How can a testing approach effectively explore diverse valid lowering paths for MLIR programs to detect correctness bugs such as miscompilations and crashes?",
+  "experiment_setup": {
+    "datasets": [
+      {
+        "name": "TOSA dialect program generator",
+        "source": "[NOT SPECIFIED IN PAPER]",
+        "description": "Generates valid MLIR programs in the TOSA high-level dialect that can be lowered through various pass combinations.",
+        "access": "restricted"
+      },
+      {
+        "name": "Ratte program generator",
+        "source": "Available from the Ratte tool repository (see baseline reference)",
+        "description": "Generates programs covering arith, linalg, and tensor dialects, with expected semantic outputs for correctness checking.",
+        "access": "open (if Ratte artifact is publicly available)"
+      }
+    ],
+    "baselines": [
+      {
+        "name": "Ratte",
+        "reference": "Ratte tool (state-of-the-art MLIR testing technique that generates programs with semantic expectations and uses a predefined fixed lowering path; original publication artifact may be on GitHub)"
+      }
+    ],
+    "metrics": [
+      {
+        "name": "Number of detected bugs",
+        "definition": "Total count of previously unknown bugs confirmed or fixed by MLIR developers, with crashes deduplicated by assertion and stack trace, and miscompilations by the faulty pass."
+      },
+      {
+        "name": "Lowering success rate",
+        "definition": "Ratio of test programs that are successfully lowered and executed within the maximum allowed lowering steps."
+      },
+      {
+        "name": "Dialect coverage",
+        "definition": "Number of distinct MLIR dialects (e.g., tosa, linalg, arith, tensor) exercised by the lowering paths during testing."
+      },
+      {
+        "name": "Operation coverage",
+        "definition": "Number of distinct MLIR operations (within dialects) executed by the test programs."
+      },
+      {
+        "name": "Line coverage",
+        "definition": "Percentage of lines in the MLIR source code that are executed during testing."
+      },
+      {
+        "name": "Branch coverage",
+        "definition": "Percentage of conditional branches in the MLIR source code that are taken."
+      }
+    ],
+    "rqs": [
+      "RQ1: To what extent can exploration of diverse lowering paths detect previously unknown miscompilations and crashes in MLIR?",
+      "RQ2: How does path-exploration testing compare to fixed-path testing (Ratte) in bug detection and coverage?",
+      "RQ3: How do stepwise construction and priority-based scheduling contribute to the ability to produce successful lowering paths?"
+    ],
+    "target_subject": "The MLIR compiler infrastructure within the LLVM project, specifically the lowering passes that transform programs from high-level dialects (e.g., TOSA) to low-level dialects (e.g., LLVM IR) via intermediate dialects such as linalg, arith, and tensor. Examples include upstream MLIR revision commits and dialects like tosa, linalg, tensor, arith.",
+    "constraints": "MLIR revision range for bug-finding experiments: commits 0a44b24 to ba63150. Fixed version for comparison: 449e2f5. Maximum lowering attempts per program: 30 steps. Time budget per input program: 30 minutes. Operation priority initialised to 10 with penalty of 1 for failed conversions. Each 12-hour experiment repeated 5 times. Hardware: Intel Xeon Gold 6354 CPU, 500 GB RAM, Ubuntu 20.04. The method must not rely on human-written test programs; inputs must be generated or provided by existing generators."
+  },
+  "expected_artifacts": [
+    "idea",
+    "code",
+    "experiment_results",
+    "paper"
+  ],
+  "feasibility_notes": "TOSA program generator must be implemented from scratch or a similar high-level dialect generator used; Ratte's generator is presumably open-source. Building MLIR from LLVM source requires a large build environment and compilation time. Running meaningful fuzzing campaigns demands hours to days of compute; the study's 12-hour repeated runs suggest significant resource needs. Coverage measurement requires instrumenting MLIR, which is straightforward. Main challenge is constructing diverse valid MLIR programs that exercise obscure lowering paths, especially for dialects without existing generators.",
+  "difficulty": "hard",
+  "seed_papers": [
+    {
+      "title": "Finding compiler bugs via live code mutation",
+      "year": 2016,
+      "authors": [
+        "Chengnian Sun",
+        "Vu Le",
+        "Z. Su"
+      ],
+      "doi": "10.1145/2983990.2984038",
+      "arxiv_id": null,
+      "pdf_url": "",
+      "citation_count": 209
+    },
+    {
+      "title": "SLEMI: Equivalence Modulo Input (EMI) Based Mutation of CPS Models for Finding Compiler Bugs in Simulink",
+      "year": 2020,
+      "authors": [
+        "Shafiul Azam Chowdhury",
+        "S. L. Shrestha",
+        "Taylor T. Johnson"
+      ],
+      "doi": "10.1145/3377811.3380381",
+      "arxiv_id": null,
+      "pdf_url": "https://dl.acm.org/doi/pdf/10.1145/3377811.3380381",
+      "citation_count": 48
+    },
+    {
+      "title": "Finding typing compiler bugs",
+      "year": 2022,
+      "authors": [
+        "Stefanos Chaliasos",
+        "T. Sotiropoulos",
+        "D. Spinellis"
+      ],
+      "doi": "10.1145/3519939.3523427",
+      "arxiv_id": null,
+      "pdf_url": "https://repository.tudelft.nl/islandora/object/uuid%3A8661c485-5d4b-48c5-bba9-8bb21f72ff72/datastream/OBJ/download",
+      "citation_count": 37
+    },
+    {
+      "title": "MLIRSmith: Random Program Generation for Fuzzing MLIR Compiler Infrastructure",
+      "year": 2023,
+      "authors": [
+        "Haoyu Wang",
+        "Junjie Chen",
+        "Chuyue Xie"
+      ],
+      "doi": "10.1109/ASE56229.2023.00120",
+      "arxiv_id": null,
+      "pdf_url": "",
+      "citation_count": 28
+    },
+    {
+      "title": "Program Reconditioning: Avoiding Undefined Behaviour When Finding and Reducing Compiler Bugs",
+      "year": 2023,
+      "authors": [
+        "B. Lecoeur",
+        "Hasan Mohsin",
+        "Alastair F. Donaldson"
+      ],
+      "doi": "10.1145/3591294",
+      "arxiv_id": null,
+      "pdf_url": "https://dl.acm.org/doi/pdf/10.1145/3591294",
+      "citation_count": 19
+    }
+  ],
+  "paper_title": "Finding Bugs in MLIR Compiler Infrastructure via Lowering Space Exploration"
+}

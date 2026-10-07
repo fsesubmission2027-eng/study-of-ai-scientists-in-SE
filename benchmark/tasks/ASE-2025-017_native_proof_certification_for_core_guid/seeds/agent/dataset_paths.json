@@ -1,0 +1,41 @@
+{
+  "layout": "mse2024_weighted_exact_instances",
+  "layout_note": "Use the complete real MaxSAT Evaluation 2024 weighted exact track through dataset_candidate/maxsat2024/. It contains the competition WCNF instances used by the ASE 2025 proof-logging paper (571 instances).",
+  "workspace_symlink": "dataset_candidate/maxsat2024",
+  "source": "https://www.cs.helsinki.fi/group/coreo/MSE2024-instances/mse24-exact-weighted.zip",
+  "source_page": "https://maxsat-evaluations.github.io/2024/benchmarks.html",
+  "expected_instances": 571,
+  "read_only": true,
+  "copy_note": "The shared package is read-only. Copy .wcnf / .wcnf.xz files into project/ before writing proofs or logs. Use xzcat for .xz instances. Evaluate the complete real 571-instance track.",
+  "data_roots": {
+    "instances": "dataset_candidate/maxsat2024/instances",
+    "instance_index": "dataset_candidate/maxsat2024/instance_index.csv",
+    "recommended_subset": "dataset_candidate/maxsat2024/recommended_subset.txt",
+    "zip_archive": "dataset_candidate/maxsat2024/mse24-exact-weighted.zip"
+  },
+  "instance_layout": {
+    "count": 571,
+    "pattern": "dataset_candidate/maxsat2024/instances/**/*.{wcnf,wcnf.xz,wcnf.gz}",
+    "note": "Evaluate the complete real 571-instance competition set. recommended_subset.txt is only a size-sorted listing, not the evaluation protocol."
+  },
+  "dataset_env": {
+    "MAXSAT2024_HOME": "dataset_candidate/maxsat2024"
+  },
+  "cpp_environment": {
+    "gpp": "g++",
+    "cmake": "cmake",
+    "EvalMaxSAT_bin": "/opt/ase-2025-017-tools/EvalMaxSAT/build/EvalMaxSAT_bin",
+    "EVALMAXSAT_HOME": "/opt/ase-2025-017-tools/EvalMaxSAT",
+    "note": "Prepared automatically by container_setup.sh (g++/cmake/xz + EvalMaxSAT commit 94e677456cab96b2718f6da3f808bf694ac383d6). Upstream EvalMaxSAT does not ship this paper's native proof logger."
+  },
+  "python_environment": {
+    "python": "/opt/ase-2025-017-venv/bin/python",
+    "activation": "source /opt/ase-2025-017-venv/bin/activate",
+    "note": "Prepared automatically at container startup with pandas/numpy/sklearn; do not recreate a host .venv inside the shared mount."
+  },
+  "not_provided": {
+    "paper_proof_logger": "The ASE 2025 native/DAG proof logger is not vendored; implement it or wrap EvalMaxSAT.",
+    "scip": "SCIP is used in the paper for some intermediate ILP calls and is not preinstalled.",
+    "certified_cgss": "The VeriPB/certified-cgss baseline binary is not bundled; document any comparison you actually run."
+  }
+}

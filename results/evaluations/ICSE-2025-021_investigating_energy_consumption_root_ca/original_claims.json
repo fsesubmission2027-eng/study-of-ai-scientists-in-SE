@@ -1,0 +1,482 @@
+{
+  "status": "ok",
+  "task_dir": "~/ai_scientist_inputs/ICSE-2025-021_investigating_energy_consumption_root_ca",
+  "paper_title": "Unveiling the Energy Vampires: A Methodology for Debugging Software Energy Consumption",
+  "task_id": "ICSE-2025-021",
+  "selection": {
+    "num_blocks": 7,
+    "total_chars": 31998,
+    "inferred_roles": {
+      "abstract": 1,
+      "introduction": 1,
+      "experiment": 4,
+      "conclusion": 1
+    },
+    "mineru_raw_keys": {
+      "field:abstract": 1,
+      "field:introduction": 1,
+      "field:experiment": 1,
+      "other": 3,
+      "conclusion": 1
+    },
+    "infer_reasons": {
+      "top_level_field": 3,
+      "body_override": 3,
+      "title": 1
+    },
+    "rescued_from_other": 3,
+    "note": "mineru key is unreliable; blocks are selected by title/body/inheritance. rescued_from_other counts sections labeled other but treated as typed roles."
+  },
+  "claims": [
+    {
+      "id": "C1",
+      "statement": "The proposed energy debugging methodology helps identify and isolate energy consumption hotspots in software systems and their dependencies.",
+      "direction": "improves",
+      "metric_names": [],
+      "evidence_quote": "This paper presents an energy debugging methodology for identifying and isolating energy consumption hotspots in software systems.",
+      "confidence": 0.85
+    },
+    {
+      "id": "C2",
+      "statement": "Redis packaged for Alpine consumes about 14.5% more energy than Redis packaged for Ubuntu while taking roughly the same time.",
+      "direction": "degrades",
+      "metric_names": [
+        "redis_package_alpine_energy",
+        "redis_package_ubuntu_energy",
+        "energy_overhead_alpinepack_vs_ubuntupack_percent"
+      ],
+      "evidence_quote": "The Alpine version uses around 14.5 % more energy than the Ubuntu version while taking roughly the same time to complete.",
+      "confidence": 0.95
+    },
+    {
+      "id": "C3",
+      "statement": "After using the same recent Redis version, the Alpine/musl image still uses around 10% more energy than Ubuntu, so Redis version differences are not the only explanation.",
+      "direction": "degrades",
+      "metric_names": [
+        "energy_overhead_standardized_alpine_vs_ubuntu_percent"
+      ],
+      "evidence_quote": "However, there is still a significant gap between Alpine and Ubuntu, with Alpine using around 10 % more energy than Ubuntu.",
+      "confidence": 0.8
+    },
+    {
+      "id": "C4",
+      "statement": "When configurations are equal except for libc, Alpine/musl consumes 8.6% more total energy and up to 20.2% more CPU power than Ubuntu/glibc for the Redis benchmark.",
+      "direction": "degrades",
+      "metric_names": [
+        "total_energy_overhead_alpinejem_vs_ubuntu_percent",
+        "max_power_overhead_alpinejem_vs_ubuntu_percent",
+        "max_power_difference_alpinejem_vs_ubuntu_w"
+      ],
+      "evidence_quote": "we observe a difference of 8.6 % in total energy consumption and up to 20.2 % in power usage.",
+      "confidence": 0.95
+    },
+    {
+      "id": "C5",
+      "statement": "Alpine with glibc performs similarly to Ubuntu and considerably better than Alpine with musl, indicating the libc implementation is the primary cause.",
+      "direction": "mixed",
+      "metric_names": [
+        "redis_alpine_glibc_energy",
+        "redis_ubuntu_libc_energy",
+        "energy_overhead_alpineglibc_vs_ubuntulibc_percent"
+      ],
+      "evidence_quote": "the image performs considerably better than any of the Alpine images with musl.",
+      "confidence": 0.9
+    },
+    {
+      "id": "C6",
+      "statement": "In traced Redis execution, memcpy dominates libc activity, representing 39.6% of traced runtime and 92.6% of calls.",
+      "direction": "neutral",
+      "metric_names": [
+        "memcpy_runtime_percent",
+        "memcpy_calls_percent"
+      ],
+      "evidence_quote": "memcpy 6594371865 (39.6) ... 115270590 (92.6)",
+      "confidence": 0.9
+    },
+    {
+      "id": "C7",
+      "statement": "In a cache-to-memory memcpy benchmark that mimics Redis small copies, musl is about 15.8% more power hungry and takes almost 3x longer than glibc, causing much higher total energy consumption.",
+      "direction": "degrades",
+      "metric_names": [
+        "memcpy_cache_to_memory_power_overhead_percent",
+        "memcpy_cache_to_memory_power_difference_w",
+        "memcpy_cache_to_memory_alpine_time",
+        "memcpy_cache_to_memory_ubuntu_time",
+        "memcpy_cache_to_memory_alpine_energy",
+        "memcpy_cache_to_memory_ubuntu_energy"
+      ],
+      "evidence_quote": "musl is much more power hungry than glibc, with a difference of around 1.1W or 15.8 % difference ... Alpine taking almost 3× more time",
+      "confidence": 0.95
+    },
+    {
+      "id": "C8",
+      "statement": "In a large 12 GB memcpy benchmark, Alpine/musl uses slightly more power but finishes faster and consumes slightly less total energy than Ubuntu/glibc, showing workload-dependent behavior.",
+      "direction": "mixed",
+      "metric_names": [
+        "memcpy_12gb_alpine_energy",
+        "memcpy_12gb_ubuntu_energy",
+        "memcpy_12gb_alpine_time",
+        "memcpy_12gb_ubuntu_time"
+      ],
+      "evidence_quote": "Alpine image ends up taking slightly less overall energy to complete the task.",
+      "confidence": 0.85
+    },
+    {
+      "id": "C9",
+      "statement": "The observed difference is attributed to memcpy implementations: glibc has additional assembly-level optimization while musl implements memcpy in C.",
+      "direction": "neutral",
+      "metric_names": [],
+      "evidence_quote": "glibc seems to have additional optimization with some assembly code, while musl does not.",
+      "confidence": 0.8
+    }
+  ],
+  "metrics": [
+    {
+      "name": "redis_package_ubuntu_energy",
+      "value": 1441.42,
+      "unit": "J",
+      "higher_is_better": false,
+      "setting": "Redis benchmark, Ubuntu packaged image, Redis 6.0.16, glibc, jemalloc",
+      "is_sota_or_best": false,
+      "evidence_quote": "ubuntupack 281.62 1441.42",
+      "confidence": 1.0
+    },
+    {
+      "name": "redis_package_alpine_energy",
+      "value": 1651.11,
+      "unit": "J",
+      "higher_is_better": false,
+      "setting": "Redis benchmark, Alpine packaged image, Redis 7.0.15, musl, musl allocator",
+      "is_sota_or_best": false,
+      "baseline_name": "redis_package_ubuntu_energy",
+      "baseline_value": 1441.42,
+      "evidence_quote": "alpinepack 286.53 1651.11",
+      "confidence": 1.0
+    },
+    {
+      "name": "redis_package_ubuntu_time",
+      "value": 281.62,
+      "unit": "s",
+      "higher_is_better": false,
+      "setting": "Redis benchmark, Ubuntu packaged image, Redis 6.0.16, glibc, jemalloc",
+      "is_sota_or_best": false,
+      "evidence_quote": "ubuntupack 281.62 1441.42",
+      "confidence": 1.0
+    },
+    {
+      "name": "redis_package_alpine_time",
+      "value": 286.53,
+      "unit": "s",
+      "higher_is_better": false,
+      "setting": "Redis benchmark, Alpine packaged image, Redis 7.0.15, musl, musl allocator",
+      "is_sota_or_best": false,
+      "baseline_name": "redis_package_ubuntu_time",
+      "baseline_value": 281.62,
+      "evidence_quote": "alpinepack 286.53 1651.11",
+      "confidence": 1.0
+    },
+    {
+      "name": "energy_overhead_alpinepack_vs_ubuntupack_percent",
+      "value": 14.5,
+      "unit": "%",
+      "higher_is_better": false,
+      "setting": "Redis benchmark, packaged Alpine vs packaged Ubuntu total energy",
+      "is_sota_or_best": false,
+      "baseline_name": "redis_package_ubuntu_energy",
+      "baseline_value": 1441.42,
+      "evidence_quote": "The Alpine version uses around 14.5 % more energy than the Ubuntu version",
+      "confidence": 0.9
+    },
+    {
+      "name": "redis_ubuntu_libc_energy",
+      "value": 1401.54,
+      "unit": "J",
+      "higher_is_better": false,
+      "setting": "Redis benchmark, Ubuntu with glibc, Redis 7.2.4, jemalloc",
+      "is_sota_or_best": false,
+      "evidence_quote": "ubuntulibc 295.27 1401.54",
+      "confidence": 1.0
+    },
+    {
+      "name": "redis_alpine_glibc_energy",
+      "value": 1435.28,
+      "unit": "J",
+      "higher_is_better": false,
+      "setting": "Redis benchmark, Alpine with glibc, Redis 7.2.4, jemalloc",
+      "is_sota_or_best": false,
+      "baseline_name": "redis_ubuntu_libc_energy",
+      "baseline_value": 1401.54,
+      "evidence_quote": "alpineglibc 284.16 1435.28",
+      "confidence": 1.0
+    },
+    {
+      "name": "energy_overhead_alpineglibc_vs_ubuntulibc_percent",
+      "value": 2.4,
+      "unit": "%",
+      "higher_is_better": false,
+      "setting": "Redis benchmark, Alpine with glibc vs recent Ubuntu total energy",
+      "is_sota_or_best": false,
+      "baseline_name": "redis_ubuntu_libc_energy",
+      "baseline_value": 1401.54,
+      "evidence_quote": "slightly worse than the most recent Ubuntu, using 2.4 % more energy",
+      "confidence": 0.9
+    },
+    {
+      "name": "redis_alpine_jemalloc_energy",
+      "value": 1521.59,
+      "unit": "J",
+      "higher_is_better": false,
+      "setting": "Redis benchmark, Alpine musl, Redis 7.2.4, jemalloc",
+      "is_sota_or_best": false,
+      "baseline_name": "redis_ubuntu_libc_energy",
+      "baseline_value": 1401.54,
+      "evidence_quote": "alpinejem 284.15 1521.59",
+      "confidence": 1.0
+    },
+    {
+      "name": "redis_alpinemusl_energy",
+      "value": 1578.99,
+      "unit": "J",
+      "higher_is_better": false,
+      "setting": "Redis benchmark, Alpine musl, Redis 7.2.4, musl allocator",
+      "is_sota_or_best": false,
+      "baseline_name": "redis_ubuntu_libc_energy",
+      "baseline_value": 1401.54,
+      "evidence_quote": "alpinemusl 288.38 1578.99",
+      "confidence": 1.0
+    },
+    {
+      "name": "redis_alpinemusl6_energy",
+      "value": 1612.1,
+      "unit": "J",
+      "higher_is_better": false,
+      "setting": "Redis benchmark, Alpine musl, Redis 6.0.16, musl allocator",
+      "is_sota_or_best": false,
+      "baseline_name": "redis_ubuntu_libc_energy",
+      "baseline_value": 1401.54,
+      "evidence_quote": "alpinemusl6 286.93 1612.10",
+      "confidence": 1.0
+    },
+    {
+      "name": "energy_overhead_standardized_alpine_vs_ubuntu_percent",
+      "value": 10.0,
+      "unit": "%",
+      "higher_is_better": false,
+      "setting": "Redis benchmark, same recent Redis version, Alpine/musl vs Ubuntu",
+      "is_sota_or_best": false,
+      "baseline_name": "redis_ubuntu_libc_energy",
+      "baseline_value": 1401.54,
+      "evidence_quote": "Alpine using around 10 % more energy than Ubuntu",
+      "confidence": 0.8
+    },
+    {
+      "name": "total_energy_overhead_alpinejem_vs_ubuntu_percent",
+      "value": 8.6,
+      "unit": "%",
+      "higher_is_better": false,
+      "setting": "Redis benchmark, all configuration equal except libc, Alpine/musl vs Ubuntu/glibc",
+      "is_sota_or_best": false,
+      "baseline_name": "redis_ubuntu_libc_energy",
+      "baseline_value": 1401.54,
+      "evidence_quote": "a significant performance difference of 8.6 % between alpinejem and ubuntu",
+      "confidence": 0.95
+    },
+    {
+      "name": "max_power_difference_alpinejem_vs_ubuntu_w",
+      "value": 1.17,
+      "unit": "W",
+      "higher_is_better": false,
+      "setting": "Redis benchmark, CPU power usage at largest gap, Alpine/musl vs Ubuntu/glibc",
+      "is_sota_or_best": false,
+      "baseline_name": "Ubuntu/glibc CPU power usage",
+      "baseline_value": null,
+      "evidence_quote": "we obtain a difference of up to 1.17W in the larger gap",
+      "confidence": 0.9
+    },
+    {
+      "name": "max_power_overhead_alpinejem_vs_ubuntu_percent",
+      "value": 20.2,
+      "unit": "%",
+      "higher_is_better": false,
+      "setting": "Redis benchmark, CPU power usage at largest gap, Alpine/musl vs Ubuntu/glibc",
+      "is_sota_or_best": false,
+      "baseline_name": "Ubuntu/glibc CPU power usage",
+      "baseline_value": null,
+      "evidence_quote": "up to 20.2 % in power usage",
+      "confidence": 0.95
+    },
+    {
+      "name": "memcpy_runtime_percent",
+      "value": 39.6,
+      "unit": "%",
+      "higher_is_better": false,
+      "setting": "uftrace report of libc function runtime share in Redis",
+      "is_sota_or_best": false,
+      "evidence_quote": "memcpy 6594371865 (39.6)",
+      "confidence": 0.9
+    },
+    {
+      "name": "memcpy_calls_percent",
+      "value": 92.6,
+      "unit": "%",
+      "higher_is_better": false,
+      "setting": "uftrace report of libc function call share in Redis",
+      "is_sota_or_best": false,
+      "evidence_quote": "115270590 (92.6)",
+      "confidence": 0.9
+    },
+    {
+      "name": "memcpy_12gb_alpine_energy",
+      "value": 783.48,
+      "unit": "J",
+      "higher_is_better": false,
+      "setting": "12 GB memcpy benchmark, Alpine/musl",
+      "is_sota_or_best": false,
+      "baseline_name": "memcpy_12gb_ubuntu_energy",
+      "baseline_value": 795.13,
+      "evidence_quote": "alpine 145.39 783.48",
+      "confidence": 1.0
+    },
+    {
+      "name": "memcpy_12gb_ubuntu_energy",
+      "value": 795.13,
+      "unit": "J",
+      "higher_is_better": false,
+      "setting": "12 GB memcpy benchmark, Ubuntu/glibc",
+      "is_sota_or_best": false,
+      "evidence_quote": "ubuntu 158.38 795.13",
+      "confidence": 1.0
+    },
+    {
+      "name": "memcpy_12gb_alpine_time",
+      "value": 145.39,
+      "unit": "s",
+      "higher_is_better": false,
+      "setting": "12 GB memcpy benchmark, Alpine/musl",
+      "is_sota_or_best": false,
+      "baseline_name": "memcpy_12gb_ubuntu_time",
+      "baseline_value": 158.38,
+      "evidence_quote": "alpine 145.39 783.48",
+      "confidence": 1.0
+    },
+    {
+      "name": "memcpy_12gb_ubuntu_time",
+      "value": 158.38,
+      "unit": "s",
+      "higher_is_better": false,
+      "setting": "12 GB memcpy benchmark, Ubuntu/glibc",
+      "is_sota_or_best": false,
+      "evidence_quote": "ubuntu 158.38 795.13",
+      "confidence": 1.0
+    },
+    {
+      "name": "memcpy_cache_to_memory_alpine_energy",
+      "value": 2977.45,
+      "unit": "J",
+      "higher_is_better": false,
+      "setting": "Cache-to-memory small memcpy benchmark, Alpine/musl",
+      "is_sota_or_best": false,
+      "baseline_name": "memcpy_cache_to_memory_ubuntu_energy",
+      "baseline_value": 972.76,
+      "evidence_quote": "alpine 406.10 2977.45",
+      "confidence": 1.0
+    },
+    {
+      "name": "memcpy_cache_to_memory_ubuntu_energy",
+      "value": 972.76,
+      "unit": "J",
+      "higher_is_better": false,
+      "setting": "Cache-to-memory small memcpy benchmark, Ubuntu/glibc",
+      "is_sota_or_best": false,
+      "evidence_quote": "ubuntu 155.37 972.76",
+      "confidence": 1.0
+    },
+    {
+      "name": "memcpy_cache_to_memory_alpine_time",
+      "value": 406.1,
+      "unit": "s",
+      "higher_is_better": false,
+      "setting": "Cache-to-memory small memcpy benchmark, Alpine/musl",
+      "is_sota_or_best": false,
+      "baseline_name": "memcpy_cache_to_memory_ubuntu_time",
+      "baseline_value": 155.37,
+      "evidence_quote": "alpine 406.10 2977.45",
+      "confidence": 1.0
+    },
+    {
+      "name": "memcpy_cache_to_memory_ubuntu_time",
+      "value": 155.37,
+      "unit": "s",
+      "higher_is_better": false,
+      "setting": "Cache-to-memory small memcpy benchmark, Ubuntu/glibc",
+      "is_sota_or_best": false,
+      "evidence_quote": "ubuntu 155.37 972.76",
+      "confidence": 1.0
+    },
+    {
+      "name": "memcpy_cache_to_memory_power_overhead_percent",
+      "value": 15.8,
+      "unit": "%",
+      "higher_is_better": false,
+      "setting": "Cache-to-memory small memcpy benchmark, Alpine/musl vs Ubuntu/glibc",
+      "is_sota_or_best": false,
+      "baseline_name": "Ubuntu/glibc power usage",
+      "baseline_value": null,
+      "evidence_quote": "with a difference of around 1.1W or 15.8 % difference",
+      "confidence": 0.9
+    },
+    {
+      "name": "memcpy_cache_to_memory_power_difference_w",
+      "value": 1.1,
+      "unit": "W",
+      "higher_is_better": false,
+      "setting": "Cache-to-memory small memcpy benchmark, Alpine/musl vs Ubuntu/glibc",
+      "is_sota_or_best": false,
+      "baseline_name": "Ubuntu/glibc power usage",
+      "baseline_value": null,
+      "evidence_quote": "with a difference of around 1.1W or 15.8 % difference",
+      "confidence": 0.9
+    },
+    {
+      "name": "memcpy_memory_to_memory_alpine_energy",
+      "value": 1065.34,
+      "unit": "J",
+      "higher_is_better": false,
+      "setting": "Memory-to-memory small memcpy benchmark, Alpine/musl",
+      "is_sota_or_best": false,
+      "baseline_name": "memcpy_memory_to_memory_ubuntu_energy",
+      "baseline_value": 1075.88,
+      "evidence_quote": "alpine 95.05 1065.34",
+      "confidence": 1.0
+    },
+    {
+      "name": "memcpy_memory_to_memory_ubuntu_energy",
+      "value": 1075.88,
+      "unit": "J",
+      "higher_is_better": false,
+      "setting": "Memory-to-memory small memcpy benchmark, Ubuntu/glibc",
+      "is_sota_or_best": false,
+      "evidence_quote": "ubuntu 95.24 1075.88",
+      "confidence": 1.0
+    }
+  ],
+  "overall_conclusion": "The paper presents a methodology for debugging software energy consumption and demonstrates it on Redis. It finds that Redis on Alpine consumes more energy than on Ubuntu, with up to 20.2% higher CPU power in certain operations, and traces the cause to the musl implementation of memcpy. Custom benchmarks confirm workload-dependent energy differences between musl and glibc.",
+  "comparable_notes": "Experiments used EnergiBridge on an AMD Ryzen 9 7900X with fixed CPU frequency/voltage, single-core isolation, 30 randomized executions, CPU warm-up via Sysbench, Redis redis-benchmark workload, and Docker images with controlled Redis version, compiler/libc, and allocator configurations. Small-copy memcpy behavior depends on compiler-visible information, so benchmark design matters.",
+  "llm_meta": {
+    "model": "deepseek-v4-pro-0813",
+    "base_url": "https://api-sg.umodelverse.ai/v1",
+    "usage": {
+      "completion_tokens": 8437,
+      "completion_tokens_details": {
+        "reasoning_tokens": 3402
+      },
+      "prompt_tokens": 9840,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "total_tokens": 18277
+    },
+    "attempt": 1
+  },
+  "cache_hit": false
+}

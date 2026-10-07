@@ -1,0 +1,36 @@
+{
+  "forbid_synthetic_pilot": true,
+  "agent_data_note": "Use mounted TON FunC/Tact contracts at `dataset_candidate/ton-smart-contract-defects/`. Prefer `contracts/` (on-chain) and `repo/` (GitHub); use `samples/` for precision/FN labeling checks. Shared mount is read-only.",
+  "required_metrics": [
+    "precision_per_defect",
+    "overall_precision",
+    "defect_count"
+  ],
+  "benchmark_rules": [
+    "Read `dataset_candidate/dataset_paths.json` and `dataset_candidate/ton-smart-contract-defects/`; use env `TON_DEFECTS_HOME` / `TON_CONTRACTS_HOME` / `TON_REPO_HOME` / `TON_SAMPLES_HOME`.",
+    "Evaluate on real FunC and Tact-originated FunC contracts from the paper corpora (922 + 718 unique in the paper).",
+    "Detect (or redefine carefully) the eight defect families: BR, PL, UR, GVR, IFM, UBM, ID, LEP.",
+    "Primary metrics: per-defect precision and overall weighted precision on labeled samples; also report defect prevalence counts (RQ1).",
+    "Shared mount is read-only. Copy contracts under `project/` before edits or instrumentation.",
+    "Paper machine used ~120GB RAM; if sandbox memory is lower, use a disclosed reduced subset.",
+    "Do not silently invent contract corpora when the mount is present. Optional `tools/TONScanner` is a baseline binary, not the dataset."
+  ],
+  "non_goals": [
+    "Using only a handful of toy FunC snippets as the sole evaluation",
+    "Ignoring TON-specific defects (UBM/ID/LEP/…) and only reporting Solidity-style checks",
+    "Silently fabricating precision labels when `samples/` is available"
+  ],
+  "dataset_env": {
+    "TON_DEFECTS_HOME": "dataset_candidate/ton-smart-contract-defects",
+    "TON_CONTRACTS_HOME": "dataset_candidate/ton-smart-contract-defects/contracts",
+    "TON_REPO_HOME": "dataset_candidate/ton-smart-contract-defects/repo",
+    "TON_SAMPLES_HOME": "dataset_candidate/ton-smart-contract-defects/samples",
+    "TON_RESULTS_HOME": "dataset_candidate/ton-smart-contract-defects/results"
+  },
+  "exclude_from_agent": [
+    "container_setup.sh",
+    "README.md",
+    "benchmark_config.json",
+    "requirements.txt"
+  ]
+}

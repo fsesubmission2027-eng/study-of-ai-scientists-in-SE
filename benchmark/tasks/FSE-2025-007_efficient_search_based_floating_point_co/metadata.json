@@ -1,0 +1,192 @@
+{
+  "id": "FSE-2025-007",
+  "paper_id": "e02e7c729fc68dedc44daa49b1a8819762dcab91",
+  "title": "QSF: Multi-Objective Optimization based Efficient Solving for Floating-Point Constraints",
+  "abstract": "Floating-point constraint solving is challenging due to the complex representation and non-linear computations. Search-based constraint solving provides an effective method for solving floating-point constraints. In this paper, we propose QSF to improve the efficiency of search-based solving for floating-point constraints. The key idea of QSF is to model the floating-point constraint solving problem as a multi-objective optimization problem. Specifically, QSF considers both the number of unsatisfied constraints and the sum of the violation degrees of unsatisfied constraints as the objectives for search-based optimization. Besides, we propose a new evolutionary algorithm in which the mutation operators are specially designed for floating-point numbers, aiming to solve the multi-objective problem more efficiently. We have implemented QSF and conducted extensive experiments on both the SMT-COMP benchmark and the benchmark from real-world floating-point programs. The results demonstrate that compared to SOTA floating-point solvers, QSF achieved an average speedup of 15.72X under a 60-second timeout and an impressive 87.48X under a 600-second timeout on the first benchmark. Similarly, on the second benchmark, QSF delivered an average speedup of 22.44X and 29.23X, respectively, under the two timeout configurations. Furthermore, QSF has also enhanced the performance of symbolic execution for floating-point programs.",
+  "year": 2025,
+  "citation_count": 1,
+  "venue": "ACM International Conference on the Foundations of Software Engineering (FSE 2025)",
+  "venue_short": "FSE 2025",
+  "authors": [
+    "Xu Yang",
+    "Zhenbang Chen",
+    "Wei Dong",
+    "Ji Wang"
+  ],
+  "pdf_url": "",
+  "paper_url": "https://www.semanticscholar.org/paper/e02e7c729fc68dedc44daa49b1a8819762dcab91",
+  "paper_type": "methodology",
+  "award": "ACM SIGSOFT Distinguished Paper Award",
+  "subfield_label": "Program Analysis & Verification",
+  "introduction": "Constraint solving [11] is fundamental for addressing problems expressed in various logics. Satisfiability Modulo Theories (SMT) [39] is an important method for constraint solving, offering decision procedures to check the satisfiability of first-order logic formulas under different logical theories. SMT has been widely used as a general problem-solving engine in numerous software engineering domains, including software testing [49,58], program verification [3,27], program synthesis [8,52], etc. With the increasing scope of applications, SMT has evolved significantly, providing more expressive logic for problem encoding and more efficient algorithms for problem-solving. Many new SMT theories have been introduced, such as bit-vector [7], array [12], and point logic [61] theories. Many excellent SMT solvers, such as Z3 [21], MathSAT5 [18], and CVC5 [4], have been developed and are widely used in various software tools.\n\nDue to the widespread use of floating-point programs, solving floating-point constraints is crucial. Existing floating-point constraint solving methods can be divided into three categories: 1) Representing float-point numbers as real numbers and using real arithmetic SMT solving [32,45].\n\n2) Precise representation of floating-point numbers based on bit-vector theory, i.e., QF_FP SMT theory, whose solving procedure converts a floating-point constrain to a SAT [14] problem (i.e., an NP-complete problem [19]) and employs an existing SAT solver for solving [18,21]. 3) Search-based methods transform the constraint solving problem into a search or optimization problem [29,57].\n\nThe first category could be efficient but faces the imprecision problem and the expressiveness problem. The results produced by real arithmetic SMT solvers are unsound for floating-point constraints. The real arithmetic SMT theory does not support certain floating-point operations, such as bitwise logical and shift operations. The second category enjoys the precise representation but suffers from the scalability problem. The SAT problems of floating-point constraints may be huge, especially for the non-linear constraints, making the solving procedure inefficient. Improving the scalability of floating-point SMT theory is challenging. The third category may achieve good scalability and efficiency through existing optimization or search techniques but encounters the problem of incompleteness. Search-based methods are effective in improving efficiency when the solution space is large. Nonetheless, the scalability issue remains challenging for the third category when dealing with floating-point constraint solving problems with extremely small solution spaces.\n\nThis paper focuses on search-based methods for floating-point constraint solving, which use scoring functions, guiding indicators, and fitness functions to find solutions for floating-point constraints heuristically. We observe that existing approaches [43] [9] typically rely on a single objective to guide the search process. This can lead to inefficiencies in many scenarios, such as prematurely discarding valuable intermediate solutions. Therefore, it is desirable to have multiple objectives to evaluate the potential of intermediate solutions, thereby improving the efficiency of the solving process.\n\nBased on this observation, we propose QSFfoot_0 , a method for quickly solving floating-point constraints. Inside QSF, we propose a bi-objective optimization-based method in which two indicators, i.e., the number of unsatisfied constraints and the sum of the violation of unsatisfied constraints, are used to evaluate the quality of intermediate solutions. Besides, we also propose a customized evolutionary algorithm in which the evolutionary operators are specially designed for floating-point type to improve the search efficiency. We have implemented QSF in a prototype and conducted extensive experiments on a standard benchmark and a benchmark generated from the program analysis of real-world floating-point programs. Besides, we embedded QSF to a state-of-the-art symbolic execution tool (i.e., KLEE) for C programs to evaluate its ability to improve symbolic execution's effectiveness. The experimental results indicate the QSF's efficiency.\n\nQSF: Multi-objective Optimization Based Efficient Solving for Floating-Point Constraints FSE024:3\n\nThe main contributions of this paper are as follows:\n\n• We propose a search-based constraint solving framework based on multi-objective optimization. As far as we know, QSF is the first approach to employ multi-objective optimization for floating-point constraint solving. • We propose two objectives for solving the problem of floating-point constraints. The first objective is the number of unsatisfied constraints, and the second objective function is the violation degree of unsatisfied constraints. • We present a multi-operator collaborative evolutionary algorithm (MOCEA) with mutation operators specifically designed for floating-point types to enhance efficiency. • We evaluate QSF by comparing its prototype with nine state-of-the-art floating-point constraint solvers. Experimental results on the standard benchmark of SMT-COMP 2023 show that QSF outperforms other solvers, with average speedups of 15.72X and 87.48X at the 60s and 600s, respectively. The benchmark results extracted from real-world floating-point programs (i.e., GNU Scientific Library [31]) demonstrate that QSF can solve the most instances and has achieved an average speedup of 22.44X within 60 seconds and 29.23X within 600 seconds compared to other solvers.\n\nThe remainder of this paper is organized as follows. Section 2 introduces the preliminaries and motivation. Section 3 describes QSF. Section 4 presents the experiments and analysis. Section 5 discusses threats to validity. Section 6 reviews related work. Section 7 concludes the paper.",
+  "experiment": "4.5.1 Effectiveness. Table 3 presents the comparison results between QSF and state-of-the-art floating-point constraint solvers on a real-world program benchmark. The structure of Table 3 is consistent with that of Table 2. It is important to note that the benchmark in this experiment includes converting bit-vector to floating-point (i.e., to_fp). Since CORAL and XSat do not support bit vectors, they are excluded from this comparison. In addition, COLIBRI considers arithmetic operations on bit-vectors as real number arithmetic operations. Compared with existing floatingpoint constraint solvers, QSF demonstrates advantages in the 60-second and 600-second evaluations. This shows that QSF is more suitable for solving constraint formulas from real-world programs. QSF solves 3211 (91.93%) of the instances within 60 seconds and 3218 (92.13%) within 600 seconds. This indicates that QSF only solved seven additional instances in the subsequent nine minutes, resulting in a marginal increase of just 0.2% in total successful cases. Besides, QSF solves more instances in 60 seconds than the other methods do in 600 seconds. This result supports the effectiveness of RQ2. In addition, a careful look at the Only QSF and Only other columns in Table 3 shows that the complementarity between QSF and other solvers is not obvious under the real-world program benchmark. Therefore, we do not combine sequential portfolio solvers on this benchmark.\n\n4.5.2 Efficiency. The data in Figure 5 are the average results of 10 runs. It can be seen from the figure that QSF is significantly better than the competing methods in terms of solving speed. QSF has a winning rate of over 87% compared with solvers other than Bitwuzla. Compared with Bitwuzla, the winning rates are 71.11% and 71.55% for the 60-second and 600-second evaluations, respectively. Under 60-second and 600-second timeout conditions, our method achieved an average speedup of 5.38X and 6.24X, respectively, when compared to QF_FP SMT solvers. Compared to real arithmetic SMT solvers, the speedup is 1.19X and 1.24X, respectively. And when compared to search-based solvers, the average speedup is 67.18X and 89.21X, respectively. Overall, when compared with seven other solvers, our method achieved an average speedup of 22.44X and 29.23X under the 60-second and 600-second timeout conditions, respectively. This positively answers the efficiency of RQ2. The distribution of solid points in the subfigure shows that QSF can solve most instances within one second. In the execution time comparison scatter plot, QSF loses to other methods in a few cases. This is because QSF falls into a local optimum and causes a timeout.\n\n4.5.3 Practical Application. Symbolic execution is an important application of constraint solving.\n\nWe have integrated QSF and seven comparative solvers into the symbolic execution engine (i.e., KLEE 2.3 [15]) to explore whether QSF can enhance the performance of symbolic execution for floating-point programs. We evaluated the capability of KLEE with different solvers on 252 benchmark programs from the GNU Scientific Library. The common experimental configuration is as follows: the total analysis time for each program is set to 1 hour, with a 60-second timeout for each solver invocation. JFS, goSAT, QSF, and COLIBRI have inherent randomness. Therefore, they are run five times each to enhance the soundness of the results, while the other solvers were executed only once. When COLIBRI obtains a real number solution that cannot be represented as a floating-point number, it searches for floating-point numbers around the real number that satisfy the constraints. Figure 6 illustrates each method's total number of covered branches under BFS and DFS, where the solid line represents the mean, and the shaded area indicates the 99% confidence interval . From the figure, it can be observed that our method outperforms the comparative methods comprehensively. Specifically, under BFS, QSF achieves the maximum branch coverage after approximately 20 minutes, whereas under DFS, it takes about 40 minutes for QSF to reach the maximum branch coverage. The reason is that the path constraints are relatively shorter under BFS, which may allow for a larger solution space. Overall, the number of branches covered by each method under BFS exceeds that under DFS, due to the more complex path constraints in DFS. By examining Figure 6, we can perform a simple analysis of the performance of existing solution methods in program analysis applications. Z3, Bitwuzla, COLIBRI, and JFS are in the first tier. CVC5 and goSAT are in the second tier, with MathSAT5 performing the worst. The poor results from CVC5 and MathSAT5 may be due to limitations in their solving capabilities. goSAT's mediocre performance is due to its poor search capabilities. A close observation of Figure 6 reveals that JFS has good results under both BFS and DFS, which may be attributed to the path constraints in the program that include a significant amount of non-linear calculations and some basic mathematical functions (e.g., sin, log, etc.). In summary, QSF enhances the performance of symbolic execution engines in analyzing floating-point programs and indirectly provides strong support for RQ2.\n\nAnswer to RQ2: On real-world program benchmarks, QSF outperforms comparable solvers in both effectiveness and efficiency. QSF performs well in practical applications.\n\nQSF consists of two components: the multi-objective problem transformation and the multiobjective algorithm. To address RQ3, this section investigates the impact of bi-objective and MOCEA for our method on the QF_FP and real-world program (RWP) benchmarks. QSF_𝑓 𝜓 1 and QSF_𝑓 𝜓 2 denote the versions of QSF that utilize only 𝑓 𝜓 1 and 𝑓 𝜓 2 guidance, respectively. QSF_NSGA-II represents the version of QSF that employs NSGA-II [22], which is one of the most classic multi-objective optimization algorithms. Preprocessing is an important algorithmic configuration in this study, so QSF_NoPre is included. QSF_NoPre indicates that QSF does not use the constants in the formula as initial values, with the default variable initialization set to 0.\n\nTable 4 presents a comparative result of the QSF solver for each configuration. From the table, it can be observed that the impact of single-objective guidance on QSF is relatively minor. This is because multi-objective guidance's advantage accelerates the search efficiency of search-based methods. QSF_𝑓 𝜓 2 yields better results than QSF_𝑓 𝜓 1 , indicating that 𝑓 𝜓 2 focuses on the effectiveness of QSF while 𝑓 𝜓 1 emphasizes efficiency. On the QF_FP benchmark, preprocessing has the most significant impact on QSF. This is attributed to the presence of numerous constants in the benchmark that direct the search for the algorithm, with solutions that satisfy the constraints potentially existing within the formulas themselves. In the RWP benchmark, MOCEA contributes the most to QSF's performance. The reason is that the multi-operator collaborative mutation has an inherent advantage over traditional mutation mechanisms, as it can simultaneously draw on the strengths of various operators. Specifically, for constraints with many variables, MOCEA can employ exponent byte mutation to achieve rapid convergence. For constraints with a higher number of equal terms, MOCEA can use special number mutation to expedite the discovery of satisfying solutions and fine-tune with single-byte mutation. For constraints involving complex arithmetic operations, MOCEA can utilize simulated binary crossover and mutation operators to balance local and global exploration capabilities. Additionally, the regular mutation in the operator pool can balance the algorithm's convergence and diversity, preventing it from falling into local optima. Hence, it is evident that the full QSF outperforms any version missing its components.\n\nAnswer to RQ3: The loss of each component will affect the overall performance of QSF.",
+  "section_quality": {
+    "has_abstract": true,
+    "has_introduction": true,
+    "has_experiment": true,
+    "intro_chars": 5873,
+    "experiment_chars": 7984
+  },
+  "introduction_source": "grobid_tei",
+  "experiment_source": "grobid_tei",
+  "background_source": "introduction",
+  "experiment_source_used": "experiment_section",
+  "task_title": "Efficient Search-Based Floating-Point Constraint Solving Using Multiple Fitness Criteria",
+  "background": "Floating-point constraint solving is essential for software testing, symbolic execution, and program verification, but faces unique challenges due to the complex semantics of floating-point arithmetic. Existing approaches fall into three categories: real arithmetic solvers (fast but imprecise and inexpressive for bitwise operations), bit-vector-based SMT solvers (precise but suffer from scalability due to NP-hard SAT encoding), and search-based solvers (heuristic, potentially scalable, but typically rely on a single scoring function, causing them to prematurely discard promising intermediate solutions). This gap motivates the need for more effective search strategies that can better navigate the large and discontinuous solution spaces of floating-point constraints without sacrificing precision.",
+  "research_question": "How can search-based floating-point constraint solvers be made more efficient and robust by employing multiple heuristic evaluation criteria to guide the optimization process?",
+  "experiment_setup": {
+    "datasets": [
+      {
+        "name": "SMT-COMP 2023 QF_FP Benchmark",
+        "source": "https://smt-comp.github.io/2023/benchmarks.html (QF_FP logic division)",
+        "description": "A large collection of floating-point satisfiability instances from the 2023 SMT competition, containing linear and non-linear operations.",
+        "access": "open"
+      },
+      {
+        "name": "Real-World Floating-Point Program Benchmark",
+        "source": "Constructable using KLEE 2.3 symbolic executor and the GNU Scientific Library (GSL) source code (https://www.gnu.org/software/gsl/).",
+        "description": "Path constraints extracted from 252 C programs in GSL by symbolically executing each function and collecting the path conditions as floating-point constraint instances.",
+        "access": "constructable"
+      }
+    ],
+    "baselines": [
+      {
+        "name": "Z3",
+        "reference": "https://github.com/Z3Prover/z3 (de Moura & Bjørner, TACAS 2008)"
+      },
+      {
+        "name": "MathSAT5",
+        "reference": "https://mathsat.fbk.eu/ (Griggio et al., FMCAD 2015)"
+      },
+      {
+        "name": "CVC5",
+        "reference": "https://cvc5.github.io/ (Barbosa et al., TACAS 2022)"
+      },
+      {
+        "name": "Bitwuzla",
+        "reference": "https://bitwuzla.github.io/ (Schoisswohl et al., CAV 2023)"
+      },
+      {
+        "name": "goSAT",
+        "reference": "Search-based floating-point solver (paper referenced in the source study)"
+      },
+      {
+        "name": "JFS",
+        "reference": "Search-based floating-point solver (paper referenced in the source study)"
+      },
+      {
+        "name": "COLIBRI",
+        "reference": "Search-based solver (paper referenced in the source study)"
+      },
+      {
+        "name": "CORAL",
+        "reference": "Real arithmetic SMT-based solver (paper referenced in the source study)"
+      },
+      {
+        "name": "XSat",
+        "reference": "Search-based solver (paper referenced in the source study)"
+      }
+    ],
+    "metrics": [
+      {
+        "name": "Solved instances",
+        "definition": "Number of constraint instances for which the solver returns a correct satisfying assignment within the given time budget."
+      },
+      {
+        "name": "Execution time",
+        "definition": "Wall-clock time taken by the solver to find a solution or declare failure/timeout."
+      },
+      {
+        "name": "Winning rate",
+        "definition": "For a pair of solvers, the fraction of instances where one solver is strictly faster than the other under the same time limit."
+      },
+      {
+        "name": "Branch coverage",
+        "definition": "Number of branches covered in the target program during symbolic execution within a fixed total analysis time, using the solver as the constraint resolution backend."
+      }
+    ],
+    "rqs": [
+      "RQ1: How effective is the proposed multi-indicator search approach compared to state-of-the-art solvers on standard floating-point constraint benchmarks?",
+      "RQ2: How well does it perform on constraints extracted from real-world floating-point software, and what impact does it have on symbolic execution branch coverage?",
+      "RQ3: What is the contribution of using multiple fitness criteria versus a single fitness criterion, and how do different algorithmic design choices influence overall performance?"
+    ],
+    "target_subject": "Floating-point constraint solving problem instances from SMT competition benchmarks and from real-world numerical software (e.g., GNU Scientific Library). The tasks include standalone solving and integration into a symbolic executor (KLEE).",
+    "constraints": "The method must be a search-based heuristic and not rely on encoding floating-point constraints into SAT or using imprecise real arithmetic. The solver must adhere to 60-second and 600-second per-instance time limits. When integrated with KLEE, the total symbolic execution time per program is 1 hour with a 60-second solver timeout per query. All baselines and the proposed approach must be evaluated under identical machine conditions."
+  },
+  "expected_artifacts": [
+    "idea",
+    "code",
+    "experiment_results",
+    "paper"
+  ],
+  "feasibility_notes": "The SMT-COMP 2023 QF_FP benchmark is publicly available. The real-world GSL benchmark can be reconstructed with moderate effort using the provided KLEE scripts and GSL source code. Running all comparisons against nine baselines may require substantial CPU time (expected several hundred core-hours), but the workload is embarrassingly parallel and can be distributed. The primary challenge lies in implementing an efficient search engine that handles floating-point mutation and solution evaluation without falling into local optima, which is nontrivial but does not require specialized hardware beyond standard CPU cores.",
+  "difficulty": "hard",
+  "seed_papers": [
+    {
+      "title": "A Pareto-based collaborative multi-objective optimization algorithm for energy-efficient scheduling of distributed permutation flow-shop with limited buffers",
+      "year": 2022,
+      "authors": [
+        "Chao Lu",
+        "Yuanxiang Huang",
+        "Leilei Meng"
+      ],
+      "doi": "10.1016/j.rcim.2021.102277",
+      "arxiv_id": null,
+      "pdf_url": "",
+      "citation_count": 120
+    },
+    {
+      "title": "An efficient slime mould algorithm for solving multi-objective optimization problems",
+      "year": 2022,
+      "authors": [
+        "Essam H. Houssein",
+        "M. A. Mahdy",
+        "Doaa Shebl"
+      ],
+      "doi": "10.1016/j.eswa.2021.115870",
+      "arxiv_id": null,
+      "pdf_url": "",
+      "citation_count": 113
+    },
+    {
+      "title": "MORIME: A multi-objective RIME optimization framework for efficient truss design",
+      "year": 2025,
+      "authors": [
+        "Mohammad Aljaidi",
+        "Nikunj Mashru",
+        "Pinank Patel"
+      ],
+      "doi": "10.1016/j.rineng.2025.103933",
+      "arxiv_id": null,
+      "pdf_url": "",
+      "citation_count": 66
+    },
+    {
+      "title": "Smooth Tchebycheff Scalarization for Multi-Objective Optimization",
+      "year": 2024,
+      "authors": [
+        "Xi Lin",
+        "Xiao-Yan Zhang",
+        "Zhiyuan Yang"
+      ],
+      "doi": "10.48550/arXiv.2402.19078",
+      "arxiv_id": "2402.19078",
+      "pdf_url": "",
+      "citation_count": 61
+    },
+    {
+      "title": "Efficient Multi-Objective Optimization on Dynamic Flexible Job Shop Scheduling Using Deep Reinforcement Learning Approach",
+      "year": 2023,
+      "authors": [
+        "Zufa Wu",
+        "Hongbo Fan",
+        "Yimeng Sun"
+      ],
+      "doi": "10.3390/pr11072018",
+      "arxiv_id": null,
+      "pdf_url": "https://www.mdpi.com/2227-9717/11/7/2018/pdf?version=1688630935",
+      "citation_count": 47
+    }
+  ],
+  "paper_title": "QSF: Multi-Objective Optimization based Efficient Solving for Floating-Point Constraints"
+}

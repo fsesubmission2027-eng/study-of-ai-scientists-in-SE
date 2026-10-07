@@ -1,0 +1,157 @@
+{
+  "id": "ASE-2025-017",
+  "paper_id": "34066c7bf56c38c65913582273555c8430dd1551",
+  "title": "Efficient and Verifiable Proof Logging for MaxSAT Solving",
+  "abstract": "MaxSAT solvers are increasingly used as back-ends in software engineering tools. Yet their results have lacked automatically checkable certificates of optimality. While SAT solvers emit DRAT proofs of (un)satisfiability, MaxSAT must additionally prove that no lower-cost solution exists. Existing approaches either cover only isolated solving paradigms or re-duce MaxSAT reasoning to heavyweight pseudo-Boolean proofs, yielding impractical verification overhead.We present the first MaxSAT-specific proof-logging framework for core-guided OLL solvers. We formalize native inference rules for cores, cliques, hardenings, totalizer updates, and bound adjustments, and implement both a human-readable logger and a compact binary DAG logger in EvalMaxSAT. Evaluation on the 2024 MaxSAT competition dataset confirm the practicality and scalability of our certification pipeline, paving the way for trustworthy, solver use.",
+  "year": 2025,
+  "citation_count": 1,
+  "venue": "40th IEEE/ACM International Conference on Automated Software Engineering (ASE 2025)",
+  "venue_short": "ASE 2025",
+  "authors": [
+    "Raoul van Doren",
+    "Timos Antonopoulos",
+    "Ruzica Piskac"
+  ],
+  "pdf_url": "",
+  "paper_url": "https://www.semanticscholar.org/paper/34066c7bf56c38c65913582273555c8430dd1551",
+  "paper_type": "methodology",
+  "award": "ACM SIGSOFT Distinguished Paper Award",
+  "subfield_label": "Program Analysis & Verification",
+  "introduction": "Software engineering increasingly relies on SAT solvers [1] for a wide range of automation tasks including program verification, test-suite generation and optimization, configuration management, model synthesis, static analysis and automated program repair [2]- [12]. Modern SAT solvers are powerful and well-engineered tools that can handle millions of variables and tens of millions of clauses, depending on the structure and complexity of the problem. An annual SAT Competition [13] showcases different SAT solvers and plays a crucial role in advancing their development. It provides challenging benchmarks and sets performance standards that push solver efficiency and scalability. However, for many years it was a standard that solvers could simply return \"SAT\" or \"UNSAT\" without any justification or proof, which lead to occasional disqualifications in the SAT competitions for incorrect UNSAT claims. To restore trust, the SAT community introduced proof certificates: RUP-style logging in 2003 [14], RAT in 2012 [15], DRUP in 2013 [16], and finally DRAT in 2014 [17]- [19]. Since 2013, all solvers in the SAT Competition's main track must emit a DRAT proof for every UNSAT result [20], ensuring that solver solutions are machine-checkable and reliable in safety-critical and auditable contexts.\n\nWhile many software engineering tasks may initially appear to be well-suited for SAT encoding, a closer examination often reveals that effective formalization requires going beyond SAT and demands optimization techniques. For instance, tasks such as identifying minimal fault-localization regions in complex debugging scenarios [21], detecting bugs in distributed systems [22], and synthesizing quantum error correction codes [23] can be formulated as SAT problems with an additional requirement to find an optimal solution based on a defined cost metric. These types of problems are more naturally expressed as weighted MaxSAT instances [24], [25].\n\nIn the classical SAT problem the goal is to find a solution for a given set of Boolean clauses. All clauses are treated equally and the found model has to be a model for every clause. MaxSAT extends the classical SAT problem by introducing two types of clauses: hard clauses, which must be satisfied, and soft clauses, which should be satisfied, but if they are not this violation incurs a weight-based penalty. The goal is to find a variable assignment that satisfies all hard clauses while minimizing the total weight of the unsatisfied soft clauses. Over the past decade, MaxSAT solver strategies and their performance have drastically increased similarly as for SAT solvers: they also can address the problems with millions of variables and clauses and there is also a yearly competition of MaxSAT solvers [26].\n\nYet, unlike SAT, where DRAT [17]- [19] proofs have been mandatory in the main track of the SAT Competition since 2013, MaxSAT lacks a single, widely supported proof format that certifies both feasibility and optimality. While a few specialized approaches emit certificates for particular solving portions, there is no general, competition-level standard that everyone uses to demonstrate that no better solution exists. This threatens the exact correctness guarantees that motivated SAT-level certification in the first place.\n\nExtending traditional SAT proof formats, such as DRAT, is insufficient to capture the optimization-specific reasoning required in MaxSAT solving. MaxSAT solvers are working in a core-guided paradigm: each time the solver identifies an unsatisfiable core comprising only of soft literals, it must not only record the literals involved but also the minimum weight among them. This minimum weight is critical and it must be added to the lower bound of the objective function to maintain sound reasoning about optimality. Consequently, a valid MaxSAT proof should log every conflict along with the exact weight update step. Unfortunately, the existing MaxSAT proof efforts trying to solve this problem either target only isolated algorithmic phases [27] or reduce all MaxSAT inferences to general pseudo-Boolean proofs [28] (e.g., VeriPB [29]- [31]), incurring substantial verification overhead and ignoring domain-specific optimizations.\n\nIn this paper, we close the gap between MaxSAT solving and certification with the first native proof-logging framework. Our system is designed to wrap around any modern MaxSAT solver, based on the OLL algorithm [32]. It is the state-of-theart core-guided approach used by all top entrants in the 2024 MaxSAT Competition. Our system produces both, a \"normal\" proof log, in human-readable text form, listing each inference with references to its premises and conclusions, as well as a proof in graph format where nodes represent soft literals and edges encode the dependency and weight-redistribution structure.\n\nBoth formats capture the full solver reasoning of the OLL algorithm. Proof sizes stay under 0.1 GB even on our largest benchmarks, showing that our approach is capable of scaling to competition benchmarks. Our contributions are as follows:\n\n• We formalize proof rules for the full OLL workflow.\n\n• We implement both a human-readable normal logger and a compact binary DAG logger within EvalMaxSAT, a topranked SOTA OLL solver. • By leveraging domain knowledge and avoiding translation to pseudo-Boolean proofs, we achieve up to an order of magnitude faster verification than prior approaches, with median verification overhead under 2% of solve time.\n\n• On all 571 benchmarks from the 2024 MaxSAT Competition, our framework successfully verifies every solved instance while producing manageable proof sizes and overhead. Beyond their theoretical significance, our contributions are highly relevant for software engineering. MaxSAT is already used in diverse SE tasks such as automated program repair, test minimization, fault localization, and configuration optimization [21]- [23], [33]. In these domains, correctness and trust are paramount: an incorrect solver result can propagate into missed faults, unsafe repairs, or misconfigured systems. Certification not only guarantees correctness of results but also enables auditability, post-run analysis and regulatory compliance. For instance, in safety-or security-critical pipelines, certificates can be archived and automatically checked as part of continuous integration, ensuring regressions are caught and decisions are traceable. Moreover, human-readable proof logs support debugging and explainability, allowing developers to understand which constraints drove a decision, rather than treating the solver as a black box.\n\nThe remainder of this paper is organized as follows. Section 2 reviews background on OLL-based MaxSAT. Section 3 introduces our proof rules and logging formats. Section 4 describes implementation details and presents the evaluation. Section 6 concludes the work.",
+  "experiment": "We have integrated both the normal and DAG-based prooflogging backends into EvalMaxSAT, one of the three topranked OLL solvers in the 2024 MaxSAT Competition. Eval-MaxSAT refines each unsatisfiable core via core minimization before applying the relaxation rules. However, this does not impact proof logging as our loggers only record the minimized cores.\n\nThe normal logger emits a sequence of entries to a plaintext file. Each entry introduces a new clause or soft literal (hard clause, extended soft clause, totalizer, bound, etc.) and assigns it a unique identifier. The proof generator then emits inference rule in the order in which they occurred and adds its premises and conclusion by referencing to the corresponding identifiers.\n\nThe DAG-based logger maintains an DAG of proof states throughout solving and serializes it in a compact binary format after the solving process has concluded. Each node includes all the information required for checking the validity of the corresponding node type.\n\nEvalMaxSAT relies on an external SAT solver and on SCIP for intermediate integer-optimization calls. When the SAT solver returns UNSAT under assumptions, we record its assumptions and optionally request a DRAT proof. If SCIP produces the final optimal assignment, we store the current proof state. The verifier later checks the validity of the stored intermediate proof state and tries to reproduce the optimum starting from the recorded intermediate proof state by performing a black-box SCIP invocation to confirm the claimed optimum.\n\nAs noted above, our implementation could be extended to emit a DRAT proof for every conflict extraction. In principle, this would allow the verifier to check each core or clique inference entirely via SAT-level reasoning. In practice however, generating and storing a DRAT proof for every conflict is not scalable: for example, verifying a clique of size n would require O(n 2 ) pairwise proofs. Instead, we resolve each conflict during verification by performing black-box SAT calls for each conflict which allows us to validate cores and cliques more efficiently. This part of the verification is also parallelizable.\n\nBenchmarks. We evaluate our implementations on the Weighted exact MaxSAT track of the 2024 MaxSAT Competition [26], comprising 571 instances drawn from diverse domains such as: Timeouts and Memory. We give a 3 600s timeout with 16 GB RAM for the solving and logging process of each benchmark. The verificaiton process of each benchmark is bounded to 7 200s and 16 GB RAM.\n\nComparison. To compare against prior work, we also evaluate \"certified-cgss\" [62], the only other proof-logging OLL solver, which emits pseudo-Boolean certificates for VeriPB [29]- [31]. We run it on the same 571 benchmarks under identical constraints.\n\nFinal State with lower bound set to 5 (i.e., sum of conflict node weights)\n\nConflict / Clique Soft literal Fig. 4: DAG representation of the illustrative example. Conflict nodes (red) point to their participating soft literals (blue). Weights are updated across relaxations, and the cumulative lower bound increases accordingly. This structure ensures that verification can be performed by a reverse traversal, making solver reasoning transparent and machine-checkable.\n\nRQ1: Proof Logging Overhead. How much additional time does proof logging add to plain MaxSAT solving in each mode? RQ2: Certificate Size. How large are the \"standard\" proofs versus the binary DAG proofs, and how do they compare to certificates produced by the certified-CGSS solver? RQ3: Verification Cost. What is the end-to-end time to check each proof, and how does it compare across the two logging modes and to the certified-CGSS baseline?\n\nTo understand how proof-logging overhead varies with problem sizes, we group the 435 solved instances into quartiles by three measures: number of hard clauses (#HC), number of soft clauses (#SC), and number of variables (V). Tables I, III and V summarize the advanced (DAG) mode, while Tables II, IV and VI report the corresponding standard mode. In each table:\n\n• FC: number of test files in the bin, • R(s): median runtime of the solver without proof logging (baseline), • TR(s): median runtime of the solver with proof logging, • IR: median percentage increase (TR -R)/R × 100, with 95% bootstrap confidence intervals (CI), • VR: median verification time (seconds),\n\n• PS: median proof size (GB),\n\n• MW: median maximum weight,\n\n• SW: median sum of weights, • OC: median optimal cost. Note that an IR value close to 0 indicates negligible runtime overhead. We report the median IR values together with 95% bootstrap confidence intervals, since the mean can be heavily skewed by outliers (e.g., when the baseline runtime R is very small). Because modern MaxSAT solvers rely on randomized heuristics, the logged run may occasionally finish faster than the baseline, which might again lead to negative IR values following from solver nondeterminism. Such negative values should be interpreted as statistical noise rather than a real performance gain.\n\nTable VII summarizes verification performance on the 668 benchmarks solved by both EvalMaxSAT and the certifiedcgss solver under identical time and memory limits. We report:\n\n• VO EMS (Verification Overhead for EvalMaxSAT): The ratio of verification time to solve time for our normal and DAG modes. • VO CGSS (Verification Overhead for certified-cgss):\n\nThe corresponding slowdown ratios for the certified-cgss tool.\n\n• VSP (Verification Speedup): The element-wise ratio VO CGSS/VO EMS, indicating how many times faster our verifier runs relative to certified-cgss. • PSD (Proof-Size Decrease): The ratio of EvalMaxSAT proof size to certified-cgss proof size. All metrics in this table are given as median and 90thpercentile.\n\nWe measure proof-logging overhead by comparing the solver's baseline run time R against its logged run time T R under both normal (standard) and advanced (DAG) modes.\n\nAcross all quartiles, the standard logger shows a negligible median overhead: overall its median IR is close to 0% (95% CI: [-0.18, 0.71]). The DAG logger is even lighter, with a slightly negative overall median IR (-1.28%, 95% CI: [-2.76, -0.26]), meaning that logged runs often finish as fast or even marginally faster than the baseline due to solver nondeterminism. In all cases, the 95% confidence intervals remain tightly centered around zero, confirming that proof logging does not add meaningful runtime cost.\n\nMore precisely:\n\n• Hard clauses. For small instances (Q1), both loggers frequently finish slightly faster than the baseline (median IR: -4.36% for standard, -5.32% for DAG). As the number of hard clauses grows, standard logging stabilizes around small positive overheads (Q3-Q4: up to 3.7%), while DAG logging remains statistically indistinguishable from zero (CIs spanning [-4.37, 0.09]). • Soft clauses. Overhead stays close to zero across all quartiles. Median IRs lie between -2.6% and +0.4% for both modes, and all confidence intervals overlap with zero, indicating no consistent penalty from logging. • Variables. Again, overhead is negligible. Standard logging has medians in the range of -4.1% to +0.7%, while DAG logging stays between -8.7% and -0.06%. In both cases, 95% CIs show that runtime differences are within solver noise.\n\nIn summary, embedding proof logging, either as a humanreadable stream or as a compact DAG, adds only a few percent (or effectively zero) to the solving time, confirming that our approach scales seamlessly to competition-level MaxSAT instances.\n\nFigure II-VI and I-V show that the standard proof format produces files in the order of a few megabytes up to 0.2 GB, depending on problem scale. For instance, when grouping by hard-clause quartiles, the median proof size is only 0.003 GB. Even in the largest soft-clause and variable-count bins, it remains under 0.087 GB. In contrast, the advanced format exploits shared derivations to achieve significantly better compaction. Thus, in every grouping its median proof size lies below 0.005 GB, and the 90th-percentile never exceeds 0.025 GB.\n\nWhen we compare against the certified-CGSS solver (Tbl. VII), this reduction becomes even more noticeable. The PSD column reports that our standard proofs consume roughly 30% of the disk space of the pseudo-Boolean certificates emitted by certified-CGSS (median), while our DAG proofs further shrink to only 3% of the CGSS proof size. Even at the 90th percentile, standard logs are under 6× smaller, and DAG logs remain 10× to 20× smaller.\n\nOverall, the binary-DAG format consistently delivers a 4-10× reduction over the standard proof logs, and up to 30× smaller certificates than the prior VeriPB-based approach.\n\nTables II-VI and I-V report absolute verification times for both logging modes across the same quartile groupings. The standard format exhibits fast verification as median times range from about 1 second in the smallest hard-clause bin (Q1) up to 37 s in the largest (Q4), and remain below 15 seconds in all soft-clause and variable-count bins. Even the 90th-percentile standard verifications complete in under one minute on competition-level inputs.\n\nBy contrast, the DAG format incurs higher but still manageable checking cost. Median verification times grow from roughly 20 seconds (hard-clauses Q2) to 158 seconds (hard- When compared against the certified-CGSS baseline in Table VII, the difference is stands out. Our standard proofs exhibit a median slowdown (VO EMS) of only 0.01× solve time (90th: 0.98×), while certified-CGSS's pseudo-Boolean certificates incur 5.64× (90th: 42.20×). Even the DAG mode, at 0.59× (90th: 1.04×), verifies over ten times faster than certified-CGSS. The element-wise ratio VSP shows that our verifier runs dramatically faster than certified-CGSS: the standard checker achieves a median speedup of over 587× (90th percentile: 3.2×10 4 ), while the DAG checker reaches a median of 20× (90th percentile: 6.3 × 10 3 ).\n\nIn summary, both proof formats enable rapid, end-to-end certification. the standard logger offers near-instant validation, and the DAG log, while incurring higher cost, remains an order of magnitude quicker than the existing VeriPB-based method, solidifying our framework's suitability for large-scale MaxSAT certification.\n\nOur rules currently target the empirically dominant OLL family of MaxSAT solvers. Certification for other paradigms (e.g., implicit hitting set, branch-and-bound) exists and/or is possible but remains future work.\n\nOur checker replays SCIP calls as black boxes on recorded intermediate instances. We do not trust the original solver calls but perform fresh ones with the recorded assumptions to verify the result. For SCIP, no standard proof format exists, and defining one is an important direction for future research.\n\nFinally, while our evaluation covers the full Weighted MaxSAT 2024 track, industrial instances may differ structurally. Additional experiments on domain-specific benchmarks (e.g., software verification, testing, or configuration) need to be valuable to confirm the practical impact of our framework.\n\nWe have introduced the first MaxSAT-specific proof-logging framework tailored to core-guided OLL solving, supporting both a human-readable format and a compact binary dependency DAG. Our system captures every inference rule, enabling lightweight proof generation and dramatically faster verification, with speedups of up to three orders of magnitude compared to prior pseudo-Boolean approaches based on VeriPB. On the full 2024 MaxSAT Competition suite, both logging modes successfully verified every solved instance, with normal proofs incurring median verification cost of only 1% of solve time and DAG proofs reducing certificate size by up to three orders of magnitude at the 90th percentile.\n\nBeyond competition benchmarks, our contributions directly support software engineering workflows that increasingly rely on MaxSAT, such as predicate abstraction in program verification, test-suite minimization, and automated debugging. The human-readable logs provide transparency for developers and auditors, while the DAG format offers scalable certificates suitable for continuous integration pipelines, regulatory compliance, and bug analysis. By closing the gap between highperformance MaxSAT solving and rigorous certification, our framework enables trustworthy optimization in safety-critical and auditable contexts, making MaxSAT a more reliable foundation for modern software engineering tasks.",
+  "section_quality": {
+    "has_abstract": true,
+    "has_introduction": true,
+    "has_experiment": true,
+    "intro_chars": 6889,
+    "experiment_chars": 12522
+  },
+  "introduction_source": "grobid_tei",
+  "experiment_source": "grobid_tei",
+  "background_source": "introduction",
+  "experiment_source_used": "experiment_section",
+  "task_title": "Native Proof Certification for Core-Guided MaxSAT Solvers",
+  "background": "Software engineering tasks such as automated program repair, test minimization, fault localization, and configuration optimization are often cast as Maximum Satisfiability (MaxSAT) problems, where the goal is to satisfy all hard clauses while minimizing the total weight of violated soft clauses. Modern MaxSAT solvers scale to millions of variables and are evaluated in annual competitions, yet unlike SAT solvers—which have long emitted DRAT proofs to certify unsatisfiability—MaxSAT lacks a single, widely supported proof format to guarantee both the feasibility and optimality of its solutions. Existing MaxSAT proof approaches either target only isolated algorithmic phases or reduce solver reasoning to heavy-weighted pseudo-Boolean proofs, leading to impractical verification overhead and ignoring domain-specific optimizations. This absence of efficient certification undermines the trustworthiness of MaxSAT-based tools in safety-critical software engineering contexts. There is a need for a general proof-logging framework that can accompany any modern core-guided MaxSAT solver, scale to competition-size instances, and allow independent verification of optimality with minimal cost.",
+  "research_question": "How can MaxSAT solvers produce automatically verifiable proofs of optimality that are compact, fast to check, and avoid the overhead of translating to general pseudo-Boolean formalisms?",
+  "experiment_setup": {
+    "datasets": [
+      {
+        "name": "2024 MaxSAT Competition Weighted Exact Track Benchmark Set",
+        "source": "MaxSAT Competition 2024 website (accessible via https://maxsat-evaluations.github.io/2024/ or contact competition organizers)",
+        "description": "571 weighted partial MaxSAT instances from diverse application domains, used in the competition's exact track.",
+        "access": "open"
+      }
+    ],
+    "baselines": [
+      {
+        "name": "certified-cgss (pseudo-Boolean proof generator for VeriPB)",
+        "reference": "[NOT SPECIFIED IN PAPER]"
+      }
+    ],
+    "metrics": [
+      {
+        "name": "Proof-logging overhead (IR)",
+        "definition": "Median percentage change in solver runtime when proof logging is enabled, computed as (logged_time - baseline_time) / baseline_time × 100, reported with 95% bootstrap confidence intervals."
+      },
+      {
+        "name": "Proof size",
+        "definition": "Median size on disk of the emitted proof file, in gigabytes (GB)."
+      },
+      {
+        "name": "Verification time",
+        "definition": "Median wall-clock time needed to independently check a proof and confirm the claimed optimal cost, in seconds."
+      },
+      {
+        "name": "Verification overhead (VO)",
+        "definition": "Ratio of verification time to solving time, capturing the relative cost of trust."
+      },
+      {
+        "name": "Proof size ratio",
+        "definition": "Ratio of proof sizes between two proof-generation approaches, used for comparing compactness."
+      }
+    ],
+    "rqs": [
+      "RQ1: What is the runtime overhead of proof logging during solving, across different logging modes and benchmark characteristics?",
+      "RQ2: How large are the generated proof certificates, and how do they compare to the alternative pseudo-Boolean proof approach?",
+      "RQ3: What is the end-to-end verification cost, and how does it compare to the alternative approach?"
+    ],
+    "target_subject": "Modern core-guided weighted MaxSAT solvers that employ OLL-like algorithms, typical of top-performing entrants in the MaxSAT Competition; examples include solvers that iteratively extract unsatisfiable cores and apply relaxation and hardening steps.",
+    "constraints": "The proof-logging mechanism must not alter the underlying solver's search heuristics or its ability to find optimal solutions. Generated proofs must capture all steps of the OLL algorithm (core extraction, clique detection, hardening, totalizer updates, bound adjustments) and be independently verifiable without access to the solver's internal state. Verification must complete within 2× the solving time and 16 GB memory on competition-grade instances. The framework should be integrable with any OLL-based solver without requiring changes to its core logic."
+  },
+  "expected_artifacts": [
+    "idea",
+    "code",
+    "experiment_results",
+    "paper"
+  ],
+  "feasibility_notes": "The benchmark instances are publicly available from the MaxSAT competition website. Verification relies on repeated SAT calls that can be parallelized; standard SAT solvers handle these efficiently on modern workstations with 16 GB RAM. Generating and storing a full DRAT proof for every conflict is not scalable, but black-box SAT calls during verification offer a practical alternative without special hardware. The primary challenge lies in designing inference rules that faithfully capture optimization reasoning while keeping proof sizes compact, but no specialized infrastructure is required.",
+  "difficulty": "hard",
+  "seed_papers": [
+    {
+      "title": "An Efficient and Extensible Zero-knowledge Proof Framework for Neural Networks",
+      "year": 2024,
+      "authors": [
+        "Tao Lu",
+        "Haoyu Wang",
+        "Wenjie Qu"
+      ],
+      "doi": null,
+      "arxiv_id": null,
+      "pdf_url": "",
+      "citation_count": 22
+    },
+    {
+      "title": "Efficient Verifiable Dynamic Searchable Symmetric Encryption With Forward and Backward Security",
+      "year": 2025,
+      "authors": [
+        "Chenbin Zhao",
+        "Ruiying Du",
+        "Kun He"
+      ],
+      "doi": "10.1109/JIOT.2024.3470772",
+      "arxiv_id": null,
+      "pdf_url": "",
+      "citation_count": 12
+    },
+    {
+      "title": "A Blockchain-Based Efficient and Verifiable Attribute-Based Proxy Re-Encryption Cloud Sharing Scheme",
+      "year": 2023,
+      "authors": [
+        "Tao Feng",
+        "Dewei Wang",
+        "Renbin Gong"
+      ],
+      "doi": "10.3390/info14050281",
+      "arxiv_id": null,
+      "pdf_url": "https://www.mdpi.com/2078-2489/14/5/281/pdf?version=1683629878",
+      "citation_count": 10
+    },
+    {
+      "title": "Efficient and Verifiable Proof of Replication with Fast Fault Localization",
+      "year": 2021,
+      "authors": [
+        "Haoran Yuan",
+        "Xiaofeng Chen",
+        "Guowen Xu"
+      ],
+      "doi": "10.1109/INFOCOM42981.2021.9488729",
+      "arxiv_id": null,
+      "pdf_url": "",
+      "citation_count": 5
+    },
+    {
+      "title": "HERMES: Towards Efficient and Verifiable Mathematical Reasoning in LLMs",
+      "year": 2025,
+      "authors": [
+        "A. Ospanov",
+        "Zijin Feng",
+        "Jiacheng Sun"
+      ],
+      "doi": "10.48550/arXiv.2511.18760",
+      "arxiv_id": "2511.18760",
+      "pdf_url": "",
+      "citation_count": 5
+    }
+  ],
+  "paper_title": "Efficient and Verifiable Proof Logging for MaxSAT Solving"
+}

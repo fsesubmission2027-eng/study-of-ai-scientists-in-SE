@@ -1,0 +1,1712 @@
+{
+  "run_dir": "~/ai_scientist_inputs/ISSTA-2025-008_automated_test_scenario_generation_for_m/workspace/evoscientist_2026-09-24_02-17-17",
+  "task_dir": "~/ai_scientist_inputs/ISSTA-2025-008_automated_test_scenario_generation_for_m",
+  "framework": "evoscientist",
+  "fairness_audit": [
+    {
+      "axis": "completeness",
+      "was_unfair": "Required both paper.tex AND paper.pdf; any tool missing one failed equally.",
+      "fix": "Paper gate: PDF=1.0; TeX-only=0.5; ``complete`` requires PDF."
+    },
+    {
+      "axis": "completeness",
+      "was_unfair": "``results`` counted stub/seed JSON (dataset_candidate/metrics.json).",
+      "fix": "``results`` requires substantive numeric results via results_normalize."
+    },
+    {
+      "axis": "experiment_success",
+      "was_unfair": "Only metrics.json; ignored results.json / experiment_results.txt.",
+      "fix": "Framework-ordered result candidates + normalized loaders."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Penalized tools with no bib; airesearcher has no workspace references.",
+      "fix": "literature_applicable=false → status not_applicable; excluded from fair aggregate."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "related_work.json subset as gold made recall hard to interpret.",
+      "fix": "Coverage gold is original paper REFERENCES from mineru; related_work only enriches metadata/fallback."
+    },
+    {
+      "axis": "peer_review",
+      "was_unfair": "Missing Stanford report looked like evaluation failure.",
+      "fix": "status not_provided; optional axis, never counts as tool failure."
+    },
+    {
+      "axis": "paths/find_results",
+      "was_unfair": "Picked downloads/** and sandbox noise (e.g. airesearcher LLVM tree).",
+      "fix": "Exclude downloads/, seeds/, dataset_candidate/, sandbox junk paths."
+    },
+    {
+      "axis": "paths/framework_noise",
+      "was_unfair": "DeepScientist .deepscientist_npm / runtime / skills templates counted as code/paper/results.",
+      "fix": "FRAMEWORK_NOISE_DIRS+markers; quest worktree + eval_output results; paper md drafts; reject template tex."
+    },
+    {
+      "axis": "paths/paper_tex",
+      "was_unfair": "tiny_scientist / ACL runs store paper under latex/*.tex; evaluator only looked at paper/main.tex.",
+      "fix": "latex/**/*.tex with substantive-body heuristic; find_paper_document uses same rules."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Entire custom.bib (300+ anthology entries) verified when paper had zero \\cite commands.",
+      "fix": "collect_agent_references filters bib to in-text cite keys; skips uncited bulk bib (>40 entries)."
+    },
+    {
+      "axis": "paths/ai_scientist_summaries",
+      "was_unfair": "AI Scientist can persist substantive results and paper-like drafts in *_summary.json logs rather than paper/main.tex or results/**/*.json.",
+      "fix": "Treat draft_summary/research_summary as weak paper documents and summary JSONs as result candidates."
+    },
+    {
+      "axis": "framework/ai_scientist_v2",
+      "was_unfair": "Manifest framework ``ai_scientist_v2`` fell through to profile ``unknown``, skipping AI-Scientist idea/result path priorities.",
+      "fix": "Normalize ``ai_scientist_v2`` (and common aliases) to profile key ``ai_scientist``."
+    },
+    {
+      "axis": "idea_generation",
+      "was_unfair": "plan.md/todos.md weak proxies scored same as structured idea.json.",
+      "fix": "Framework idea_priority tried first; missing idea → not_applicable where appropriate."
+    }
+  ],
+  "generated_at": "2026-10-01T12:55:04",
+  "axes": [
+    "alignment",
+    "completeness",
+    "experiment_analysis",
+    "idea_generation",
+    "literature_review",
+    "peer_review"
+  ],
+  "results": {
+    "completeness": {
+      "framework": "evoscientist",
+      "run_dir": "~/ai_scientist_inputs/ISSTA-2025-008_automated_test_scenario_generation_for_m/workspace/evoscientist_2026-09-24_02-17-17",
+      "task_dir": "~/ai_scientist_inputs/ISSTA-2025-008_automated_test_scenario_generation_for_m",
+      "complete": true,
+      "required_score": 1.0,
+      "bonus_score": 0.13,
+      "overall_score": 0.8521,
+      "missing": [],
+      "required": {
+        "idea": {
+          "path": "plan.md",
+          "bytes": 3013,
+          "via": "candidate"
+        },
+        "code": {
+          "count": 6,
+          "files": [
+            {
+              "path": "project/_repro_lib.py",
+              "bytes": 4751,
+              "via": "glob"
+            },
+            {
+              "path": "project/analyze.py",
+              "bytes": 7324,
+              "via": "glob"
+            },
+            {
+              "path": "project/compute_all.py",
+              "bytes": 5088,
+              "via": "glob"
+            },
+            {
+              "path": "project/run_rs.py",
+              "bytes": 6253,
+              "via": "glob"
+            },
+            {
+              "path": "project/run_sb.py",
+              "bytes": 3242,
+              "via": "glob"
+            },
+            {
+              "path": "project/seed_analysis.py",
+              "bytes": 1922,
+              "via": "glob"
+            }
+          ]
+        },
+        "results": {
+          "substantive": true,
+          "normalized_path": "results/metrics.json",
+          "numeric_leaf_count": 370,
+          "discovered_files": [
+            {
+              "path": "results/metrics.json",
+              "bytes": 13015,
+              "via": "candidate"
+            },
+            {
+              "path": "results/bootstrap_ci.json",
+              "bytes": 3359,
+              "via": "glob"
+            },
+            {
+              "path": "results/rs/2vessel/2vessel_2026-09-24T02-52-03.316359_129670049116752.json",
+              "bytes": 1647,
+              "via": "glob"
+            },
+            {
+              "path": "results/rs/2vessel/2vessel_2026-09-24T02-52-03.379148_129669147044848.json",
+              "bytes": 1645,
+              "via": "glob"
+            },
+            {
+              "path": "results/rs/2vessel/2vessel_2026-09-24T02-52-03.540491_129669300849104.json",
+              "bytes": 1646,
+              "via": "glob"
+            },
+            {
+              "path": "results/rs/2vessel/2vessel_2026-09-24T02-52-03.634063_129670042883728.json",
+              "bytes": 1648,
+              "via": "glob"
+            },
+            {
+              "path": "results/rs/2vessel/2vessel_2026-09-24T02-52-03.681823_129669300750800.json",
+              "bytes": 1644,
+              "via": "glob"
+            },
+            {
+              "path": "results/rs/2vessel/2vessel_2026-09-24T02-52-03.712522_129669147676336.json",
+              "bytes": 1646,
+              "via": "glob"
+            },
+            {
+              "path": "results/rs/2vessel/2vessel_2026-09-24T02-52-03.880721_129670042883968.json",
+              "bytes": 1651,
+              "via": "glob"
+            },
+            {
+              "path": "results/rs/2vessel/2vessel_2026-09-24T02-52-03.940385_129669300760736.json",
+              "bytes": 1644,
+              "via": "glob"
+            },
+            {
+              "path": "results/rs/2vessel/2vessel_2026-09-24T02-52-04.012021_129670049204784.json",
+              "bytes": 1645,
+              "via": "glob"
+            },
+            {
+              "path": "results/rs/2vessel/2vessel_2026-09-24T02-52-04.110162_129669147037792.json",
+              "bytes": 1650,
+              "via": "glob"
+            },
+            {
+              "path": "results/rs/2vessel/2vessel_2026-09-24T02-52-04.165986_129670049308656.json",
+              "bytes": 1643,
+              "via": "glob"
+            },
+            {
+              "path": "results/rs/2vessel/2vessel_2026-09-24T02-52-04.278222_129669147279168.json",
+              "bytes": 1642,
+              "via": "glob"
+            },
+            {
+              "path": "results/rs/2vessel/2vessel_2026-09-24T02-52-04.526918_129668859905024.json",
+              "bytes": 1650,
+              "via": "glob"
+            },
+            {
+              "path": "results/rs/2vessel/2vessel_2026-09-24T02-52-04.594108_129669300972288.json",
+              "bytes": 1643,
+              "via": "glob"
+            },
+            {
+              "path": "results/rs/2vessel/2vessel_2026-09-24T02-52-04.631755_129669147676336.json",
+              "bytes": 1650,
+              "via": "glob"
+            },
+            {
+              "path": "results/rs/2vessel/2vessel_2026-09-24T02-52-04.728953_129670049275744.json",
+              "bytes": 1641,
+              "via": "glob"
+            },
+            {
+              "path": "results/rs/2vessel/2vessel_2026-09-24T02-52-04.800356_129669147376512.json",
+              "bytes": 1647,
+              "via": "glob"
+            },
+            {
+              "path": "results/rs/2vessel/2vessel_2026-09-24T02-52-04.882096_129669147491248.json",
+              "bytes": 1650,
+              "via": "glob"
+            }
+          ],
+          "metrics_keys_sample": []
+        },
+        "paper": {
+          "tex": {
+            "path": "paper/main.tex",
+            "bytes": 17317,
+            "via": "candidate"
+          },
+          "pdf": {
+            "path": "paper/main.pdf",
+            "bytes": 228567,
+            "via": "candidate"
+          },
+          "md": {
+            "path": "paper/paper.md",
+            "bytes": 19150,
+            "via": "candidate"
+          },
+          "json": null,
+          "status": "pdf",
+          "score": 1.0
+        }
+      },
+      "bonus": {
+        "experiment_plan": {
+          "path": "plan.md",
+          "bytes": 3013,
+          "via": "candidate"
+        },
+        "experiment_log": {
+          "path": "evoscientist_run.log",
+          "bytes": 79547,
+          "via": "glob"
+        },
+        "review": {
+          "path": "artifacts/peer_review/stanford_apr.md",
+          "bytes": 11983,
+          "via": "glob"
+        },
+        "readme": {
+          "path": "README.md",
+          "bytes": 3738,
+          "via": "candidate"
+        },
+        "narrative": null,
+        "bib": null
+      },
+      "manifest_status": {
+        "research_request": true,
+        "plan": true,
+        "metrics": true,
+        "paper_tex": true,
+        "paper_pdf": true,
+        "readme": true
+      },
+      "gate_scores": {
+        "idea": 1.0,
+        "code": 1.0,
+        "results": 1.0,
+        "paper": 1.0
+      },
+      "fairness": {
+        "gates": [
+          "idea",
+          "code",
+          "results",
+          "paper"
+        ],
+        "paper_gate_rule": "PDF=1.0; TeX-only/md_only/json_only=0.5; complete requires PDF",
+        "results_gate_rule": "substantive numeric results via framework-aware normalize_results",
+        "audit_ref": "framework_profile.FAIRNESS_AUDIT"
+      },
+      "notes": [
+        "Required: idea, code, substantive results, paper (PDF full; TeX/markdown/JSON draft half).",
+        "Stub/seed metrics (e.g. dataset_candidate/metrics.json) do not satisfy results.",
+        "Framework noise (.deepscientist_npm, skills/templates, runtime) is excluded from code/results/paper.",
+        "Manifest status is informational; disk presence is authoritative."
+      ]
+    },
+    "idea_generation": {
+      "run_dir": "~/ai_scientist_inputs/ISSTA-2025-008_automated_test_scenario_generation_for_m/workspace/evoscientist_2026-09-24_02-17-17",
+      "task_dir": "~/ai_scientist_inputs/ISSTA-2025-008_automated_test_scenario_generation_for_m",
+      "idea_path": "~/ai_scientist_inputs/ISSTA-2025-008_automated_test_scenario_generation_for_m/workspace/evoscientist_2026-09-24_02-17-17/plan.md",
+      "status": "ok",
+      "dimensions": {
+        "novelty": {
+          "score": 1.0,
+          "justification": "The idea states it will 'reproduce SB/RS/CO baselines and add (i) a closed-form uniform-reference (U-Ref) coverage bound and (ii) bootstrap/seed uncertainty.' This directly reuses the scenario-generation approaches already represented by R38 (automated test generation for COLREGS compliance), R40 (CommonOcean modular benchmarks and scenario generation), and R3/R25 (metaheuristic/search-based scenario concretization and testing). The core method is already present; only evaluation-level statistical additions are proposed.",
+          "rubric": "Existing: the idea's core method is already clearly present or solved in the Solution Space; only tiny parameter / test-case changes.",
+          "category": "Existing",
+          "nearest_solution_space_ids": [
+            "R38",
+            "R40",
+            "R3",
+            "R25"
+          ],
+          "differentiation": "The plan does not introduce a new scenario-generation mechanism. Its additions are a closed-form uniform-reference coverage bound and bootstrap/seed uncertainty analysis, which are evaluation-level contributions rather than a new method."
+        },
+        "feasibility": {
+          "score": 4.0,
+          "justification": "The plan leverages existing libraries and artifact data: 'run_sb.py — NSGA-II (PyMoo)', 'Scenic rejection sampling (helpers inlined to avoid module side effect)', and 'working drivers + metric computation on the artifact.' The experiment design is modest, with fresh SB K=2..6 and RS K=2,3 at 200 runs, so the engineering burden is low to moderate and clearly within a single researcher's capacity.",
+          "rubric": "Low barrier / easy to implement: core logic can be quickly built on existing Python libraries or common ML frameworks; only small changes to a standard evaluation flow (e.g. prompt strategy tweaks or swapping metrics)."
+        },
+        "clarity": {
+          "score": 4.0,
+          "justification": "The plan is concrete and stage-gated: it specifies 'single-pass functional abstraction → shape hash; metric computation', explicit run counts such as 'fresh SB (K=2..6, 200 runs), fresh RS (K=2,3, 200 runs)', and documents blockers like the CommonOcean XML re-parse API change. However, the U-Ref bound and bootstrap methodology are named but not formally specified, preventing a score of 5.",
+          "rubric": "Clear and concrete: steps are explicit with a reasonable, specific experiment design (baseline tools, metric definitions); can be turned into a solid proposal."
+        }
+      },
+      "overall_score": 2.0,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "novelty",
+        "feasibility",
+        "clarity"
+      ],
+      "solution_space": {
+        "status": "ok",
+        "paper_count": 127,
+        "entry_count": 127,
+        "cache_hit": true,
+        "source_file": "~/ai_scientist_inputs/ISSTA-2025-008_automated_test_scenario_generation_for_m/mineru_sections.json",
+        "stats": {
+          "papers": 127,
+          "extracted": 127,
+          "usable_abstracts": 56,
+          "citation_meta_abstracts": 0,
+          "missing_abstracts": 71,
+          "mineru_titles": 81,
+          "related_work_titles": 75,
+          "abstracts_attached": 56,
+          "related_work_extras": 46,
+          "batches": 8
+        },
+        "error": null
+      },
+      "notes": [
+        "Scores the intermediate idea artifact (not the final paper).",
+        "Dimensions: novelty, feasibility, clarity (each 1-5). Excitement removed.",
+        "Novelty is scored against a Solution Space built from mineru REFERENCES titles (+ related_work.json abstracts when matched)."
+      ],
+      "idea_via": "candidate",
+      "idea_relative": "plan.md",
+      "summary": "This is a reproduction and re-analysis plan for an existing COLREGS test scenario generation study. It reruns SB/RS/CommonOcean baselines on the provided artifact, computes the required metrics, and adds a uniform-reference coverage bound plus bootstrap/seed uncertainty. The implementation and experiment design are feasible and clearly described, but the core generation method is not novel relative to the solution space. The contribution is primarily empirical and statistical rather than methodological.",
+      "strengths": [
+        "Concrete stage-by-stage reproducibility plan with explicit success criteria",
+        "Uses existing artifact, PyMoo, and Scenic, keeping feasibility high",
+        "Adds useful statistical rigor via bootstrap CIs and seed sensitivity analysis",
+        "Documents real engineering blockers and workarounds"
+      ],
+      "weaknesses": [
+        "Core method is a reproduction of existing scenario-generation approaches",
+        "U-Ref analytical bound is named but not formally derived or specified",
+        "No new generator, abstraction, or search mechanism is proposed",
+        "Contribution is evaluation-level rather than advancing the problem paradigm"
+      ],
+      "llm_meta": {
+        "model": "deepseek-v4-pro-0813",
+        "base_url": "https://api-sg.umodelverse.ai/v1",
+        "usage": {
+          "completion_tokens": 2801,
+          "completion_tokens_details": {
+            "reasoning_tokens": 2123
+          },
+          "prompt_tokens": 6807,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "total_tokens": 9608
+        },
+        "attempt": 1
+      }
+    },
+    "peer_review": {
+      "run_dir": "~/ai_scientist_inputs/ISSTA-2025-008_automated_test_scenario_generation_for_m/workspace/evoscientist_2026-09-24_02-17-17",
+      "review_report": "~/ai_scientist_inputs/ISSTA-2025-008_automated_test_scenario_generation_for_m/workspace/evoscientist_2026-09-24_02-17-17/artifacts/peer_review/stanford_apr.md",
+      "paper_pdf": "~/ai_scientist_inputs/ISSTA-2025-008_automated_test_scenario_generation_for_m/workspace/evoscientist_2026-09-24_02-17-17/paper/main.pdf",
+      "paper_tex": "~/ai_scientist_inputs/ISSTA-2025-008_automated_test_scenario_generation_for_m/workspace/evoscientist_2026-09-24_02-17-17/paper/main.tex",
+      "status": "ok",
+      "dimensions": {},
+      "overall_score": 5.8,
+      "score_scale": "1-10",
+      "dimension_order": [],
+      "notes": [
+        "Scored from paperreview.ai (Stanford APR) native ratings; benchmark 5-dimension LLM rubric skipped.",
+        "Overall scale: 1-10."
+      ],
+      "paperreview": {
+        "status": "cached",
+        "hint": "Cached APR score found; no re-upload."
+      },
+      "scoring_method": "paperreview_apr",
+      "scoring_source": "paperreview_json",
+      "apr_dimensions": {},
+      "summary": "",
+      "red_flags": []
+    },
+    "alignment": {
+      "run_dir": "~/ai_scientist_inputs/ISSTA-2025-008_automated_test_scenario_generation_for_m/workspace/evoscientist_2026-09-24_02-17-17",
+      "task_dir": "~/ai_scientist_inputs/ISSTA-2025-008_automated_test_scenario_generation_for_m",
+      "status": "ok",
+      "original": {
+        "paper_title": "Assessing Scene Generation Techniques for Testing COLREGS-Compliance of Autonomous Surface Vehicles",
+        "selection": {
+          "num_blocks": 6,
+          "total_chars": 31998,
+          "inferred_roles": {
+            "abstract": 1,
+            "experiment": 3,
+            "discussion": 1,
+            "conclusion": 1
+          },
+          "mineru_raw_keys": {
+            "field:abstract": 1,
+            "field:experiment": 1,
+            "other": 3,
+            "conclusion": 1
+          },
+          "infer_reasons": {
+            "top_level_field": 2,
+            "body": 2,
+            "title": 2
+          },
+          "rescued_from_other": 3,
+          "note": "mineru key is unreliable; blocks are selected by title/body/inheritance. rescued_from_other counts sections labeled other but treated as typed roles."
+        },
+        "claims": [
+          {
+            "id": "C1",
+            "statement": "Test scenarios derived from real-world AIS/CommonOcean data are insufficient for testing multi-ship COLREGS-compliance encounters.",
+            "direction": "degrades",
+            "metric_names": [
+              "relevant_consistent_ratio",
+              "ambiguous_consistent_ratio"
+            ],
+            "evidence_quote": "test scenarios derived from historic maritime traffic are insufficient for testing multi-ship encounters",
+            "confidence": 0.97
+          },
+          {
+            "id": "C2",
+            "statement": "Existing synthetic test scenario generation techniques provide sufficient scalability and speed, and search-based generation is sufficient for practical open-sea encounters with 3-6 vessels.",
+            "direction": "improves",
+            "metric_names": [
+              "scalability",
+              "speed"
+            ],
+            "evidence_quote": "search-based scenario generation provided sufficient scalability and speed for deriving test scenarios for open sea encounters with increasing number of vessels for problems of practical size (3–6 vessels)",
+            "confidence": 0.95
+          },
+          {
+            "id": "C3",
+            "statement": "Adapted automotive scenario generation techniques are limited in diversity and completeness as the number of vessels increases.",
+            "direction": "degrades",
+            "metric_names": [
+              "diversity",
+              "completeness"
+            ],
+            "evidence_quote": "both SB and RS failed to cover many equivalence classes, particularly for larger problems with more vessels",
+            "confidence": 0.96
+          },
+          {
+            "id": "C4",
+            "statement": "Rejection sampling was not effective for generating maritime test scenarios, likely due to higher degrees of freedom in vessel placement.",
+            "direction": "degrades",
+            "metric_names": [
+              "scalability",
+              "speed"
+            ],
+            "evidence_quote": "while rejection sampling was proven highly beneficial in the automotive domain, it was not effective in generating maritime test scenarios",
+            "confidence": 0.94
+          },
+          {
+            "id": "C5",
+            "statement": "Synthetic test generation techniques can repeatedly derive functionally inconsistent COLREGS scenarios, indicating possible COLREGS assumption gaps in edge cases.",
+            "direction": "mixed",
+            "metric_names": [
+              "consistent_scenario_ratio"
+            ],
+            "evidence_quote": "synthetic test generation techniques repeatedly derived scenarios where the functional scenario model was inconsistent",
+            "confidence": 0.9
+          }
+        ],
+        "metrics": [
+          {
+            "name": "relevant_consistent_ratio_CO_K2",
+            "value": 30.8,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "CommonOcean (CO) real-world AIS benchmark, K=2 vessels",
+            "is_sota_or_best": false,
+            "evidence_quote": "The real-world CO dataset has low relevance ratio (30.8%) for K = 2",
+            "confidence": 0.97
+          },
+          {
+            "name": "ambiguous_consistent_ratio_CO_K_gt_2",
+            "value": 0.0,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "CommonOcean (CO) real-world AIS benchmark, K>2 vessels",
+            "is_sota_or_best": false,
+            "evidence_quote": "0% relevance and ambiguous ratio for K > 2",
+            "confidence": 0.9
+          },
+          {
+            "name": "two_vessel_encounter_ratio",
+            "value": 97.7,
+            "unit": "%",
+            "higher_is_better": false,
+            "setting": "CommonOcean benchmark overall encounter composition",
+            "is_sota_or_best": false,
+            "evidence_quote": "This benchmark predominantly (97.7%) features two-vessel encounters",
+            "confidence": 0.95
+          },
+          {
+            "name": "relevant_consistent_ratio_SB_K2",
+            "value": 94.4,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "Search-based (SB) synthetic scene generation, K=2 vessels",
+            "is_sota_or_best": false,
+            "baseline_name": "RS",
+            "baseline_value": 94.6,
+            "evidence_quote": "T∩C (%) 94.4% 94.6% 30.8%",
+            "confidence": 0.8
+          },
+          {
+            "name": "relevant_consistent_ratio_RS_K2",
+            "value": 94.6,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "Rejection sampling (RS) synthetic scene generation, K=2 vessels",
+            "is_sota_or_best": true,
+            "baseline_name": "SB",
+            "baseline_value": 94.4,
+            "evidence_quote": "T∩C (%) 94.4% 94.6% 30.8%",
+            "confidence": 0.8
+          }
+        ],
+        "overall_conclusion": "Automotive scenario generation techniques can be adapted to maritime COLREGS testing, and search-based generation provides adequate speed and scalability, but both SB and RS have limited diversity and completeness for multi-vessel encounters. Real-world AIS-derived CommonOcean scenarios are largely insufficient for testing multi-ship COLREGS compliance due to low relevance and rare multi-vessel encounters.",
+        "comparable_notes": "Experiments compare search-based (SB), rejection-sampling (RS), and CommonOcean AIS data. Measurements used 1000 runs per approach/problem size with a 10-minute timeout on Ubuntu 24.04, Intel Haswell, 32GB RAM, Python 3.12, reset seeds, garbage collection, and two warm-up runs. Scenes were abstracted with l2f into functional equivalence classes; relevance is measured by T∩C and ambiguity by A∩C, with ambiguity defined only for multi-vessel (K>2) scenarios.",
+        "cache_hit": true
+      },
+      "agent": {
+        "status": "ok",
+        "run_dir": "~/ai_scientist_inputs/ISSTA-2025-008_automated_test_scenario_generation_for_m/workspace/evoscientist_2026-09-24_02-17-17",
+        "claims": [
+          {
+            "id": "A1",
+            "statement": "Search-based scene generation (SB) achieves near-100% relevance and the highest coverage among the evaluated generators.",
+            "direction": "improves",
+            "metric_names": [
+              "relevance_ratio",
+              "coverage"
+            ],
+            "evidence_quote": "SB achieves near-100\\% relevance and the highest coverage",
+            "confidence": 0.95
+          },
+          {
+            "id": "A2",
+            "statement": "SB coverage and uniformity degrade as the number of vessels K grows, leaving a completeness gap of 0.34-0.37 for K=4..6.",
+            "direction": "degrades",
+            "metric_names": [
+              "coverage",
+              "distribution_divergence_kl",
+              "coverage_gap"
+            ],
+            "evidence_quote": "its coverage and uniformity degrade as $K$ grows, leaving a completeness gap of $0.34$--$0.37$ for $K=4..6$",
+            "confidence": 0.9
+          },
+          {
+            "id": "A3",
+            "statement": "Rejection sampling (RS) is fast for K=2,3 but its acceptance rate collapses to 48/1000 valid scenes at K=4 and 0/1000 at K=5,6 within a 240s budget.",
+            "direction": "degrades",
+            "metric_names": [
+              "average_generation_time",
+              "valid_scene_ratio"
+            ],
+            "evidence_quote": "RS is fast for $K=2,3$ but its acceptance rate collapses ($48/1000$ valid scenes at $K=4$ and $0/1000$ at $K=5,6$ within a $240$~s budget)",
+            "confidence": 0.95
+          },
+          {
+            "id": "A4",
+            "statement": "CommonOcean AIS data is relevant only for approximately 2-vessel encounters.",
+            "direction": "neutral",
+            "metric_names": [
+              "relevance_ratio",
+              "coverage"
+            ],
+            "evidence_quote": "CommonOcean AIS data is relevant only for $\\approx$2-vessel encounters.",
+            "confidence": 0.9
+          },
+          {
+            "id": "A5",
+            "statement": "The uniform-reference bound provides a closed-form budget-normalized ceiling for coverage with zero expected KL divergence, enabling completeness-gap measurement.",
+            "direction": "neutral",
+            "metric_names": [
+              "coverage_gap"
+            ],
+            "evidence_quote": "a closed-form \\emph{uniform-reference bound} that normalizes completeness against the run budget",
+            "confidence": 0.85
+          }
+        ],
+        "metrics": [
+          {
+            "name": "coverage",
+            "value": 1.0,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "SB fresh, K=2, C=5, n_total_files=200",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "metrics.json: {\"K\": 2, \"C\": 5, \"method\": \"sb_fresh\", \"coverage\": 1.0}",
+            "confidence": 0.95
+          },
+          {
+            "name": "relevance_ratio",
+            "value": 0.965,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "SB fresh, K=2, C=5, n_total_files=200",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "metrics.json: {\"K\": 2, \"C\": 5, \"method\": \"sb_fresh\", \"relevance_ratio\": 0.965}",
+            "confidence": 0.95
+          },
+          {
+            "name": "relevance_ratio",
+            "value": 0.885,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "SB fresh, K=3, C=15, n_total_files=200",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "metrics.json: {\"K\": 3, \"C\": 15, \"method\": \"sb_fresh\", \"relevance_ratio\": 0.885}",
+            "confidence": 0.95
+          },
+          {
+            "name": "coverage",
+            "value": 0.9333333333333333,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "SB bundled, K=3, C=15, n_total_files=1000",
+            "is_sota_or_best": true,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "metrics.json: {\"K\": 3, \"C\": 15, \"method\": \"sb_bundled\", \"coverage\": 0.9333333333333333}",
+            "confidence": 0.9
+          },
+          {
+            "name": "coverage",
+            "value": 0.8666666666666667,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "SB fresh, K=3, C=15, n_total_files=200",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "metrics.json: {\"K\": 3, \"C\": 15, \"method\": \"sb_fresh\", \"coverage\": 0.8666666666666667}",
+            "confidence": 0.95
+          },
+          {
+            "name": "distribution_divergence_kl",
+            "value": 0.4000083691857148,
+            "unit": null,
+            "higher_is_better": false,
+            "setting": "SB fresh, K=3, C=15, n_total_files=200",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "metrics.json: {\"K\": 3, \"C\": 15, \"method\": \"sb_fresh\", \"distribution_divergence_kl\": 0.4000083691857148}",
+            "confidence": 0.95
+          },
+          {
+            "name": "average_generation_time",
+            "value": 0.03941165,
+            "unit": "s",
+            "higher_is_better": false,
+            "setting": "RS fresh, K=2, C=5, n_total_files=200",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "metrics.json: {\"K\": 2, \"C\": 5, \"method\": \"rs_fresh\", \"average_generation_time\": 0.03941165}",
+            "confidence": 0.95
+          },
+          {
+            "name": "average_generation_time",
+            "value": 6.023465365,
+            "unit": "s",
+            "higher_is_better": false,
+            "setting": "RS fresh, K=3, C=15, n_total_files=200",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "metrics.json: {\"K\": 3, \"C\": 15, \"method\": \"rs_fresh\", \"average_generation_time\": 6.023465365}",
+            "confidence": 0.95
+          },
+          {
+            "name": "relevance_ratio",
+            "value": 0.9,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "RS fresh, K=3, C=15, n_total_files=200",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "metrics.json: {\"K\": 3, \"C\": 15, \"method\": \"rs_fresh\", \"relevance_ratio\": 0.9}",
+            "confidence": 0.95
+          },
+          {
+            "name": "coverage",
+            "value": 0.7333333333333333,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "RS fresh, K=3, C=15, n_total_files=200",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "metrics.json: {\"K\": 3, \"C\": 15, \"method\": \"rs_fresh\", \"coverage\": 0.7333333333333333}",
+            "confidence": 0.95
+          },
+          {
+            "name": "coverage_gap",
+            "value": 0.13332836158127515,
+            "unit": null,
+            "higher_is_better": false,
+            "setting": "SB fresh, K=3, C=15, n_total_files=200",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "metrics.json: {\"K\": 3, \"C\": 15, \"method\": \"sb_fresh\", \"coverage_gap\": 0.13332836158127515}",
+            "confidence": 0.9
+          },
+          {
+            "name": "coverage_gap",
+            "value": 0.2666626244481045,
+            "unit": null,
+            "higher_is_better": false,
+            "setting": "RS fresh, K=3, C=15, n_total_files=200",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "metrics.json: {\"K\": 3, \"C\": 15, \"method\": \"rs_fresh\", \"coverage_gap\": 0.2666626244481045}",
+            "confidence": 0.9
+          },
+          {
+            "name": "relevance_ratio",
+            "value": 0.30819366852886404,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "CommonOcean bundled, K=2, C=5, n_total_files=3222",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "metrics.json: {\"K\": 2, \"C\": 5, \"method\": \"co_bundled\", \"relevance_ratio\": 0.30819366852886404}",
+            "confidence": 0.95
+          },
+          {
+            "name": "coverage",
+            "value": 0.0,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "CommonOcean bundled, K=3, C=15, n_total_files=72",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "metrics.json: {\"K\": 3, \"C\": 15, \"method\": \"co_bundled\", \"coverage\": 0.0}",
+            "confidence": 0.95
+          },
+          {
+            "name": "valid_scene_ratio",
+            "value": 0.048,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "RS, K=4, C=35, 1000 samples, 240s budget",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "$48/1000$ valid scenes at $K=4$",
+            "confidence": 0.9
+          },
+          {
+            "name": "valid_scene_ratio",
+            "value": 0.0,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "RS, K=5..6, 1000 samples, 240s budget",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "$0/1000$ at $K=5,6$ within a $240$~s budget",
+            "confidence": 0.9
+          }
+        ],
+        "overall_conclusion": "The reproduction confirms the original study: SB gives near-perfect relevance and the highest coverage at low K, but its coverage and uniformity degrade for K=4..6, leaving a completeness gap of 0.34-0.37. RS is fast for K=2,3 but its acceptance collapses for K>=4. CommonOcean AIS data is relevant only for approximately 2-vessel encounters. The uniform-reference bound provides a budget-normalized ceiling that makes these completeness gaps measurable.",
+        "sources": {
+          "metrics_path": "results/metrics.json",
+          "paper_tex_path": "paper/main.tex"
+        },
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 10278,
+            "completion_tokens_details": {
+              "reasoning_tokens": 7316
+            },
+            "prompt_tokens": 4795,
+            "prompt_tokens_details": {
+              "cached_tokens": 4096
+            },
+            "total_tokens": 15073
+          },
+          "attempt": 2
+        }
+      },
+      "comparison": {
+        "status": "ok",
+        "claim_alignment": [
+          {
+            "original_claim_id": "C1",
+            "agent_claim_id": "A4",
+            "label": "consistent",
+            "rationale": "Agent states CommonOcean AIS data is relevant only for approximately two-vessel encounters, which agrees with the original claim that such real-world scenarios are insufficient for multi-ship COLREGS testing."
+          },
+          {
+            "original_claim_id": "C2",
+            "agent_claim_id": "A1",
+            "label": "partial",
+            "rationale": "Agent confirms SB has near-100% relevance and highest coverage, but does not establish sufficient scalability/speed for practical 3-6 vessel encounters and reports coverage degradation at K=4-6."
+          },
+          {
+            "original_claim_id": "C3",
+            "agent_claim_id": "A2",
+            "label": "consistent",
+            "rationale": "Agent reports SB coverage and uniformity degrade as K grows, leaving completeness gaps at K=4-6, matching the original claim that diversity/completeness are limited as vessel count increases."
+          },
+          {
+            "original_claim_id": "C4",
+            "agent_claim_id": "A3",
+            "label": "consistent",
+            "rationale": "Agent reports RS is fast only for K=2-3 and acceptance collapses at K>=4, agreeing that rejection sampling is not effective for maritime scenario generation."
+          },
+          {
+            "original_claim_id": "C5",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "Agent does not report functionally inconsistent COLREGS scenarios or assumption gaps in edge cases."
+          }
+        ],
+        "metric_alignment": [
+          {
+            "original_metric": "relevant_consistent_ratio_CO_K2",
+            "agent_metric": "relevance_ratio",
+            "comparable": true,
+            "original_value": 30.8,
+            "agent_value": 30.819366852886404,
+            "delta_abs": 0.019366852886405,
+            "delta_rel": 0.0006287939248832792,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Agent CommonOcean K=2 relevance_ratio of 0.30819 corresponds to 30.819%, matching the original 30.8% after unit conversion; the original metric is not a SOTA/best claim."
+          },
+          {
+            "original_metric": "ambiguous_consistent_ratio_CO_K_gt_2",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 0.0,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Agent reports CommonOcean K=3 coverage rather than the ambiguous consistency ratio, so the two metrics are not comparable."
+          },
+          {
+            "original_metric": "two_vessel_encounter_ratio",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 97.7,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Agent does not report encounter composition or the share of two-vessel encounters."
+          },
+          {
+            "original_metric": "relevant_consistent_ratio_SB_K2",
+            "agent_metric": "relevance_ratio",
+            "comparable": false,
+            "original_value": 94.4,
+            "agent_value": 96.5,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Agent reports SB K=2 relevance_ratio of 0.965 (96.5%), but with a reduced protocol (200 files and 240 s budget) relative to the original 1000-run, 600 s protocol, so values are not directly comparable."
+          },
+          {
+            "original_metric": "relevant_consistent_ratio_RS_K2",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 94.6,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Agent does not report RS K=2 relevance_ratio; it only reports RS generation time and K=3 relevance/coverage."
+          }
+        ],
+        "summary": {
+          "direction_consistency": "mixed",
+          "consistent_claim_ratio": 0.6,
+          "has_comparable_metrics": true,
+          "sota_improvement_summary": "No comparable SOTA improvement; agent reproduced the CommonOcean K=2 relevance ratio but did not report the original RS K=2 SOTA value.",
+          "overall_alignment_score": 0.7,
+          "score_rationale": "Three core claims align on CommonOcean insufficiency, synthetic diversity/completeness degradation, and RS ineffectiveness, but the agent only partially addresses scalability sufficiency and misses functional inconsistency claims/metrics."
+        },
+        "warnings": [
+          "Metric names and units differ: agent uses relevance_ratio as a fraction, original uses relevant_consistent_ratio as a percentage.",
+          "Synthetic-generation metrics are incomparable because the agent used a reduced protocol (e.g., 200 files and 240 s budget versus original 1000 runs and 600 s timeout).",
+          "Agent does not report ambiguous_consistent_ratio, two_vessel_encounter_ratio, or RS K=2 relevance_ratio, and misses original claim C5 on functional inconsistency."
+        ],
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 10449,
+            "completion_tokens_details": {
+              "reasoning_tokens": 9168
+            },
+            "prompt_tokens": 5231,
+            "prompt_tokens_details": {
+              "cached_tokens": 2048
+            },
+            "total_tokens": 15680
+          },
+          "attempt": 0
+        }
+      },
+      "overall_alignment_score": 0.7,
+      "direction_consistency": "mixed"
+    },
+    "experiment_analysis": {
+      "run_dir": "~/ai_scientist_inputs/ISSTA-2025-008_automated_test_scenario_generation_for_m/workspace/evoscientist_2026-09-24_02-17-17",
+      "task_dir": "~/ai_scientist_inputs/ISSTA-2025-008_automated_test_scenario_generation_for_m",
+      "status": "ok",
+      "metrics_path": "results/metrics.json",
+      "experiment_success": {
+        "status": "ok",
+        "success": true,
+        "metrics_path": "results/metrics.json",
+        "absolute_metrics_path": "~/ai_scientist_inputs/ISSTA-2025-008_automated_test_scenario_generation_for_m/workspace/evoscientist_2026-09-24_02-17-17/results/metrics.json",
+        "checks": {
+          "has_results_file": true,
+          "non_stub": true,
+          "numeric_leaf_count": 370,
+          "min_numeric_ok": true
+        },
+        "manifest_hints": {
+          "status": {
+            "research_request": true,
+            "plan": true,
+            "metrics": true,
+            "paper_tex": true,
+            "paper_pdf": true,
+            "readme": true
+          },
+          "returncode": 0,
+          "benchmark_complete": true,
+          "artifacts_metrics_flag": false
+        },
+        "warnings": [],
+        "suspicious_values": [],
+        "note": "success=true requires substantive results (framework-aware path) with >=3 numeric leaves. Supports metrics.json, results.json, experiment_results.txt, etc. Manifest returncode/benchmark_complete are soft warnings only."
+      },
+      "idea_code_consistency": {
+        "status": "ok",
+        "idea_path": "plan.md",
+        "code_files": [
+          "project/_repro_lib.py",
+          "project/analyze.py",
+          "project/compute_all.py",
+          "project/run_rs.py"
+        ],
+        "score_scale": "1-5",
+        "score": 3.0,
+        "label": null,
+        "justification": "The code partially aligns with the idea: it includes the evaluation metrics, statistical analysis, and RS baseline, but it omits or does not show important components such as fresh SB generation and seed sensitivity analysis, so the alignment is only partial.",
+        "matched_elements": [
+          "Implements metric computation for relevance, ambiguity, coverage, KL divergence, and timing.",
+          "Implements bootstrap confidence intervals and uniform-reference U-Ref analysis.",
+          "Implements fresh rejection-sampling baseline for RS with K=2,3.",
+          "compute_all supports evaluation paths for bundled SB/RS/CommonOcean outputs."
+        ],
+        "missing_or_divergent_elements": [
+          "No visible NSGA-II/SB generation script implementing the core proposed baseline.",
+          "No visible seed sensitivity analysis script.",
+          "Several files are truncated and contain incomplete code or possible variable errors.",
+          "Direct fresh SB generation and K=2..6 scalability runs are not implemented in the provided code."
+        ],
+        "rubric": "Partial alignment: main direction matches, but important components from the idea (baselines, metrics, protocol, subjects) are dropped or altered without clear mapping.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 1178,
+            "completion_tokens_details": {
+              "reasoning_tokens": 954
+            },
+            "prompt_tokens": 2263,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 3441
+          },
+          "attempt": 2
+        }
+      },
+      "setup_coverage": {
+        "status": "ok",
+        "overall_coverage": 1.0,
+        "datasets": {
+          "gold_count": 2,
+          "hit_count": 2,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "CommonOcean benchmark",
+            "COLREGS functional equivalence classes"
+          ],
+          "misses": []
+        },
+        "baselines": {
+          "gold_count": 3,
+          "hit_count": 3,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "Search-based maritime scenario generation",
+            "Rejection-sampling maritime scenario generation",
+            "CommonOcean real-world AIS scenarios"
+          ],
+          "misses": []
+        },
+        "metrics": {
+          "gold_count": 5,
+          "hit_count": 5,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "Relevance ratio (T ∩ C)",
+            "Ambiguous relevance ratio (A ∩ C)",
+            "Equivalence class coverage",
+            "Distribution divergence",
+            "Average generation time"
+          ],
+          "misses": []
+        },
+        "agent_protocol": {},
+        "gold_protocol": {},
+        "dataset_dirs": [
+          "dataset_candidate"
+        ],
+        "flags": {
+          "weaker_baseline_suspected": false,
+          "weak_protocol": [],
+          "synthetic_data": "synthetic_allowed_by_task",
+          "gold_allows_synthetic": true
+        },
+        "gold_sources": [
+          "~/ai_scientist_inputs/ISSTA-2025-008_automated_test_scenario_generation_for_m/task.md",
+          "~/ai_scientist_inputs/ISSTA-2025-008_automated_test_scenario_generation_for_m/metadata.json"
+        ],
+        "note": "Coverage is name/alias matching against task.md Datasets/Baselines/Metrics. weak_protocol flags large reductions in trials/timeout vs Constraints. Synthetic corpora are not penalized when the task itself requires synthesis."
+      },
+      "ablation_significance": {
+        "status": "ok",
+        "idea_path": "plan.md",
+        "significance_signals_rule_based": {
+          "signals": [
+            "paper_contains:bootstrap",
+            "paper_contains:confidence interval"
+          ],
+          "artifact_paths": [
+            "results/bootstrap_ci.json"
+          ],
+          "has_any_significance_artifact": true
+        },
+        "evidence_format": "raw_json_truncated",
+        "study_type": "reproduction",
+        "components": [
+          {
+            "name": "SB (NSGA-II search-based baseline)",
+            "role": "baseline",
+            "ablation_expected": false,
+            "significance_expected": true,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "Comparison baseline, not removable method module; no ablation expected.",
+            "significance_status": "present",
+            "significance_evidence": "Bootstrap CIs and seed sensitivity analysis are implemented/reported (results/bootstrap_ci.json, seed_sensitivity.json)."
+          },
+          {
+            "name": "RS (Scenic rejection-sampling baseline)",
+            "role": "baseline",
+            "ablation_expected": false,
+            "significance_expected": true,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "Comparison baseline; no ablation expected.",
+            "significance_status": "present",
+            "significance_evidence": "Included in bootstrap CI analysis; fresh RS sample sizes and per-run timing variability reported."
+          },
+          {
+            "name": "CommonOcean AIS baseline",
+            "role": "baseline",
+            "ablation_expected": false,
+            "significance_expected": false,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "Real-world AIS baseline; not a generated method module.",
+            "significance_status": "not_required",
+            "significance_evidence": "Observational real-data baseline; deterministic/available as bundled parsed AIS data."
+          },
+          {
+            "name": "U-Ref uniform reference coverage bound",
+            "role": "instrumentation",
+            "ablation_expected": false,
+            "significance_expected": false,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "Analytical closed-form bound used as reference; not removable generator component.",
+            "significance_status": "not_required",
+            "significance_evidence": "Deterministic bound."
+          },
+          {
+            "name": "Bootstrap CI and seed sensitivity analysis",
+            "role": "instrumentation",
+            "ablation_expected": false,
+            "significance_expected": true,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "Uncertainty quantification, not an ablatable method module in a reproduction study.",
+            "significance_status": "present",
+            "significance_evidence": "Code computes bootstrap 95% CIs for coverage/KL and seed sensitivity; artifacts include bootstrap_ci.json and seed_sensitivity.json."
+          },
+          {
+            "name": "Functional equivalence-class abstraction/metrics",
+            "role": "instrumentation",
+            "ablation_expected": false,
+            "significance_expected": false,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "Metrics and class definitions are the measurement framework, not a proposed removable method component.",
+            "significance_status": "not_required",
+            "significance_evidence": "No statistical test needed for metric definitions."
+          }
+        ],
+        "ablation_coverage_score": 1.0,
+        "overall_ablation_ok": true,
+        "overall_significance_ok": true,
+        "summary": "Reproduction/re-analysis comparing SB, RS, and CommonOcean baselines. Baselines are the comparison targets, so module ablation is not appropriate. Bootstrap CIs and seed sensitivity provide statistical uncertainty; no missing expected ablations or significance tests.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 3500,
+            "completion_tokens_details": {
+              "reasoning_tokens": 3500
+            },
+            "prompt_tokens": 6857,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 10357
+          },
+          "attempt": 0
+        }
+      },
+      "results_paper_consistency": {
+        "status": "ok",
+        "paper_tex": "paper/main.tex",
+        "paper_kind": "paper_tex",
+        "results_format": "raw_json",
+        "digest_hint": {
+          "unfavorable_count": 0,
+          "trial_fail_count": 0,
+          "trial_success_count": 0,
+          "metadata": {}
+        },
+        "score_scale": "1-5",
+        "method": "Direct LLM comparison: agent's FINAL results artifact (metrics.json summary) vs paper Results/Discussion/Conclusion. Interim failed runs are NOT evidence unless still present in the final metrics file.",
+        "score": null,
+        "consistency_label": null,
+        "hiding_unfavorable_suspected": false,
+        "hiding_confidence": null,
+        "justification": "",
+        "supported_claims": [],
+        "unsupported_or_overstated_claims": [],
+        "numeric_mismatches": [],
+        "unfavorable_in_final_results": [],
+        "unfavorable_acknowledged_in_paper": [],
+        "unfavorable_missing_from_paper": [],
+        "rubric": null,
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 495,
+            "completion_tokens_details": {
+              "reasoning_tokens": 493
+            },
+            "prompt_tokens": 3264,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 3759
+          },
+          "attempt": 1
+        }
+      },
+      "scores": {
+        "experiment_success": true,
+        "idea_code_score": 3.0,
+        "setup_coverage": 1.0,
+        "ablation_coverage_score": 1.0,
+        "overall_ablation_ok": true,
+        "overall_significance_ok": true,
+        "results_paper_score": null,
+        "hiding_unfavorable_suspected": false
+      },
+      "notes": [
+        "Axes 1,2,3,4,6 in experiment_analysis (figures excluded).",
+        "setup_coverage matches task.md Datasets/Baselines/Metrics; weak_protocol flags reductions vs Constraints.",
+        "Axis 6: final normalized results vs paper; interim run logs not used as ground truth."
+      ]
+    },
+    "literature_review": {
+      "run_dir": "~/ai_scientist_inputs/ISSTA-2025-008_automated_test_scenario_generation_for_m/workspace/evoscientist_2026-09-24_02-17-17",
+      "task_dir": "~/ai_scientist_inputs/ISSTA-2025-008_automated_test_scenario_generation_for_m",
+      "status": "ok",
+      "as_of_year": 2026,
+      "agent_ref_count": 18,
+      "sources": [
+        {
+          "path": "~/ai_scientist_inputs/ISSTA-2025-008_automated_test_scenario_generation_for_m/workspace/evoscientist_2026-09-24_02-17-17/project/literature_synthesis.md",
+          "kind": "literature_synthesis"
+        },
+        {
+          "path": "~/ai_scientist_inputs/ISSTA-2025-008_automated_test_scenario_generation_for_m/workspace/evoscientist_2026-09-24_02-17-17/paper/main.tex",
+          "kind": "thebibliography"
+        }
+      ],
+      "collection_audit": {
+        "cited_keys_count": 18,
+        "filter_mode": "paper_cite_keys",
+        "bib_total_before_filter": 0,
+        "bib_after_filter": 0,
+        "uncited_bib_skipped": 0,
+        "cited_keys_sample": [
+          "abdessalem2018ase",
+          "abdessalem2018icse",
+          "babikian2023",
+          "bakdi2021",
+          "bolbot2022",
+          "fremont2019",
+          "frey2025",
+          "hansen2020",
+          "kargen2024",
+          "krasowski2021iv",
+          "krasowski2022",
+          "kreutzmann2013",
+          "kuwata2013",
+          "pedersen2020",
+          "porres2020",
+          "ulbrich2015",
+          "woerner2019",
+          "zohdinasab2021"
+        ],
+        "thebibliography_after_filter": 18,
+        "agent_ref_count": 18
+      },
+      "fabrication": {
+        "status": "ok",
+        "scholarly_count": 18,
+        "verified_count": 16,
+        "fake_count": 0,
+        "lookup_failed_count": 2,
+        "insufficient_metadata_count": 0,
+        "non_paper_count": 0,
+        "fabrication_rate": 0.0,
+        "items": [
+          {
+            "title": "Assessing Scene Generation Techniques for Testing COLREGS-Compliance of Autonomous Surface Vehicles",
+            "doi": "10.1145/3728919",
+            "arxiv_id": "",
+            "year": 2025,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Assessing Scene Generation Techniques for Testing COLREGS-Compliance of Autonomous Surface Vehicles",
+            "resolved_year": 2025,
+            "notes": [],
+            "cache_hit": true,
+            "cite_key": "frey2025",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "Towards Automated Test Scenario Generation for Assuring COLREGs Compliance of Autonomous Surface Vehicles",
+            "doi": "10.1145/3640310.3674098",
+            "arxiv_id": "",
+            "year": 2024,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Towards Automated Test Scenario Generation for Assuring COLREGs Compliance of Autonomous Surface Vehicles",
+            "resolved_year": 2024,
+            "notes": [],
+            "cache_hit": true,
+            "cite_key": "kargen2024",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "Safe Maritime Autonomous Navigation With COLREGS, Using Velocity Obstacles",
+            "doi": "10.1109/joe.2013.2254214",
+            "arxiv_id": "",
+            "year": 2013,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Safe Maritime Autonomous Navigation With COLREGS, Using Velocity Obstacles",
+            "resolved_year": 2014,
+            "notes": [],
+            "cache_hit": true,
+            "cite_key": "kuwata2013",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "Towards Safe Navigation by Formalizing Navigation Rules",
+            "doi": "10.12716/1001.07.02.01",
+            "arxiv_id": "",
+            "year": 2013,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated.",
+              "Saw 1 conclusive miss(es) mixed with 2 API error(s)."
+            ],
+            "cite_key": "kreutzmann2013",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "Temporal Logic Formalization of Marine Traffic Rules",
+            "doi": "10.1109/iv48863.2021.9575685",
+            "arxiv_id": "",
+            "year": 2021,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Temporal Logic Formalization of Marine Traffic Rules",
+            "resolved_year": 2021,
+            "notes": [],
+            "cache_hit": true,
+            "cite_key": "krasowski2021iv",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "Quantifying protocol evaluation for autonomous collision avoidance",
+            "doi": "10.1007/s10514-018-9765-y",
+            "arxiv_id": "",
+            "year": 2018,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Quantifying protocol evaluation for autonomous collision avoidance",
+            "resolved_year": 2018,
+            "notes": [],
+            "cache_hit": true,
+            "cite_key": "woerner2019",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "COLREGs-based Situation Awareness for Marine Vessels",
+            "doi": "10.1016/j.ifacol.2020.12.1453",
+            "arxiv_id": "",
+            "year": 2020,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "COLREGs-based Situation Awareness for Marine Vessels - a Discrete Event Systems Approach",
+            "resolved_year": 2020,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "hansen2020",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "Scenario-based Testing of a Ship Collision Avoidance System",
+            "doi": "10.1109/seaa51224.2020.00090",
+            "arxiv_id": "",
+            "year": 2020,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Scenario-based Testing of a Ship Collision Avoidance System",
+            "resolved_year": 2020,
+            "notes": [],
+            "cache_hit": true,
+            "cite_key": "porres2020",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "Towards simulation-based verification of autonomous navigation systems",
+            "doi": "10.1016/j.ssci.2020.104799",
+            "arxiv_id": "",
+            "year": 2020,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated.",
+              "Saw 1 conclusive miss(es) mixed with 2 API error(s)."
+            ],
+            "cite_key": "pedersen2020",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "Automatic traffic scenarios generation for autonomous ships collision avoidance system testing",
+            "doi": "10.1016/j.oceaneng.2022.111309",
+            "arxiv_id": "",
+            "year": 2022,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Automatic traffic scenarios generation for autonomous ships collision avoidance system testing",
+            "resolved_year": 2022,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "bolbot2022",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "Testbed Scenario Design Exploiting Traffic Big Data for Autonomous Ship Trials Under Multiple Conflicts With Collision/Grounding Risks and Spatio-Temporal Dependencies",
+            "doi": "10.1109/tits.2021.3095547",
+            "arxiv_id": "",
+            "year": 2021,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Testbed Scenario Design Exploiting Traffic Big Data for Autonomous Ship Trials Under Multiple Conflicts With Collision/Grounding Risks and Spatio-Temporal Dependencies",
+            "resolved_year": 2021,
+            "notes": [],
+            "cache_hit": true,
+            "cite_key": "bakdi2021",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "Testing vision-based control systems using learnable evolutionary algorithms",
+            "doi": "10.1145/3180155.3180160",
+            "arxiv_id": "",
+            "year": 2018,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Testing Vision-Based Control Systems Using Learnable Evolutionary Algorithms",
+            "resolved_year": 2018,
+            "notes": [],
+            "cache_hit": true,
+            "cite_key": "abdessalem2018icse",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "Testing autonomous cars for feature interaction failures using many-objective search",
+            "doi": "10.1145/3238147.3238192",
+            "arxiv_id": "",
+            "year": 2018,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Testing Autonomous Cars for Feature Interaction Failures using Many-Objective Search",
+            "resolved_year": 2018,
+            "notes": [],
+            "cache_hit": true,
+            "cite_key": "abdessalem2018ase",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "Scenic: a language for scenario specification and scene generation",
+            "doi": "10.1145/3314221.3314633",
+            "arxiv_id": "",
+            "year": 2019,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Scenic: a language for scenario specification and scene generation",
+            "resolved_year": 2018,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "fremont2019",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "Defining and Substantiating the Terms Scene, Situation, and Scenario for Automated Driving",
+            "doi": "10.1109/itsc.2015.164",
+            "arxiv_id": "",
+            "year": 2015,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Defining and Substantiating the Terms Scene, Situation, and Scenario for Automated Driving",
+            "resolved_year": 2015,
+            "notes": [],
+            "cache_hit": true,
+            "cite_key": "ulbrich2015",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "Concretization of Abstract Traffic Scene Specifications Using Metaheuristic Search",
+            "doi": "10.1109/tse.2023.3331254",
+            "arxiv_id": "2307.07826",
+            "year": 2023,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Concretization of Abstract Traffic Scene Specifications Using Metaheuristic Search",
+            "resolved_year": 2023,
+            "notes": [],
+            "cache_hit": true,
+            "cite_key": "babikian2023",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "CommonOcean: Composable Benchmarks for Motion Planning on Oceans",
+            "doi": "10.1109/itsc55140.2022.9921925",
+            "arxiv_id": "",
+            "year": 2022,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "CommonOcean: Composable Benchmarks for Motion Planning on Oceans",
+            "resolved_year": 2022,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "krasowski2022",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "DeepHyperion: exploring the feature space of deep learning-based systems through illumination search",
+            "doi": "10.1145/3460319.3464811",
+            "arxiv_id": "",
+            "year": 2021,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "DeepHyperion: exploring the feature space of deep learning-based systems through illumination search",
+            "resolved_year": 2021,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "zohdinasab2021",
+            "source_kind": "thebibliography"
+          }
+        ],
+        "cache_path": "~/ai_scientist_evals/ISSTA-2025-008_automated_test_scenario_generation_for_m/reference_verify_cache.json",
+        "override_path": "~/ai_scientist_evals/ISSTA-2025-008_automated_test_scenario_generation_for_m/reference_verify_overrides.json",
+        "note": "fabrication_rate = fake / (verified + fake). lookup_failed (API errors) and insufficient_metadata are excluded and retried or skipped. GitHub/docs/tool URLs are non_paper and excluded from the rate. To manually correct a false negative, edit reference_verify_overrides.json (key=normalized title / doi / cite_key; value=\"verified\" or a result dict), then re-run."
+      },
+      "coverage": {
+        "status": "ok",
+        "gold_source": "~/ai_scientist_inputs/ISSTA-2025-008_automated_test_scenario_generation_for_m/mineru_sections.json",
+        "gold_count": 81,
+        "gold_is_original_paper_references": true,
+        "gold_is_openalex_subset": false,
+        "agent_count": 18,
+        "intersection_size": 6,
+        "recall": 0.07407407407407407,
+        "precision": 0.3333333333333333,
+        "matched_gold_keys": [
+          "abdessalem2018testing",
+          "degre1981collision",
+          "krasowski2022commonocean",
+          "kuwata2013safe",
+          "pedersen2020simulationbased",
+          "woerner2018quantifying"
+        ],
+        "primary_metric": "recall",
+        "note": "Primary metric is recall against the original paper bibliography (titles from mineru_sections.json REFERENCES; related_work.json used only to enrich DOI/year or as fallback if mineru titles are empty). Denominator = |original paper references|. Precision is secondary (agent may cite valid extra papers)."
+      },
+      "recency": {
+        "status": "ok",
+        "dated_count": 18,
+        "unknown_year_count": 0,
+        "year_histogram": {
+          "2013": 1,
+          "2014": 1,
+          "2015": 1,
+          "2018": 4,
+          "2020": 3,
+          "2021": 3,
+          "2022": 2,
+          "2023": 1,
+          "2024": 1,
+          "2025": 1
+        },
+        "windows": {
+          "3": {
+            "years": 3,
+            "cutoff_year_inclusive": 2023,
+            "recent_count": 3,
+            "recent_ratio": 0.16666666666666666
+          },
+          "5": {
+            "years": 5,
+            "cutoff_year_inclusive": 2021,
+            "recent_count": 8,
+            "recent_ratio": 0.4444444444444444
+          }
+        }
+      },
+      "scores": {
+        "fabrication_rate": 0.0,
+        "coverage_recall": 0.07407407407407407,
+        "coverage_precision": 0.3333333333333333,
+        "recency_ratio_3y": 0.16666666666666666,
+        "recency_ratio_5y": 0.4444444444444444
+      }
+    }
+  },
+  "scores": {
+    "completeness": {
+      "complete": true,
+      "overall_score": 0.8521,
+      "required_score": 1.0,
+      "bonus_score": 0.13
+    },
+    "peer_review": {
+      "status": "ok",
+      "optional": false,
+      "overall_score": 5.8,
+      "score_scale": "1-10",
+      "scoring_method": "paperreview_apr"
+    },
+    "idea_generation": {
+      "status": "ok",
+      "overall_score": 2.0,
+      "dimensions": {
+        "novelty": 1.0,
+        "feasibility": 4.0,
+        "clarity": 4.0
+      },
+      "novelty_category": "Existing",
+      "solution_space_status": "ok"
+    },
+    "alignment": {
+      "status": "ok",
+      "direction_consistency": "mixed",
+      "overall_alignment_score": 0.7
+    },
+    "literature_review": {
+      "fabrication_rate": 0.0,
+      "coverage_recall": 0.07407407407407407,
+      "coverage_precision": 0.3333333333333333,
+      "recency_ratio_3y": 0.16666666666666666,
+      "recency_ratio_5y": 0.4444444444444444
+    },
+    "experiment_analysis": {
+      "experiment_success": true,
+      "idea_code_score": 3.0,
+      "setup_coverage": 1.0,
+      "ablation_coverage_score": 1.0,
+      "overall_ablation_ok": true,
+      "overall_significance_ok": true,
+      "results_paper_score": null,
+      "hiding_unfavorable_suspected": false
+    }
+  },
+  "fair_scores": {
+    "applicable_axes": [
+      "completeness",
+      "idea_generation",
+      "peer_review",
+      "alignment",
+      "literature_review",
+      "experiment_analysis"
+    ],
+    "skipped_axes": [],
+    "fair_mean_0_1": 0.66,
+    "note": "fair_mean_0_1 averages only applicable axes; optional peer review and framework-inapplicable literature are excluded from the denominator."
+  },
+  "evals_root": "~/ai_scientist_evals",
+  "claims_cache": "~/ai_scientist_evals/ISSTA-2025-008_automated_test_scenario_generation_for_m/original_claims.json",
+  "solution_space_cache": "~/ai_scientist_evals/ISSTA-2025-008_automated_test_scenario_generation_for_m/solution_space.json"
+}

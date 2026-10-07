@@ -1,0 +1,168 @@
+{
+  "id": "ICSE-2025-010",
+  "paper_id": "f85eb1bc94d4c86582565f30e0728aa071f6d3fa",
+  "title": "Hetrify: Efficient Verification of Heterogeneous Programs on RISC-V",
+  "abstract": "The heterogeneous nature of contemporary software, comprising components like closed-source libraries, embedded assembly snippets, and modules written in multiple programming languages, leads to significant verification challenges. Currently, there are no mature and available methods to effectively address such problems. To bridge this gap, we propose a verification approach capable of effectively verifying heterogeneous programs. This approach is universally applicable. It theoretically supports the verification of any heterogeneous program that can be compiled into binary code, without being constrained by any specific programming language. The approach begins by compiling the entire program or its unverifiable segments into binary format. Under guarantees of semantic equivalence, these binaries are converted into verifiable C code, which can then be verified using existing C verification tools. Based on the RISC-V architecture, we developed the Hetrify tool to implement this verification approach. The tool is supported by rigorous mathematical proofs to ensure operational semantic equivalence between the converted C programs and their original counterparts. To validate our approach, we conducted verification experiments on 130 programs, including 100 assembly programs and 30 large heterogeneous programs with missing critical function source code, demonstrating the effectiveness of our approach.",
+  "year": 2025,
+  "citation_count": 0,
+  "venue": "47th International Conference on Software Engineering (ICSE 2025)",
+  "venue_short": "ICSE 2025",
+  "authors": [
+    "Yiwei Li",
+    "Liangze Yin",
+    "Wei Dong",
+    "Jiaxin Liu",
+    "Yanfeng Hu",
+    "Shanshan Li"
+  ],
+  "pdf_url": "",
+  "paper_url": "https://www.semanticscholar.org/paper/f85eb1bc94d4c86582565f30e0728aa071f6d3fa",
+  "paper_type": "tool",
+  "award": "ACM SIGSOFT Distinguished Paper Award",
+  "subfield_label": "Program Analysis & Verification",
+  "introduction": "In contemporary software development, programs are often collaboratively developed by multiple teams, with different modules potentially written in various programming languages [1], [2]. This heterogeneity is common in complex systems, where each module is designed to leverage the strengths of a particular language [3], [4]. However, the source code for essential third-party library functions, which might be written in different languages, is often inaccessible, posing significant challenges for program verification [5]. When the source code is composed of multiple programming languages, critical functions are unavailable, or there are no mature automated verification tools, verification processes can become inaccurate [6]. This inadequacy compromises the reliability and security of the software.\n\nPrevious research has explored various strategies for program verification, focusing on abstracting the behavior of programs where source code cannot be directly verified. Tools like SLAM [7] and CIL [8] abstract program behaviors to perform * Corresponding authors: Liangze Yin, Wei Dong detailed source code checks. Some methods decompile binary code of unverifiable segments into verifiable code forms. However, tools like BinDiff [9] and IDA Pro [10] often fail in conversion, and even when successful, produce pseudocode that cannot be directly verified. Recently, AI techniques using neural machine translation models [11] and large language models [12] have been applied to decompile binary code to high-level code. While promising, these approaches focus on code similarity rather than semantic equivalence [13].\n\nOther studies have focused on verifying mixed-language programs. Schmaltz and Shadrin proposed a method to verify mixed low-level language programs by ensuring compatibility with MASM and the Windows ABI. Still, this approach is limited by its dependence on specific ABI standards, reducing flexibility [14]. Recoules et al. introduced TInA, which converts inline assembly into verifiable C code for x86 and ARM architectures. While effective, TInA is limited to small-scale code and struggles to maintain full semantic equivalence after conversion [15].\n\nInspired by [15]- [17], this paper proposes a verification approach that converts unverifiable segments of heterogeneous programs into verifiable C code while ensuring semantic equivalence. These segments may include low-level language code, closed-source library functions, and code written in other programming languages. The converted programs are then integrated with the original program for comprehensive verification. To implement this approach, we chose the RISC-V architecture due to its widespread adoption in academia and industry, the potential for future development, and ability to meet diverse application needs through its base instruction set and optional extensions [18], [19]. Based on this architecture, we developed Hetrify, a tool designed to verify heterogeneous programs. Hetrify theoretically allows for the automated verification of any compiled language program, as long as it can be compiled into RISC-V binary files, which Hetrify can then convert into C code for automated verification.\n\nTo ensure the converted C programs are semantically equivalent to the original code, we mathematically proved that the operational semantics of the original code's compiled binary are equivalent to those of the converted C code. We validated our method with experiments involving 100 assembly programs and large heterogeneous programs with missing critical function source code. The results showed that all 130 programs were accurately verified, with incorrect programs identified and correct ones verified, except for a few timeouts in the assembly programs. This indicates that, given sufficient verification time and computational resources, our method can achieve 100% verification accuracy, demonstrating both its effectiveness and the correctness of our theoretical analysis.\n\nTo summarize, the key contributions of this paper are outlined as follows:\n\n• We propose a novel verification approach for heterogeneous programs that enables the conversion of entire programs or their unverifiable segments into verifiable C code, ensuring operational semantic equivalence. This approach theoretically supports comprehensive verification of any compiled or low-level language program, even without source code access. • To ensure the correctness of the verification approach, we mathematically demonstrated that the converted C programs maintain operational semantic equivalence with the original code. • We developed Hetrify, a verification tool based on the RISC-V architecture and our proposed approach. Evaluations of 100 assembly programs and 30 large C programs with missing critical functions confirmed the effectiveness and theoretical correctness of our approach. The rest of the paper is organized as follows. Section II presents the preliminary knowledge. Section III outlines the research motivation with an example program, illustrating the challenges for program verification. Section IV introduces the verification methodology and its workflow. Section V details the methods used to convert heterogeneous programs into verifiable C code. Section VI describes our experimental evaluation. Section VII discusses related work in the field. Section VIII discusses the limitations of this work and outlines future research directions. Finally, Section IX summarizes our findings and conclusions.",
+  "experiment": "the Hetrify tool through three key experiments, focusing on\nits performance in verifying assembly, large heterogeneous,\nand binary programs. In order to comprehensively evaluate\nHetrify’s performance, we investigated the following research\nquestions:\nRQ 1: Can Hetrify effectively verify low-level language\n•\nprograms?\nRQ 2: Is Hetrify capable of verifying large-scale heteroge-\n•\nneous programs with missing source code functions?\n• RQ 3: Can Hetrify be replaced by existing decompiler tools\nsuch as IDA Pro and Ghidra?\nThe experiments were conducted using CBMC (version 5.95)\non a system equipped with dual AMD EPYC 7713 CPUs, two\nA 800 GPUs, and 384 GB of RAM, running Ubuntu 22.04\nLTS, and the verification results were assessed using two key\nmetrics:\nCorrect Verifications\nCorrectness Rate = ,\nTotal Tests\nCorrect Verifications + Timeouts\nError Rate = 1 − .\nTotal Tests\nA. RQ 1: Can Hetrify effectively verify low-level language\nprograms?\nTo answer RQ 1, this experiment was designed to eval-\nuate Hetrify’s effectiveness in verifying low-level language\nfication Results Comparison\nIncorrect Assembly\nwind 100 Unwind 50 Unwind 100 No Limit\n58% 76% 86% 96%\n0% 20% 10% 0%\nnumber of loop iterations explored during verification.\nof Large Heterogeneous Programs\nMetrics\nCorrect Count Timeout Count Correct Rate Error Rate\n0 0 0% 100%\n6 0 100% 0%\n3 8 27% 73%\n11 0 100% 0%\n1 0 100% 0%\n1 0 100% 0%\n4 0 57% 43%\n7 0 100% 0%\n3 0 60% 40%\n5 0 100% 0%\nprograms, specifically assembly, while also validating the\naccuracy of our proposed assembly-to-C conversion method-\nology. To ensure the experiment’s rigor and professional-\nism, We randomly selected 100 C programs from SV-COMP\n2024 [27], equally split between 50 correct and 50 incor-\nrect programs, each containing one to three functions. To\nfacilitate compatibility with the Hetrify tool and the RISC-\nV compiler, we modified these C programs by eliminat-\ning certain non-essential functions, ensuring that these al-\nterations did not affect the verification outcomes. We then\ncompiled these adjusted programs into assembly code using\nthe riscv 64-unknown-elf-gcc compiler to create our\ntargeted assembly program dataset.\nWe employed the Hetrify tool to convert these 100 assem-\nbly programs into verifiable C programs. Subsequently, we\nutilized CBMC to individually verify each of the converted C\nprograms, setting a verification time limit of 3000 seconds per\nprogram. The results are presented in Table II.\nThe results in Table II demonstrate Hetrify’s effectiveness\nin verifying low-level language (RISC-V assembly) programs.\nFor correct programs, a 100% success rate was achieved\nat an unwind factor of 20, but it decreased with higher\nunwind factors due to increased computational complexity. In\ncontrast, for incorrect programs, the success rate improved as\nthe unwind factor increased, reaching 96% with no unwind\nlimit. These findings suggest that, theoretically, given sufficient\ntime, Hetrify could successfully verify all low-level programs\nwithout encountering verification errors.\nTABLE IV: Binary Program V\nCorrect Progr\nMetric\nIDA Pro Ghidra\nConvertible Count 0 50\nCorrect Count - 36\nTimeout Count - 6\nCorrect Rate 0% 72%\nError Rate - 16%\nNote: The correct program is loop-unwound up to 100 tim\nB. RQ 2: Is Hetrify capable of verifying large-scale heteroge-\nneous programs with missing source code functions?\nTo verify this question, we conducted an experiment to\nassess Hetrify’s ability to verify large-scale heterogeneous pro-\ngrams, particularly when source code for certain functions is\nmissing. Due to the limited number of qualifying programs in\nSV-COMP 2024 [27], additional programs were sourced from\nSV-COMP 2023 [28]. A total of 30 verification programs were\nselected, comprising 15 correct and 15 incorrect programs.\nEach program contains more than 5 functions and exceeds\n300 lines of code, with an average length of over 1000 lines.\nCBMC successfully verified all selected programs.\nWe randomly extracted functions highly correlated\nwith the verification results from these 30 programs\nand compiled them into a static library using the\nriscv 64-unknown-elf-gcc compiler, subsequently\nremoving these functions from the source files. Following\nthis, Hetrify was used to convert these static library files, and\nverification was conducted in conjunction with the source\nfiles. Additionally, a comparative experiment was also set up\nfor direct verification of the source files with the missing\nfunctions. The timeout was set to 3000 seconds, with a\nfixed unwind factor of 20 for correct programs and no fixed\nunwind factor for incorrect programs. The verification results\nare shown in Table III.\nThe results in Table III show that the total correctness\nrate for direct verification across all five program types was\n36.7% with an error rate of 63.3%. In contrast, post-conversion\nverification achieved a perfect correctness rate of 100% with\nno errors. This demonstrates that post-conversion verification\nsignificantly outperforms direct verification in all program\ntypes. Hetrify effectively addresses the verification challenges\nposed by large-scale heterogeneous programs, enabling accu-\nrate verification even when source code for certain functions\nis missing.\nC. RQ 3: Can Hetrify be replaced by existing decompiler tools\nsuch as IDA Pro and Ghidra?\nTo verify this question, we experimented to determine\nwhether traditional decompilers, such as IDA Pro and Ghidra,\ncould serve as viable alternatives to Hetrify. We selected 100\nassembly programs, evenly split between 50 correct and 50\nincorrect ones, and compiled them into binaries. Each binary\nwas then decompiled using IDA Pro, Ghidra, and Hetrify, and\nthe resulting C code was verified using CBMC.\nVerification Results Comparison\nram Incorrect Program\nHetrify IDA Pro Ghidra Hetrify\n29 - 47 48\n21 - 0 2\n58% 0% 94% 96%\n0% - 0% 0%\nmes, while the incorrect program has no unwinding limit.\nDuring the experiment, we encountered several limitations\nwith traditional decompilers. IDA Pro could not process RISC-\nV binaries at all, making it unsuitable for this verification\ntask. Ghidra, although capable of decompiling the binaries,\ngenerated C code with frequent syntax issues, such as missing\nheader file declarations, undefined global variables, and incor-\nrect variable types. These issues required manual corrections,\nwhich we applied before attempting verification. However,\ndespite these corrections, the generated C code still likely\ncontained semantic inaccuracies.\nThe verification results are summarized in Table. IV. As\nshown, Ghidra encountered issues during the conversion pro-\ncess, with 3 programs failing due to unresolvable syntax errors\ncaused by incorrect function interface conversions. Addition-\nally, 8 programs that were successfully converted still resulted\nin verification errors. In contrast, Hetrify produced correct and\nverifiable C code without requiring any manual corrections,\ndemonstrating its clear advantage over traditional decompilers.\nThese results suggest that Hetrify offers significant benefits\nand cannot be replaced by existing decompilers like IDA Pro\nand Ghidra, particularly when dealing with RISC-V binaries.",
+  "section_quality": {
+    "has_abstract": true,
+    "has_introduction": true,
+    "has_experiment": true,
+    "intro_chars": 5511,
+    "experiment_chars": 7183
+  },
+  "introduction_source": "grobid_tei",
+  "experiment_source": "pdf_fallback",
+  "background_source": "introduction",
+  "experiment_source_used": "experiment_section",
+  "task_title": "Verification of Heterogeneous Programs with Inaccessible Source Code",
+  "background": "Modern software frequently integrates components written in multiple programming languages, and critical third-party libraries whose source code is not available. This heterogeneity makes program verification challenging, as many existing tools require full source code. Approaches like decompilation or direct abstraction often fail to guarantee semantic equivalence or are restricted to specific architectures and standards. Therefore, a robust verification approach is needed for programs that contain unverifiable segments—such as low-level code or missing functions—without requiring source code access or sacrificing correctness.",
+  "research_question": "How can programs that include components with missing source code or low-level code be accurately verified, ensuring semantic equivalence with the original program without requiring the inaccessible source?",
+  "experiment_setup": {
+    "datasets": [
+      {
+        "name": "RISC-V Assembly Programs from SV-COMP",
+        "source": "SV-COMP 2024 (https://sv-comp.sosy-lab.org/2024/)",
+        "description": "100 C programs selected from SV-COMP 2024 (50 correct, 50 incorrect), each with 1–3 functions, modified to remove non-essential functions and compiled to RISC-V assembly using riscv64-unknown-elf-gcc.",
+        "access": "constructable"
+      },
+      {
+        "name": "Large Heterogeneous C Programs with Missing Functions",
+        "source": "SV-COMP 2024 and SV-COMP 2023 (https://sv-comp.sosy-lab.org/2023/)",
+        "description": "30 verification tasks (15 correct, 15 incorrect) with >5 functions and >300 lines (average >1000 lines). Functions highly correlated with verification were removed and compiled into RISC-V static libraries.",
+        "access": "constructable"
+      },
+      {
+        "name": "RISC-V Binary Programs",
+        "source": "Derived from RISC-V Assembly Programs dataset",
+        "description": "100 assembly programs compiled into RISC-V binary executables for decompiler comparison.",
+        "access": "constructable"
+      }
+    ],
+    "baselines": [
+      {
+        "name": "Direct CBMC verification",
+        "reference": "CBMC (https://www.cprover.org/cbmc/) on the source code with missing functions replaced by stubs"
+      },
+      {
+        "name": "IDA Pro",
+        "reference": "Hex-Rays IDA Pro (https://hex-rays.com/ida-pro/)"
+      },
+      {
+        "name": "Ghidra",
+        "reference": "NSA Ghidra (https://ghidra-sre.org/)"
+      }
+    ],
+    "metrics": [
+      {
+        "name": "Correctness Rate",
+        "definition": "Correct Verifications divided by Total Tests"
+      },
+      {
+        "name": "Error Rate",
+        "definition": "1 minus (Correct Verifications + Timeouts) divided by Total Tests"
+      }
+    ],
+    "rqs": [
+      "RQ1: Can the approach effectively verify low-level language (assembly) programs?",
+      "RQ2: Is the approach capable of verifying large-scale heterogeneous programs with missing source code functions?",
+      "RQ3: Can existing decompiler tools such as IDA Pro and Ghidra serve as viable alternatives to the proposed approach?"
+    ],
+    "target_subject": "Program verification tasks involving RISC-V assembly, large C programs with some functions replaced by compiled libraries (missing source code), and RISC-V binary executables. Example tasks are drawn from the SV-COMP benchmark suites.",
+    "constraints": "All programs must be compilable to RISC-V binaries. CBMC must be used as the backend verifier with a timeout of 3000 seconds per program. For correct programs, loop unwind factor is fixed to 20; for incorrect programs, no fixed unwind factor is applied. Environment: Ubuntu 22.04 LTS, RISC-V GCC toolchain (riscv64-unknown-elf-gcc)."
+  },
+  "expected_artifacts": [
+    "idea",
+    "code",
+    "experiment_results",
+    "paper"
+  ],
+  "feasibility_notes": "The SV-COMP benchmarks are publicly accessible, and compilation to RISC-V is well-supported by GCC. The experiments involve a large number of verification runs with a 3000-second timeout, which may require significant compute time (potential total >80 CPU-hours). A high-memory machine (the original used 384 GB RAM) may be needed for some large programs, though typical benchmarks are less demanding. Building the tool and environment requires knowledge of CBMC and RISC-V toolchains.",
+  "difficulty": "medium",
+  "seed_papers": [
+    {
+      "title": "Efficient degradation and mineralization of polyethylene terephthalate microplastics by the synergy of sulfate and hydroxyl radicals in a heterogeneous electro-Fenton-activated persulfate oxidation system.",
+      "year": 2024,
+      "authors": [
+        "Yinghui Lin",
+        "Yuehua Zhang",
+        "Yonghao Wang"
+      ],
+      "doi": "10.1016/j.jhazmat.2024.135635",
+      "arxiv_id": null,
+      "pdf_url": "",
+      "citation_count": 32
+    },
+    {
+      "title": "A Self-Learning Discrete Artificial Bee Colony Algorithm for Energy-Efficient Distributed Heterogeneous L-R Fuzzy Welding Shop Scheduling Problem",
+      "year": 2024,
+      "authors": [
+        "Fei Yu",
+        "Lvjiang Yin",
+        "Bing Zeng"
+      ],
+      "doi": "10.1109/TFUZZ.2024.3382398",
+      "arxiv_id": null,
+      "pdf_url": "",
+      "citation_count": 21
+    },
+    {
+      "title": "A hybrid genetic-based task scheduling algorithm for cost-efficient workflow execution in heterogeneous cloud computing environment",
+      "year": 2024,
+      "authors": [
+        "Mohsen Khademi Dehnavi",
+        "A. Broumandnia",
+        "M. H. Shirvani"
+      ],
+      "doi": "10.1007/s10586-024-04468-6",
+      "arxiv_id": null,
+      "pdf_url": "",
+      "citation_count": 19
+    },
+    {
+      "title": "Scenario Generation for Autonomous Vehicles with Deep-Learning-Based Heterogeneous Driver Models: Implementation and Verification",
+      "year": 2023,
+      "authors": [
+        "Li Gao",
+        "Rui Zhou",
+        "Kai Zhang"
+      ],
+      "doi": "10.3390/s23094570",
+      "arxiv_id": null,
+      "pdf_url": "https://www.mdpi.com/1424-8220/23/9/4570/pdf?version=1683556203",
+      "citation_count": 9
+    },
+    {
+      "title": "Consensus Criterion Verification for Heterogeneous Multiagent Systems via Sum-of-Squares Programming",
+      "year": 2024,
+      "authors": [
+        "Shuyuan Zhang",
+        "Lei Wang",
+        "Bai Xue"
+      ],
+      "doi": "10.1109/TAC.2024.3388201",
+      "arxiv_id": null,
+      "pdf_url": "",
+      "citation_count": 8
+    }
+  ],
+  "paper_title": "Hetrify: Efficient Verification of Heterogeneous Programs on RISC-V"
+}

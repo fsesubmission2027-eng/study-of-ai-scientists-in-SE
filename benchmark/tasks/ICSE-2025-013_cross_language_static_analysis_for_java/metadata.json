@@ -1,0 +1,181 @@
+{
+  "id": "ICSE-2025-013",
+  "paper_id": "aa8af148127f69fa53979e1e4acebd482c499db4",
+  "title": "Interactive Cross-Language Pointer Analysis for Resolving Native Code in Java Programs",
+  "abstract": "Java offers the Java Native Interface (JNI), which allows programs running in the Java Virtual Machine to invoke and be manipulated by native applications and libraries written in other languages, typically C. While JNI mechanism significantly enhances the Java platform's capabilities, it also presents challenges for static analysis of Java programs due to the complex behaviors introduced by native code. Therefore, effectively resolving the interactions between Java and native code is crucial for static analysis. In this paper, we introduce JNIFER, the first interactive cross-language pointer analysis for resolving native code in Java programs. JNIFER integrates both Java and C pointer analyses, equipped with advanced native call and JNI function analyses, enabling the simultaneous analysis of both Java and native code. During the analysis of crosslanguage interactions, the two analyzers interact with each other, constructing cross-language points-to relations and call graphs, thereby approximating the runtime behavior at the interaction sites. Our evaluation shows that JNIFER outperforms state-of-the-art approaches in terms of soundness while maintaining high precision and comparable efficiency, as evidenced by extensive experiments on OpenJDK and real-world Java applications.",
+  "year": 2025,
+  "citation_count": 3,
+  "venue": "47th International Conference on Software Engineering (ICSE 2025)",
+  "venue_short": "ICSE 2025",
+  "authors": [
+    "Chenxi Zhang",
+    "Yufei Liang",
+    "Tian Tan",
+    "Chang Xu",
+    "Shuangxiang Kan",
+    "Yulei Sui",
+    "Yue Li"
+  ],
+  "pdf_url": "",
+  "paper_url": "https://www.semanticscholar.org/paper/aa8af148127f69fa53979e1e4acebd482c499db4",
+  "paper_type": "methodology",
+  "award": "ACM SIGSOFT Distinguished Paper Award",
+  "subfield_label": "Program Analysis & Verification",
+  "introduction": "In Java development, native method calls play a crucial role in leveraging existing native libraries, facilitating direct interaction with the underlying operating system, optimizing application performance, etc. Unlike ordinary Java methods, which are declared and implemented in Java, native methods are declared in Java but implemented in other languages (primarily C code, referred to as native code). The execution of native methods involves not only intra-language communication within Java and C but also complex cross-language interactions. These interactions can be categorized into two types: first, invoking C functions from Java via native method calls (denoted Java → C); second, using Java Native Interface (JNI) functions in C to call Java methods, create Java objects, access Java fields, and more (denoted C → Java).\n\nWhile native code is highly useful in development, it poses significant challenges for static analysis [1]. The key to resolving native code lies in inferring behaviors at crosslanguage interaction sites, which involves identifying the target native function of a native method call for J → C interactions C pointer analyses. Based on this model, we introduce two analyzers to on-the-fly resolve the cross-language interactions of Java→C and C→Java respectively, by utilizing pointer analysis while adhering strictly to the JNI specification. To maximally unleash the power of pointer analysis, JNIFER instantiates its methodology by incorporating Tai-e [13] and SVF [14], two state-of-the-art pointer analysis frameworks, as its pointer analysis components for Java and C, respectively. b) Results: We conducted extensive experiments to compare JNIFER with state-of-the-art tools, JN-Sum and Native-Scanner, to examine its effectiveness. These tools were used to analyze OpenJDK, which extensively uses native code, as well as all real-world Java applications used in recent research [11], [12]. The results indicate that JNIFER significantly outperforms existing state-of-the-art methods:\n\n• Soundness: We measured soundness by comparing how many dynamic cross-language interactions in our experiments could be recalled by the analyzers. JNIFER achieved an average recall of 91.6%, significantly higher than JN-Sum (34.6%) and Native-Scanner (62.9%). • Precision: We randomly selected various interaction sites and examined the analysis results of the tools. JNIFER maintained excellent precision at 99.1%, whereas Native-Scanner's precision was only 25.0%. Although JN-Sum reached a precision of 100%, it failed to resolve a significant number of cross-language interaction sites. • Efficiency: JNIFER proved to be the fastest in our experiments, achieving a speedup of 2.4x over JN-Sum and 1.2x over Native-Scanner. We will release JNIFER as an open-source tool and submit an artifact to AEC for reproducing all experimental results.",
+  "experiment": "In this section, we evaluate the effectiveness of JNIFER by comparing it with state-of-the-art methods in resolving native code behaviors. Specifically, we investigate the following research questions: RQ1. How does JNIFER compare to state-of-the-art methods in resolving J → C interactions, specifically native method calls? RQ2. How does JNIFER compare to state-of-the-art methods in resolving the most commonly used C → J interactions, i.e., method calls, object creation, and field accesses? RQ3. Is JNIFER efficient?\n\nWe first introduce our experimental setup (Section V-A), and then examine the results for RQ1 (Section V-B), RQ2 (Section V-C), and RQ3 (Section V-D).\n\nJNIFER consists of a Java component and a C component for analyzing Java programs and C (native) code, which we implemented on Tai-e [13] and SVF [14], respectively. We run the experiments on a 64-bit machine with an Intel i7-12700KF 3.6GHz CPU and 128 GB of RAM. Below, we describe several key setups in our experiments.\n\na) The Compared Analyzers: We compared JNIFER with two state-of-the-art native code analyzers, JN-Sum [11] and Native-Scanner [12]. The original JN-Sum has issues that cause it to crash on all our benchmarks. To enable it to analyze more benchmarks, we made two modifications. First, we modified it to quietly ignore unsupported JNI functions to prevent crashes. Second, we removed erroneous statements from Java source code generated by JN-Sum (i.e., the summary), which often contained errors such as assigning a Throwable object to an int variable. All modifications and fixes will be provided in the artifact. For Native-Scanner, we utilize its artifact version to run our experiments.\n\nb) Benchmarks: For a thorough and practical evaluation, we consider OpenJDK and real-world Java applications as our benchmarks. OpenJDK extensively utilizes native code, presenting numerous cross-language behaviors and various JNI function usages. We choose OpenJDK 8, which is a widely- used JDK version that serves as the foundation for many Java applications. Additionally, our benchmarks include all realworld Java applications previously used in related research [11], [12], namely aspectj-1.6.9, lucene-4.3.0, tomcat-native-1.2.23, and log4j-1.2.16. c) Ground Truth: To evaluate the effectiveness of JNIFER against other analyzers in terms of soundness and precision, we need to establish a ground truth for crosslanguage interactions within the benchmarks. This ground truth represents all actual cross-language behaviors at each interaction site. However, due to the complexity of our benchmarks, obtaining their complete cross-language interactions is unrealistic. Therefore, we use runtime instrumentation and sampling manual studies to establish the ground truth for soundness and precision, as explained below.\n\nTo measure the soundness of the analyzers, we perform recall experiments on our benchmarks by executing them, recording runtime cross-language behaviors through JVM (Hotspot) instrumentation, and comparing these with the results of static analyzers. For OpenJDK, we run its official test suites, which are organized into 28 directories, each corresponding to a JDK package, such as java.lang and java.io. We randomly selected 100 test cases from each directory (or all available test cases if fewer than 100), except for java.time and sun.invoke, where we encountered compilation issues. For real-world applications, the test suites of aspectj and lucene depend on complex testing frameworks, making it impossible for all three analyzers to reach the application code. Consequently, we manually created test cases for these projects to trigger as many native method calls as possible. For tomcat-native and log4j, we utilized their official test suites.\n\nTo establish the ground truth for precision evaluation, we randomly sampled one-third of the benchmarks (10 out of 30). For each selected benchmark, we randomly chose 10 interaction sites (or all available sites if fewer than 10) for each type of cross-language interaction, and then manually determined all possible interactions for each call site by examining the source code.\n\nTable II presents the results of our recall experiments and the analysis outcomes of the three analyzers for J → C interactions. The column \"#NMethod\" shows the number of distinct native methods reachable at runtime for each benchmark. For each static analyzer, the column \"Recall\" shows the number of runtime-recorded reachable native methods resolved by the analyzer, while the column \"#Res\" represents the total number of distinct native methods resolved by the analyzer.\n\nJNIFER achieves the highest recall at 84.8%, noticeably outperforming JN-Sum (66.3%) and Native-Scanner (67.8%). Upon investigation, we found that the major reason for JNIFER's superior recall is its better handling of native method dynamic binding. For instance, JNIFER comprehensively analyzes RegisterNatives, whereas JN-Sum only supports its limited usage patterns, and Native-Scanner is unable to analyze it, leading to missed native methods called from Java.\n\nTo examine precision, we randomly sampled 100 distinct native method call sites and manually inspected their true target native functions (as mentioned in Section V-A). Overall, JNIFER resolved 82 sites, JN-Sum resolved 56 sites, and Native-Scanner resolved 70 sites. We found that all native functions resolved by the three analyzers were true targets, achieving a precision of 100%. However, all call sites successfully resolved by JN-Sum and Native-Scanner could be resolved by simple name matching following the conventions in [2]. In contrast, JNIFER demonstrated a more comprehensive resolution ability by analyzing both name matching and dynamic binding to resolve more call sites.\n\nIn this section, we evaluate how JNIFER performs compared to other analyzers in resolving three common types of C → J interactions: method calls, object creation, and field accesses. As described in Section V-A, we instrumented cross-language interaction sites in native code to obtain true runtime behaviors as ground truth and compared these with the results from the three static analyzers. The results are presented in Tables III and IV. In summary, JNIFER outperforms JN-Sum and Native-Scanner in both soundness and precision for all three types of C → J interactions, with significant soundness advantages over JN-Sum and substantial precision advantages over Native-Scanner. Detailed results are explained below. a) Method Calls and Object Creation: Table III presents the true cross-language interactions collected via runtime instrumentation and the results of the three static analyzers for method calls (left half) and object creation (right half). The column \"#JMethod\" indicates the number of distinct Java methods called from native code, and the column \"#ObjType\" shows the number of distinct types of Java objects created from native code, both collected at runtime in our benchmarks. For each static analyzer, the column \"Recall\" shows the number of runtime-recorded Java methods and types it resolved, while the column \"#Res\" indicates the total number of distinct reachable Java methods and created types of Java objects resolved from native code, respectively.\n\nJNIFER achieves the highest recall, with 97.7% for method calls and 96.9% for object creation, by resolving nearly all true Java methods called from native code and all true types of Java objects created from native code in our experiments. Despite we fixed numerous errors in its generated Java summary, JN-Sum still has a low recall of only 24.8% for method calls and 20.1% for object creation. This is because it supports only a subset of the C language and misses some important C features used in native code, such as variadic function calls, leading to an inability to resolve many method IDs in complex realworld native code. Native-Scanner achieved a fairly high recall of 92.0% for method calls and 91.7% for object creation, but at the cost of extremely low precision, as explained below.\n\nIn our study, JNIFER achieved a high precision of 99.0% for method calls and 97.3% for object creation, thanks to its interactive pointer analysis approach. While JN-Sum reached a precision of 100.0% for both types of interaction, it was only able to resolve a limited number of interaction sites with simple patterns. Specifically, among the 100 studied C → J method call sites, JN-Sum resolved only 6 sites, whereas JNIFER resolved all 100 sites.\n\nNative-Scanner's precision is very low, at just 0.012% for method calls and 0.14% for object creation, because of its conservative assumption that every Java method or type matching any signature extracted from native code can be invoked or created from native code.\n\nThe loss of JNIFER's precision primarily stems from its flow-insensitive pointer analysis, which leads to imprecise points-to sets. A typical example occurs in OpenJDK's native code (X11Color.c), where a pointer (awt_colormodel) is reused for class lookups with a JNI object creation call in between. Because flow-insensitive analysis does not dis-and may miss cross-language interactions. Additionally, the ILEA tool is currently not available.\n\nOther works focus on native binary analysis of Android apps. Patrik et al. [27] focus on Dalvik bytecode analysis and binary analysis with program slicing to analyze some taint flows in the native binaries. JSA DEC- * [28] decompiles the native binaries of Android apps to C code and uses JN-Sum to analyze the native code. Some other methods [3], [4], [29] use symbolic execution, which results in scalability issues for large codebases. In contrast, our work provides an interactive cross-language pointer analysis that accurately captures the cross-language interactions. b) JNI Analysis Clients: Many existing approaches focus on monitoring and instrumenting JNI programs. [30] and Jinn [31] insert detection constraints and instrumentations for different JNI specification rules before and after the language boundary, i.e., native method calls and JNI function calls, to monitor the running status of JNI programs. They can accurately report violations when constraints are breached during execution. Other works use static analysis to detect JNI specification violations. Furr et al. [32] build a type system to infer possible Java types that JNI function call arguments may refer to, checking if they conform to the JNI specification. Li et al. [7]- [9] model how JNI functions affect the JVM's exceptional state and detect missing error checks in JNI programs. Kondoh et al. [6] detect missing error checks, JVM local resource leaks, and improper access to JVM critical regions through typestate analysis.\n\nCSS [5] provides a caller-sensitive cross-language taint analysis for native code, analyzing pre-tainted sources in a demand-driven way. CHERI [33] extends Java's security model to native code using hardware-assisted implementation, detecting vulnerabilities that bypass memory protection and high-level security policies, enforcing memory safety and compartmentalization. NCScope [34] uses hardware-assisted methods to collect execution traces and memory data of Android apps, detecting self-protection and anti-analysis mechanisms and diagnosing memory corruption bugs. NATIDROID [35] maps permissions for Android APIs, focusing on native library permissions, and detects vulnerabilities like permission over-privilege and component hijacking. µDep [36] provides a hybrid analysis framework using lightweight static binary analysis with differential fuzzing to identify dependencies between arguments and return values of native methods, detecting sensitive information flows in Android native code. LibDroid [37] offers a static analysis framework summarizing information flows within Android native binaries to identify potential security vulnerabilities, such as misuse of sensitive information. Gu et al. [38], [39] detect potential JNI global reference exhaustion with a hybrid analysis for Android native code. They analyze call graphs of Android system service code to identify potentially vulnerable APIs and automatically tests the findings to reduce false positives.\n\nWe introduced JNIFER, the first interactive cross-language pointer analysis for resolving Java native code. JNIFER effectively integrates Java and C pointer analyses, enabling onthe-fly resolution of native calls (Java→C) and JNI function calls (C→Java). Extensive experimental results demonstrate that JNIFER significantly outperforms state-of-the-art native code analysis tools in terms of soundness, while maintaining high precision and efficiency. We expect that the design methodology of interactive cross-language pointer analysis underlying JNIFER can facilitate the development of other client analyses requiring more sound control and data flow handling between Java and C. Furthermore, the methodology may also inspire interactive pointer analysis between other programming languages, like Python and C.",
+  "section_quality": {
+    "has_abstract": true,
+    "has_introduction": true,
+    "has_experiment": true,
+    "intro_chars": 2872,
+    "experiment_chars": 13036
+  },
+  "introduction_source": "grobid_tei",
+  "experiment_source": "grobid_tei",
+  "background_source": "introduction",
+  "experiment_source_used": "experiment_section",
+  "task_title": "Cross-Language Static Analysis for Java Native Code Interactions",
+  "background": "Java programs extensively use native methods via the Java Native Interface (JNI) to access OS features, legacy C libraries, or performance-critical routines. These native methods are declared in Java but implemented in C, creating complex cross-language interactions: Java calls C functions, and C code can invoke Java methods, create objects, or access fields via JNI. Modern static analysis of Java applications struggles with such mixed-language code because native implementations are opaque to Java-only analyzers. Existing state-of-the-art tools either unsoundly ignore native code or partially model it, resulting in low recall (many dynamic interactions missed) or poor precision (many spurious interactions reported). This severely limits the usefulness of static analysis for bug finding, security auditing, and software understanding in real-world Java applications that depend on native code. There is thus a pressing need for a static analysis framework that can accurately resolve both directions of JNI interactions with high soundness and precision.",
+  "research_question": "How can a static analysis framework resolve cross-language interactions through JNI to achieve significantly higher soundness and precision than current tools, while handling full JNI specifications and real-world Java/C codebases?",
+  "experiment_setup": {
+    "datasets": [
+      {
+        "name": "OpenJDK 8",
+        "source": "https://openjdk.org/projects/jdk8/",
+        "description": "The reference implementation of Java SE 8, containing extensive JNI usage across core libraries and a large test suite (28 directories, hundreds of test cases).",
+        "access": "open"
+      },
+      {
+        "name": "aspectj-1.6.9",
+        "source": "https://github.com/eclipse/org.aspectj",
+        "description": "Aspect-oriented programming extension for Java; uses native methods for weaving.",
+        "access": "open"
+      },
+      {
+        "name": "lucene-4.3.0",
+        "source": "https://github.com/apache/lucene",
+        "description": "High-performance text search engine library with native code acceleration.",
+        "access": "open"
+      },
+      {
+        "name": "tomcat-native-1.2.23",
+        "source": "https://github.com/apache/tomcat-native",
+        "description": "Apache Tomcat native library providing OS-level integration via JNI.",
+        "access": "open"
+      },
+      {
+        "name": "log4j-1.2.16",
+        "source": "https://github.com/apache/logging-log4j2",
+        "description": "Logging framework that uses native code for performance.",
+        "access": "open"
+      }
+    ],
+    "baselines": [
+      {
+        "name": "JN-Sum",
+        "reference": "JN-Sum: A Summary-Based Approach for Resolving Native Code in Java Programs"
+      },
+      {
+        "name": "Native-Scanner",
+        "reference": "Native-Scanner: A Static Analysis Framework For Resolving JNI Interactions"
+      }
+    ],
+    "metrics": [
+      {
+        "name": "Soundness (Recall)",
+        "definition": "Percentage of dynamically recorded true cross-language interactions (via JVM instrumentation) that are correctly resolved by the static analysis."
+      },
+      {
+        "name": "Precision",
+        "definition": "Percentage of statically resolved interactions that match the true interactions determined by manual inspection of source code."
+      },
+      {
+        "name": "Efficiency",
+        "definition": "Wall-clock time for the entire analysis on each benchmark, measured in seconds."
+      }
+    ],
+    "rqs": [
+      "RQ1: What is the recall and precision of resolving Java-to-C native method calls compared to the baselines, using dynamic ground truth?",
+      "RQ2: What is the recall and precision of resolving the most common C-to-Java interactions (method calls, object creation, field accesses) compared to the baselines?",
+      "RQ3: How does the analysis scale with program size and what is the speedup relative to baseline analyzers?"
+    ],
+    "target_subject": "Java applications that make extensive use of JNI to C native code, including the JDK itself and widely-used libraries with native components. Examples: OpenJDK core class libraries, Apache Tomcat native connectors, Lucene search engine.",
+    "constraints": "Must handle full JNI specification (including dynamic binding via RegisterNatives, all JNI function types). Must analyze unmodified C and Java source/binary code simultaneously. Ground truth for soundness requires running test suites with a modified JVM to record dynamic interactions. Hardware: 64-bit Linux, recommended 128GB RAM for whole-program analysis. Time budget not specified but the analysis should complete within hours for the largest benchmark."
+  },
+  "expected_artifacts": [
+    "idea",
+    "code",
+    "experiment_results",
+    "paper"
+  ],
+  "feasibility_notes": "All benchmarks are open-source and accessible. The ground truth collection requires building a custom HotSpot JVM with instrumentation, which is complex but documented. The analysis is memory-intensive (OpenJDK analysis may need >64GB). Integrating a Java pointer analysis with a C pointer analysis is technically challenging, requiring careful cross-language points-to propagation. The task is suitable for researchers with expertise in program analysis and JNI internals.",
+  "difficulty": "hard",
+  "seed_papers": [
+    {
+      "title": "Ensuring Accuracy and Equity in Vaccination Information From ChatGPT and CDC: Mixed-Methods Cross-Language Evaluation",
+      "year": 2024,
+      "authors": [
+        "Saubhagya Joshi",
+        "Eunbin Ha",
+        "Andee Amaya"
+      ],
+      "doi": "10.2196/60939",
+      "arxiv_id": null,
+      "pdf_url": "https://doi.org/10.2196/60939",
+      "citation_count": 13
+    },
+    {
+      "title": "AXA: Cross-Language Analysis through Integration of Single-Language Analyses",
+      "year": 2024,
+      "authors": [
+        "Tobias Roth",
+        "Julius Näumann",
+        "Dominik Helm"
+      ],
+      "doi": "10.1145/3691620.3696193",
+      "arxiv_id": null,
+      "pdf_url": "",
+      "citation_count": 8
+    },
+    {
+      "title": "Cross-Attention Transformer-Based Visual-Language Fusion for Multimodal Image Analysis",
+      "year": 2025,
+      "authors": [
+        "Liwei Ding",
+        "Kowei Shih",
+        "Hairu Wen"
+      ],
+      "doi": "10.30560/ijas.v8n1p27",
+      "arxiv_id": null,
+      "pdf_url": "",
+      "citation_count": 7
+    },
+    {
+      "title": "Bots in white coats: are large language models the future of patient education? A multicenter cross-sectional analysis",
+      "year": 2025,
+      "authors": [
+        "U. Aghamaliyev",
+        "J. Karimbayli",
+        "A. Zamparas"
+      ],
+      "doi": "10.1097/JS9.0000000000002250",
+      "arxiv_id": null,
+      "pdf_url": "https://doi.org/10.1097/js9.0000000000002250",
+      "citation_count": 7
+    },
+    {
+      "title": "Cross-Language Taint Analysis: Generating Caller-Sensitive Native Code Specification for Java",
+      "year": 2024,
+      "authors": [
+        "Shuangxiang Kan",
+        "Yuhao Gao",
+        "Zexin Zhong"
+      ],
+      "doi": "10.1109/TSE.2024.3392254",
+      "arxiv_id": null,
+      "pdf_url": "",
+      "citation_count": 6
+    }
+  ],
+  "paper_title": "Interactive Cross-Language Pointer Analysis for Resolving Native Code in Java Programs"
+}

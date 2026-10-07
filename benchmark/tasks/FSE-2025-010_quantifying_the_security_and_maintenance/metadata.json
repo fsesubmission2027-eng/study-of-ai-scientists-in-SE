@@ -1,0 +1,155 @@
+{
+  "id": "FSE-2025-010",
+  "paper_id": "3715728",
+  "title": "Pinning Is Futile: You Need More Than Local Dependency Versioning to Defend Against Supply Chain Attacks",
+  "abstract": "Recent high-profile incidents in open-source software have greatly raised practitioner attention on software supply chain attacks. To guard against potential malicious package updates, security practitioners advocate pinning dependency to specific versions rather than floating in version ranges. However, it remains controversial whether pinning carries a meaningful security benefit that outweighs the cost of maintaining outdated and possibly vulnerable dependencies. In this paper, we quantify, through counterfactual analysis and simulations, the security and maintenance impact of version constraints in the npm ecosystem. By simulating dependency resolutions over historical time points, we find that pinning direct dependencies not only (as expected) increases the cost of maintaining vulnerable and outdated dependencies, but also (surprisingly) even increases the risk of exposure to malicious package updates in larger dependency graphs due to the specifics of npm’s dependency resolution mechanism. Finally, we explore collective pinning strategies to secure the ecosystem against supply chain attacks, suggesting specific changes to npm to enable such interventions. Our study provides guidance for practitioners and tool designers to manage their supply chains more securely.",
+  "year": 2025,
+  "citation_count": null,
+  "venue": "ACM International Conference on the Foundations of Software Engineering (FSE 2025)",
+  "venue_short": "FSE 2025",
+  "authors": [
+    "Hao He",
+    "Bogdan Vasilescu",
+    "Christian Kästner"
+  ],
+  "pdf_url": "",
+  "paper_url": "https://dl.acm.org/doi/10.1145/3715728",
+  "paper_type": "study",
+  "award": "ACM SIGSOFT Distinguished Paper Award",
+  "subfield_label": "Software Security",
+  "introduction": "Open-source components have become a critical part of software supply chains in today's software development. However, recent high-profile security incidents show that integrating open-source components exposes a software project to two major types of security risks:\n\n• Security Vulnerabilities: An open-source component, especially outdated versions, may contain accidentally introduced vulnerabilities or weaknesses, which may be exploitable by a malicious actor in certain cases (e.g., the Log4Shell vulnerability [IBM 2021]). • Malicious Package Updates: An open-source component may be intentionally compromised by an attacker to release a malicious update and exploit downstream applications (e.g., the node-ipc [Snyk 2022] and xz incidents [Sonatype 2024b]). This scenario is often referred to, in a broader sense, as software supply chain attacks [Ladisa et al. 2023;Ohm et al. 2020]. In most ecosystems, software projects need to specify version constraints for their dependencies on open-source components-these constraints influence their exposure to security vulnerabilities and malicious package updates. For example, npm packages are expected to follow semantic versioning [Preston-Werner 2023], using minor version updates to indicate non-breaking releases. Then, downstream developers can use floating version constraints (e.g., \"ˆ1.2.0\" matches 1.2.0 ≤ version < 2.0.0) to allow their project to automatically install the most recent, patched but also backward compatible version of a dependency at the time of installation. Through this mechanism, a security patch fixing a vulnerability (e.g., 1.2.1 fixing 1.2.0) can be immediately propagated to a downstream project as long as it uses floating version constraints for that dependency.\n\nHowever, the same floating mechanism can also lead to the immediate propagation of malicious package updates in case a dependency gets compromised and releases a malicious version as a new patch release (e.g., the node-ipc incident [Snyk 2022]). Even if malicious updates are less common, they are arguably more concerning than security vulnerabilities because many security vulnerabilities are hard to exploit [Jacobs et al. 2019;Younis et al. 2016] whereas the injection of malicious code can cause immediate catastrophic harm and is difficult to defend against. To prevent exposure to malicious package updates, it seems necessary to pin dependency versions (e.g., require exactly version 1.2.0). However, this strategy comes with its own costs. To receive future updates, developers have to manually update the dependency to a newer release, ideally after auditing the changes. Failure to do so can leave security vulnerabilities to hackers even when the security patch has been available for a long time [Decan et al. 2018].\n\nThe choice between pinning and floating not only represents a trade-off among competing security priorities but also interacts with other dependency management concerns. Specifically, the above discussion also applies to breaking changes (that are not malicious) and outdated dependencies (a form of technical debt). What's more, modern software supply chains form complex networks in which each node (i.e., project) can only make local decisions about its direct dependencies [Decan et al. 2019], but all pinning and floating decisions an upstream project makes have implications, both directly and transitively, for all its downstream projects. For example, a floating version constraint leaves an attack surface for all downstream projects, while pinning puts downstream projects at a higher risk of encountering dependency conflicts [Pinckney et al. 2023c;Wang et al. 2018]. We summarize the commonly argued benefits and drawbacks of pinning and floating in Table 1.\n\nImportantly, the concern about malicious package updates is fairly recent and reached broad awareness through high-profile incidents, such as SolarWinds in 2020 [TechTarget 2023], node-ipc in 2022 [Snyk 2022] and the xz attack targeted at ssh in 2024 [Sonatype 2024b]-such recent attention may shift trade-off considerations. Prior to this recent concern, there have been many studies and discussions about the trade-off between semantic versioning and breaking changes [e.g., Pinning Is Futile FSE013:3 2 0 1 1 2 0 1 3 2 0 1 5 2 0 1 7 2 0 1 9 2 0 2 1 2 0 2 2 0 1 1 2 0 1 3 2 0 1 5 2 0 1 7 2 0 1 9 2 0 2 1 2 0 2 Fig. 1. The distribution of version constraint types and project-level versioning strategies in each year in the dataset we use for answering RQ1 (see Section 3.1 for details) -we observe that after years of increasing floating adoption, since about 2020 the trend reverses with a shift toward pinning. In Figure 1(a), we ignore non-floating/pinning version constraints as they only occupy 0.83% of version constraints in our dataset. Bogart et al. 2021;Jafari et al. 2022;Raemaekers et al. 2017]. In a survey conducted in 2020, the majority of practitioners in the npm ecosystem were in favor of (semantic-versioning-based) floating [Jafari et al. 2022]. It is argued that pinning accumulates technical debt in the form of outdated dependencies [Hacker News 2018;Jafari et al. 2022], prevents security fixes from propagating downstream [Chinthanet et al. 2021;Wang et al. 2023], and increases the likelihood of dependency conflicts (or bloat in npm) [Hacker News 2017;StackOverflow 2017]. However, recent high-profile malicious package update incidents provide a new argument in favor of pinning, as pinning reduces the attack surface for malicious package updates. Given this argument, together with prior arguments that pinning increases application stability and reproducibility [Leiter 2023;Lucid 2017;Radzikowski 2021], many practitioners now argue in favor of pinning for security sensitive applications -for example, a survey of 17 domain experts and 134 software developers by Ladisa et al. [2023] ranks pinning as a top-3 safeguard against supply chain attacks in terms of utility/cost ratio; the OpenSSF Scorecard project [OpenSSF 2023;Zahan et al. 2023a] included \"pinned dependencies\" as one of its 18 security best practices. This discussion clearly reaches practitioners-as we show in Figure 1 (and explain in more depth later in Section 3.1), practitioners in npm have gradually shifted toward pinning more dependencies since 2020.\n\nOverall, controversies remain on whether the benefits of pinning outweigh its drawbacks, as manifested by online discussions [Bressers 2022;Curphey 2022;Renovate Bot 2018] and evidenced by the contradicting results from the collected practitioner opinions in prior studies [Jafari et al. 2022;Ladisa et al. 2023]. However, to the best of our knowledge, there is no quantitative evidence so far about the actual impact of pinning versus floating dependencies on the security and maintenance trade-offs in Table 1. To gather quantitative evidence about pinning and floating, we perform a repository mining study on the npm ecosystem, the most frequently discussed ecosystem in the literature. Our study highlights an important complication that makes the discussion around pinning so difficult: Since a project can only control the version constraints of its direct dependencies, the actual impact of pinning as a local intervention is complicated and unclear, contingent upon both the decisions made upstream and the behaviors of dependency management tools. To measure this impact holistically from empirical data, we raise the following research question:\n\n• RQ1: (Impact of Pinning) How does the individual choice of pinning direct dependencies affect the overall security risks and maintenance costs in one's own dependency graph?\n\nTo answer this research question, we collect a large sample of npm packages and GitHub repositories using npm. Then, we use an experimental time-traveling feature of the npm dependency resolver to simulate the evolution of their dependency graphs over a 12-month period. We estimate the impact of pinning on a set of five security and maintenance-related metrics using fixed-effect panel regression [Brüderl and Ludwig 2015;Hanck et al. 2021]. A key (and counter-intuitive) finding from our model is that for the purpose of reducing the attack surface of malicious updates, pinning is futile and can be even harmful for projects with ≥498 direct and transitive dependencies (affecting 26% of GitHub repositories in our dataset). That is, pinning is ineffective for one of its main goals, all while creating substantial costs for managing outdated, vulnerable, and conflicting dependencies.\n\nInspired by this finding, we argue that ecosystem-level interventions (e.g., investing resources to secure critical open-source projects) are more effective than (possibly futile) local interventions of pinning direct dependencies to improve the overall resilience of an open-source ecosystem against malicious package updates. To empirically test this, we explore the second research question:\n\n• RQ2: (Ecosystem-Level Interventions) How effective is coordinating pinning among selected upstream packages in reducing the risk of malicious package updates ecosystem-wide? We answer this research question by simulating coordinated efforts in the entire npm dependency network. We formulate attack models and defense strategies in the dependency network, define heuristics to intervene in selected upstream packages, and measure the overall risk of malicious package updates after the intervention. Our findings indicate that it is possible to reduce the average spread of malicious package updates in the npm dependency network by nearly 30% if we pin in 100 intentionally selected important packages. However, as we will quantify, this intervention could be substantially more effective (up to 75%) if npm implements a new transitive pinning feature to allow packages to pass their entire pinned dependency graphs downstream.\n\nSummary of Contributions. Our paper contributes novel quantitative evidence on the security and maintenance impact of version constraints in a packaging ecosystem, especially in light of recent concerns about malicious package updates. Our findings align with the opinions of npm developers [Jafari et al. 2022] but contradict the views of security practitioners [Ladisa et al. 2023;Zahan et al. 2023a], suggesting that pinning direct dependencies is futile (and can be even counterproductive) as protection against malicious package updates. In addition, we contribute evidence that a new ecosystem-wide intervention, along with tooling changes and ecosystem-wide allocation of collectively pooled resources, can be an effective intervention against malicious package updates. Our findings lead to concrete advice for developers and ecosystem policy makers to improve the state of software supply chain security (Section 5).",
+  "experiment": "In this section, we report results based on production dependency graphs (i.e., excluding development dependencies) from all projects in all time points (Table 4). Wald tests show that the full model (with pinning and the interaction) is preferable for all five outcome variables (𝑝 < 0.001) compared to a null model with only 𝑠𝑖𝑧𝑒 (𝐺) as an independent variable. Note while development dependencies are generally considered irrelevant for security vulnerabilities [Latendresse et al. 2022;Pashchenko et al. 2018], they form an important attack surface for malicious package updates that compromise build systems [Ladisa et al. 2023;Ohm et al. 2020]. Therefore, we have also explored the robustness of our findings: (1) in dependency graphs with development dependencies, (2) separately on npm packages and GitHub repositories, and (3) using only data collected at 𝑡 0 . The results are highly consistent and available in the replication package (Section 6). Fig. 4. The effect of pinning direct dependencies on malicious package update attack surface (as measured by the number of floating dependencies in the entire dependency graph). Our model shows that pinning reduces attack surface for small dependency graphs, but the positive effect decreases as the dependency graphs grow larger and even flips to negative for dependency graphs with more than 498 dependencies.\n\nFor the effect of pinning, we find that pinning all direct dependencies has a significant influence on the three measures of cost-higher exposure to security vulnerabilities (n_vuln), number of outdated dependencies that need to be manually updated (n_outdated_deps), and higher exposure to dependency conflicts (n_bloated). Those results are supported by the differences in the descriptive results over different time periods (Table 3) and the significant coefficients in our panel regression models ( Table 4); the interaction term shows that all three costs of pinning increase with dependency graph sizes; the exposure to security vulnerabilities has the strongest interaction effect.\n\nThe effect of pinning on the two metrics expected to show benefits of pinning (reduced attack surface and fewer breaking changes) is dim. For the number of automatic updates, the regression model fits poorly and provides little explanatory power (other factors like picking dependencies with fewer releases likely have a stronger effect than pinning). For the number of floating dependencies, the interaction effect with the size of the dependency graph (see Table 4 and illustration in Figure 4) shows that the benefit of pinning on reducing the attack surface is smaller with larger dependency graphs and even (counter-intuitively) negative for very large dependency graphs. 4 RQ2: How effective is coordinating pinning among selected upstream packages in reducing the risk of malicious package updates ecosystem-wide?\n\nAs the results from RQ1 (Section 3.3) indicate, pinning direct dependencies is ineffective and possibly even harmful for preventing malicious package updates if a project has a large and complex dependency graph (we will return to this issue in Section 5). Then, a natural follow-up question arises: Are there better, alternative interventions that can effectively reduce the risk of malicious package updates in the npm ecosystem? Inspired by previous research that reveals the structures of dependency networks [Decan et al. 2019;Zimmermann et al. 2019], we hypothesize that the risk of malicious package updates can be greatly reduced if a small set of \"core\" packages pin and promptly update all their dependencies after proper auditing (ensuring there is no outdated dependency but also no malicious update). That is, instead of all developers redundantly performing security actions, a few package maintainers (or a dedicated security team for the ecosystem) might (a) Attack Impact Computation: Packages C to H all directly or indirectly depend on B and are hence reachable if B is attacked, but package A is not. The impact of compromising package B is the sum of downloads of all reachable packages (C-H) divided by the total number of downloads across all packages. In this case, impact(𝐵) = (1𝑚 + 10𝑘 + 5𝑘 + 2𝑘 + 1𝑘+900+500)/(90𝑘+1𝑚+10𝑘+5𝑘+2𝑘+1𝑘+900+500) ≈ 0.92. |𝐴| 𝑎∈𝐴 impact(𝑎)). Intuitively, 𝑟𝑖𝑠𝑘 (𝐴) ∈ [0, 1] is an estimation of the expected average percentage of npm downloads that would be affected by compromising any one of the packages in 𝐴.\n\nPinning Mechanism. With npm's existing mechanisms, the maintainers of the 𝑛 defending packages can only pin their direct dependencies (local pinning), but not their transitive ones. Maintainers can freeze their dependency graph with a package-lock.json file, which, with npm's current design, only has an effect on their own package and not on anyone importing their package.\n\nTo give maintainers more power (at a higher maintenance cost), we imagine an alternative strategy of transitive pinning, where maintainers can pin direct and indirect dependencies. This could be implemented with a change to npm that allows (a) package maintainers to upload their package-lock.json as part of the deployed package and (b) npm to consider that file in each package during dependency resolution. We illustrate the difference in Figure 5(b).\n\nDefense Selection Strategy. Finally, we need to decide which 𝑛 packages to defend with local or transitive pinning. Unfortunately, the problem of choosing an optimal package set of size 𝑛 that minimizes 𝑟𝑖𝑠𝑘 (𝐴) is equivalent to the Influence Minimization problem, which is NP-hard [Xie et al. 2023]. Hence, we focus on evaluating simple heuristics to choose the defended packages and leave the optimization as future work. Specifically, we choose top-𝑛 packages with (1) highest downloads, (2) highest out degrees (i.e., the packages with the most direct dependencies), (3) highest betweenness centrality (i.e., the packages on most dependency paths), (4) highest downloads × out degrees (i.e., popular packages with many direct dependencies), and (5) highest downloads × betweenness centrality (i.e., popular packages on many dependency paths). Intuitively, we expect defense selection strategies based on out degree to work best for local pinning as they emphasize direct dependencies, and strategies based on betweenness to work best for transitive pinning as transitive pinning interrupts paths.\n\nSimulation. For each combination of pinning mechanism, defense selection strategy, and number of defended packages from 0 to 𝑛, we measure the impact of the defense on the risk metric. To compute the impact, we compute risk(A) with a modified reachable function (Equation 2, different from the standard notion of graph reachability) by breaking propagation of the attack when the final edge is pinned (local pinning) or if the path contains a defended package (transitive pinning). Limitations and Threats to Validity. To make the simulation feasible, we make several simplifying assumptions described above. Notably, we assume that attacks happen uniformly randomly on a fixed number of attack targets, while real attack selection strategies may be more targeted, more opportunistic, and may adapt in response to defense strategies. Therefore, we additionally explored two different attack selection strategies: (1) attacking any actively maintained projects randomly, and (2) attacking the most fragile or under-maintained packages (e.g., as the xz attack, which focused on a dependency with a single overworked maintainer [Sonatype 2024b]) defined as the bottom-1000 packages in our package dataset, ranked by the number of core maintainers estimated in World of Code [Ma et al. 2021]. For space and since our results are generally robust under the different attack selection strategies, we only report results under the impact-based attack selection strategy (the remaining are in the replication package, Section 6). What's more, the dependency network is only an approximation of reverse dependency relationships. However, similar kinds of dependency networks are frequently used in prior research [Decan et al. 2019;Zimmermann et al. 2019] because it is generally impossible to compute precise reverse dependencies as would be resolved by npm due to its deduplication optimizations (Section 2). For defense selection strategies, we have to rely on simple heuristics, leaving potentially better strategies (e.g., more computationally expensive optimization attempts) to future work. Finally, due to a lack of access to real-world application data, our simulation does not accurately quantify the impact of malicious package updates on applications, whether open-source repositories or closed-source projects outside of npm. We mitigate this by considering downloads in attack impact estimation (Equation 2), but npm download data can be also noisy and inconsistent. Due to these simplifying assumptions, readers should take our results as a first exploration of broad defense strategies and their ecosystem-wide effects, rather than specific implementation recommendations.\n\nIn this section, we report results for 𝑛 = 100 and 𝑚 = 1, 000 (i.e., defending up to 100 packages to minimize the risk of attack among the top 1000 most impactful packages; the results are robust under other 𝑛, 𝑚 variations which are available in the replication package, Section 6). As visible in Figure 6, one would expect 1.93% of npm downloads to be affected on average upon an attack without any intervention, which is enormous considering that npm has ∼12 billion downloads per day in 2024 [Sonatype 2024a]. Most defense strategies can reduce ecosystem-wide risk (from doing nothing at 𝑛 = 0) with targeted defenses at 10 to 100 packages, but their effectiveness varies widely. The best local pinning strategy can reduce ecosystem-wide risk against the 1000 most popular packages by 12.21% with defending only 20 packages and 30.09% when defending 100 packages. The best transitive pinning strategy can reduce ecosystem-wide risk against the 1000 most popular packages by 51.34% when defending only 20 packages and 75.81% when defending 100 packages. For both pinning mechanisms, selecting packages with betweenness weighted by downloads is most effective, but transitive pinning is usually two to three times more effective than local pinning.",
+  "section_quality": {
+    "has_abstract": true,
+    "has_introduction": true,
+    "has_experiment": true,
+    "intro_chars": 10801,
+    "experiment_chars": 10314
+  },
+  "introduction_source": "grobid_tei",
+  "experiment_source": "grobid_tei",
+  "background_source": "introduction",
+  "experiment_source_used": "experiment_section",
+  "task_title": "Quantifying the Security and Maintenance Trade-offs of Dependency Pinning versus Floating in the npm Ecosystem",
+  "background": "Modern software supply chains rely heavily on open-source components managed through package managers. Projects specify version constraints for their dependencies, typically choosing between floating constraints (allowing automatic minor/patch updates) and pinning (locking to a specific version). Floating enables rapid propagation of security patches but also creates an attack surface for malicious package updates, as seen in recent high-profile incidents. Pinning reduces exposure to such attacks but accumulates outdated dependencies, prolongs vulnerability exposure, and increases dependency conflicts. The security and maintenance costs of these strategies, particularly in large, transitive dependency networks, are poorly understood and have only been studied before the recent shift in awareness of supply chain attacks.",
+  "research_question": "How do dependency pinning and floating strategies affect exposure to malicious package updates, security vulnerabilities, and maintenance burdens across npm dependency graphs, and can coordinated interventions by key packages reduce the ecosystem-wide risk?",
+  "experiment_setup": {
+    "datasets": [
+      {
+        "name": "npm package metadata and dependency graphs (historical)",
+        "source": "npm public registry (https://registry.npmjs.org) and Libraries.io (https://libraries.io)",
+        "description": "Package version histories, dependency relationships, and download counts for npm packages over multiple time points. Vulnerability data from npm advisories (https://github.com/advisories) or the GitHub Advisory Database. Construction involves resolving dependency graphs from package.json files for a large set of npm packages and GitHub repositories, computing transitive dependencies, and mapping vulnerabilities to specific package versions.",
+        "access": "open"
+      }
+    ],
+    "baselines": [
+      {
+        "name": "Floating version constraints (no pinning)",
+        "reference": "Existing npm behavior using semantic versioning ranges (e.g., ^1.2.0)"
+      },
+      {
+        "name": "Local pinning with no coordination (existing npm pinning)",
+        "reference": "npm's package-lock.json mechanism that pins direct dependencies only"
+      },
+      {
+        "name": "Transitive pinning (hypothetical npm extension)",
+        "reference": "Proposed mechanism extending package-lock.json to pin transitive dependencies for downstream consumers"
+      },
+      {
+        "name": "Defense selection heuristics (download-based, out-degree-based, betweenness centrality-based, and combinations)",
+        "reference": "Analytical baselines for selecting which packages to defend"
+      }
+    ],
+    "metrics": [
+      {
+        "name": "Attack surface (number of floating dependencies)",
+        "definition": "Total count of floating (non-pinned) direct and transitive dependencies in a project's dependency graph."
+      },
+      {
+        "name": "Number of outdated dependencies",
+        "definition": "Count of dependencies in the resolved graph that are not at their latest available version."
+      },
+      {
+        "name": "Exposure to security vulnerabilities (n_vuln)",
+        "definition": "Number of known vulnerabilities affecting the resolved dependency versions."
+      },
+      {
+        "name": "Number of breaking changes",
+        "definition": "Count of automated updates that would introduce a major version bump or incompatible API change."
+      },
+      {
+        "name": "Number of dependency conflicts (n_bloated)",
+        "definition": "Count of duplicated packages or conflicting version requirements in the resolved dependency graph."
+      },
+      {
+        "name": "Ecosystem risk (expected download fraction affected)",
+        "definition": "Estimate of the average fraction of total npm downloads that would be impacted by a single attack on a package in a set A, computed as (1/|A|) sum_{a in A} (sum of downloads of all packages reachable from a divided by total downloads)."
+      }
+    ],
+    "rqs": [
+      "RQ1: What is the effect of pinning all direct dependencies on the five measures of security and maintenance cost, and how does this effect vary with dependency graph size?",
+      "RQ2: How effective are coordinated pinning strategies (local and transitive) among top-selected upstream packages at reducing the ecosystem-wide risk of malicious package updates?"
+    ],
+    "target_subject": "npm ecosystem (JavaScript packages), including both libraries published to npm and applications hosted on GitHub that depend on npm packages. Examples include widely used libraries such as lodash, express, react.",
+    "constraints": "Dependency graph construction must respect npm's actual resolution algorithm (semantic versioning, package-lock.json semantics). Historical analyses require data from specific time points; simulations assume uniform random attack target selection as a baseline, but sensitivity analyses with alternative attack models (targeting actively maintained projects or fragile packages) are recommended."
+  },
+  "expected_artifacts": [
+    "idea",
+    "code",
+    "experiment_results",
+    "paper"
+  ],
+  "feasibility_notes": "All data is available from public npm registries, vulnerability databases, and download count APIs. Processing historical dependency graphs for thousands of packages may require moderate compute resources (CPU-bound, ~GBs of memory) and can likely be executed on a standard server within a few days. The simulation for RQ2 involves computing network centrality measures and evaluating multiple heuristics on a large graph, which is computationally feasible with standard libraries. No special hardware is required.",
+  "difficulty": "medium",
+  "seed_papers": [
+    {
+      "title": "Pinning Is Futile: You Need More Than Local Dependency Versioning to Defend against Supply Chain Attacks",
+      "year": 2025,
+      "authors": [
+        "Hao He",
+        "Bogdan Vasilescu",
+        "Christian Kästner"
+      ],
+      "doi": "10.1145/3715728",
+      "arxiv_id": "2502.06662",
+      "pdf_url": "",
+      "citation_count": 11
+    },
+    {
+      "title": "From KMMLU-Redux to Pro: A Professional Korean Benchmark Suite for LLM Evaluation",
+      "year": 2025,
+      "authors": [
+        "Seokhee Hong",
+        "SunKyoung Kim",
+        "Guijin Son"
+      ],
+      "doi": "10.18653/v1/2025.findings-emnlp.1038",
+      "arxiv_id": "2507.08924",
+      "pdf_url": "",
+      "citation_count": 2
+    },
+    {
+      "title": "YOU SEE THE CORNER OF HER EYES / TWISTED LIKE A CROOKED PIN”: THE IMAGE OF WOMAN IN T. S. ELIOT’S EARLY POETRY”",
+      "year": 2020,
+      "authors": [
+        "M. Sulaiman"
+      ],
+      "doi": "10.37648/ijrssh.v10i01.005",
+      "arxiv_id": null,
+      "pdf_url": "",
+      "citation_count": 0
+    },
+    {
+      "title": "Approaching Popular Culture",
+      "year": 2017,
+      "authors": [
+        "in therapy not only much for is it common popular thi uttered workers"
+      ],
+      "doi": null,
+      "arxiv_id": null,
+      "pdf_url": "",
+      "citation_count": 0
+    }
+  ],
+  "paper_title": "Pinning Is Futile: You Need More Than Local Dependency Versioning to Defend Against Supply Chain Attacks"
+}

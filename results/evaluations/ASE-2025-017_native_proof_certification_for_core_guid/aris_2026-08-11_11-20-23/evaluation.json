@@ -1,0 +1,1115 @@
+{
+  "run_dir": "~/ai_scientist_inputs/ASE-2025-017_native_proof_certification_for_core_guid/workspace/aris_2026-08-11_11-20-23",
+  "task_dir": "~/ai_scientist_inputs/ASE-2025-017_native_proof_certification_for_core_guid",
+  "framework": "aris",
+  "fairness_audit": [
+    {
+      "axis": "completeness",
+      "was_unfair": "Required both paper.tex AND paper.pdf; any tool missing one failed equally.",
+      "fix": "Paper gate: PDF=1.0; TeX-only=0.5; ``complete`` requires PDF."
+    },
+    {
+      "axis": "completeness",
+      "was_unfair": "``results`` counted stub/seed JSON (dataset_candidate/metrics.json).",
+      "fix": "``results`` requires substantive numeric results via results_normalize."
+    },
+    {
+      "axis": "experiment_success",
+      "was_unfair": "Only metrics.json; ignored results.json / experiment_results.txt.",
+      "fix": "Framework-ordered result candidates + normalized loaders."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Penalized tools with no bib; airesearcher has no workspace references.",
+      "fix": "literature_applicable=false → status not_applicable; excluded from fair aggregate."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "related_work.json subset as gold made recall hard to interpret.",
+      "fix": "Coverage gold is original paper REFERENCES from mineru; related_work only enriches metadata/fallback."
+    },
+    {
+      "axis": "peer_review",
+      "was_unfair": "Missing Stanford report looked like evaluation failure.",
+      "fix": "status not_provided; optional axis, never counts as tool failure."
+    },
+    {
+      "axis": "paths/find_results",
+      "was_unfair": "Picked downloads/** and sandbox noise (e.g. airesearcher LLVM tree).",
+      "fix": "Exclude downloads/, seeds/, dataset_candidate/, sandbox junk paths."
+    },
+    {
+      "axis": "paths/framework_noise",
+      "was_unfair": "DeepScientist .deepscientist_npm / runtime / skills templates counted as code/paper/results.",
+      "fix": "FRAMEWORK_NOISE_DIRS+markers; quest worktree + eval_output results; paper md drafts; reject template tex."
+    },
+    {
+      "axis": "paths/paper_tex",
+      "was_unfair": "tiny_scientist / ACL runs store paper under latex/*.tex; evaluator only looked at paper/main.tex.",
+      "fix": "latex/**/*.tex with substantive-body heuristic; find_paper_document uses same rules."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Entire custom.bib (300+ anthology entries) verified when paper had zero \\cite commands.",
+      "fix": "collect_agent_references filters bib to in-text cite keys; skips uncited bulk bib (>40 entries)."
+    },
+    {
+      "axis": "paths/ai_scientist_summaries",
+      "was_unfair": "AI Scientist can persist substantive results and paper-like drafts in *_summary.json logs rather than paper/main.tex or results/**/*.json.",
+      "fix": "Treat draft_summary/research_summary as weak paper documents and summary JSONs as result candidates."
+    },
+    {
+      "axis": "idea_generation",
+      "was_unfair": "plan.md/todos.md weak proxies scored same as structured idea.json.",
+      "fix": "Framework idea_priority tried first; missing idea → not_applicable where appropriate."
+    }
+  ],
+  "generated_at": "2026-08-24T16:04:09",
+  "axes": [
+    "alignment",
+    "completeness",
+    "experiment_analysis",
+    "idea_generation",
+    "literature_review",
+    "peer_review"
+  ],
+  "results": {
+    "completeness": {
+      "framework": "aris",
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-017_native_proof_certification_for_core_guid/workspace/aris_2026-08-11_11-20-23",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-017_native_proof_certification_for_core_guid",
+      "complete": false,
+      "required_score": 0.75,
+      "bonus_score": 0.11,
+      "overall_score": 0.6,
+      "missing": [
+        "results"
+      ],
+      "required": {
+        "idea": {
+          "path": "idea-stage/IDEA_REPORT.md",
+          "bytes": 9554,
+          "via": "candidate"
+        },
+        "code": {
+          "count": 4,
+          "files": [
+            {
+              "path": "project/scripts/run_benchmark.py",
+              "bytes": 16185,
+              "via": "glob"
+            },
+            {
+              "path": "project/src/oll_solver.py",
+              "bytes": 23505,
+              "via": "glob"
+            },
+            {
+              "path": "project/src/proof_format.py",
+              "bytes": 1619,
+              "via": "glob"
+            },
+            {
+              "path": "project/src/proof_verifier.py",
+              "bytes": 8508,
+              "via": "glob"
+            }
+          ]
+        },
+        "results": {
+          "substantive": false,
+          "normalized_path": null,
+          "numeric_leaf_count": 0,
+          "discovered_files": [],
+          "metrics_keys_sample": []
+        },
+        "paper": {
+          "tex": {
+            "path": "paper/main.tex",
+            "bytes": 15101,
+            "via": "candidate"
+          },
+          "pdf": {
+            "path": "paper/main.pdf",
+            "bytes": 157437,
+            "via": "compiled_promoted"
+          },
+          "md": null,
+          "json": null,
+          "status": "pdf",
+          "score": 1.0
+        }
+      },
+      "bonus": {
+        "experiment_plan": {
+          "path": "refine-logs/EXPERIMENT_PLAN.md",
+          "bytes": 2413,
+          "via": "candidate"
+        },
+        "experiment_log": {
+          "path": "aris_run.log",
+          "bytes": 75240,
+          "via": "glob"
+        },
+        "review": null,
+        "readme": {
+          "path": "README_BENCHMARK.md",
+          "bytes": 948,
+          "via": "candidate"
+        },
+        "narrative": {
+          "path": "NARRATIVE_REPORT.md",
+          "bytes": 5269,
+          "via": "candidate"
+        },
+        "bib": null
+      },
+      "manifest_status": {
+        "idea": true,
+        "experiment_plan": true,
+        "experiment_log": false,
+        "metrics": false,
+        "review": false,
+        "narrative": true,
+        "paper_tex": true,
+        "paper_pdf": false
+      },
+      "gate_scores": {
+        "idea": 1.0,
+        "code": 1.0,
+        "results": 0.0,
+        "paper": 1.0
+      },
+      "fairness": {
+        "gates": [
+          "idea",
+          "code",
+          "results",
+          "paper"
+        ],
+        "paper_gate_rule": "PDF=1.0; TeX-only/md_only/json_only=0.5; complete requires PDF",
+        "results_gate_rule": "substantive numeric results via framework-aware normalize_results",
+        "audit_ref": "framework_profile.FAIRNESS_AUDIT"
+      },
+      "notes": [
+        "Required: idea, code, substantive results, paper (PDF full; TeX/markdown/JSON draft half).",
+        "Stub/seed metrics (e.g. dataset_candidate/metrics.json) do not satisfy results.",
+        "Framework noise (.deepscientist_npm, skills/templates, runtime) is excluded from code/results/paper.",
+        "Manifest status is informational; disk presence is authoritative."
+      ]
+    },
+    "idea_generation": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-017_native_proof_certification_for_core_guid/workspace/aris_2026-08-11_11-20-23",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-017_native_proof_certification_for_core_guid",
+      "idea_path": "~/ai_scientist_inputs/ASE-2025-017_native_proof_certification_for_core_guid/workspace/aris_2026-08-11_11-20-23/idea-stage/IDEA_REPORT.md",
+      "status": "ok",
+      "dimensions": {
+        "novelty": {
+          "score": 3.0,
+          "justification": "The core proof-logging paradigm already appears in R58 ('Certified core-guided maxsat solving') and R55/R63; the idea's claimed novelty is 'incremental online proof verification' and a 'streaming proof verifier', which is a meaningful extension of existing post-hoc certification rather than a new paradigm.",
+          "rubric": "Incremental: a meaningful extension or optimization of prior baseline work that fixes a concrete prior limitation, but the core paradigm is unchanged.",
+          "category": "Incremental",
+          "nearest_solution_space_ids": [
+            "R58",
+            "R55",
+            "R63",
+            "R49",
+            "R50",
+            "R59"
+          ],
+          "differentiation": "Prior work certifies core-guided MaxSAT post-hoc via pseudo-Boolean/ILP or SAT-based certificates; this idea adds online/incremental streaming verification with checkpoint markers and SAT-only validation during solving."
+        },
+        "feasibility": {
+          "score": 3.0,
+          "justification": "Plan requires wrapping/modifying EvalMaxSAT ('Modify EvalMaxSAT (or wrap it via LD_PRELOAD/file hooks) to emit proof lines') and building a C++ incremental verifier that 'validates each core by calling a SAT solver'; scoped to '20 smallest instances' with 600s/8GB, so moderate research engineering, but online optimality checking of all OLL steps is nontrivial.",
+          "rubric": "Moderate workload (sweet spot): needs nontrivial coding such as scripting existing open-source tools (parsers, CFG extractors) or building a custom graph-processing pipeline; standard research engineering effort."
+        },
+        "clarity": {
+          "score": 3.0,
+          "justification": "Provides method, implementation plan, and experiment plan, but key details are underspecified: exact proof format, how 'final optimality check is O(1)' is achieved, and how checkpoint markers/resume work are not concretely defined.",
+          "rubric": "Complete frame but missing details: What/Why/How are present, yet key technical execution details or specific comparison plans are underspecified."
+        }
+      },
+      "overall_score": 3.0,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "novelty",
+        "feasibility",
+        "clarity"
+      ],
+      "solution_space": {
+        "status": "ok",
+        "paper_count": 63,
+        "entry_count": 63,
+        "cache_hit": true,
+        "source_file": "~/ai_scientist_inputs/ASE-2025-017_native_proof_certification_for_core_guid/mineru_sections.json",
+        "stats": {
+          "papers": 63,
+          "extracted": 63,
+          "usable_abstracts": 24,
+          "citation_meta_abstracts": 0,
+          "missing_abstracts": 39,
+          "mineru_titles": 59,
+          "related_work_titles": 47,
+          "abstracts_attached": 24,
+          "related_work_extras": 4,
+          "batches": 4
+        },
+        "error": null
+      },
+      "notes": [
+        "Scores the intermediate idea artifact (not the final paper).",
+        "Dimensions: novelty, feasibility, clarity (each 1-5). Excitement removed.",
+        "Novelty is scored against a Solution Space built from mineru REFERENCES titles (+ related_work.json abstracts when matched)."
+      ],
+      "idea_via": "candidate",
+      "idea_relative": "idea-stage/IDEA_REPORT.md",
+      "summary": "The idea extends core-guided MaxSAT proof logging with an incremental streaming verifier that checks proof lines during solving, avoiding post-hoc ILP-based verification. It is a meaningful but incremental extension of existing certified MaxSAT work, with moderate implementation complexity and a scoped pilot. The plan is coherent but lacks precise proof-format and optimality-check details.",
+      "strengths": [
+        "Addresses a real gap: online verification and early error detection for MaxSAT proofs",
+        "Avoids heavy ILP/PB translation by proposing SAT-only validation",
+        "Scoped experiment plan with concrete metrics and dataset subset"
+      ],
+      "weaknesses": [
+        "Novelty is limited to verification timing/format relative to existing certified core-guided MaxSAT work",
+        "Technical details for incremental optimality checking and checkpoint/resume are underspecified",
+        "Feasibility depends on wrapping a complex OLL solver and validating all core-guided steps online"
+      ],
+      "llm_meta": {
+        "model": "deepseek-v4-pro-0813",
+        "base_url": "https://api-sg.umodelverse.ai/v1",
+        "usage": {
+          "completion_tokens": 2545,
+          "completion_tokens_details": {
+            "reasoning_tokens": 1975
+          },
+          "prompt_tokens": 7566,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "total_tokens": 10111
+        },
+        "attempt": 0
+      }
+    },
+    "peer_review": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-017_native_proof_certification_for_core_guid/workspace/aris_2026-08-11_11-20-23",
+      "review_report": "~/ai_scientist_inputs/ASE-2025-017_native_proof_certification_for_core_guid/workspace/aris_2026-08-11_11-20-23/artifacts/peer_review/stanford_apr.md",
+      "paper_pdf": "~/ai_scientist_inputs/ASE-2025-017_native_proof_certification_for_core_guid/workspace/aris_2026-08-11_11-20-23/paper/main.pdf",
+      "paper_tex": "~/ai_scientist_inputs/ASE-2025-017_native_proof_certification_for_core_guid/workspace/aris_2026-08-11_11-20-23/paper/main.tex",
+      "status": "ok",
+      "dimensions": {},
+      "overall_score": 4.1,
+      "score_scale": "1-10",
+      "dimension_order": [],
+      "notes": [
+        "Scored from paperreview.ai (Stanford APR) native ratings; benchmark 5-dimension LLM rubric skipped.",
+        "Overall scale: 1-10."
+      ],
+      "paperreview": {
+        "status": "cached",
+        "hint": "Cached APR score found; no re-upload."
+      },
+      "scoring_method": "paperreview_apr",
+      "scoring_source": "paperreview_json",
+      "apr_dimensions": {
+        "Claims_Support": -1.0,
+        "Experimental_Soundness": -1.0,
+        "Writing_Clarity": 0.0,
+        "Prior_Work_Context": 0.0,
+        "Question_Importance": 1.0,
+        "Originality": 0.0,
+        "Value_to_Community": -1.0
+      },
+      "summary": "",
+      "red_flags": []
+    },
+    "alignment": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-017_native_proof_certification_for_core_guid/workspace/aris_2026-08-11_11-20-23",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-017_native_proof_certification_for_core_guid",
+      "status": "ok",
+      "original": {
+        "paper_title": "Efficient and Verifiable Proof Logging for MaxSAT Solving",
+        "selection": {
+          "num_blocks": 6,
+          "total_chars": 31666,
+          "inferred_roles": {
+            "abstract": 1,
+            "introduction": 1,
+            "experiment": 3,
+            "conclusion": 1
+          },
+          "mineru_raw_keys": {
+            "field:abstract": 1,
+            "field:introduction": 1,
+            "field:experiment": 1,
+            "other": 2,
+            "conclusion": 1
+          },
+          "infer_reasons": {
+            "top_level_field": 3,
+            "body_override": 2,
+            "title": 1
+          },
+          "rescued_from_other": 2,
+          "note": "mineru key is unreliable; blocks are selected by title/body/inheritance. rescued_from_other counts sections labeled other but treated as typed roles."
+        },
+        "claims": [
+          {
+            "id": "C1",
+            "statement": "The framework is the first MaxSAT-specific proof-logging framework for core-guided OLL solvers.",
+            "direction": "neutral",
+            "metric_names": [],
+            "evidence_quote": "the first MaxSAT-specific proof-logging framework for core-guided OLL solvers",
+            "confidence": 1.0
+          },
+          {
+            "id": "C2",
+            "statement": "The implementation captures the full OLL workflow and integrates into EvalMaxSAT, a top-ranked OLL solver.",
+            "direction": "neutral",
+            "metric_names": [],
+            "evidence_quote": "we implement both a human-readable normal logger and a compact binary DAG logger within EvalMaxSAT",
+            "confidence": 1.0
+          },
+          {
+            "id": "C3",
+            "statement": "Proof logging adds negligible runtime overhead in both normal and DAG modes.",
+            "direction": "no_difference",
+            "metric_names": [
+              "median_runtime_overhead_standard",
+              "median_runtime_overhead_dag"
+            ],
+            "evidence_quote": "proof logging does not add meaningful runtime cost",
+            "confidence": 0.95
+          }
+        ],
+        "metrics": [],
+        "overall_conclusion": null,
+        "comparable_notes": null,
+        "cache_hit": true
+      },
+      "agent": {
+        "status": "ok",
+        "run_dir": "~/ai_scientist_inputs/ASE-2025-017_native_proof_certification_for_core_guid/workspace/aris_2026-08-11_11-20-23",
+        "claims": [
+          {
+            "id": "A1",
+            "statement": "StreamProof produces compact certificates that verify in milliseconds.",
+            "direction": "improves",
+            "metric_names": [
+              "proof verification time",
+              "proof size"
+            ],
+            "evidence_quote": "Results demonstrate that our proof format produces compact certificates that verify in milliseconds",
+            "confidence": 0.9
+          },
+          {
+            "id": "A2",
+            "statement": "StreamProof eliminates the ILP solver dependency of VeriPB and enables concurrent verification that completes the instant the solver terminates.",
+            "direction": "improves",
+            "metric_names": [
+              "proof verification time"
+            ],
+            "evidence_quote": "An incremental checker validates each proof line using SAT-only reasoning, eliminating the ILP solver dependency of VeriPB and enabling concurrent verification that completes the instant the solver terminates.",
+            "confidence": 0.9
+          },
+          {
+            "id": "A3",
+            "statement": "Existing MaxSAT proof approaches either target isolated preprocessing phases or reduce solver reasoning to heavy-weighted pseudo-Boolean proofs via VeriPB, incurring prohibitive translation overhead.",
+            "direction": "degrades",
+            "metric_names": [
+              "translation overhead"
+            ],
+            "evidence_quote": "Existing MaxSAT proof approaches either target isolated preprocessing phases or reduce MaxSAT reasoning to pseudo-Boolean (PB) constraints for the VeriPB checker, incurring heavy translation overhead that produces proofs orders of magnitude larger than the original instance and requires an ILP solver (SCIP) for verification.",
+            "confidence": 0.8
+          },
+          {
+            "id": "A4",
+            "statement": "StreamProof captures core extraction witnesses, relaxation, hardening, and bound adjustments as independently verifiable steps.",
+            "direction": "neutral",
+            "metric_names": [],
+            "evidence_quote": "Our format captures core extraction witnesses, relaxation, hardening, and bound adjustments as independently verifiable steps.",
+            "confidence": 0.9
+          },
+          {
+            "id": "A5",
+            "statement": "Checkpoint markers enable partial trust during long-running solves and crash recovery.",
+            "direction": "improves",
+            "metric_names": [],
+            "evidence_quote": "Checkpoint markers enabling partial trust during long-running solves and crash recovery.",
+            "confidence": 0.8
+          },
+          {
+            "id": "A6",
+            "statement": "The Doren and Antonopoulos approach verifies proofs post-hoc, missing concurrent verification during solving.",
+            "direction": "degrades",
+            "metric_names": [],
+            "evidence_quote": "However, their approach verifies proofs post-hoc---the entire proof must be written to disk and then checked sequentially---missing the opportunity for concurrent verification during solving.",
+            "confidence": 0.8
+          },
+          {
+            "id": "A7",
+            "statement": "StreamProof uses only a SAT oracle, operates line-by-line enabling streaming, and confirms optimality the instant the solver terminates.",
+            "direction": "improves",
+            "metric_names": [
+              "proof verification time"
+            ],
+            "evidence_quote": "Unlike prior work, our verifier uses only a SAT oracle (not SCIP/ILP), operates on a line-by-line basis enabling streaming, and confirms optimality the instant the solver terminates.",
+            "confidence": 0.9
+          }
+        ],
+        "metrics": [
+          {
+            "name": "proof verification time",
+            "value": null,
+            "unit": "ms",
+            "higher_is_better": false,
+            "setting": "MSE 2024 weighted exact track",
+            "is_sota_or_best": false,
+            "baseline_name": "VeriPB",
+            "baseline_value": null,
+            "evidence_quote": "Results demonstrate that our proof format produces compact certificates that verify in milliseconds",
+            "confidence": 0.4
+          },
+          {
+            "name": "proof size",
+            "value": null,
+            "unit": null,
+            "higher_is_better": false,
+            "setting": "MSE 2024 weighted exact track",
+            "is_sota_or_best": false,
+            "baseline_name": "VeriPB",
+            "baseline_value": null,
+            "evidence_quote": "compact certificates",
+            "confidence": 0.3
+          },
+          {
+            "name": "translation overhead",
+            "value": null,
+            "unit": null,
+            "higher_is_better": false,
+            "setting": "existing MaxSAT proof approaches",
+            "is_sota_or_best": false,
+            "baseline_name": "VeriPB",
+            "baseline_value": null,
+            "evidence_quote": "incurring prohibitive translation overhead that hides domain-specific optimizations",
+            "confidence": 0.5
+          }
+        ],
+        "overall_conclusion": "StreamProof introduces a line-based streaming proof format and incremental SAT-only verifier for OLL-based core-guided MaxSAT solvers, claiming compact certificates that verify in milliseconds and eliminating ILP solver dependency, with validation on MSE 2024 weighted exact instances.",
+        "sources": {
+          "metrics_path": null,
+          "paper_tex_path": "paper/main.tex"
+        },
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 3271,
+            "completion_tokens_details": {
+              "reasoning_tokens": 2179
+            },
+            "prompt_tokens": 2184,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 5455
+          },
+          "attempt": 0
+        }
+      },
+      "comparison": {
+        "status": "ok",
+        "claim_alignment": [
+          {
+            "original_claim_id": "C1",
+            "agent_claim_id": "A4",
+            "label": "partial",
+            "rationale": "The agent introduces a MaxSAT-specific proof-logging framework for OLL-based core-guided MaxSAT solvers and describes captured OLL steps, but it does not explicitly claim to be the first such framework."
+          },
+          {
+            "original_claim_id": "C2",
+            "agent_claim_id": "A4",
+            "label": "partial",
+            "rationale": "The agent claims StreamProof captures core extraction witnesses, relaxation, hardening, and bound adjustments, which overlaps with the full OLL workflow, but it does not mention integration into EvalMaxSAT."
+          },
+          {
+            "original_claim_id": "C3",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "The agent does not address proof-logging runtime overhead in normal or DAG modes; it focuses on proof verification time, proof size, and translation overhead."
+          }
+        ],
+        "metric_alignment": [
+          {
+            "original_metric": "median_runtime_overhead_standard",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": null,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Original metric is proof-logging runtime overhead in standard mode; agent reports no corresponding runtime-overhead metric."
+          },
+          {
+            "original_metric": "median_runtime_overhead_dag",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": null,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Original metric is proof-logging runtime overhead in DAG mode; agent reports no corresponding runtime-overhead metric."
+          }
+        ],
+        "summary": {
+          "direction_consistency": "mixed",
+          "consistent_claim_ratio": 0.0,
+          "has_comparable_metrics": false,
+          "sota_improvement_summary": "N/A",
+          "overall_alignment_score": 0.4,
+          "score_rationale": "Agent works on the same research problem of proof logging for OLL-based core-guided MaxSAT solvers and partially overlaps framework/workflow claims, but it does not confirm firstness, EvalMaxSAT integration, or runtime overhead; no comparable metrics were extracted."
+        },
+        "warnings": [
+          "Original metrics array is empty; metric names from C3 were used for metric_alignment.",
+          "Agent reports proof verification time, proof size, and translation overhead, which are not present in the original extraction; no deltas computed.",
+          "Agent protocol may differ (MSE 2024 weighted exact track) and no numeric metric values were extracted."
+        ],
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 2936,
+            "completion_tokens_details": {
+              "reasoning_tokens": 2270
+            },
+            "prompt_tokens": 2255,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 5191
+          },
+          "attempt": 0
+        }
+      },
+      "overall_alignment_score": 0.4,
+      "direction_consistency": "mixed"
+    },
+    "experiment_analysis": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-017_native_proof_certification_for_core_guid/workspace/aris_2026-08-11_11-20-23",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-017_native_proof_certification_for_core_guid",
+      "status": "ok",
+      "metrics_path": null,
+      "experiment_success": {
+        "status": "failed_or_incomplete",
+        "success": false,
+        "metrics_path": null,
+        "absolute_metrics_path": null,
+        "checks": {
+          "has_results_file": false,
+          "non_stub": false,
+          "numeric_leaf_count": 0,
+          "min_numeric_ok": false
+        },
+        "manifest_hints": {
+          "status": {
+            "idea": true,
+            "experiment_plan": true,
+            "experiment_log": false,
+            "metrics": false,
+            "review": false,
+            "narrative": true,
+            "paper_tex": true,
+            "paper_pdf": false
+          },
+          "returncode": 1,
+          "benchmark_complete": false,
+          "artifacts_metrics_flag": false
+        },
+        "warnings": [
+          "manifest.returncode=1",
+          "manifest.benchmark_complete=false"
+        ],
+        "suspicious_values": [],
+        "note": "success=true requires substantive results (framework-aware path) with >=3 numeric leaves. Supports metrics.json, results.json, experiment_results.txt, etc. Manifest returncode/benchmark_complete are soft warnings only."
+      },
+      "idea_code_consistency": {
+        "status": "ok",
+        "idea_path": "idea-stage/IDEA_REPORT.md",
+        "code_files": [
+          "project/scripts/run_benchmark.py",
+          "project/src/oll_solver.py",
+          "project/src/proof_format.py",
+          "project/src/proof_verifier.py"
+        ],
+        "score_scale": "1-5",
+        "score": 4.0,
+        "label": null,
+        "justification": "",
+        "matched_elements": [],
+        "missing_or_divergent_elements": [],
+        "rubric": "Strong alignment: code largely implements the idea's method and evaluation; only minor omissions or declared simplifications.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 734,
+            "completion_tokens_details": {
+              "reasoning_tokens": 705
+            },
+            "prompt_cache_hit_tokens": 128,
+            "prompt_cache_miss_tokens": 2039,
+            "prompt_tokens": 2167,
+            "prompt_tokens_details": {
+              "cached_tokens": 128
+            },
+            "total_tokens": 2901
+          },
+          "attempt": 0
+        }
+      },
+      "setup_coverage": {
+        "status": "ok",
+        "overall_coverage": 1.0,
+        "datasets": {
+          "gold_count": 1,
+          "hit_count": 1,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "2024 MaxSAT Competition Weighted Exact Track Benchmark Set"
+          ],
+          "misses": []
+        },
+        "baselines": {
+          "gold_count": 1,
+          "hit_count": 1,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "certified-cgss (pseudo-Boolean proof generator for VeriPB)"
+          ],
+          "misses": []
+        },
+        "metrics": {
+          "gold_count": 5,
+          "hit_count": 5,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "Proof-logging overhead (IR)",
+            "Proof size",
+            "Verification time",
+            "Verification overhead (VO)",
+            "Proof size ratio"
+          ],
+          "misses": []
+        },
+        "agent_protocol": {},
+        "gold_protocol": {},
+        "dataset_dirs": [
+          "dataset_candidate"
+        ],
+        "flags": {
+          "weaker_baseline_suspected": false,
+          "weak_protocol": [],
+          "synthetic_data": "unexpected_synthetic_or_local_only_data",
+          "gold_allows_synthetic": false
+        },
+        "gold_sources": [
+          "~/ai_scientist_inputs/ASE-2025-017_native_proof_certification_for_core_guid/task.md",
+          "~/ai_scientist_inputs/ASE-2025-017_native_proof_certification_for_core_guid/metadata.json"
+        ],
+        "note": "Coverage is name/alias matching against task.md Datasets/Baselines/Metrics. weak_protocol flags large reductions in trials/timeout vs Constraints. Synthetic corpora are not penalized when the task itself requires synthesis."
+      },
+      "ablation_significance": {
+        "status": "ok",
+        "idea_path": "idea-stage/IDEA_REPORT.md",
+        "significance_signals_rule_based": {
+          "signals": [
+            "paper_contains:significant"
+          ],
+          "artifact_paths": [],
+          "has_any_significance_artifact": true
+        },
+        "evidence_format": null,
+        "study_type": "new_method",
+        "components": [
+          {
+            "name": "Line-based streaming proof format",
+            "role": "module",
+            "ablation_expected": true,
+            "significance_expected": false,
+            "ablation_status": "missing",
+            "ablation_evidence": "No experiment compares against post-hoc/offline verification or non-streaming format; paper discusses format but only reports proof verification on three satisfiable instances with no core steps.",
+            "significance_status": "not_required",
+            "significance_evidence": "Pilot study with three instances and descriptive timings; no inferential comparisons made."
+          },
+          {
+            "name": "Incremental proof checker",
+            "role": "module",
+            "ablation_expected": true,
+            "significance_expected": false,
+            "ablation_status": "missing",
+            "ablation_evidence": "No controlled ablation disables streaming/online checking to compare post-hoc verification; verification checker is only tested end-to-end on three trivial instances.",
+            "significance_status": "not_required",
+            "significance_evidence": "No statistical tests or CIs; single-run pilot."
+          },
+          {
+            "name": "Checkpoint markers",
+            "role": "module",
+            "ablation_expected": true,
+            "significance_expected": false,
+            "ablation_status": "missing",
+            "ablation_evidence": "Checkpoint markers are specified in proof_format.py but no experiment measures partial trust, crash recovery, or removes checkpoints.",
+            "significance_status": "not_required",
+            "significance_evidence": "No numerical results reported for checkpoints."
+          },
+          {
+            "name": "SAT-only core validation",
+            "role": "module",
+            "ablation_expected": true,
+            "significance_expected": false,
+            "ablation_status": "missing",
+            "ablation_evidence": "No comparison against ILP-based verification or pseudo-Boolean translation; SAT-only validation is asserted but not isolated.",
+            "significance_status": "not_required",
+            "significance_evidence": "Descriptive only; no statistical comparisons."
+          },
+          {
+            "name": "EvalMaxSAT baseline",
+            "role": "baseline",
+            "ablation_expected": false,
+            "significance_expected": false,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "Baseline comparison is descriptive, not an ablation target.",
+            "significance_status": "not_required",
+            "significance_evidence": "Only point timings for 3 instances; no variability estimates."
+          }
+        ],
+        "ablation_coverage_score": 0.0,
+        "overall_ablation_ok": false,
+        "overall_significance_ok": true,
+        "summary": "The study is a small pilot implementation of a streaming MaxSAT proof verifier. Key method components (streaming format, incremental checker, checkpoint markers, SAT-only validation) are not ablated or compared against post-hoc/ILP baselines, so ablation coverage is absent. Statistical significance is not required for this pilot with three instances and descriptive timings, but the lack of experiment on non-trivial instances with core steps limits inferential support.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 1842,
+            "completion_tokens_details": {
+              "reasoning_tokens": 1136
+            },
+            "prompt_cache_hit_tokens": 128,
+            "prompt_cache_miss_tokens": 2653,
+            "prompt_tokens": 2781,
+            "prompt_tokens_details": {
+              "cached_tokens": 128
+            },
+            "total_tokens": 4623
+          },
+          "attempt": 2
+        }
+      },
+      "results_paper_consistency": {
+        "status": "missing_metrics"
+      },
+      "scores": {
+        "experiment_success": false,
+        "idea_code_score": 4.0,
+        "setup_coverage": 1.0,
+        "ablation_coverage_score": 0.0,
+        "overall_ablation_ok": false,
+        "overall_significance_ok": true,
+        "results_paper_score": null,
+        "hiding_unfavorable_suspected": null
+      },
+      "notes": [
+        "Axes 1,2,3,4,6 in experiment_analysis (figures excluded).",
+        "setup_coverage matches task.md Datasets/Baselines/Metrics; weak_protocol flags reductions vs Constraints.",
+        "Axis 6: final normalized results vs paper; interim run logs not used as ground truth."
+      ]
+    },
+    "literature_review": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-017_native_proof_certification_for_core_guid/workspace/aris_2026-08-11_11-20-23",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-017_native_proof_certification_for_core_guid",
+      "status": "ok",
+      "as_of_year": 2026,
+      "agent_ref_count": 8,
+      "sources": [
+        {
+          "path": "~/ai_scientist_inputs/ASE-2025-017_native_proof_certification_for_core_guid/workspace/aris_2026-08-11_11-20-23/paper/main.tex",
+          "kind": "thebibliography"
+        }
+      ],
+      "collection_audit": {
+        "cited_keys_count": 8,
+        "filter_mode": "paper_cite_keys",
+        "bib_total_before_filter": 0,
+        "bib_after_filter": 0,
+        "uncited_bib_skipped": 0,
+        "cited_keys_sample": [
+          "berg2024veripb",
+          "doren2025efficient",
+          "heule2013drat",
+          "ihalainen2024certified",
+          "jabs2025certified",
+          "martins2014open",
+          "wetzler2014drat",
+          "xiong2017precise"
+        ],
+        "thebibliography_after_filter": 8,
+        "agent_ref_count": 8
+      },
+      "fabrication": {
+        "status": "ok",
+        "scholarly_count": 8,
+        "verified_count": 5,
+        "fake_count": 1,
+        "lookup_failed_count": 2,
+        "non_paper_count": 0,
+        "fabrication_rate": 0.16666666666666666,
+        "items": [
+          {
+            "title": "Precise condition synthesis for program repair",
+            "doi": "",
+            "arxiv_id": "",
+            "year": 2017,
+            "status": "verified",
+            "matched_via": "arxiv_title",
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "xiong2017precise",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "DRAT-trim: Efficient checking and trimming using expressive clausal proofs",
+            "doi": "10.1007/978-3-319-09284-3_31",
+            "arxiv_id": "",
+            "year": 2014,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "DRAT-trim: Efficient Checking and Trimming Using Expressive Clausal Proofs",
+            "resolved_year": 2014,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "wetzler2014drat",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "Verifying refutations with extended resolution",
+            "doi": "",
+            "arxiv_id": "",
+            "year": 2013,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated.",
+              "Saw 1 conclusive miss(es) mixed with 1 API error(s)."
+            ],
+            "cite_key": "heule2013drat",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "Certified MaxSAT Preprocessing",
+            "doi": "",
+            "arxiv_id": "2404.17316",
+            "year": null,
+            "status": "verified",
+            "matched_via": "s2_arxiv",
+            "resolved_title": "Certified MaxSAT Preprocessing",
+            "resolved_year": 2024,
+            "notes": [],
+            "cache_hit": true,
+            "cite_key": "ihalainen2024certified",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "Certified Branch-and-Bound MaxSAT Solving (Extended Version)",
+            "doi": "",
+            "arxiv_id": "2511.10273",
+            "year": null,
+            "status": "verified",
+            "matched_via": "arxiv_id",
+            "resolved_title": null,
+            "resolved_year": null,
+            "notes": [],
+            "cache_hit": true,
+            "cite_key": "jabs2025certified",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "VeriPB: Verified pseudo-Boolean proofs",
+            "doi": "",
+            "arxiv_id": "",
+            "year": 2024,
+            "status": "fabricated_or_unfound",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "Not found on Semantic Scholar or arXiv with DOI/arxiv/title lookup."
+            ],
+            "cite_key": "berg2024veripb",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "Efficient and verifiable proof logging for MaxSAT solving",
+            "doi": "10.1109/ase63991.2025.00113",
+            "arxiv_id": "",
+            "year": 2025,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Efficient and Verifiable Proof Logging for MaxSAT Solving",
+            "resolved_year": 2025,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "doren2025efficient",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "Open-WBO: A modular MaxSAT solver",
+            "doi": "",
+            "arxiv_id": "",
+            "year": 2014,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated.",
+              "Saw 1 conclusive miss(es) mixed with 1 API error(s)."
+            ],
+            "cite_key": "martins2014open",
+            "source_kind": "thebibliography"
+          }
+        ],
+        "cache_path": "~/ai_scientist_evals/ASE-2025-017_native_proof_certification_for_core_guid/reference_verify_cache.json",
+        "override_path": "~/ai_scientist_evals/ASE-2025-017_native_proof_certification_for_core_guid/reference_verify_overrides.json",
+        "note": "fabrication_rate = fake / (verified + fake); lookup_failed (API errors) excluded. GitHub/docs/tool URLs are non_paper and excluded from the rate. To manually correct a false negative, edit reference_verify_overrides.json (key=normalized title / doi / cite_key; value=\"verified\" or a result dict), then re-run."
+      },
+      "coverage": {
+        "status": "ok",
+        "gold_source": "~/ai_scientist_inputs/ASE-2025-017_native_proof_certification_for_core_guid/mineru_sections.json",
+        "gold_count": 59,
+        "gold_is_original_paper_references": true,
+        "gold_is_openalex_subset": false,
+        "agent_count": 8,
+        "intersection_size": 3,
+        "recall": 0.05084745762711865,
+        "precision": 0.375,
+        "matched_gold_keys": [
+          "heule2013verifying",
+          "ihalainen2024certified",
+          "wetzler2014drattrim"
+        ],
+        "primary_metric": "recall",
+        "note": "Primary metric is recall against the original paper bibliography (titles from mineru_sections.json REFERENCES; related_work.json used only to enrich DOI/year or as fallback if mineru titles are empty). Denominator = |original paper references|. Precision is secondary (agent may cite valid extra papers)."
+      },
+      "recency": {
+        "status": "ok",
+        "dated_count": 8,
+        "unknown_year_count": 0,
+        "year_histogram": {
+          "2013": 1,
+          "2014": 2,
+          "2017": 1,
+          "2024": 2,
+          "2025": 2
+        },
+        "windows": {
+          "3": {
+            "years": 3,
+            "cutoff_year_inclusive": 2023,
+            "recent_count": 4,
+            "recent_ratio": 0.5
+          },
+          "5": {
+            "years": 5,
+            "cutoff_year_inclusive": 2021,
+            "recent_count": 4,
+            "recent_ratio": 0.5
+          }
+        }
+      },
+      "scores": {
+        "fabrication_rate": 0.16666666666666666,
+        "coverage_recall": 0.05084745762711865,
+        "coverage_precision": 0.375,
+        "recency_ratio_3y": 0.5,
+        "recency_ratio_5y": 0.5
+      }
+    }
+  },
+  "scores": {
+    "completeness": {
+      "complete": false,
+      "overall_score": 0.6,
+      "required_score": 0.75,
+      "bonus_score": 0.11
+    },
+    "peer_review": {
+      "status": "ok",
+      "optional": false,
+      "overall_score": 4.1,
+      "score_scale": "1-10",
+      "scoring_method": "paperreview_apr"
+    },
+    "idea_generation": {
+      "status": "ok",
+      "overall_score": 3.0,
+      "dimensions": {
+        "novelty": 3.0,
+        "feasibility": 3.0,
+        "clarity": 3.0
+      },
+      "novelty_category": "Incremental",
+      "solution_space_status": "ok"
+    },
+    "alignment": {
+      "status": "ok",
+      "direction_consistency": "mixed",
+      "overall_alignment_score": 0.4
+    },
+    "literature_review": {
+      "fabrication_rate": 0.16666666666666666,
+      "coverage_recall": 0.05084745762711865,
+      "coverage_precision": 0.375,
+      "recency_ratio_3y": 0.5,
+      "recency_ratio_5y": 0.5
+    },
+    "experiment_analysis": {
+      "experiment_success": false,
+      "idea_code_score": 4.0,
+      "setup_coverage": 1.0,
+      "ablation_coverage_score": 0.0,
+      "overall_ablation_ok": false,
+      "overall_significance_ok": true,
+      "results_paper_score": null,
+      "hiding_unfavorable_suspected": null
+    }
+  },
+  "fair_scores": {
+    "applicable_axes": [
+      "completeness",
+      "idea_generation",
+      "peer_review",
+      "alignment",
+      "literature_review",
+      "experiment_analysis"
+    ],
+    "skipped_axes": [],
+    "fair_mean_0_1": 0.5369,
+    "note": "fair_mean_0_1 averages only applicable axes; optional peer review and framework-inapplicable literature are excluded from the denominator."
+  },
+  "evals_root": "~/ai_scientist_evals",
+  "claims_cache": "~/ai_scientist_evals/ASE-2025-017_native_proof_certification_for_core_guid/original_claims.json",
+  "solution_space_cache": "~/ai_scientist_evals/ASE-2025-017_native_proof_certification_for_core_guid/solution_space.json"
+}

@@ -1,0 +1,34 @@
+{
+  "forbid_synthetic_pilot": true,
+  "agent_data_note": "Use the real replication package at `dataset_candidate/llm-agents-study/`. It is mounted read-only; copy it to `project/llm-agents-study/` before running author scripts that write outputs.",
+  "required_metrics": [
+    "iteration_count",
+    "input_token_consumption",
+    "output_token_consumption",
+    "action_category_distribution",
+    "frequent_action_sequences",
+    "thought_action_result_coherence"
+  ],
+  "benchmark_rules": [
+    "Use only the provided annotated trajectories and derived data under `dataset_candidate/llm-agents-study/`; do not fabricate trajectories or annotations.",
+    "Read `dataset_candidate/dataset_paths.json` before analysis and use `$LLM_AGENTS_STUDY_HOME` in Python scripts.",
+    "The shared dataset is read-only. Copy it to `project/llm-agents-study/` before running scripts that generate figures, sequence files, or other outputs.",
+    "The Python analysis environment is installed automatically and available through `python` or `/opt/ase-2025-008-venv/bin/python`.",
+    "Separate successful and unsuccessful trajectories and report agent-specific sample sizes.",
+    "Existing relationship labels may be reused for analysis; do not claim newly performed human annotation unless annotators actually supplied it."
+  ],
+  "non_goals": [
+    "Re-running AutoCodeRover, OpenHands, or RepairAgent to regenerate trajectories",
+    "Using synthetic trajectories as the main experiment data",
+    "Modifying the read-only shared replication package",
+    "Claiming independent human annotation from automated relabeling"
+  ],
+  "dataset_env": {
+    "LLM_AGENTS_STUDY_HOME": "dataset_candidate/llm-agents-study"
+  },
+  "exclude_from_agent": [
+    "container_setup.sh",
+    "README.md",
+    "benchmark_config.json"
+  ]
+}

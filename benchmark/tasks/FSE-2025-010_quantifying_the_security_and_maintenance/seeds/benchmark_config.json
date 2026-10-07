@@ -1,0 +1,36 @@
+{
+  "forbid_synthetic_pilot": true,
+  "agent_data_note": "Use the official Zenodo replication package at `dataset_candidate/pinning-is-futile/`. It contains curated npm/GitHub dependency datasets and analysis scripts for pinning vs floating. Do not invent toy dependency graphs as a substitute.",
+  "required_metrics": [
+    "n_floating_deps",
+    "n_outdated_deps",
+    "n_vuln",
+    "n_breaking_changes",
+    "n_bloated",
+    "ecosystem_risk"
+  ],
+  "benchmark_rules": [
+    "Read `dataset_candidate/dataset_paths.json` and use `$PINNING_IS_FUTILE_HOME` / `dataset_candidate/pinning-is-futile/` before experiments.",
+    "Prefer the curated tables/graphs and notebooks inside the mounted artifact over scraping the live npm registry at ecosystem scale.",
+    "The shared artifact mount is read-only. Write analysis outputs, figures, and metrics under `project/` or `results/`.",
+    "RQ1: quantify security/maintenance trade-offs of pinning direct dependencies (panel / counterfactual comparison over graph size).",
+    "RQ2: evaluate coordinated local vs transitive pinning with defense-selection heuristics (downloads, out-degree, betweenness, combinations).",
+    "Respect npm resolution semantics (semver ranges, package-lock / deduplication) when simulating graphs.",
+    "Node/npm and the Python venv at `/opt/fse-2025-010-venv` are prepared by container_setup.sh; Rscript may also be available for artifact notebooks.",
+    "Do not claim full paper reproduction unless the experiment protocol and resources match."
+  ],
+  "non_goals": [
+    "Mirroring the entire historical npm registry from scratch when curated study data is already provided",
+    "Using fabricated toy dependency graphs instead of the mounted Zenodo datasets",
+    "Requiring live Libraries.io API credentials as a hard dependency"
+  ],
+  "dataset_env": {
+    "PINNING_IS_FUTILE_HOME": "dataset_candidate/pinning-is-futile"
+  },
+  "exclude_from_agent": [
+    "container_setup.sh",
+    "README.md",
+    "benchmark_config.json",
+    "requirements.txt"
+  ]
+}

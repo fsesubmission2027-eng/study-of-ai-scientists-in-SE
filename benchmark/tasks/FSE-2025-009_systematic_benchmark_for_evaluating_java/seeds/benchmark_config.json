@@ -1,0 +1,34 @@
+{
+  "forbid_synthetic_pilot": true,
+  "agent_data_note": "Use the official Gleipner paper artifact at `dataset_candidate/gleipner/`. Category JARs live under `algorithms/_target/`. Do not invent toy Java deserialization chains as a substitute for Gleipner.",
+  "required_metrics": [
+    "true_positive_rate",
+    "false_positive_count",
+    "category_coverage"
+  ],
+  "benchmark_rules": [
+    "Read `dataset_candidate/dataset_paths.json` and use `$GLEIPNER_HOME` / `dataset_candidate/gleipner/` before experiments.",
+    "Evaluate detectors against the provided Gleipner category JARs under `algorithms/_target/` (including basic, depth, polymorphism, multipath, reflection, ysoserial replicas).",
+    "Configure tools to search for sink `gleipner.core.SinkGadget.sinkMethod(String)`. Ground-truth TP/FP counts are in each JAR META-INF/MANIFEST.MF (`chains-tp`, `chains-fp`).",
+    "The shared Gleipner mount is read-only. Write tool outputs, logs, and metrics under `project/` or `results/`.",
+    "Use `java -jar $GLEIPNER_HOME/algorithms/evaluator.jar <output_file>` (or copy evaluator into a writable dir) to score tool outputs when possible.",
+    "Baseline detectors (Serianalyzer, GadgetInspector, Tabby, JDD, etc.) are optional — install or implement comparison methods as needed. Prefer JDK 8 for older tools via `$JAVA8_HOME`.",
+    "Do not claim full paper reproduction of all seven tools unless the experiment protocol and resources match."
+  ],
+  "non_goals": [
+    "Pre-installing all seven paper baseline detectors as a benchmark requirement",
+    "Reconstructing Gleipner from scratch when the artifact JARs are already provided",
+    "Using fabricated Java gadget chains instead of the mounted Gleipner JARs"
+  ],
+  "dataset_env": {
+    "GLEIPNER_HOME": "dataset_candidate/gleipner",
+    "JAVA_HOME": "/usr/lib/jvm/java-11-openjdk-amd64",
+    "JAVA8_HOME": "/usr/lib/jvm/java-8-openjdk-amd64"
+  },
+  "exclude_from_agent": [
+    "container_setup.sh",
+    "README.md",
+    "benchmark_config.json",
+    "requirements.txt"
+  ]
+}

@@ -1,0 +1,1029 @@
+{
+  "generated_at": "2026-09-29T02:08:11",
+  "run_dir": "~/ai_scientist_inputs/ICSE-2025-021_investigating_energy_consumption_root_ca/workspace/researchclaw_2026-09-15_02-29-34",
+  "task_dir": "~/ai_scientist_inputs/ICSE-2025-021_investigating_energy_consumption_root_ca",
+  "framework": "researchclaw",
+  "fairness_audit": [
+    {
+      "axis": "completeness",
+      "was_unfair": "Required both paper.tex AND paper.pdf; any tool missing one failed equally.",
+      "fix": "Paper gate: PDF=1.0; TeX-only=0.5; ``complete`` requires PDF."
+    },
+    {
+      "axis": "completeness",
+      "was_unfair": "``results`` counted stub/seed JSON (dataset_candidate/metrics.json).",
+      "fix": "``results`` requires substantive numeric results via results_normalize."
+    },
+    {
+      "axis": "experiment_success",
+      "was_unfair": "Only metrics.json; ignored results.json / experiment_results.txt.",
+      "fix": "Framework-ordered result candidates + normalized loaders."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Penalized tools with no bib; airesearcher has no workspace references.",
+      "fix": "literature_applicable=false → status not_applicable; excluded from fair aggregate."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "related_work.json subset as gold made recall hard to interpret.",
+      "fix": "Coverage gold is original paper REFERENCES from mineru; related_work only enriches metadata/fallback."
+    },
+    {
+      "axis": "peer_review",
+      "was_unfair": "Missing Stanford report looked like evaluation failure.",
+      "fix": "status not_provided; optional axis, never counts as tool failure."
+    },
+    {
+      "axis": "paths/find_results",
+      "was_unfair": "Picked downloads/** and sandbox noise (e.g. airesearcher LLVM tree).",
+      "fix": "Exclude downloads/, seeds/, dataset_candidate/, sandbox junk paths."
+    },
+    {
+      "axis": "paths/framework_noise",
+      "was_unfair": "DeepScientist .deepscientist_npm / runtime / skills templates counted as code/paper/results.",
+      "fix": "FRAMEWORK_NOISE_DIRS+markers; quest worktree + eval_output results; paper md drafts; reject template tex."
+    },
+    {
+      "axis": "paths/paper_tex",
+      "was_unfair": "tiny_scientist / ACL runs store paper under latex/*.tex; evaluator only looked at paper/main.tex.",
+      "fix": "latex/**/*.tex with substantive-body heuristic; find_paper_document uses same rules."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Entire custom.bib (300+ anthology entries) verified when paper had zero \\cite commands.",
+      "fix": "collect_agent_references filters bib to in-text cite keys; skips uncited bulk bib (>40 entries)."
+    },
+    {
+      "axis": "paths/ai_scientist_summaries",
+      "was_unfair": "AI Scientist can persist substantive results and paper-like drafts in *_summary.json logs rather than paper/main.tex or results/**/*.json.",
+      "fix": "Treat draft_summary/research_summary as weak paper documents and summary JSONs as result candidates."
+    },
+    {
+      "axis": "framework/ai_scientist_v2",
+      "was_unfair": "Manifest framework ``ai_scientist_v2`` fell through to profile ``unknown``, skipping AI-Scientist idea/result path priorities.",
+      "fix": "Normalize ``ai_scientist_v2`` (and common aliases) to profile key ``ai_scientist``."
+    },
+    {
+      "axis": "idea_generation",
+      "was_unfair": "plan.md/todos.md weak proxies scored same as structured idea.json.",
+      "fix": "Framework idea_priority tried first; missing idea → not_applicable where appropriate."
+    }
+  ],
+  "axes": [
+    "alignment",
+    "completeness",
+    "experiment_analysis",
+    "idea_generation",
+    "literature_review",
+    "peer_review"
+  ],
+  "results": {
+    "completeness": {
+      "framework": "researchclaw",
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-021_investigating_energy_consumption_root_ca/workspace/researchclaw_2026-09-15_02-29-34",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-021_investigating_energy_consumption_root_ca",
+      "complete": false,
+      "required_score": 0.5,
+      "bonus_score": 0.09,
+      "overall_score": 0.4,
+      "missing": [
+        "results",
+        "paper"
+      ],
+      "required": {
+        "idea": {
+          "path": "artifacts/idea.json",
+          "bytes": 4614,
+          "via": "candidate"
+        },
+        "code": {
+          "count": 2,
+          "files": [
+            {
+              "path": "artifacts/code/main.py",
+              "bytes": 1590,
+              "via": "glob"
+            },
+            {
+              "path": "stage-10/experiment/main.py",
+              "bytes": 1590,
+              "via": "glob"
+            }
+          ]
+        },
+        "results": {
+          "substantive": false,
+          "normalized_path": null,
+          "numeric_leaf_count": 0,
+          "discovered_files": [],
+          "metrics_keys_sample": []
+        },
+        "paper": {
+          "tex": null,
+          "pdf": null,
+          "md": null,
+          "json": null,
+          "status": "missing",
+          "score": 0.0
+        }
+      },
+      "bonus": {
+        "experiment_plan": {
+          "path": "stage-09/exp_plan.yaml",
+          "bytes": 3055,
+          "via": "candidate"
+        },
+        "experiment_log": {
+          "path": "researchclaw_run.log",
+          "bytes": 6059,
+          "via": "glob"
+        },
+        "review": null,
+        "readme": null,
+        "narrative": null,
+        "bib": {
+          "path": "stage-04/references.bib",
+          "bytes": 5451,
+          "via": "glob"
+        }
+      },
+      "manifest_status": {
+        "pipeline": false,
+        "idea": true,
+        "code": true,
+        "results": false,
+        "paper": false
+      },
+      "gate_scores": {
+        "idea": 1.0,
+        "code": 1.0,
+        "results": 0.0,
+        "paper": 0.0
+      },
+      "fairness": {
+        "gates": [
+          "idea",
+          "code",
+          "results",
+          "paper"
+        ],
+        "paper_gate_rule": "PDF=1.0; TeX-only/md_only/json_only=0.5; complete requires PDF",
+        "results_gate_rule": "substantive numeric results via framework-aware normalize_results",
+        "audit_ref": "framework_profile.FAIRNESS_AUDIT"
+      },
+      "notes": [
+        "Required: idea, code, substantive results, paper (PDF full; TeX/markdown/JSON draft half).",
+        "Stub/seed metrics (e.g. dataset_candidate/metrics.json) do not satisfy results.",
+        "Framework noise (.deepscientist_npm, skills/templates, runtime) is excluded from code/results/paper.",
+        "Manifest status is informational; disk presence is authoritative."
+      ]
+    },
+    "idea_generation": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-021_investigating_energy_consumption_root_ca/workspace/researchclaw_2026-09-15_02-29-34",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-021_investigating_energy_consumption_root_ca",
+      "idea_path": "~/ai_scientist_inputs/ICSE-2025-021_investigating_energy_consumption_root_ca/workspace/researchclaw_2026-09-15_02-29-34/artifacts/idea.json",
+      "status": "ok",
+      "dimensions": {
+        "novelty": {
+          "score": 1.0,
+          "justification": "The artifact states \"The three perspective sections are blank\" and \"there are no hypotheses to synthesize,\" so it provides no core method to compare against the Solution Space. It cannot be mapped to entries such as R29 or R24 because it proposes nothing.",
+          "rubric": "Existing: the idea's core method is already clearly present or solved in the Solution Space; only tiny parameter / test-case changes.",
+          "category": "Existing",
+          "nearest_solution_space_ids": [],
+          "differentiation": "None; the artifact contains no proposed method, so no differentiation from any Solution Space entry can be identified."
+        },
+        "feasibility": {
+          "score": 1.0,
+          "justification": "The artifact says \"Please provide the actual hypotheses\" and \"The three perspective sections are blank,\" meaning there is no implementable design, engineering plan, or evaluation pipeline. It is not executable as a research study in its current form.",
+          "rubric": "Theoretically infeasible / compute catastrophe: NP-hard-scale computation, must dynamically reproduce extremely complex system-level vulnerability environments, or depends on unavailable closed-source model internal weights; not doable by a single person."
+        },
+        "clarity": {
+          "score": 1.0,
+          "justification": "The prose is grammatically clear but substantively empty: it only repeats that \"the three perspective sections are blank\" and \"there are no hypotheses to synthesize.\" The What/Why/How of a research idea are entirely missing.",
+          "rubric": "Vague concept: full of empty buzzwords; problem undefined; method only gives a high-level direction with little substance."
+        }
+      },
+      "overall_score": 1.0,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "novelty",
+        "feasibility",
+        "clarity"
+      ],
+      "solution_space": {
+        "status": "ok",
+        "paper_count": 36,
+        "entry_count": 36,
+        "cache_hit": true,
+        "source_file": "~/ai_scientist_inputs/ICSE-2025-021_investigating_energy_consumption_root_ca/mineru_sections.json",
+        "stats": {
+          "papers": 36,
+          "extracted": 36,
+          "usable_abstracts": 17,
+          "citation_meta_abstracts": 0,
+          "missing_abstracts": 19,
+          "mineru_titles": 35,
+          "related_work_titles": 19,
+          "abstracts_attached": 17,
+          "related_work_extras": 1,
+          "batches": 2
+        },
+        "error": null
+      },
+      "notes": [
+        "Scores the intermediate idea artifact (not the final paper).",
+        "Dimensions: novelty, feasibility, clarity (each 1-5). Excitement removed.",
+        "Novelty is scored against a Solution Space built from mineru REFERENCES titles (+ related_work.json abstracts when matched)."
+      ],
+      "idea_via": "candidate",
+      "idea_relative": "artifacts/idea.json",
+      "summary": "This artifact is an incomplete placeholder rather than a research idea. It explicitly states that the innovation, pragmatist, and contrarian perspectives are blank and requests the missing hypotheses instead of proposing any research direction. There is no method, experiment design, or evaluation plan, so novelty, feasibility, and clarity cannot be meaningfully assessed beyond a minimum score.",
+      "strengths": [
+        "Honestly identifies missing inputs rather than fabricating content.",
+        "Clear meta-level statement about what is required to proceed."
+      ],
+      "weaknesses": [
+        "Contains no research hypotheses.",
+        "Contains no proposed method or technical mechanism.",
+        "Contains no evaluation or experimental plan.",
+        "Cannot be mapped to the Solution Space because it proposes nothing."
+      ],
+      "llm_meta": {
+        "model": "deepseek-v4-pro-0813",
+        "base_url": "https://api-sg.umodelverse.ai/v1",
+        "usage": {
+          "completion_tokens": 1284,
+          "completion_tokens_details": {
+            "reasoning_tokens": 856
+          },
+          "prompt_tokens": 4256,
+          "prompt_tokens_details": {
+            "cached_tokens": 4096
+          },
+          "total_tokens": 5540
+        },
+        "attempt": 0
+      }
+    },
+    "peer_review": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-021_investigating_energy_consumption_root_ca/workspace/researchclaw_2026-09-15_02-29-34",
+      "review_report": null,
+      "paper_pdf": null,
+      "paper_tex": null,
+      "status": "not_provided",
+      "dimensions": {},
+      "overall_score": null,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "soundness",
+        "significance",
+        "novelty",
+        "presentation",
+        "credibility"
+      ],
+      "notes": [
+        "Stanford Agentic Reviewer (paperreview.ai): manual download to artifacts/peer_review/stanford_apr.md, or pass --auto-paperreview.",
+        "Dimensions: soundness, significance, novelty, presentation, credibility (each 1-5)."
+      ],
+      "paperreview": {
+        "status": "skipped",
+        "reason": "no_pdf"
+      },
+      "optional": true,
+      "hint": "Optional external review (Stanford APR). Upload paper/main.pdf to https://paperreview.ai/ , save review to ~/ai_scientist_inputs/ICSE-2025-021_investigating_energy_consumption_root_ca/workspace/researchclaw_2026-09-15_02-29-34/artifacts/peer_review/stanford_apr.md"
+    },
+    "alignment": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-021_investigating_energy_consumption_root_ca/workspace/researchclaw_2026-09-15_02-29-34",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-021_investigating_energy_consumption_root_ca",
+      "status": "missing_agent_paper_or_metrics",
+      "original": {
+        "status": "ok",
+        "task_dir": "~/ai_scientist_inputs/ICSE-2025-021_investigating_energy_consumption_root_ca",
+        "paper_title": "Unveiling the Energy Vampires: A Methodology for Debugging Software Energy Consumption",
+        "task_id": "ICSE-2025-021",
+        "selection": {
+          "num_blocks": 7,
+          "total_chars": 31998,
+          "inferred_roles": {
+            "abstract": 1,
+            "introduction": 1,
+            "experiment": 4,
+            "conclusion": 1
+          },
+          "mineru_raw_keys": {
+            "field:abstract": 1,
+            "field:introduction": 1,
+            "field:experiment": 1,
+            "other": 3,
+            "conclusion": 1
+          },
+          "infer_reasons": {
+            "top_level_field": 3,
+            "body_override": 3,
+            "title": 1
+          },
+          "rescued_from_other": 3,
+          "note": "mineru key is unreliable; blocks are selected by title/body/inheritance. rescued_from_other counts sections labeled other but treated as typed roles."
+        },
+        "claims": [],
+        "metrics": [],
+        "overall_conclusion": null,
+        "comparable_notes": null,
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 1220,
+            "completion_tokens_details": {
+              "reasoning_tokens": 1218
+            },
+            "prompt_tokens": 2764,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 3984
+          },
+          "attempt": 2
+        },
+        "cache_hit": true
+      },
+      "agent": {
+        "status": "missing_agent_paper_or_metrics",
+        "run_dir": "~/ai_scientist_inputs/ICSE-2025-021_investigating_energy_consumption_root_ca/workspace/researchclaw_2026-09-15_02-29-34"
+      }
+    },
+    "experiment_analysis": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-021_investigating_energy_consumption_root_ca/workspace/researchclaw_2026-09-15_02-29-34",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-021_investigating_energy_consumption_root_ca",
+      "status": "ok",
+      "metrics_path": null,
+      "experiment_success": {
+        "status": "failed_or_incomplete",
+        "success": false,
+        "metrics_path": null,
+        "absolute_metrics_path": null,
+        "checks": {
+          "has_results_file": false,
+          "non_stub": false,
+          "numeric_leaf_count": 0,
+          "min_numeric_ok": false
+        },
+        "manifest_hints": {
+          "status": {
+            "pipeline": false,
+            "idea": true,
+            "code": true,
+            "results": false,
+            "paper": false
+          },
+          "returncode": 1,
+          "benchmark_complete": null,
+          "artifacts_metrics_flag": false
+        },
+        "warnings": [
+          "manifest.returncode=1"
+        ],
+        "suspicious_values": [],
+        "note": "success=true requires substantive results (framework-aware path) with >=3 numeric leaves. Supports metrics.json, results.json, experiment_results.txt, etc. Manifest returncode/benchmark_complete are soft warnings only."
+      },
+      "idea_code_consistency": {
+        "status": "ok",
+        "idea_path": "artifacts/idea.json",
+        "code_files": [
+          "stage-10/experiment/main.py"
+        ],
+        "score_scale": "1-5",
+        "score": 1.0,
+        "label": "severe_mismatch",
+        "justification": "The research idea explicitly states that the hypothesis sections are blank and therefore no hypotheses, method, or evaluation can be synthesized. The experiment code instead provides generic synthetic binary classification data generation and preprocessing utilities, with no connection to the idea's requested hypothesis synthesis task.",
+        "matched_elements": [],
+        "missing_or_divergent_elements": [
+          "No hypotheses are implemented or evaluated",
+          "No Innovator/Pragmatist/Contrarian perspective sections are represented",
+          "Code introduces an unrelated synthetic classification dataset and preprocessing functions",
+          "No experiment entrypoint, metrics, or protocol tied to the stated idea"
+        ],
+        "rubric": "Severe mismatch: code implements a different problem/method than the idea, or is unrelated boilerplate.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 406,
+            "completion_tokens_details": {
+              "reasoning_tokens": 252
+            },
+            "prompt_tokens": 1053,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 1459
+          },
+          "attempt": 0
+        }
+      },
+      "setup_coverage": {
+        "status": "ok",
+        "overall_coverage": 0.16666666666666666,
+        "datasets": {
+          "gold_count": 2,
+          "hit_count": 1,
+          "miss_count": 1,
+          "coverage": 0.5,
+          "hits": [
+            "EnergyDebug AE artifact (Redis / PostgreSQL / memcpy energy + traces)"
+          ],
+          "misses": [
+            "Redis benchmark workloads on custom Docker images"
+          ]
+        },
+        "baselines": {
+          "gold_count": 1,
+          "hit_count": 0,
+          "miss_count": 1,
+          "coverage": 0.0,
+          "hits": [],
+          "misses": [
+            "Macroscopic energy comparison (Tjiong et al.)"
+          ]
+        },
+        "metrics": {
+          "gold_count": 3,
+          "hit_count": 0,
+          "miss_count": 3,
+          "coverage": 0.0,
+          "hits": [],
+          "misses": [
+            "Total energy consumption",
+            "Average power",
+            "Execution time"
+          ]
+        },
+        "agent_protocol": {},
+        "gold_protocol": {},
+        "dataset_dirs": [
+          "dataset_candidate"
+        ],
+        "flags": {
+          "weaker_baseline_suspected": true,
+          "weak_protocol": [],
+          "synthetic_data": "unexpected_synthetic_or_local_only_data",
+          "gold_allows_synthetic": false
+        },
+        "gold_sources": [
+          "~/ai_scientist_inputs/ICSE-2025-021_investigating_energy_consumption_root_ca/task.md",
+          "~/ai_scientist_inputs/ICSE-2025-021_investigating_energy_consumption_root_ca/metadata.json"
+        ],
+        "note": "Coverage is name/alias matching against task.md Datasets/Baselines/Metrics. weak_protocol flags large reductions in trials/timeout vs Constraints. Synthetic corpora are not penalized when the task itself requires synthesis."
+      },
+      "ablation_significance": {
+        "status": "ok",
+        "idea_path": "artifacts/idea.json",
+        "significance_signals_rule_based": {
+          "signals": [],
+          "artifact_paths": [],
+          "has_any_significance_artifact": false
+        },
+        "evidence_format": null,
+        "study_type": "pilot",
+        "components": [
+          {
+            "name": "synthetic_classification_data_generator",
+            "role": "dataset/instrumentation",
+            "ablation_expected": false,
+            "significance_expected": false,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "Data-generation utility only; no comparative hypothesis or removable method module is defined.",
+            "significance_status": "not_required",
+            "significance_evidence": "No statistical claim or modeling result is present."
+          },
+          {
+            "name": "label_noise_injection",
+            "role": "dataset hyperparameter",
+            "ablation_expected": false,
+            "significance_expected": false,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "No experiment or comparison is provided, so this is not an ablation target in the available code.",
+            "significance_status": "not_required",
+            "significance_evidence": "No inferential result is reported."
+          },
+          {
+            "name": "deterministic_train_test_split",
+            "role": "data split",
+            "ablation_expected": false,
+            "significance_expected": false,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "Standard data-splitting instrumentation, not a research method component requiring ablation.",
+            "significance_status": "not_required",
+            "significance_evidence": "No significance test is applicable to a data split utility alone."
+          },
+          {
+            "name": "standardization",
+            "role": "preprocessing",
+            "ablation_expected": false,
+            "significance_expected": false,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "Preprocessing step with no downstream experiment or comparison provided.",
+            "significance_status": "not_required",
+            "significance_evidence": "No results exist to evaluate statistically."
+          }
+        ],
+        "ablation_coverage_score": 1.0,
+        "overall_ablation_ok": true,
+        "overall_significance_ok": true,
+        "summary": "The idea sections are blank and the experiment evidence/results are empty; only data-generation utilities are present. No hypotheses, modeling comparisons, or completed experimental runs are available, so no ablations or significance tests are expected at this stage. Ablation coverage defaults to 1.0 because no components require ablation.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 2412,
+            "completion_tokens_details": {
+              "reasoning_tokens": 1872
+            },
+            "prompt_tokens": 1360,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 3772
+          },
+          "attempt": 0
+        }
+      },
+      "results_paper_consistency": {
+        "status": "missing_metrics"
+      },
+      "scores": {
+        "experiment_success": false,
+        "idea_code_score": 1.0,
+        "setup_coverage": 0.16666666666666666,
+        "ablation_coverage_score": 1.0,
+        "overall_ablation_ok": true,
+        "overall_significance_ok": true,
+        "results_paper_score": null,
+        "hiding_unfavorable_suspected": null
+      },
+      "notes": [
+        "Axes 1,2,3,4,6 in experiment_analysis (figures excluded).",
+        "setup_coverage matches task.md Datasets/Baselines/Metrics; weak_protocol flags reductions vs Constraints.",
+        "Axis 6: final normalized results vs paper; interim run logs not used as ground truth."
+      ]
+    },
+    "literature_review": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-021_investigating_energy_consumption_root_ca/workspace/researchclaw_2026-09-15_02-29-34",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-021_investigating_energy_consumption_root_ca",
+      "status": "ok",
+      "as_of_year": 2026,
+      "agent_ref_count": 19,
+      "sources": [
+        {
+          "path": "~/ai_scientist_inputs/ICSE-2025-021_investigating_energy_consumption_root_ca/workspace/researchclaw_2026-09-15_02-29-34/stage-05/shortlist.jsonl",
+          "kind": "shortlist"
+        },
+        {
+          "path": "~/ai_scientist_inputs/ICSE-2025-021_investigating_energy_consumption_root_ca/workspace/researchclaw_2026-09-15_02-29-34/stage-04/references.bib",
+          "kind": "bib"
+        }
+      ],
+      "collection_audit": {
+        "cited_keys_count": 0,
+        "filter_mode": "non_bib_sources",
+        "bib_total_before_filter": 19,
+        "bib_after_filter": 0,
+        "uncited_bib_skipped": 19,
+        "agent_ref_count": 19
+      },
+      "fabrication": {
+        "status": "ok",
+        "scholarly_count": 19,
+        "verified_count": 14,
+        "fake_count": 0,
+        "lookup_failed_count": 5,
+        "non_paper_count": 0,
+        "fabrication_rate": 0.0,
+        "items": [
+          {
+            "title": "RAPL in Action",
+            "doi": "10.1145/3177754",
+            "arxiv_id": "",
+            "year": 2018,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "RAPL in Action",
+            "resolved_year": 2018,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "khan2018rapl",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Ranking programming languages by energy efficiency",
+            "doi": "10.1016/j.scico.2021.102609",
+            "arxiv_id": "",
+            "year": 2021,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Ranking programming languages by energy efficiency",
+            "resolved_year": 2021,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "pereira2021ranking",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Catalog of energy patterns for mobile applications",
+            "doi": "10.1007/s10664-019-09682-0",
+            "arxiv_id": "",
+            "year": 2019,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated."
+            ],
+            "cite_key": "cruz2019catalog",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Performance-Based Guidelines for Energy Efficient Mobile Applications",
+            "doi": "10.1109/mobilesoft.2017.19",
+            "arxiv_id": "",
+            "year": 2017,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated."
+            ],
+            "cite_key": "cruz2017performancebased",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Energy‐efficiency and sustainability in new generation cloud computing: A vision and directions for integrated management of data centre resources and workloads",
+            "doi": "10.1002/spe.3248",
+            "arxiv_id": "",
+            "year": 2023,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Energy‐efficiency and sustainability in new generation cloud computing: A vision and directions for integrated management of data centre resources and workloads",
+            "resolved_year": 2023,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "buyya2023energyefficiency",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Software bloat analysis",
+            "doi": "10.1145/1882362.1882448",
+            "arxiv_id": "",
+            "year": 2010,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Software bloat analysis: finding, removing, and preventing performance problems in modern large-scale object-oriented applications",
+            "resolved_year": 2010,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "xu2010software",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Identifying Compiler Options to Minimize Energy Consumption for Embedded Platforms",
+            "doi": "10.1093/comjnl/bxt129",
+            "arxiv_id": "1303.6485",
+            "year": 2013,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Identifying Compiler Options to Minimize Energy Consumption for Embedded Platforms",
+            "resolved_year": 2013,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "pallister2013identifying",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Profiling Software for Energy Consumption",
+            "doi": "10.1109/greencom.2012.86",
+            "arxiv_id": "",
+            "year": 2012,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Profiling Software for Energy Consumption",
+            "resolved_year": 2012,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "schubert2012profiling",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Is Moore’s Law Slowing Down? What’s Next?",
+            "doi": "10.1109/mm.2017.3211123",
+            "arxiv_id": "",
+            "year": 2017,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Is Moore's Law Slowing Down? What's Next?",
+            "resolved_year": 2017,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "eeckhout2017moores",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "An Insight Into the Impact of Dockerfile Evolutionary Trajectories on Quality and Latency",
+            "doi": "10.1109/compsac.2018.00026",
+            "arxiv_id": "",
+            "year": 2018,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated."
+            ],
+            "cite_key": "zhang2018insight",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Power Consumption of Virtualization Technologies: An Empirical Investigation",
+            "doi": "10.1109/ucc.2015.93",
+            "arxiv_id": "1511.01232",
+            "year": 2015,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Power Consumption of Virtualization Technologies: An Empirical Investigation",
+            "resolved_year": 2015,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "morabito2015power",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Do Energy-Oriented Changes Hinder Maintainability?",
+            "doi": "10.1109/icsme.2019.00013",
+            "arxiv_id": "",
+            "year": 2019,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Do Energy-Oriented Changes Hinder Maintainability?",
+            "resolved_year": 2019,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "cruz2019energyoriented",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Recommending Base Image for Docker Containers based on Deep Configuration Comprehension",
+            "doi": "10.1109/saner53432.2022.00060",
+            "arxiv_id": "",
+            "year": 2022,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated."
+            ],
+            "cite_key": "zhang2022recommending",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Empirical Study of the Docker Smells Impact on the Image Size",
+            "doi": "10.1145/3597503.3639143",
+            "arxiv_id": "",
+            "year": 2024,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated."
+            ],
+            "cite_key": "durieux2024empirical",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Energy-Saving Strategies for Mobile Web Apps and their Measurement: Results from a Decade of Research",
+            "doi": "10.1109/mobilsoft59058.2023.00017",
+            "arxiv_id": "",
+            "year": 2023,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Energy-Saving Strategies for Mobile Web Apps and their Measurement: Results from a Decade of Research",
+            "resolved_year": 2023,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "dornauer2023energysaving",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Unit testing of energy consumption of software libraries",
+            "doi": "10.1145/2554850.2554932",
+            "arxiv_id": "",
+            "year": 2014,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Unit testing of energy consumption of software libraries",
+            "resolved_year": 2014,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "noureddine2014unit",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Software Bloat and Wasted Joules: Is Modularity a Hurdle to Green Software?",
+            "doi": "10.1109/mc.2011.293",
+            "arxiv_id": "",
+            "year": 2011,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Software Bloat and Wasted Joules: Is Modularity a Hurdle to Green Software?",
+            "resolved_year": 2011,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "bhattacharya2011software",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Assessing and Improving the Quality of Docker Artifacts",
+            "doi": "10.1109/icsme55016.2022.00081",
+            "arxiv_id": "",
+            "year": 2022,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Assessing and Improving the Quality of Docker Artifacts",
+            "resolved_year": 2022,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "rosa2022assessing",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Enhancing Compiler Techniques for Memory Energy Optimizations",
+            "doi": "10.1007/3-540-45828-x_27",
+            "arxiv_id": "",
+            "year": 2002,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Enhancing Compiler Techniques for Memory Energy Optimizations",
+            "resolved_year": 2002,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "zambreno2002enhancing",
+            "source_kind": "shortlist"
+          }
+        ],
+        "cache_path": "~/ai_scientist_evals/ICSE-2025-021_investigating_energy_consumption_root_ca/reference_verify_cache.json",
+        "override_path": "~/ai_scientist_evals/ICSE-2025-021_investigating_energy_consumption_root_ca/reference_verify_overrides.json",
+        "note": "fabrication_rate = fake / (verified + fake); lookup_failed (API errors) excluded. GitHub/docs/tool URLs are non_paper and excluded from the rate. To manually correct a false negative, edit reference_verify_overrides.json (key=normalized title / doi / cite_key; value=\"verified\" or a result dict), then re-run."
+      },
+      "coverage": {
+        "status": "ok",
+        "gold_source": "~/ai_scientist_inputs/ICSE-2025-021_investigating_energy_consumption_root_ca/mineru_sections.json",
+        "gold_count": 35,
+        "gold_is_original_paper_references": true,
+        "gold_is_openalex_subset": false,
+        "agent_count": 19,
+        "intersection_size": 18,
+        "recall": 0.5142857142857142,
+        "precision": 0.9473684210526315,
+        "matched_gold_keys": [
+          "bhattacharya2011software",
+          "buyya2023energyefficiency",
+          "cruz2017performancebased",
+          "cruz2019catalog",
+          "cruz2019energyoriented",
+          "durieux2024empirical",
+          "eeckhout2017moores",
+          "khan2018rapl",
+          "morabito2015power",
+          "noureddine2014unit",
+          "pallister2013identifying",
+          "pereira2021ranking",
+          "rosa2022assessing",
+          "schubert2012profiling",
+          "xu2010software",
+          "zambreno2002enhancing",
+          "zhang2018insight",
+          "zhang2022recommending"
+        ],
+        "primary_metric": "recall",
+        "note": "Primary metric is recall against the original paper bibliography (titles from mineru_sections.json REFERENCES; related_work.json used only to enrich DOI/year or as fallback if mineru titles are empty). Denominator = |original paper references|. Precision is secondary (agent may cite valid extra papers)."
+      },
+      "recency": {
+        "status": "ok",
+        "dated_count": 19,
+        "unknown_year_count": 0,
+        "year_histogram": {
+          "2002": 1,
+          "2010": 1,
+          "2011": 1,
+          "2012": 1,
+          "2013": 1,
+          "2014": 1,
+          "2015": 1,
+          "2017": 2,
+          "2018": 2,
+          "2019": 2,
+          "2021": 1,
+          "2022": 2,
+          "2023": 2,
+          "2024": 1
+        },
+        "windows": {
+          "3": {
+            "years": 3,
+            "cutoff_year_inclusive": 2023,
+            "recent_count": 3,
+            "recent_ratio": 0.15789473684210525
+          },
+          "5": {
+            "years": 5,
+            "cutoff_year_inclusive": 2021,
+            "recent_count": 6,
+            "recent_ratio": 0.3157894736842105
+          }
+        }
+      },
+      "scores": {
+        "fabrication_rate": 0.0,
+        "coverage_recall": 0.5142857142857142,
+        "coverage_precision": 0.9473684210526315,
+        "recency_ratio_3y": 0.15789473684210525,
+        "recency_ratio_5y": 0.3157894736842105
+      }
+    }
+  },
+  "scores": {
+    "completeness": {
+      "complete": false,
+      "overall_score": 0.4,
+      "required_score": 0.5,
+      "bonus_score": 0.09
+    },
+    "peer_review": {
+      "status": "not_provided",
+      "optional": true,
+      "overall_score": null,
+      "score_scale": "1-5",
+      "scoring_method": null
+    },
+    "idea_generation": {
+      "status": "ok",
+      "overall_score": 1.0,
+      "dimensions": {
+        "novelty": 1.0,
+        "feasibility": 1.0,
+        "clarity": 1.0
+      },
+      "novelty_category": "Existing",
+      "solution_space_status": "ok"
+    },
+    "alignment": {
+      "status": "missing_agent_paper_or_metrics",
+      "direction_consistency": null,
+      "overall_alignment_score": null
+    },
+    "literature_review": {
+      "fabrication_rate": 0.0,
+      "coverage_recall": 0.5142857142857142,
+      "coverage_precision": 0.9473684210526315,
+      "recency_ratio_3y": 0.15789473684210525,
+      "recency_ratio_5y": 0.3157894736842105
+    },
+    "experiment_analysis": {
+      "experiment_success": false,
+      "idea_code_score": 1.0,
+      "setup_coverage": 0.16666666666666666,
+      "ablation_coverage_score": 1.0,
+      "overall_ablation_ok": true,
+      "overall_significance_ok": true,
+      "results_paper_score": null,
+      "hiding_unfavorable_suspected": null
+    }
+  },
+  "fair_scores": {
+    "applicable_axes": [
+      "completeness",
+      "idea_generation",
+      "literature_review",
+      "experiment_analysis"
+    ],
+    "skipped_axes": [
+      {
+        "axis": "peer_review",
+        "reason": "optional_external_review"
+      }
+    ],
+    "fair_mean_0_1": 0.3449,
+    "note": "fair_mean_0_1 averages only applicable axes; optional peer review and framework-inapplicable literature are excluded from the denominator."
+  },
+  "evals_root": "~/ai_scientist_evals",
+  "claims_cache": "~/ai_scientist_evals/ICSE-2025-021_investigating_energy_consumption_root_ca/original_claims.json",
+  "solution_space_cache": "~/ai_scientist_evals/ICSE-2025-021_investigating_energy_consumption_root_ca/solution_space.json"
+}

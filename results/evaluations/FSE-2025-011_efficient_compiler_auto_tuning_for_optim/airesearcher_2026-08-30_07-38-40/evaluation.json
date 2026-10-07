@@ -1,0 +1,912 @@
+{
+  "generated_at": "2026-09-05T07:54:31",
+  "run_dir": "~/ai_scientist_inputs/FSE-2025-011_efficient_compiler_auto_tuning_for_optim/workspace/airesearcher_2026-08-30_07-38-40",
+  "task_dir": "~/ai_scientist_inputs/FSE-2025-011_efficient_compiler_auto_tuning_for_optim",
+  "framework": "airesearcher",
+  "fairness_audit": [
+    {
+      "axis": "completeness",
+      "was_unfair": "Required both paper.tex AND paper.pdf; any tool missing one failed equally.",
+      "fix": "Paper gate: PDF=1.0; TeX-only=0.5; ``complete`` requires PDF."
+    },
+    {
+      "axis": "completeness",
+      "was_unfair": "``results`` counted stub/seed JSON (dataset_candidate/metrics.json).",
+      "fix": "``results`` requires substantive numeric results via results_normalize."
+    },
+    {
+      "axis": "experiment_success",
+      "was_unfair": "Only metrics.json; ignored results.json / experiment_results.txt.",
+      "fix": "Framework-ordered result candidates + normalized loaders."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Penalized tools with no bib; airesearcher has no workspace references.",
+      "fix": "literature_applicable=false → status not_applicable; excluded from fair aggregate."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "related_work.json subset as gold made recall hard to interpret.",
+      "fix": "Coverage gold is original paper REFERENCES from mineru; related_work only enriches metadata/fallback."
+    },
+    {
+      "axis": "peer_review",
+      "was_unfair": "Missing Stanford report looked like evaluation failure.",
+      "fix": "status not_provided; optional axis, never counts as tool failure."
+    },
+    {
+      "axis": "paths/find_results",
+      "was_unfair": "Picked downloads/** and sandbox noise (e.g. airesearcher LLVM tree).",
+      "fix": "Exclude downloads/, seeds/, dataset_candidate/, sandbox junk paths."
+    },
+    {
+      "axis": "paths/framework_noise",
+      "was_unfair": "DeepScientist .deepscientist_npm / runtime / skills templates counted as code/paper/results.",
+      "fix": "FRAMEWORK_NOISE_DIRS+markers; quest worktree + eval_output results; paper md drafts; reject template tex."
+    },
+    {
+      "axis": "paths/paper_tex",
+      "was_unfair": "tiny_scientist / ACL runs store paper under latex/*.tex; evaluator only looked at paper/main.tex.",
+      "fix": "latex/**/*.tex with substantive-body heuristic; find_paper_document uses same rules."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Entire custom.bib (300+ anthology entries) verified when paper had zero \\cite commands.",
+      "fix": "collect_agent_references filters bib to in-text cite keys; skips uncited bulk bib (>40 entries)."
+    },
+    {
+      "axis": "paths/ai_scientist_summaries",
+      "was_unfair": "AI Scientist can persist substantive results and paper-like drafts in *_summary.json logs rather than paper/main.tex or results/**/*.json.",
+      "fix": "Treat draft_summary/research_summary as weak paper documents and summary JSONs as result candidates."
+    },
+    {
+      "axis": "framework/ai_scientist_v2",
+      "was_unfair": "Manifest framework ``ai_scientist_v2`` fell through to profile ``unknown``, skipping AI-Scientist idea/result path priorities.",
+      "fix": "Normalize ``ai_scientist_v2`` (and common aliases) to profile key ``ai_scientist``."
+    },
+    {
+      "axis": "idea_generation",
+      "was_unfair": "plan.md/todos.md weak proxies scored same as structured idea.json.",
+      "fix": "Framework idea_priority tried first; missing idea → not_applicable where appropriate."
+    }
+  ],
+  "axes": [
+    "alignment",
+    "completeness",
+    "experiment_analysis",
+    "idea_generation",
+    "literature_review",
+    "peer_review"
+  ],
+  "results": {
+    "completeness": {
+      "framework": "airesearcher",
+      "run_dir": "~/ai_scientist_inputs/FSE-2025-011_efficient_compiler_auto_tuning_for_optim/workspace/airesearcher_2026-08-30_07-38-40",
+      "task_dir": "~/ai_scientist_inputs/FSE-2025-011_efficient_compiler_auto_tuning_for_optim",
+      "complete": false,
+      "required_score": 0.75,
+      "bonus_score": 0.05,
+      "overall_score": 0.6,
+      "missing": [
+        "idea"
+      ],
+      "required": {
+        "idea": null,
+        "code": {
+          "count": 27,
+          "files": [
+            {
+              "path": ".airesearcher-benchmark/metaprompt.py",
+              "bytes": 9575,
+              "via": "glob"
+            },
+            {
+              "path": "project/data_processing/compiler.py",
+              "bytes": 3920,
+              "via": "glob"
+            },
+            {
+              "path": "project/data_processing/dataset.py",
+              "bytes": 7874,
+              "via": "glob"
+            },
+            {
+              "path": "project/data_processing/flags_filter.py",
+              "bytes": 1842,
+              "via": "glob"
+            },
+            {
+              "path": "project/model/__init__.py",
+              "bytes": 1702,
+              "via": "glob"
+            },
+            {
+              "path": "project/model/acquisition.py",
+              "bytes": 1890,
+              "via": "glob"
+            },
+            {
+              "path": "project/model/adaptive.py",
+              "bytes": 4417,
+              "via": "glob"
+            },
+            {
+              "path": "project/model/baselines.py",
+              "bytes": 5928,
+              "via": "glob"
+            },
+            {
+              "path": "project/model/bayesopt_pdcat.py",
+              "bytes": 9068,
+              "via": "glob"
+            },
+            {
+              "path": "project/model/constraints.py",
+              "bytes": 3434,
+              "via": "glob"
+            },
+            {
+              "path": "project/model/pdcat_ae.py",
+              "bytes": 7174,
+              "via": "glob"
+            },
+            {
+              "path": "project/model/preference.py",
+              "bytes": 1713,
+              "via": "glob"
+            },
+            {
+              "path": "project/model/prior.py",
+              "bytes": 2473,
+              "via": "glob"
+            },
+            {
+              "path": "project/model/surrogate.py",
+              "bytes": 10722,
+              "via": "glob"
+            },
+            {
+              "path": "project/run_ablation.py",
+              "bytes": 6986,
+              "via": "glob"
+            },
+            {
+              "path": "project/run_comparison.py",
+              "bytes": 5728,
+              "via": "glob"
+            },
+            {
+              "path": "project/run_experiment.py",
+              "bytes": 9746,
+              "via": "glob"
+            },
+            {
+              "path": "project/run_sensitivity.py",
+              "bytes": 6288,
+              "via": "glob"
+            },
+            {
+              "path": "project/run_training_testing.py",
+              "bytes": 9204,
+              "via": "glob"
+            },
+            {
+              "path": "project/testing/__init__.py",
+              "bytes": 296,
+              "via": "glob"
+            },
+            {
+              "path": "project/testing/evaluate.py",
+              "bytes": 3229,
+              "via": "glob"
+            },
+            {
+              "path": "project/tests/test_components.py",
+              "bytes": 5206,
+              "via": "glob"
+            },
+            {
+              "path": "project/tests/test_harness.py",
+              "bytes": 2022,
+              "via": "glob"
+            },
+            {
+              "path": "project/tests/test_metrics.py",
+              "bytes": 1695,
+              "via": "glob"
+            },
+            {
+              "path": "project/training/__init__.py",
+              "bytes": 84,
+              "via": "glob"
+            },
+            {
+              "path": "project/training/train.py",
+              "bytes": 3175,
+              "via": "glob"
+            },
+            {
+              "path": "project/visualize.py",
+              "bytes": 4612,
+              "via": "glob"
+            }
+          ]
+        },
+        "results": {
+          "substantive": true,
+          "normalized_path": "results/run_details.json",
+          "numeric_leaf_count": 1315,
+          "discovered_files": [
+            {
+              "path": "results/metrics.json",
+              "bytes": 1361,
+              "via": "candidate"
+            },
+            {
+              "path": "results/ablation.json",
+              "bytes": 2418,
+              "via": "glob"
+            },
+            {
+              "path": "results/ablation_final.json",
+              "bytes": 6499,
+              "via": "glob"
+            },
+            {
+              "path": "results/ablation_full.json",
+              "bytes": 2915,
+              "via": "glob"
+            },
+            {
+              "path": "results/comparison.json",
+              "bytes": 922,
+              "via": "glob"
+            },
+            {
+              "path": "results/rq1_budgets.json",
+              "bytes": 10281,
+              "via": "glob"
+            },
+            {
+              "path": "results/rq1_budgets_final.json",
+              "bytes": 13733,
+              "via": "glob"
+            },
+            {
+              "path": "results/rq1_budgets_full.json",
+              "bytes": 13736,
+              "via": "glob"
+            },
+            {
+              "path": "results/rq1_budgets_smoke.json",
+              "bytes": 1854,
+              "via": "glob"
+            },
+            {
+              "path": "results/run_details.json",
+              "bytes": 28573,
+              "via": "glob"
+            },
+            {
+              "path": "results/sensitivity.json",
+              "bytes": 2570,
+              "via": "glob"
+            }
+          ],
+          "metrics_keys_sample": [
+            "gemm",
+            "symm",
+            "syrk",
+            "trmm",
+            "gemver"
+          ]
+        },
+        "paper": {
+          "tex": null,
+          "pdf": {
+            "path": "paper/main.pdf",
+            "bytes": 45765,
+            "via": "compiled_from_md"
+          },
+          "md": {
+            "path": "paper/paper.md",
+            "bytes": 7837,
+            "via": "candidate"
+          },
+          "json": null,
+          "status": "pdf",
+          "score": 1.0
+        }
+      },
+      "bonus": {
+        "experiment_plan": null,
+        "experiment_log": {
+          "path": "airesearcher_run.log",
+          "bytes": 2097242,
+          "via": "glob"
+        },
+        "review": null,
+        "readme": {
+          "path": "README_BENCHMARK.md",
+          "bytes": 885,
+          "via": "candidate"
+        },
+        "narrative": null,
+        "bib": null
+      },
+      "manifest_status": {
+        "pipeline": true,
+        "research_brief": true,
+        "instance": true,
+        "source_papers": true,
+        "metrics": true,
+        "project": true,
+        "paper": true
+      },
+      "gate_scores": {
+        "idea": 0.0,
+        "code": 1.0,
+        "results": 1.0,
+        "paper": 1.0
+      },
+      "fairness": {
+        "gates": [
+          "idea",
+          "code",
+          "results",
+          "paper"
+        ],
+        "paper_gate_rule": "PDF=1.0; TeX-only/md_only/json_only=0.5; complete requires PDF",
+        "results_gate_rule": "substantive numeric results via framework-aware normalize_results",
+        "audit_ref": "framework_profile.FAIRNESS_AUDIT"
+      },
+      "notes": [
+        "Required: idea, code, substantive results, paper (PDF full; TeX/markdown/JSON draft half).",
+        "Stub/seed metrics (e.g. dataset_candidate/metrics.json) do not satisfy results.",
+        "Framework noise (.deepscientist_npm, skills/templates, runtime) is excluded from code/results/paper.",
+        "Manifest status is informational; disk presence is authoritative."
+      ]
+    },
+    "idea_generation": {
+      "run_dir": "~/ai_scientist_inputs/FSE-2025-011_efficient_compiler_auto_tuning_for_optim/workspace/airesearcher_2026-08-30_07-38-40",
+      "task_dir": "~/ai_scientist_inputs/FSE-2025-011_efficient_compiler_auto_tuning_for_optim",
+      "idea_path": null,
+      "status": "missing_idea",
+      "dimensions": {},
+      "overall_score": null,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "novelty",
+        "feasibility",
+        "clarity"
+      ],
+      "solution_space": null,
+      "notes": [
+        "Scores the intermediate idea artifact (not the final paper).",
+        "Dimensions: novelty, feasibility, clarity (each 1-5). Excitement removed.",
+        "Novelty is scored against a Solution Space built from mineru REFERENCES titles (+ related_work.json abstracts when matched)."
+      ],
+      "hint": "No idea artifact found under candidates like artifacts/idea.json, idea-stage/IDEA_REPORT.md, session/idea.json, tiny_idea.json, selected_idea.md."
+    },
+    "peer_review": {
+      "run_dir": "~/ai_scientist_inputs/FSE-2025-011_efficient_compiler_auto_tuning_for_optim/workspace/airesearcher_2026-08-30_07-38-40",
+      "review_report": "~/ai_scientist_inputs/FSE-2025-011_efficient_compiler_auto_tuning_for_optim/workspace/airesearcher_2026-08-30_07-38-40/artifacts/peer_review/stanford_apr.md",
+      "paper_pdf": "~/ai_scientist_inputs/FSE-2025-011_efficient_compiler_auto_tuning_for_optim/workspace/airesearcher_2026-08-30_07-38-40/paper/main.pdf",
+      "paper_tex": null,
+      "status": "ok",
+      "dimensions": {},
+      "overall_score": 2.7,
+      "score_scale": "1-10",
+      "dimension_order": [],
+      "notes": [
+        "Scored from paperreview.ai (Stanford APR) native ratings; benchmark 5-dimension LLM rubric skipped.",
+        "Overall scale: 1-10."
+      ],
+      "paperreview": {
+        "status": "fetched",
+        "token_file": "~/ai_scientist_inputs/FSE-2025-011_efficient_compiler_auto_tuning_for_optim/workspace/airesearcher_2026-08-30_07-38-40/artifacts/peer_review/paperreview.token.txt",
+        "json": "~/ai_scientist_inputs/FSE-2025-011_efficient_compiler_auto_tuning_for_optim/workspace/airesearcher_2026-08-30_07-38-40/artifacts/peer_review/stanford_apr.json",
+        "markdown": "~/ai_scientist_inputs/FSE-2025-011_efficient_compiler_auto_tuning_for_optim/workspace/airesearcher_2026-08-30_07-38-40/artifacts/peer_review/stanford_apr.md",
+        "apr_scores": {
+          "scale": "1-10",
+          "overall": 2.7,
+          "dimensions": {}
+        },
+        "pdf_rebuild": null
+      },
+      "scoring_method": "paperreview_apr",
+      "scoring_source": "paperreview_json",
+      "apr_dimensions": {},
+      "summary": "",
+      "red_flags": []
+    },
+    "alignment": {
+      "run_dir": "~/ai_scientist_inputs/FSE-2025-011_efficient_compiler_auto_tuning_for_optim/workspace/airesearcher_2026-08-30_07-38-40",
+      "task_dir": "~/ai_scientist_inputs/FSE-2025-011_efficient_compiler_auto_tuning_for_optim",
+      "status": "ok",
+      "original": {
+        "paper_title": "PDCAT: Preference-Driven Compiler Auto-Tuning",
+        "selection": {
+          "num_blocks": 7,
+          "total_chars": 31998,
+          "inferred_roles": {
+            "abstract": 1,
+            "introduction": 1,
+            "experiment": 3,
+            "discussion": 1,
+            "conclusion": 1
+          },
+          "mineru_raw_keys": {
+            "field:abstract": 1,
+            "field:introduction": 1,
+            "field:experiment": 1,
+            "other": 2,
+            "discussion": 1,
+            "conclusion": 1
+          },
+          "infer_reasons": {
+            "top_level_field": 3,
+            "title": 3,
+            "body": 1
+          },
+          "rescued_from_other": 2,
+          "note": "mineru key is unreliable; blocks are selected by title/body/inheritance. rescued_from_other counts sections labeled other but treated as typed roles."
+        },
+        "claims": [
+          {
+            "id": "C1",
+            "statement": "PDCAT improves acceleration performance over GCC default -O3 optimization setting on all selected cases at 5,000 seconds.",
+            "direction": "improves",
+            "metric_names": [
+              "speedup_over_O3"
+            ],
+            "evidence_quote": "PDCAT achieves 5.5%-81.2% acceleration performance over GCC default -O3 optimization setting in all 28 selected cases in 5,000 seconds.",
+            "confidence": 0.95
+          },
+          {
+            "id": "C2",
+            "statement": "PDCAT significantly outperforms four compared compiler auto-tuning techniques, including the state-of-the-art technique SRTuner.",
+            "direction": "improves",
+            "metric_names": [
+              "average_speedup_over_O3",
+              "best_result_count"
+            ],
+            "evidence_quote": "PDCAT significantly outperforms the four compared techniques, including the state-of-art technique SRTuner.",
+            "confidence": 0.95
+          },
+          {
+            "id": "C3",
+            "statement": "PDCAT achieves the best optimization result on 10/11/14 programs at 1,250/2,500/5,000 seconds, while RIO, CFSCA, CompTuner and SRTuner achieve best results on only 2/1/1, 5/3/2, 3/5/4 and 8/8/7 programs, respectively.",
+            "direction": "improves",
+            "metric_names": [
+              "best_result_count"
+            ],
+            "evidence_quote": "PDCAT achieves the best optimization result on 10/11/14 programs in 1,250/2,500/5,000 seconds, while the compared RIO, CFSCA, CompTuner and SRTuner achieve the best results on only 2/1/1, 5/3/2, 3/5/4 and 8/8/7, respectively.",
+            "confidence": 0.9
+          },
+          {
+            "id": "C4",
+            "statement": "PDCAT never achieves the worst result on 28 programs at 1,250/2,500/5,000 seconds, whereas baselines achieve worst results in multiple cases.",
+            "direction": "improves",
+            "metric_names": [
+              "worst_result_count"
+            ],
+            "evidence_quote": "PDCAT never achieves the worst results on 28 programs in 1,250/2,500/5,000 seconds, while the compared RIO, CFSCA, CompTuner and SRTuner achieve the worst results in 18/18/21, 3/3/3, 6/5/3 and 1/2/1, respectively.",
+            "confidence": 0.9
+          }
+        ],
+        "metrics": [],
+        "overall_conclusion": null,
+        "comparable_notes": null,
+        "cache_hit": true
+      },
+      "agent": {
+        "status": "ok",
+        "run_dir": "~/ai_scientist_inputs/FSE-2025-011_efficient_compiler_auto_tuning_for_optim/workspace/airesearcher_2026-08-30_07-38-40",
+        "claims": [
+          {
+            "id": "C1",
+            "statement": "PDCAT-AE delivers the best budget-scaled speedup, reaching 1.109x at the 120s equal wall-clock budget.",
+            "direction": "improves",
+            "metric_names": [
+              "rq1_120_pdcatae_speedup"
+            ],
+            "evidence_quote": "PDCAT-AE delivers the best budget-scaled speedup (1.109x at 120s).",
+            "confidence": 0.95
+          },
+          {
+            "id": "C2",
+            "statement": "Both PDCAT-AE and BayesOpt-PDCAT are reported to outperform the RIO random-search and PDCAT reference baselines under an equal wall-clock budget.",
+            "direction": "improves",
+            "metric_names": [
+              "rq1_120_pdcatae_speedup",
+              "rq1_120_bayesopt_pdcat_speedup",
+              "rq1_120_pdcat_speedup"
+            ]
+          }
+        ],
+        "metrics": [],
+        "overall_conclusion": null,
+        "sources": {
+          "metrics_path": "results/run_details.json",
+          "paper_tex_path": "paper/paper.md"
+        },
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 1237,
+            "completion_tokens_details": {
+              "reasoning_tokens": 998
+            },
+            "prompt_tokens": 493,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 1730
+          },
+          "attempt": 2
+        }
+      },
+      "comparison": {
+        "status": "ok",
+        "claim_alignment": [
+          {
+            "original_claim_id": "C1",
+            "agent_claim_id": "A1",
+            "label": "incomparable",
+            "rationale": "Agent A1 reports best budget-scaled speedup at 120s over a PDCAT reference, while original C1 reports speedup over GCC -O3 at 5,000 seconds. Same positive direction, but different reference baseline and budget prevent direct comparison."
+          },
+          {
+            "original_claim_id": "C2",
+            "agent_claim_id": "A2",
+            "label": "partial",
+            "rationale": "Agent A2 reports that PDCAT-AE and BayesOpt-PDCAT outperform RIO random-search and PDCAT reference under an equal wall-clock budget, but it does not compare against the original four compiler auto-tuning techniques including SRTuner."
+          },
+          {
+            "original_claim_id": "C3",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "Agent does not report best-result counts or compare PDCAT against the listed baselines at 1,250/2,500/5,000 seconds."
+          },
+          {
+            "original_claim_id": "C4",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "Agent does not report worst-result counts, so the claim that PDCAT is never worst is not evaluated."
+          }
+        ],
+        "metric_alignment": [
+          {
+            "original_metric": "speedup_over_O3",
+            "agent_metric": "rq1_120_pdcatae_speedup",
+            "comparable": false,
+            "original_value": null,
+            "agent_value": 1.109,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Agent reports budget-scaled speedup at 120s, not speedup over GCC -O3 at 5,000 seconds."
+          },
+          {
+            "original_metric": "average_speedup_over_O3",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": null,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Agent does not report average speedup over GCC -O3."
+          },
+          {
+            "original_metric": "best_result_count",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": null,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "unknown",
+            "rationale": "Agent does not report best-result counts."
+          },
+          {
+            "original_metric": "worst_result_count",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": null,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "unknown",
+            "rationale": "Agent does not report worst-result counts."
+          }
+        ],
+        "summary": {
+          "direction_consistency": "mixed",
+          "consistent_claim_ratio": 0.0,
+          "overall_alignment_score": 0.4,
+          "has_comparable_metrics": false,
+          "sota_improvement_summary": "No comparable SOTA improvement because the agent uses a 120s equal wall-clock budget and different baselines, and does not report the original SOTA comparison versus SRTuner."
+        },
+        "warnings": [
+          "Agent evaluation protocol differs from original: 120s equal wall-clock budget versus original 1,250/2,500/5,000 second budgets.",
+          "No comparable metrics for speedup over GCC -O3, average speedup, best-result count, or worst-result count.",
+          "Baseline coverage is partial; SRTuner and some original compiler auto-tuning baselines are not reported."
+        ],
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 1666,
+            "completion_tokens_details": {
+              "reasoning_tokens": 745
+            },
+            "prompt_tokens": 3141,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 4807
+          },
+          "attempt": 3
+        }
+      },
+      "overall_alignment_score": 0.4,
+      "direction_consistency": "mixed"
+    },
+    "experiment_analysis": {
+      "run_dir": "~/ai_scientist_inputs/FSE-2025-011_efficient_compiler_auto_tuning_for_optim/workspace/airesearcher_2026-08-30_07-38-40",
+      "task_dir": "~/ai_scientist_inputs/FSE-2025-011_efficient_compiler_auto_tuning_for_optim",
+      "status": "ok",
+      "metrics_path": "results/run_details.json",
+      "experiment_success": {
+        "status": "ok",
+        "success": true,
+        "metrics_path": "results/run_details.json",
+        "absolute_metrics_path": "~/ai_scientist_inputs/FSE-2025-011_efficient_compiler_auto_tuning_for_optim/workspace/airesearcher_2026-08-30_07-38-40/results/run_details.json",
+        "checks": {
+          "has_results_file": true,
+          "non_stub": true,
+          "numeric_leaf_count": 1315,
+          "min_numeric_ok": true
+        },
+        "manifest_hints": {
+          "status": {
+            "pipeline": true,
+            "research_brief": true,
+            "instance": true,
+            "source_papers": true,
+            "metrics": true,
+            "project": true,
+            "paper": true
+          },
+          "returncode": 0,
+          "benchmark_complete": null,
+          "artifacts_metrics_flag": true
+        },
+        "warnings": [],
+        "suspicious_values": [],
+        "note": "success=true requires substantive results (framework-aware path) with >=3 numeric leaves. Supports metrics.json, results.json, experiment_results.txt, etc. Manifest returncode/benchmark_complete are soft warnings only."
+      },
+      "idea_code_consistency": {
+        "status": "missing_idea"
+      },
+      "setup_coverage": {
+        "status": "ok",
+        "overall_coverage": 1.0,
+        "datasets": {
+          "gold_count": 2,
+          "hit_count": 2,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "cBench",
+            "PolyBench"
+          ],
+          "misses": []
+        },
+        "baselines": {
+          "gold_count": 4,
+          "hit_count": 4,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "RIO",
+            "CFSCA",
+            "CompTuner",
+            "SRTuner"
+          ],
+          "misses": []
+        },
+        "metrics": {
+          "gold_count": 1,
+          "hit_count": 1,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "Speedup ratio over -O3"
+          ],
+          "misses": []
+        },
+        "agent_protocol": {},
+        "gold_protocol": {},
+        "dataset_dirs": [
+          "dataset_candidate",
+          "data"
+        ],
+        "flags": {
+          "weaker_baseline_suspected": false,
+          "weak_protocol": [],
+          "synthetic_data": "synthetic_allowed_by_task",
+          "gold_allows_synthetic": true
+        },
+        "gold_sources": [
+          "~/ai_scientist_inputs/FSE-2025-011_efficient_compiler_auto_tuning_for_optim/task.md",
+          "~/ai_scientist_inputs/FSE-2025-011_efficient_compiler_auto_tuning_for_optim/metadata.json"
+        ],
+        "note": "Coverage is name/alias matching against task.md Datasets/Baselines/Metrics. weak_protocol flags large reductions in trials/timeout vs Constraints. Synthetic corpora are not penalized when the task itself requires synthesis."
+      },
+      "ablation_significance": {
+        "status": "missing_idea"
+      },
+      "results_paper_consistency": {
+        "status": "ok",
+        "paper_tex": "paper/paper.md",
+        "paper_kind": "paper_md",
+        "results_format": "raw_json_truncated",
+        "digest_hint": {
+          "unfavorable_count": 0,
+          "trial_fail_count": 0,
+          "trial_success_count": 0,
+          "metadata": {}
+        },
+        "score_scale": "1-5",
+        "method": "Direct LLM comparison: agent's FINAL results artifact (metrics.json summary) vs paper Results/Discussion/Conclusion. Interim failed runs are NOT evidence unless still present in the final metrics file.",
+        "score": 2.0,
+        "consistency_label": "poor",
+        "hiding_unfavorable_suspected": true,
+        "hiding_confidence": 0.7,
+        "justification": "The paper excerpt frames the optimization methods as outperforming baselines and emphasizes a 1.109x speedup at 120s. However, the final results JSON contains per-kernel best speedups only for what appear to be BayesOpt-PDCAT runs, not the PDCAT-AE result cited in the abstract. Several kernels have many trials with speedup below 1.0: trmm has multiple runs around 0.355 and mean speedup below 1, syrk and gemver mean speedups are also below 1, with individual runs as low as 0.636. These unfavorable outcomes are not acknowledged in the paper excerpt, and the claimed 1.109x result is not directly present in the final results JSON.",
+        "supported_claims": [
+          "Final results include per-kernel best speedups above 1.0 for gemm, symm, syrk, trmm, and gemver."
+        ],
+        "unsupported_or_overstated_claims": [
+          "The paper claims PDCAT-AE achieves 1.109x at 120s, but the final results JSON does not contain a PDCAT-AE result or matching 120s aggregate metric.",
+          "The paper frames the methods as outperforming baselines, but the final results do not include direct RIO or PDCAT baseline comparisons.",
+          "The narrative omits that several kernels have many trials with speedup below 1.0, and mean speedup is below 1.0 for syrk, trmm, and gemver."
+        ],
+        "numeric_mismatches": [
+          {
+            "paper": "PDCAT-AE best budget-scaled speedup is 1.109x at 120s.",
+            "results": "Final results JSON contains best speedup 1.808 for gemm, 1.0505 for symm, 1.0138 for syrk, 1.0138 for trmm, and 1.0603 for gemver, but no PDCAT-AE 120s aggregate result.",
+            "note": "The cited 1.109x PDCAT-AE figure is not directly present in the final results."
+          },
+          {
+            "paper": "Both methods outperform RIO and PDCAT baseline.",
+            "results": "Final results JSON does not include RIO or PDCAT baseline values; only speedup per trial and best_speedup are provided.",
+            "note": "The baseline comparison cannot be verified from the final results JSON."
+          }
+        ],
+        "unfavorable_in_final_results": [
+          "syrk many speedup values below 1.0 and mean speedup below 1.0",
+          "trmm multiple speedup values around 0.355 and mean speedup below 1.0",
+          "gemver several speedup values around 0.636-0.681 and mean speedup below 1.0",
+          "symm has multiple speedup values slightly below 1.0",
+          "gemm has at least one low speedup around 0.69"
+        ],
+        "unfavorable_acknowledged_in_paper": [],
+        "unfavorable_missing_from_paper": [],
+        "rubric": "Poor consistency: several key numbers/claims disagree with metrics, or major unfavorable outcomes are missing from the narrative.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 1618,
+            "completion_tokens_details": {
+              "reasoning_tokens": 808
+            },
+            "prompt_tokens": 3262,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 4880
+          },
+          "attempt": 0
+        }
+      },
+      "scores": {
+        "experiment_success": true,
+        "idea_code_score": null,
+        "setup_coverage": 1.0,
+        "ablation_coverage_score": null,
+        "overall_ablation_ok": null,
+        "overall_significance_ok": null,
+        "results_paper_score": 2.0,
+        "hiding_unfavorable_suspected": true
+      },
+      "notes": [
+        "Axes 1,2,3,4,6 in experiment_analysis (figures excluded).",
+        "setup_coverage matches task.md Datasets/Baselines/Metrics; weak_protocol flags reductions vs Constraints.",
+        "Axis 6: final normalized results vs paper; interim run logs not used as ground truth."
+      ]
+    },
+    "literature_review": {
+      "run_dir": "~/ai_scientist_inputs/FSE-2025-011_efficient_compiler_auto_tuning_for_optim/workspace/airesearcher_2026-08-30_07-38-40",
+      "task_dir": "~/ai_scientist_inputs/FSE-2025-011_efficient_compiler_auto_tuning_for_optim",
+      "status": "not_applicable",
+      "framework": "airesearcher",
+      "reason": "Framework does not produce workspace reference artifacts for fair comparison.",
+      "scores": null
+    }
+  },
+  "scores": {
+    "completeness": {
+      "complete": false,
+      "overall_score": 0.6,
+      "required_score": 0.75,
+      "bonus_score": 0.05
+    },
+    "peer_review": {
+      "status": "ok",
+      "optional": false,
+      "overall_score": 2.7,
+      "score_scale": "1-10",
+      "scoring_method": "paperreview_apr"
+    },
+    "idea_generation": {
+      "status": "missing_idea",
+      "overall_score": null,
+      "dimensions": {
+        "novelty": null,
+        "feasibility": null,
+        "clarity": null
+      },
+      "novelty_category": null,
+      "solution_space_status": null
+    },
+    "alignment": {
+      "status": "ok",
+      "direction_consistency": "mixed",
+      "overall_alignment_score": 0.4
+    },
+    "literature_review": {
+      "fabrication_rate": null,
+      "coverage_recall": null,
+      "recency_ratio_3y": null,
+      "recency_ratio_5y": null
+    },
+    "experiment_analysis": {
+      "experiment_success": true,
+      "idea_code_score": null,
+      "setup_coverage": 1.0,
+      "ablation_coverage_score": null,
+      "overall_ablation_ok": null,
+      "overall_significance_ok": null,
+      "results_paper_score": 2.0,
+      "hiding_unfavorable_suspected": true
+    }
+  },
+  "fair_scores": {
+    "applicable_axes": [
+      "completeness",
+      "peer_review",
+      "alignment",
+      "experiment_analysis"
+    ],
+    "skipped_axes": [
+      {
+        "axis": "idea_generation",
+        "reason": "missing_idea"
+      },
+      {
+        "axis": "literature_review",
+        "reason": "not_applicable"
+      }
+    ],
+    "fair_mean_0_1": 0.555,
+    "note": "fair_mean_0_1 averages only applicable axes; optional peer review and framework-inapplicable literature are excluded from the denominator."
+  },
+  "evals_root": "~/ai_scientist_evals",
+  "claims_cache": "~/ai_scientist_evals/FSE-2025-011_efficient_compiler_auto_tuning_for_optim/original_claims.json",
+  "solution_space_cache": "~/ai_scientist_evals/FSE-2025-011_efficient_compiler_auto_tuning_for_optim/solution_space.json"
+}

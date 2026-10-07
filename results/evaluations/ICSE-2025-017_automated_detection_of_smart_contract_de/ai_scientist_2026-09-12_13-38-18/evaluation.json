@@ -1,0 +1,710 @@
+{
+  "generated_at": "2026-09-25T02:49:37",
+  "run_dir": "~/ai_scientist_inputs/ICSE-2025-017_automated_detection_of_smart_contract_de/workspace/ai_scientist_2026-09-12_13-38-18",
+  "task_dir": "~/ai_scientist_inputs/ICSE-2025-017_automated_detection_of_smart_contract_de",
+  "framework": "ai_scientist",
+  "fairness_audit": [
+    {
+      "axis": "completeness",
+      "was_unfair": "Required both paper.tex AND paper.pdf; any tool missing one failed equally.",
+      "fix": "Paper gate: PDF=1.0; TeX-only=0.5; ``complete`` requires PDF."
+    },
+    {
+      "axis": "completeness",
+      "was_unfair": "``results`` counted stub/seed JSON (dataset_candidate/metrics.json).",
+      "fix": "``results`` requires substantive numeric results via results_normalize."
+    },
+    {
+      "axis": "experiment_success",
+      "was_unfair": "Only metrics.json; ignored results.json / experiment_results.txt.",
+      "fix": "Framework-ordered result candidates + normalized loaders."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Penalized tools with no bib; airesearcher has no workspace references.",
+      "fix": "literature_applicable=false → status not_applicable; excluded from fair aggregate."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "related_work.json subset as gold made recall hard to interpret.",
+      "fix": "Coverage gold is original paper REFERENCES from mineru; related_work only enriches metadata/fallback."
+    },
+    {
+      "axis": "peer_review",
+      "was_unfair": "Missing Stanford report looked like evaluation failure.",
+      "fix": "status not_provided; optional axis, never counts as tool failure."
+    },
+    {
+      "axis": "paths/find_results",
+      "was_unfair": "Picked downloads/** and sandbox noise (e.g. airesearcher LLVM tree).",
+      "fix": "Exclude downloads/, seeds/, dataset_candidate/, sandbox junk paths."
+    },
+    {
+      "axis": "paths/framework_noise",
+      "was_unfair": "DeepScientist .deepscientist_npm / runtime / skills templates counted as code/paper/results.",
+      "fix": "FRAMEWORK_NOISE_DIRS+markers; quest worktree + eval_output results; paper md drafts; reject template tex."
+    },
+    {
+      "axis": "paths/paper_tex",
+      "was_unfair": "tiny_scientist / ACL runs store paper under latex/*.tex; evaluator only looked at paper/main.tex.",
+      "fix": "latex/**/*.tex with substantive-body heuristic; find_paper_document uses same rules."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Entire custom.bib (300+ anthology entries) verified when paper had zero \\cite commands.",
+      "fix": "collect_agent_references filters bib to in-text cite keys; skips uncited bulk bib (>40 entries)."
+    },
+    {
+      "axis": "paths/ai_scientist_summaries",
+      "was_unfair": "AI Scientist can persist substantive results and paper-like drafts in *_summary.json logs rather than paper/main.tex or results/**/*.json.",
+      "fix": "Treat draft_summary/research_summary as weak paper documents and summary JSONs as result candidates."
+    },
+    {
+      "axis": "framework/ai_scientist_v2",
+      "was_unfair": "Manifest framework ``ai_scientist_v2`` fell through to profile ``unknown``, skipping AI-Scientist idea/result path priorities.",
+      "fix": "Normalize ``ai_scientist_v2`` (and common aliases) to profile key ``ai_scientist``."
+    },
+    {
+      "axis": "idea_generation",
+      "was_unfair": "plan.md/todos.md weak proxies scored same as structured idea.json.",
+      "fix": "Framework idea_priority tried first; missing idea → not_applicable where appropriate."
+    }
+  ],
+  "axes": [
+    "alignment",
+    "completeness",
+    "experiment_analysis",
+    "idea_generation",
+    "literature_review",
+    "peer_review"
+  ],
+  "results": {
+    "completeness": {
+      "framework": "ai_scientist",
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-017_automated_detection_of_smart_contract_de/workspace/ai_scientist_2026-09-12_13-38-18",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-017_automated_detection_of_smart_contract_de",
+      "complete": false,
+      "required_score": 0.5,
+      "bonus_score": 0.03,
+      "overall_score": 0.4,
+      "missing": [
+        "results",
+        "paper"
+      ],
+      "required": {
+        "idea": {
+          "path": "session/idea.json",
+          "bytes": 10118,
+          "via": "candidate"
+        },
+        "code": {
+          "count": 1,
+          "files": [
+            {
+              "path": "experiments/2026-09-12_13-40-49_automated_detection_of_smart_contract_defects_on_attempt_0/logs/0-run/stage_1_initial_implementation_1_preliminary/best_solution_43e025cffa914c65890325f12df2aa03.py",
+              "bytes": 12748,
+              "via": "glob"
+            }
+          ]
+        },
+        "results": {
+          "substantive": false,
+          "normalized_path": null,
+          "numeric_leaf_count": 0,
+          "discovered_files": [
+            {
+              "path": "session/data/metrics.json",
+              "bytes": 582,
+              "via": "candidate"
+            }
+          ],
+          "metrics_keys_sample": []
+        },
+        "paper": {
+          "tex": null,
+          "pdf": null,
+          "md": null,
+          "json": null,
+          "status": "missing",
+          "score": 0.0
+        }
+      },
+      "bonus": {
+        "experiment_plan": null,
+        "experiment_log": {
+          "path": "ai_scientist_run.log",
+          "bytes": 408270,
+          "via": "glob"
+        },
+        "review": null,
+        "readme": null,
+        "narrative": null,
+        "bib": null
+      },
+      "manifest_status": {
+        "pipeline": false
+      },
+      "gate_scores": {
+        "idea": 1.0,
+        "code": 1.0,
+        "results": 0.0,
+        "paper": 0.0
+      },
+      "fairness": {
+        "gates": [
+          "idea",
+          "code",
+          "results",
+          "paper"
+        ],
+        "paper_gate_rule": "PDF=1.0; TeX-only/md_only/json_only=0.5; complete requires PDF",
+        "results_gate_rule": "substantive numeric results via framework-aware normalize_results",
+        "audit_ref": "framework_profile.FAIRNESS_AUDIT"
+      },
+      "notes": [
+        "Required: idea, code, substantive results, paper (PDF full; TeX/markdown/JSON draft half).",
+        "Stub/seed metrics (e.g. dataset_candidate/metrics.json) do not satisfy results.",
+        "Framework noise (.deepscientist_npm, skills/templates, runtime) is excluded from code/results/paper.",
+        "Manifest status is informational; disk presence is authoritative."
+      ]
+    },
+    "idea_generation": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-017_automated_detection_of_smart_contract_de/workspace/ai_scientist_2026-09-12_13-38-18",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-017_automated_detection_of_smart_contract_de",
+      "idea_path": "~/ai_scientist_inputs/ICSE-2025-017_automated_detection_of_smart_contract_de/workspace/ai_scientist_2026-09-12_13-38-18/session/idea.json",
+      "status": "ok",
+      "dimensions": {
+        "novelty": {
+          "score": 1.0,
+          "justification": "The artifact asks to 'automatically detect known defect patterns in TON smart contracts with high precision,' but no method is proposed. It explicitly notes 'No existing automated TON defect detection tools are available for comparison,' leaving only the same defect-detection paradigm as prior Ethereum work (R11, R12, R57, R58) with a domain shift.",
+          "rubric": "Existing: the idea's core method is already clearly present or solved in the Solution Space; only tiny parameter / test-case changes.",
+          "category": "Existing",
+          "nearest_solution_space_ids": [
+            "R11",
+            "R12",
+            "R57",
+            "R58"
+          ],
+          "differentiation": "The only differentiation is the target blockchain/language (TON FunC/Tact), but no concrete detection mechanism is specified; the text therefore does not go beyond restating an existing defect-detection goal from Ethereum-focused work."
+        },
+        "feasibility": {
+          "score": 1.0,
+          "justification": "No detection algorithm, tool architecture, labeling procedure, or baseline implementation is proposed, so the engineering burden cannot be scoped. Although the dataset is constructable, the absence of any method means the idea is not implementable as written; the text only says the 'main technical challenge is accurately modeling the asynchronous message-passing and the cell data structure.'",
+          "rubric": "Theoretically infeasible / compute catastrophe: NP-hard-scale computation, must dynamically reproduce extremely complex system-level vulnerability environments, or depends on unavailable closed-source model internal weights; not doable by a single person."
+        },
+        "clarity": {
+          "score": 2.0,
+          "justification": "Background, datasets, metrics, and constraints are given, but the core 'how' is missing: 'eight defined defect types' are never defined, 'Baselines [NOT SPECIFIED IN PAPER]', and no detection technique is described. It is a task specification rather than a complete research idea.",
+          "rubric": "Broken logic: states a problem but the proposed solution does not match it, or never mentions experiments / evaluation."
+        }
+      },
+      "overall_score": 1.3,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "novelty",
+        "feasibility",
+        "clarity"
+      ],
+      "solution_space": {
+        "status": "ok",
+        "paper_count": 59,
+        "entry_count": 59,
+        "cache_hit": false,
+        "source_file": "~/ai_scientist_inputs/ICSE-2025-017_automated_detection_of_smart_contract_de/mineru_sections.json",
+        "stats": {
+          "papers": 59,
+          "extracted": 59,
+          "usable_abstracts": 17,
+          "citation_meta_abstracts": 0,
+          "missing_abstracts": 42,
+          "mineru_titles": 58,
+          "related_work_titles": 18,
+          "abstracts_attached": 17,
+          "related_work_extras": 1,
+          "batches": 4
+        },
+        "error": null
+      },
+      "notes": [
+        "Scores the intermediate idea artifact (not the final paper).",
+        "Dimensions: novelty, feasibility, clarity (each 1-5). Excitement removed.",
+        "Novelty is scored against a Solution Space built from mineru REFERENCES titles (+ related_work.json abstracts when matched)."
+      ],
+      "idea_via": "candidate",
+      "idea_relative": "session/idea.json",
+      "summary": "This artifact is essentially a task/problem statement for TON smart contract defect detection, not a concrete idea. It provides dataset details, precision metrics, and three research questions, but completely omits the detection method, defect definitions, and baselines. Relative to the solution space, it only restates a domain-shifted version of existing Ethereum defect-detection goals. As written, feasibility and clarity are low because there is no implementable technical contribution to evaluate.",
+      "strengths": [
+        "Concrete dataset description and reproducible setup",
+        "Clear precision metrics and research questions",
+        "Acknowledges constraints such as source-only static analysis"
+      ],
+      "weaknesses": [
+        "No detection approach or algorithm is proposed",
+        "Defect types are referenced but not defined",
+        "Baselines are explicitly unspecified",
+        "No implementation plan, tool architecture, or evaluation pipeline",
+        "Cannot be assessed for novelty beyond a domain-shift claim"
+      ],
+      "llm_meta": {
+        "model": "deepseek-v4-pro-0813",
+        "base_url": "https://api-sg.umodelverse.ai/v1",
+        "usage": {
+          "completion_tokens": 2646,
+          "completion_tokens_details": {
+            "reasoning_tokens": 2079
+          },
+          "prompt_tokens": 6174,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "total_tokens": 8820
+        },
+        "attempt": 0
+      }
+    },
+    "peer_review": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-017_automated_detection_of_smart_contract_de/workspace/ai_scientist_2026-09-12_13-38-18",
+      "review_report": null,
+      "paper_pdf": null,
+      "paper_tex": null,
+      "status": "not_provided",
+      "dimensions": {},
+      "overall_score": null,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "soundness",
+        "significance",
+        "novelty",
+        "presentation",
+        "credibility"
+      ],
+      "notes": [
+        "Stanford Agentic Reviewer (paperreview.ai): manual download to artifacts/peer_review/stanford_apr.md, or pass --auto-paperreview.",
+        "Dimensions: soundness, significance, novelty, presentation, credibility (each 1-5)."
+      ],
+      "paperreview": {
+        "status": "skipped",
+        "reason": "no_pdf"
+      },
+      "optional": true,
+      "hint": "Optional external review (Stanford APR). Upload paper/main.pdf to https://paperreview.ai/ , save review to ~/ai_scientist_inputs/ICSE-2025-017_automated_detection_of_smart_contract_de/workspace/ai_scientist_2026-09-12_13-38-18/artifacts/peer_review/stanford_apr.md"
+    },
+    "alignment": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-017_automated_detection_of_smart_contract_de/workspace/ai_scientist_2026-09-12_13-38-18",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-017_automated_detection_of_smart_contract_de",
+      "status": "missing_agent_paper_or_metrics",
+      "original": {
+        "status": "ok",
+        "task_dir": "~/ai_scientist_inputs/ICSE-2025-017_automated_detection_of_smart_contract_de",
+        "paper_title": "Enhancing The Open Network: Definition and Automated Detection of Smart Contract Defects",
+        "task_id": "ICSE-2025-017",
+        "selection": {
+          "num_blocks": 7,
+          "total_chars": 31998,
+          "inferred_roles": {
+            "abstract": 1,
+            "introduction": 1,
+            "experiment": 4,
+            "conclusion": 1
+          },
+          "mineru_raw_keys": {
+            "field:abstract": 1,
+            "field:introduction": 1,
+            "field:experiment": 1,
+            "other": 3,
+            "conclusion": 1
+          },
+          "infer_reasons": {
+            "top_level_field": 3,
+            "inherited": 2,
+            "title": 2
+          },
+          "rescued_from_other": 3,
+          "note": "mineru key is unreliable; blocks are selected by title/body/inheritance. rescued_from_other counts sections labeled other but treated as typed roles."
+        },
+        "claims": [
+          {
+            "id": "C1",
+            "statement": "The paper defines eight types of FunC smart contract defects, five specific to TON blockchain, and provides code examples for each.",
+            "direction": "neutral",
+            "metric_names": [],
+            "evidence_quote": "we ultimately define eight types of FunC smart contract defects ... the latter five are specific to TON.",
+            "confidence": 0.98
+          },
+          {
+            "id": "C2",
+            "statement": "TONScanner, a static analysis framework, detects the eight TON smart contract defects by converting FunC source code to SSA-form IR and using data dependency, call graph, taint analysis, and cell construct analyzers.",
+            "direction": "neutral",
+            "metric_names": [],
+            "evidence_quote": "TONScanner integrates the Data Dependency, Call Graph, Taint Analysis, and a customized Cell Construct as analyzers.",
+            "confidence": 0.98
+          },
+          {
+            "id": "C3",
+            "statement": "Across 1,640 collected FunC and Tact contracts, TONScanner reported 14,995 total defects, and 94% of contracts contain at least one defect.",
+            "direction": "neutral",
+            "metric_names": [
+              "defects_total",
+              "contracts_with_defect_percentage"
+            ],
+            "evidence_quote": "we find a total of 14,995 defects ... 1,545 smart contracts contain at least one defect",
+            "confidence": 0.95
+          },
+          {
+            "id": "C4",
+            "statement": "On the FunC dataset, TONScanner achieves 95.09% overall precision, with per-defect precision of 93.06% for UBM, 83.75% for ID, and 97.85% for LEP; other five defects are 100%.",
+            "direction": "improves",
+            "metric_names": [
+              "precision",
+              "overall_precision"
+            ],
+            "evidence_quote": "the overall precision of TONScanner achieves 95.09% on the FunC dataset",
+            "confidence": 0.98
+          },
+          {
+            "id": "C5",
+            "statement": "On the Tact dataset, TONScanner achieves 100% precision on all manually sampled defect types.",
+            "direction": "improves",
+            "metric_names": [
+              "precision"
+            ],
+            "evidence_quote": "For the remaining 5 defects, our tool achieves 100% precision",
+            "confidence": 0.95
+          },
+          {
+            "id": "C6",
+            "statement": "The most prevalent defects differ by language: in FunC contracts UR and LEP are most common; in Tact contracts UR, LEP and ID are prevalent along with UBM.",
+            "direction": "neutral",
+            "metric_names": [],
+            "evidence_quote": "For FunC contracts, UR and LEP are the most common defects. ... For Tact contracts, UR, LEP and ID are prevalent",
+            "confidence": 0.9
+          }
+        ],
+        "metrics": [],
+        "overall_conclusion": null,
+        "comparable_notes": null,
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 2152,
+            "completion_tokens_details": {
+              "reasoning_tokens": 1490
+            },
+            "prompt_tokens": 2939,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 5091
+          },
+          "attempt": 1
+        },
+        "cache_hit": false
+      },
+      "agent": {
+        "status": "missing_agent_paper_or_metrics",
+        "run_dir": "~/ai_scientist_inputs/ICSE-2025-017_automated_detection_of_smart_contract_de/workspace/ai_scientist_2026-09-12_13-38-18"
+      }
+    },
+    "experiment_analysis": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-017_automated_detection_of_smart_contract_de/workspace/ai_scientist_2026-09-12_13-38-18",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-017_automated_detection_of_smart_contract_de",
+      "status": "ok",
+      "metrics_path": null,
+      "experiment_success": {
+        "status": "failed_or_incomplete",
+        "success": false,
+        "metrics_path": null,
+        "absolute_metrics_path": null,
+        "checks": {
+          "has_results_file": false,
+          "non_stub": false,
+          "numeric_leaf_count": 0,
+          "min_numeric_ok": false
+        },
+        "manifest_hints": {
+          "status": {
+            "pipeline": false
+          },
+          "returncode": 1,
+          "benchmark_complete": null,
+          "artifacts_metrics_flag": false
+        },
+        "warnings": [
+          "manifest.returncode=1"
+        ],
+        "suspicious_values": [],
+        "note": "success=true requires substantive results (framework-aware path) with >=3 numeric leaves. Supports metrics.json, results.json, experiment_results.txt, etc. Manifest returncode/benchmark_complete are soft warnings only."
+      },
+      "idea_code_consistency": {
+        "status": "ok",
+        "idea_path": "session/idea.json",
+        "code_files": [
+          "experiments/2026-09-12_13-40-49_automated_detection_of_smart_contract_defects_on_attempt_0/logs/0-run/stage_1_initial_implementation_1_preliminary/best_solution_43e025cffa914c65890325f12df2aa03.py"
+        ],
+        "score_scale": "1-5",
+        "score": 3.0,
+        "label": "partial",
+        "justification": "The code targets the same TON smart contract defect detection task, uses the expected dataset directories (contracts/, repo/) and source-only static analysis, and defines the eight defect names from the idea. However, the visible implementation is only a preliminary regex-based detector and does not implement the stated evaluation protocol (per-defect precision, overall precision, FunC vs Tact reporting, or RQ prevalence analysis). Key experiment components are therefore missing even though the main direction aligns.",
+        "matched_elements": [
+          "TON smart contract defect detection direction",
+          "Uses TON_DEFECTS_HOME / dataset_candidate/ton-smart-contract-defects",
+          "Collects FunC/Tact contract files from contracts/ and repo/",
+          "Defines the eight defect types from the idea",
+          "Static source-code-only detection approach"
+        ],
+        "missing_or_divergent_elements": [
+          "Precision and overall precision evaluation metrics not implemented",
+          "No TP/FP labeling or results reporting pipeline",
+          "RQ1 prevalence analysis not implemented",
+          "No explicit separation/reporting for FunC vs Tact datasets",
+          "Visible detection is a preliminary regex heuristic, not a complete/non-trivial tool",
+          "No experiment entrypoint for running full evaluation"
+        ],
+        "rubric": "Partial alignment: main direction matches, but important components from the idea (baselines, metrics, protocol, subjects) are dropped or altered without clear mapping.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 1266,
+            "completion_tokens_details": {
+              "reasoning_tokens": 978
+            },
+            "prompt_tokens": 2376,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 3642
+          },
+          "attempt": 0
+        }
+      },
+      "setup_coverage": {
+        "status": "ok",
+        "overall_coverage": 0.75,
+        "datasets": {
+          "gold_count": 2,
+          "hit_count": 2,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "TON FunC Smart Contracts",
+            "TON Tact Smart Contracts"
+          ],
+          "misses": []
+        },
+        "baselines": {
+          "gold_count": 0,
+          "hit_count": 0,
+          "miss_count": 0,
+          "coverage": null,
+          "hits": [],
+          "misses": []
+        },
+        "metrics": {
+          "gold_count": 2,
+          "hit_count": 1,
+          "miss_count": 1,
+          "coverage": 0.5,
+          "hits": [
+            "Precision per defect"
+          ],
+          "misses": [
+            "Overall precision"
+          ]
+        },
+        "agent_protocol": {},
+        "gold_protocol": {},
+        "dataset_dirs": [
+          "dataset_candidate"
+        ],
+        "flags": {
+          "weaker_baseline_suspected": false,
+          "weak_protocol": [],
+          "synthetic_data": "synthetic_allowed_by_task",
+          "gold_allows_synthetic": true
+        },
+        "gold_sources": [
+          "~/ai_scientist_inputs/ICSE-2025-017_automated_detection_of_smart_contract_de/task.md",
+          "~/ai_scientist_inputs/ICSE-2025-017_automated_detection_of_smart_contract_de/metadata.json"
+        ],
+        "note": "Coverage is name/alias matching against task.md Datasets/Baselines/Metrics. weak_protocol flags large reductions in trials/timeout vs Constraints. Synthetic corpora are not penalized when the task itself requires synthesis."
+      },
+      "ablation_significance": {
+        "status": "ok",
+        "idea_path": "session/idea.json",
+        "significance_signals_rule_based": {
+          "signals": [
+            "file:stats.py:scipy.stats"
+          ],
+          "artifact_paths": [
+            ".container-home/.local/lib/python3.11/site-packages/scipy/stats/stats.py",
+            ".container-home/.local/lib/python3.11/site-packages/sklearn/utils/stats.py"
+          ],
+          "has_any_significance_artifact": true
+        },
+        "evidence_format": null,
+        "study_type": "new_method",
+        "components": [
+          {
+            "name": "TON FunC dataset",
+            "role": "evaluation dataset",
+            "ablation_expected": false,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "No baseline or multi-module method specified; dataset is not an ablatable component.",
+            "significance_expected": false,
+            "significance_status": "not_required",
+            "significance_evidence": "Descriptive prevalence/precision reporting on collected contracts; no comparator or inferential claim."
+          },
+          {
+            "name": "TON Tact dataset",
+            "role": "evaluation dataset",
+            "ablation_expected": false,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "No baseline or multi-module method specified; dataset is not an ablatable component.",
+            "significance_expected": false,
+            "significance_status": "not_required",
+            "significance_evidence": "Descriptive prevalence/precision reporting on collected contracts; no comparator or inferential claim."
+          },
+          {
+            "name": "Eight defect-specific detection rules",
+            "role": "detection method components",
+            "ablation_expected": false,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "Individual defect detectors are evaluated per defect type, not removable components of a multi-module algorithm.",
+            "significance_expected": false,
+            "significance_status": "not_required",
+            "significance_evidence": "Precision/prevalence are descriptive; no statistical tests required absent a comparator."
+          }
+        ],
+        "ablation_coverage_score": 1.0,
+        "overall_ablation_ok": true,
+        "overall_significance_ok": true,
+        "summary": "Study is a new defect-detection tool with descriptive evaluation on TON FunC/Tact contracts and no specified baseline or multi-module method, so neither ablations nor formal significance tests are required; reported evaluation is descriptive and the run's lack of ablation/significance evidence is acceptable.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 1322,
+            "completion_tokens_details": {
+              "reasoning_tokens": 859
+            },
+            "prompt_tokens": 2764,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 4086
+          },
+          "attempt": 0
+        }
+      },
+      "results_paper_consistency": {
+        "status": "missing_metrics"
+      },
+      "scores": {
+        "experiment_success": false,
+        "idea_code_score": 3.0,
+        "setup_coverage": 0.75,
+        "ablation_coverage_score": 1.0,
+        "overall_ablation_ok": true,
+        "overall_significance_ok": true,
+        "results_paper_score": null,
+        "hiding_unfavorable_suspected": null
+      },
+      "notes": [
+        "Axes 1,2,3,4,6 in experiment_analysis (figures excluded).",
+        "setup_coverage matches task.md Datasets/Baselines/Metrics; weak_protocol flags reductions vs Constraints.",
+        "Axis 6: final normalized results vs paper; interim run logs not used as ground truth."
+      ]
+    },
+    "literature_review": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-017_automated_detection_of_smart_contract_de/workspace/ai_scientist_2026-09-12_13-38-18",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-017_automated_detection_of_smart_contract_de",
+      "status": "not_applicable",
+      "as_of_year": 2026,
+      "agent_ref_count": 0,
+      "sources": [],
+      "collection_audit": {
+        "cited_keys_count": 0,
+        "filter_mode": "none",
+        "bib_total_before_filter": 0,
+        "bib_after_filter": 0,
+        "uncited_bib_skipped": 0
+      },
+      "fabrication": null,
+      "coverage": null,
+      "recency": null,
+      "reason": "no_reference_artifacts",
+      "hint": "No literature artifacts found (bib / thebibliography / shortlist / related_work.txt / arxiv index). Marked not_applicable rather than failure — tool may not emit references in-run."
+    }
+  },
+  "scores": {
+    "completeness": {
+      "complete": false,
+      "overall_score": 0.4,
+      "required_score": 0.5,
+      "bonus_score": 0.03
+    },
+    "peer_review": {
+      "status": "not_provided",
+      "optional": true,
+      "overall_score": null,
+      "score_scale": "1-5",
+      "scoring_method": null
+    },
+    "idea_generation": {
+      "status": "ok",
+      "overall_score": 1.3,
+      "dimensions": {
+        "novelty": 1.0,
+        "feasibility": 1.0,
+        "clarity": 2.0
+      },
+      "novelty_category": "Existing",
+      "solution_space_status": "ok"
+    },
+    "alignment": {
+      "status": "missing_agent_paper_or_metrics",
+      "direction_consistency": null,
+      "overall_alignment_score": null
+    },
+    "literature_review": {
+      "fabrication_rate": null,
+      "coverage_recall": null,
+      "recency_ratio_3y": null,
+      "recency_ratio_5y": null
+    },
+    "experiment_analysis": {
+      "experiment_success": false,
+      "idea_code_score": 3.0,
+      "setup_coverage": 0.75,
+      "ablation_coverage_score": 1.0,
+      "overall_ablation_ok": true,
+      "overall_significance_ok": true,
+      "results_paper_score": null,
+      "hiding_unfavorable_suspected": null
+    }
+  },
+  "fair_scores": {
+    "applicable_axes": [
+      "completeness",
+      "idea_generation",
+      "experiment_analysis"
+    ],
+    "skipped_axes": [
+      {
+        "axis": "peer_review",
+        "reason": "optional_external_review"
+      },
+      {
+        "axis": "literature_review",
+        "reason": "not_applicable"
+      }
+    ],
+    "fair_mean_0_1": 0.4033,
+    "note": "fair_mean_0_1 averages only applicable axes; optional peer review and framework-inapplicable literature are excluded from the denominator."
+  },
+  "evals_root": "~/ai_scientist_evals",
+  "claims_cache": "~/ai_scientist_evals/ICSE-2025-017_automated_detection_of_smart_contract_de/original_claims.json",
+  "solution_space_cache": "~/ai_scientist_evals/ICSE-2025-017_automated_detection_of_smart_contract_de/solution_space.json"
+}

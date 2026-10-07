@@ -1,0 +1,1384 @@
+{
+  "run_dir": "~/ai_scientist_inputs/ASE-2025-004_predicting_recheck_success_in_continuous/workspace/evoscientist_2026-09-29_04-38-40",
+  "task_dir": "~/ai_scientist_inputs/ASE-2025-004_predicting_recheck_success_in_continuous",
+  "framework": "evoscientist",
+  "fairness_audit": [
+    {
+      "axis": "completeness",
+      "was_unfair": "Required both paper.tex AND paper.pdf; any tool missing one failed equally.",
+      "fix": "Paper gate: PDF=1.0; TeX-only=0.5; ``complete`` requires PDF."
+    },
+    {
+      "axis": "completeness",
+      "was_unfair": "``results`` counted stub/seed JSON (dataset_candidate/metrics.json).",
+      "fix": "``results`` requires substantive numeric results via results_normalize."
+    },
+    {
+      "axis": "experiment_success",
+      "was_unfair": "Only metrics.json; ignored results.json / experiment_results.txt.",
+      "fix": "Framework-ordered result candidates + normalized loaders."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Penalized tools with no bib; airesearcher has no workspace references.",
+      "fix": "literature_applicable=false → status not_applicable; excluded from fair aggregate."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "related_work.json subset as gold made recall hard to interpret.",
+      "fix": "Coverage gold is original paper REFERENCES from mineru; related_work only enriches metadata/fallback."
+    },
+    {
+      "axis": "peer_review",
+      "was_unfair": "Missing Stanford report looked like evaluation failure.",
+      "fix": "status not_provided; optional axis, never counts as tool failure."
+    },
+    {
+      "axis": "paths/find_results",
+      "was_unfair": "Picked downloads/** and sandbox noise (e.g. airesearcher LLVM tree).",
+      "fix": "Exclude downloads/, seeds/, dataset_candidate/, sandbox junk paths."
+    },
+    {
+      "axis": "paths/framework_noise",
+      "was_unfair": "DeepScientist .deepscientist_npm / runtime / skills templates counted as code/paper/results.",
+      "fix": "FRAMEWORK_NOISE_DIRS+markers; quest worktree + eval_output results; paper md drafts; reject template tex."
+    },
+    {
+      "axis": "paths/paper_tex",
+      "was_unfair": "tiny_scientist / ACL runs store paper under latex/*.tex; evaluator only looked at paper/main.tex.",
+      "fix": "latex/**/*.tex with substantive-body heuristic; find_paper_document uses same rules."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Entire custom.bib (300+ anthology entries) verified when paper had zero \\cite commands.",
+      "fix": "collect_agent_references filters bib to in-text cite keys; skips uncited bulk bib (>40 entries)."
+    },
+    {
+      "axis": "paths/ai_scientist_summaries",
+      "was_unfair": "AI Scientist can persist substantive results and paper-like drafts in *_summary.json logs rather than paper/main.tex or results/**/*.json.",
+      "fix": "Treat draft_summary/research_summary as weak paper documents and summary JSONs as result candidates."
+    },
+    {
+      "axis": "framework/ai_scientist_v2",
+      "was_unfair": "Manifest framework ``ai_scientist_v2`` fell through to profile ``unknown``, skipping AI-Scientist idea/result path priorities.",
+      "fix": "Normalize ``ai_scientist_v2`` (and common aliases) to profile key ``ai_scientist``."
+    },
+    {
+      "axis": "idea_generation",
+      "was_unfair": "plan.md/todos.md weak proxies scored same as structured idea.json.",
+      "fix": "Framework idea_priority tried first; missing idea → not_applicable where appropriate."
+    }
+  ],
+  "generated_at": "2026-10-01T09:40:12",
+  "axes": [
+    "alignment",
+    "completeness",
+    "experiment_analysis",
+    "idea_generation",
+    "literature_review",
+    "peer_review"
+  ],
+  "results": {
+    "completeness": {
+      "framework": "evoscientist",
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-004_predicting_recheck_success_in_continuous/workspace/evoscientist_2026-09-29_04-38-40",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-004_predicting_recheck_success_in_continuous",
+      "complete": true,
+      "required_score": 1.0,
+      "bonus_score": 0.09,
+      "overall_score": 0.8453,
+      "missing": [],
+      "required": {
+        "idea": {
+          "path": "plan.md",
+          "bytes": 3215,
+          "via": "candidate"
+        },
+        "code": {
+          "count": 14,
+          "files": [
+            {
+              "path": "code/data.py",
+              "bytes": 2635,
+              "via": "glob"
+            },
+            {
+              "path": "code/make_figures.py",
+              "bytes": 4675,
+              "via": "glob"
+            },
+            {
+              "path": "code/model.py",
+              "bytes": 4435,
+              "via": "glob"
+            },
+            {
+              "path": "code/rcs_utils.py",
+              "bytes": 1363,
+              "via": "glob"
+            },
+            {
+              "path": "code/run_rq1.py",
+              "bytes": 8294,
+              "via": "glob"
+            },
+            {
+              "path": "code/run_window_sensitivity.py",
+              "bytes": 2105,
+              "via": "glob"
+            },
+            {
+              "path": "code/verify_reproduction.py",
+              "bytes": 1553,
+              "via": "glob"
+            },
+            {
+              "path": "project/data.py",
+              "bytes": 2635,
+              "via": "glob"
+            },
+            {
+              "path": "project/make_figures.py",
+              "bytes": 4675,
+              "via": "glob"
+            },
+            {
+              "path": "project/model.py",
+              "bytes": 4435,
+              "via": "glob"
+            },
+            {
+              "path": "project/rcs_utils.py",
+              "bytes": 1363,
+              "via": "glob"
+            },
+            {
+              "path": "project/run_rq1.py",
+              "bytes": 8294,
+              "via": "glob"
+            },
+            {
+              "path": "project/run_window_sensitivity.py",
+              "bytes": 2105,
+              "via": "glob"
+            },
+            {
+              "path": "project/verify_reproduction.py",
+              "bytes": 1553,
+              "via": "glob"
+            }
+          ]
+        },
+        "results": {
+          "substantive": true,
+          "normalized_path": "results/window_sensitivity_ranking.json",
+          "numeric_leaf_count": 224,
+          "discovered_files": [
+            {
+              "path": "results/metrics.json",
+              "bytes": 1718,
+              "via": "candidate"
+            },
+            {
+              "path": "results/rq1_metrics.json",
+              "bytes": 579,
+              "via": "glob"
+            },
+            {
+              "path": "results/rq1_temporal_cv.json",
+              "bytes": 6530,
+              "via": "glob"
+            },
+            {
+              "path": "results/window_sensitivity_ranking.json",
+              "bytes": 11504,
+              "via": "glob"
+            }
+          ],
+          "metrics_keys_sample": [
+            "days_1",
+            "weeks_1",
+            "weeks_2",
+            "months_1",
+            "months_3",
+            "months_6",
+            "years_1",
+            "years_20"
+          ]
+        },
+        "paper": {
+          "tex": {
+            "path": "paper/main.tex",
+            "bytes": 12536,
+            "via": "candidate"
+          },
+          "pdf": {
+            "path": "paper/main.pdf",
+            "bytes": 288088,
+            "via": "candidate"
+          },
+          "md": {
+            "path": "paper/paper.md",
+            "bytes": 15490,
+            "via": "candidate"
+          },
+          "json": null,
+          "status": "pdf",
+          "score": 1.0
+        }
+      },
+      "bonus": {
+        "experiment_plan": {
+          "path": "plan.md",
+          "bytes": 3215,
+          "via": "candidate"
+        },
+        "experiment_log": {
+          "path": "evoscientist_run.log",
+          "bytes": 48566,
+          "via": "glob"
+        },
+        "review": null,
+        "readme": {
+          "path": "README.md",
+          "bytes": 3599,
+          "via": "candidate"
+        },
+        "narrative": null,
+        "bib": null
+      },
+      "manifest_status": {
+        "research_request": true,
+        "plan": true,
+        "metrics": true,
+        "paper_tex": true,
+        "paper_pdf": true,
+        "readme": true
+      },
+      "gate_scores": {
+        "idea": 1.0,
+        "code": 1.0,
+        "results": 1.0,
+        "paper": 1.0
+      },
+      "fairness": {
+        "gates": [
+          "idea",
+          "code",
+          "results",
+          "paper"
+        ],
+        "paper_gate_rule": "PDF=1.0; TeX-only/md_only/json_only=0.5; complete requires PDF",
+        "results_gate_rule": "substantive numeric results via framework-aware normalize_results",
+        "audit_ref": "framework_profile.FAIRNESS_AUDIT"
+      },
+      "notes": [
+        "Required: idea, code, substantive results, paper (PDF full; TeX/markdown/JSON draft half).",
+        "Stub/seed metrics (e.g. dataset_candidate/metrics.json) do not satisfy results.",
+        "Framework noise (.deepscientist_npm, skills/templates, runtime) is excluded from code/results/paper.",
+        "Manifest status is informational; disk presence is authoritative."
+      ]
+    },
+    "idea_generation": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-004_predicting_recheck_success_in_continuous/workspace/evoscientist_2026-09-29_04-38-40",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-004_predicting_recheck_success_in_continuous",
+      "idea_path": "~/ai_scientist_inputs/ASE-2025-004_predicting_recheck_success_in_continuous/workspace/evoscientist_2026-09-29_04-38-40/plan.md",
+      "status": "ok",
+      "dimensions": {
+        "novelty": {
+          "score": 1.0,
+          "justification": "The plan states it will 're-implement and re-validate the ASE 2025 ... modelling pipeline' and describes a 'faithful reproduction + scoped re-analysis.' Feature-based CI/failure prediction already appears in R11/R12/R45, with recheck context in R10. Thus the core method is already present/solved relative to the Solution Space.",
+          "rubric": "Existing: the idea's core method is already clearly present or solved in the Solution Space; only tiny parameter / test-case changes.",
+          "category": "Existing",
+          "nearest_solution_space_ids": [],
+          "differentiation": "The artifact re-applies known feature-based CI outcome prediction to recheck success data and adds strict temporal CV/window sensitivity, but these are validation rigor changes, not a new mechanism; the plan explicitly describes a faithful reproduction."
+        },
+        "feasibility": {
+          "score": 3.0,
+          "justification": "Standard Python stack, clear pipeline, but the data are large ('download Zenodo replication package for train/valid/test features (803 MiB) and dataset dump (7.0 GiB)') and BSON extraction/fallback may require nontrivial engineering.",
+          "rubric": "Moderate workload (sweet spot): needs nontrivial coding such as scripting existing open-source tools (parsers, CFG extractors) or building a custom graph-processing pipeline; standard research engineering effort."
+        },
+        "clarity": {
+          "score": 4.0,
+          "justification": "The plan gives concrete stages, environment, metrics, success thresholds, and blockers, but does not fully discuss limitations/defenses beyond blockers; exact feature engineering and baseline details remain partially implicit.",
+          "rubric": "Clear and concrete: steps are explicit with a reasonable, specific experiment design (baseline tools, metric definitions); can be turned into a solid proposal."
+        }
+      },
+      "overall_score": 2.0,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "novelty",
+        "feasibility",
+        "clarity"
+      ],
+      "solution_space": {
+        "status": "ok",
+        "paper_count": 51,
+        "entry_count": 51,
+        "cache_hit": true,
+        "source_file": "~/ai_scientist_inputs/ASE-2025-004_predicting_recheck_success_in_continuous/mineru_sections.json",
+        "stats": {
+          "papers": 51,
+          "extracted": 51,
+          "usable_abstracts": 35,
+          "citation_meta_abstracts": 0,
+          "missing_abstracts": 16,
+          "mineru_titles": 48,
+          "related_work_titles": 43,
+          "abstracts_attached": 35,
+          "related_work_extras": 3,
+          "batches": 3
+        },
+        "error": null
+      },
+      "notes": [
+        "Scores the intermediate idea artifact (not the final paper).",
+        "Dimensions: novelty, feasibility, clarity (each 1-5). Excitement removed.",
+        "Novelty is scored against a Solution Space built from mineru REFERENCES titles (+ related_work.json abstracts when matched)."
+      ],
+      "idea_via": "candidate",
+      "idea_relative": "plan.md",
+      "summary": "Reproduction of a recheck-success prediction study with strict temporal CV and window sensitivity. The plan is clear and concrete, and feasibility is moderate despite large BSON data. However, the core method is feature-based CI prediction already present in the references; the idea is explicitly a faithful reproduction, so novelty is low.",
+      "strengths": [
+        "Concrete reproducibility plan with staged workflow and success signals",
+        "Addresses temporal leakage with strict temporal k-fold CV",
+        "Uses open/documented Python stack with explicit metrics and baselines"
+      ],
+      "weaknesses": [
+        "Very low novelty; core method is existing in solution space and explicitly a reproduction",
+        "Limited incremental contribution beyond temporal validation and window sensitivity",
+        "Potential heavy data/BSON engineering and fallback requirements"
+      ],
+      "llm_meta": {
+        "model": "deepseek-v4-pro-0813",
+        "base_url": "https://api-sg.umodelverse.ai/v1",
+        "usage": {
+          "completion_tokens": 1692,
+          "completion_tokens_details": {
+            "reasoning_tokens": 1197
+          },
+          "prompt_tokens": 2841,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "total_tokens": 4533
+        },
+        "attempt": 0
+      }
+    },
+    "peer_review": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-004_predicting_recheck_success_in_continuous/workspace/evoscientist_2026-09-29_04-38-40",
+      "review_report": "~/ai_scientist_inputs/ASE-2025-004_predicting_recheck_success_in_continuous/workspace/evoscientist_2026-09-29_04-38-40/artifacts/peer_review/stanford_apr.md",
+      "paper_pdf": "~/ai_scientist_inputs/ASE-2025-004_predicting_recheck_success_in_continuous/workspace/evoscientist_2026-09-29_04-38-40/paper/main.pdf",
+      "paper_tex": "~/ai_scientist_inputs/ASE-2025-004_predicting_recheck_success_in_continuous/workspace/evoscientist_2026-09-29_04-38-40/paper/main.tex",
+      "status": "ok",
+      "dimensions": {},
+      "overall_score": 5.0,
+      "score_scale": "1-10",
+      "dimension_order": [],
+      "notes": [
+        "Scored from paperreview.ai (Stanford APR) native ratings; benchmark 5-dimension LLM rubric skipped.",
+        "Overall scale: 1-10."
+      ],
+      "paperreview": {
+        "status": "fetched",
+        "token_file": "~/ai_scientist_inputs/ASE-2025-004_predicting_recheck_success_in_continuous/workspace/evoscientist_2026-09-29_04-38-40/artifacts/peer_review/paperreview.token.txt",
+        "json": "~/ai_scientist_inputs/ASE-2025-004_predicting_recheck_success_in_continuous/workspace/evoscientist_2026-09-29_04-38-40/artifacts/peer_review/stanford_apr.json",
+        "markdown": "~/ai_scientist_inputs/ASE-2025-004_predicting_recheck_success_in_continuous/workspace/evoscientist_2026-09-29_04-38-40/artifacts/peer_review/stanford_apr.md",
+        "apr_scores": {
+          "scale": "1-10",
+          "overall": 5.0,
+          "dimensions": {
+            "Claims_Support": 1.0,
+            "Experimental_Soundness": 0.0,
+            "Writing_Clarity": 1.0,
+            "Prior_Work_Context": 0.0,
+            "Question_Importance": 0.0,
+            "Originality": 0.0,
+            "Value_to_Community": 0.0
+          }
+        },
+        "pdf_rebuild": null
+      },
+      "scoring_method": "paperreview_apr",
+      "scoring_source": "paperreview_json",
+      "apr_dimensions": {
+        "Claims_Support": 1.0,
+        "Experimental_Soundness": 0.0,
+        "Writing_Clarity": 1.0,
+        "Prior_Work_Context": 0.0,
+        "Question_Importance": 0.0,
+        "Originality": 0.0,
+        "Value_to_Community": 0.0
+      },
+      "summary": "",
+      "red_flags": []
+    },
+    "alignment": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-004_predicting_recheck_success_in_continuous/workspace/evoscientist_2026-09-29_04-38-40",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-004_predicting_recheck_success_in_continuous",
+      "status": "ok",
+      "original": {
+        "paper_title": "Rechecking Recheck Requests in Continuous Integration: An Empirical Study of OpenStack",
+        "selection": {
+          "num_blocks": 7,
+          "total_chars": 31998,
+          "inferred_roles": {
+            "abstract": 1,
+            "introduction": 1,
+            "experiment": 4,
+            "conclusion": 1
+          },
+          "mineru_raw_keys": {
+            "field:abstract": 1,
+            "field:introduction": 1,
+            "field:experiment": 1,
+            "other": 3,
+            "conclusion": 1
+          },
+          "infer_reasons": {
+            "top_level_field": 3,
+            "body_override": 3,
+            "title": 1
+          },
+          "rescued_from_other": 3,
+          "note": "mineru key is unreliable; blocks are selected by title/body/inheritance. rescued_from_other counts sections labeled other but treated as typed roles."
+        },
+        "claims": [
+          {
+            "id": "C1",
+            "statement": "A statistical model trained on OpenStack recheck requests can discriminate between successful and failed rechecks well, outperforming baseline approaches by 23.6 percentage points in AUROC (0.736).",
+            "direction": "improves",
+            "metric_names": [
+              "AUROC"
+            ],
+            "evidence_quote": "our model can differentiate successful and failed rechecks well, outperforming baseline approaches by 23.6 percentage points in terms of AUROC (0.736)",
+            "confidence": 0.98
+          },
+          {
+            "id": "C6",
+            "statement": "Skipping rechecks predicted to fail would avoid 86.49% of wasted rechecks and save roughly 262 years of compute time.",
+            "direction": "improves",
+            "metric_names": [
+              "wasted_rechecks_avoided",
+              "compute_time_saved"
+            ],
+            "evidence_quote": "Applying our model to skip recheck requests when they are predicted to fail would avoid 86.49% of wasted rechecks, saving roughly 262 years of compute time.",
+            "confidence": 0.98
+          }
+        ],
+        "metrics": [],
+        "overall_conclusion": null,
+        "comparable_notes": null,
+        "cache_hit": true
+      },
+      "agent": {
+        "status": "ok",
+        "run_dir": "~/ai_scientist_inputs/ASE-2025-004_predicting_recheck_success_in_continuous/workspace/evoscientist_2026-09-29_04-38-40",
+        "claims": [
+          {
+            "id": "A1",
+            "statement": "The re-implementation reproduces the reported apparent metrics to within numerical precision: AUROC 0.7361, Brier 0.1909, and AUPRC 0.6033.",
+            "direction": "no_difference",
+            "metric_names": [
+              "AUROC",
+              "Brier score",
+              "AUPRC"
+            ],
+            "evidence_quote": "Our re-implementation reproduces the reported metrics to within numerical precision (AUROC 0.7361, Brier 0.1909, AUPRC 0.6033)",
+            "confidence": 0.95
+          },
+          {
+            "id": "A2",
+            "statement": "Under time-based 10-fold cross-validation, the spline logistic regression retains discriminative power with AUROC 0.737, indicating the reported signal is not an artifact of in-sample evaluation.",
+            "direction": "no_difference",
+            "metric_names": [
+              "AUROC"
+            ],
+            "evidence_quote": "Under time-based 10-fold cross-validation, in which every test recheck occurs strictly after all training rechecks, the model retains its discriminative power (AUROC 0.737), confirming that the reported signal is not an artifact of in-sample evaluation.",
+            "confidence": 0.95
+          },
+          {
+            "id": "A3",
+            "statement": "Past job and bot success ratios dominate predictions; jobs_success_ratio alone accounts for roughly 40% of explanatory power and together with bots_success_ratio about 50%.",
+            "direction": "neutral",
+            "metric_names": [
+              "jobs_success_ratio",
+              "bots_success_ratio"
+            ],
+            "evidence_quote": "jobs_success_ratio alone accounts for roughly 40% of explanatory power, and together with bots_success_ratio for about 50%, reproducing the original's key finding.",
+            "confidence": 0.9
+          },
+          {
+            "id": "A4",
+            "statement": "Results are insensitive to the history window, and Wald chi-square feature rankings match the original within 0.5%.",
+            "direction": "neutral",
+            "metric_names": [
+              "jobs_success_ratio",
+              "bots_success_ratio"
+            ],
+            "evidence_quote": "Feature-importance and window-size analyses reproduce the conclusion that job/bot success ratios dominate and that results are insensitive to the history window.",
+            "confidence": 0.9
+          },
+          {
+            "id": "A5",
+            "statement": "Static patch and timing features are negligible compared with job and bot success ratios.",
+            "direction": "neutral",
+            "metric_names": [
+              "lines_inserted",
+              "lines_deleted",
+              "queued_hour",
+              "queued_minute"
+            ],
+            "evidence_quote": "Static patch and timing features are negligible.",
+            "confidence": 0.9
+          }
+        ],
+        "metrics": [
+          {
+            "name": "AUROC_reproduced_full_data",
+            "value": 0.7361,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "Full 314,947-row dataset apparent performance",
+            "is_sota_or_best": false,
+            "baseline_name": "Random baseline",
+            "baseline_value": 0.5,
+            "evidence_quote": "AUROC  & 0.7361 & 0.7361 & 0.5000",
+            "confidence": 0.95
+          },
+          {
+            "name": "Brier_score_reproduced_full_data",
+            "value": 0.1909,
+            "unit": null,
+            "higher_is_better": false,
+            "setting": "Full 314,947-row dataset apparent performance",
+            "is_sota_or_best": false,
+            "baseline_name": "Random baseline",
+            "baseline_value": 0.2271,
+            "evidence_quote": "Brier  & 0.1909 & 0.1909 & 0.2271",
+            "confidence": 0.95
+          },
+          {
+            "name": "AUPRC_reproduced_full_data",
+            "value": 0.6033,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "Full 314,947-row dataset apparent performance",
+            "is_sota_or_best": false,
+            "baseline_name": "Prevalence baseline",
+            "baseline_value": 0.3487,
+            "evidence_quote": "AUPRC  & 0.6033 & 0.6035 & 0.3487",
+            "confidence": 0.95
+          },
+          {
+            "name": "AUROC_temporal_cv_logistic_splines_mean",
+            "value": 0.737,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "Time-based 10-fold cross-validation",
+            "is_sota_or_best": false,
+            "baseline_name": "Random baseline",
+            "baseline_value": 0.5,
+            "evidence_quote": "Logistic regression + splines & $0.737\\pm0.032$ & $0.190\\pm0.017$ & $0.590\\pm0.070$",
+            "confidence": 0.9
+          },
+          {
+            "name": "Brier_temporal_cv_logistic_splines_mean",
+            "value": 0.19,
+            "unit": null,
+            "higher_is_better": false,
+            "setting": "Time-based 10-fold cross-validation",
+            "is_sota_or_best": false,
+            "baseline_name": "Random baseline",
+            "baseline_value": 0.227,
+            "evidence_quote": "Logistic regression + splines & $0.737\\pm0.032$ & $0.190\\pm0.017$ & $0.590\\pm0.070$",
+            "confidence": 0.9
+          },
+          {
+            "name": "AUPRC_temporal_cv_logistic_splines_mean",
+            "value": 0.59,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "Time-based 10-fold cross-validation",
+            "is_sota_or_best": false,
+            "baseline_name": "Prevalence baseline",
+            "baseline_value": 0.349,
+            "evidence_quote": "Logistic regression + splines & $0.737\\pm0.032$ & $0.190\\pm0.017$ & $0.590\\pm0.070$",
+            "confidence": 0.9
+          },
+          {
+            "name": "AUROC_temporal_cv_gradient_boosting_mean",
+            "value": 0.739,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "Time-based 10-fold cross-validation",
+            "is_sota_or_best": true,
+            "baseline_name": "Random baseline",
+            "baseline_value": 0.5,
+            "evidence_quote": "Gradient boosting              & $0.739\\pm0.044$ & $0.187\\pm0.027$ & $0.596\\pm0.090$",
+            "confidence": 0.9
+          },
+          {
+            "name": "wald_chi2_jobs_success_ratio_weeks_2",
+            "value": 16697.581219649026,
+            "unit": "Wald chi2",
+            "higher_is_better": true,
+            "setting": "weeks_2 window sensitivity ranking",
+            "is_sota_or_best": true,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "{\"feature\": \"jobs_success_ratio\", \"df\": 2, \"wald_chi2\": 16697.581219649026}",
+            "confidence": 0.95
+          }
+        ],
+        "overall_conclusion": "The study reproduces Brus et al.'s recheck-success prediction model with AUROC 0.7361, Brier 0.1909, and AUPRC 0.6033; time-based 10-fold cross-validation confirms discriminative power (AUROC 0.737), and job/bot success ratios dominate while results are insensitive to the history window.",
+        "sources": {
+          "metrics_path": "results/window_sensitivity_ranking.json",
+          "paper_tex_path": "paper/main.tex"
+        },
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 8060,
+            "completion_tokens_details": {
+              "reasoning_tokens": 6222
+            },
+            "prompt_tokens": 5213,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 13273
+          },
+          "attempt": 0
+        }
+      },
+      "comparison": {
+        "status": "ok",
+        "claim_alignment": [
+          {
+            "original_claim_id": "C1",
+            "agent_claim_id": "A1",
+            "label": "consistent",
+            "rationale": "The agent reproduces the reported AUROC of 0.7361, and its random baseline of 0.5 matches the original claim of 23.6 percentage points improvement over baseline, while A2 confirms the discriminative signal is robust under temporal cross-validation."
+          },
+          {
+            "original_claim_id": "C6",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "The agent does not report skipping predicted-failed rechecks, avoided wasted rechecks, or compute time saved, so the operational impact claim is not addressed."
+          }
+        ],
+        "metric_alignment": [
+          {
+            "original_metric": "AUROC",
+            "agent_metric": "AUROC_reproduced_full_data",
+            "comparable": true,
+            "original_value": 0.736,
+            "agent_value": 0.7361,
+            "delta_abs": 0.0001,
+            "delta_rel": 0.0001359,
+            "direction_vs_original_sota": "equal",
+            "rationale": "The agent reproduces the original apparent AUROC to within rounding precision, and the random baseline of 0.5 corresponds to the same 23.6 percentage point advantage."
+          },
+          {
+            "original_metric": "wasted_rechecks_avoided",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 86.49,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "The agent does not report percentage of wasted rechecks avoided from skipping predicted failures."
+          },
+          {
+            "original_metric": "compute_time_saved",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 262,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "The agent does not report compute time saved, so this projection cannot be compared."
+          }
+        ],
+        "summary": {
+          "direction_consistency": "mixed",
+          "consistent_claim_ratio": 0.5,
+          "has_comparable_metrics": true,
+          "sota_improvement_summary": "The agent reproduces the central AUROC/discriminative-power result but does not evaluate the claimed operational savings from skipping predicted-failed rechecks.",
+          "overall_alignment_score": 0.55,
+          "score_rationale": "The agent clearly reproduces the core model-discrimination claim (C1) but does not address the wasted-recheck/compute-saving claim (C6), so alignment is partial."
+        },
+        "warnings": [
+          "The original extraction had an empty metrics array; metric names were taken from original claim metric_names.",
+          "The agent did not evaluate the operational impact claim about avoided wasted rechecks and compute time saved.",
+          "The agent reports additional metrics such as Brier score, AUPRC, and feature-importance results that were not part of the original extracted claims."
+        ],
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 4905,
+            "completion_tokens_details": {
+              "reasoning_tokens": 4167
+            },
+            "prompt_tokens": 2969,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 7874
+          },
+          "attempt": 2
+        }
+      },
+      "overall_alignment_score": 0.55,
+      "direction_consistency": "mixed"
+    },
+    "experiment_analysis": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-004_predicting_recheck_success_in_continuous/workspace/evoscientist_2026-09-29_04-38-40",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-004_predicting_recheck_success_in_continuous",
+      "status": "ok",
+      "metrics_path": "results/window_sensitivity_ranking.json",
+      "experiment_success": {
+        "status": "ok",
+        "success": true,
+        "metrics_path": "results/window_sensitivity_ranking.json",
+        "absolute_metrics_path": "~/ai_scientist_inputs/ASE-2025-004_predicting_recheck_success_in_continuous/workspace/evoscientist_2026-09-29_04-38-40/results/window_sensitivity_ranking.json",
+        "checks": {
+          "has_results_file": true,
+          "non_stub": true,
+          "numeric_leaf_count": 224,
+          "min_numeric_ok": true
+        },
+        "manifest_hints": {
+          "status": {
+            "research_request": true,
+            "plan": true,
+            "metrics": true,
+            "paper_tex": true,
+            "paper_pdf": true,
+            "readme": true
+          },
+          "returncode": 0,
+          "benchmark_complete": true,
+          "artifacts_metrics_flag": false
+        },
+        "warnings": [],
+        "suspicious_values": [],
+        "note": "success=true requires substantive results (framework-aware path) with >=3 numeric leaves. Supports metrics.json, results.json, experiment_results.txt, etc. Manifest returncode/benchmark_complete are soft warnings only."
+      },
+      "idea_code_consistency": {
+        "status": "ok",
+        "idea_path": "idea.md",
+        "code_files": [
+          "code/data.py",
+          "code/make_figures.py",
+          "code/model.py",
+          "code/rcs_utils.py"
+        ],
+        "score_scale": "1-5",
+        "score": 3.0,
+        "label": "partial",
+        "justification": "The code implements core parts of the reproduction: the 16-feature list, NA encoding (-1 to NaN), the same two collinear drops, restricted cubic splines for the six behavior features, statsmodels logistic regression, and AUROC/Brier/AUPRC computation. However, the provided experiment code does not implement the strict temporal 10-fold cross-validation or the three ML baselines required for C2/H2, and it lacks runners for Wald/drop-one feature importance and window-size refitting (C3/C4), instead only reading precomputed CSVs in plotting code.",
+        "matched_elements": [
+          "16-feature schema and specified collinear feature removal",
+          "-1.0 to NaN NA-encoding convention",
+          "RCS basis with 3 knots for the six behavior features",
+          "statsmodels logistic regression with AUROC/Brier/AUPRC metrics",
+          "bootstrap optimism estimation",
+          "data loading for different history-window CSVs and date sorting"
+        ],
+        "missing_or_divergent_elements": [
+          "Strict temporal 10-fold cross-validation protocol (train-on-past/test-on-future)",
+          "Baseline models: plain logistic regression, random forest, gradient boosting",
+          "Wald chi-square and drop-one feature importance computation (only plotting of precomputed CSV shown)",
+          "Window-size sensitivity refitting runner (only plotting of precomputed summary shown)",
+          "Explicit RQ1/RQ2 entrypoint scripts for full reproduction"
+        ],
+        "rubric": "Partial alignment: main direction matches, but important components from the idea (baselines, metrics, protocol, subjects) are dropped or altered without clear mapping.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 1751,
+            "completion_tokens_details": {
+              "reasoning_tokens": 1414
+            },
+            "prompt_tokens": 5140,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 6891
+          },
+          "attempt": 0
+        }
+      },
+      "setup_coverage": {
+        "status": "ok",
+        "overall_coverage": 1.0,
+        "datasets": {
+          "gold_count": 1,
+          "hit_count": 1,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "OpenStack Recheck Dataset"
+          ],
+          "misses": []
+        },
+        "baselines": {
+          "gold_count": 1,
+          "hit_count": 1,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "Random Guessing"
+          ],
+          "misses": []
+        },
+        "metrics": {
+          "gold_count": 4,
+          "hit_count": 4,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "AUROC",
+            "Brier Score",
+            "AUPRC",
+            "Optimism"
+          ],
+          "misses": []
+        },
+        "agent_protocol": {},
+        "gold_protocol": {},
+        "dataset_dirs": [
+          "dataset_candidate"
+        ],
+        "flags": {
+          "weaker_baseline_suspected": false,
+          "weak_protocol": [],
+          "synthetic_data": "synthetic_allowed_by_task",
+          "gold_allows_synthetic": true
+        },
+        "gold_sources": [
+          "~/ai_scientist_inputs/ASE-2025-004_predicting_recheck_success_in_continuous/task.md",
+          "~/ai_scientist_inputs/ASE-2025-004_predicting_recheck_success_in_continuous/metadata.json"
+        ],
+        "note": "Coverage is name/alias matching against task.md Datasets/Baselines/Metrics. weak_protocol flags large reductions in trials/timeout vs Constraints. Synthetic corpora are not penalized when the task itself requires synthesis."
+      },
+      "ablation_significance": {
+        "status": "ok",
+        "idea_path": "idea.md",
+        "significance_signals_rule_based": {
+          "signals": [
+            "file:stats.py:scipy.stats",
+            "paper_contains:bootstrap"
+          ],
+          "artifact_paths": [
+            ".container-home/.local/lib/python3.11/site-packages/scipy/stats/stats.py",
+            ".container-home/.local/lib/python3.11/site-packages/sklearn/utils/stats.py"
+          ],
+          "has_any_significance_artifact": true
+        },
+        "evidence_format": "raw_json_truncated",
+        "study_type": "reproduction",
+        "components": [
+          {
+            "name": "NA encoding and missingness filtering",
+            "role": "preprocessing",
+            "ablation_expected": false,
+            "significance_expected": false,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "Reproduces -1.0->NaN and row dropping from the original replication package.",
+            "significance_status": "not_required",
+            "significance_evidence": ""
+          },
+          {
+            "name": "Spearman collinearity filtering",
+            "role": "preprocessing",
+            "ablation_expected": false,
+            "significance_expected": false,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "Removes bots_flip_success_ratio and numbers_of_unique_files.",
+            "significance_status": "not_required",
+            "significance_evidence": ""
+          },
+          {
+            "name": "Restricted cubic spline logistic regression",
+            "role": "core model",
+            "ablation_expected": false,
+            "significance_expected": false
+          }
+        ],
+        "ablation_coverage_score": null,
+        "overall_ablation_ok": null,
+        "overall_significance_ok": null,
+        "summary": "",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 1518,
+            "completion_tokens_details": {
+              "reasoning_tokens": 1261
+            },
+            "prompt_tokens": 514,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 2032
+          },
+          "attempt": 1
+        }
+      },
+      "results_paper_consistency": {
+        "status": "ok",
+        "paper_tex": "paper/main.tex",
+        "paper_kind": "paper_tex",
+        "results_format": "raw_json",
+        "digest_hint": {
+          "unfavorable_count": 0,
+          "trial_fail_count": 0,
+          "trial_success_count": 0,
+          "metadata": {}
+        },
+        "score_scale": "1-5",
+        "method": "Direct LLM comparison: agent's FINAL results artifact (metrics.json summary) vs paper Results/Discussion/Conclusion. Interim failed runs are NOT evidence unless still present in the final metrics file.",
+        "score": 5.0,
+        "consistency_label": "high",
+        "hiding_unfavorable_suspected": false,
+        "hiding_confidence": 0.95,
+        "justification": "The final years_20 Wald statistics match the paper's reproduced table within rounding, and the window-sensitivity results support the paper's stable top-ranked feature set and negligible static/patch/timing features. No hidden unfavorable results are evident.",
+        "supported_claims": [],
+        "unsupported_or_overstated_claims": [],
+        "numeric_mismatches": [],
+        "unfavorable_in_final_results": [],
+        "unfavorable_acknowledged_in_paper": [],
+        "unfavorable_missing_from_paper": [],
+        "rubric": "Highly consistent and transparent: numbers and conclusions match metrics; failures and limitations are fairly reported.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 2312,
+            "completion_tokens_details": {
+              "reasoning_tokens": 2215
+            },
+            "prompt_tokens": 3262,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 5574
+          },
+          "attempt": 0
+        }
+      },
+      "scores": {
+        "experiment_success": true,
+        "idea_code_score": 3.0,
+        "setup_coverage": 1.0,
+        "ablation_coverage_score": null,
+        "overall_ablation_ok": null,
+        "overall_significance_ok": null,
+        "results_paper_score": 5.0,
+        "hiding_unfavorable_suspected": false
+      },
+      "notes": [
+        "Axes 1,2,3,4,6 in experiment_analysis (figures excluded).",
+        "setup_coverage matches task.md Datasets/Baselines/Metrics; weak_protocol flags reductions vs Constraints.",
+        "Axis 6: final normalized results vs paper; interim run logs not used as ground truth."
+      ]
+    },
+    "literature_review": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-004_predicting_recheck_success_in_continuous/workspace/evoscientist_2026-09-29_04-38-40",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-004_predicting_recheck_success_in_continuous",
+      "status": "ok",
+      "as_of_year": 2026,
+      "agent_ref_count": 14,
+      "sources": [
+        {
+          "path": "~/ai_scientist_inputs/ASE-2025-004_predicting_recheck_success_in_continuous/workspace/evoscientist_2026-09-29_04-38-40/paper/main.tex",
+          "kind": "thebibliography"
+        }
+      ],
+      "collection_audit": {
+        "cited_keys_count": 14,
+        "filter_mode": "paper_cite_keys",
+        "bib_total_before_filter": 0,
+        "bib_after_filter": 0,
+        "uncited_bib_skipped": 0,
+        "cited_keys_sample": [
+          "bell2018",
+          "brus2025",
+          "chen2020",
+          "durieux2020",
+          "eck2019",
+          "hassan2006",
+          "jin2020",
+          "jin2022",
+          "lam2019",
+          "leinen2024",
+          "luo2014",
+          "maipradit2023",
+          "parry2021",
+          "sun2024"
+        ],
+        "thebibliography_after_filter": 14,
+        "agent_ref_count": 14
+      },
+      "fabrication": {
+        "status": "ok",
+        "scholarly_count": 14,
+        "verified_count": 8,
+        "fake_count": 0,
+        "lookup_failed_count": 6,
+        "non_paper_count": 0,
+        "fabrication_rate": 0.0,
+        "items": [
+          {
+            "title": "DeFlaker: Automatically Detecting Flaky Tests",
+            "doi": "10.1145/3180155.3180164",
+            "arxiv_id": "",
+            "year": 2018,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated.",
+              "Saw 1 conclusive miss(es) mixed with 2 API error(s)."
+            ],
+            "cite_key": "bell2018",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "Rechecking Recheck Requests in Continuous Integration",
+            "doi": "10.1109/ase63991.2025.00121",
+            "arxiv_id": "",
+            "year": 2025,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated."
+            ],
+            "cite_key": "brus2025",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "BuildFast",
+            "doi": "10.1145/3324884.3416616",
+            "arxiv_id": "",
+            "year": 2020,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "BUILDFAST: History-Aware Build Outcome Prediction for Fast Feedback and Reduced Cost in Continuous Integration",
+            "resolved_year": 2020,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "chen2020",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "Empirical Study of Restarted and Flaky Builds on Travis CI",
+            "doi": "10.1145/3379597.3387460",
+            "arxiv_id": "",
+            "year": 2020,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Empirical Study of Restarted and Flaky Builds on Travis CI",
+            "resolved_year": 2020,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "durieux2020",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "Understanding Flaky Tests",
+            "doi": "10.1145/3338906.3338945",
+            "arxiv_id": "",
+            "year": 2019,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated."
+            ],
+            "cite_key": "eck2019",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "Using Decision Trees to Predict the Certification Result of a Build",
+            "doi": "10.1109/ase.2006.72",
+            "arxiv_id": "",
+            "year": 2006,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Using Decision Trees to Predict the Certification Result of a Build",
+            "resolved_year": 2006,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "hassan2006",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "SmartBuildSkip",
+            "doi": "10.1145/3377811.3380437",
+            "arxiv_id": "",
+            "year": 2020,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated."
+            ],
+            "cite_key": "jin2020",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "Which builds are really safe to skip?",
+            "doi": "10.1016/j.jss.2022.111292",
+            "arxiv_id": "",
+            "year": 2022,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Which builds are really safe to skip? Maximizing failure observation for build selection in continuous integration",
+            "resolved_year": 2022,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "jin2022",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "iDFlakies",
+            "doi": "10.1109/icst.2019.00038",
+            "arxiv_id": "",
+            "year": 2019,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "iDFlakies: A Framework for Detecting and Partially Classifying Flaky Tests",
+            "resolved_year": 2019,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "lam2019",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "Cost of Flaky Tests in CI",
+            "doi": "10.1109/icst60714.2024.00037",
+            "arxiv_id": "",
+            "year": 2024,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated."
+            ],
+            "cite_key": "leinen2024",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "An empirical analysis of flaky tests",
+            "doi": "10.1145/2635868.2635920",
+            "arxiv_id": "",
+            "year": 2014,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "An empirical analysis of flaky tests",
+            "resolved_year": 2014,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "luo2014",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "Repeated Builds During Code Review",
+            "doi": "10.1109/ase56229.2023.00030",
+            "arxiv_id": "",
+            "year": 2023,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Repeated Builds During Code Review: An Empirical Study of the OpenStack Community",
+            "resolved_year": 2023,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "maipradit2023",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "A Survey of Flaky Tests",
+            "doi": "10.1145/3476105",
+            "arxiv_id": "",
+            "year": 2021,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated."
+            ],
+            "cite_key": "parry2021",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "RavenBuild",
+            "doi": "10.1145/3643771",
+            "arxiv_id": "",
+            "year": 2024,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "RavenBuild: Context, Relevance, and Dependency Aware Build Outcome Prediction",
+            "resolved_year": 2024,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "sun2024",
+            "source_kind": "thebibliography"
+          }
+        ],
+        "cache_path": "~/ai_scientist_evals/ASE-2025-004_predicting_recheck_success_in_continuous/reference_verify_cache.json",
+        "override_path": "~/ai_scientist_evals/ASE-2025-004_predicting_recheck_success_in_continuous/reference_verify_overrides.json",
+        "note": "fabrication_rate = fake / (verified + fake); lookup_failed (API errors) excluded. GitHub/docs/tool URLs are non_paper and excluded from the rate. To manually correct a false negative, edit reference_verify_overrides.json (key=normalized title / doi / cite_key; value=\"verified\" or a result dict), then re-run."
+      },
+      "coverage": {
+        "status": "ok",
+        "gold_source": "~/ai_scientist_inputs/ASE-2025-004_predicting_recheck_success_in_continuous/mineru_sections.json",
+        "gold_count": 48,
+        "gold_is_original_paper_references": true,
+        "gold_is_openalex_subset": false,
+        "agent_count": 14,
+        "intersection_size": 9,
+        "recall": 0.1875,
+        "precision": 0.6428571428571429,
+        "matched_gold_keys": [
+          "durieux2020empirical",
+          "eck2019understanding",
+          "hassan2006decision",
+          "jin2022which",
+          "luo2014empirical",
+          "maipradit2023repeated",
+          "mineru_ref_39",
+          "sun2024ravenbuild",
+          "vasilescu2015quality"
+        ],
+        "primary_metric": "recall",
+        "note": "Primary metric is recall against the original paper bibliography (titles from mineru_sections.json REFERENCES; related_work.json used only to enrich DOI/year or as fallback if mineru titles are empty). Denominator = |original paper references|. Precision is secondary (agent may cite valid extra papers)."
+      },
+      "recency": {
+        "status": "ok",
+        "dated_count": 14,
+        "unknown_year_count": 0,
+        "year_histogram": {
+          "2006": 1,
+          "2014": 1,
+          "2018": 1,
+          "2019": 2,
+          "2020": 3,
+          "2021": 1,
+          "2022": 1,
+          "2023": 1,
+          "2024": 2,
+          "2025": 1
+        },
+        "windows": {
+          "3": {
+            "years": 3,
+            "cutoff_year_inclusive": 2023,
+            "recent_count": 4,
+            "recent_ratio": 0.2857142857142857
+          },
+          "5": {
+            "years": 5,
+            "cutoff_year_inclusive": 2021,
+            "recent_count": 6,
+            "recent_ratio": 0.42857142857142855
+          }
+        }
+      },
+      "scores": {
+        "fabrication_rate": 0.0,
+        "coverage_recall": 0.1875,
+        "coverage_precision": 0.6428571428571429,
+        "recency_ratio_3y": 0.2857142857142857,
+        "recency_ratio_5y": 0.42857142857142855
+      }
+    }
+  },
+  "scores": {
+    "completeness": {
+      "complete": true,
+      "overall_score": 0.8453,
+      "required_score": 1.0,
+      "bonus_score": 0.09
+    },
+    "peer_review": {
+      "status": "ok",
+      "optional": false,
+      "overall_score": 5.0,
+      "score_scale": "1-10",
+      "scoring_method": "paperreview_apr"
+    },
+    "idea_generation": {
+      "status": "ok",
+      "overall_score": 2.0,
+      "dimensions": {
+        "novelty": 1.0,
+        "feasibility": 3.0,
+        "clarity": 4.0
+      },
+      "novelty_category": "Existing",
+      "solution_space_status": "ok"
+    },
+    "alignment": {
+      "status": "ok",
+      "direction_consistency": "mixed",
+      "overall_alignment_score": 0.55
+    },
+    "literature_review": {
+      "fabrication_rate": 0.0,
+      "coverage_recall": 0.1875,
+      "coverage_precision": 0.6428571428571429,
+      "recency_ratio_3y": 0.2857142857142857,
+      "recency_ratio_5y": 0.42857142857142855
+    },
+    "experiment_analysis": {
+      "experiment_success": true,
+      "idea_code_score": 3.0,
+      "setup_coverage": 1.0,
+      "ablation_coverage_score": null,
+      "overall_ablation_ok": null,
+      "overall_significance_ok": null,
+      "results_paper_score": 5.0,
+      "hiding_unfavorable_suspected": false
+    }
+  },
+  "fair_scores": {
+    "applicable_axes": [
+      "completeness",
+      "idea_generation",
+      "peer_review",
+      "alignment",
+      "literature_review",
+      "experiment_analysis"
+    ],
+    "skipped_axes": [],
+    "fair_mean_0_1": 0.6402,
+    "note": "fair_mean_0_1 averages only applicable axes; optional peer review and framework-inapplicable literature are excluded from the denominator."
+  },
+  "evals_root": "~/ai_scientist_evals",
+  "claims_cache": "~/ai_scientist_evals/ASE-2025-004_predicting_recheck_success_in_continuous/original_claims.json",
+  "solution_space_cache": "~/ai_scientist_evals/ASE-2025-004_predicting_recheck_success_in_continuous/solution_space.json"
+}

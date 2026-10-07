@@ -1,0 +1,162 @@
+{
+  "id": "FSE-2025-012",
+  "paper_id": "425d16205b28ce175c8429965a964d19b6f390c1",
+  "title": "Hallucination Detection in Large Language Models with Metamorphic Relations",
+  "abstract": "Large Language Models (LLMs) are prone to hallucinations, e.g., factually incorrect information, in their responses. These hallucinations present challenges for LLM-based applications that demand high factual accuracy. Existing hallucination detection methods primarily depend on external resources, which can suffer from issues such as low availability, incomplete coverage, privacy concerns, high latency, low reliability, and poor scalability. There are also methods depending on output probabilities, which are often inaccessible for closed-source LLMs like GPT models. This paper presents MetaQA, a self-contained hallucination detection approach that leverages metamorphic relation and prompt mutation. Unlike existing methods, MetaQA operates without any external resources and is compatible with both open-source and closed-source LLMs. MetaQA is based on the hypothesis that if an LLM’s response is a hallucination, the designed metamorphic relations will be violated. We compare MetaQA with the state-of-the-art zero-resource hallucination detection method, SelfCheckGPT, across multiple datasets, and on two open-source and two closed-source LLMs. Our results reveal that MetaQA outperforms SelfCheckGPT in terms of precision, recall, and f1 score. For the four LLMs we study, MetaQA outperforms SelfCheckGPT with a superiority margin ranging from 0.041 - 0.113 (for precision), 0.143 - 0.430 (for recall), and 0.154 - 0.368 (for F1-score). For instance, with Mistral-7B, MetaQA achieves an average F1-score of 0.435, compared to SelfCheckGPT’s F1-score of 0.205, representing an improvement rate of 112.2%. MetaQA also demonstrates superiority across all different categories of questions.",
+  "year": 2025,
+  "citation_count": 39,
+  "venue": "ACM International Conference on the Foundations of Software Engineering (FSE 2025)",
+  "venue_short": "FSE 2025",
+  "authors": [
+    "Borui Yang",
+    "Md Afif Al Mamun",
+    "Jie M. Zhang",
+    "Gias Uddin"
+  ],
+  "pdf_url": "",
+  "paper_url": "https://www.semanticscholar.org/paper/425d16205b28ce175c8429965a964d19b6f390c1",
+  "paper_type": "methodology",
+  "award": "ACM SIGSOFT Distinguished Paper Award",
+  "subfield_label": "AI/ML System Testing",
+  "introduction": "Large Language Models (LLMs) like GPT-4 [34] have revolutionized language processing by generating fluent and organized responses for various applications, such as drafting reports and summarization systems [23,33,52]. However, LLMs are prone to generating hallucinations-coherent but factually incorrect or irrelevant outputs, such as non-factual responses in question-answering context [16,45]. This tendency poses significant challenges to the reliability of LLMs, undermining the effectiveness of LLMs in applications requiring high factual accuracy. Fact-conflicting hallucinations, where LLMs produce content that contradicts established facts, are particularly concerning as they can mislead users lacking expertise on the topic, leading to significant confusion and eroding the trust essential for various LLM applications. Figure 1 illustrates a scenario where a legal question is posed to ChatGPT, which generates a response containing hallucinations. Without proper detection, such inaccuracies could have serious consequences for individuals who lack expertise in the legal field. Many approaches have been introduced to detect or mitigate hallucination of LLMs that compare responses to factual information, often relying on databases or search engines [5,6,[13][14][15]17]. However, relying on external resources for hallucination detection often limits the scope to specific domains where a comprehensive database does not exist. Moreover, hallucinations are observed across a wide range of tasks that extend beyond simple fact verification [22]. Other works use token-level information such as token confidence and entropy [42,47], which is often inaccessible in closed-source models. To tackle these issues, Manakul et al. proposed SelfcheckGPT [30], a self-contained approach to addressing hallucination. However, for the sample generation process in SelfCheckGPT, the LLM tends to produce samples that are identical to the original response, which significantly impacts its performance in hallucination detection.\n\nThis paper introduces MetaQA, a novel zero-resource technique that employs Metamorphic Relations (MRs) to detect hallucinations in LLM responses. MetaQA uses MRs to generate response mutations and verifies these mutations against expected outcomes to identify inconsistencies. Acting as a test oracle-similar to mechanisms in software testing, MetaQA ensures reliable factual accuracy checks of the LLM outputs without requiring additional agents. This method is advantageous as it relies solely on the LLM itself. MetaQA is applicable to both open-source and closed-source LLMs. MetaQA can be used without the need for intermediate processes or external tools.\n\nWe evaluate MetaQA using three datasets-TruthfulQA, HotpotQA, and FreshQA -the widely studied benchmarks in hallucination evaluation, across four LLMs: GPT-4, GPT-3.5, Llama3, and Mistral. Our results reveal that MetaQA consistently outperforms SelfCheckGPT in terms of precision, recall, and f1 score on all the four LLMs we study. In particular, for the four LLMs, MetaQA outperforms SelfCheckGPT with a superiority margin ranging from 0.154 to 0.368 in terms of F1-score. Our ablation studies also show that MetaQA has considerable stability across multiple runs, and has better performance with lower temperatures.\n\nOur major contributions include:\n\n(1) To the best of our knowledge, we are the first to apply synonym and antonym-based metamorphic relations to detect hallucination LLMs responses. (2) We improve the TruthfulQA [28] benchmark by updating 238 questions with new correct answers. We share the improved benchmark, which we name TruthfulQA-Enhanced. This new benchmark can support more accurate hallucination detection research. (3) We conduct a large-scale evaluation of MetaQA on TruthfulQA-Enhanced, FreshQA, and HotpotQA datasets, showing superior performance over the baseline method SelfCheckGPT.\n\nIf a private employer fires you for a Facebook post about vaccines, it may potentially violate your First Amendment right to free speech. .... Hallucination Score = 1.0",
+  "experiment": "The objective of this module is to enhance the detection of fact-conflicting hallucinations in LLM outputs by analyzing the metamorphic relations between the original and mutated responses.\n\nMetaQA calculates a hallucination score based on the verification of synonymous and antonymous mutations representing the likelihood of hallucination in the base LLM response. Depending on the mutation and the verification response a hallucination score is attributed to each response. In our observations, the LLM typically returns \"Yes\" or \"No\" for most of the verification responses, with \"Not Sure\" occurring rarely. Let 𝑅𝑆 𝑖 and 𝑅𝐴 𝑗 represent the verification responses for synonymous mutation 𝑆 𝑖 and antonymous mutation 𝐴 𝑗 , respectively. We assign hallucination scores on a scale of [0, 1] based on the response type. \"Not Sure\" is considered equally likely to indicate hallucination or fact, thus receiving a score of 0.5. The scores are mapped as follows:\n\nThe total hallucination score 𝑆 𝑄𝐵 for a question 𝑄 and base response B, is calculated as:\n\nwhere 𝑁 is the number of synonymous mutations and 𝑀 is the number of antonymous mutations. Hallucination Score 𝑆 𝑄𝐵 indicates the likelihood of hallucination in the original LLM responses. In Algorithm 1, we calculate the hallucination score from Line 10 to 12. Finally, to classify a response as a hallucination, we compare 𝑆 𝑄𝐵 with a predefined threshold 𝜃 . Specifically, a response is classified as a hallucination if 𝑆 𝑄𝐵 ≥ 𝜃 .\n\nIn our experiments, we use this criterion to determine whether a response is a hallucination. Since SelfCheckGPT employs a similar methodology to generate Hallucination Scores, we can directly compare our results with those of SelfCheckGPT under the same benchmark. 5.\n\nWe use SelfCheckGPT [30], the state-of-the-art (SOTA) hallucination detection approach that does not need external resources. As outlined in Section 2.1, by repeatedly querying an LLM to generate reference samples and by measuring their consistency with the original response, SelfCheckGPT calculates a hallucination score for user reference. As such, both MetaQA and SelfCheckGPT use a threshold based on Equation 5) to determine whether a response is hallucinated or not. We used the publicly available version of SelfCheckGPT [30], which by default calls the ChatGPT API without specifying an explicit temperature value. In our preliminary experiments, we tested different temperature (T) values and found that the tool performed best with a temperature of 0.5 (specific results with different temperatures are shown on our homepagefoot_3 ). Therefore, in our evaluation, by default, we use threshold 0.5 to compare MetaQA and SelfCheckGPT. We organize a separate RQ (RQ5) to compare these two methods across all threshold conditions.\n\nWe adopt three benchmark datasets: TruthfulQA [28], HotpotQA [46], and FreshQA [43]. Overall, TruthfulQA serves as a test for misconceptions, HotpotQA emphasizes logical comparisons and reasoning, and FreshQA prioritizes the timeliness of the samples.\n\nTruthfulQA. We use TruthfulQA [28] as our primary experimental dataset. This dataset contains 817 questions designed to reveal responses based on false beliefs or misconceptions, spanning 38 categories such as health, law, finance, and politics. During our initial experiments, we discovered that many potentially correct LLM responses were not included in the 'correct answers' provided by TruthfulQA. Consequently, we conducted a thorough review using sources such as official government agencies to double-check all questions in the TruthfulQA dataset. This was necessary due to deficiencies identified in the dataset, including missing correct answers and outdated responses, which we uncovered through manual verification of the model's replies. As a result, we updated 238 entries in the TruthfulQA dataset. These updates were crucial, as they provided more accurate answers to many questions over time. We refer to this revised dataset as 'TruthfulQA-Enhanced', a sample is shown in Table 2. [46] is also part of our experimental dataset. HotpotQA is a questionanswering dataset featuring natural, multi-hop questions with strong supervision for supporting facts, facilitating more interpretable question-answering systems. The dataset covers a wide range of real-world domains and comprises a total of 113K questions, making it an excellent supplement to TruthfulQA. Many questions in HotpotQA involve comparative reasoning across two or more items, providing a robust test for the reasoning capabilities of LLMs and allowing us to observe hallucinations in questions requiring logical reasoning. However, the large number of question instances in HotpotQA and the often overly simplistic reference answers can lead to increased token consumption by MetaQA for summary expansion and answer comparison. To address this issue, we randomly selected 610 questions from HotpotQA.\n\nFreshQA. We include FreshQA [43], which features questions requiring up-to-date world knowledge and those based on false premises. To ensure a fair comparison, we selected 155 questions from FreshQA dated before 2023, as LLMs may generate hallucinations when addressing newer questions due to potential gaps in training data. Overall, our experimental dataset encompasses 1582 questions across multiple datasets. Table 3 offers summary statistics of the final three datasets used in our study.\n\nTo ensure a reliable evaluation in our experiments, we assess several LLMs that have been evaluated in LiveBench [? ], a benchmark used to assess LLMs across various aspects, including math, reasoning, language, instruction following, and more. Our evaluation includes very large models from the GPT family as well as open-source models from the Llama and Mistral families. We divide the selected models into two types:\n\n• Closed-source models. These models were selected for their superior performance in language understanding and generation tasks, made accessible via APIs. Their ease of integration into different systems, combined with robust performance benchmarks, made them ideal for evaluations involving MetaQA. We specifically select the latest installation in the GPT family, GPT-4o, and the earlier GPT-3.5-turbo model for this category. • Open-source models. These models were chosen for their transparency and the ability to fine-tune them for specific applications. Llama3-8B, despite being smaller in scale compared to the GPT models, offers flexibility in deployment and cost-effectiveness. Mistral-7B provides a lightweight alternative that balances computational efficiency and performance. Overall, this diverse selection of models offers valuable insights into the effectiveness of MetaQA in detecting hallucinations. The temperature of all LLMs was set to 0.1 in all experiments to reduce randomness. Table 4 offers summary statistics of the studied LLMs. Our experiments are performed using an NVIDIA A100 40GB GPU for open-source LLMs. We use the official releases of these models from the HuggingFace repositories 3 . For experiments involving ChatGPT, we use the OpenAI chat completion APIfoot_5 .\n\nIn our experimental datasets, each question is accompanied by several \"reference correct answers. \" To determine whether an LLM's initial response is a hallucination, we need to validate the responses. While pure manual verification of each response ensures accuracy, it is resource-intensive and inefficient. Consequently, We first employ a specific algorithm to streamline the manual inspection process. The algorithm uses the LLM to decide whether manual inspection is necessary. This decision is based on comparing the original response with each reference correct answer, as detailed in Figure 5 below. For those who need manual checks, the first two authors participate individually (with a disagreement rate of only 0.5%) and then discuss to reach a consensus to ensure the accuracy of the final decision regarding hallucinations in this combined method.\n\n5 Experimental Results\n\nTable 5 shows the results of MetaQA and SelfCheckGPT across different datasets and LLMs with the default threshold 𝜃 = 0.5. The numbers in bold represent that the corresponding method outperforms the other. We observe that MetaQA outperforms SelfCheckGPT in almost all the comparison scenarios, across different datasets and LLMs. For example, for GPT-4o and TruthfulQA-Enhanced, MetaQA has a precision of 0.739, 0.459, and 0.567, while for SelfCheckGPT, the results are only 0.615, 0.216, and 0.320, respectively.\n\nOn average (among the three datasets), MetaQA considerably outperforms SelfCheckGPT in all performance metrics on all the LLMs. For instance, with Mistral-7B, MetaQA achieves an average F1-score of 0.435, compared to SelfCheckGPT's F1-score of 0.205, representing an improvement of 112.2%. Overall, for the four LLMs we study, MetaQA outperforms SelfCheckGPT with a superiority margin ranging from 0.041 to 0.113 in terms of precision, 0.143 to 0.430 in terms of recall, and 0.154 to 0.368 in terms of F1-score. Wilcoxon test. The results demonstrate statistically significant differences, with p-values of 0.0092, 0.00015, and 0.0000305 for Precision, Recall, and F1 Score, respectively.\n\nAnswer to RQ1: MetaQA consistently outperforms SelfCheckGPT in terms of precision, recall, and f1 score. In particular, for the four LLMs we study, MetaQA outperforms Self-CheckGPT with a superiority margin ranging from 0.041 to 0.113 in terms of precision, 0.143 to 0.430 in terms of recall, and 0.154 to 0.368 in terms of F1-score. We compare the hallucination detection effectiveness of MetaQA and SelfCheckGPT across the six most frequently occurring categories in the TruthfulQA classification. Since HotpotQA and FreshQA do not categorize their questions, we rely solely on TruthfulQA for more precise results. The x-axis of Figure 6 shows the six categories, including Misconceptions, Law, Indexical Error, Health, Sociology, and Confusion. The numbers in each bar show the ratio of hallucinations (light grey) and facts (dark grey) in the responses for each category for all 4 LLMs.\n\nFigure 6 shows the hallucination detection results of MetaQA (black) and SelfCheckGPT (dark grey). Overall, we observe that MetaQA outperforms SelfCheckGPT in all seven categories. MetaQA performs extremely well in Confusion and Law. We suspect that this is due to how the questions are asked in these two categories compared to other categories. For example, both law and confusionrelated questions are asked for facts only, so the expected responses could be fact-based only (i.e., less winding than other opinion-type responses). Given that MetaQA is designed to handle fact-conflicting hallucinations, such fact-inducing questions were better addressed in MetaQA approach for hallucination detection.\n\nAnswer to RQ2: MetaQA outperforms SelfCheckGPT in all six categories in the TruthfulQA dataset. MetaQA performs extremely well in Confusion and Law. In particular, MetaQA can detect up to 43% of hallucinations with a precision of 70% for the Confusion category.\n\nPrevious results demonstrate that MetaQA is an effective approach for detecting hallucinations in the question-answering process with LLMs. An additional consideration is the stability of MetaQA as a hallucination detection method. Given the randomness of hallucination generation in LLMs [35] and the reliance of MetaQA's workflow on the LLM itself, it is crucial to assess whether MetaQA is affected by these uncertainties. To address this concern, we repeated MetaQA runs 3 times on the same dataset using both the open-source model Llama3 and the closed-source model GPT-3.5. As shown in Figure 7, MetaQA exhibits robust stability at thresholds 𝜃 ≤ 0.7. However, its stability of precision decreases at thresholds 𝜃 > 0.7. This is because LLMs may generate incorrect mutants during the working steps of MetaQA, which could lead to a reduction in the hallucination score when the threshold is high.\n\nOf Temperature. Temperature plays a crucial role in the functioning of LLMs by influencing the randomness and creativity of the generated text [49]. In LLMs, temperature serves as a parameter that controls output diversity by manipulating the softmax function, which determines the probabilities of the next word in a sequence. When the temperature is low (e.g., close to zero), the generated text tends to be more focused and deterministic, leading to more confident predictions and less variation in the output. This characteristic can be beneficial when a conservative and predictable response is preferred. For MetaQA, accurate mutation generation and verification results are essential, making it imperative to investigate the impact of temperature on its performance. In our experiments, we assessed the stability of MetaQA across a set of temperature values, denoted as 𝑇 = {0.1, 0.3, 0.5, 0.7}, which were selected as the experimental parameters. We randomly sampled 10% of the total dataset for the temperature experiments conducted on GPT-3.5. As illustrated in Figure 8, this finding aligns with our anticipated results, demonstrating that MetaQA's performance decreases with increasing temperatures and performs better at lower temperatures.\n\nAnswer to RQ3: Multiple rounds of experiments indicate that MetaQA maintains considerable stability. Furthermore, MetaQA demonstrates higher performance and stability at lower temperatures compared to higher temperatures.\n\nAlthough increasing the number of synonym and antonym mutations can enhance the stability of mutation quality and is expected to improve MetaQA's performance, it also incurs higher computational costs. Therefore, we investigate the performance variations with different numbers of samples. As illustrated in Figure 9, where each line indicates MetaQA with a threshold 𝜃 = 0.5, 0.55, 0.6, where each line indicates MetaQA with a threshold 𝜃 = 0.5, 0.55, 0.6, which equal or close to our default threshold 0.5 it is evident that the performance of MetaQA increases as more mutations are used, with reduced fluctuations and overall performance showing diminishing gains as the number of samples grows. Answer to RQ4: The experimental results demonstrate that MetaQA's performance improves as the number of mutations increases. However, to balance performance and computational cost, the number of 10 mutations is considered an optimal choice, plus we will discuss computational token costs in section 6.\n\nTo Relations (MR) to generate diverse mutations and perform fact verification, thereby improving hallucination detection accuracy. Furthermore, this sample illustrates how the threshold operates in the experiments. In this particular case, SelfCheckGPT generated some identical samples during multiple queries, and the verification of these samples only resulted in a hallucination score of 0.2. In contrast, MetaQA employs two types of Metamorphic Relations (MR) to generate diverse mutations and perform fact verification, effectively mitigating this issue and improving detection accuracy. Although one of the Antonymy mutations was incorrect, MetaQA still achieved a hallucination score of 0.75 due to the verification of the diverse mutations it generated. The threshold will work in the following way in the experiment, at threshold 𝜃 = 0.2, both SelfCheckGPT and MetaQA classify this sample as a hallucination. at threshold 𝜃 = 0.5, only MetaQA detects a hallucination, while at threshold 𝜃 = 0.8, neither method detects it. Employing token-based models may incur substantial costs when processing large datasets or executing multiple iterations. Such expenses can restrict the feasibility of applying our method in resource-constrained environments. Based on Table 7, which compares the average token cost between MetaQA and SelfCheckGPT using GPT-3.5, several insights can be drawn. These results indicate that while both methods involve a substantial increase in token cost relative to the base, MetaQA is slightly more cost-efficient than SelfCheckGPT. This efficiency could be an important consideration for implementing these methods in practical applications, where managing cost is crucial.\n\nHallucinations in LLMs arise from the diverse and sometimes inconsistent human-created data on which they are trained, as well as the probabilistic nature of their text generation. Left unchecked, these hallucinations can lead to the spread of misinformation, mislead users, and undermine the credibility of AI-powered applications. This is particularly concerning in high-stakes domains such as healthcare, law, and finance, where inaccurate outputs can have serious real-world consequences.\n\nHallucination detection is similar to software testing and machine learning testing [51], where bug detection, though expected, is critical for improving system reliability and building user trust. Similarly, detecting hallucinations in LLMs helps establish trust boundaries, refine the model design, and ensure accuracy in applications in high-stakes fields [16,45]. While hallucinations, like bugs, cannot be fully eliminated, their detection and management allow us to mitigate risks and enhance the reliability of LLMs. Given their impact on trust and safety, hallucination detection deserves dedicated effort and innovation. We call on the community to contribute to advancing robust hallucination detection methods, improving mitigation strategies, to ensuring the responsible deployment of LLM systems.\n\n1. Baseball is not the least popular sport in Japan. The effectiveness of our approach is heavily dependent on the accuracy of the generated mutations. If these mutations do not accurately represent plausible variations of the original responses, subsequent hallucination detection may yield unreliable results. Furthermore, LLMs may introduce minor hallucinations during this process, with double negations in antonym mutation generation being a notable example [4,41]. Indeed, we sometimes encountered a double negative in the antonym mutation-generating process (an example is detailed in Fig 11). This could result in false positives or negatives, ultimately affecting the validity of our findings. Conversely, utilizing more accurate mutation generation methods could significantly enhance the performance metrics of MetaQA. 6.3.2 Generalizability of Results. The study assesses MetaQA using datasets (TruthfulQA, Hot-potQA, FreshQA) and LLMs (GPT-4, GPT-3.5, Llama3, Mistral). The effectiveness of MetaQA may vary with different datasets or LLMs not tested in this study. Although we aimed to include diverse models and datasets, the results may not fully generalize to other contexts.",
+  "section_quality": {
+    "has_abstract": true,
+    "has_introduction": true,
+    "has_experiment": true,
+    "intro_chars": 4086,
+    "experiment_chars": 18694
+  },
+  "introduction_source": "grobid_tei",
+  "experiment_source": "grobid_tei",
+  "background_source": "introduction",
+  "experiment_source_used": "experiment_section",
+  "task_title": "Zero-Resource Detection of Fact-Conflicting Hallucinations in LLM Outputs Without External Resources or Token Probabilities",
+  "background": "Large Language Models (LLMs) frequently produce fact-conflicting hallucinations—coherent but factually incorrect responses—that pose risks for applications requiring high factual accuracy. Existing detection methods often rely on external databases or search engines, which limits their use in domains without comprehensive knowledge bases. Other methods depend on token-level confidence metrics, which are inaccessible for closed-source models like GPT-4. SelfCheckGPT, a state-of-the-art zero-resource approach, generates multiple reference samples and checks consistency; however, it tends to produce samples identical to the original response, significantly reducing its effectiveness. This highlights a need for a more reliable self-contained hallucination detection technique that operates solely using the LLM itself, without external resources or internal probability information, and that can overcome the duplicate-sample limitation of current sample-based methods.",
+  "research_question": "How can a hallucination detection method for LLMs operate without external knowledge bases or token-level probabilities, and effectively overcome the issue of identical sample generation that hampers existing self-contained techniques?",
+  "experiment_setup": {
+    "datasets": [
+      {
+        "name": "TruthfulQA-Enhanced",
+        "source": "Available from the paper's artifact repository (updated benchmark with 238 corrected answers)",
+        "description": "An enhanced version of the TruthfulQA dataset containing 817 questions across 38 categories; 238 entries were manually updated with corrected answers to address missing or outdated reference answers.",
+        "access": "open"
+      },
+      {
+        "name": "HotpotQA (subset)",
+        "source": "https://hotpotqa.github.io/",
+        "description": "A multi-hop question-answering dataset; a random subset of 610 questions was used to manage token consumption, focusing on comparative reasoning questions.",
+        "access": "open"
+      },
+      {
+        "name": "FreshQA (subset)",
+        "source": "https://github.com/alexandrasouly/freshqa",
+        "description": "A QA dataset requiring up-to-date knowledge; 155 questions dated before 2023 were selected to avoid post-training knowledge gaps.",
+        "access": "open"
+      }
+    ],
+    "baselines": [
+      {
+        "name": "SelfCheckGPT",
+        "reference": "Potsawee Manakul et al., SelfCheckGPT: Zero-Resource Black-Box Hallucination Detection for Generative Large Language Models, EMNLP 2023. GitHub: https://github.com/potsawee/selfcheckgpt"
+      }
+    ],
+    "metrics": [
+      {
+        "name": "Precision",
+        "definition": "The proportion of responses flagged as hallucinations that are indeed factually incorrect."
+      },
+      {
+        "name": "Recall",
+        "definition": "The proportion of actual hallucinated responses that are correctly identified as such."
+      },
+      {
+        "name": "F1-score",
+        "definition": "The harmonic mean of precision and recall."
+      }
+    ],
+    "rqs": [
+      "RQ1: How does the detection performance compare to SelfCheckGPT in terms of precision, recall, and F1-score across different LLMs and datasets?",
+      "RQ2: What is the effect of the LLM's temperature setting on the effectiveness of hallucination detection?",
+      "RQ3: How consistent is the detection performance across multiple independent runs?"
+    ],
+    "target_subject": "Both closed-source and open-source large language models, specifically GPT-4o, GPT-3.5-turbo, Llama3-8B, and Mistral-7B.",
+    "constraints": "The detection method must not use any external databases, search engines, or fact-verification APIs. It must not rely on internal model probability outputs (e.g., token logits), as these may be inaccessible for closed-source models. The approach must be self-contained, leveraging only the LLM's own text generation capabilities."
+  },
+  "expected_artifacts": [
+    "idea",
+    "code",
+    "experiment_results",
+    "paper"
+  ],
+  "feasibility_notes": "TruthfulQA-Enhanced is publicly available via the paper's artifact repository; HotpotQA and FreshQA are also open. Running open-source models (Llama3-8B, Mistral-7B) requires an NVIDIA A100 40GB GPU, while closed-source models need OpenAI API access. The evaluation spans 1,582 questions across three datasets, with manual verification used to establish ground-truth labels—this step is resource-intensive but can be partially automated. Overall experiments are feasible but computationally demanding.",
+  "difficulty": "hard",
+  "seed_papers": [
+    {
+      "title": "SelfCheckGPT: Zero-Resource Black-Box Hallucination Detection for Generative Large Language Models",
+      "year": 2023,
+      "authors": [
+        "Potsawee Manakul",
+        "Adian Liusie",
+        "M. Gales"
+      ],
+      "doi": "10.48550/arXiv.2303.08896",
+      "arxiv_id": "2303.08896",
+      "pdf_url": "https://arxiv.org/pdf/2303.08896",
+      "citation_count": 1000
+    },
+    {
+      "title": "Unsupervised Real-Time Hallucination Detection based on the Internal States of Large Language Models",
+      "year": 2024,
+      "authors": [
+        "Weihang Su",
+        "Changyue Wang",
+        "Qingyao Ai"
+      ],
+      "doi": "10.48550/arXiv.2403.06448",
+      "arxiv_id": "2403.06448",
+      "pdf_url": "",
+      "citation_count": 101
+    },
+    {
+      "title": "Unified Hallucination Detection for Multimodal Large Language Models",
+      "year": 2024,
+      "authors": [
+        "Xiang Chen",
+        "Chenxi Wang",
+        "Yida Xue"
+      ],
+      "doi": "10.48550/arXiv.2402.03190",
+      "arxiv_id": "2402.03190",
+      "pdf_url": "",
+      "citation_count": 84
+    },
+    {
+      "title": "Drowzee: Metamorphic Testing for Fact-Conflicting Hallucination Detection in Large Language Models",
+      "year": 2024,
+      "authors": [
+        "Ningke Li",
+        "Yuekang Li",
+        "Yi Liu"
+      ],
+      "doi": "10.1145/3689776",
+      "arxiv_id": "2405.00648",
+      "pdf_url": "https://doi.org/10.1145/3689776",
+      "citation_count": 27
+    },
+    {
+      "title": "Attention-guided Self-reflection for Zero-shot Hallucination Detection in Large Language Models",
+      "year": 2025,
+      "authors": [
+        "Q. Liu",
+        "Xinlong Chen",
+        "Yue Ding"
+      ],
+      "doi": "10.48550/arXiv.2501.09997",
+      "arxiv_id": "2501.09997",
+      "pdf_url": "",
+      "citation_count": 16
+    }
+  ],
+  "paper_title": "Hallucination Detection in Large Language Models with Metamorphic Relations"
+}

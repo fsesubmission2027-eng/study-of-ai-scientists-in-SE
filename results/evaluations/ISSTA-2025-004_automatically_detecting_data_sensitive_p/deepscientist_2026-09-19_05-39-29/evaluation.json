@@ -1,0 +1,1489 @@
+{
+  "run_dir": "~/ai_scientist_inputs/ISSTA-2025-004_automatically_detecting_data_sensitive_p/workspace/deepscientist_2026-09-19_05-39-29",
+  "task_dir": "~/ai_scientist_inputs/ISSTA-2025-004_automatically_detecting_data_sensitive_p",
+  "framework": "deepscientist",
+  "fairness_audit": [
+    {
+      "axis": "completeness",
+      "was_unfair": "Required both paper.tex AND paper.pdf; any tool missing one failed equally.",
+      "fix": "Paper gate: PDF=1.0; TeX-only=0.5; ``complete`` requires PDF."
+    },
+    {
+      "axis": "completeness",
+      "was_unfair": "``results`` counted stub/seed JSON (dataset_candidate/metrics.json).",
+      "fix": "``results`` requires substantive numeric results via results_normalize."
+    },
+    {
+      "axis": "experiment_success",
+      "was_unfair": "Only metrics.json; ignored results.json / experiment_results.txt.",
+      "fix": "Framework-ordered result candidates + normalized loaders."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Penalized tools with no bib; airesearcher has no workspace references.",
+      "fix": "literature_applicable=false → status not_applicable; excluded from fair aggregate."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "related_work.json subset as gold made recall hard to interpret.",
+      "fix": "Coverage gold is original paper REFERENCES from mineru; related_work only enriches metadata/fallback."
+    },
+    {
+      "axis": "peer_review",
+      "was_unfair": "Missing Stanford report looked like evaluation failure.",
+      "fix": "status not_provided; optional axis, never counts as tool failure."
+    },
+    {
+      "axis": "paths/find_results",
+      "was_unfair": "Picked downloads/** and sandbox noise (e.g. airesearcher LLVM tree).",
+      "fix": "Exclude downloads/, seeds/, dataset_candidate/, sandbox junk paths."
+    },
+    {
+      "axis": "paths/framework_noise",
+      "was_unfair": "DeepScientist .deepscientist_npm / runtime / skills templates counted as code/paper/results.",
+      "fix": "FRAMEWORK_NOISE_DIRS+markers; quest worktree + eval_output results; paper md drafts; reject template tex."
+    },
+    {
+      "axis": "paths/paper_tex",
+      "was_unfair": "tiny_scientist / ACL runs store paper under latex/*.tex; evaluator only looked at paper/main.tex.",
+      "fix": "latex/**/*.tex with substantive-body heuristic; find_paper_document uses same rules."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Entire custom.bib (300+ anthology entries) verified when paper had zero \\cite commands.",
+      "fix": "collect_agent_references filters bib to in-text cite keys; skips uncited bulk bib (>40 entries)."
+    },
+    {
+      "axis": "paths/ai_scientist_summaries",
+      "was_unfair": "AI Scientist can persist substantive results and paper-like drafts in *_summary.json logs rather than paper/main.tex or results/**/*.json.",
+      "fix": "Treat draft_summary/research_summary as weak paper documents and summary JSONs as result candidates."
+    },
+    {
+      "axis": "framework/ai_scientist_v2",
+      "was_unfair": "Manifest framework ``ai_scientist_v2`` fell through to profile ``unknown``, skipping AI-Scientist idea/result path priorities.",
+      "fix": "Normalize ``ai_scientist_v2`` (and common aliases) to profile key ``ai_scientist``."
+    },
+    {
+      "axis": "idea_generation",
+      "was_unfair": "plan.md/todos.md weak proxies scored same as structured idea.json.",
+      "fix": "Framework idea_priority tried first; missing idea → not_applicable where appropriate."
+    }
+  ],
+  "generated_at": "2026-10-01T14:56:52",
+  "axes": [
+    "alignment",
+    "completeness",
+    "experiment_analysis",
+    "idea_generation",
+    "literature_review",
+    "peer_review"
+  ],
+  "results": {
+    "completeness": {
+      "framework": "deepscientist",
+      "run_dir": "~/ai_scientist_inputs/ISSTA-2025-004_automatically_detecting_data_sensitive_p/workspace/deepscientist_2026-09-19_05-39-29",
+      "task_dir": "~/ai_scientist_inputs/ISSTA-2025-004_automatically_detecting_data_sensitive_p",
+      "complete": true,
+      "required_score": 1.0,
+      "bonus_score": 0.02,
+      "overall_score": 0.8334,
+      "missing": [],
+      "required": {
+        "idea": {
+          "path": "DeepScientist/quests/001/artifacts/idea/selected_idea.md",
+          "bytes": 4140,
+          "via": "glob"
+        },
+        "code": {
+          "count": 33,
+          "files": [
+            {
+              "path": "DeepScientist/quests/001/.ds/worktrees/paper-run-dataprobe-main-1/experiments/main/dataprobe/__init__.py",
+              "bytes": 282,
+              "via": "glob"
+            },
+            {
+              "path": "DeepScientist/quests/001/.ds/worktrees/paper-run-dataprobe-main-1/experiments/main/dataprobe/confirmer.py",
+              "bytes": 2537,
+              "via": "glob"
+            },
+            {
+              "path": "DeepScientist/quests/001/.ds/worktrees/paper-run-dataprobe-main-1/experiments/main/dataprobe/data_generator.py",
+              "bytes": 3417,
+              "via": "glob"
+            },
+            {
+              "path": "DeepScientist/quests/001/.ds/worktrees/paper-run-dataprobe-main-1/experiments/main/dataprobe/db.py",
+              "bytes": 494,
+              "via": "glob"
+            },
+            {
+              "path": "DeepScientist/quests/001/.ds/worktrees/paper-run-dataprobe-main-1/experiments/main/dataprobe/detector.py",
+              "bytes": 3248,
+              "via": "glob"
+            },
+            {
+              "path": "DeepScientist/quests/001/.ds/worktrees/paper-run-dataprobe-main-1/experiments/main/dataprobe/hunt.py",
+              "bytes": 3360,
+              "via": "glob"
+            },
+            {
+              "path": "DeepScientist/quests/001/.ds/worktrees/paper-run-dataprobe-main-1/experiments/main/dataprobe/pilot.py",
+              "bytes": 5080,
+              "via": "glob"
+            },
+            {
+              "path": "DeepScientist/quests/001/.ds/worktrees/paper-run-dataprobe-main-1/experiments/main/dataprobe/plan_oracle.py",
+              "bytes": 3593,
+              "via": "glob"
+            },
+            {
+              "path": "DeepScientist/quests/001/.ds/worktrees/paper-run-dataprobe-main-1/experiments/main/dataprobe/query_generator.py",
+              "bytes": 3031,
+              "via": "glob"
+            },
+            {
+              "path": "DeepScientist/quests/001/.ds/worktrees/paper-run-dataprobe-main-1/experiments/main/dataprobe/runner.py",
+              "bytes": 4674,
+              "via": "glob"
+            },
+            {
+              "path": "DeepScientist/quests/001/.ds/worktrees/paper-run-dataprobe-main-1/experiments/main/dataprobe/schema_generator.py",
+              "bytes": 2413,
+              "via": "glob"
+            },
+            {
+              "path": "DeepScientist/quests/001/experiments/main/dataprobe/__init__.py",
+              "bytes": 282,
+              "via": "glob"
+            },
+            {
+              "path": "DeepScientist/quests/001/experiments/main/dataprobe/confirmer.py",
+              "bytes": 2537,
+              "via": "glob"
+            },
+            {
+              "path": "DeepScientist/quests/001/experiments/main/dataprobe/data_generator.py",
+              "bytes": 3417,
+              "via": "glob"
+            },
+            {
+              "path": "DeepScientist/quests/001/experiments/main/dataprobe/db.py",
+              "bytes": 494,
+              "via": "glob"
+            },
+            {
+              "path": "DeepScientist/quests/001/experiments/main/dataprobe/detector.py",
+              "bytes": 3248,
+              "via": "glob"
+            },
+            {
+              "path": "DeepScientist/quests/001/experiments/main/dataprobe/hunt.py",
+              "bytes": 3360,
+              "via": "glob"
+            },
+            {
+              "path": "DeepScientist/quests/001/experiments/main/dataprobe/pilot.py",
+              "bytes": 5080,
+              "via": "glob"
+            },
+            {
+              "path": "DeepScientist/quests/001/experiments/main/dataprobe/plan_oracle.py",
+              "bytes": 3593,
+              "via": "glob"
+            },
+            {
+              "path": "DeepScientist/quests/001/experiments/main/dataprobe/query_generator.py",
+              "bytes": 3031,
+              "via": "glob"
+            },
+            {
+              "path": "DeepScientist/quests/001/experiments/main/dataprobe/runner.py",
+              "bytes": 4674,
+              "via": "glob"
+            },
+            {
+              "path": "DeepScientist/quests/001/experiments/main/dataprobe/schema_generator.py",
+              "bytes": 2413,
+              "via": "glob"
+            },
+            {
+              "path": "project/dataprobe/__init__.py",
+              "bytes": 282,
+              "via": "glob"
+            },
+            {
+              "path": "project/dataprobe/confirmer.py",
+              "bytes": 2537,
+              "via": "glob"
+            },
+            {
+              "path": "project/dataprobe/data_generator.py",
+              "bytes": 3417,
+              "via": "glob"
+            },
+            {
+              "path": "project/dataprobe/db.py",
+              "bytes": 494,
+              "via": "glob"
+            },
+            {
+              "path": "project/dataprobe/detector.py",
+              "bytes": 3248,
+              "via": "glob"
+            },
+            {
+              "path": "project/dataprobe/hunt.py",
+              "bytes": 3360,
+              "via": "glob"
+            },
+            {
+              "path": "project/dataprobe/pilot.py",
+              "bytes": 5080,
+              "via": "glob"
+            },
+            {
+              "path": "project/dataprobe/plan_oracle.py",
+              "bytes": 3593,
+              "via": "glob"
+            }
+          ]
+        },
+        "results": {
+          "substantive": true,
+          "normalized_path": "results/metrics.json",
+          "numeric_leaf_count": 3,
+          "discovered_files": [
+            {
+              "path": "results/metrics.json",
+              "bytes": 773,
+              "via": "candidate"
+            },
+            {
+              "path": "DeepScientist/quests/001/.ds/worktrees/idea-idea-451f0d38/artifacts/reports/report-e279e690.json",
+              "bytes": 2615,
+              "via": "glob"
+            },
+            {
+              "path": "DeepScientist/quests/001/.ds/worktrees/paper-run-dataprobe-main-1/artifacts/reports/report-16224fd5.json",
+              "bytes": 5095,
+              "via": "glob"
+            },
+            {
+              "path": "DeepScientist/quests/001/.ds/worktrees/paper-run-dataprobe-main-1/artifacts/reports/report-489caed4.json",
+              "bytes": 4512,
+              "via": "glob"
+            },
+            {
+              "path": "DeepScientist/quests/001/.ds/worktrees/paper-run-dataprobe-main-1/artifacts/reports/report-ac99d3b5.json",
+              "bytes": 4625,
+              "via": "glob"
+            },
+            {
+              "path": "DeepScientist/quests/001/.ds/worktrees/paper-run-dataprobe-main-1/artifacts/reports/report-e4e895a0.json",
+              "bytes": 2841,
+              "via": "glob"
+            }
+          ],
+          "metrics_keys_sample": [
+            "number_of_confirmed_performance_anomalies",
+            "performance_degradation_ratio",
+            "crash_bug_count",
+            "_source",
+            "_forced_finalize",
+            "_raw_metric_keys",
+            "_notes"
+          ]
+        },
+        "paper": {
+          "tex": null,
+          "pdf": {
+            "path": "paper/main.pdf",
+            "bytes": 132171,
+            "via": "compiled_from_md"
+          },
+          "md": {
+            "path": "paper/manuscript.md",
+            "bytes": 18108,
+            "via": "candidate"
+          },
+          "json": null,
+          "status": "pdf",
+          "score": 1.0
+        }
+      },
+      "bonus": {
+        "experiment_plan": null,
+        "experiment_log": null,
+        "review": null,
+        "readme": {
+          "path": "README.md",
+          "bytes": 428,
+          "via": "candidate"
+        },
+        "narrative": null,
+        "bib": null
+      },
+      "manifest_status": {
+        "launched": true,
+        "forced_stopped": true,
+        "quest_status": "stopped"
+      },
+      "gate_scores": {
+        "idea": 1.0,
+        "code": 1.0,
+        "results": 1.0,
+        "paper": 1.0
+      },
+      "fairness": {
+        "gates": [
+          "idea",
+          "code",
+          "results",
+          "paper"
+        ],
+        "paper_gate_rule": "PDF=1.0; TeX-only/md_only/json_only=0.5; complete requires PDF",
+        "results_gate_rule": "substantive numeric results via framework-aware normalize_results",
+        "audit_ref": "framework_profile.FAIRNESS_AUDIT"
+      },
+      "notes": [
+        "Required: idea, code, substantive results, paper (PDF full; TeX/markdown/JSON draft half).",
+        "Stub/seed metrics (e.g. dataset_candidate/metrics.json) do not satisfy results.",
+        "Framework noise (.deepscientist_npm, skills/templates, runtime) is excluded from code/results/paper.",
+        "Manifest status is informational; disk presence is authoritative."
+      ]
+    },
+    "idea_generation": {
+      "run_dir": "~/ai_scientist_inputs/ISSTA-2025-004_automatically_detecting_data_sensitive_p/workspace/deepscientist_2026-09-19_05-39-29",
+      "task_dir": "~/ai_scientist_inputs/ISSTA-2025-004_automatically_detecting_data_sensitive_p",
+      "idea_path": "~/ai_scientist_inputs/ISSTA-2025-004_automatically_detecting_data_sensitive_p/workspace/deepscientist_2026-09-19_05-39-29/DeepScientist/quests/001/artifacts/idea/selected_idea.md",
+      "status": "ok",
+      "dimensions": {
+        "novelty": {
+          "score": null,
+          "justification": "",
+          "rubric": null,
+          "category": null,
+          "nearest_solution_space_ids": [],
+          "differentiation": ""
+        },
+        "feasibility": {
+          "score": null,
+          "justification": "",
+          "rubric": null
+        },
+        "clarity": {
+          "score": null,
+          "justification": "",
+          "rubric": null
+        }
+      },
+      "overall_score": null,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "novelty",
+        "feasibility",
+        "clarity"
+      ],
+      "solution_space": {
+        "status": "ok",
+        "paper_count": 45,
+        "entry_count": 45,
+        "cache_hit": true,
+        "source_file": "~/ai_scientist_inputs/ISSTA-2025-004_automatically_detecting_data_sensitive_p/mineru_sections.json",
+        "stats": {
+          "papers": 45,
+          "extracted": 45,
+          "usable_abstracts": 12,
+          "citation_meta_abstracts": 0,
+          "missing_abstracts": 33,
+          "mineru_titles": 37,
+          "related_work_titles": 22,
+          "abstracts_attached": 12,
+          "related_work_extras": 8,
+          "batches": 3
+        },
+        "error": null
+      },
+      "notes": [
+        "Scores the intermediate idea artifact (not the final paper).",
+        "Dimensions: novelty, feasibility, clarity (each 1-5). Excitement removed.",
+        "Novelty is scored against a Solution Space built from mineru REFERENCES titles (+ related_work.json abstracts when matched)."
+      ],
+      "idea_via": "glob",
+      "idea_relative": "DeepScientist/quests/001/artifacts/idea/selected_idea.md",
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "llm_meta": {
+        "model": "deepseek-v4-pro-0813",
+        "base_url": "https://api-sg.umodelverse.ai/v1",
+        "usage": {
+          "completion_tokens": 2500,
+          "completion_tokens_details": {
+            "reasoning_tokens": 2500
+          },
+          "prompt_tokens": 2800,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "total_tokens": 5300
+        },
+        "attempt": 0
+      }
+    },
+    "peer_review": {
+      "run_dir": "~/ai_scientist_inputs/ISSTA-2025-004_automatically_detecting_data_sensitive_p/workspace/deepscientist_2026-09-19_05-39-29",
+      "review_report": "~/ai_scientist_inputs/ISSTA-2025-004_automatically_detecting_data_sensitive_p/workspace/deepscientist_2026-09-19_05-39-29/artifacts/peer_review/stanford_apr.md",
+      "paper_pdf": "~/ai_scientist_inputs/ISSTA-2025-004_automatically_detecting_data_sensitive_p/workspace/deepscientist_2026-09-19_05-39-29/paper/main.pdf",
+      "paper_tex": null,
+      "status": "ok",
+      "dimensions": {},
+      "overall_score": 6.1,
+      "score_scale": "1-10",
+      "dimension_order": [],
+      "notes": [
+        "Scored from paperreview.ai (Stanford APR) native ratings; benchmark 5-dimension LLM rubric skipped.",
+        "Overall scale: 1-10."
+      ],
+      "paperreview": {
+        "status": "cached",
+        "hint": "Cached APR score found; no re-upload."
+      },
+      "scoring_method": "paperreview_apr",
+      "scoring_source": "paperreview_json",
+      "apr_dimensions": {},
+      "summary": "",
+      "red_flags": []
+    },
+    "alignment": {
+      "run_dir": "~/ai_scientist_inputs/ISSTA-2025-004_automatically_detecting_data_sensitive_p/workspace/deepscientist_2026-09-19_05-39-29",
+      "task_dir": "~/ai_scientist_inputs/ISSTA-2025-004_automatically_detecting_data_sensitive_p",
+      "status": "ok",
+      "original": {
+        "paper_title": "Hulk: Exploring Data-Sensitive Performance Anomalies in DBMSs via Data-Driven Analysis",
+        "selection": {
+          "num_blocks": 7,
+          "total_chars": 31998,
+          "inferred_roles": {
+            "abstract": 1,
+            "introduction": 1,
+            "experiment": 3,
+            "discussion": 1,
+            "conclusion": 1
+          },
+          "mineru_raw_keys": {
+            "field:abstract": 1,
+            "field:introduction": 1,
+            "field:experiment": 1,
+            "other": 2,
+            "discussion": 1,
+            "conclusion": 1
+          },
+          "infer_reasons": {
+            "top_level_field": 3,
+            "title": 4
+          },
+          "rescued_from_other": 2,
+          "note": "mineru key is unreliable; blocks are selected by title/body/inheritance. rescued_from_other counts sections labeled other but treated as typed roles."
+        },
+        "claims": [
+          {
+            "id": "C1",
+            "statement": "Hulk is a data-driven analysis approach that automatically explores data-sensitive DBMS performance anomalies by synthesizing data-sensitive queries and sampling response-time trends of the target DBMS and a comparable DBMS as data volume increases.",
+            "direction": "improves",
+            "metric_names": [
+              "reported_anomalies",
+              "confirmed_bugs"
+            ],
+            "evidence_quote": "we propose Hulk to automatically explore these data-sensitive performance anomalies via data-driven analysis.",
+            "confidence": 0.95
+          },
+          {
+            "id": "C2",
+            "statement": "Data-sensitive performance anomalies arise from implementation errors in CBO components and can cause dramatic response-time fluctuations with small changes in data volume.",
+            "direction": "degrades",
+            "metric_names": [
+              "mysql_response_time_increase_pct",
+              "percona_response_time_increase_pct"
+            ],
+            "evidence_quote": "Any implementation errors may cause performance to fluctuate abnormally when the dataset changes.",
+            "confidence": 0.9
+          },
+          {
+            "id": "C3",
+            "statement": "Hulk reported 135 anomalies on six widely used DBMSs, and 129 were confirmed by developers as new bugs.",
+            "direction": "neutral",
+            "metric_names": [
+              "reported_anomalies",
+              "confirmed_bugs"
+            ],
+            "evidence_quote": "Hulk totally reports 135 anomalies, with 129 have been confirmed as new bugs, including 14 CVEs.",
+            "confidence": 0.99
+          },
+          {
+            "id": "C4",
+            "statement": "Among the 129 confirmed bugs, 94 are data-sensitive performance anomalies and 35 are crash bugs; 14 were assigned CVE IDs.",
+            "direction": "neutral",
+            "metric_names": [
+              "data_sensitive_performance_anomalies",
+              "crash_bugs",
+              "cve_count"
+            ],
+            "evidence_quote": "94 anomalies are data-sensitive performance anomalies, and 35 anomalies cause the DBMS crash.",
+            "confidence": 0.99
+          },
+          {
+            "id": "C5",
+            "statement": "The detected data-sensitive performance anomalies span CBO components: 41 are CE-related, 13 are CM-related, and 40 are PE-related.",
+            "direction": "neutral",
+            "metric_names": [
+              "ce_related_anomalies",
+              "cm_related_anomalies",
+              "pe_related_anomalies"
+            ],
+            "evidence_quote": "We can see that 41, 13, and 40 performance anomalies are due to the implementation errors in CE, CM, PE, and others, respectively.",
+            "confidence": 0.9
+          },
+          {
+            "id": "C6",
+            "statement": "Detected data-sensitive performance anomalies cause serious slowdowns: 42 exhibit 1x-10x degradation, 30 exhibit 11x-20x, 13 exhibit 21x-30x, and 9 exhibit over 30x.",
+            "direction": "degrades",
+            "metric_names": [
+              "anomalies_1x_to_10x",
+              "anomalies_11x_to_20x",
+              "anomalies_21x_to_30x",
+              "anomalies_gt_30x"
+            ],
+            "evidence_quote": "42, 30, 13, and 9 anomalies exhibit speed decreases of 1x-10x, 11x-20x, 21x-30x, and over 30x, respectively.",
+            "confidence": 0.99
+          },
+          {
+            "id": "C7",
+            "statement": "Many Hulk-detected anomalies are realistic: 58 cases could be reproduced with queries containing fewer than 10 clauses, and 74 triggering queries contain no more than 20 clauses.",
+            "direction": "neutral",
+            "metric_names": [
+              "bugs_reproduced_under_10_clauses",
+              "queries_with_at_most_20_clauses"
+            ],
+            "evidence_quote": "58 cases could be reproduced using queries comprising fewer than 10 clauses and typical workloads after reducing the test cases.",
+            "confidence": 0.95
+          },
+          {
+            "id": "C8",
+            "statement": "A motivating MySQL anomaly shows that a 0.1% increase in data volume from inserting 10 rows caused response time to rise from 1.75s to 67.43s, a 3753% increase.",
+            "direction": "degrades",
+            "metric_names": [
+              "mysql_response_time_increase_pct"
+            ],
+            "evidence_quote": "With a 0.1% increase in the amount of data, the response time increases by 3753%.",
+            "confidence": 0.99
+          },
+          {
+            "id": "C9",
+            "statement": "A motivating Percona anomaly shows that inserting only 5 rows in two tables caused execution time to rise from 0.57s to 13.03s, a 2185% performance degradation.",
+            "direction": "degrades",
+            "metric_names": [
+              "percona_response_time_increase_pct"
+            ],
+            "evidence_quote": "It causes 2185% performance degradation.",
+            "confidence": 0.99
+          },
+          {
+            "id": "C10",
+            "statement": "Hulk found long-hidden bugs, with 21 detected bugs hidden for over 5 years and one imported 9 years ago.",
+            "direction": "neutral",
+            "metric_names": [
+              "bugs_hidden_over_5_years",
+              "oldest_bug_age_years"
+            ],
+            "evidence_quote": "Besides, 21 of the detected bugs have been hidden in the DBMSs for over 5 years.",
+            "confidence": 0.95
+          }
+        ],
+        "metrics": [
+          {
+            "name": "reported_anomalies",
+            "value": 135,
+            "unit": "count",
+            "higher_is_better": true,
+            "setting": "Hulk on six DBMSs: MySQL, MariaDB, Percona, TiDB, AntDB, PostgreSQL",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "Hulk totally reports 135 anomalies",
+            "confidence": 0.99
+          },
+          {
+            "name": "confirmed_bugs",
+            "value": 129,
+            "unit": "count",
+            "higher_is_better": true,
+            "setting": "Hulk on six DBMSs: MySQL, MariaDB, Percona, TiDB, AntDB, PostgreSQL",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "129 have been confirmed as new bugs",
+            "confidence": 0.99
+          },
+          {
+            "name": "data_sensitive_performance_anomalies",
+            "value": 94,
+            "unit": "count",
+            "higher_is_better": true,
+            "setting": "Hulk on six DBMSs",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "94 anomalies are data-sensitive performance anomalies",
+            "confidence": 0.99
+          },
+          {
+            "name": "crash_bugs",
+            "value": 35,
+            "unit": "count",
+            "higher_is_better": true,
+            "setting": "Hulk on six DBMSs",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "35 anomalies cause the DBMS crash",
+            "confidence": 0.99
+          },
+          {
+            "name": "cve_count",
+            "value": 14,
+            "unit": "count",
+            "higher_is_better": true,
+            "setting": "Hulk-discovered bugs assigned CVE IDs",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "including 14 CVEs",
+            "confidence": 0.95
+          },
+          {
+            "name": "fixed_performance_anomalies",
+            "value": 29,
+            "unit": "count",
+            "higher_is_better": true,
+            "setting": "Among 94 data-sensitive performance anomalies",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "Among them, 29 performance anomalies have been fixed",
+            "confidence": 0.99
+          },
+          {
+            "name": "fixed_crash_bugs",
+            "value": 23,
+            "unit": "count",
+            "higher_is_better": true,
+            "setting": "Among 35 crash bugs",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "23 of them have been fixed",
+            "confidence": 0.95
+          },
+          {
+            "name": "mysql_performance_anomalies",
+            "value": 26,
+            "unit": "count",
+            "higher_is_better": true,
+            "setting": "Hulk on MySQL",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "26 performance anomalies in MySQL",
+            "confidence": 0.9
+          }
+        ],
+        "overall_conclusion": null,
+        "comparable_notes": null,
+        "cache_hit": true
+      },
+      "agent": {
+        "status": "ok",
+        "run_dir": "~/ai_scientist_inputs/ISSTA-2025-004_automatically_detecting_data_sensitive_p/workspace/deepscientist_2026-09-19_05-39-29",
+        "claims": [
+          {
+            "id": "A1",
+            "statement": "DataProbe detects a forced 10,000x plan-cost degradation while keeping a 6.7% false-positive rate on control queries in a falsification study.",
+            "direction": "neutral",
+            "metric_names": [
+              "forced_plan_cost_degradation",
+              "false_positive_rate"
+            ],
+            "evidence_quote": "On a falsification study, DataProbe detects a 10,000× forced plan-cost degradation while keeping a 6.7% false-positive rate on control queries",
+            "confidence": 0.95
+          },
+          {
+            "id": "A2",
+            "statement": "Distribution mutation doubles the rate at which plan discontinuities are surfaced relative to volume-only mutation.",
+            "direction": "improves",
+            "metric_names": [
+              "plan_discontinuity_rate_volume_only",
+              "plan_discontinuity_rate_distribution"
+            ],
+            "evidence_quote": "distribution mutation doubles the rate at which plan discontinuities are surfaced (0.067 to 0.150 per trial)",
+            "confidence": 0.95
+          },
+          {
+            "id": "A3",
+            "statement": "DataProbe reports a self-verified data-sensitive anomaly on PostgreSQL where a small data change causes an 18.5x plan-cost regression while a 32x cheaper plan provably exists in the same engine.",
+            "direction": "neutral",
+            "metric_names": [
+              "performance_degradation_ratio",
+              "cheaper_plan_speedup_max"
+            ],
+            "evidence_quote": "We report a self-verified data-sensitive anomaly on PostgreSQL where a small data change causes an 18.5× plan-cost regression while a 32× cheaper plan provably exists in the same engine.",
+            "confidence": 0.95
+          }
+        ],
+        "metrics": [
+          {
+            "name": "forced_plan_cost_degradation",
+            "value": 10000.0,
+            "unit": "x",
+            "higher_is_better": false,
+            "setting": "falsification study with forced plan-cost degradation",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "DataProbe detects a 10,000× forced plan-cost degradation",
+            "confidence": 0.95
+          },
+          {
+            "name": "false_positive_rate",
+            "value": 6.7,
+            "unit": "%",
+            "higher_is_better": false,
+            "setting": "falsification study on control queries",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "keeping a 6.7% false-positive rate on control queries",
+            "confidence": 0.95
+          },
+          {
+            "name": "plan_discontinuity_rate_volume_only",
+            "value": 0.067,
+            "unit": "per trial",
+            "higher_is_better": true,
+            "setting": "ablation study over 120 random trials",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "distribution mutation doubles the rate at which plan discontinuities are surfaced (0.067 to 0.150 per trial)",
+            "confidence": 0.9
+          },
+          {
+            "name": "plan_discontinuity_rate_distribution",
+            "value": 0.15,
+            "unit": "per trial",
+            "higher_is_better": true,
+            "setting": "ablation study over 120 random trials with distribution mutation",
+            "is_sota_or_best": true,
+            "baseline_name": "volume-only mutation",
+            "baseline_value": 0.067,
+            "evidence_quote": "distribution mutation doubles the rate at which plan discontinuities are surfaced (0.067 to 0.150 per trial)",
+            "confidence": 0.9
+          },
+          {
+            "name": "performance_degradation_ratio",
+            "value": 18.5,
+            "unit": "x",
+            "higher_is_better": false,
+            "setting": "self-verified anomaly on PostgreSQL 18.6",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "a small data change causes an 18.5× plan-cost regression",
+            "confidence": 0.95
+          },
+          {
+            "name": "cheaper_plan_speedup_max",
+            "value": 32.0,
+            "unit": "x",
+            "higher_is_better": true,
+            "setting": "self-verified anomaly on PostgreSQL 18.6",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "while a 32× cheaper plan provably exists in the same engine",
+            "confidence": 0.9
+          },
+          {
+            "name": "number_of_confirmed_performance_anomalies",
+            "value": 1.0,
+            "unit": "count",
+            "higher_is_better": true,
+            "setting": "bounded hunt on PostgreSQL 18.6",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "a bounded hunt surfaces a self-verified anomaly",
+            "confidence": 0.9
+          },
+          {
+            "name": "crash_bug_count",
+            "value": 0.0,
+            "unit": "count",
+            "higher_is_better": false,
+            "setting": "bounded hunt on PostgreSQL 18.6",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "\"crash_bug_count\": 0",
+            "confidence": 0.8
+          }
+        ],
+        "overall_conclusion": "DataProbe uses a self-referential plan oracle and distribution-aware mutation to detect data-sensitive DBMS performance anomalies. In a falsification study it detects a 10,000x forced plan-cost degradation with 6.7% false-positive rate; distribution mutation doubles surfaced plan discontinuities (0.067 to 0.150 per trial); and a bounded hunt found one self-verified PostgreSQL anomaly with an 18.5x plan-cost regression while a 32x cheaper plan exists.",
+        "sources": {
+          "metrics_path": "results/metrics.json",
+          "paper_tex_path": "paper/manuscript.md"
+        },
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 5974,
+            "completion_tokens_details": {
+              "reasoning_tokens": 4517
+            },
+            "prompt_tokens": 2488,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 8462
+          },
+          "attempt": 0
+        }
+      },
+      "comparison": {
+        "status": "ok",
+        "claim_alignment": [
+          {
+            "original_claim_id": "C1",
+            "agent_claim_id": null,
+            "label": "incomparable",
+            "rationale": "C1 describes Hulk's specific data-driven query-synthesis and response-trend sampling method; DataProbe uses a different plan-oracle/distribution-mutation protocol, so the approaches are not directly comparable despite the shared anomaly-detection goal."
+          },
+          {
+            "original_claim_id": "C2",
+            "agent_claim_id": "A3",
+            "label": "partial",
+            "rationale": "A3 supports the same direction that small data changes can cause large DBMS plan-cost/response regressions, but it does not establish the original CBO implementation-error cause."
+          },
+          {
+            "original_claim_id": "C3",
+            "agent_claim_id": null,
+            "label": "incomparable",
+            "rationale": "C3 reports Hulk's aggregate results over six DBMSs; the agent reports one PostgreSQL anomaly in a reduced bounded hunt, so the counts are not comparable."
+          },
+          {
+            "original_claim_id": "C4",
+            "agent_claim_id": null,
+            "label": "incomparable",
+            "rationale": "C4 reports Hulk-specific breakdowns of confirmed bugs and CVEs; DataProbe reports a single anomaly and zero crash bugs in a different protocol, so no comparison is valid."
+          },
+          {
+            "original_claim_id": "C5",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "The agent run does not address the distribution of anomalies across CBO components CE, CM, and PE."
+          },
+          {
+            "original_claim_id": "C6",
+            "agent_claim_id": "A3",
+            "label": "partial",
+            "rationale": "A3 reports an 18.5x plan-cost regression, which falls in the 11x-20x slowdown bucket from C6, but the agent gives only one case rather than the full slowdown distribution."
+          },
+          {
+            "original_claim_id": "C7",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "The agent run does not report whether detected anomalies can be reproduced with queries containing fewer than 10 or 20 clauses."
+          },
+          {
+            "original_claim_id": "C8",
+            "agent_claim_id": "A3",
+            "label": "incomparable",
+            "rationale": "C8 is a specific MySQL motivating anomaly with a 3753% increase; A3 reports a PostgreSQL plan-cost regression of different magnitude and engine, so the cases are not directly comparable."
+          },
+          {
+            "original_claim_id": "C9",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "The agent run does not address the motivating Percona anomaly or its 2185% performance degradation."
+          },
+          {
+            "original_claim_id": "C10",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "The agent run does not report bug hidden duration or long-hidden bug counts."
+          }
+        ],
+        "metric_alignment": [
+          {
+            "original_metric": "reported_anomalies",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 135,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Hulk's six-DBMS reported anomaly count is not comparable to DataProbe's single bounded-hunt result."
+          },
+          {
+            "original_metric": "confirmed_bugs",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 129,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Developer-confirmed bug counts from Hulk across six DBMSs have no equivalent DataProbe metric."
+          },
+          {
+            "original_metric": "data_sensitive_performance_anomalies",
+            "agent_metric": "number_of_confirmed_performance_anomalies",
+            "comparable": false,
+            "original_value": 94,
+            "agent_value": 1.0,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Both count performance anomalies, but Hulk uses six DBMSs and developer confirmation while DataProbe reports one self-verified PostgreSQL anomaly."
+          },
+          {
+            "original_metric": "crash_bugs",
+            "agent_metric": "crash_bug_count",
+            "comparable": false,
+            "original_value": 35,
+            "agent_value": 0.0,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Crash counts come from different systems and protocols, so the values cannot be directly compared."
+          },
+          {
+            "original_metric": "cve_count",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 14,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "DataProbe does not report CVE assignments."
+          },
+          {
+            "original_metric": "fixed_performance_anomalies",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 29,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "DataProbe does not report developer-fixed performance anomaly counts."
+          },
+          {
+            "original_metric": "fixed_crash_bugs",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 23,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "DataProbe does not report fixed crash bug counts."
+          },
+          {
+            "original_metric": "mysql_performance_anomalies",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 26,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "DataProbe reports a PostgreSQL anomaly and has no MySQL performance anomaly count."
+          }
+        ],
+        "summary": {
+          "direction_consistency": "mixed",
+          "consistent_claim_ratio": 0.0,
+          "has_comparable_metrics": false,
+          "sota_improvement_summary": "N/A: no metrics were directly comparable between Hulk and DataProbe; DataProbe reports one self-verified PostgreSQL anomaly and a mutation ablation but does not compare against Hulk's full results.",
+          "overall_alignment_score": 0.4,
+          "score_rationale": "Broad direction on data-sensitive performance regressions is partially aligned through the 18.5x PostgreSQL regression, while Hulk-specific aggregate counts and case studies are mostly incomparable or unaddressed, with no direct conflicts."
+        },
+        "warnings": [
+          "Agent run describes a different system (DataProbe) with a reduced protocol rather than Hulk, so direct comparison of aggregate anomaly counts is not possible.",
+          "No metrics have comparable settings, so no deltas or SOTA improvement comparisons were computed.",
+          "Only broad direction on data-sensitive performance regressions is comparable; many original Hulk-specific claims are unaddressed."
+        ],
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 8999,
+            "completion_tokens_details": {
+              "reasoning_tokens": 7206
+            },
+            "prompt_tokens": 4567,
+            "prompt_tokens_details": {
+              "cached_tokens": 2048
+            },
+            "total_tokens": 13566
+          },
+          "attempt": 0
+        }
+      },
+      "overall_alignment_score": 0.4,
+      "direction_consistency": "mixed"
+    },
+    "experiment_analysis": {
+      "run_dir": "~/ai_scientist_inputs/ISSTA-2025-004_automatically_detecting_data_sensitive_p/workspace/deepscientist_2026-09-19_05-39-29",
+      "task_dir": "~/ai_scientist_inputs/ISSTA-2025-004_automatically_detecting_data_sensitive_p",
+      "status": "ok",
+      "metrics_path": "results/metrics.json",
+      "experiment_success": {
+        "status": "ok",
+        "success": true,
+        "metrics_path": "results/metrics.json",
+        "absolute_metrics_path": "~/ai_scientist_inputs/ISSTA-2025-004_automatically_detecting_data_sensitive_p/workspace/deepscientist_2026-09-19_05-39-29/results/metrics.json",
+        "checks": {
+          "has_results_file": true,
+          "non_stub": true,
+          "numeric_leaf_count": 3,
+          "min_numeric_ok": true
+        },
+        "manifest_hints": {
+          "status": {
+            "launched": true,
+            "forced_stopped": true,
+            "quest_status": "stopped"
+          },
+          "returncode": 130,
+          "benchmark_complete": false,
+          "artifacts_metrics_flag": false
+        },
+        "warnings": [
+          "manifest.returncode=130",
+          "manifest.benchmark_complete=false"
+        ],
+        "suspicious_values": [],
+        "note": "success=true requires substantive results (framework-aware path) with >=3 numeric leaves. Supports metrics.json, results.json, experiment_results.txt, etc. Manifest returncode/benchmark_complete are soft warnings only."
+      },
+      "idea_code_consistency": {
+        "status": "ok",
+        "idea_path": "DeepScientist/quests/001/artifacts/idea/selected_idea.md",
+        "code_files": [
+          "DeepScientist/quests/001/.ds/worktrees/paper-run-dataprobe-main-1/experiments/main/dataprobe/__init__.py",
+          "DeepScientist/quests/001/.ds/worktrees/paper-run-dataprobe-main-1/experiments/main/dataprobe/confirmer.py",
+          "DeepScientist/quests/001/.ds/worktrees/paper-run-dataprobe-main-1/experiments/main/dataprobe/data_generator.py",
+          "DeepScientist/quests/001/.ds/worktrees/paper-run-dataprobe-main-1/experiments/main/dataprobe/db.py"
+        ],
+        "score_scale": "1-5",
+        "score": 3.0,
+        "label": "partial",
+        "justification": "The code implements several core DataProbe components—distribution-aware data generation/mutation and independent single-DBMS confirmation—but the provided experiment code does not show the self-referential EXPLAIN ANALYZE plan-trend/discontinuity oracle, query synthesizer, comparison harness, or evaluation metrics that are central to the idea.",
+        "matched_elements": [
+          "Single-DBMS black-box PostgreSQL focus",
+          "Distribution mutation operators including skew, correlation, selectivity/domain, and null rate",
+          "Independent confirmation by showing the same DBMS can produce a cheaper plan",
+          "Use of EXPLAIN ANALYZE realized plan cost as the performance signal"
+        ],
+        "missing_or_divergent_elements": [
+          "Self-referential plan-cost trend/discontinuity detection loop is not visible in the provided code",
+          "Data-sensitive query synthesizer is absent from the provided files",
+          "HULK-style volume-only ablation and baseline comparison harness are missing",
+          "Validation protocol and metrics such as false-positive rate, num_confirmed_anomalies, and degradation_ratio are not implemented in the shown code"
+        ],
+        "rubric": "Partial alignment: main direction matches, but important components from the idea (baselines, metrics, protocol, subjects) are dropped or altered without clear mapping.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 656,
+            "completion_tokens_details": {
+              "reasoning_tokens": 401
+            },
+            "prompt_tokens": 3468,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 4124
+          },
+          "attempt": 0
+        }
+      },
+      "setup_coverage": {
+        "status": "ok",
+        "overall_coverage": 1.0,
+        "datasets": {
+          "gold_count": 1,
+          "hit_count": 1,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "Synthetic data‑sensitive workload"
+          ],
+          "misses": []
+        },
+        "baselines": {
+          "gold_count": 3,
+          "hit_count": 3,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "APOLLO",
+            "SQLancer CERT",
+            "Sqirrel"
+          ],
+          "misses": []
+        },
+        "metrics": {
+          "gold_count": 3,
+          "hit_count": 3,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "Number of confirmed performance anomalies",
+            "Performance degradation ratio",
+            "Crash bug count"
+          ],
+          "misses": []
+        },
+        "agent_protocol": {},
+        "gold_protocol": {},
+        "dataset_dirs": [
+          "dataset_candidate"
+        ],
+        "flags": {
+          "weaker_baseline_suspected": false,
+          "weak_protocol": [],
+          "synthetic_data": "synthetic_allowed_by_task",
+          "gold_allows_synthetic": true
+        },
+        "gold_sources": [
+          "~/ai_scientist_inputs/ISSTA-2025-004_automatically_detecting_data_sensitive_p/task.md",
+          "~/ai_scientist_inputs/ISSTA-2025-004_automatically_detecting_data_sensitive_p/metadata.json"
+        ],
+        "note": "Coverage is name/alias matching against task.md Datasets/Baselines/Metrics. weak_protocol flags large reductions in trials/timeout vs Constraints. Synthetic corpora are not penalized when the task itself requires synthesis."
+      },
+      "ablation_significance": {
+        "status": "ok",
+        "idea_path": "DeepScientist/quests/001/artifacts/idea/selected_idea.md",
+        "significance_signals_rule_based": {
+          "signals": [],
+          "artifact_paths": [],
+          "has_any_significance_artifact": false
+        },
+        "evidence_format": "raw_json",
+        "study_type": "new_method",
+        "components": [
+          {
+            "name": "...",
+            "role": "module",
+            "ablation_expected": true,
+            "significance_expected": true,
+            "ablation_status": "present",
+            "significance_status": "not_required",
+            "evidence": "..."
+          }
+        ],
+        "ablation_coverage_score": null,
+        "overall_ablation_ok": true,
+        "overall_significance_ok": true,
+        "summary": "",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 2500,
+            "completion_tokens_details": {
+              "reasoning_tokens": 2500
+            },
+            "prompt_tokens": 2738,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 5238
+          },
+          "attempt": 0
+        }
+      },
+      "results_paper_consistency": {
+        "status": "ok",
+        "paper_tex": "paper/manuscript.md",
+        "paper_kind": "paper_md",
+        "results_format": "raw_json",
+        "digest_hint": {
+          "unfavorable_count": 0,
+          "trial_fail_count": 0,
+          "trial_success_count": 0,
+          "metadata": {}
+        },
+        "score_scale": "1-5",
+        "method": "Direct LLM comparison: agent's FINAL results artifact (metrics.json summary) vs paper Results/Discussion/Conclusion. Interim failed runs are NOT evidence unless still present in the final metrics file.",
+        "score": 4.0,
+        "consistency_label": "mostly",
+        "hiding_unfavorable_suspected": false,
+        "hiding_confidence": 0.9,
+        "justification": "The final results confirm the paper's central claim of one PostgreSQL data-sensitive performance anomaly with an 18.5x plan-cost regression. Other quantitative claims (10,000x forced degradation detection, 6.7% FPR, distribution mutation doubling, 32x cheaper plan) are not fully represented by the provided final metrics; this is a reporting/coverage gap but no contradiction or hidden unfavorable results are evident.",
+        "supported_claims": [
+          "A self-verified data-sensitive anomaly was found on PostgreSQL.",
+          "The anomaly causes an 18.5x plan-cost regression.",
+          "No crash bugs were found (crash_bug_count=0)."
+        ],
+        "unsupported_or_overstated_claims": [
+          "Detection of a 10,000x forced plan-cost degradation (not present in final results JSON).",
+          "6.7% false-positive rate on control queries (pilot_fpr key present but no value in final JSON).",
+          "Distribution mutation doubles the rate of plan discontinuities relative to volume-only mutation (flag_rate_* keys present but no values in final JSON).",
+          "A 32x cheaper plan provably exists (cheaper_plan_speedup_max key present but no value in final JSON)."
+        ],
+        "numeric_mismatches": [
+          {
+            "paper": "18.5x plan-cost regression",
+            "results": "performance_degradation_ratio=18.5",
+            "note": "Matches exactly."
+          },
+          {
+            "paper": "10,000x forced plan-cost degradation",
+            "results": "not provided in final JSON",
+            "note": "Cannot verify from final metrics."
+          },
+          {
+            "paper": "6.7% false-positive rate",
+            "results": "not provided in final JSON",
+            "note": "pilot_fpr metric key exists but no numeric value."
+          },
+          {
+            "paper": "32x cheaper plan exists",
+            "results": "not provided in final JSON",
+            "note": "cheaper_plan_speedup_max metric key exists but no numeric value."
+          }
+        ],
+        "unfavorable_in_final_results": [],
+        "unfavorable_acknowledged_in_paper": [
+          "One PostgreSQL anomaly with 18.5x plan-cost regression is reported."
+        ],
+        "unfavorable_missing_from_paper": [],
+        "rubric": "Mostly consistent: reported conclusions track the metrics; negative/failed settings are acknowledged with only minor gaps.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 1413,
+            "completion_tokens_details": {
+              "reasoning_tokens": 883
+            },
+            "prompt_tokens": 2999,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 4412
+          },
+          "attempt": 0
+        }
+      },
+      "scores": {
+        "experiment_success": true,
+        "idea_code_score": 3.0,
+        "setup_coverage": 1.0,
+        "ablation_coverage_score": null,
+        "overall_ablation_ok": true,
+        "overall_significance_ok": true,
+        "results_paper_score": 4.0,
+        "hiding_unfavorable_suspected": false
+      },
+      "notes": [
+        "Axes 1,2,3,4,6 in experiment_analysis (figures excluded).",
+        "setup_coverage matches task.md Datasets/Baselines/Metrics; weak_protocol flags reductions vs Constraints.",
+        "Axis 6: final normalized results vs paper; interim run logs not used as ground truth."
+      ]
+    },
+    "literature_review": {
+      "run_dir": "~/ai_scientist_inputs/ISSTA-2025-004_automatically_detecting_data_sensitive_p/workspace/deepscientist_2026-09-19_05-39-29",
+      "task_dir": "~/ai_scientist_inputs/ISSTA-2025-004_automatically_detecting_data_sensitive_p",
+      "status": "ok",
+      "as_of_year": 2026,
+      "agent_ref_count": 2,
+      "sources": [
+        {
+          "path": "~/ai_scientist_inputs/ISSTA-2025-004_automatically_detecting_data_sensitive_p/workspace/deepscientist_2026-09-19_05-39-29/DeepScientist/quests/001/.ds/worktrees/paper-run-dataprobe-main-1/artifacts/idea/literature_survey.md",
+          "kind": "literature_survey"
+        },
+        {
+          "path": "~/ai_scientist_inputs/ISSTA-2025-004_automatically_detecting_data_sensitive_p/workspace/deepscientist_2026-09-19_05-39-29/DeepScientist/quests/001/artifacts/idea/literature_survey.md",
+          "kind": "literature_survey"
+        }
+      ],
+      "collection_audit": {
+        "cited_keys_count": 0,
+        "filter_mode": "non_bib_sources",
+        "bib_total_before_filter": 0,
+        "bib_after_filter": 0,
+        "uncited_bib_skipped": 0,
+        "agent_ref_count": 2
+      },
+      "fabrication": {
+        "status": "ok",
+        "scholarly_count": 2,
+        "verified_count": 2,
+        "fake_count": 0,
+        "lookup_failed_count": 0,
+        "insufficient_metadata_count": 0,
+        "non_paper_count": 0,
+        "fabrication_rate": 0.0,
+        "items": [
+          {
+            "title": "Hulk: Exploring Data-Sensitive Performance Anomalies in DBMSs via Data-Driven Analysis",
+            "doi": "10.1145/3728973",
+            "arxiv_id": "",
+            "year": 2025,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Hulk: Exploring Data-Sensitive Performance Anomalies in DBMSs via Data-Driven Analysis",
+            "resolved_year": 2025,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "",
+            "source_kind": "literature_survey"
+          },
+          {
+            "title": "Distribution-Aware Distributed Database Testing",
+            "doi": "",
+            "arxiv_id": "2609.18501",
+            "year": 2026,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Distribution-Aware Distributed Database Testing (Extended Version)",
+            "resolved_year": 2026,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "",
+            "source_kind": "literature_survey"
+          }
+        ],
+        "cache_path": "~/ai_scientist_evals/ISSTA-2025-004_automatically_detecting_data_sensitive_p/reference_verify_cache.json",
+        "override_path": "~/ai_scientist_evals/ISSTA-2025-004_automatically_detecting_data_sensitive_p/reference_verify_overrides.json",
+        "note": "fabrication_rate = fake / (verified + fake). lookup_failed (API errors) and insufficient_metadata are excluded and retried or skipped. GitHub/docs/tool URLs are non_paper and excluded from the rate. To manually correct a false negative, edit reference_verify_overrides.json (key=normalized title / doi / cite_key; value=\"verified\" or a result dict), then re-run."
+      },
+      "coverage": {
+        "status": "ok",
+        "gold_source": "~/ai_scientist_inputs/ISSTA-2025-004_automatically_detecting_data_sensitive_p/mineru_sections.json",
+        "gold_count": 37,
+        "gold_is_original_paper_references": true,
+        "gold_is_openalex_subset": false,
+        "agent_count": 2,
+        "intersection_size": 0,
+        "recall": 0.0,
+        "precision": 0.0,
+        "matched_gold_keys": [],
+        "primary_metric": "recall",
+        "note": "Primary metric is recall against the original paper bibliography (titles from mineru_sections.json REFERENCES; related_work.json used only to enrich DOI/year or as fallback if mineru titles are empty). Denominator = |original paper references|. Precision is secondary (agent may cite valid extra papers)."
+      },
+      "recency": {
+        "status": "ok",
+        "dated_count": 2,
+        "unknown_year_count": 0,
+        "year_histogram": {
+          "2025": 1,
+          "2026": 1
+        },
+        "windows": {
+          "3": {
+            "years": 3,
+            "cutoff_year_inclusive": 2023,
+            "recent_count": 2,
+            "recent_ratio": 1.0
+          },
+          "5": {
+            "years": 5,
+            "cutoff_year_inclusive": 2021,
+            "recent_count": 2,
+            "recent_ratio": 1.0
+          }
+        }
+      },
+      "scores": {
+        "fabrication_rate": 0.0,
+        "coverage_recall": 0.0,
+        "coverage_precision": 0.0,
+        "recency_ratio_3y": 1.0,
+        "recency_ratio_5y": 1.0
+      }
+    }
+  },
+  "scores": {
+    "completeness": {
+      "complete": true,
+      "overall_score": 0.8334,
+      "required_score": 1.0,
+      "bonus_score": 0.02
+    },
+    "peer_review": {
+      "status": "ok",
+      "optional": false,
+      "overall_score": 6.1,
+      "score_scale": "1-10",
+      "scoring_method": "paperreview_apr"
+    },
+    "idea_generation": {
+      "status": "ok",
+      "overall_score": null,
+      "dimensions": {
+        "novelty": null,
+        "feasibility": null,
+        "clarity": null
+      },
+      "novelty_category": null,
+      "solution_space_status": "ok"
+    },
+    "alignment": {
+      "status": "ok",
+      "direction_consistency": "mixed",
+      "overall_alignment_score": 0.4
+    },
+    "literature_review": {
+      "fabrication_rate": 0.0,
+      "coverage_recall": 0.0,
+      "coverage_precision": 0.0,
+      "recency_ratio_3y": 1.0,
+      "recency_ratio_5y": 1.0
+    },
+    "experiment_analysis": {
+      "experiment_success": true,
+      "idea_code_score": 3.0,
+      "setup_coverage": 1.0,
+      "ablation_coverage_score": null,
+      "overall_ablation_ok": true,
+      "overall_significance_ok": true,
+      "results_paper_score": 4.0,
+      "hiding_unfavorable_suspected": false
+    }
+  },
+  "fair_scores": {
+    "applicable_axes": [
+      "completeness",
+      "peer_review",
+      "alignment",
+      "literature_review",
+      "experiment_analysis"
+    ],
+    "skipped_axes": [],
+    "fair_mean_0_1": 0.7053,
+    "note": "fair_mean_0_1 averages only applicable axes; optional peer review and framework-inapplicable literature are excluded from the denominator."
+  },
+  "evals_root": "~/ai_scientist_evals",
+  "claims_cache": "~/ai_scientist_evals/ISSTA-2025-004_automatically_detecting_data_sensitive_p/original_claims.json",
+  "solution_space_cache": "~/ai_scientist_evals/ISSTA-2025-004_automatically_detecting_data_sensitive_p/solution_space.json"
+}

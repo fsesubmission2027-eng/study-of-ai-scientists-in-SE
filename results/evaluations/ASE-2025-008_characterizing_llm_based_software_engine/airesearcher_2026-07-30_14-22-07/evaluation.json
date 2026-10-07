@@ -1,0 +1,878 @@
+{
+  "generated_at": "2026-08-22T09:33:41",
+  "run_dir": "~/ai_scientist_inputs/ASE-2025-008_characterizing_llm_based_software_engine/workspace/airesearcher_2026-07-30_14-22-07",
+  "task_dir": "~/ai_scientist_inputs/ASE-2025-008_characterizing_llm_based_software_engine",
+  "framework": "airesearcher",
+  "fairness_audit": [
+    {
+      "axis": "completeness",
+      "was_unfair": "Required both paper.tex AND paper.pdf; any tool missing one failed equally.",
+      "fix": "Paper gate: PDF=1.0; TeX-only=0.5; ``complete`` requires PDF."
+    },
+    {
+      "axis": "completeness",
+      "was_unfair": "``results`` counted stub/seed JSON (dataset_candidate/metrics.json).",
+      "fix": "``results`` requires substantive numeric results via results_normalize."
+    },
+    {
+      "axis": "experiment_success",
+      "was_unfair": "Only metrics.json; ignored results.json / experiment_results.txt.",
+      "fix": "Framework-ordered result candidates + normalized loaders."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Penalized tools with no bib; airesearcher has no workspace references.",
+      "fix": "literature_applicable=false → status not_applicable; excluded from fair aggregate."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "related_work.json subset as gold made recall hard to interpret.",
+      "fix": "Coverage gold is original paper REFERENCES from mineru; related_work only enriches metadata/fallback."
+    },
+    {
+      "axis": "peer_review",
+      "was_unfair": "Missing Stanford report looked like evaluation failure.",
+      "fix": "status not_provided; optional axis, never counts as tool failure."
+    },
+    {
+      "axis": "paths/find_results",
+      "was_unfair": "Picked downloads/** and sandbox noise (e.g. airesearcher LLVM tree).",
+      "fix": "Exclude downloads/, seeds/, dataset_candidate/, sandbox junk paths."
+    },
+    {
+      "axis": "paths/framework_noise",
+      "was_unfair": "DeepScientist .deepscientist_npm / runtime / skills templates counted as code/paper/results.",
+      "fix": "FRAMEWORK_NOISE_DIRS+markers; quest worktree + eval_output results; paper md drafts; reject template tex."
+    },
+    {
+      "axis": "paths/paper_tex",
+      "was_unfair": "tiny_scientist / ACL runs store paper under latex/*.tex; evaluator only looked at paper/main.tex.",
+      "fix": "latex/**/*.tex with substantive-body heuristic; find_paper_document uses same rules."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Entire custom.bib (300+ anthology entries) verified when paper had zero \\cite commands.",
+      "fix": "collect_agent_references filters bib to in-text cite keys; skips uncited bulk bib (>40 entries)."
+    },
+    {
+      "axis": "paths/ai_scientist_summaries",
+      "was_unfair": "AI Scientist can persist substantive results and paper-like drafts in *_summary.json logs rather than paper/main.tex or results/**/*.json.",
+      "fix": "Treat draft_summary/research_summary as weak paper documents and summary JSONs as result candidates."
+    },
+    {
+      "axis": "idea_generation",
+      "was_unfair": "plan.md/todos.md weak proxies scored same as structured idea.json.",
+      "fix": "Framework idea_priority tried first; missing idea → not_applicable where appropriate."
+    }
+  ],
+  "axes": [
+    "alignment",
+    "completeness",
+    "experiment_analysis",
+    "idea_generation",
+    "literature_review",
+    "peer_review"
+  ],
+  "results": {
+    "completeness": {
+      "framework": "airesearcher",
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-008_characterizing_llm_based_software_engine/workspace/airesearcher_2026-07-30_14-22-07",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-008_characterizing_llm_based_software_engine",
+      "complete": false,
+      "required_score": 0.25,
+      "bonus_score": 0.05,
+      "overall_score": 0.2,
+      "missing": [
+        "idea",
+        "results",
+        "paper"
+      ],
+      "required": {
+        "idea": null,
+        "code": {
+          "count": 542,
+          "files": [
+            {
+              "path": ".airesearcher-benchmark/metaprompt.py",
+              "bytes": 9139,
+              "via": "glob"
+            },
+            {
+              "path": "project/AgentBoard/agentboard/agents/__init__.py",
+              "bytes": 299,
+              "via": "glob"
+            },
+            {
+              "path": "project/AgentBoard/agentboard/agents/base_agent.py",
+              "bytes": 387,
+              "via": "glob"
+            },
+            {
+              "path": "project/AgentBoard/agentboard/agents/custom_agent.py",
+              "bytes": 2413,
+              "via": "glob"
+            },
+            {
+              "path": "project/AgentBoard/agentboard/agents/react_agent.py",
+              "bytes": 10283,
+              "via": "glob"
+            },
+            {
+              "path": "project/AgentBoard/agentboard/agents/vanilla_agent.py",
+              "bytes": 8606,
+              "via": "glob"
+            },
+            {
+              "path": "project/AgentBoard/agentboard/common/registry.py",
+              "bytes": 6665,
+              "via": "glob"
+            },
+            {
+              "path": "project/AgentBoard/agentboard/environment/WebShop/run_dev.sh",
+              "bytes": 84,
+              "via": "glob"
+            },
+            {
+              "path": "project/AgentBoard/agentboard/environment/WebShop/run_web_agent_site_env.sh",
+              "bytes": 54,
+              "via": "glob"
+            },
+            {
+              "path": "project/AgentBoard/agentboard/environment/WebShop/run_web_agent_text_env.sh",
+              "bytes": 54,
+              "via": "glob"
+            },
+            {
+              "path": "project/AgentBoard/agentboard/environment/WebShop/search_engine/convert_product_file_format.py",
+              "bytes": 1322,
+              "via": "glob"
+            },
+            {
+              "path": "project/AgentBoard/agentboard/environment/WebShop/search_engine/lucene_searcher.py",
+              "bytes": 326,
+              "via": "glob"
+            },
+            {
+              "path": "project/AgentBoard/agentboard/environment/WebShop/search_engine/run_indexing.sh",
+              "bytes": 903,
+              "via": "glob"
+            },
+            {
+              "path": "project/AgentBoard/agentboard/environment/WebShop/setup.sh",
+              "bytes": 422,
+              "via": "glob"
+            },
+            {
+              "path": "project/AgentBoard/agentboard/environment/WebShop/web_agent_site/app.py",
+              "bytes": 11492,
+              "via": "glob"
+            },
+            {
+              "path": "project/AgentBoard/agentboard/environment/WebShop/web_agent_site/attributes/annotate.py",
+              "bytes": 1923,
+              "via": "glob"
+            },
+            {
+              "path": "project/AgentBoard/agentboard/environment/WebShop/web_agent_site/attributes/generate_attrs.py",
+              "bytes": 5151,
+              "via": "glob"
+            },
+            {
+              "path": "project/AgentBoard/agentboard/environment/WebShop/web_agent_site/engine/engine.py",
+              "bytes": 12783,
+              "via": "glob"
+            },
+            {
+              "path": "project/AgentBoard/agentboard/environment/WebShop/web_agent_site/engine/goal.py",
+              "bytes": 10897,
+              "via": "glob"
+            },
+            {
+              "path": "project/AgentBoard/agentboard/environment/WebShop/web_agent_site/engine/normalize.py",
+              "bytes": 3819,
+              "via": "glob"
+            },
+            {
+              "path": "project/AgentBoard/agentboard/environment/WebShop/web_agent_site/envs/__init__.py",
+              "bytes": 363,
+              "via": "glob"
+            },
+            {
+              "path": "project/AgentBoard/agentboard/environment/WebShop/web_agent_site/envs/web_agent_site_env.py",
+              "bytes": 7893,
+              "via": "glob"
+            },
+            {
+              "path": "project/AgentBoard/agentboard/environment/WebShop/web_agent_site/envs/web_agent_text_env.py",
+              "bytes": 31072,
+              "via": "glob"
+            },
+            {
+              "path": "project/AgentBoard/agentboard/environment/WebShop/web_agent_site/models/__init__.py",
+              "bytes": 80,
+              "via": "glob"
+            },
+            {
+              "path": "project/AgentBoard/agentboard/environment/WebShop/web_agent_site/models/models.py",
+              "bytes": 1295,
+              "via": "glob"
+            },
+            {
+              "path": "project/AgentBoard/agentboard/environment/WebShop/web_agent_site/utils.py",
+              "bytes": 2381,
+              "via": "glob"
+            },
+            {
+              "path": "project/AgentBoard/agentboard/environment/__init__.py",
+              "bytes": 1991,
+              "via": "glob"
+            },
+            {
+              "path": "project/AgentBoard/agentboard/environment/academia_env.py",
+              "bytes": 5809,
+              "via": "glob"
+            },
+            {
+              "path": "project/AgentBoard/agentboard/environment/alfworld/alfworld_env.py",
+              "bytes": 4883,
+              "via": "glob"
+            },
+            {
+              "path": "project/AgentBoard/agentboard/environment/babyai_env.py",
+              "bytes": 39626,
+              "via": "glob"
+            }
+          ]
+        },
+        "results": {
+          "substantive": false,
+          "normalized_path": null,
+          "numeric_leaf_count": 0,
+          "discovered_files": [],
+          "metrics_keys_sample": []
+        },
+        "paper": {
+          "tex": null,
+          "pdf": null,
+          "md": null,
+          "json": null,
+          "status": "missing",
+          "score": 0.0
+        }
+      },
+      "bonus": {
+        "experiment_plan": null,
+        "experiment_log": {
+          "path": "airesearcher_run.log",
+          "bytes": 1182845,
+          "via": "glob"
+        },
+        "review": null,
+        "readme": {
+          "path": "README_BENCHMARK.md",
+          "bytes": 885,
+          "via": "candidate"
+        },
+        "narrative": null,
+        "bib": null
+      },
+      "manifest_status": {
+        "pipeline": false,
+        "research_brief": true,
+        "instance": true,
+        "source_papers": true,
+        "metrics": false,
+        "project": true,
+        "paper": false
+      },
+      "gate_scores": {
+        "idea": 0.0,
+        "code": 1.0,
+        "results": 0.0,
+        "paper": 0.0
+      },
+      "fairness": {
+        "gates": [
+          "idea",
+          "code",
+          "results",
+          "paper"
+        ],
+        "paper_gate_rule": "PDF=1.0; TeX-only/md_only/json_only=0.5; complete requires PDF",
+        "results_gate_rule": "substantive numeric results via framework-aware normalize_results",
+        "audit_ref": "framework_profile.FAIRNESS_AUDIT"
+      },
+      "notes": [
+        "Required: idea, code, substantive results, paper (PDF full; TeX/markdown/JSON draft half).",
+        "Stub/seed metrics (e.g. dataset_candidate/metrics.json) do not satisfy results.",
+        "Framework noise (.deepscientist_npm, skills/templates, runtime) is excluded from code/results/paper.",
+        "Manifest status is informational; disk presence is authoritative."
+      ]
+    },
+    "idea_generation": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-008_characterizing_llm_based_software_engine/workspace/airesearcher_2026-07-30_14-22-07",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-008_characterizing_llm_based_software_engine",
+      "idea_path": null,
+      "status": "missing_idea",
+      "dimensions": {},
+      "overall_score": null,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "novelty",
+        "feasibility",
+        "clarity"
+      ],
+      "solution_space": null,
+      "notes": [
+        "Scores the intermediate idea artifact (not the final paper).",
+        "Dimensions: novelty, feasibility, clarity (each 1-5). Excitement removed.",
+        "Novelty is scored against a Solution Space built from mineru REFERENCES titles (+ related_work.json abstracts when matched)."
+      ],
+      "hint": "No idea artifact found under candidates like artifacts/idea.json, idea-stage/IDEA_REPORT.md, session/idea.json, tiny_idea.json, selected_idea.md."
+    },
+    "peer_review": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-008_characterizing_llm_based_software_engine/workspace/airesearcher_2026-07-30_14-22-07",
+      "review_report": null,
+      "paper_pdf": null,
+      "paper_tex": null,
+      "status": "not_provided",
+      "dimensions": {},
+      "overall_score": null,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "soundness",
+        "significance",
+        "novelty",
+        "presentation",
+        "credibility"
+      ],
+      "notes": [
+        "Stanford Agentic Reviewer (paperreview.ai): manual download to artifacts/peer_review/stanford_apr.md, or pass --auto-paperreview.",
+        "Dimensions: soundness, significance, novelty, presentation, credibility (each 1-5)."
+      ],
+      "paperreview": {
+        "status": "skipped",
+        "reason": "no_pdf"
+      },
+      "optional": true,
+      "hint": "Optional external review (Stanford APR). Upload paper/main.pdf to https://paperreview.ai/ , save review to ~/ai_scientist_inputs/ASE-2025-008_characterizing_llm_based_software_engine/workspace/airesearcher_2026-07-30_14-22-07/artifacts/peer_review/stanford_apr.md"
+    },
+    "alignment": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-008_characterizing_llm_based_software_engine/workspace/airesearcher_2026-07-30_14-22-07",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-008_characterizing_llm_based_software_engine",
+      "status": "missing_agent_paper_or_metrics",
+      "original": {
+        "status": "ok",
+        "task_dir": "~/ai_scientist_inputs/ASE-2025-008_characterizing_llm_based_software_engine",
+        "paper_title": "Understanding Software Engineering Agents: A Study of Thought-Action-Result Trajectories",
+        "task_id": "ASE-2025-008",
+        "selection": {
+          "num_blocks": 7,
+          "total_chars": 31998,
+          "inferred_roles": {
+            "abstract": 1,
+            "introduction": 1,
+            "experiment": 4,
+            "conclusion": 1
+          },
+          "mineru_raw_keys": {
+            "field:abstract": 1,
+            "field:introduction": 1,
+            "field:experiment": 1,
+            "other": 3,
+            "conclusion": 1
+          },
+          "infer_reasons": {
+            "top_level_field": 3,
+            "body_override": 1,
+            "inherited": 1,
+            "title": 2
+          },
+          "rescued_from_other": 3,
+          "note": "mineru key is unreliable; blocks are selected by title/body/inheritance. rescued_from_other counts sections labeled other but treated as typed roles."
+        },
+        "claims": [
+          {
+            "id": "C1",
+            "statement": "AutoCodeRover completes repair workflows in fewer steps than RepairAgent and OpenHands.",
+            "direction": "neutral",
+            "metric_names": [
+              "mean_trajectory_length_repairagent",
+              "mean_trajectory_length_openhands",
+              "mean_trajectory_length_autocoderover"
+            ],
+            "evidence_quote": "RepairAgent has a mean trajectory length of 34 iterations while OpenHands averages 29 iterations and AutoCodeRover completes workflows in fewer steps at 6 on average.",
+            "confidence": 0.95
+          },
+          {
+            "id": "C2",
+            "statement": "Unsuccessful RepairAgent trajectories are longer than successful ones.",
+            "direction": "neutral",
+            "metric_names": [
+              "mean_trajectory_length_repairagent_successful",
+              "mean_trajectory_length_repairagent_failed"
+            ],
+            "evidence_quote": "For RepairAgent, unsuccessful cases have longer trajectories (mean 40) than successful ones (mean 22).",
+            "confidence": 0.95
+          },
+          {
+            "id": "C3",
+            "statement": "OpenHands is considerably more token-intensive than AutoCodeRover and RepairAgent.",
+            "direction": "neutral",
+            "metric_names": [
+              "token_consumption_mean_openhands",
+              "token_consumption_mean_autocoderover",
+              "token_consumption_mean_repairagent",
+              "token_consumption_ratio_openhands_to_autocoderover"
+            ],
+            "evidence_quote": "OpenHands averages about 1.2M tokens (median 900K), about 52 times more than AutoCodeRover, whose mean is 23K and median is 14K. RepairAgent consumes a moderate mean of 220K tokens, median 180K.",
+            "confidence": 0.95
+          },
+          {
+            "id": "C4",
+            "statement": "The most frequent actions in the studied trajectories are Generate Fix, Run tests, Search, and Explore.",
+            "direction": "neutral",
+            "metric_names": [
+              "action_frequency_generate_fix",
+              "action_frequency_run_tests",
+              "action_frequency_search",
+              "action_frequency_explore"
+            ],
+            "evidence_quote": "Across all action categories, the most frequent actions are Generate Fix (23%), Run tests (19%), Search (15%), and Explore (14%).",
+            "confidence": 0.9
+          },
+          {
+            "id": "C5",
+            "statement": "Successful trajectories tend to balance exploration, explanation, fix generation, and testing, while unsuccessful trajectories contain repetitive, non-adaptive cycles.",
+            "direction": "improves",
+            "metric_names": [
+              "action_frequency_generate_fix",
+              "action_frequency_run_tests",
+              "action_frequency_search",
+              "action_frequency_explore"
+            ],
+            "evidence_quote": "Successful trajectories demonstrated a balance of generating fix, searching for relevant code, exploring files, explaining code, reasoning, dividing bug localization and fix generation, and testing.",
+            "confidence": 0.85
+          },
+          {
+            "id": "C6",
+            "statement": "RepairAgent and OpenHands exhibit more balanced or test-driven action sequences, while AutoCodeRover follows a structured search-locate-fix workflow and omits Reproduce and Test actions.",
+            "direction": "neutral",
+            "metric_names": [
+              "action_frequency_generate_fix",
+              "action_frequency_run_tests",
+              "action_frequency_search",
+              "action_frequency_explore"
+            ],
+            "evidence_quote": "RepairAgent maintains a balanced distribution. OpenHands is test-driven, while AutoCodeRover uses a structured search-locate-fix action sequence and omits Reproduce/Test steps.",
+            "confidence": 0.9
+          },
+          {
+            "id": "C7",
+            "statement": "Thought-action misalignment is rare but more common in failing trajectories, especially for AutoCodeRover.",
+            "direction": "degrades",
+            "metric_names": [
+              "thought_action_misalignment_rate_repairagent_overall",
+              "thought_action_misalignment_rate_openhands_successful",
+              "thought_action_misalignment_rate_openhands_failed",
+              "thought_action_misalignment_rate_autocoderover_successful",
+              "thought_action_misalignment_rate_autocoderover_failed"
+            ],
+            "evidence_quote": "OpenHands shows 0.5% misalignment in successful and 1.4% in failing trajectories, while AutoCodeRover shows 0% in success and 4.8% in failing trajectories. RepairAgent shows overall 1.5% misalignment.",
+            "confidence": 0.85
+          },
+          {
+            "id": "C8",
+            "statement": "The study analyzes 120 trajectories and 2,822 LLM interactions across RepairAgent, AutoCodeRover, and OpenHands.",
+            "direction": "neutral",
+            "metric_names": [
+              "dataset_trajectory_count",
+              "dataset_llm_interactions"
+            ],
+            "evidence_quote": "Dataset: 120 trajectories, 2,822 LLM interactions, three agents RepairAgent, AutoCodeRover, and OpenHands.",
+            "confidence": 0.98
+          }
+        ],
+        "metrics": [
+          {
+            "name": "mean_trajectory_length_repairagent",
+            "value": 34,
+            "unit": "iterations",
+            "higher_is_better": false,
+            "confidence": 0.95
+          },
+          {
+            "name": "mean_trajectory_length_openhands",
+            "value": 29,
+            "unit": "iterations",
+            "higher_is_better": false,
+            "confidence": 0.95
+          },
+          {
+            "name": "mean_trajectory_length_autocoderover",
+            "value": 6,
+            "unit": "iterations",
+            "higher_is_better": false,
+            "confidence": 0.95
+          },
+          {
+            "name": "mean_trajectory_length_repairagent_successful",
+            "value": 22,
+            "unit": "iterations",
+            "higher_is_better": false,
+            "confidence": 0.9
+          },
+          {
+            "name": "mean_trajectory_length_repairagent_failed",
+            "value": 40,
+            "unit": "iterations",
+            "higher_is_better": false,
+            "confidence": 0.9
+          },
+          {
+            "name": "token_consumption_mean_autocoderover",
+            "value": 23000,
+            "unit": "tokens",
+            "higher_is_better": false,
+            "confidence": 0.95
+          },
+          {
+            "name": "token_consumption_median_autocoderover",
+            "value": 14000,
+            "unit": "tokens",
+            "higher_is_better": false,
+            "confidence": 0.95
+          },
+          {
+            "name": "token_consumption_mean_openhands",
+            "value": 1200000,
+            "unit": "tokens",
+            "higher_is_better": false,
+            "confidence": 0.95
+          },
+          {
+            "name": "token_consumption_median_openhands",
+            "value": 900000,
+            "unit": "tokens",
+            "higher_is_better": false,
+            "confidence": 0.95
+          },
+          {
+            "name": "token_consumption_mean_repairagent",
+            "value": 220000,
+            "unit": "tokens",
+            "higher_is_better": false,
+            "confidence": 0.95
+          },
+          {
+            "name": "token_consumption_median_repairagent",
+            "value": 180000,
+            "unit": "tokens",
+            "higher_is_better": false,
+            "confidence": 0.95
+          },
+          {
+            "name": "token_consumption_ratio_openhands_to_autocoderover",
+            "value": 52,
+            "unit": "x",
+            "higher_is_better": false,
+            "confidence": 0.85
+          },
+          {
+            "name": "action_frequency_generate_fix",
+            "value": 23,
+            "unit": "%",
+            "higher_is_better": false,
+            "confidence": 0.9
+          },
+          {
+            "name": "action_frequency_run_tests",
+            "value": 19,
+            "unit": "%",
+            "higher_is_better": false,
+            "confidence": 0.9
+          },
+          {
+            "name": "action_frequency_search",
+            "value": 15,
+            "unit": "%",
+            "higher_is_better": false,
+            "confidence": 0.9
+          },
+          {
+            "name": "action_frequency_explore",
+            "value": 14,
+            "unit": "%",
+            "higher_is_better": false,
+            "confidence": 0.9
+          },
+          {
+            "name": "thought_action_misalignment_rate_repairagent_overall",
+            "value": 1.5,
+            "unit": "%",
+            "higher_is_better": false,
+            "confidence": 0.85
+          },
+          {
+            "name": "thought_action_misalignment_rate_openhands_successful",
+            "value": 0.5,
+            "unit": "%",
+            "higher_is_better": false,
+            "confidence": 0.85
+          },
+          {
+            "name": "thought_action_misalignment_rate_openhands_failed",
+            "value": 1.4,
+            "unit": "%",
+            "higher_is_better": false,
+            "confidence": 0.85
+          },
+          {
+            "name": "thought_action_misalignment_rate_autocoderover_successful",
+            "value": 0,
+            "unit": "%",
+            "higher_is_better": false,
+            "confidence": 0.85
+          },
+          {
+            "name": "thought_action_misalignment_rate_autocoderover_failed",
+            "value": 4.8,
+            "unit": "%",
+            "higher_is_better": false,
+            "confidence": 0.85
+          },
+          {
+            "name": "dataset_trajectory_count",
+            "value": 120,
+            "unit": "trajectories",
+            "higher_is_better": false,
+            "confidence": 0.98
+          },
+          {
+            "name": "dataset_llm_interactions",
+            "value": 2822,
+            "unit": "interactions",
+            "higher_is_better": false,
+            "confidence": 0.98
+          }
+        ],
+        "overall_conclusion": "...",
+        "comparable_notes": "...",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813-sg",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 2500,
+            "completion_tokens_details": {
+              "reasoning_tokens": 2500
+            },
+            "prompt_tokens": 2647,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 5147
+          },
+          "attempt": 2
+        },
+        "cache_hit": true
+      },
+      "agent": {
+        "status": "missing_agent_paper_or_metrics",
+        "run_dir": "~/ai_scientist_inputs/ASE-2025-008_characterizing_llm_based_software_engine/workspace/airesearcher_2026-07-30_14-22-07"
+      }
+    },
+    "experiment_analysis": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-008_characterizing_llm_based_software_engine/workspace/airesearcher_2026-07-30_14-22-07",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-008_characterizing_llm_based_software_engine",
+      "status": "ok",
+      "metrics_path": null,
+      "experiment_success": {
+        "status": "failed_or_incomplete",
+        "success": false,
+        "metrics_path": null,
+        "absolute_metrics_path": null,
+        "checks": {
+          "has_results_file": false,
+          "non_stub": false,
+          "numeric_leaf_count": 0,
+          "min_numeric_ok": false
+        },
+        "manifest_hints": {
+          "status": {
+            "pipeline": false,
+            "research_brief": true,
+            "instance": true,
+            "source_papers": true,
+            "metrics": false,
+            "project": true,
+            "paper": false
+          },
+          "returncode": 1,
+          "benchmark_complete": null,
+          "artifacts_metrics_flag": false
+        },
+        "warnings": [
+          "manifest.returncode=1"
+        ],
+        "suspicious_values": [],
+        "note": "success=true requires substantive results (framework-aware path) with >=3 numeric leaves. Supports metrics.json, results.json, experiment_results.txt, etc. Manifest returncode/benchmark_complete are soft warnings only."
+      },
+      "idea_code_consistency": {
+        "status": "missing_idea"
+      },
+      "setup_coverage": {
+        "status": "ok",
+        "overall_coverage": 1.0,
+        "datasets": {
+          "gold_count": 1,
+          "hit_count": 1,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "Agent Trajectory Dataset"
+          ],
+          "misses": []
+        },
+        "baselines": {
+          "gold_count": 0,
+          "hit_count": 0,
+          "miss_count": 0,
+          "coverage": null,
+          "hits": [],
+          "misses": []
+        },
+        "metrics": {
+          "gold_count": 5,
+          "hit_count": 5,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "Iteration count",
+            "Token consumption (input and output)",
+            "Action category distribution",
+            "Frequent action sequences",
+            "Thought-action-result coherence"
+          ],
+          "misses": []
+        },
+        "agent_protocol": {},
+        "gold_protocol": {},
+        "dataset_dirs": [
+          "dataset_candidate"
+        ],
+        "flags": {
+          "weaker_baseline_suspected": false,
+          "weak_protocol": [],
+          "synthetic_data": "synthetic_allowed_by_task",
+          "gold_allows_synthetic": true
+        },
+        "gold_sources": [
+          "~/ai_scientist_inputs/ASE-2025-008_characterizing_llm_based_software_engine/task.md",
+          "~/ai_scientist_inputs/ASE-2025-008_characterizing_llm_based_software_engine/metadata.json"
+        ],
+        "note": "Coverage is name/alias matching against task.md Datasets/Baselines/Metrics. weak_protocol flags large reductions in trials/timeout vs Constraints. Synthetic corpora are not penalized when the task itself requires synthesis."
+      },
+      "ablation_significance": {
+        "status": "missing_idea"
+      },
+      "results_paper_consistency": {
+        "status": "missing_metrics"
+      },
+      "scores": {
+        "experiment_success": false,
+        "idea_code_score": null,
+        "setup_coverage": 1.0,
+        "ablation_coverage_score": null,
+        "overall_ablation_ok": null,
+        "overall_significance_ok": null,
+        "results_paper_score": null,
+        "hiding_unfavorable_suspected": null
+      },
+      "notes": [
+        "Axes 1,2,3,4,6 in experiment_analysis (figures excluded).",
+        "setup_coverage matches task.md Datasets/Baselines/Metrics; weak_protocol flags reductions vs Constraints.",
+        "Axis 6: final normalized results vs paper; interim run logs not used as ground truth."
+      ]
+    },
+    "literature_review": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-008_characterizing_llm_based_software_engine/workspace/airesearcher_2026-07-30_14-22-07",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-008_characterizing_llm_based_software_engine",
+      "status": "not_applicable",
+      "framework": "airesearcher",
+      "reason": "Framework does not produce workspace reference artifacts for fair comparison.",
+      "scores": null
+    }
+  },
+  "scores": {
+    "completeness": {
+      "complete": false,
+      "overall_score": 0.2,
+      "required_score": 0.25,
+      "bonus_score": 0.05
+    },
+    "peer_review": {
+      "status": "not_provided",
+      "optional": true,
+      "overall_score": null,
+      "score_scale": "1-5",
+      "scoring_method": null
+    },
+    "idea_generation": {
+      "status": "missing_idea",
+      "overall_score": null,
+      "dimensions": {
+        "novelty": null,
+        "feasibility": null,
+        "clarity": null
+      },
+      "novelty_category": null,
+      "solution_space_status": null
+    },
+    "alignment": {
+      "status": "missing_agent_paper_or_metrics",
+      "direction_consistency": null,
+      "overall_alignment_score": null
+    },
+    "literature_review": {
+      "fabrication_rate": null,
+      "coverage_recall": null,
+      "recency_ratio_3y": null,
+      "recency_ratio_5y": null
+    },
+    "experiment_analysis": {
+      "experiment_success": false,
+      "idea_code_score": null,
+      "setup_coverage": 1.0,
+      "ablation_coverage_score": null,
+      "overall_ablation_ok": null,
+      "overall_significance_ok": null,
+      "results_paper_score": null,
+      "hiding_unfavorable_suspected": null
+    }
+  },
+  "fair_scores": {
+    "applicable_axes": [
+      "completeness",
+      "experiment_analysis"
+    ],
+    "skipped_axes": [
+      {
+        "axis": "idea_generation",
+        "reason": "missing_idea"
+      },
+      {
+        "axis": "peer_review",
+        "reason": "optional_external_review"
+      },
+      {
+        "axis": "literature_review",
+        "reason": "not_applicable"
+      }
+    ],
+    "fair_mean_0_1": 0.375,
+    "note": "fair_mean_0_1 averages only applicable axes; optional peer review and framework-inapplicable literature are excluded from the denominator."
+  },
+  "evals_root": "~/ai_scientist_evals",
+  "claims_cache": "~/ai_scientist_evals/ASE-2025-008_characterizing_llm_based_software_engine/original_claims.json",
+  "solution_space_cache": "~/ai_scientist_evals/ASE-2025-008_characterizing_llm_based_software_engine/solution_space.json"
+}

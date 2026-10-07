@@ -1,0 +1,262 @@
+{
+  "status": "ok",
+  "task_dir": "~/ai_scientist_inputs/ISSTA-2025-004_automatically_detecting_data_sensitive_p",
+  "paper_title": "Hulk: Exploring Data-Sensitive Performance Anomalies in DBMSs via Data-Driven Analysis",
+  "task_id": "ISSTA-2025-004",
+  "selection": {
+    "num_blocks": 7,
+    "total_chars": 31998,
+    "inferred_roles": {
+      "abstract": 1,
+      "introduction": 1,
+      "experiment": 3,
+      "discussion": 1,
+      "conclusion": 1
+    },
+    "mineru_raw_keys": {
+      "field:abstract": 1,
+      "field:introduction": 1,
+      "field:experiment": 1,
+      "other": 2,
+      "discussion": 1,
+      "conclusion": 1
+    },
+    "infer_reasons": {
+      "top_level_field": 3,
+      "title": 4
+    },
+    "rescued_from_other": 2,
+    "note": "mineru key is unreliable; blocks are selected by title/body/inheritance. rescued_from_other counts sections labeled other but treated as typed roles."
+  },
+  "claims": [
+    {
+      "id": "C1",
+      "statement": "Hulk is a data-driven analysis approach that automatically explores data-sensitive DBMS performance anomalies by synthesizing data-sensitive queries and sampling response-time trends of the target DBMS and a comparable DBMS as data volume increases.",
+      "direction": "improves",
+      "metric_names": [
+        "reported_anomalies",
+        "confirmed_bugs"
+      ],
+      "evidence_quote": "we propose Hulk to automatically explore these data-sensitive performance anomalies via data-driven analysis.",
+      "confidence": 0.95
+    },
+    {
+      "id": "C2",
+      "statement": "Data-sensitive performance anomalies arise from implementation errors in CBO components and can cause dramatic response-time fluctuations with small changes in data volume.",
+      "direction": "degrades",
+      "metric_names": [
+        "mysql_response_time_increase_pct",
+        "percona_response_time_increase_pct"
+      ],
+      "evidence_quote": "Any implementation errors may cause performance to fluctuate abnormally when the dataset changes.",
+      "confidence": 0.9
+    },
+    {
+      "id": "C3",
+      "statement": "Hulk reported 135 anomalies on six widely used DBMSs, and 129 were confirmed by developers as new bugs.",
+      "direction": "neutral",
+      "metric_names": [
+        "reported_anomalies",
+        "confirmed_bugs"
+      ],
+      "evidence_quote": "Hulk totally reports 135 anomalies, with 129 have been confirmed as new bugs, including 14 CVEs.",
+      "confidence": 0.99
+    },
+    {
+      "id": "C4",
+      "statement": "Among the 129 confirmed bugs, 94 are data-sensitive performance anomalies and 35 are crash bugs; 14 were assigned CVE IDs.",
+      "direction": "neutral",
+      "metric_names": [
+        "data_sensitive_performance_anomalies",
+        "crash_bugs",
+        "cve_count"
+      ],
+      "evidence_quote": "94 anomalies are data-sensitive performance anomalies, and 35 anomalies cause the DBMS crash.",
+      "confidence": 0.99
+    },
+    {
+      "id": "C5",
+      "statement": "The detected data-sensitive performance anomalies span CBO components: 41 are CE-related, 13 are CM-related, and 40 are PE-related.",
+      "direction": "neutral",
+      "metric_names": [
+        "ce_related_anomalies",
+        "cm_related_anomalies",
+        "pe_related_anomalies"
+      ],
+      "evidence_quote": "We can see that 41, 13, and 40 performance anomalies are due to the implementation errors in CE, CM, PE, and others, respectively.",
+      "confidence": 0.9
+    },
+    {
+      "id": "C6",
+      "statement": "Detected data-sensitive performance anomalies cause serious slowdowns: 42 exhibit 1x-10x degradation, 30 exhibit 11x-20x, 13 exhibit 21x-30x, and 9 exhibit over 30x.",
+      "direction": "degrades",
+      "metric_names": [
+        "anomalies_1x_to_10x",
+        "anomalies_11x_to_20x",
+        "anomalies_21x_to_30x",
+        "anomalies_gt_30x"
+      ],
+      "evidence_quote": "42, 30, 13, and 9 anomalies exhibit speed decreases of 1x-10x, 11x-20x, 21x-30x, and over 30x, respectively.",
+      "confidence": 0.99
+    },
+    {
+      "id": "C7",
+      "statement": "Many Hulk-detected anomalies are realistic: 58 cases could be reproduced with queries containing fewer than 10 clauses, and 74 triggering queries contain no more than 20 clauses.",
+      "direction": "neutral",
+      "metric_names": [
+        "bugs_reproduced_under_10_clauses",
+        "queries_with_at_most_20_clauses"
+      ],
+      "evidence_quote": "58 cases could be reproduced using queries comprising fewer than 10 clauses and typical workloads after reducing the test cases.",
+      "confidence": 0.95
+    },
+    {
+      "id": "C8",
+      "statement": "A motivating MySQL anomaly shows that a 0.1% increase in data volume from inserting 10 rows caused response time to rise from 1.75s to 67.43s, a 3753% increase.",
+      "direction": "degrades",
+      "metric_names": [
+        "mysql_response_time_increase_pct"
+      ],
+      "evidence_quote": "With a 0.1% increase in the amount of data, the response time increases by 3753%.",
+      "confidence": 0.99
+    },
+    {
+      "id": "C9",
+      "statement": "A motivating Percona anomaly shows that inserting only 5 rows in two tables caused execution time to rise from 0.57s to 13.03s, a 2185% performance degradation.",
+      "direction": "degrades",
+      "metric_names": [
+        "percona_response_time_increase_pct"
+      ],
+      "evidence_quote": "It causes 2185% performance degradation.",
+      "confidence": 0.99
+    },
+    {
+      "id": "C10",
+      "statement": "Hulk found long-hidden bugs, with 21 detected bugs hidden for over 5 years and one imported 9 years ago.",
+      "direction": "neutral",
+      "metric_names": [
+        "bugs_hidden_over_5_years",
+        "oldest_bug_age_years"
+      ],
+      "evidence_quote": "Besides, 21 of the detected bugs have been hidden in the DBMSs for over 5 years.",
+      "confidence": 0.95
+    }
+  ],
+  "metrics": [
+    {
+      "name": "reported_anomalies",
+      "value": 135,
+      "unit": "count",
+      "higher_is_better": true,
+      "setting": "Hulk on six DBMSs: MySQL, MariaDB, Percona, TiDB, AntDB, PostgreSQL",
+      "is_sota_or_best": false,
+      "baseline_name": null,
+      "baseline_value": null,
+      "evidence_quote": "Hulk totally reports 135 anomalies",
+      "confidence": 0.99
+    },
+    {
+      "name": "confirmed_bugs",
+      "value": 129,
+      "unit": "count",
+      "higher_is_better": true,
+      "setting": "Hulk on six DBMSs: MySQL, MariaDB, Percona, TiDB, AntDB, PostgreSQL",
+      "is_sota_or_best": false,
+      "baseline_name": null,
+      "baseline_value": null,
+      "evidence_quote": "129 have been confirmed as new bugs",
+      "confidence": 0.99
+    },
+    {
+      "name": "data_sensitive_performance_anomalies",
+      "value": 94,
+      "unit": "count",
+      "higher_is_better": true,
+      "setting": "Hulk on six DBMSs",
+      "is_sota_or_best": false,
+      "baseline_name": null,
+      "baseline_value": null,
+      "evidence_quote": "94 anomalies are data-sensitive performance anomalies",
+      "confidence": 0.99
+    },
+    {
+      "name": "crash_bugs",
+      "value": 35,
+      "unit": "count",
+      "higher_is_better": true,
+      "setting": "Hulk on six DBMSs",
+      "is_sota_or_best": false,
+      "baseline_name": null,
+      "baseline_value": null,
+      "evidence_quote": "35 anomalies cause the DBMS crash",
+      "confidence": 0.99
+    },
+    {
+      "name": "cve_count",
+      "value": 14,
+      "unit": "count",
+      "higher_is_better": true,
+      "setting": "Hulk-discovered bugs assigned CVE IDs",
+      "is_sota_or_best": false,
+      "baseline_name": null,
+      "baseline_value": null,
+      "evidence_quote": "including 14 CVEs",
+      "confidence": 0.95
+    },
+    {
+      "name": "fixed_performance_anomalies",
+      "value": 29,
+      "unit": "count",
+      "higher_is_better": true,
+      "setting": "Among 94 data-sensitive performance anomalies",
+      "is_sota_or_best": false,
+      "baseline_name": null,
+      "baseline_value": null,
+      "evidence_quote": "Among them, 29 performance anomalies have been fixed",
+      "confidence": 0.99
+    },
+    {
+      "name": "fixed_crash_bugs",
+      "value": 23,
+      "unit": "count",
+      "higher_is_better": true,
+      "setting": "Among 35 crash bugs",
+      "is_sota_or_best": false,
+      "baseline_name": null,
+      "baseline_value": null,
+      "evidence_quote": "23 of them have been fixed",
+      "confidence": 0.95
+    },
+    {
+      "name": "mysql_performance_anomalies",
+      "value": 26,
+      "unit": "count",
+      "higher_is_better": true,
+      "setting": "Hulk on MySQL",
+      "is_sota_or_best": false,
+      "baseline_name": null,
+      "baseline_value": null,
+      "evidence_quote": "26 performance anomalies in MySQL",
+      "confidence": 0.9
+    }
+  ],
+  "overall_conclusion": null,
+  "comparable_notes": null,
+  "llm_meta": {
+    "model": "deepseek-v4-pro-0813",
+    "base_url": "https://api-sg.umodelverse.ai/v1",
+    "usage": {
+      "completion_tokens": 2108,
+      "completion_tokens_details": {
+        "reasoning_tokens": 0
+      },
+      "prompt_tokens": 2219,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "total_tokens": 4327
+    },
+    "attempt": 2
+  },
+  "cache_hit": false
+}

@@ -1,0 +1,37 @@
+{
+  "forbid_synthetic_pilot": true,
+  "agent_data_note": "Use mounted EnergyDebug AE artifact at `dataset_candidate/energydebug-icse2025/`. Prefer `data/` (energy/logs/tracing for Redis, PostgreSQL, memcpy) and `energydebug.ipynb` for analysis. Shared mount is read-only — copy under `project/` before editing notebooks or writing derived tables.",
+  "required_metrics": [
+    "total_energy_joules",
+    "average_power_watts",
+    "execution_time_seconds",
+    "energy_delta_percent",
+    "power_delta_percent"
+  ],
+  "benchmark_rules": [
+    "Read `dataset_candidate/dataset_paths.json` and `dataset_candidate/energydebug-icse2025/`; use env `ENERGYDEBUG_HOME` / `ENERGYDEBUG_DATA_HOME` / `ENERGYDEBUG_NOTEBOOK`.",
+    "Primary reproduction path is analysis of pre-collected energy + uftrace data via methods in `energydebug.ipynb` (log alignment, hotspot localization, memcpy isolation).",
+    "Subjects in the artifact: Redis, PostgreSQL, and memcpy microbenchmarks across Alpine/musl vs Ubuntu/glibc style configurations.",
+    "Primary metrics: total energy (J), average power (W), wall time (s), and relative deltas between base images / libc implementations.",
+    "Shared mount is read-only. Copy notebooks/scripts under `project/` before modification; write results under `project/` or `results/`.",
+    "New EnergiBridge collection needs bare-metal AMD/Intel MSR privileges and is usually unavailable in sandbox — disclose when reusing mounted traces instead of re-measuring.",
+    "Do not invent synthetic energy traces when the EnergyDebug artifact is mounted."
+  ],
+  "non_goals": [
+    "Reporting only image size differences without energy/power metrics",
+    "Claiming a new root cause without aligning traces to energy timelines (or an equivalent localization step)",
+    "Ignoring the Alpine/musl vs Ubuntu/glibc Redis comparison that anchors the paper"
+  ],
+  "dataset_env": {
+    "ENERGYDEBUG_HOME": "dataset_candidate/energydebug-icse2025",
+    "ENERGYDEBUG_DATA_HOME": "dataset_candidate/energydebug-icse2025/data",
+    "ENERGYDEBUG_NOTEBOOK": "dataset_candidate/energydebug-icse2025/energydebug.ipynb",
+    "ENERGYDEBUG_DOCKER_HOME": "dataset_candidate/energydebug-icse2025/docker"
+  },
+  "exclude_from_agent": [
+    "container_setup.sh",
+    "README.md",
+    "benchmark_config.json",
+    "requirements.txt"
+  ]
+}

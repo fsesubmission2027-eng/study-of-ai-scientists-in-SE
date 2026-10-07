@@ -1,0 +1,676 @@
+{
+  "generated_at": "2026-09-02T12:08:46",
+  "run_dir": "~/ai_scientist_inputs/FSE-2025-007_efficient_search_based_floating_point_co/workspace/aris_2026-08-22_13-25-38",
+  "task_dir": "~/ai_scientist_inputs/FSE-2025-007_efficient_search_based_floating_point_co",
+  "framework": "aris",
+  "fairness_audit": [
+    {
+      "axis": "completeness",
+      "was_unfair": "Required both paper.tex AND paper.pdf; any tool missing one failed equally.",
+      "fix": "Paper gate: PDF=1.0; TeX-only=0.5; ``complete`` requires PDF."
+    },
+    {
+      "axis": "completeness",
+      "was_unfair": "``results`` counted stub/seed JSON (dataset_candidate/metrics.json).",
+      "fix": "``results`` requires substantive numeric results via results_normalize."
+    },
+    {
+      "axis": "experiment_success",
+      "was_unfair": "Only metrics.json; ignored results.json / experiment_results.txt.",
+      "fix": "Framework-ordered result candidates + normalized loaders."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Penalized tools with no bib; airesearcher has no workspace references.",
+      "fix": "literature_applicable=false → status not_applicable; excluded from fair aggregate."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "related_work.json subset as gold made recall hard to interpret.",
+      "fix": "Coverage gold is original paper REFERENCES from mineru; related_work only enriches metadata/fallback."
+    },
+    {
+      "axis": "peer_review",
+      "was_unfair": "Missing Stanford report looked like evaluation failure.",
+      "fix": "status not_provided; optional axis, never counts as tool failure."
+    },
+    {
+      "axis": "paths/find_results",
+      "was_unfair": "Picked downloads/** and sandbox noise (e.g. airesearcher LLVM tree).",
+      "fix": "Exclude downloads/, seeds/, dataset_candidate/, sandbox junk paths."
+    },
+    {
+      "axis": "paths/framework_noise",
+      "was_unfair": "DeepScientist .deepscientist_npm / runtime / skills templates counted as code/paper/results.",
+      "fix": "FRAMEWORK_NOISE_DIRS+markers; quest worktree + eval_output results; paper md drafts; reject template tex."
+    },
+    {
+      "axis": "paths/paper_tex",
+      "was_unfair": "tiny_scientist / ACL runs store paper under latex/*.tex; evaluator only looked at paper/main.tex.",
+      "fix": "latex/**/*.tex with substantive-body heuristic; find_paper_document uses same rules."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Entire custom.bib (300+ anthology entries) verified when paper had zero \\cite commands.",
+      "fix": "collect_agent_references filters bib to in-text cite keys; skips uncited bulk bib (>40 entries)."
+    },
+    {
+      "axis": "paths/ai_scientist_summaries",
+      "was_unfair": "AI Scientist can persist substantive results and paper-like drafts in *_summary.json logs rather than paper/main.tex or results/**/*.json.",
+      "fix": "Treat draft_summary/research_summary as weak paper documents and summary JSONs as result candidates."
+    },
+    {
+      "axis": "framework/ai_scientist_v2",
+      "was_unfair": "Manifest framework ``ai_scientist_v2`` fell through to profile ``unknown``, skipping AI-Scientist idea/result path priorities.",
+      "fix": "Normalize ``ai_scientist_v2`` (and common aliases) to profile key ``ai_scientist``."
+    },
+    {
+      "axis": "idea_generation",
+      "was_unfair": "plan.md/todos.md weak proxies scored same as structured idea.json.",
+      "fix": "Framework idea_priority tried first; missing idea → not_applicable where appropriate."
+    }
+  ],
+  "axes": [
+    "alignment",
+    "completeness",
+    "experiment_analysis",
+    "idea_generation",
+    "literature_review",
+    "peer_review"
+  ],
+  "results": {
+    "completeness": {
+      "framework": "aris",
+      "run_dir": "~/ai_scientist_inputs/FSE-2025-007_efficient_search_based_floating_point_co/workspace/aris_2026-08-22_13-25-38",
+      "task_dir": "~/ai_scientist_inputs/FSE-2025-007_efficient_search_based_floating_point_co",
+      "complete": false,
+      "required_score": 0.25,
+      "bonus_score": 0.09,
+      "overall_score": 0.2,
+      "missing": [
+        "code",
+        "results",
+        "paper"
+      ],
+      "required": {
+        "idea": {
+          "path": "idea-stage/IDEA_REPORT.md",
+          "bytes": 9050,
+          "via": "candidate"
+        },
+        "code": {
+          "count": 0,
+          "files": []
+        },
+        "results": {
+          "substantive": false,
+          "normalized_path": null,
+          "numeric_leaf_count": 0,
+          "discovered_files": [],
+          "metrics_keys_sample": []
+        },
+        "paper": {
+          "tex": null,
+          "pdf": null,
+          "md": null,
+          "json": null,
+          "status": "missing",
+          "score": 0.0
+        }
+      },
+      "bonus": {
+        "experiment_plan": {
+          "path": "refine-logs/EXPERIMENT_PLAN.md",
+          "bytes": 2051,
+          "via": "candidate"
+        },
+        "experiment_log": {
+          "path": "aris_run.log",
+          "bytes": 321741,
+          "via": "glob"
+        },
+        "review": null,
+        "readme": {
+          "path": "README_BENCHMARK.md",
+          "bytes": 948,
+          "via": "candidate"
+        },
+        "narrative": null,
+        "bib": null
+      },
+      "manifest_status": null,
+      "gate_scores": {
+        "idea": 1.0,
+        "code": 0.0,
+        "results": 0.0,
+        "paper": 0.0
+      },
+      "fairness": {
+        "gates": [
+          "idea",
+          "code",
+          "results",
+          "paper"
+        ],
+        "paper_gate_rule": "PDF=1.0; TeX-only/md_only/json_only=0.5; complete requires PDF",
+        "results_gate_rule": "substantive numeric results via framework-aware normalize_results",
+        "audit_ref": "framework_profile.FAIRNESS_AUDIT"
+      },
+      "notes": [
+        "Required: idea, code, substantive results, paper (PDF full; TeX/markdown/JSON draft half).",
+        "Stub/seed metrics (e.g. dataset_candidate/metrics.json) do not satisfy results.",
+        "Framework noise (.deepscientist_npm, skills/templates, runtime) is excluded from code/results/paper.",
+        "Manifest status is informational; disk presence is authoritative."
+      ]
+    },
+    "idea_generation": {
+      "run_dir": "~/ai_scientist_inputs/FSE-2025-007_efficient_search_based_floating_point_co/workspace/aris_2026-08-22_13-25-38",
+      "task_dir": "~/ai_scientist_inputs/FSE-2025-007_efficient_search_based_floating_point_co",
+      "idea_path": "~/ai_scientist_inputs/FSE-2025-007_efficient_search_based_floating_point_co/workspace/aris_2026-08-22_13-25-38/idea-stage/IDEA_REPORT.md",
+      "status": "ok",
+      "dimensions": {
+        "novelty": {
+          "score": 3.0,
+          "justification": "The core method remains search-based evolutionary floating-point constraint solving: \"PolyFP: Pareto-guided multi-indicator search with indicator-elite archive and adaptive operator selection for floating-point constraint solving.\" Closest Solution Space entries R36 and R38 already target floating-point constraint solving via search-based/coverage-guided methods. The idea itself frames the advances as \"indicator-elite ε-archive survival\" and \"adaptive operator selection via UCB1 bandit\", which are meaningful but incremental extensions rather than a paradigm shift.",
+          "rubric": "Incremental: a meaningful extension or optimization of prior baseline work that fixes a concrete prior limitation, but the core paradigm is unchanged.",
+          "category": "Incremental",
+          "nearest_solution_space_ids": [
+            "R36",
+            "R38",
+            "R19",
+            "R15"
+          ],
+          "differentiation": "Adds a three-indicator fitness scheme with indicator-elite ε-archive survival and UCB1 adaptive operator selection, plus extended seeds for subnormal/±0/±Inf, whereas R36/R38 use single-criterion search/fuzzing and R19 provides generic NSGA-II survival without per-indicator elite guarantees or bandit credit assignment."
+        },
+        "feasibility": {
+          "score": 3.0,
+          "justification": "Requires building \"parser → vectorized numpy evaluator → search core\", running on 266 plus ~3480 benchmark instances, and verifying sat with Z3 model checks. This is standard research engineering on open-source tools but still nontrivial. The Python/numpy evaluator also introduces runtime caveats compared with \"QSF's LLVM JIT\".",
+          "rubric": "Moderate workload (sweet spot): needs nontrivial coding such as scripting existing open-source tools (parsers, CFG extractors) or building a custom graph-processing pipeline; standard research engineering effort."
+        },
+        "clarity": {
+          "score": 4.0,
+          "justification": "The plan is explicit about RQ mapping (\"PolyFP vs Z3 on full smtlib_qf_fp (266), 60 s\"), metrics (\"solved_instances, execution_time (wall clock), winning_rate\"), and ablations (\"f_dist-only, f_sat-only, 2-criterion, and non-adaptive operators\"). Some implementation-level details such as UCB1 hyperparameters and archive ε settings are not specified.",
+          "rubric": "Clear and concrete: steps are explicit with a reasonable, specific experiment design (baseline tools, metric definitions); can be turned into a solid proposal."
+        }
+      },
+      "overall_score": 3.2,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "novelty",
+        "feasibility",
+        "clarity"
+      ],
+      "solution_space": {
+        "status": "ok",
+        "paper_count": 71,
+        "entry_count": 71,
+        "cache_hit": true,
+        "source_file": "~/ai_scientist_inputs/FSE-2025-007_efficient_search_based_floating_point_co/mineru_sections.json",
+        "stats": {
+          "papers": 71,
+          "extracted": 71,
+          "usable_abstracts": 28,
+          "citation_meta_abstracts": 0,
+          "missing_abstracts": 43,
+          "mineru_titles": 62,
+          "related_work_titles": 51,
+          "abstracts_attached": 28,
+          "related_work_extras": 9,
+          "batches": 4
+        },
+        "error": null
+      },
+      "notes": [
+        "Scores the intermediate idea artifact (not the final paper).",
+        "Dimensions: novelty, feasibility, clarity (each 1-5). Excitement removed.",
+        "Novelty is scored against a Solution Space built from mineru REFERENCES titles (+ related_work.json abstracts when matched)."
+      ],
+      "idea_via": "candidate",
+      "idea_relative": "idea-stage/IDEA_REPORT.md",
+      "summary": "PolyFP extends search-based floating-point constraint solving with three heuristic indicators, an indicator-elite epsilon archive, and UCB1 adaptive operator selection. It is a clear but incremental improvement over prior search-based solvers, especially QSF. The experiment plan is concrete, with standard benchmarks, Z3 baseline, metrics, and RQ3 ablations. Feasibility is moderate: it needs a custom parser, vectorized evaluator, and search core, while Python/numpy runtime caveats remain.",
+      "strengths": [
+        "Well-scoped incremental design with explicit component ablations for RQ3.",
+        "Correctness contract verifies sat with Z3 model check, supporting bounded soundness.",
+        "Concrete benchmarks, metrics, and Z3 baseline with a stated time budget."
+      ],
+      "weaknesses": [
+        "Novelty is close to QSF; the reviewer concern \"Is this just QSF plus tweaks?\" is only partially resolved.",
+        "Python/numpy evaluator may be slower than QSF's LLVM JIT, complicating wall-clock comparisons.",
+        "Search remains incomplete and cannot prove UNSAT, like prior search-based solvers."
+      ],
+      "llm_meta": {
+        "model": "deepseek-v4-pro-0813",
+        "base_url": "https://api-sg.umodelverse.ai/v1",
+        "usage": {
+          "completion_tokens": 2675,
+          "completion_tokens_details": {
+            "reasoning_tokens": 1962
+          },
+          "prompt_tokens": 8031,
+          "prompt_tokens_details": {
+            "cached_tokens": 4096
+          },
+          "total_tokens": 10706
+        },
+        "attempt": 0
+      }
+    },
+    "peer_review": {
+      "run_dir": "~/ai_scientist_inputs/FSE-2025-007_efficient_search_based_floating_point_co/workspace/aris_2026-08-22_13-25-38",
+      "review_report": null,
+      "paper_pdf": null,
+      "paper_tex": null,
+      "status": "not_provided",
+      "dimensions": {},
+      "overall_score": null,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "soundness",
+        "significance",
+        "novelty",
+        "presentation",
+        "credibility"
+      ],
+      "notes": [
+        "Stanford Agentic Reviewer (paperreview.ai): manual download to artifacts/peer_review/stanford_apr.md, or pass --auto-paperreview.",
+        "Dimensions: soundness, significance, novelty, presentation, credibility (each 1-5)."
+      ],
+      "paperreview": {
+        "status": "skipped",
+        "reason": "no_pdf"
+      },
+      "optional": true,
+      "hint": "Optional external review (Stanford APR). Upload paper/main.pdf to https://paperreview.ai/ , save review to ~/ai_scientist_inputs/FSE-2025-007_efficient_search_based_floating_point_co/workspace/aris_2026-08-22_13-25-38/artifacts/peer_review/stanford_apr.md"
+    },
+    "alignment": {
+      "run_dir": "~/ai_scientist_inputs/FSE-2025-007_efficient_search_based_floating_point_co/workspace/aris_2026-08-22_13-25-38",
+      "task_dir": "~/ai_scientist_inputs/FSE-2025-007_efficient_search_based_floating_point_co",
+      "status": "missing_agent_paper_or_metrics",
+      "original": {
+        "status": "ok",
+        "task_dir": "~/ai_scientist_inputs/FSE-2025-007_efficient_search_based_floating_point_co",
+        "paper_title": "QSF: Multi-Objective Optimization based Efficient Solving for Floating-Point Constraints",
+        "task_id": "FSE-2025-007",
+        "selection": {
+          "num_blocks": 8,
+          "total_chars": 31998,
+          "inferred_roles": {
+            "abstract": 1,
+            "introduction": 1,
+            "experiment": 4,
+            "discussion": 1,
+            "conclusion": 1
+          },
+          "mineru_raw_keys": {
+            "field:abstract": 1,
+            "field:introduction": 1,
+            "other": 4,
+            "discussion": 1,
+            "conclusion": 1
+          },
+          "infer_reasons": {
+            "top_level_field": 2,
+            "title": 6
+          },
+          "rescued_from_other": 4,
+          "note": "mineru key is unreliable; blocks are selected by title/body/inheritance. rescued_from_other counts sections labeled other but treated as typed roles."
+        },
+        "claims": [
+          {
+            "id": "C1",
+            "statement": "...",
+            "direction": "improves",
+            "metric_names": [
+              "..."
+            ],
+            "evidence_quote": "...",
+            "confidence": 0.99
+          }
+        ],
+        "metrics": [
+          {
+            "name": "avg_speedup_qf_fp_60s",
+            "value": 15.72,
+            "unit": "ratio",
+            "higher_is_better": true,
+            "setting": "...",
+            "is_sota_or_best": true,
+            "baseline_name": "nine compared solvers",
+            "baseline_value": null,
+            "evidence_quote": "...",
+            "confidence": 0.99
+          }
+        ],
+        "overall_conclusion": "...",
+        "comparable_notes": "...",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 2500,
+            "completion_tokens_details": {
+              "reasoning_tokens": 2500
+            },
+            "prompt_tokens": 3661,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 6161
+          },
+          "attempt": 3
+        },
+        "cache_hit": true
+      },
+      "agent": {
+        "status": "missing_agent_paper_or_metrics",
+        "run_dir": "~/ai_scientist_inputs/FSE-2025-007_efficient_search_based_floating_point_co/workspace/aris_2026-08-22_13-25-38"
+      }
+    },
+    "experiment_analysis": {
+      "run_dir": "~/ai_scientist_inputs/FSE-2025-007_efficient_search_based_floating_point_co/workspace/aris_2026-08-22_13-25-38",
+      "task_dir": "~/ai_scientist_inputs/FSE-2025-007_efficient_search_based_floating_point_co",
+      "status": "ok",
+      "metrics_path": null,
+      "experiment_success": {
+        "status": "failed_or_incomplete",
+        "success": false,
+        "metrics_path": null,
+        "absolute_metrics_path": null,
+        "checks": {
+          "has_results_file": false,
+          "non_stub": false,
+          "numeric_leaf_count": 0,
+          "min_numeric_ok": false
+        },
+        "manifest_hints": {
+          "status": null,
+          "returncode": null,
+          "benchmark_complete": null,
+          "artifacts_metrics_flag": false
+        },
+        "warnings": [],
+        "suspicious_values": [],
+        "note": "success=true requires substantive results (framework-aware path) with >=3 numeric leaves. Supports metrics.json, results.json, experiment_results.txt, etc. Manifest returncode/benchmark_complete are soft warnings only."
+      },
+      "idea_code_consistency": {
+        "status": "missing_code",
+        "idea_path": "idea-stage/IDEA_REPORT.md"
+      },
+      "setup_coverage": {
+        "status": "ok",
+        "overall_coverage": 0.5833333333333334,
+        "datasets": {
+          "gold_count": 2,
+          "hit_count": 2,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "SMT-COMP 2023 QF_FP Benchmark",
+            "Real-World Floating-Point Program Benchmark"
+          ],
+          "misses": []
+        },
+        "baselines": {
+          "gold_count": 9,
+          "hit_count": 0,
+          "miss_count": 9,
+          "coverage": 0.0,
+          "hits": [],
+          "misses": [
+            "Z3",
+            "MathSAT5",
+            "CVC5",
+            "Bitwuzla",
+            "goSAT",
+            "JFS",
+            "COLIBRI",
+            "CORAL",
+            "XSat"
+          ]
+        },
+        "metrics": {
+          "gold_count": 4,
+          "hit_count": 3,
+          "miss_count": 1,
+          "coverage": 0.75,
+          "hits": [
+            "Solved instances",
+            "Execution time",
+            "Winning rate"
+          ],
+          "misses": [
+            "Branch coverage"
+          ]
+        },
+        "agent_protocol": {},
+        "gold_protocol": {
+          "timeout_hours": 1
+        },
+        "dataset_dirs": [
+          "dataset_candidate"
+        ],
+        "flags": {
+          "weaker_baseline_suspected": true,
+          "weak_protocol": [],
+          "synthetic_data": "synthetic_allowed_by_task",
+          "gold_allows_synthetic": true
+        },
+        "gold_sources": [
+          "~/ai_scientist_inputs/FSE-2025-007_efficient_search_based_floating_point_co/task.md",
+          "~/ai_scientist_inputs/FSE-2025-007_efficient_search_based_floating_point_co/metadata.json"
+        ],
+        "note": "Coverage is name/alias matching against task.md Datasets/Baselines/Metrics. weak_protocol flags large reductions in trials/timeout vs Constraints. Synthetic corpora are not penalized when the task itself requires synthesis."
+      },
+      "ablation_significance": {
+        "status": "ok",
+        "idea_path": "idea-stage/IDEA_REPORT.md",
+        "significance_signals_rule_based": {
+          "signals": [],
+          "artifact_paths": [],
+          "has_any_significance_artifact": false
+        },
+        "evidence_format": null,
+        "study_type": "new_method",
+        "components": [
+          {
+            "name": "Multi-indicator scoring (f_sat, f_dist, f_ham)",
+            "role": "module",
+            "ablation_expected": true,
+            "significance_expected": false,
+            "ablation_status": "missing",
+            "ablation_evidence": "RQ3 plan lists f_dist-only, f_sat-only, and two-criterion baselines, but no executed ablation results or code/paper evidence are present in the provided experiment evidence.",
+            "significance_status": "not_required",
+            "significance_evidence": "Ablation difference is evaluated via solve count/winning rate; no statistical evidence provided."
+          },
+          {
+            "name": "Indicator-elite ε-archive survival",
+            "role": "module",
+            "ablation_expected": true,
+            "significance_expected": false,
+            "ablation_status": "missing",
+            "ablation_evidence": "No planned or executed ablation isolates survival with/without the indicator-elite ε-archive (e.g., vs pure NSGA-II-style survival).",
+            "significance_status": "not_required",
+            "significance_evidence": ""
+          },
+          {
+            "name": "Adaptive operator selection (UCB1 bandit)",
+            "role": "module",
+            "ablation_expected": true,
+            "significance_expected": false,
+            "ablation_status": "missing",
+            "ablation_evidence": "Plan includes a non-adaptive operator baseline, but no executed comparison results or code flags are provided.",
+            "significance_status": "not_required",
+            "significance_evidence": ""
+          },
+          {
+            "name": "Extended FP domain seeding (subnormal/±0/±Inf)",
+            "role": "preprocessing",
+            "ablation_expected": true,
+            "significance_expected": false,
+            "ablation_status": "missing",
+            "ablation_evidence": "No planned or executed ablation removes extended-domain seeding to test normal-only vs extended domain.",
+            "significance_status": "not_required",
+            "significance_evidence": ""
+          },
+          {
+            "name": "Z3 baseline",
+            "role": "baseline",
+            "ablation_expected": false,
+            "significance_expected": true,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "Baseline comparison is the primary evaluation, not an ablation.",
+            "significance_status": "missing",
+            "significance_evidence": "No confidence intervals, bootstrap, p-values, or statistical tests are reported for solved_instances or winning_rate."
+          },
+          {
+            "name": "Criterion-only baselines (f_dist-only, f_sat-only, two-criterion)",
+            "role": "baseline",
+            "ablation_expected": false,
+            "significance_expected": true,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "These are ablation controls for the multi-indicator module, but are themselves baselines.",
+            "significance_status": "missing",
+            "significance_evidence": "No statistical tests for marginal criterion contributions are provided."
+          },
+          {
+            "name": "Non-adaptive operator baseline",
+            "role": "baseline",
+            "ablation_expected": false,
+            "significance_expected": true,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "Control for adaptive operator selection, not an ablation of PolyFP itself.",
+            "significance_status": "missing",
+            "significance_evidence": "No statistical tests reported."
+          }
+        ],
+        "ablation_coverage_score": 0.0,
+        "overall_ablation_ok": false,
+        "overall_significance_ok": false,
+        "summary": "PolyFP is a new method with four removable components (multi-indicator scoring, indicator-elite ε-archive survival, adaptive operator selection, extended FP-domain seeding) that each require ablation. The idea/plan mentions criterion and operator baselines but no executed ablation results or code evidence are present; the ε-archive and extended-domain components are not isolated in the plan. Main comparisons against Z3 and ablation baselines also lack any significance testing (CI/bootstrap/p-values).",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 7704,
+            "completion_tokens_details": {
+              "reasoning_tokens": 6769
+            },
+            "prompt_tokens": 3034,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 10738
+          },
+          "attempt": 0
+        }
+      },
+      "results_paper_consistency": {
+        "status": "missing_metrics"
+      },
+      "scores": {
+        "experiment_success": false,
+        "idea_code_score": null,
+        "setup_coverage": 0.5833333333333334,
+        "ablation_coverage_score": 0.0,
+        "overall_ablation_ok": false,
+        "overall_significance_ok": false,
+        "results_paper_score": null,
+        "hiding_unfavorable_suspected": null
+      },
+      "notes": [
+        "Axes 1,2,3,4,6 in experiment_analysis (figures excluded).",
+        "setup_coverage matches task.md Datasets/Baselines/Metrics; weak_protocol flags reductions vs Constraints.",
+        "Axis 6: final normalized results vs paper; interim run logs not used as ground truth."
+      ]
+    },
+    "literature_review": {
+      "run_dir": "~/ai_scientist_inputs/FSE-2025-007_efficient_search_based_floating_point_co/workspace/aris_2026-08-22_13-25-38",
+      "task_dir": "~/ai_scientist_inputs/FSE-2025-007_efficient_search_based_floating_point_co",
+      "status": "not_applicable",
+      "as_of_year": 2026,
+      "agent_ref_count": 0,
+      "sources": [],
+      "collection_audit": {
+        "cited_keys_count": 0,
+        "filter_mode": "none",
+        "bib_total_before_filter": 0,
+        "bib_after_filter": 0,
+        "uncited_bib_skipped": 0
+      },
+      "fabrication": null,
+      "coverage": null,
+      "recency": null,
+      "reason": "no_reference_artifacts",
+      "hint": "No literature artifacts found (bib / thebibliography / shortlist / related_work.txt / arxiv index). Marked not_applicable rather than failure — tool may not emit references in-run."
+    }
+  },
+  "scores": {
+    "completeness": {
+      "complete": false,
+      "overall_score": 0.2,
+      "required_score": 0.25,
+      "bonus_score": 0.09
+    },
+    "peer_review": {
+      "status": "not_provided",
+      "optional": true,
+      "overall_score": null,
+      "score_scale": "1-5",
+      "scoring_method": null
+    },
+    "idea_generation": {
+      "status": "ok",
+      "overall_score": 3.2,
+      "dimensions": {
+        "novelty": 3.0,
+        "feasibility": 3.0,
+        "clarity": 4.0
+      },
+      "novelty_category": "Incremental",
+      "solution_space_status": "ok"
+    },
+    "alignment": {
+      "status": "missing_agent_paper_or_metrics",
+      "direction_consistency": null,
+      "overall_alignment_score": null
+    },
+    "literature_review": {
+      "fabrication_rate": null,
+      "coverage_recall": null,
+      "recency_ratio_3y": null,
+      "recency_ratio_5y": null
+    },
+    "experiment_analysis": {
+      "experiment_success": false,
+      "idea_code_score": null,
+      "setup_coverage": 0.5833333333333334,
+      "ablation_coverage_score": 0.0,
+      "overall_ablation_ok": false,
+      "overall_significance_ok": false,
+      "results_paper_score": null,
+      "hiding_unfavorable_suspected": null
+    }
+  },
+  "fair_scores": {
+    "applicable_axes": [
+      "completeness",
+      "idea_generation",
+      "experiment_analysis"
+    ],
+    "skipped_axes": [
+      {
+        "axis": "peer_review",
+        "reason": "optional_external_review"
+      },
+      {
+        "axis": "literature_review",
+        "reason": "not_applicable"
+      }
+    ],
+    "fair_mean_0_1": 0.3939,
+    "note": "fair_mean_0_1 averages only applicable axes; optional peer review and framework-inapplicable literature are excluded from the denominator."
+  },
+  "evals_root": "~/ai_scientist_evals",
+  "claims_cache": "~/ai_scientist_evals/FSE-2025-007_efficient_search_based_floating_point_co/original_claims.json",
+  "solution_space_cache": "~/ai_scientist_evals/FSE-2025-007_efficient_search_based_floating_point_co/solution_space.json"
+}

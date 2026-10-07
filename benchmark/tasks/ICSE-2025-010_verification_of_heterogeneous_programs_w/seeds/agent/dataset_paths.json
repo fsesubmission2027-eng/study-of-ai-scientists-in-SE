@@ -1,0 +1,74 @@
+{
+  "layout": "icse2025_hetrify_svcomp_riscv",
+  "layout_note": "ICSE 2025 Distinguished Paper: Hetrify — Efficient Verification of Heterogeneous Programs on RISC-V. Pre-mounted SV-COMP 2024 (+ optional 2023) benchmarks, CBMC 5.95.x .deb, optional Ghidra. Construct assembly / missing-function / binary evaluation sets from the suite.",
+  "workspace_symlink": "dataset_candidate/hetrify-svcomp",
+  "paper_title": "Hetrify: Efficient Verification of Heterogeneous Programs on RISC-V",
+  "paper_venue": "ICSE 2025",
+  "paper_artifact_anonymous": "https://anonymous.4open.science/r/Hetrify",
+  "svcomp24_zenodo": "https://doi.org/10.5281/zenodo.10669723",
+  "svcomp23_zenodo": "https://doi.org/10.5281/zenodo.7627783",
+  "cbmc_release": "https://github.com/diffblue/cbmc/releases/tag/cbmc-5.95.1",
+  "read_only": true,
+  "copy_note": "Shared SV-COMP mount is read-only. Copy selected C tasks under project/ before edits, RISC-V compilation, or stubbing missing functions. Write converted C, CBMC logs, and metrics under project/ or results/.",
+  "data_roots": {
+    "artifact_root": "dataset_candidate/hetrify-svcomp",
+    "svcomp24": "dataset_candidate/hetrify-svcomp/svcomp24",
+    "svcomp23": "dataset_candidate/hetrify-svcomp/svcomp23",
+    "cbmc_deb": "dataset_candidate/hetrify-svcomp/tools/cbmc.deb",
+    "ghidra": "dataset_candidate/hetrify-svcomp/tools/ghidra",
+    "archives": "dataset_candidate/hetrify-svcomp/archives",
+    "meta": "dataset_candidate/hetrify-svcomp/.artifact_meta.txt",
+    "data_readme": "dataset_candidate/hetrify-svcomp/docs/README_DATA.txt"
+  },
+  "instance_counts": {
+    "svcomp24_zip": "1756960125 B (~1.76 GiB; Zenodo lists ~1.8 GB)",
+    "svcomp23_zip": "1396566648 B (~1.40 GiB)",
+    "cbmc_5_95_1_deb": "~67.4 MB (ubuntu-22.04-cbmc-5.95.1-Linux.deb)",
+    "ghidra_public_zip_optional": "~569 MiB (Ghidra 12.1.3 PUBLIC)",
+    "riscv_gcc": "apt gcc-riscv64-unknown-elf (installed in container_setup; not in shared zip)",
+    "paper_task_counts": {
+      "assembly_programs": 100,
+      "large_heterogeneous": 30,
+      "binaries_for_rq3": 100,
+      "total_programs": 130
+    },
+    "paper_machine": "dual AMD EPYC 7713, 384 GB RAM, Ubuntu 22.04, CBMC 5.95",
+    "paper_timeout_sec": 3000,
+    "paper_unwind_correct": 20,
+    "note": "Full SV-COMP suites are the constructable pool; paper randomly selected qualifying tasks. Hetrify tool URL may expire — reimplement conversion if needed."
+  },
+  "dataset_env": {
+    "HETRIFY_SVCOMP_HOME": "dataset_candidate/hetrify-svcomp",
+    "SVCOMP24_HOME": "dataset_candidate/hetrify-svcomp/svcomp24",
+    "SVCOMP23_HOME": "dataset_candidate/hetrify-svcomp/svcomp23",
+    "CBMC_DEB": "dataset_candidate/hetrify-svcomp/tools/cbmc.deb"
+  },
+  "python_environment": {
+    "python": "/opt/icse-2025-010-venv/bin/python",
+    "activation": "source /opt/icse-2025-010-venv/bin/activate",
+    "note": "CBMC + riscv64-unknown-elf-gcc for compile/verify; OpenJDK 17 if using Ghidra headless."
+  },
+  "toolchain": {
+    "verifier": "CBMC 5.95.x (paper); installed from tools/cbmc.deb in container_setup",
+    "riscv": "riscv64-unknown-elf-gcc / binutils-riscv64-unknown-elf",
+    "decompiler_open": "Ghidra (optional; FETCH_MODE=all)",
+    "decompiler_closed": "IDA Pro (commercial; not provided)"
+  },
+  "paper_protocol": {
+    "rq1": "100 RISC-V assembly programs from SV-COMP 2024 (50 correct / 50 incorrect)",
+    "rq2": "30 large C programs with missing critical functions as RISC-V static libs",
+    "rq3": "100 binaries; compare Hetrify vs IDA Pro vs Ghidra then CBMC",
+    "timeout_sec": 3000,
+    "unwind_correct": 20,
+    "unwind_incorrect": "no fixed limit",
+    "primary_metrics": [
+      "correctness_rate",
+      "error_rate"
+    ]
+  },
+  "not_provided": {
+    "hetrify_if_anonymous_expired": "Reimplement RISC-V asm/binary→C conversion per paper theorems; keep CBMC backend",
+    "ida_pro": "Commercial license required; skip and document",
+    "full_384gb_machine": "Use reduced subset/timeout and disclose in results"
+  }
+}

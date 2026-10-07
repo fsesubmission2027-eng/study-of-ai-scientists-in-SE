@@ -1,0 +1,46 @@
+{
+  "required_metrics": [
+    "annotation_count",
+    "unconfirmed_assumption_warning_rate",
+    "potential_misuse_call_site_rate",
+    "significant_misuse_rate",
+    "runtime_overhead_factor"
+  ],
+  "optional_metrics": [
+    "unconfirmed_assumption_warnings",
+    "potential_misuse_call_sites",
+    "significant_misuse_calls",
+    "notebooks_with_unconfirmed_assumptions",
+    "notebooks_checked"
+  ],
+  "definitions": {
+    "annotation_count": "Number of assumption annotations written for the covered statistical functions (RQ1). Paper: 26 annotations for 18 assumptions (12 Python + 14 R).",
+    "unconfirmed_assumption_warning_rate": "Fraction of annotated-function calls (or call sites) where at least one assumption check rejects at α=0.05 (RQ2). Higher indicates more unconfirmed assumptions.",
+    "potential_misuse_call_site_rate": "Fraction of unique call sites with ≥1 unconfirmed assumption (potential misuse).",
+    "significant_misuse_rate": "Among hypothesis-test calls with unconfirmed assumptions, fraction where a more appropriate alternative test yields a p-value on the opposite side of α vs the original test (different conclusion) (RQ3).",
+    "runtime_overhead_factor": "mean(time_with_checks) / mean(time_without_checks) on synthetic samples (e.g., length 100).",
+    "unconfirmed_assumption_warnings": "Raw count of warning-emitting checks.",
+    "potential_misuse_call_sites": "Raw count of unique call sites with ≥1 unconfirmed assumption.",
+    "significant_misuse_calls": "Raw count of significant-misuse calls among hypothesis tests.",
+    "notebooks_with_unconfirmed_assumptions": "Number of notebooks with ≥1 unconfirmed assumption.",
+    "notebooks_checked": "Number of notebooks successfully executed with checks enabled."
+  },
+  "reporting_format": {
+    "note": "Report at both call-site and call (invocation) granularity when possible; also report per-function breakdown.",
+    "example_row": {
+      "function": "ttest_ind",
+      "call_sites": 29,
+      "calls": 53,
+      "potential_misuse_call_sites": 21,
+      "significant_misuse_calls": 6,
+      "runtime_overhead_factor": 3.2
+    },
+    "alternative_tests_hint": {
+      "normality_fail_independent_ttest": "mannwhitneyu / wilcox.test",
+      "normality_fail_paired_or_onesample": "wilcoxon signed-rank",
+      "normality_fail_anova": "kruskal",
+      "homoscedasticity_fail_only": "Welch t-test (equal_var=False / var.equal=FALSE)"
+    }
+  },
+  "evaluation_script_hint": "Monkey-patch annotated scipy.stats / R stats functions at notebook top (warnings only), execute with nbclient/nbconvert or Rscript, parse warnings, then for unconfirmed hypothesis tests re-run the appropriate non-parametric alternative and compare p-values against α."
+}

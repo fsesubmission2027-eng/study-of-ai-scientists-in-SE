@@ -1,0 +1,1260 @@
+{
+  "generated_at": "2026-09-04T10:18:07",
+  "run_dir": "~/ai_scientist_inputs/FSE-2025-010_quantifying_the_security_and_maintenance/workspace/aris_2026-08-26_12-43-17",
+  "task_dir": "~/ai_scientist_inputs/FSE-2025-010_quantifying_the_security_and_maintenance",
+  "framework": "aris",
+  "fairness_audit": [
+    {
+      "axis": "completeness",
+      "was_unfair": "Required both paper.tex AND paper.pdf; any tool missing one failed equally.",
+      "fix": "Paper gate: PDF=1.0; TeX-only=0.5; ``complete`` requires PDF."
+    },
+    {
+      "axis": "completeness",
+      "was_unfair": "``results`` counted stub/seed JSON (dataset_candidate/metrics.json).",
+      "fix": "``results`` requires substantive numeric results via results_normalize."
+    },
+    {
+      "axis": "experiment_success",
+      "was_unfair": "Only metrics.json; ignored results.json / experiment_results.txt.",
+      "fix": "Framework-ordered result candidates + normalized loaders."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Penalized tools with no bib; airesearcher has no workspace references.",
+      "fix": "literature_applicable=false → status not_applicable; excluded from fair aggregate."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "related_work.json subset as gold made recall hard to interpret.",
+      "fix": "Coverage gold is original paper REFERENCES from mineru; related_work only enriches metadata/fallback."
+    },
+    {
+      "axis": "peer_review",
+      "was_unfair": "Missing Stanford report looked like evaluation failure.",
+      "fix": "status not_provided; optional axis, never counts as tool failure."
+    },
+    {
+      "axis": "paths/find_results",
+      "was_unfair": "Picked downloads/** and sandbox noise (e.g. airesearcher LLVM tree).",
+      "fix": "Exclude downloads/, seeds/, dataset_candidate/, sandbox junk paths."
+    },
+    {
+      "axis": "paths/framework_noise",
+      "was_unfair": "DeepScientist .deepscientist_npm / runtime / skills templates counted as code/paper/results.",
+      "fix": "FRAMEWORK_NOISE_DIRS+markers; quest worktree + eval_output results; paper md drafts; reject template tex."
+    },
+    {
+      "axis": "paths/paper_tex",
+      "was_unfair": "tiny_scientist / ACL runs store paper under latex/*.tex; evaluator only looked at paper/main.tex.",
+      "fix": "latex/**/*.tex with substantive-body heuristic; find_paper_document uses same rules."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Entire custom.bib (300+ anthology entries) verified when paper had zero \\cite commands.",
+      "fix": "collect_agent_references filters bib to in-text cite keys; skips uncited bulk bib (>40 entries)."
+    },
+    {
+      "axis": "paths/ai_scientist_summaries",
+      "was_unfair": "AI Scientist can persist substantive results and paper-like drafts in *_summary.json logs rather than paper/main.tex or results/**/*.json.",
+      "fix": "Treat draft_summary/research_summary as weak paper documents and summary JSONs as result candidates."
+    },
+    {
+      "axis": "framework/ai_scientist_v2",
+      "was_unfair": "Manifest framework ``ai_scientist_v2`` fell through to profile ``unknown``, skipping AI-Scientist idea/result path priorities.",
+      "fix": "Normalize ``ai_scientist_v2`` (and common aliases) to profile key ``ai_scientist``."
+    },
+    {
+      "axis": "idea_generation",
+      "was_unfair": "plan.md/todos.md weak proxies scored same as structured idea.json.",
+      "fix": "Framework idea_priority tried first; missing idea → not_applicable where appropriate."
+    }
+  ],
+  "axes": [
+    "alignment",
+    "completeness",
+    "experiment_analysis",
+    "idea_generation",
+    "literature_review",
+    "peer_review"
+  ],
+  "results": {
+    "completeness": {
+      "framework": "aris",
+      "run_dir": "~/ai_scientist_inputs/FSE-2025-010_quantifying_the_security_and_maintenance/workspace/aris_2026-08-26_12-43-17",
+      "task_dir": "~/ai_scientist_inputs/FSE-2025-010_quantifying_the_security_and_maintenance",
+      "complete": true,
+      "required_score": 1.0,
+      "bonus_score": 0.17,
+      "overall_score": 0.8589,
+      "missing": [],
+      "required": {
+        "idea": {
+          "path": "idea-stage/IDEA_REPORT.md",
+          "bytes": 11252,
+          "via": "candidate"
+        },
+        "code": {
+          "count": 2,
+          "files": [
+            {
+              "path": "project/experiment_runner.py",
+              "bytes": 21515,
+              "via": "glob"
+            },
+            {
+              "path": "project/validate_rq2_tables.py",
+              "bytes": 4425,
+              "via": "glob"
+            }
+          ]
+        },
+        "results": {
+          "substantive": true,
+          "normalized_path": "results/panel_regression_results.json",
+          "numeric_leaf_count": 160,
+          "discovered_files": [
+            {
+              "path": "results/metrics.json",
+              "bytes": 1455,
+              "via": "candidate"
+            },
+            {
+              "path": "results/panel_regression_results.json",
+              "bytes": 6786,
+              "via": "glob"
+            },
+            {
+              "path": "results/rq2_table_validation.json",
+              "bytes": 7311,
+              "via": "glob"
+            }
+          ],
+          "metrics_keys_sample": [
+            "rows"
+          ]
+        },
+        "paper": {
+          "tex": {
+            "path": "paper/main.tex",
+            "bytes": 15936,
+            "via": "candidate"
+          },
+          "pdf": {
+            "path": "paper/main.pdf",
+            "bytes": 352642,
+            "via": "candidate"
+          },
+          "md": null,
+          "json": null,
+          "status": "pdf",
+          "score": 1.0
+        }
+      },
+      "bonus": {
+        "experiment_plan": {
+          "path": "refine-logs/EXPERIMENT_PLAN.md",
+          "bytes": 1897,
+          "via": "candidate"
+        },
+        "experiment_log": {
+          "path": "aris_run.log",
+          "bytes": 559322,
+          "via": "glob"
+        },
+        "review": {
+          "path": "review-stage/AUTO_REVIEW.md",
+          "bytes": 5756,
+          "via": "candidate"
+        },
+        "readme": {
+          "path": "README_BENCHMARK.md",
+          "bytes": 948,
+          "via": "candidate"
+        },
+        "narrative": {
+          "path": "NARRATIVE_REPORT.md",
+          "bytes": 7552,
+          "via": "candidate"
+        },
+        "bib": {
+          "path": "paper/references.bib",
+          "bytes": 1729,
+          "via": "candidate"
+        }
+      },
+      "manifest_status": {
+        "idea": true,
+        "experiment_plan": true,
+        "experiment_log": false,
+        "metrics": true,
+        "review": true,
+        "narrative": true,
+        "paper_tex": true,
+        "paper_pdf": true
+      },
+      "gate_scores": {
+        "idea": 1.0,
+        "code": 1.0,
+        "results": 1.0,
+        "paper": 1.0
+      },
+      "fairness": {
+        "gates": [
+          "idea",
+          "code",
+          "results",
+          "paper"
+        ],
+        "paper_gate_rule": "PDF=1.0; TeX-only/md_only/json_only=0.5; complete requires PDF",
+        "results_gate_rule": "substantive numeric results via framework-aware normalize_results",
+        "audit_ref": "framework_profile.FAIRNESS_AUDIT"
+      },
+      "notes": [
+        "Required: idea, code, substantive results, paper (PDF full; TeX/markdown/JSON draft half).",
+        "Stub/seed metrics (e.g. dataset_candidate/metrics.json) do not satisfy results.",
+        "Framework noise (.deepscientist_npm, skills/templates, runtime) is excluded from code/results/paper.",
+        "Manifest status is informational; disk presence is authoritative."
+      ]
+    },
+    "idea_generation": {
+      "run_dir": "~/ai_scientist_inputs/FSE-2025-010_quantifying_the_security_and_maintenance/workspace/aris_2026-08-26_12-43-17",
+      "task_dir": "~/ai_scientist_inputs/FSE-2025-010_quantifying_the_security_and_maintenance",
+      "idea_path": "~/ai_scientist_inputs/FSE-2025-010_quantifying_the_security_and_maintenance/workspace/aris_2026-08-26_12-43-17/idea-stage/IDEA_REPORT.md",
+      "status": "ok",
+      "dimensions": {
+        "novelty": {
+          "score": 1.0,
+          "justification": "The idea begins: 'The research question is, almost verbatim, the research question of He, Vasilescu & Kästner, \"Pinning Is Futile...\" FSE 2025' and later says 'Novelty: None claimed (empirical task).' Its core method and findings already exist in the referenced study and the provided official replication package, so the idea is an existing re-analysis rather than a new solution.",
+          "rubric": "Existing: the idea's core method is already clearly present or solved in the Solution Space; only tiny parameter / test-case changes.",
+          "category": "Existing",
+          "nearest_solution_space_ids": [
+            "R7",
+            "R10",
+            "R13",
+            "R15"
+          ],
+          "differentiation": "The artifact explicitly states 'Novelty: None claimed (empirical task)' and describes the contribution as 'a clean, auditable, Python re-implementation' of the existing He et al. study; the only additions are cross-language verification and binding outputs to metrics_schema.json."
+        },
+        "feasibility": {
+          "score": 4.0,
+          "justification": "The plan uses the 'official Zenodo replication package' with 'precomputed RQ1 panel-regression metrics' and 'precomputed RQ2 intervention risk tables.' Pilot results were already computed using linearmodels. Remaining work such as 'implement project/experiment_runner.py + analysis modules' is low-barrier Python-based analysis, not heavy new tooling or data collection.",
+          "rubric": "Low barrier / easy to implement: core logic can be quickly built on existing Python libraries or common ML frameworks; only small changes to a standard evaluation flow (e.g. prompt strategy tweaks or swapping metrics)."
+        },
+        "clarity": {
+          "score": 4.0,
+          "justification": "The proposal gives concrete details such as the regression specification 'log(y+1) ~ pinning + log(n_deps) + pinning×log(n_deps), entity + time FE, clustered SEs,' five heuristics, three attack models, data scale, and pilot tables. It is clear and concrete, though it lacks a limitations/discussion section and high-level pipeline details are only partially specified.",
+          "rubric": "Clear and concrete: steps are explicit with a reasonable, specific experiment design (baseline tools, metric definitions); can be turned into a solid proposal."
+        }
+      },
+      "overall_score": 2.0,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "novelty",
+        "feasibility",
+        "clarity"
+      ],
+      "solution_space": {
+        "status": "ok",
+        "paper_count": 93,
+        "entry_count": 93,
+        "cache_hit": true,
+        "source_file": "~/ai_scientist_inputs/FSE-2025-010_quantifying_the_security_and_maintenance/mineru_sections.json",
+        "stats": {
+          "papers": 93,
+          "extracted": 93,
+          "usable_abstracts": 51,
+          "citation_meta_abstracts": 0,
+          "missing_abstracts": 42,
+          "mineru_titles": 73,
+          "related_work_titles": 58,
+          "abstracts_attached": 51,
+          "related_work_extras": 20,
+          "batches": 6
+        },
+        "error": null
+      },
+      "notes": [
+        "Scores the intermediate idea artifact (not the final paper).",
+        "Dimensions: novelty, feasibility, clarity (each 1-5). Excitement removed.",
+        "Novelty is scored against a Solution Space built from mineru REFERENCES titles (+ related_work.json abstracts when matched)."
+      ],
+      "idea_via": "candidate",
+      "idea_relative": "idea-stage/IDEA_REPORT.md",
+      "summary": "This idea explicitly reproduces He et al.'s FSE 2025 study on npm dependency pinning versus floating using the official Zenodo",
+      "strengths": [],
+      "weaknesses": [],
+      "llm_meta": {
+        "model": "deepseek-v4-pro-0813",
+        "base_url": "https://api-sg.umodelverse.ai/v1",
+        "usage": {
+          "completion_tokens": 2281,
+          "completion_tokens_details": {
+            "reasoning_tokens": 1818
+          },
+          "prompt_tokens": 723,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "total_tokens": 3004
+        },
+        "attempt": 0
+      }
+    },
+    "peer_review": {
+      "run_dir": "~/ai_scientist_inputs/FSE-2025-010_quantifying_the_security_and_maintenance/workspace/aris_2026-08-26_12-43-17",
+      "review_report": "~/ai_scientist_inputs/FSE-2025-010_quantifying_the_security_and_maintenance/workspace/aris_2026-08-26_12-43-17/artifacts/peer_review/stanford_apr.md",
+      "paper_pdf": "~/ai_scientist_inputs/FSE-2025-010_quantifying_the_security_and_maintenance/workspace/aris_2026-08-26_12-43-17/paper/main.pdf",
+      "paper_tex": "~/ai_scientist_inputs/FSE-2025-010_quantifying_the_security_and_maintenance/workspace/aris_2026-08-26_12-43-17/paper/main.tex",
+      "status": "ok",
+      "dimensions": {},
+      "overall_score": 4.4,
+      "score_scale": "1-10",
+      "dimension_order": [],
+      "notes": [
+        "Scored from paperreview.ai (Stanford APR) native ratings; benchmark 5-dimension LLM rubric skipped.",
+        "Overall scale: 1-10."
+      ],
+      "paperreview": {
+        "status": "fetched",
+        "token_file": "~/ai_scientist_inputs/FSE-2025-010_quantifying_the_security_and_maintenance/workspace/aris_2026-08-26_12-43-17/artifacts/peer_review/paperreview.token.txt",
+        "json": "~/ai_scientist_inputs/FSE-2025-010_quantifying_the_security_and_maintenance/workspace/aris_2026-08-26_12-43-17/artifacts/peer_review/stanford_apr.json",
+        "markdown": "~/ai_scientist_inputs/FSE-2025-010_quantifying_the_security_and_maintenance/workspace/aris_2026-08-26_12-43-17/artifacts/peer_review/stanford_apr.md",
+        "apr_scores": {
+          "scale": "1-10",
+          "overall": 4.4,
+          "dimensions": {
+            "Claims_Support": 1.0,
+            "Experimental_Soundness": 0.0,
+            "Writing_Clarity": 0.0,
+            "Prior_Work_Context": 0.0,
+            "Question_Importance": 0.0,
+            "Originality": -1.0,
+            "Value_to_Community": 0.0
+          }
+        },
+        "pdf_rebuild": null
+      },
+      "scoring_method": "paperreview_apr",
+      "scoring_source": "paperreview_json",
+      "apr_dimensions": {
+        "Claims_Support": 1.0,
+        "Experimental_Soundness": 0.0,
+        "Writing_Clarity": 0.0,
+        "Prior_Work_Context": 0.0,
+        "Question_Importance": 0.0,
+        "Originality": -1.0,
+        "Value_to_Community": 0.0
+      },
+      "summary": "",
+      "red_flags": []
+    },
+    "alignment": {
+      "run_dir": "~/ai_scientist_inputs/FSE-2025-010_quantifying_the_security_and_maintenance/workspace/aris_2026-08-26_12-43-17",
+      "task_dir": "~/ai_scientist_inputs/FSE-2025-010_quantifying_the_security_and_maintenance",
+      "status": "ok",
+      "original": {
+        "paper_title": "Pinning Is Futile: You Need More Than Local Dependency Versioning to Defend Against Supply Chain Attacks",
+        "selection": {
+          "num_blocks": 11,
+          "total_chars": 31998,
+          "inferred_roles": {
+            "abstract": 1,
+            "introduction": 1,
+            "experiment": 5,
+            "method": 1,
+            "discussion": 2,
+            "conclusion": 1
+          },
+          "mineru_raw_keys": {
+            "field:abstract": 1,
+            "field:introduction": 1,
+            "other": 8,
+            "conclusion": 1
+          },
+          "infer_reasons": {
+            "top_level_field": 2,
+            "title": 8,
+            "body": 1
+          },
+          "rescued_from_other": 8,
+          "note": "mineru key is unreliable; blocks are selected by title/body/inheritance. rescued_from_other counts sections labeled other but treated as typed roles."
+        },
+        "claims": [
+          {
+            "id": "C1",
+            "statement": "Pinning all direct dependencies significantly increases maintenance and security costs, including higher exposure to vulnerabilities, more outdated dependencies, and more dependency conflicts.",
+            "direction": "degrades",
+            "metric_names": [
+              "n_vuln",
+              "n_outdated_deps",
+              "n_bloated"
+            ],
+            "evidence_quote": "pinning all direct dependencies significant influence on three measures of cost—higher exposure vulnerabilities (n_vuln), number outdated dependencies (n_outdated_deps), higher exposure dependency conflicts (n_bloated).",
+            "confidence": 0.9
+          },
+          {
+            "id": "C2",
+            "statement": "Pinning direct dependencies has diminishing benefits for floating dependencies and automatic updates; the effect on floating dependencies flips negative for dependency graphs with more than about 498 dependencies.",
+            "direction": "mixed",
+            "metric_names": [
+              "floating_dependencies",
+              "n_auto_update"
+            ],
+            "evidence_quote": "effect on two benefits dim, for number automatic updates regression model fits poorly R^2<0.1; for number floating dependencies benefit smaller with larger graph negative for very large; flips to negative for dependency graphs with more than 498 dependencies.",
+            "confidence": 0.95
+          },
+          {
+            "id": "C3",
+            "statement": "The interaction between pinning and dependency graph size strengthens adverse cost outcomes, with the strongest interaction observed for exposure to vulnerabilities.",
+            "direction": "degrades",
+            "metric_names": [
+              "n_vuln",
+              "n_outdated_deps",
+              "n_bloated"
+            ],
+            "evidence_quote": "Interaction term all three costs increase with graph size; vulnerabilities strongest interaction.",
+            "confidence": 0.85
+          },
+          {
+            "id": "C4",
+            "statement": "Best local pinning reduces ecosystem-wide risk against top 1000 popular packages by 12.21% when defending 20 packages and 30.09% when defending 100 packages.",
+            "direction": "improves",
+            "metric_names": [
+              "ecosystem_risk_reduction"
+            ],
+            "evidence_quote": "Best local pinning reduce ecosystem-wide risk against top 1000 popular packages by 12.21% with defending only 20 packages and 30.09% when defending 100.",
+            "confidence": 0.95
+          },
+          {
+            "id": "C5",
+            "statement": "Best transitive pinning reduces ecosystem-wide risk against top 1000 popular packages by 51.34% when defending 20 packages and 75.81% when defending 100 packages.",
+            "direction": "improves",
+            "metric_names": [
+              "ecosystem_risk_reduction"
+            ],
+            "evidence_quote": "Best transitive pinning reduce by 51.34% when defending only 20 packages and 75.81% when defending 100.",
+            "confidence": 0.95
+          },
+          {
+            "id": "C6",
+            "statement": "For both local and transitive pinning interventions, selecting packages by betweenness weighted by downloads is the most effective strategy, and transitive pinning is usually two to three times more effective than local pinning.",
+            "direction": "improves",
+            "metric_names": [
+              "ecosystem_risk_reduction"
+            ],
+            "evidence_quote": "For both mechanisms, selecting packages with betweenness weighted by downloads is most effective, transitive pinning usually two to three times more effective than local pinning.",
+            "confidence": 0.9
+          },
+          {
+            "id": "C7",
+            "statement": "Only 44.21% of GitHub repositories in the dataset commit package-lock.json, limiting the practical reach of faithful full-graph pinning via lockfiles.",
+            "direction": "neutral",
+            "metric_names": [
+              "lockfile_adoption"
+            ],
+            "evidence_quote": "lock file: 44.21% of GitHub repositories in dataset did this (committed package-lock.json).",
+            "confidence": 0.9
+          },
+          {
+            "id": "C8",
+            "statement": "Full regression models were preferable to null models for all five outcome variables, with Wald tests significant at p<0.001; however, the automatic-update model fit weakly with R^2<0.1.",
+            "direction": "mixed",
+            "metric_names": [
+              "model_preference_p",
+              "n_auto_update_R2"
+            ],
+            "evidence_quote": "Wald tests full model preferable for all five outcome variables p<0.001; n_auto_update model R^2<0.1.",
+            "confidence": 0.85
+          }
+        ],
+        "metrics": [
+          {
+            "name": "unprotected_downloads_affected",
+            "value": 1.93,
+            "unit": "%",
+            "higher_is_better": false,
+            "setting": "Expected percentage of npm downloads affected on average upon attack without intervention, top 1000 most impactful packages",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "without intervention 1.93% of npm downloads affected on average upon attack",
+            "confidence": 0.95
+          },
+          {
+            "name": "local_pinning_risk_reduction_20_packages",
+            "value": 12.21,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "Best local pinning strategy defending 20 packages against top 1000 popular package attacks",
+            "is_sota_or_best": true,
+            "baseline_name": "no intervention",
+            "baseline_value": 0.0,
+            "evidence_quote": "Best local pinning reduce ecosystem-wide risk against top 1000 popular packages by 12.21% with defending only 20 packages",
+            "confidence": 0.95
+          },
+          {
+            "name": "local_pinning_risk_reduction_100_packages",
+            "value": 30.09,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "Best local pinning strategy defending 100 packages against top 1000 popular package attacks",
+            "is_sota_or_best": true,
+            "baseline_name": "no intervention",
+            "baseline_value": 0.0,
+            "evidence_quote": "Best local pinning reduce ecosystem-wide risk against top 1000 popular packages by 30.09% when defending 100.",
+            "confidence": 0.95
+          },
+          {
+            "name": "transitive_pinning_risk_reduction_20_packages",
+            "value": 51.34,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "Best transitive pinning strategy defending 20 packages against top 1000 popular package attacks",
+            "is_sota_or_best": true,
+            "baseline_name": "no intervention",
+            "baseline_value": 0.0,
+            "evidence_quote": "Best transitive pinning reduce by 51.34% when defending only 20 packages",
+            "confidence": 0.95
+          },
+          {
+            "name": "transitive_pinning_risk_reduction_100_packages",
+            "value": 75.81,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "Best transitive pinning strategy defending 100 packages against top 1000 popular package attacks",
+            "is_sota_or_best": true,
+            "baseline_name": "no intervention",
+            "baseline_value": 0.0,
+            "evidence_quote": "Best transitive pinning reduce by 75.81% when defending 100.",
+            "confidence": 0.95
+          },
+          {
+            "name": "lockfile_adoption_github_repositories",
+            "value": 44.21,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "Percentage of GitHub repositories committing package-lock.json",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "lock file: 44.21% of GitHub repositories in dataset did this (committed package-lock.json).",
+            "confidence": 0.9
+          },
+          {
+            "name": "dependency_graph_pinning_benefit_threshold",
+            "value": 498,
+            "unit": "dependencies",
+            "higher_is_better": false,
+            "setting": "Dependency graph size above which pinning effect on floating dependencies becomes negative",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "flips to negative for dependency graphs with more than 498 dependencies.",
+            "confidence": 0.95
+          }
+        ],
+        "overall_conclusion": "Pinning all direct dependencies does not provide a clear net benefit: it significantly increases exposure to vulnerabilities, outdated dependencies, and bloated dependency graphs, while offering only modest or inconsistent benefits for floating dependencies and automatic updates. Ecosystem-wide risk reductions are substantial mainly for targeted transitive pinning, which reduced risk against top popular packages by 51.34% when defending 20 packages and 75.81% when defending 100 packages, roughly two to three times better than local pinning. Betweenness weighted by downloads is the most effective package selection strategy.",
+        "comparable_notes": "Metrics compare no-intervention baseline against best local and best transitive pinning strategies for top 1000 popular packages; higher percentages indicate stronger ecosystem risk reduction. Local pinning risk reductions are 12.21% and 30.09% for 20 and 100 defended packages, while transitive pinning achieves 51.34% and 75.81% for the same counts. Lockfile adoption is reported as 44.21% of GitHub repositories. Model fit for automatic updates was poor (R^2<0.1), so automatic-update estimates should be interpreted cautiously.",
+        "cache_hit": true
+      },
+      "agent": {
+        "status": "ok",
+        "run_dir": "~/ai_scientist_inputs/FSE-2025-010_quantifying_the_security_and_maintenance/workspace/aris_2026-08-26_12-43-17",
+        "claims": [],
+        "metrics": [],
+        "overall_conclusion": null,
+        "sources": {
+          "metrics_path": "results/panel_regression_results.json",
+          "paper_tex_path": "paper/main.tex"
+        },
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 276,
+            "completion_tokens_details": {
+              "reasoning_tokens": 274
+            },
+            "prompt_tokens": 2763,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 3039
+          },
+          "attempt": 3
+        }
+      },
+      "comparison": {
+        "status": "ok",
+        "claim_alignment": [
+          {
+            "original_claim_id": "C1",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "Agent extraction contains no claims; original claim not addressed."
+          },
+          {
+            "original_claim_id": "C2",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "Agent extraction contains no claims; original claim not addressed."
+          },
+          {
+            "original_claim_id": "C3",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "Agent extraction contains no claims; original claim not addressed."
+          },
+          {
+            "original_claim_id": "C4",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "Agent extraction contains no claims; original claim not addressed."
+          },
+          {
+            "original_claim_id": "C5",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "Agent extraction contains no claims; original claim not addressed."
+          },
+          {
+            "original_claim_id": "C6",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "Agent extraction contains no claims; original claim not addressed."
+          },
+          {
+            "original_claim_id": "C7",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "Agent extraction contains no claims; original claim not addressed."
+          },
+          {
+            "original_claim_id": "C8",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "Agent extraction contains no claims; original claim not addressed."
+          }
+        ],
+        "metric_alignment": [
+          {
+            "original_metric": "unprotected_downloads_affected",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 1.93,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Agent reported no metrics, so no comparison is possible."
+          },
+          {
+            "original_metric": "local_pinning_risk_reduction_20_packages",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 12.21,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Agent reported no metrics, so no comparison is possible."
+          },
+          {
+            "original_metric": "local_pinning_risk_reduction_100_packages",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 30.09,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Agent reported no metrics, so no comparison is possible."
+          },
+          {
+            "original_metric": "transitive_pinning_risk_reduction_20_packages",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 51.34,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Agent reported no metrics, so no comparison is possible."
+          },
+          {
+            "original_metric": "transitive_pinning_risk_reduction_100_packages",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 75.81,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Agent reported no metrics, so no comparison is possible."
+          },
+          {
+            "original_metric": "lockfile_adoption_github_repositories",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 44.21,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Agent reported no metrics, so no comparison is possible."
+          },
+          {
+            "original_metric": "dependency_graph_pinning_benefit_threshold",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 498,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Agent reported no metrics, so no comparison is possible."
+          }
+        ],
+        "summary": {
+          "direction_consistency": "unknown",
+          "consistent_claim_ratio": 0.0,
+          "has_comparable_metrics": false,
+          "sota_improvement_summary": "N/A",
+          "overall_alignment_score": 0.0,
+          "score_rationale": "Agent extraction contains no claims or metrics, so there is no comparable evidence of alignment; all original claims are missing."
+        },
+        "warnings": [
+          "Agent run returned empty claims and metrics; unable to assess substantive alignment.",
+          "No agent overall_conclusion was extracted."
+        ],
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 2684,
+            "completion_tokens_details": {
+              "reasoning_tokens": 1442
+            },
+            "prompt_tokens": 3105,
+            "prompt_tokens_details": {
+              "cached_tokens": 2048
+            },
+            "total_tokens": 5789
+          },
+          "attempt": 0
+        }
+      },
+      "overall_alignment_score": 0.0,
+      "direction_consistency": "unknown"
+    },
+    "experiment_analysis": {
+      "run_dir": "~/ai_scientist_inputs/FSE-2025-010_quantifying_the_security_and_maintenance/workspace/aris_2026-08-26_12-43-17",
+      "task_dir": "~/ai_scientist_inputs/FSE-2025-010_quantifying_the_security_and_maintenance",
+      "status": "ok",
+      "metrics_path": "results/panel_regression_results.json",
+      "experiment_success": {
+        "status": "ok",
+        "success": true,
+        "metrics_path": "results/panel_regression_results.json",
+        "absolute_metrics_path": "~/ai_scientist_inputs/FSE-2025-010_quantifying_the_security_and_maintenance/workspace/aris_2026-08-26_12-43-17/results/panel_regression_results.json",
+        "checks": {
+          "has_results_file": true,
+          "non_stub": true,
+          "numeric_leaf_count": 160,
+          "min_numeric_ok": true
+        },
+        "manifest_hints": {
+          "status": {
+            "idea": true,
+            "experiment_plan": true,
+            "experiment_log": false,
+            "metrics": true,
+            "review": true,
+            "narrative": true,
+            "paper_tex": true,
+            "paper_pdf": true
+          },
+          "returncode": 1,
+          "benchmark_complete": false,
+          "artifacts_metrics_flag": false
+        },
+        "warnings": [
+          "manifest.returncode=1",
+          "manifest.benchmark_complete=false"
+        ],
+        "suspicious_values": [],
+        "note": "success=true requires substantive results (framework-aware path) with >=3 numeric leaves. Supports metrics.json, results.json, experiment_results.txt, etc. Manifest returncode/benchmark_complete are soft warnings only."
+      },
+      "idea_code_consistency": {
+        "status": "ok",
+        "idea_path": "idea-stage/IDEA_REPORT.md",
+        "code_files": [
+          "project/experiment_runner.py"
+        ],
+        "score_scale": "1-5",
+        "score": 5.0,
+        "label": "Excellent alignment",
+        "justification": "The visible experiment runner code directly matches the stated research idea. Its docstring, imports, metric definitions, published coefficients, and output paths implement the planned RQ1 two-way fixed-effects panel regression and RQ2 re-analysis from precomputed intervention tables. No divergence is visible in the provided code excerpt.",
+        "matched_elements": [
+          "RQ1 PanelOLS two-way fixed-effects panel regression",
+          "Five outcome metrics for RQ1",
+          "RQ2 re-analysis from precomputed intervention tables",
+          "Comparison against published coefficients for npm/woc",
+          "Expected outputs including metrics.json, regression results, CSVs, and figures"
+        ],
+        "missing_or_divergent_elements": [],
+        "rubric": "Excellent alignment: experiment entrypoints, metrics, and protocol clearly realize the stated idea (including scoped reductions that match the idea text).",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 696,
+            "completion_tokens_details": {
+              "reasoning_tokens": 527
+            },
+            "prompt_tokens": 2263,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 2959
+          },
+          "attempt": 0
+        }
+      },
+      "setup_coverage": {
+        "status": "ok",
+        "overall_coverage": 1.0,
+        "datasets": {
+          "gold_count": 1,
+          "hit_count": 1,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "npm package metadata and dependency graphs (historical)"
+          ],
+          "misses": []
+        },
+        "baselines": {
+          "gold_count": 4,
+          "hit_count": 4,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "Floating version constraints (no pinning)",
+            "Local pinning with no coordination (existing npm pinning)",
+            "Transitive pinning (hypothetical npm extension)",
+            "Defense selection heuristics (download-based, out-degree-based, betweenness centrality-based, and combinations)"
+          ],
+          "misses": []
+        },
+        "metrics": {
+          "gold_count": 6,
+          "hit_count": 6,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "Attack surface (number of floating dependencies)",
+            "Number of outdated dependencies",
+            "Exposure to security vulnerabilities (n_vuln)",
+            "Number of breaking changes",
+            "Number of dependency conflicts (n_bloated)",
+            "Ecosystem risk (expected download fraction affected)"
+          ],
+          "misses": []
+        },
+        "agent_protocol": {},
+        "gold_protocol": {},
+        "dataset_dirs": [
+          "dataset_candidate"
+        ],
+        "flags": {
+          "weaker_baseline_suspected": false,
+          "weak_protocol": [],
+          "synthetic_data": "unexpected_synthetic_or_local_only_data",
+          "gold_allows_synthetic": false
+        },
+        "gold_sources": [
+          "~/ai_scientist_inputs/FSE-2025-010_quantifying_the_security_and_maintenance/task.md",
+          "~/ai_scientist_inputs/FSE-2025-010_quantifying_the_security_and_maintenance/metadata.json"
+        ],
+        "note": "Coverage is name/alias matching against task.md Datasets/Baselines/Metrics. weak_protocol flags large reductions in trials/timeout vs Constraints. Synthetic corpora are not penalized when the task itself requires synthesis."
+      },
+      "ablation_significance": {
+        "status": "ok",
+        "idea_path": "idea-stage/IDEA_REPORT.md",
+        "significance_signals_rule_based": {
+          "signals": [
+            "paper_contains:bootstrap",
+            "paper_contains:confidence interval",
+            "paper_contains:p<"
+          ],
+          "artifact_paths": [],
+          "has_any_significance_artifact": true
+        },
+        "evidence_format": "raw_json",
+        "study_type": "reproduction",
+        "components": [
+          {
+            "name": "Official Zenodo data artifact and data filtering",
+            "role": "dataset",
+            "ablation_expected": false,
+            "significance_expected": false,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "Reproduction relies on the official curated data; removing or substituting this artifact is not meaningful for this study type.",
+            "significance_status": "not_required",
+            "significance_evidence": "No inferential test is needed for data artifact availability."
+          },
+          {
+            "name": "npm vs woc source split",
+            "role": "dataset split",
+            "ablation_expected": false,
+            "significance_expected": false,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "The two ecosystems are analyzed separately as part of the reproduction, not as a removable module.",
+            "significance_status": "not_required",
+            "significance_evidence": "Source-specific results are descriptive dimensions of the same reproduction."
+          },
+          {
+            "name": "Pinning treatment contrast (original vs all-pinned vs all-floating)",
+            "role": "controlled comparison",
+            "ablation_expected": false,
+            "significance_expected": true,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "This treatment contrast is the core RQ1 manipulation; removing it would eliminate the research question, so it is not an ablation.",
+            "significance_status": "present",
+            "significance_evidence": "metrics.json reports coef_pinning, se_pinning, and p_pinning for npm and woc outcomes; most p-values are <0.001."
+          },
+          {
+            "name": "Two-way fixed-effects panel regression with clustered standard errors",
+            "role": "statistical model",
+            "ablation_expected": false,
+            "significance_expected": true,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "This statistical model is the analytical core; removing it would remove the ability to estimate effects, so ablation is not applicable.",
+            "significance_status": "present",
+            "significance_evidence": "The model produces coefficients, standard errors, and p-values; significance tests are reported for key predictors."
+          }
+        ],
+        "ablation_coverage_score": null,
+        "overall_ablation_ok": null,
+        "overall_significance_ok": null,
+        "summary": "",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 2034,
+            "completion_tokens_details": {
+              "reasoning_tokens": 1517
+            },
+            "prompt_tokens": 702,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 2736
+          },
+          "attempt": 0
+        }
+      },
+      "results_paper_consistency": {
+        "status": "ok",
+        "paper_tex": "paper/main.tex",
+        "paper_kind": "paper_tex",
+        "results_format": "raw_json",
+        "digest_hint": {
+          "unfavorable_count": 0,
+          "trial_fail_count": 0,
+          "trial_success_count": 0,
+          "metadata": {}
+        },
+        "score_scale": "1-5",
+        "method": "Direct LLM comparison: agent's FINAL results artifact (metrics.json summary) vs paper Results/Discussion/Conclusion. Interim failed runs are NOT evidence unless still present in the final metrics file.",
+        "score": null,
+        "consistency_label": null,
+        "hiding_unfavorable_suspected": false,
+        "hiding_confidence": null,
+        "justification": "",
+        "supported_claims": [],
+        "unsupported_or_overstated_claims": [],
+        "numeric_mismatches": [],
+        "unfavorable_in_final_results": [],
+        "unfavorable_acknowledged_in_paper": [],
+        "unfavorable_missing_from_paper": [],
+        "rubric": null,
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 222,
+            "completion_tokens_details": {
+              "reasoning_tokens": 220
+            },
+            "prompt_tokens": 3262,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 3484
+          },
+          "attempt": 0
+        }
+      },
+      "scores": {
+        "experiment_success": true,
+        "idea_code_score": 5.0,
+        "setup_coverage": 1.0,
+        "ablation_coverage_score": null,
+        "overall_ablation_ok": null,
+        "overall_significance_ok": null,
+        "results_paper_score": null,
+        "hiding_unfavorable_suspected": false
+      },
+      "notes": [
+        "Axes 1,2,3,4,6 in experiment_analysis (figures excluded).",
+        "setup_coverage matches task.md Datasets/Baselines/Metrics; weak_protocol flags reductions vs Constraints.",
+        "Axis 6: final normalized results vs paper; interim run logs not used as ground truth."
+      ]
+    },
+    "literature_review": {
+      "run_dir": "~/ai_scientist_inputs/FSE-2025-010_quantifying_the_security_and_maintenance/workspace/aris_2026-08-26_12-43-17",
+      "task_dir": "~/ai_scientist_inputs/FSE-2025-010_quantifying_the_security_and_maintenance",
+      "status": "ok",
+      "as_of_year": 2026,
+      "agent_ref_count": 6,
+      "sources": [
+        {
+          "path": "~/ai_scientist_inputs/FSE-2025-010_quantifying_the_security_and_maintenance/workspace/aris_2026-08-26_12-43-17/paper/references.bib",
+          "kind": "bib"
+        }
+      ],
+      "collection_audit": {
+        "cited_keys_count": 6,
+        "filter_mode": "paper_cite_keys",
+        "bib_total_before_filter": 6,
+        "bib_after_filter": 6,
+        "uncited_bib_skipped": 0,
+        "cited_keys_sample": [
+          "berretta2025dependency",
+          "decan2017dependency",
+          "he2025pinning",
+          "jafari2020dependency",
+          "okafor2024sok",
+          "schmid2026supplychain"
+        ],
+        "thebibliography_after_filter": 0,
+        "agent_ref_count": 6
+      },
+      "fabrication": {
+        "status": "ok",
+        "scholarly_count": 6,
+        "verified_count": 6,
+        "fake_count": 0,
+        "lookup_failed_count": 0,
+        "non_paper_count": 0,
+        "fabrication_rate": 0.0,
+        "items": [
+          {
+            "title": "Pinning Is Futile: You Need More Than Local Dependency Versioning to Defend against Supply Chain Attacks",
+            "doi": "10.1145/3715728",
+            "arxiv_id": "",
+            "year": 2025,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Pinning Is Futile: You Need More Than Local Dependency Versioning to Defend against Supply Chain Attacks",
+            "resolved_year": 2025,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "he2025pinning",
+            "source_kind": "bib"
+          },
+          {
+            "title": "SoK: Analysis of Software Supply Chain Security by Establishing Secure Design Properties",
+            "doi": "",
+            "arxiv_id": "2406.10109",
+            "year": 2024,
+            "status": "verified",
+            "matched_via": "s2_arxiv",
+            "resolved_title": "SoK: Analysis of Software Supply Chain Security by Establishing Secure Design Properties",
+            "resolved_year": 2022,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "okafor2024sok",
+            "source_kind": "bib"
+          },
+          {
+            "title": "Dependency Smells in JavaScript Projects",
+            "doi": "",
+            "arxiv_id": "2010.14573",
+            "year": 2020,
+            "status": "verified",
+            "matched_via": "arxiv_id",
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "jafari2020dependency",
+            "source_kind": "bib"
+          },
+          {
+            "title": "An Empirical Comparison of Dependency Network Evolution in Seven Software Packaging Ecosystems",
+            "doi": "",
+            "arxiv_id": "1710.04936",
+            "year": 2017,
+            "status": "verified",
+            "matched_via": "s2_arxiv",
+            "resolved_title": "An empirical comparison of dependency network evolution in seven software packaging ecosystems",
+            "resolved_year": 2017,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "decan2017dependency",
+            "source_kind": "bib"
+          },
+          {
+            "title": "Dependency Update Adoption Patterns in the Maven Software Ecosystem",
+            "doi": "",
+            "arxiv_id": "2504.07310",
+            "year": 2025,
+            "status": "verified",
+            "matched_via": "s2_arxiv",
+            "resolved_title": "Dependency Update Adoption Patterns in the Maven Software Ecosystem",
+            "resolved_year": 2025,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "berretta2025dependency",
+            "source_kind": "bib"
+          },
+          {
+            "title": "Software Supply Chain Smells: Lightweight Analysis for Secure Dependency Management",
+            "doi": "",
+            "arxiv_id": "2603.24282",
+            "year": 2026,
+            "status": "verified",
+            "matched_via": "s2_arxiv",
+            "resolved_title": "Software Supply Chain Smells: Lightweight Analysis for Secure Dependency Management",
+            "resolved_year": 2026,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "schmid2026supplychain",
+            "source_kind": "bib"
+          }
+        ],
+        "cache_path": "~/ai_scientist_evals/FSE-2025-010_quantifying_the_security_and_maintenance/reference_verify_cache.json",
+        "override_path": "~/ai_scientist_evals/FSE-2025-010_quantifying_the_security_and_maintenance/reference_verify_overrides.json",
+        "note": "fabrication_rate = fake / (verified + fake); lookup_failed (API errors) excluded. GitHub/docs/tool URLs are non_paper and excluded from the rate. To manually correct a false negative, edit reference_verify_overrides.json (key=normalized title / doi / cite_key; value=\"verified\" or a result dict), then re-run."
+      },
+      "coverage": {
+        "status": "ok",
+        "gold_source": "~/ai_scientist_inputs/FSE-2025-010_quantifying_the_security_and_maintenance/mineru_sections.json",
+        "gold_count": 73,
+        "gold_is_original_paper_references": true,
+        "gold_is_openalex_subset": false,
+        "agent_count": 6,
+        "intersection_size": 1,
+        "recall": 0.0136986301369863,
+        "precision": 0.16666666666666666,
+        "matched_gold_keys": [
+          "mineru_ref_14"
+        ],
+        "primary_metric": "recall",
+        "note": "Primary metric is recall against the original paper bibliography (titles from mineru_sections.json REFERENCES; related_work.json used only to enrich DOI/year or as fallback if mineru titles are empty). Denominator = |original paper references|. Precision is secondary (agent may cite valid extra papers)."
+      },
+      "recency": {
+        "status": "ok",
+        "dated_count": 6,
+        "unknown_year_count": 0,
+        "year_histogram": {
+          "2017": 1,
+          "2020": 1,
+          "2022": 1,
+          "2025": 2,
+          "2026": 1
+        },
+        "windows": {
+          "3": {
+            "years": 3,
+            "cutoff_year_inclusive": 2023,
+            "recent_count": 3,
+            "recent_ratio": 0.5
+          },
+          "5": {
+            "years": 5,
+            "cutoff_year_inclusive": 2021,
+            "recent_count": 4,
+            "recent_ratio": 0.6666666666666666
+          }
+        }
+      },
+      "scores": {
+        "fabrication_rate": 0.0,
+        "coverage_recall": 0.0136986301369863,
+        "coverage_precision": 0.16666666666666666,
+        "recency_ratio_3y": 0.5,
+        "recency_ratio_5y": 0.6666666666666666
+      }
+    }
+  },
+  "scores": {
+    "completeness": {
+      "complete": true,
+      "overall_score": 0.8589,
+      "required_score": 1.0,
+      "bonus_score": 0.17
+    },
+    "peer_review": {
+      "status": "ok",
+      "optional": false,
+      "overall_score": 4.4,
+      "score_scale": "1-10",
+      "scoring_method": "paperreview_apr"
+    },
+    "idea_generation": {
+      "status": "ok",
+      "overall_score": 2.0,
+      "dimensions": {
+        "novelty": 1.0,
+        "feasibility": 4.0,
+        "clarity": 4.0
+      },
+      "novelty_category": "Existing",
+      "solution_space_status": "ok"
+    },
+    "alignment": {
+      "status": "ok",
+      "direction_consistency": "unknown",
+      "overall_alignment_score": 0.0
+    },
+    "literature_review": {
+      "fabrication_rate": 0.0,
+      "coverage_recall": 0.0136986301369863,
+      "coverage_precision": 0.16666666666666666,
+      "recency_ratio_3y": 0.5,
+      "recency_ratio_5y": 0.6666666666666666
+    },
+    "experiment_analysis": {
+      "experiment_success": true,
+      "idea_code_score": 5.0,
+      "setup_coverage": 1.0,
+      "ablation_coverage_score": null,
+      "overall_ablation_ok": null,
+      "overall_significance_ok": null,
+      "results_paper_score": null,
+      "hiding_unfavorable_suspected": false
+    }
+  },
+  "fair_scores": {
+    "applicable_axes": [
+      "completeness",
+      "idea_generation",
+      "peer_review",
+      "alignment",
+      "literature_review",
+      "experiment_analysis"
+    ],
+    "skipped_axes": [],
+    "fair_mean_0_1": 0.5574,
+    "note": "fair_mean_0_1 averages only applicable axes; optional peer review and framework-inapplicable literature are excluded from the denominator."
+  },
+  "evals_root": "~/ai_scientist_evals",
+  "claims_cache": "~/ai_scientist_evals/FSE-2025-010_quantifying_the_security_and_maintenance/original_claims.json",
+  "solution_space_cache": "~/ai_scientist_evals/FSE-2025-010_quantifying_the_security_and_maintenance/solution_space.json"
+}

@@ -1,0 +1,38 @@
+{
+  "forbid_synthetic_pilot": true,
+  "agent_data_note": "Use the mounted TopScoreWrongExam artifact at `dataset_candidate/topscorewrongexam-issta2025/`. Original datasets under `original_datasets/` (BigVul / Devign / DiverseVul); paper labels under `labeled_samples/`; reproduction scripts under `scripts/`.",
+  "required_metrics": [
+    "accuracy",
+    "precision",
+    "recall",
+    "f1_score",
+    "auc_roc",
+    "context_dependency_rate",
+    "cohens_kappa"
+  ],
+  "benchmark_rules": [
+    "Artifact is at `dataset_candidate/topscorewrongexam-issta2025/` (workspace symlink; use for ls/read_file and $TOPSCOREWRONGEXAM_HOME).",
+    "Primary inputs: original_datasets/BigVul/MSR_data_cleaned.csv, original_datasets/Devign/function.json, original_datasets/DiverseVul/diversevul_20230702.json, labeled_samples/, scripts/rq_2/.",
+    "Use the publicly available BigVul, Devign, and DiverseVul datasets as stated in the task.",
+    "Classification baselines must operate solely on function source code without external calling context.",
+    "Forbidden: fabricating context-dependency rates, Cohen's Kappa, or classifier F1/AUC that were not measured.",
+    "Follow the paper evaluation protocol (manual/automated context-dependency analysis + spurious word-count classifier) as stated in the task."
+  ],
+  "non_goals": [
+    "Using a handful of hand-written toy functions as the sole evaluation evidence",
+    "Fabricating context-dependency or spurious-feature results that were not executed",
+    "Substituting unrelated vulnerability corpora for BigVul / Devign / DiverseVul"
+  ],
+  "dataset_env": {
+    "TOPSCOREWRONGEXAM_HOME": "dataset_candidate/topscorewrongexam-issta2025",
+    "BIGVUL_HOME": "dataset_candidate/topscorewrongexam-issta2025/original_datasets/BigVul",
+    "DEVIGN_HOME": "dataset_candidate/topscorewrongexam-issta2025/original_datasets/Devign",
+    "DIVERSEVUL_HOME": "dataset_candidate/topscorewrongexam-issta2025/original_datasets/DiverseVul"
+  },
+  "exclude_from_agent": [
+    "container_setup.sh",
+    "README.md",
+    "benchmark_config.json",
+    "requirements.txt"
+  ]
+}

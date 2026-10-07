@@ -1,0 +1,1029 @@
+{
+  "run_dir": "~/ai_scientist_inputs/ASE-2025-017_native_proof_certification_for_core_guid/workspace/deepscientist_2026-08-11_15-37-36",
+  "task_dir": "~/ai_scientist_inputs/ASE-2025-017_native_proof_certification_for_core_guid",
+  "framework": "deepscientist",
+  "fairness_audit": [
+    {
+      "axis": "completeness",
+      "was_unfair": "Required both paper.tex AND paper.pdf; any tool missing one failed equally.",
+      "fix": "Paper gate: PDF=1.0; TeX-only=0.5; ``complete`` requires PDF."
+    },
+    {
+      "axis": "completeness",
+      "was_unfair": "``results`` counted stub/seed JSON (dataset_candidate/metrics.json).",
+      "fix": "``results`` requires substantive numeric results via results_normalize."
+    },
+    {
+      "axis": "experiment_success",
+      "was_unfair": "Only metrics.json; ignored results.json / experiment_results.txt.",
+      "fix": "Framework-ordered result candidates + normalized loaders."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Penalized tools with no bib; airesearcher has no workspace references.",
+      "fix": "literature_applicable=false → status not_applicable; excluded from fair aggregate."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "related_work.json subset as gold made recall hard to interpret.",
+      "fix": "Coverage gold is original paper REFERENCES from mineru; related_work only enriches metadata/fallback."
+    },
+    {
+      "axis": "peer_review",
+      "was_unfair": "Missing Stanford report looked like evaluation failure.",
+      "fix": "status not_provided; optional axis, never counts as tool failure."
+    },
+    {
+      "axis": "paths/find_results",
+      "was_unfair": "Picked downloads/** and sandbox noise (e.g. airesearcher LLVM tree).",
+      "fix": "Exclude downloads/, seeds/, dataset_candidate/, sandbox junk paths."
+    },
+    {
+      "axis": "paths/framework_noise",
+      "was_unfair": "DeepScientist .deepscientist_npm / runtime / skills templates counted as code/paper/results.",
+      "fix": "FRAMEWORK_NOISE_DIRS+markers; quest worktree + eval_output results; paper md drafts; reject template tex."
+    },
+    {
+      "axis": "paths/paper_tex",
+      "was_unfair": "tiny_scientist / ACL runs store paper under latex/*.tex; evaluator only looked at paper/main.tex.",
+      "fix": "latex/**/*.tex with substantive-body heuristic; find_paper_document uses same rules."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Entire custom.bib (300+ anthology entries) verified when paper had zero \\cite commands.",
+      "fix": "collect_agent_references filters bib to in-text cite keys; skips uncited bulk bib (>40 entries)."
+    },
+    {
+      "axis": "paths/ai_scientist_summaries",
+      "was_unfair": "AI Scientist can persist substantive results and paper-like drafts in *_summary.json logs rather than paper/main.tex or results/**/*.json.",
+      "fix": "Treat draft_summary/research_summary as weak paper documents and summary JSONs as result candidates."
+    },
+    {
+      "axis": "framework/ai_scientist_v2",
+      "was_unfair": "Manifest framework ``ai_scientist_v2`` fell through to profile ``unknown``, skipping AI-Scientist idea/result path priorities.",
+      "fix": "Normalize ``ai_scientist_v2`` (and common aliases) to profile key ``ai_scientist``."
+    },
+    {
+      "axis": "idea_generation",
+      "was_unfair": "plan.md/todos.md weak proxies scored same as structured idea.json.",
+      "fix": "Framework idea_priority tried first; missing idea → not_applicable where appropriate."
+    }
+  ],
+  "generated_at": "2026-10-01T14:28:03",
+  "axes": [
+    "alignment",
+    "completeness",
+    "experiment_analysis",
+    "idea_generation",
+    "literature_review",
+    "peer_review"
+  ],
+  "results": {
+    "completeness": {
+      "framework": "deepscientist",
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-017_native_proof_certification_for_core_guid/workspace/deepscientist_2026-08-11_15-37-36",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-017_native_proof_certification_for_core_guid",
+      "complete": true,
+      "required_score": 1.0,
+      "bonus_score": 0.0,
+      "overall_score": 0.83,
+      "missing": [],
+      "required": {
+        "idea": {
+          "path": "artifacts/idea/selected_idea.md",
+          "bytes": 3976,
+          "via": "candidate"
+        },
+        "code": {
+          "count": 14,
+          "files": [
+            {
+              "path": "DeepScientist/quests/001/.ds/worktrees/idea-idea-ffa8912a/project/maxcert/formats.py",
+              "bytes": 4941,
+              "via": "glob"
+            },
+            {
+              "path": "DeepScientist/quests/001/.ds/worktrees/idea-idea-ffa8912a/project/maxcert/run_experiment.py",
+              "bytes": 10201,
+              "via": "glob"
+            },
+            {
+              "path": "DeepScientist/quests/001/.ds/worktrees/idea-idea-ffa8912a/project/maxcert/solver.py",
+              "bytes": 4828,
+              "via": "glob"
+            },
+            {
+              "path": "DeepScientist/quests/001/.ds/worktrees/idea-idea-ffa8912a/project/maxcert/verifier.py",
+              "bytes": 6985,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/main/run_experiment.py",
+              "bytes": 6315,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/main/src/maxcert.py",
+              "bytes": 7557,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/main/src/oll_solver.py",
+              "bytes": 8265,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/main/src/sat_solver.py",
+              "bytes": 8964,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/main/src/verifier.py",
+              "bytes": 7467,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/main/src/wcnf_parser.py",
+              "bytes": 5979,
+              "via": "glob"
+            },
+            {
+              "path": "project/maxcert/formats.py",
+              "bytes": 4941,
+              "via": "glob"
+            },
+            {
+              "path": "project/maxcert/run_experiment.py",
+              "bytes": 6683,
+              "via": "glob"
+            },
+            {
+              "path": "project/maxcert/solver.py",
+              "bytes": 4861,
+              "via": "glob"
+            },
+            {
+              "path": "project/maxcert/verifier.py",
+              "bytes": 4949,
+              "via": "glob"
+            }
+          ]
+        },
+        "results": {
+          "substantive": true,
+          "normalized_path": "DeepScientist/quests/001/.ds/worktrees/idea-idea-ffa8912a/experiments/main/run-001/results.json",
+          "numeric_leaf_count": 130,
+          "discovered_files": [
+            {
+              "path": "DeepScientist/quests/001/.ds/worktrees/idea-idea-ffa8912a/experiments/main/run-001/results.json",
+              "bytes": 7722,
+              "via": "glob"
+            },
+            {
+              "path": "results/experiment_001/results.json",
+              "bytes": 4057,
+              "via": "glob"
+            },
+            {
+              "path": "DeepScientist/quests/001/.ds/worktrees/idea-idea-ffa8912a/artifacts/reports/report-0f3ccb75.json",
+              "bytes": 2705,
+              "via": "glob"
+            },
+            {
+              "path": "DeepScientist/quests/001/.ds/worktrees/idea-idea-ffa8912a/artifacts/reports/report-1ec6d84b.json",
+              "bytes": 2617,
+              "via": "glob"
+            },
+            {
+              "path": "DeepScientist/quests/001/.ds/worktrees/idea-idea-ffa8912a/artifacts/reports/report-1ed5a51f.json",
+              "bytes": 2979,
+              "via": "glob"
+            },
+            {
+              "path": "DeepScientist/quests/001/.ds/worktrees/idea-idea-ffa8912a/artifacts/reports/report-325441c3.json",
+              "bytes": 2496,
+              "via": "glob"
+            },
+            {
+              "path": "DeepScientist/quests/001/.ds/worktrees/idea-idea-ffa8912a/artifacts/reports/report-5c160203.json",
+              "bytes": 2768,
+              "via": "glob"
+            },
+            {
+              "path": "DeepScientist/quests/001/.ds/worktrees/idea-idea-ffa8912a/artifacts/reports/report-6c575697.json",
+              "bytes": 2713,
+              "via": "glob"
+            },
+            {
+              "path": "DeepScientist/quests/001/.ds/worktrees/idea-idea-ffa8912a/artifacts/reports/report-835c3fd0.json",
+              "bytes": 3342,
+              "via": "glob"
+            },
+            {
+              "path": "DeepScientist/quests/001/.ds/worktrees/idea-idea-ffa8912a/artifacts/reports/report-ee343793.json",
+              "bytes": 2232,
+              "via": "glob"
+            }
+          ],
+          "metrics_keys_sample": [
+            "results",
+            "summary",
+            "note"
+          ]
+        },
+        "paper": {
+          "tex": null,
+          "pdf": {
+            "path": "paper/main.pdf",
+            "bytes": 50087,
+            "via": "candidate"
+          },
+          "md": {
+            "path": "paper/paper.md",
+            "bytes": 18479,
+            "via": "candidate"
+          },
+          "json": null,
+          "status": "pdf",
+          "score": 1.0
+        }
+      },
+      "bonus": {
+        "experiment_plan": null,
+        "experiment_log": null,
+        "review": null,
+        "readme": null,
+        "narrative": null,
+        "bib": null
+      },
+      "manifest_status": {
+        "launched": true
+      },
+      "gate_scores": {
+        "idea": 1.0,
+        "code": 1.0,
+        "results": 1.0,
+        "paper": 1.0
+      },
+      "fairness": {
+        "gates": [
+          "idea",
+          "code",
+          "results",
+          "paper"
+        ],
+        "paper_gate_rule": "PDF=1.0; TeX-only/md_only/json_only=0.5; complete requires PDF",
+        "results_gate_rule": "substantive numeric results via framework-aware normalize_results",
+        "audit_ref": "framework_profile.FAIRNESS_AUDIT"
+      },
+      "notes": [
+        "Required: idea, code, substantive results, paper (PDF full; TeX/markdown/JSON draft half).",
+        "Stub/seed metrics (e.g. dataset_candidate/metrics.json) do not satisfy results.",
+        "Framework noise (.deepscientist_npm, skills/templates, runtime) is excluded from code/results/paper.",
+        "Manifest status is informational; disk presence is authoritative."
+      ]
+    },
+    "idea_generation": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-017_native_proof_certification_for_core_guid/workspace/deepscientist_2026-08-11_15-37-36",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-017_native_proof_certification_for_core_guid",
+      "idea_path": "~/ai_scientist_inputs/ASE-2025-017_native_proof_certification_for_core_guid/workspace/deepscientist_2026-08-11_15-37-36/artifacts/idea/selected_idea.md",
+      "status": "ok",
+      "dimensions": {
+        "novelty": {
+          "score": 3.0,
+          "justification": "The idea is not completely existing because it proposes a new proof format rather than reusing VeriPB, but the core certification problem for core-guided MaxSAT is already solved by R58; the proposed native format is a meaningful optimization of proof representation, not a new paradigm. Closest prior R59 takes initial steps toward proof logging and R63 builds Max-SAT certificates via SAT resolution refutations, so this work extends those lines incrementally.",
+          "rubric": "Incremental: a meaningful extension or optimization of prior baseline work that fixes a concrete prior limitation, but the core paradigm is unchanged.",
+          "category": "Incremental",
+          "nearest_solution_space_ids": [
+            "R58",
+            "R59",
+            "R63"
+          ],
+          "differentiation": "R58 already certifies core-guided MaxSAT via pseudo-Boolean proof logging with structure sharing, weight-aware core extraction, and hardening; MaxCERT's novelty is a native domain-specific proof format that directly captures OLL operations (core extraction, relaxation, hardening, bound updates, totalizer, clique) to avoid PB translation overhead. However the idea's claim of 'Core-guided support: Yes (first)' is false relative to R58."
+        },
+        "feasibility": {
+          "score": 3.0,
+          "justification": "Implementation requires building a Python-based core-guided OLL MaxSAT solver with proof logging and a standalone Python verifier, followed by evaluation on 50 competition instances. This is nontrivial coding (e.g., embedding SAT sub-proof checking, totalizer and bound tracking) but uses standard tools and is within a typical research engineering effort; no infeasible scale or closed-source dependencies.",
+          "rubric": "Moderate workload (sweet spot): needs nontrivial coding such as scripting existing open-source tools (parsers, CFG extractors) or building a custom graph-processing pipeline; standard research engineering effort."
+        },
+        "clarity": {
+          "score": 3.0,
+          "justification": "The idea provides a clear frame (proof format steps, verifier checks, RQs, metrics, success criteria) but lacks key technical execution details such as exact representation of CORE_UNSAT mini-SAT-proof fragments ('resolution chain or DUP derivation' is ambiguous), how totalizer/clique steps are encoded and checked, and it only compares against 'estimated VeriPB encoding size' rather than a real certified-cgss baseline.",
+          "rubric": "Complete frame but missing details: What/Why/How are present, yet key technical execution details or specific comparison plans are underspecified."
+        }
+      },
+      "overall_score": 3.0,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "novelty",
+        "feasibility",
+        "clarity"
+      ],
+      "solution_space": {
+        "status": "ok",
+        "paper_count": 63,
+        "entry_count": 63,
+        "cache_hit": false,
+        "source_file": "~/ai_scientist_inputs/ASE-2025-017_native_proof_certification_for_core_guid/mineru_sections.json",
+        "stats": {
+          "papers": 63,
+          "extracted": 63,
+          "usable_abstracts": 24,
+          "citation_meta_abstracts": 0,
+          "missing_abstracts": 39,
+          "mineru_titles": 59,
+          "related_work_titles": 47,
+          "abstracts_attached": 24,
+          "related_work_extras": 4,
+          "batches": 4
+        },
+        "error": null
+      },
+      "notes": [
+        "Scores the intermediate idea artifact (not the final paper).",
+        "Dimensions: novelty, feasibility, clarity (each 1-5). Excitement removed.",
+        "Novelty is scored against a Solution Space built from mineru REFERENCES titles (+ related_work.json abstracts when matched)."
+      ],
+      "idea_via": "candidate",
+      "idea_relative": "artifacts/idea/selected_idea.md",
+      "summary": "MaxCERT proposes a native proof format for core-guided OLL Max",
+      "strengths": [],
+      "weaknesses": [],
+      "llm_meta": {
+        "model": "deepseek-v4-pro-0813",
+        "base_url": "https://api-sg.umodelverse.ai/v1",
+        "usage": {
+          "completion_tokens": 1645,
+          "completion_tokens_details": {
+            "reasoning_tokens": 1167
+          },
+          "prompt_cache_hit_tokens": 128,
+          "prompt_cache_miss_tokens": 514,
+          "prompt_tokens": 642,
+          "prompt_tokens_details": {
+            "cached_tokens": 128
+          },
+          "total_tokens": 2287
+        },
+        "attempt": 0
+      }
+    },
+    "peer_review": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-017_native_proof_certification_for_core_guid/workspace/deepscientist_2026-08-11_15-37-36",
+      "review_report": "~/ai_scientist_inputs/ASE-2025-017_native_proof_certification_for_core_guid/workspace/deepscientist_2026-08-11_15-37-36/artifacts/peer_review/stanford_apr.md",
+      "paper_pdf": "~/ai_scientist_inputs/ASE-2025-017_native_proof_certification_for_core_guid/workspace/deepscientist_2026-08-11_15-37-36/paper/main.pdf",
+      "paper_tex": null,
+      "status": "ok",
+      "dimensions": {},
+      "overall_score": 4.8,
+      "score_scale": "1-10",
+      "dimension_order": [],
+      "notes": [
+        "Scored from paperreview.ai (Stanford APR) native ratings; benchmark 5-dimension LLM rubric skipped.",
+        "Overall scale: 1-10."
+      ],
+      "paperreview": {
+        "status": "cached",
+        "hint": "Cached APR score found; no re-upload."
+      },
+      "scoring_method": "paperreview_apr",
+      "scoring_source": "paperreview_json",
+      "apr_dimensions": {
+        "Claims_Support": -1.0,
+        "Experimental_Soundness": -1.0,
+        "Writing_Clarity": 0.0,
+        "Prior_Work_Context": 0.0,
+        "Question_Importance": 1.0,
+        "Originality": 1.0,
+        "Value_to_Community": 0.0
+      },
+      "summary": "",
+      "red_flags": []
+    },
+    "alignment": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-017_native_proof_certification_for_core_guid/workspace/deepscientist_2026-08-11_15-37-36",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-017_native_proof_certification_for_core_guid",
+      "status": "ok",
+      "original": {
+        "paper_title": "Efficient and Verifiable Proof Logging for MaxSAT Solving",
+        "selection": {
+          "num_blocks": 6,
+          "total_chars": 31666,
+          "inferred_roles": {
+            "abstract": 1,
+            "introduction": 1,
+            "experiment": 3,
+            "conclusion": 1
+          },
+          "mineru_raw_keys": {
+            "field:abstract": 1,
+            "field:introduction": 1,
+            "field:experiment": 1,
+            "other": 2,
+            "conclusion": 1
+          },
+          "infer_reasons": {
+            "top_level_field": 3,
+            "body_override": 2,
+            "title": 1
+          },
+          "rescued_from_other": 2,
+          "note": "mineru key is unreliable; blocks are selected by title/body/inheritance. rescued_from_other counts sections labeled other but treated as typed roles."
+        },
+        "claims": [
+          {
+            "id": "C1",
+            "statement": "The framework is the first MaxSAT-specific proof-logging framework for core-guided OLL solvers.",
+            "direction": "neutral",
+            "metric_names": [],
+            "evidence_quote": "the first MaxSAT-specific proof-logging framework for core-guided OLL solvers",
+            "confidence": 1.0
+          },
+          {
+            "id": "C2",
+            "statement": "The implementation captures the full OLL workflow and integrates into EvalMaxSAT, a top-ranked OLL solver.",
+            "direction": "neutral",
+            "metric_names": [],
+            "evidence_quote": "we implement both a human-readable normal logger and a compact binary DAG logger within EvalMaxSAT",
+            "confidence": 1.0
+          },
+          {
+            "id": "C3",
+            "statement": "Proof logging adds negligible runtime overhead in both normal and DAG modes.",
+            "direction": "no_difference",
+            "metric_names": [
+              "median_runtime_overhead_standard",
+              "median_runtime_overhead_dag"
+            ],
+            "evidence_quote": "proof logging does not add meaningful runtime cost",
+            "confidence": 0.95
+          }
+        ],
+        "metrics": [],
+        "overall_conclusion": null,
+        "comparable_notes": null,
+        "cache_hit": false
+      },
+      "agent": {
+        "status": "ok",
+        "run_dir": "~/ai_scientist_inputs/ASE-2025-017_native_proof_certification_for_core_guid/workspace/deepscientist_2026-08-11_15-37-36",
+        "claims": [
+          {
+            "id": "C1",
+            "statement": "MaxCERT is the first native proof format designed specifically for core-guided (OLL) MaxSAT solving.",
+            "direction": "neutral",
+            "metric_names": [],
+            "evidence_quote": "We present MaxCERT, the first native proof format designed specifically for core-guided (OLL) MaxSAT solving.",
+            "confidence": 0.95
+          },
+          {
+            "id": "C2",
+            "statement": ""
+          }
+        ],
+        "metrics": [],
+        "overall_conclusion": null,
+        "sources": {
+          "metrics_path": "DeepScientist/quests/001/.ds/worktrees/idea-idea-ffa8912a/experiments/main/run-001/results.json",
+          "paper_tex_path": "paper/paper.md"
+        },
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 2032,
+            "completion_tokens_details": {
+              "reasoning_tokens": 1943
+            },
+            "prompt_cache_hit_tokens": 128,
+            "prompt_cache_miss_tokens": 151,
+            "prompt_tokens": 279,
+            "prompt_tokens_details": {
+              "cached_tokens": 128
+            },
+            "total_tokens": 2311
+          },
+          "attempt": 2
+        }
+      },
+      "comparison": {
+        "status": "ok",
+        "claim_alignment": [
+          {
+            "original_claim_id": "C1",
+            "agent_claim_id": "C1",
+            "label": "consistent",
+            "rationale": "Both assert the first proof-logging/format approach specifically for core-guided OLL MaxSAT solving."
+          },
+          {
+            "original_claim_id": "C2",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "Agent extraction does not mention implementation in EvalMaxSAT or capture of the full OLL workflow."
+          },
+          {
+            "original_claim_id": "C3",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "Agent extraction reports no runtime overhead metrics or corresponding claims."
+          }
+        ],
+        "metric_alignment": [
+          {
+            "original_metric": "median_runtime_overhead_standard",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": null,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Agent run did not report this metric."
+          },
+          {
+            "original_metric": "median_runtime_overhead_dag",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": null,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Agent run did not report this metric."
+          }
+        ],
+        "summary": {
+          "direction_consistency": "mixed",
+          "consistent_claim_ratio": 0.3333333333333333,
+          "has_comparable_metrics": false,
+          "sota_improvement_summary": "N/A",
+          "overall_alignment_score": 0.45,
+          "score_rationale": "Agent works on the same MaxSAT proof-logging direction and the first comparabale claim is consistent, but implementation and runtime overhead claims are missing, so alignment is only partial."
+        },
+        "warnings": [
+          "Agent extraction appears truncated: C2 is empty and no metrics were extracted, so integration and runtime overhead comparisons cannot be evaluated."
+        ],
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 2361,
+            "completion_tokens_details": {
+              "reasoning_tokens": 1841
+            },
+            "prompt_cache_hit_tokens": 0,
+            "prompt_cache_miss_tokens": 1217,
+            "prompt_tokens": 1217,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 3578
+          },
+          "attempt": 0
+        }
+      },
+      "overall_alignment_score": 0.45,
+      "direction_consistency": "mixed"
+    },
+    "experiment_analysis": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-017_native_proof_certification_for_core_guid/workspace/deepscientist_2026-08-11_15-37-36",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-017_native_proof_certification_for_core_guid",
+      "status": "ok",
+      "metrics_path": "DeepScientist/quests/001/.ds/worktrees/idea-idea-ffa8912a/experiments/main/run-001/results.json",
+      "experiment_success": {
+        "status": "ok",
+        "success": true,
+        "metrics_path": "DeepScientist/quests/001/.ds/worktrees/idea-idea-ffa8912a/experiments/main/run-001/results.json",
+        "absolute_metrics_path": "~/ai_scientist_inputs/ASE-2025-017_native_proof_certification_for_core_guid/workspace/deepscientist_2026-08-11_15-37-36/DeepScientist/quests/001/.ds/worktrees/idea-idea-ffa8912a/experiments/main/run-001/results.json",
+        "checks": {
+          "has_results_file": true,
+          "non_stub": true,
+          "numeric_leaf_count": 130,
+          "min_numeric_ok": true
+        },
+        "manifest_hints": {
+          "status": {
+            "launched": true
+          },
+          "returncode": 0,
+          "benchmark_complete": null,
+          "artifacts_metrics_flag": false
+        },
+        "warnings": [],
+        "suspicious_values": [],
+        "note": "success=true requires substantive results (framework-aware path) with >=3 numeric leaves. Supports metrics.json, results.json, experiment_results.txt, etc. Manifest returncode/benchmark_complete are soft warnings only."
+      },
+      "idea_code_consistency": {
+        "status": "ok",
+        "idea_path": "artifacts/idea/selected_idea.md",
+        "code_files": [
+          "DeepScientist/quests/001/.ds/worktrees/idea-idea-ffa8912a/project/maxcert/formats.py",
+          "DeepScientist/quests/001/.ds/worktrees/idea-idea-ffa8912a/project/maxcert/run_experiment.py",
+          "DeepScientist/quests/001/.ds/worktrees/idea-idea-ffa8912a/project/maxcert/solver.py",
+          "DeepScientist/quests/001/.ds/worktrees/idea-idea-ffa8912a/project/maxcert/verifier.py"
+        ],
+        "score_scale": "1-5",
+        "score": 4.0,
+        "label": "strong alignment",
+        "justification": "",
+        "matched_elements": [],
+        "missing_or_divergent_elements": [],
+        "rubric": "Strong alignment: code largely implements the idea's method and evaluation; only minor omissions or declared simplifications.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 501,
+            "completion_tokens_details": {
+              "reasoning_tokens": 431
+            },
+            "prompt_cache_hit_tokens": 128,
+            "prompt_cache_miss_tokens": 104,
+            "prompt_tokens": 232,
+            "prompt_tokens_details": {
+              "cached_tokens": 128
+            },
+            "total_tokens": 733
+          },
+          "attempt": 0
+        }
+      },
+      "setup_coverage": {
+        "status": "ok",
+        "overall_coverage": 1.0,
+        "datasets": {
+          "gold_count": 1,
+          "hit_count": 1,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "2024 MaxSAT Competition Weighted Exact Track Benchmark Set"
+          ],
+          "misses": []
+        },
+        "baselines": {
+          "gold_count": 1,
+          "hit_count": 1,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "certified-cgss (pseudo-Boolean proof generator for VeriPB)"
+          ],
+          "misses": []
+        },
+        "metrics": {
+          "gold_count": 5,
+          "hit_count": 5,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "Proof-logging overhead (IR)",
+            "Proof size",
+            "Verification time",
+            "Verification overhead (VO)",
+            "Proof size ratio"
+          ],
+          "misses": []
+        },
+        "agent_protocol": {},
+        "gold_protocol": {},
+        "dataset_dirs": [
+          "dataset_candidate"
+        ],
+        "flags": {
+          "weaker_baseline_suspected": false,
+          "weak_protocol": [],
+          "synthetic_data": "unexpected_synthetic_or_local_only_data",
+          "gold_allows_synthetic": false
+        },
+        "gold_sources": [
+          "~/ai_scientist_inputs/ASE-2025-017_native_proof_certification_for_core_guid/task.md",
+          "~/ai_scientist_inputs/ASE-2025-017_native_proof_certification_for_core_guid/metadata.json"
+        ],
+        "note": "Coverage is name/alias matching against task.md Datasets/Baselines/Metrics. weak_protocol flags large reductions in trials/timeout vs Constraints. Synthetic corpora are not penalized when the task itself requires synthesis."
+      },
+      "ablation_significance": {
+        "status": "ok",
+        "idea_path": "artifacts/idea/selected_idea.md",
+        "significance_signals_rule_based": {
+          "signals": [
+            "paper_contains:significant"
+          ],
+          "artifact_paths": [],
+          "has_any_significance_artifact": true
+        },
+        "evidence_format": "raw_json",
+        "study_type": "new_method",
+        "components": [
+          {}
+        ],
+        "ablation_coverage_score": null,
+        "overall_ablation_ok": null,
+        "overall_significance_ok": null,
+        "summary": "",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 346,
+            "completion_tokens_details": {
+              "reasoning_tokens": 331
+            },
+            "prompt_cache_hit_tokens": 128,
+            "prompt_cache_miss_tokens": 55,
+            "prompt_tokens": 183,
+            "prompt_tokens_details": {
+              "cached_tokens": 128
+            },
+            "total_tokens": 529
+          },
+          "attempt": 1
+        }
+      },
+      "results_paper_consistency": {
+        "status": "ok",
+        "paper_tex": "paper/paper.md",
+        "paper_kind": "paper_md",
+        "results_format": "raw_json",
+        "digest_hint": {
+          "unfavorable_count": 0,
+          "trial_fail_count": 0,
+          "trial_success_count": 0,
+          "metadata": {}
+        },
+        "score_scale": "1-5",
+        "method": "Direct LLM comparison: agent's FINAL results artifact (metrics.json summary) vs paper Results/Discussion/Conclusion. Interim failed runs are NOT evidence unless still present in the final metrics file.",
+        "score": 1.0,
+        "consistency_label": "severe",
+        "hiding_unfavorable_suspected": true,
+        "hiding_confidence": 0.9,
+        "justification": "The final results contain six timeouts and four invalid proofs (verification_valid=false), yet the paper reports that all proofs were independently validated and emphasizes practical efficiency. The paper's median verification time (0.013 s) and overhead (1.25%) do not match the final summary (median verification 0.152 s, mean overhead",
+        "supported_claims": [],
+        "unsupported_or_overstated_claims": [],
+        "numeric_mismatches": [],
+        "unfavorable_in_final_results": [],
+        "unfavorable_acknowledged_in_paper": [],
+        "unfavorable_missing_from_paper": [],
+        "rubric": "Severe inconsistency or concealment: paper claims contradict metrics, invent numbers, or omit clear failures/negative findings that dominate the results.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 1265,
+            "completion_tokens_details": {
+              "reasoning_tokens": 1160
+            },
+            "prompt_cache_hit_tokens": 128,
+            "prompt_cache_miss_tokens": 156,
+            "prompt_tokens": 284,
+            "prompt_tokens_details": {
+              "cached_tokens": 128
+            },
+            "total_tokens": 1549
+          },
+          "attempt": 1
+        }
+      },
+      "scores": {
+        "experiment_success": true,
+        "idea_code_score": 4.0,
+        "setup_coverage": 1.0,
+        "ablation_coverage_score": null,
+        "overall_ablation_ok": null,
+        "overall_significance_ok": null,
+        "results_paper_score": 1.0,
+        "hiding_unfavorable_suspected": true
+      },
+      "notes": [
+        "Axes 1,2,3,4,6 in experiment_analysis (figures excluded).",
+        "setup_coverage matches task.md Datasets/Baselines/Metrics; weak_protocol flags reductions vs Constraints.",
+        "Axis 6: final normalized results vs paper; interim run logs not used as ground truth."
+      ]
+    },
+    "literature_review": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-017_native_proof_certification_for_core_guid/workspace/deepscientist_2026-08-11_15-37-36",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-017_native_proof_certification_for_core_guid",
+      "status": "ok",
+      "as_of_year": 2026,
+      "agent_ref_count": 5,
+      "sources": [
+        {
+          "path": "~/ai_scientist_inputs/ASE-2025-017_native_proof_certification_for_core_guid/workspace/deepscientist_2026-08-11_15-37-36/artifacts/idea/literature_survey.md",
+          "kind": "literature_survey"
+        },
+        {
+          "path": "~/ai_scientist_inputs/ASE-2025-017_native_proof_certification_for_core_guid/workspace/deepscientist_2026-08-11_15-37-36/DeepScientist/quests/001/.ds/worktrees/paper-paper-idea-001-idea-ffa8912a/literature/arxiv/index.json",
+          "kind": "arxiv_index"
+        },
+        {
+          "path": "~/ai_scientist_inputs/ASE-2025-017_native_proof_certification_for_core_guid/workspace/deepscientist_2026-08-11_15-37-36/DeepScientist/quests/001/literature/arxiv/index.json",
+          "kind": "arxiv_index"
+        }
+      ],
+      "collection_audit": {
+        "cited_keys_count": 0,
+        "filter_mode": "non_bib_sources",
+        "bib_total_before_filter": 0,
+        "bib_after_filter": 0,
+        "uncited_bib_skipped": 0,
+        "agent_ref_count": 5
+      },
+      "fabrication": {
+        "status": "ok",
+        "scholarly_count": 5,
+        "verified_count": 5,
+        "fake_count": 0,
+        "lookup_failed_count": 0,
+        "insufficient_metadata_count": 0,
+        "non_paper_count": 0,
+        "fabrication_rate": 0.0,
+        "items": [
+          {
+            "title": "Certifying Pareto-Optimality in Multi-Objective Maximum Satisfiability",
+            "doi": "",
+            "arxiv_id": "2501.17493",
+            "year": null,
+            "status": "verified",
+            "matched_via": "s2_arxiv",
+            "resolved_title": "Certifying Pareto-Optimality in Multi-Objective Maximum Satisfiability",
+            "resolved_year": 2025,
+            "notes": [],
+            "cache_hit": true,
+            "cite_key": "",
+            "source_kind": "arxiv_index"
+          },
+          {
+            "title": "Certified MaxSAT Preprocessing",
+            "doi": "",
+            "arxiv_id": "2404.17316",
+            "year": null,
+            "status": "verified",
+            "matched_via": "s2_arxiv",
+            "resolved_title": "Certified MaxSAT Preprocessing",
+            "resolved_year": 2024,
+            "notes": [],
+            "cache_hit": true,
+            "cite_key": "",
+            "source_kind": "arxiv_index"
+          },
+          {
+            "title": "Certified Branch-and-Bound MaxSAT Solving (Extended Version)",
+            "doi": "",
+            "arxiv_id": "2511.10273",
+            "year": null,
+            "status": "verified",
+            "matched_via": "arxiv_id",
+            "resolved_title": null,
+            "resolved_year": null,
+            "notes": [],
+            "cache_hit": true,
+            "cite_key": "",
+            "source_kind": "arxiv_index"
+          },
+          {
+            "title": "Dynamics of a mathematical model of virus spreading incorporating the effect of a vaccine",
+            "doi": "",
+            "arxiv_id": "2307.12707",
+            "year": null,
+            "status": "verified",
+            "matched_via": "s2_arxiv",
+            "resolved_title": "Dynamics of a mathematical model of virus spreading incorporating the effect of a vaccine",
+            "resolved_year": 2023,
+            "notes": [],
+            "cache_hit": true,
+            "cite_key": "",
+            "source_kind": "arxiv_index"
+          },
+          {
+            "title": "Generative Sentiment Transfer via Adaptive Masking",
+            "doi": "",
+            "arxiv_id": "2302.12045",
+            "year": null,
+            "status": "verified",
+            "matched_via": "s2_arxiv",
+            "resolved_title": "Generative Sentiment Transfer via Adaptive Masking",
+            "resolved_year": 2023,
+            "notes": [],
+            "cache_hit": true,
+            "cite_key": "",
+            "source_kind": "arxiv_index"
+          }
+        ],
+        "cache_path": "~/ai_scientist_evals/ASE-2025-017_native_proof_certification_for_core_guid/reference_verify_cache.json",
+        "override_path": "~/ai_scientist_evals/ASE-2025-017_native_proof_certification_for_core_guid/reference_verify_overrides.json",
+        "note": "fabrication_rate = fake / (verified + fake). lookup_failed (API errors) and insufficient_metadata are excluded and retried or skipped. GitHub/docs/tool URLs are non_paper and excluded from the rate. To manually correct a false negative, edit reference_verify_overrides.json (key=normalized title / doi / cite_key; value=\"verified\" or a result dict), then re-run."
+      },
+      "coverage": {
+        "status": "ok",
+        "gold_source": "~/ai_scientist_inputs/ASE-2025-017_native_proof_certification_for_core_guid/mineru_sections.json",
+        "gold_count": 59,
+        "gold_is_original_paper_references": true,
+        "gold_is_openalex_subset": false,
+        "agent_count": 5,
+        "intersection_size": 1,
+        "recall": 0.01694915254237288,
+        "precision": 0.2,
+        "matched_gold_keys": [
+          "ihalainen2024certified"
+        ],
+        "primary_metric": "recall",
+        "note": "Primary metric is recall against the original paper bibliography (titles from mineru_sections.json REFERENCES; related_work.json used only to enrich DOI/year or as fallback if mineru titles are empty). Denominator = |original paper references|. Precision is secondary (agent may cite valid extra papers)."
+      },
+      "recency": {
+        "status": "ok",
+        "dated_count": 4,
+        "unknown_year_count": 1,
+        "year_histogram": {
+          "2023": 2,
+          "2024": 1,
+          "2025": 1
+        },
+        "windows": {
+          "3": {
+            "years": 3,
+            "cutoff_year_inclusive": 2023,
+            "recent_count": 4,
+            "recent_ratio": 1.0
+          },
+          "5": {
+            "years": 5,
+            "cutoff_year_inclusive": 2021,
+            "recent_count": 4,
+            "recent_ratio": 1.0
+          }
+        }
+      },
+      "scores": {
+        "fabrication_rate": 0.0,
+        "coverage_recall": 0.01694915254237288,
+        "coverage_precision": 0.2,
+        "recency_ratio_3y": 1.0,
+        "recency_ratio_5y": 1.0
+      }
+    }
+  },
+  "scores": {
+    "completeness": {
+      "complete": true,
+      "overall_score": 0.83,
+      "required_score": 1.0,
+      "bonus_score": 0.0
+    },
+    "peer_review": {
+      "status": "ok",
+      "optional": false,
+      "overall_score": 4.8,
+      "score_scale": "1-10",
+      "scoring_method": "paperreview_apr"
+    },
+    "idea_generation": {
+      "status": "ok",
+      "overall_score": 3.0,
+      "dimensions": {
+        "novelty": 3.0,
+        "feasibility": 3.0,
+        "clarity": 3.0
+      },
+      "novelty_category": "Incremental",
+      "solution_space_status": "ok"
+    },
+    "alignment": {
+      "status": "ok",
+      "direction_consistency": "mixed",
+      "overall_alignment_score": 0.45
+    },
+    "literature_review": {
+      "fabrication_rate": 0.0,
+      "coverage_recall": 0.01694915254237288,
+      "coverage_precision": 0.2,
+      "recency_ratio_3y": 1.0,
+      "recency_ratio_5y": 1.0
+    },
+    "experiment_analysis": {
+      "experiment_success": true,
+      "idea_code_score": 4.0,
+      "setup_coverage": 1.0,
+      "ablation_coverage_score": null,
+      "overall_ablation_ok": null,
+      "overall_significance_ok": null,
+      "results_paper_score": 1.0,
+      "hiding_unfavorable_suspected": true
+    }
+  },
+  "fair_scores": {
+    "applicable_axes": [
+      "completeness",
+      "idea_generation",
+      "peer_review",
+      "alignment",
+      "literature_review",
+      "experiment_analysis"
+    ],
+    "skipped_axes": [],
+    "fair_mean_0_1": 0.6587,
+    "note": "fair_mean_0_1 averages only applicable axes; optional peer review and framework-inapplicable literature are excluded from the denominator."
+  },
+  "evals_root": "~/ai_scientist_evals",
+  "claims_cache": "~/ai_scientist_evals/ASE-2025-017_native_proof_certification_for_core_guid/original_claims.json",
+  "solution_space_cache": "~/ai_scientist_evals/ASE-2025-017_native_proof_certification_for_core_guid/solution_space.json"
+}

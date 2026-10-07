@@ -1,0 +1,70 @@
+{
+  "layout": "icse2025_lpea_oracle_rl_software",
+  "layout_note": "ICSE 2025 AE artifact for LPEA (Lyapunov-stability) test oracle over Stable-Baselines3 A2C/PPO/TD3 buggy and bug-less implementations.",
+  "workspace_symlink": "dataset_candidate/lpea-oracle-icse2025",
+  "paper_title": "A Test Oracle for Reinforcement Learning Software based on Lyapunov Stability Control Theory",
+  "paper_venue": "ICSE 2025",
+  "paper_doi": "10.1109/ICSE55347.2025.00074",
+  "paper_zenodo": "https://doi.org/10.5281/zenodo.14759447",
+  "paper_github": "https://github.com/QixinWangCpsLab/LPEA_Oracle_ICSE2025_AE_Track",
+  "read_only": true,
+  "copy_note": "Shared mount is read-only. Copy RL-Oracle-Lyapunov-v1 under project/ before bug injection or SB3 edits. Write metrics under project/ or results/.",
+  "data_roots": {
+    "artifact_root": "dataset_candidate/lpea-oracle-icse2025",
+    "repo": "dataset_candidate/lpea-oracle-icse2025/RL-Oracle-Lyapunov-v1",
+    "testing": "dataset_candidate/lpea-oracle-icse2025/RL-Oracle-Lyapunov-v1/RLTestingLyapunov",
+    "bug_library": "dataset_candidate/lpea-oracle-icse2025/bug_library",
+    "rl_testing_symlink": "dataset_candidate/lpea-oracle-icse2025/rl_testing",
+    "archives": "dataset_candidate/lpea-oracle-icse2025/archives",
+    "meta": "dataset_candidate/lpea-oracle-icse2025/.artifact_meta.txt",
+    "data_readme": "dataset_candidate/lpea-oracle-icse2025/docs/README_DATA.txt"
+  },
+  "instance_counts": {
+    "a2c_buggy_bugless": "19 / 19",
+    "ppo_buggy_bugless": "22 / 22",
+    "td3_buggy_bugless": "15 / 15",
+    "injectable_bugs": 44,
+    "human_oracle_traces": 672,
+    "zenodo_zip_bytes": 4498165,
+    "paper_machine": "AMD Ryzen 7 5800H + NVIDIA RTX 3060 Laptop GPU",
+    "paper_lpea_compute_hours": "<=129",
+    "note": "On-disk MiB after extract — see .artifact_meta.txt / du -sh."
+  },
+  "dataset_env": {
+    "LPEA_ORACLE_HOME": "dataset_candidate/lpea-oracle-icse2025",
+    "LPEA_REPO_HOME": "dataset_candidate/lpea-oracle-icse2025/RL-Oracle-Lyapunov-v1",
+    "LPEA_TESTING_HOME": "dataset_candidate/lpea-oracle-icse2025/RL-Oracle-Lyapunov-v1/RLTestingLyapunov",
+    "LPEA_BUG_LIB_HOME": "dataset_candidate/lpea-oracle-icse2025/bug_library",
+    "LPEA_SB3_HOME": "dataset_candidate/lpea-oracle-icse2025/RL-Oracle-Lyapunov-v1"
+  },
+  "python_environment": {
+    "python": "/opt/icse-2025-019-venv/bin/python",
+    "activation": "source /opt/icse-2025-019-venv/bin/activate",
+    "sb3_editable": "/opt/icse-2025-019-sb3",
+    "note": "CPU torch + gymnasium + cvxpy/control/openpyxl; editable SB3 copied from artifact."
+  },
+  "toolchain": {
+    "algorithms": "A2C, PPO, TD3 (Stable-Baselines3 lineage commit 4efee92)",
+    "oracle_entry": "RLTestingLyapunov/LPEA_Oracle.py",
+    "bug_injection": "RLTestingLyapunov/bug_injection.py (bug_id 0-43; -1 = bug-less)",
+    "envs": "Classic control / Lyapunov-guided custom envs (LPEA_Env.py)"
+  },
+  "paper_protocol": {
+    "rq": "How good is LPEA(vartheta, theta) vs the human oracle?",
+    "hyperparams": "I=20, J=800, n=2, m=2; A2C/PPO/TD3 lr 4e-4/1.2e-3/1e-3; steps 9e4/1.2e5/9e4",
+    "primary_metrics": [
+      "accuracy",
+      "precision",
+      "recall",
+      "f1",
+      "fp",
+      "fn",
+      "roc_auc"
+    ]
+  },
+  "not_provided": {
+    "precomputed_full_result_tables": "Re-run LPEA_Oracle / Evaluation.py with the paper evaluation settings",
+    "cuda_torch_by_default": "CPU torch is preinstalled; install CUDA build in project/ if GPU present",
+    "large_external_rl_corpus": "Benchmark is constructed from SB3 + bug injection, not a GB-scale dataset"
+  }
+}

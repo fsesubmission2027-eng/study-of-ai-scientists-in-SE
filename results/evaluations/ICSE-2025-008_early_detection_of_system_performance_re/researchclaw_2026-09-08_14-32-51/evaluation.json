@@ -1,0 +1,1564 @@
+{
+  "generated_at": "2026-09-23T02:24:21",
+  "run_dir": "~/ai_scientist_inputs/ICSE-2025-008_early_detection_of_system_performance_re/workspace/researchclaw_2026-09-08_14-32-51",
+  "task_dir": "~/ai_scientist_inputs/ICSE-2025-008_early_detection_of_system_performance_re",
+  "framework": "researchclaw",
+  "fairness_audit": [
+    {
+      "axis": "completeness",
+      "was_unfair": "Required both paper.tex AND paper.pdf; any tool missing one failed equally.",
+      "fix": "Paper gate: PDF=1.0; TeX-only=0.5; ``complete`` requires PDF."
+    },
+    {
+      "axis": "completeness",
+      "was_unfair": "``results`` counted stub/seed JSON (dataset_candidate/metrics.json).",
+      "fix": "``results`` requires substantive numeric results via results_normalize."
+    },
+    {
+      "axis": "experiment_success",
+      "was_unfair": "Only metrics.json; ignored results.json / experiment_results.txt.",
+      "fix": "Framework-ordered result candidates + normalized loaders."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Penalized tools with no bib; airesearcher has no workspace references.",
+      "fix": "literature_applicable=false → status not_applicable; excluded from fair aggregate."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "related_work.json subset as gold made recall hard to interpret.",
+      "fix": "Coverage gold is original paper REFERENCES from mineru; related_work only enriches metadata/fallback."
+    },
+    {
+      "axis": "peer_review",
+      "was_unfair": "Missing Stanford report looked like evaluation failure.",
+      "fix": "status not_provided; optional axis, never counts as tool failure."
+    },
+    {
+      "axis": "paths/find_results",
+      "was_unfair": "Picked downloads/** and sandbox noise (e.g. airesearcher LLVM tree).",
+      "fix": "Exclude downloads/, seeds/, dataset_candidate/, sandbox junk paths."
+    },
+    {
+      "axis": "paths/framework_noise",
+      "was_unfair": "DeepScientist .deepscientist_npm / runtime / skills templates counted as code/paper/results.",
+      "fix": "FRAMEWORK_NOISE_DIRS+markers; quest worktree + eval_output results; paper md drafts; reject template tex."
+    },
+    {
+      "axis": "paths/paper_tex",
+      "was_unfair": "tiny_scientist / ACL runs store paper under latex/*.tex; evaluator only looked at paper/main.tex.",
+      "fix": "latex/**/*.tex with substantive-body heuristic; find_paper_document uses same rules."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Entire custom.bib (300+ anthology entries) verified when paper had zero \\cite commands.",
+      "fix": "collect_agent_references filters bib to in-text cite keys; skips uncited bulk bib (>40 entries)."
+    },
+    {
+      "axis": "paths/ai_scientist_summaries",
+      "was_unfair": "AI Scientist can persist substantive results and paper-like drafts in *_summary.json logs rather than paper/main.tex or results/**/*.json.",
+      "fix": "Treat draft_summary/research_summary as weak paper documents and summary JSONs as result candidates."
+    },
+    {
+      "axis": "framework/ai_scientist_v2",
+      "was_unfair": "Manifest framework ``ai_scientist_v2`` fell through to profile ``unknown``, skipping AI-Scientist idea/result path priorities.",
+      "fix": "Normalize ``ai_scientist_v2`` (and common aliases) to profile key ``ai_scientist``."
+    },
+    {
+      "axis": "idea_generation",
+      "was_unfair": "plan.md/todos.md weak proxies scored same as structured idea.json.",
+      "fix": "Framework idea_priority tried first; missing idea → not_applicable where appropriate."
+    }
+  ],
+  "axes": [
+    "alignment",
+    "completeness",
+    "experiment_analysis",
+    "idea_generation",
+    "literature_review",
+    "peer_review"
+  ],
+  "results": {
+    "completeness": {
+      "framework": "researchclaw",
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-008_early_detection_of_system_performance_re/workspace/researchclaw_2026-09-08_14-32-51",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-008_early_detection_of_system_performance_re",
+      "complete": false,
+      "required_score": 0.25,
+      "bonus_score": 0.05,
+      "overall_score": 0.2,
+      "missing": [
+        "code",
+        "results",
+        "paper"
+      ],
+      "required": {
+        "idea": {
+          "path": "artifacts/idea.json",
+          "bytes": 1067,
+          "via": "candidate"
+        },
+        "code": {
+          "count": 0,
+          "files": []
+        },
+        "results": {
+          "substantive": false,
+          "normalized_path": null,
+          "numeric_leaf_count": 0,
+          "discovered_files": [],
+          "metrics_keys_sample": []
+        },
+        "paper": {
+          "tex": null,
+          "pdf": null,
+          "md": null,
+          "json": null,
+          "status": "missing",
+          "score": 0.0
+        }
+      },
+      "bonus": {
+        "experiment_plan": null,
+        "experiment_log": {
+          "path": "researchclaw_run.log",
+          "bytes": 3508,
+          "via": "glob"
+        },
+        "review": null,
+        "readme": null,
+        "narrative": null,
+        "bib": {
+          "path": "stage-04/references.bib",
+          "bytes": 16045,
+          "via": "glob"
+        }
+      },
+      "manifest_status": {
+        "pipeline": false,
+        "idea": false,
+        "code": false,
+        "results": false,
+        "paper": false
+      },
+      "gate_scores": {
+        "idea": 1.0,
+        "code": 0.0,
+        "results": 0.0,
+        "paper": 0.0
+      },
+      "fairness": {
+        "gates": [
+          "idea",
+          "code",
+          "results",
+          "paper"
+        ],
+        "paper_gate_rule": "PDF=1.0; TeX-only/md_only/json_only=0.5; complete requires PDF",
+        "results_gate_rule": "substantive numeric results via framework-aware normalize_results",
+        "audit_ref": "framework_profile.FAIRNESS_AUDIT"
+      },
+      "notes": [
+        "Required: idea, code, substantive results, paper (PDF full; TeX/markdown/JSON draft half).",
+        "Stub/seed metrics (e.g. dataset_candidate/metrics.json) do not satisfy results.",
+        "Framework noise (.deepscientist_npm, skills/templates, runtime) is excluded from code/results/paper.",
+        "Manifest status is informational; disk presence is authoritative."
+      ]
+    },
+    "idea_generation": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-008_early_detection_of_system_performance_re/workspace/researchclaw_2026-09-08_14-32-51",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-008_early_detection_of_system_performance_re",
+      "idea_path": "~/ai_scientist_inputs/ICSE-2025-008_early_detection_of_system_performance_re/workspace/researchclaw_2026-09-08_14-32-51/artifacts/idea.json",
+      "status": "ok",
+      "dimensions": {
+        "novelty": {
+          "score": 1.0,
+          "justification": "The artifact contains only a research question: \"How can component-level performance test results be used to predict system-level performance regressions in microservice-based software systems before the system is fully integrated and deployed?\" It provides no concrete technique. The closest Solution Space entries, such as R26 (performance-aware unit tests and regression detection), R15 (model-driven performance engineering for microservices), and R19 (reusing pipeline tests as performance tests), already address closely related component-level performance regression or early performance assessment goals. The artifact's self-reported \"novelty_score\": 1.0 and \"assessment\": \"high\" are not grounded in any comparison against the Solution Space, with \"similar_papers_found\": 0.",
+          "rubric": "Existing: the idea's core method is already clearly present or solved in the Solution Space; only tiny parameter / test-case changes.",
+          "category": "Existing",
+          "nearest_solution_space_ids": [
+            "R26",
+            "R15",
+            "R19"
+          ],
+          "differentiation": "No differentiation can be established because the artifact does not propose any method, model, architecture, or mechanism. The high-level goal of linking component/unit-level performance test results to system-level regression prediction already appears in the Solution Space, especially in R26, R15, and R19."
+        },
+        "feasibility": {
+          "score": 2.0,
+          "justification": "The artifact specifies no implementation plan, prediction model, data pipeline, or evaluation workflow. The hypotheses field is empty: \"hypotheses_md\": \"\". There is no evidence of a runnable system or even a minimal technical design. From the provided idea alone, a researcher would need to design the entire prediction mechanism, integrate component-level performance data, and build the evaluation harness from scratch, which represents an extreme and undefined engineering burden.",
+          "rubric": "Extreme engineering barrier: requires building complex low-level tooling from scratch (custom compiler plugins, new vulnerability execution sandboxes), or an extremely heavy experimental pipeline with multi-month development."
+        },
+        "clarity": {
+          "score": 1.0,
+          "justification": "The idea is only a task question and an empty hypotheses section. It lacks a defined problem operationalization, proposed method, architecture, experiment design, or evaluation plan. The text gives no concrete technical substance beyond \"component-level performance test results\" and \"system-level performance regressions in microservice-based software systems.\" This is a vague concept with no actionable plan.",
+          "rubric": "Vague concept: full of empty buzzwords; problem undefined; method only gives a high-level direction with little substance."
+        }
+      },
+      "overall_score": 1.3,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "novelty",
+        "feasibility",
+        "clarity"
+      ],
+      "solution_space": {
+        "status": "ok",
+        "paper_count": 59,
+        "entry_count": 59,
+        "cache_hit": true,
+        "source_file": "~/ai_scientist_inputs/ICSE-2025-008_early_detection_of_system_performance_re/mineru_sections.json",
+        "stats": {
+          "papers": 59,
+          "extracted": 59,
+          "usable_abstracts": 44,
+          "citation_meta_abstracts": 0,
+          "missing_abstracts": 15,
+          "mineru_titles": 57,
+          "related_work_titles": 49,
+          "abstracts_attached": 44,
+          "related_work_extras": 2,
+          "batches": 4
+        },
+        "error": null
+      },
+      "notes": [
+        "Scores the intermediate idea artifact (not the final paper).",
+        "Dimensions: novelty, feasibility, clarity (each 1-5). Excitement removed.",
+        "Novelty is scored against a Solution Space built from mineru REFERENCES titles (+ related_work.json abstracts when matched)."
+      ],
+      "idea_via": "candidate",
+      "idea_relative": "artifacts/idea.json",
+      "summary": "The artifact provides only the research question plus a self-reported novelty check. It contains no hypothesis, method, model, architecture, or experiment plan; \"hypotheses_md\" is empty. The claimed high novelty is unsupported and conflicts with existing Solution Space work on performance-aware unit tests and model-driven microservice performance engineering. The proposal is therefore not actionable as stated, with very low clarity and feasibility.",
+      "strengths": [
+        "Identifies a relevant high-level problem: predicting system-level regressions from component-level tests in microservices.",
+        "Targets an important cost/time gap between component testing and full-system performance testing."
+      ],
+      "weaknesses": [
+        "No concrete method or technical mechanism is proposed.",
+        "No experiment design, metrics, baselines, or implementation plan.",
+        "Self-reported novelty is not validated against the Solution Space.",
+        "Empty hypotheses section gives no"
+      ],
+      "llm_meta": {
+        "model": "deepseek-v4-pro-0813",
+        "base_url": "https://api-sg.umodelverse.ai/v1",
+        "usage": {
+          "completion_tokens": 2322,
+          "completion_tokens_details": {
+            "reasoning_tokens": 1649
+          },
+          "prompt_tokens": 2764,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "total_tokens": 5086
+        },
+        "attempt": 0
+      }
+    },
+    "peer_review": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-008_early_detection_of_system_performance_re/workspace/researchclaw_2026-09-08_14-32-51",
+      "review_report": null,
+      "paper_pdf": null,
+      "paper_tex": null,
+      "status": "not_provided",
+      "dimensions": {},
+      "overall_score": null,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "soundness",
+        "significance",
+        "novelty",
+        "presentation",
+        "credibility"
+      ],
+      "notes": [
+        "Stanford Agentic Reviewer (paperreview.ai): manual download to artifacts/peer_review/stanford_apr.md, or pass --auto-paperreview.",
+        "Dimensions: soundness, significance, novelty, presentation, credibility (each 1-5)."
+      ],
+      "paperreview": {
+        "status": "skipped",
+        "reason": "no_pdf"
+      },
+      "optional": true,
+      "hint": "Optional external review (Stanford APR). Upload paper/main.pdf to https://paperreview.ai/ , save review to ~/ai_scientist_inputs/ICSE-2025-008_early_detection_of_system_performance_re/workspace/researchclaw_2026-09-08_14-32-51/artifacts/peer_review/stanford_apr.md"
+    },
+    "alignment": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-008_early_detection_of_system_performance_re/workspace/researchclaw_2026-09-08_14-32-51",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-008_early_detection_of_system_performance_re",
+      "status": "missing_agent_paper_or_metrics",
+      "original": {
+        "status": "ok",
+        "task_dir": "~/ai_scientist_inputs/ICSE-2025-008_early_detection_of_system_performance_re",
+        "paper_title": "Early Detection of Performance Regressions by Bridging Local Performance Data and Architectural Models",
+        "task_id": "ICSE-2025-008",
+        "selection": {
+          "num_blocks": 6,
+          "total_chars": 31939,
+          "inferred_roles": {
+            "abstract": 1,
+            "introduction": 1,
+            "experiment": 3,
+            "conclusion": 1
+          },
+          "mineru_raw_keys": {
+            "field:abstract": 1,
+            "field:introduction": 1,
+            "field:experiment": 1,
+            "experiment": 2,
+            "conclusion": 1
+          },
+          "infer_reasons": {
+            "top_level_field": 3,
+            "body_override": 2,
+            "title": 1
+          },
+          "rescued_from_other": 0,
+          "note": "mineru key is unreliable; blocks are selected by title/body/inheritance. rescued_from_other counts sections labeled other but treated as typed roles."
+        },
+        "claims": [
+          {
+            "id": "C1",
+            "statement": "The proposed approach can effectively detect end-to-end system performance regressions from local performance deviations with different intensities.",
+            "direction": "improves",
+            "metric_names": [
+              "outcome",
+              "true_positive",
+              "true_negative"
+            ],
+            "evidence_quote": "our approach can effectively detect system performance regressions with different intensities of local performance deviations",
+            "confidence": 0.9
+          },
+          {
+            "id": "C2",
+            "statement": "The proposed approach can detect regressions as early as the development phase, before full system performance testing is available.",
+            "direction": "improves",
+            "metric_names": [],
+            "evidence_quote": "our approach can detect regressions as early as in the development phase, in contrast to existing approaches that require the system to be fully built and deployed",
+            "confidence": 0.95
+          },
+          {
+            "id": "C3",
+            "statement": "Significant local performance deviations do not always cause system-level performance regressions, and the approach avoids false alarms in fixed-workload cases without system regressions.",
+            "direction": "improves",
+            "metric_names": [
+              "false_positive"
+            ],
+            "evidence_quote": "Our approach does not generate false alarms when there is local performance deviation but no system performance regression.",
+            "confidence": 0.9
+          },
+          {
+            "id": "C4",
+            "statement": "Under various workloads, the approach maintains effectiveness: TeaStore is consistent with system testing in seven out of nine cases, and TrainTicket model predictions align except for an undetectable L1 case.",
+            "direction": "mixed",
+            "metric_names": [
+              "outcome"
+            ],
+            "evidence_quote": "for TeaStore, our approach maintains consistency with the performance testing results in seven out of nine cases",
+            "confidence": 0.85
+          }
+        ],
+        "metrics": [
+          {
+            "name": "fixed_workload_TeaStore_L1_Low_response_time_testing_mpd_ms",
+            "value": 7.02,
+            "unit": "ms",
+            "higher_is_better": false,
+            "setting": "TeaStore fixed-workload L1 Low",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "performance testing MPD (ms) 7.02",
+            "confidence": 0.95
+          },
+          {
+            "name": "fixed_workload_TeaStore_L1_Low_response_time_model_mpd_ms",
+            "value": 7.6,
+            "unit": "ms",
+            "higher_is_better": false,
+            "setting": "TeaStore fixed-workload L1 Low",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "model prediction MPD (ms) 7.60",
+            "confidence": 0.95
+          },
+          {
+            "name": "fixed_workload_TeaStore_L1_Low_cpu_testing_mpd_percent",
+            "value": 6.53,
+            "unit": "%",
+            "higher_is_better": false,
+            "setting": "TeaStore fixed-workload L1 Low",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "CPU testing MPD 6.53",
+            "confidence": 0.9
+          },
+          {
+            "name": "fixed_workload_TeaStore_L1_Low_cpu_model_mpd_percent",
+            "value": 6.09,
+            "unit": "%",
+            "higher_is_better": false,
+            "setting": "TeaStore fixed-workload L1 Low",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "CPU model prediction MPD 6.09",
+            "confidence": 0.9
+          }
+        ],
+        "overall_conclusion": "The proposed approach bridges component-level performance deviation detection and architectural models to infer system-level performance regressions early in the development phase. Across TeaStore and TrainTicket benchmarks, fixed-workload evaluations show that the approach detects most injected regressions while avoiding false alarms in no-regression cases, and various-workload evaluations show maintained consistency in most cases.",
+        "comparable_notes": "The comparison uses open-source systems TeaStore and TrainTicket, injected regressions at L1-L3, Low/Medium/High intensities, component-level tests repeated 30 times, system performance tests run 15 minutes with 5-minute warm-up and repeated 3 times, and regression outcomes derived from response time effect size and CPU MPD differences.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 2500,
+            "completion_tokens_details": {
+              "reasoning_tokens": 2500
+            },
+            "prompt_tokens": 3670,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 6170
+          },
+          "attempt": 1
+        },
+        "cache_hit": true
+      },
+      "agent": {
+        "status": "missing_agent_paper_or_metrics",
+        "run_dir": "~/ai_scientist_inputs/ICSE-2025-008_early_detection_of_system_performance_re/workspace/researchclaw_2026-09-08_14-32-51"
+      }
+    },
+    "experiment_analysis": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-008_early_detection_of_system_performance_re/workspace/researchclaw_2026-09-08_14-32-51",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-008_early_detection_of_system_performance_re",
+      "status": "ok",
+      "metrics_path": null,
+      "experiment_success": {
+        "status": "failed_or_incomplete",
+        "success": false,
+        "metrics_path": null,
+        "absolute_metrics_path": null,
+        "checks": {
+          "has_results_file": false,
+          "non_stub": false,
+          "numeric_leaf_count": 0,
+          "min_numeric_ok": false
+        },
+        "manifest_hints": {
+          "status": {
+            "pipeline": false,
+            "idea": false,
+            "code": false,
+            "results": false,
+            "paper": false
+          },
+          "returncode": 1,
+          "benchmark_complete": null,
+          "artifacts_metrics_flag": false
+        },
+        "warnings": [
+          "manifest.returncode=1"
+        ],
+        "suspicious_values": [],
+        "note": "success=true requires substantive results (framework-aware path) with >=3 numeric leaves. Supports metrics.json, results.json, experiment_results.txt, etc. Manifest returncode/benchmark_complete are soft warnings only."
+      },
+      "idea_code_consistency": {
+        "status": "missing_code",
+        "idea_path": "artifacts/idea.json"
+      },
+      "setup_coverage": {
+        "status": "ok",
+        "overall_coverage": 0.0,
+        "datasets": {
+          "gold_count": 2,
+          "hit_count": 0,
+          "miss_count": 2,
+          "coverage": 0.0,
+          "hits": [],
+          "misses": [
+            "TeaStore",
+            "TrainTicket"
+          ]
+        },
+        "baselines": {
+          "gold_count": 0,
+          "hit_count": 0,
+          "miss_count": 0,
+          "coverage": null,
+          "hits": [],
+          "misses": []
+        },
+        "metrics": {
+          "gold_count": 3,
+          "hit_count": 0,
+          "miss_count": 3,
+          "coverage": 0.0,
+          "hits": [],
+          "misses": [
+            "Response time deviation",
+            "CPU usage deviation",
+            "Detection accuracy"
+          ]
+        },
+        "agent_protocol": {},
+        "gold_protocol": {},
+        "dataset_dirs": [
+          "dataset_candidate"
+        ],
+        "flags": {
+          "weaker_baseline_suspected": false,
+          "weak_protocol": [],
+          "synthetic_data": "unexpected_synthetic_or_local_only_data",
+          "gold_allows_synthetic": false
+        },
+        "gold_sources": [
+          "~/ai_scientist_inputs/ICSE-2025-008_early_detection_of_system_performance_re/task.md",
+          "~/ai_scientist_inputs/ICSE-2025-008_early_detection_of_system_performance_re/metadata.json"
+        ],
+        "note": "Coverage is name/alias matching against task.md Datasets/Baselines/Metrics. weak_protocol flags large reductions in trials/timeout vs Constraints. Synthetic corpora are not penalized when the task itself requires synthesis."
+      },
+      "ablation_significance": {
+        "status": "ok",
+        "idea_path": "artifacts/idea.json",
+        "significance_signals_rule_based": {
+          "signals": [],
+          "artifact_paths": [],
+          "has_any_significance_artifact": false
+        },
+        "evidence_format": null,
+        "study_type": "pilot",
+        "components": [],
+        "ablation_coverage_score": 1.0,
+        "overall_ablation_ok": true,
+        "overall_significance_ok": true,
+        "summary": "The idea describes a research question about predicting system-level performance regressions from component-level performance test results in microservice-based systems. No concrete method components, baselines, ablations, or experimental evidence were provided. With no method components extracted, no ablations are expected, and significance testing is not required for this descriptive/pilot proposal.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 831,
+            "completion_tokens_details": {
+              "reasoning_tokens": 706
+            },
+            "prompt_tokens": 1049,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 1880
+          },
+          "attempt": 0
+        }
+      },
+      "results_paper_consistency": {
+        "status": "missing_metrics"
+      },
+      "scores": {
+        "experiment_success": false,
+        "idea_code_score": null,
+        "setup_coverage": 0.0,
+        "ablation_coverage_score": 1.0,
+        "overall_ablation_ok": true,
+        "overall_significance_ok": true,
+        "results_paper_score": null,
+        "hiding_unfavorable_suspected": null
+      },
+      "notes": [
+        "Axes 1,2,3,4,6 in experiment_analysis (figures excluded).",
+        "setup_coverage matches task.md Datasets/Baselines/Metrics; weak_protocol flags reductions vs Constraints.",
+        "Axis 6: final normalized results vs paper; interim run logs not used as ground truth."
+      ]
+    },
+    "literature_review": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-008_early_detection_of_system_performance_re/workspace/researchclaw_2026-09-08_14-32-51",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-008_early_detection_of_system_performance_re",
+      "status": "ok",
+      "as_of_year": 2026,
+      "agent_ref_count": 53,
+      "sources": [
+        {
+          "path": "~/ai_scientist_inputs/ICSE-2025-008_early_detection_of_system_performance_re/workspace/researchclaw_2026-09-08_14-32-51/stage-05/shortlist.jsonl",
+          "kind": "shortlist"
+        },
+        {
+          "path": "~/ai_scientist_inputs/ICSE-2025-008_early_detection_of_system_performance_re/workspace/researchclaw_2026-09-08_14-32-51/stage-04/references.bib",
+          "kind": "bib"
+        }
+      ],
+      "collection_audit": {
+        "cited_keys_count": 0,
+        "filter_mode": "non_bib_sources",
+        "bib_total_before_filter": 53,
+        "bib_after_filter": 0,
+        "uncited_bib_skipped": 53,
+        "agent_ref_count": 53
+      },
+      "fabrication": {
+        "status": "ok",
+        "scholarly_count": 53,
+        "verified_count": 43,
+        "fake_count": 0,
+        "lookup_failed_count": 10,
+        "non_paper_count": 0,
+        "fabrication_rate": 0.0,
+        "items": [
+          {
+            "title": "Individual Comparisons by Ranking Methods",
+            "doi": "10.1007/978-1-4612-4380-9_16",
+            "arxiv_id": "",
+            "year": 1992,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated.",
+              "Saw 1 conclusive miss(es) mixed with 2 API error(s)."
+            ],
+            "cite_key": "wilcoxon1992individual",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Model-based performance prediction in software development: a survey",
+            "doi": "10.1109/tse.2004.9",
+            "arxiv_id": "",
+            "year": 2004,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Model-based performance prediction in software development: a survey",
+            "resolved_year": 2004,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "balsamo2004modelbased",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "The Palladio component model for model-driven performance prediction",
+            "doi": "10.1016/j.jss.2008.03.066",
+            "arxiv_id": "",
+            "year": 2008,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated.",
+              "Saw 1 conclusive miss(es) mixed with 2 API error(s)."
+            ],
+            "cite_key": "becker2008palladio",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Ordinal Methods for Behavioral Data Analysis",
+            "doi": "10.4324/9781315806730",
+            "arxiv_id": "",
+            "year": 2014,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated.",
+              "Saw 1 conclusive miss(es) mixed with 2 API error(s)."
+            ],
+            "cite_key": "cliff2014ordinal",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "The Method of Layers",
+            "doi": "10.1109/32.403785",
+            "arxiv_id": "",
+            "year": 1995,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "The Method of Layers",
+            "resolved_year": 1995,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "rolia1995method",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Fault Analysis and Debugging of Microservice Systems: Industrial Survey, Benchmark System, and Empirical Study",
+            "doi": "10.1109/tse.2018.2887384",
+            "arxiv_id": "",
+            "year": 2018,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Fault Analysis and Debugging of Microservice Systems: Industrial Survey, Benchmark System, and Empirical Study",
+            "resolved_year": 2018,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "zhou2018fault",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "The Future of Software Performance Engineering",
+            "doi": "10.1109/fose.2007.32",
+            "arxiv_id": "",
+            "year": 2007,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "The Future of Software Performance Engineering",
+            "resolved_year": 2007,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "woodside2007future",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "The stochastic rendezvous network model for performance of synchronous client-server-like distributed software",
+            "doi": "10.1109/12.368012",
+            "arxiv_id": "",
+            "year": 1995,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "The Stochastic Rendezvous Network Model for Performance of Synchronous Client-Server-like Distributed Software",
+            "resolved_year": 1995,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "woodside1995stochastic",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Kieker",
+            "doi": "10.1145/2188286.2188326",
+            "arxiv_id": "2503.09189",
+            "year": 2012,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "The Kieker Observability Framework Version 2",
+            "resolved_year": 2025,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "hoorn2012kieker",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Experience with performance testing of software systems: issues, an approach, and case study",
+            "doi": "10.1109/32.888628",
+            "arxiv_id": "",
+            "year": 2000,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Experience with Performance Testing of Software Systems: Issues, an Approach, and Case Study",
+            "resolved_year": 2000,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "weyuker2000experience",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Enhanced Modeling and Solution of Layered Queueing Networks",
+            "doi": "10.1109/tse.2008.74",
+            "arxiv_id": "",
+            "year": 2008,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated.",
+              "Saw 1 conclusive miss(es) mixed with 2 API error(s)."
+            ],
+            "cite_key": "franks2008enhanced",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Identifying impactful service system problems via log analysis",
+            "doi": "10.1145/3236024.3236083",
+            "arxiv_id": "",
+            "year": 2018,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Identifying impactful service system problems via log analysis",
+            "resolved_year": 2018,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "he2018identifying",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Model-Based performance prediction with the palladio component model",
+            "doi": "10.1145/1216993.1217006",
+            "arxiv_id": "",
+            "year": 2007,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Model-Based performance prediction with the palladio component model",
+            "resolved_year": 2007,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "becker2007modelbased",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Performance Modeling and Evaluation of Distributed Component-Based Systems Using Queueing Petri Nets",
+            "doi": "10.1109/tse.2006.69",
+            "arxiv_id": "",
+            "year": 2006,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Performance Modeling and Evaluation of Distributed Component-Based Systems Using Queueing Petri Nets",
+            "resolved_year": 2006,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "kounev2006performance",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Ensembles of Models for Automated Diagnosis of System Performance Problems",
+            "doi": "10.1109/dsn.2005.44",
+            "arxiv_id": "",
+            "year": 2005,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Ensembles of models for automated diagnosis of system performance problems",
+            "resolved_year": 2005,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "zhang2005ensembles",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "TeaStore: A Micro-Service Reference Application for Benchmarking, Modeling and Resource Management Research",
+            "doi": "10.1109/mascots.2018.00030",
+            "arxiv_id": "",
+            "year": 2018,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "TeaStore: A Micro-Service Reference Application for Benchmarking, Modeling and Resource Management Research",
+            "resolved_year": 2018,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "kistowski2018teastore",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Queueing Petri Nets-A formalism for the combined qualitative and quantitative analysis of systems",
+            "doi": "10.1109/pnpm.1993.393439",
+            "arxiv_id": "",
+            "year": 2002,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Queueing Petri Nets-A formalism for the combined qualitative and quantitative analysis of systems",
+            "resolved_year": 1993,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "bause2002queueing",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Enhancing Performance Prediction Robustness by Combining Analytical Modeling and Machine Learning",
+            "doi": "10.1145/2668930.2688047",
+            "arxiv_id": "",
+            "year": 2015,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Enhancing Performance Prediction Robustness by Combining Analytical Modeling and Machine Learning",
+            "resolved_year": 2015,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "didona2015enhancing",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Software microbenchmarking in the cloud. How bad is it really?",
+            "doi": "10.1007/s10664-019-09681-1",
+            "arxiv_id": "",
+            "year": 2019,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Software microbenchmarking in the cloud. How bad is it really?",
+            "resolved_year": 2019,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "laaber2019software",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "A model-driven approach for continuous performance engineering in microservice-based systems",
+            "doi": "10.1016/j.jss.2021.111084",
+            "arxiv_id": "",
+            "year": 2021,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "A model-driven approach for continuous performance engineering in microservice-based systems",
+            "resolved_year": 2021,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "cortellessa2021modeldriven",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Adaptive performance anomaly detection for online service systems via pattern sketching",
+            "doi": "10.1145/3510003.3510085",
+            "arxiv_id": "2201.02944",
+            "year": 2022,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Adaptive Performance Anomaly Detection for Online Service Systems via Pattern Sketching",
+            "resolved_year": 2022,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "chen2022adaptive",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Testing with Fewer Resources: An Adaptive Approach to Performance-Aware Test Case Generation",
+            "doi": "10.1109/tse.2019.2946773",
+            "arxiv_id": "",
+            "year": 2019,
+            "status": "verified",
+            "matched_via": "arxiv_title",
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "grano2019testing",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "vPerfGuard",
+            "doi": "10.1145/2479871.2479909",
+            "arxiv_id": "",
+            "year": 2013,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "vPerfGuard: an automated model-driven framework for application performance diagnosis in consolidated cloud environments",
+            "resolved_year": 2013,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "xiong2013vperfguard",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Automated root cause isolation of performance regressions during software development",
+            "doi": "10.1145/2479871.2479879",
+            "arxiv_id": "",
+            "year": 2013,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Automated root cause isolation of performance regressions during software development",
+            "resolved_year": 2013,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "heger2013automated",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "A statistics-based performance testing methodology for cloud applications",
+            "doi": "10.1145/3338906.3338912",
+            "arxiv_id": "",
+            "year": 2019,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "A statistics-based performance testing methodology for cloud applications",
+            "resolved_year": 2019,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "he2019statisticsbased",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Automated Detection of Performance Regressions Using Regression Models on Clustered Performance Counters",
+            "doi": "10.1145/2668930.2688052",
+            "arxiv_id": "",
+            "year": 2015,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Automated Detection of Performance Regressions Using Regression Models on Clustered Performance Counters",
+            "resolved_year": 2015,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "shang2015automated",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "An Exploratory Study of Performance Regression Introducing Code Changes",
+            "doi": "10.1109/icsme.2017.13",
+            "arxiv_id": "",
+            "year": 2017,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "An Exploratory Study of Performance Regression Introducing Code Changes",
+            "resolved_year": 2017,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "chen2017exploratory",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Leveraging Performance Counters and Execution Logs to Diagnose Memory-Related Performance Issues",
+            "doi": "10.1109/icsm.2013.22",
+            "arxiv_id": "",
+            "year": 2013,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Leveraging Performance Counters and Execution Logs to Diagnose Memory-Related Performance Issues",
+            "resolved_year": 2013,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "syer2013leveraging",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "What's Wrong with My Benchmark Results? Studying Bad Practices in JMH Benchmarks",
+            "doi": "10.1109/tse.2019.2925345",
+            "arxiv_id": "",
+            "year": 2019,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "What's Wrong with My Benchmark Results? Studying Bad Practices in JMH Benchmarks",
+            "resolved_year": 2019,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "costa2019whats",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "The Index-Based Subgraph Matching Algorithm with General Symmetries (ISMAGS): Exploiting Symmetry for Faster Subgraph Enumeration",
+            "doi": "10.1371/journal.pone.0097896",
+            "arxiv_id": "",
+            "year": 2014,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "The Index-Based Subgraph Matching Algorithm with General Symmetries (ISMAGS): Exploiting Symmetry for Faster Subgraph Enumeration",
+            "resolved_year": 2014,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "houbraken2014indexbased",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "An evaluation of open-source software microbenchmark suites for continuous performance assessment",
+            "doi": "10.1145/3196398.3196407",
+            "arxiv_id": "",
+            "year": 2018,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "An Evaluation of Open-Source Software Microbenchmark Suites for Continuous Performance Assessment",
+            "resolved_year": 2018,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "laaber2018evaluation",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Automated analysis of load testing results",
+            "doi": "10.1145/1831708.1831726",
+            "arxiv_id": "",
+            "year": 2010,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Automated analysis of load testing results",
+            "resolved_year": 2010,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "jiang2010automated",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Performance Testing of Mobile Applications at the Unit Test Level",
+            "doi": "10.1109/ssiri.2009.28",
+            "arxiv_id": "",
+            "year": 2009,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Performance Testing of Mobile Applications at the Unit Test Level",
+            "resolved_year": 2009,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "kim2009performance",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "PerfJIT: Test-Level Just-in-Time Prediction for Performance Regression Introducing Commits",
+            "doi": "10.1109/tse.2020.3023955",
+            "arxiv_id": "",
+            "year": 2020,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "PerfJIT: Test-Level Just-in-Time Prediction for Performance Regression Introducing Commits",
+            "resolved_year": 2022,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "chen2020perfjit",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Identifying Recurrent and Unknown Performance Issues",
+            "doi": "10.1109/icdm.2014.96",
+            "arxiv_id": "",
+            "year": 2014,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated.",
+              "Saw 1 conclusive miss(es) mixed with 2 API error(s)."
+            ],
+            "cite_key": "lim2014identifying",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "An Automated Approach for Recommending When to Stop Performance Tests",
+            "doi": "10.1109/icsme.2016.46",
+            "arxiv_id": "",
+            "year": 2016,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "An Automated Approach for Recommending When to Stop Performance Tests",
+            "resolved_year": 2016,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "alghmadi2016automated",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Behavioral log analysis with statistical guarantees",
+            "doi": "10.1145/2884781.2884805",
+            "arxiv_id": "",
+            "year": 2016,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Behavioral Log Analysis with Statistical Guarantees",
+            "resolved_year": 2016,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "busany2016behavioral",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "An Experience Report of Generating Load Tests Using Log-Recovered Workloads at Varying Granularities of User Behaviour",
+            "doi": "10.1109/ase.2019.00068",
+            "arxiv_id": "",
+            "year": 2019,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "An Experience Report of Generating Load Tests Using Log-Recovered Workloads at Varying Granularities of User Behaviour",
+            "resolved_year": 2019,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "chen2019experience",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Automating serverless deployments for DevOps organizations",
+            "doi": "10.1145/3468264.3468575",
+            "arxiv_id": "",
+            "year": 2021,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Automating serverless deployments for DevOps organizations",
+            "resolved_year": 2021,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "sokolowski2021automating",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Performance mutation testing",
+            "doi": "10.1002/stvr.1728",
+            "arxiv_id": "",
+            "year": 2020,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Performance mutation testing",
+            "resolved_year": 2020,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "delgadoperez2020performance",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Locating Performance Regression Root Causes in the Field Operations of Web-based Systems: An Experience Report",
+            "doi": "10.1109/tse.2021.3131529",
+            "arxiv_id": "",
+            "year": 2021,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Locating Performance Regression Root Causes in the Field Operations of Web-Based Systems: An Experience Report",
+            "resolved_year": 2022,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "liao2021locating",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Utilizing Performance Unit Tests To Increase Performance Awareness",
+            "doi": "10.1145/2668930.2688051",
+            "arxiv_id": "",
+            "year": 2015,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated.",
+              "Saw 1 conclusive miss(es) mixed with 2 API error(s)."
+            ],
+            "cite_key": "horky2015utilizing",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Automated Verification of Load Tests Using Control Charts",
+            "doi": "10.1109/apsec.2011.59",
+            "arxiv_id": "",
+            "year": 2011,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Automated Verification of Load Tests Using Control Charts",
+            "resolved_year": 2011,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "nguyen2011automated",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Web Application Performance Modeling Using Layered Queueing Networks",
+            "doi": "10.1016/j.entcs.2011.09.009",
+            "arxiv_id": "",
+            "year": 2011,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Web Application Performance Modeling Using Layered Queueing Networks",
+            "resolved_year": 2011,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "shoaib2011application",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "A Framework to Evaluate the Effectiveness of Different Load Testing Analysis Techniques",
+            "doi": "10.1109/icst.2016.9",
+            "arxiv_id": "",
+            "year": 2016,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "A Framework to Evaluate the Effectiveness of Different Load Testing Analysis Techniques",
+            "resolved_year": 2016,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "gao2016framework",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "PeASS: A Tool for Identifying Performance Changes at Code Level",
+            "doi": "10.1109/ase.2019.00123",
+            "arxiv_id": "",
+            "year": 2019,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "PeASS: A Tool for Identifying Performance Changes at Code Level",
+            "resolved_year": 2019,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "reichelt2019peass",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Improving the Testing Efficiency of Selenium-Based Load Tests",
+            "doi": "10.1109/ast.2019.00008",
+            "arxiv_id": "",
+            "year": 2019,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated."
+            ],
+            "cite_key": "shariff2019improving",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Architectural runtime models for integrating runtime observations and component-based models",
+            "doi": "10.1016/j.jss.2020.110722",
+            "arxiv_id": "",
+            "year": 2020,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Architectural runtime models for integrating runtime observations and component-based models",
+            "resolved_year": 2020,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "heinrich2020architectural",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Software Performance and Scalability",
+            "doi": "10.1002/9780470465394",
+            "arxiv_id": "",
+            "year": 2008,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Software Performance and Scalability",
+            "resolved_year": 2009,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "liu2008software",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "DeepTLE: Learning Code-Level Features to Predict Code Performance before It Runs",
+            "doi": "10.1109/apsec48747.2019.00042",
+            "arxiv_id": "",
+            "year": 2019,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated."
+            ],
+            "cite_key": "zhou2019deeptle",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Automatic detection of performance deviations in the load testing of Large Scale Systems",
+            "doi": "10.1109/icse.2013.6606651",
+            "arxiv_id": "",
+            "year": 2013,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Automatic detection of performance deviations in the load testing of Large Scale Systems",
+            "resolved_year": 2013,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "malik2013automatic",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "An Industrial Case Study on the Automated Detection of Performance Regressions in Heterogeneous Environments",
+            "doi": "10.1109/icse.2015.144",
+            "arxiv_id": "",
+            "year": 2015,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated."
+            ],
+            "cite_key": "foo2015industrial",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Automated Generation and Evaluation of JMH Microbenchmark Suites From Unit Tests",
+            "doi": "10.1109/tse.2022.3188005",
+            "arxiv_id": "",
+            "year": 2022,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated."
+            ],
+            "cite_key": "jangali2022automated",
+            "source_kind": "shortlist"
+          }
+        ],
+        "cache_path": "~/ai_scientist_evals/ICSE-2025-008_early_detection_of_system_performance_re/reference_verify_cache.json",
+        "override_path": "~/ai_scientist_evals/ICSE-2025-008_early_detection_of_system_performance_re/reference_verify_overrides.json",
+        "note": "fabrication_rate = fake / (verified + fake); lookup_failed (API errors) excluded. GitHub/docs/tool URLs are non_paper and excluded from the rate. To manually correct a false negative, edit reference_verify_overrides.json (key=normalized title / doi / cite_key; value=\"verified\" or a result dict), then re-run."
+      },
+      "coverage": {
+        "status": "ok",
+        "gold_source": "~/ai_scientist_inputs/ICSE-2025-008_early_detection_of_system_performance_re/mineru_sections.json",
+        "gold_count": 57,
+        "gold_is_original_paper_references": true,
+        "gold_is_openalex_subset": false,
+        "agent_count": 53,
+        "intersection_size": 47,
+        "recall": 0.8245614035087719,
+        "precision": 0.8867924528301887,
+        "matched_gold_keys": [
+          "alghmadi2016automated",
+          "balsamo2004modelbased",
+          "bause2002queueing",
+          "becker2007modelbased",
+          "becker2008palladio",
+          "busany2016behavioral",
+          "chen2017exploratory",
+          "chen2019experience",
+          "chen2022adaptive",
+          "cortellessa2021modeldriven",
+          "costa2019whats",
+          "delgadoperez2020performance",
+          "didona2015enhancing",
+          "foo2015industrial",
+          "franks2008enhanced",
+          "gao2016framework",
+          "grano2019testing",
+          "he2018identifying",
+          "he2019statisticsbased",
+          "heger2013automated",
+          "heinrich2020architectural",
+          "horky2015utilizing",
+          "houbraken2014indexbased",
+          "jangali2022automated",
+          "jiang2010automated",
+          "kim2009performance",
+          "kistowski2018teastore",
+          "kounev2006performance",
+          "laaber2018evaluation",
+          "laaber2019software",
+          "liao2021locating",
+          "lim2014identifying",
+          "malik2013automatic",
+          "nguyen2011automated",
+          "rolia1995method",
+          "shang2015automated",
+          "shariff2019improving",
+          "shoaib2011application",
+          "sokolowski2021automating",
+          "syer2013leveraging",
+          "weyuker2000experience",
+          "wilcoxon1992individual",
+          "woodside1995stochastic",
+          "woodside2007future",
+          "xiong2013vperfguard",
+          "zhang2005ensembles",
+          "zhou2018fault"
+        ],
+        "primary_metric": "recall",
+        "note": "Primary metric is recall against the original paper bibliography (titles from mineru_sections.json REFERENCES; related_work.json used only to enrich DOI/year or as fallback if mineru titles are empty). Denominator = |original paper references|. Precision is secondary (agent may cite valid extra papers)."
+      },
+      "recency": {
+        "status": "ok",
+        "dated_count": 53,
+        "unknown_year_count": 0,
+        "year_histogram": {
+          "1992": 1,
+          "1993": 1,
+          "1995": 2,
+          "2000": 1,
+          "2004": 1,
+          "2005": 1,
+          "2006": 1,
+          "2007": 2,
+          "2008": 2,
+          "2009": 2,
+          "2010": 1,
+          "2011": 2,
+          "2013": 4,
+          "2014": 3,
+          "2015": 4,
+          "2016": 3,
+          "2017": 1,
+          "2018": 4,
+          "2019": 8,
+          "2020": 2,
+          "2021": 2,
+          "2022": 4,
+          "2025": 1
+        },
+        "windows": {
+          "3": {
+            "years": 3,
+            "cutoff_year_inclusive": 2023,
+            "recent_count": 1,
+            "recent_ratio": 0.018867924528301886
+          },
+          "5": {
+            "years": 5,
+            "cutoff_year_inclusive": 2021,
+            "recent_count": 7,
+            "recent_ratio": 0.1320754716981132
+          }
+        }
+      },
+      "scores": {
+        "fabrication_rate": 0.0,
+        "coverage_recall": 0.8245614035087719,
+        "coverage_precision": 0.8867924528301887,
+        "recency_ratio_3y": 0.018867924528301886,
+        "recency_ratio_5y": 0.1320754716981132
+      }
+    }
+  },
+  "scores": {
+    "completeness": {
+      "complete": false,
+      "overall_score": 0.2,
+      "required_score": 0.25,
+      "bonus_score": 0.05
+    },
+    "peer_review": {
+      "status": "not_provided",
+      "optional": true,
+      "overall_score": null,
+      "score_scale": "1-5",
+      "scoring_method": null
+    },
+    "idea_generation": {
+      "status": "ok",
+      "overall_score": 1.3,
+      "dimensions": {
+        "novelty": 1.0,
+        "feasibility": 2.0,
+        "clarity": 1.0
+      },
+      "novelty_category": "Existing",
+      "solution_space_status": "ok"
+    },
+    "alignment": {
+      "status": "missing_agent_paper_or_metrics",
+      "direction_consistency": null,
+      "overall_alignment_score": null
+    },
+    "literature_review": {
+      "fabrication_rate": 0.0,
+      "coverage_recall": 0.8245614035087719,
+      "coverage_precision": 0.8867924528301887,
+      "recency_ratio_3y": 0.018867924528301886,
+      "recency_ratio_5y": 0.1320754716981132
+    },
+    "experiment_analysis": {
+      "experiment_success": false,
+      "idea_code_score": null,
+      "setup_coverage": 0.0,
+      "ablation_coverage_score": 1.0,
+      "overall_ablation_ok": true,
+      "overall_significance_ok": true,
+      "results_paper_score": null,
+      "hiding_unfavorable_suspected": null
+    }
+  },
+  "fair_scores": {
+    "applicable_axes": [
+      "completeness",
+      "idea_generation",
+      "literature_review",
+      "experiment_analysis"
+    ],
+    "skipped_axes": [
+      {
+        "axis": "peer_review",
+        "reason": "optional_external_review"
+      }
+    ],
+    "fair_mean_0_1": 0.2811,
+    "note": "fair_mean_0_1 averages only applicable axes; optional peer review and framework-inapplicable literature are excluded from the denominator."
+  },
+  "evals_root": "~/ai_scientist_evals",
+  "claims_cache": "~/ai_scientist_evals/ICSE-2025-008_early_detection_of_system_performance_re/original_claims.json",
+  "solution_space_cache": "~/ai_scientist_evals/ICSE-2025-008_early_detection_of_system_performance_re/solution_space.json"
+}

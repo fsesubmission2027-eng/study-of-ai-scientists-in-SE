@@ -1,0 +1,1491 @@
+{
+  "generated_at": "2026-09-19T10:43:47",
+  "run_dir": "~/ai_scientist_inputs/ICSE-2025-002_evaluating_assisting_exploration_strateg/workspace/researchclaw_2026-08-31_11-28-59",
+  "task_dir": "~/ai_scientist_inputs/ICSE-2025-002_evaluating_assisting_exploration_strateg",
+  "framework": "researchclaw",
+  "fairness_audit": [
+    {
+      "axis": "completeness",
+      "was_unfair": "Required both paper.tex AND paper.pdf; any tool missing one failed equally.",
+      "fix": "Paper gate: PDF=1.0; TeX-only=0.5; ``complete`` requires PDF."
+    },
+    {
+      "axis": "completeness",
+      "was_unfair": "``results`` counted stub/seed JSON (dataset_candidate/metrics.json).",
+      "fix": "``results`` requires substantive numeric results via results_normalize."
+    },
+    {
+      "axis": "experiment_success",
+      "was_unfair": "Only metrics.json; ignored results.json / experiment_results.txt.",
+      "fix": "Framework-ordered result candidates + normalized loaders."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Penalized tools with no bib; airesearcher has no workspace references.",
+      "fix": "literature_applicable=false → status not_applicable; excluded from fair aggregate."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "related_work.json subset as gold made recall hard to interpret.",
+      "fix": "Coverage gold is original paper REFERENCES from mineru; related_work only enriches metadata/fallback."
+    },
+    {
+      "axis": "peer_review",
+      "was_unfair": "Missing Stanford report looked like evaluation failure.",
+      "fix": "status not_provided; optional axis, never counts as tool failure."
+    },
+    {
+      "axis": "paths/find_results",
+      "was_unfair": "Picked downloads/** and sandbox noise (e.g. airesearcher LLVM tree).",
+      "fix": "Exclude downloads/, seeds/, dataset_candidate/, sandbox junk paths."
+    },
+    {
+      "axis": "paths/framework_noise",
+      "was_unfair": "DeepScientist .deepscientist_npm / runtime / skills templates counted as code/paper/results.",
+      "fix": "FRAMEWORK_NOISE_DIRS+markers; quest worktree + eval_output results; paper md drafts; reject template tex."
+    },
+    {
+      "axis": "paths/paper_tex",
+      "was_unfair": "tiny_scientist / ACL runs store paper under latex/*.tex; evaluator only looked at paper/main.tex.",
+      "fix": "latex/**/*.tex with substantive-body heuristic; find_paper_document uses same rules."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Entire custom.bib (300+ anthology entries) verified when paper had zero \\cite commands.",
+      "fix": "collect_agent_references filters bib to in-text cite keys; skips uncited bulk bib (>40 entries)."
+    },
+    {
+      "axis": "paths/ai_scientist_summaries",
+      "was_unfair": "AI Scientist can persist substantive results and paper-like drafts in *_summary.json logs rather than paper/main.tex or results/**/*.json.",
+      "fix": "Treat draft_summary/research_summary as weak paper documents and summary JSONs as result candidates."
+    },
+    {
+      "axis": "framework/ai_scientist_v2",
+      "was_unfair": "Manifest framework ``ai_scientist_v2`` fell through to profile ``unknown``, skipping AI-Scientist idea/result path priorities.",
+      "fix": "Normalize ``ai_scientist_v2`` (and common aliases) to profile key ``ai_scientist``."
+    },
+    {
+      "axis": "idea_generation",
+      "was_unfair": "plan.md/todos.md weak proxies scored same as structured idea.json.",
+      "fix": "Framework idea_priority tried first; missing idea → not_applicable where appropriate."
+    }
+  ],
+  "axes": [
+    "alignment",
+    "completeness",
+    "experiment_analysis",
+    "idea_generation",
+    "literature_review",
+    "peer_review"
+  ],
+  "results": {
+    "completeness": {
+      "framework": "researchclaw",
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-002_evaluating_assisting_exploration_strateg/workspace/researchclaw_2026-08-31_11-28-59",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-002_evaluating_assisting_exploration_strateg",
+      "complete": false,
+      "required_score": 0.5,
+      "bonus_score": 0.09,
+      "overall_score": 0.4,
+      "missing": [
+        "results",
+        "paper"
+      ],
+      "required": {
+        "idea": {
+          "path": "artifacts/idea.json",
+          "bytes": 2330,
+          "via": "candidate"
+        },
+        "code": {
+          "count": 16,
+          "files": [
+            {
+              "path": "artifacts/code/config.py",
+              "bytes": 365,
+              "via": "glob"
+            },
+            {
+              "path": "artifacts/code/data.py",
+              "bytes": 909,
+              "via": "glob"
+            },
+            {
+              "path": "artifacts/code/evaluate.py",
+              "bytes": 801,
+              "via": "glob"
+            },
+            {
+              "path": "artifacts/code/experiment_config.py",
+              "bytes": 365,
+              "via": "glob"
+            },
+            {
+              "path": "artifacts/code/main.py",
+              "bytes": 602,
+              "via": "glob"
+            },
+            {
+              "path": "artifacts/code/metrics.py",
+              "bytes": 856,
+              "via": "glob"
+            },
+            {
+              "path": "artifacts/code/model.py",
+              "bytes": 822,
+              "via": "glob"
+            },
+            {
+              "path": "artifacts/code/train.py",
+              "bytes": 2331,
+              "via": "glob"
+            },
+            {
+              "path": "stage-10/experiment/config.py",
+              "bytes": 365,
+              "via": "glob"
+            },
+            {
+              "path": "stage-10/experiment/data.py",
+              "bytes": 909,
+              "via": "glob"
+            },
+            {
+              "path": "stage-10/experiment/evaluate.py",
+              "bytes": 801,
+              "via": "glob"
+            },
+            {
+              "path": "stage-10/experiment/experiment_config.py",
+              "bytes": 365,
+              "via": "glob"
+            },
+            {
+              "path": "stage-10/experiment/main.py",
+              "bytes": 602,
+              "via": "glob"
+            },
+            {
+              "path": "stage-10/experiment/metrics.py",
+              "bytes": 856,
+              "via": "glob"
+            },
+            {
+              "path": "stage-10/experiment/model.py",
+              "bytes": 822,
+              "via": "glob"
+            },
+            {
+              "path": "stage-10/experiment/train.py",
+              "bytes": 2331,
+              "via": "glob"
+            }
+          ]
+        },
+        "results": {
+          "substantive": false,
+          "normalized_path": null,
+          "numeric_leaf_count": 0,
+          "discovered_files": [],
+          "metrics_keys_sample": []
+        },
+        "paper": {
+          "tex": null,
+          "pdf": null,
+          "md": null,
+          "json": null,
+          "status": "missing",
+          "score": 0.0
+        }
+      },
+      "bonus": {
+        "experiment_plan": {
+          "path": "stage-09/exp_plan.yaml",
+          "bytes": 669,
+          "via": "candidate"
+        },
+        "experiment_log": {
+          "path": "researchclaw_run.log",
+          "bytes": 6465,
+          "via": "glob"
+        },
+        "review": null,
+        "readme": null,
+        "narrative": null,
+        "bib": {
+          "path": "stage-04/references.bib",
+          "bytes": 13594,
+          "via": "glob"
+        }
+      },
+      "manifest_status": {
+        "pipeline": false,
+        "idea": true,
+        "code": true,
+        "results": false,
+        "paper": false
+      },
+      "gate_scores": {
+        "idea": 1.0,
+        "code": 1.0,
+        "results": 0.0,
+        "paper": 0.0
+      },
+      "fairness": {
+        "gates": [
+          "idea",
+          "code",
+          "results",
+          "paper"
+        ],
+        "paper_gate_rule": "PDF=1.0; TeX-only/md_only/json_only=0.5; complete requires PDF",
+        "results_gate_rule": "substantive numeric results via framework-aware normalize_results",
+        "audit_ref": "framework_profile.FAIRNESS_AUDIT"
+      },
+      "notes": [
+        "Required: idea, code, substantive results, paper (PDF full; TeX/markdown/JSON draft half).",
+        "Stub/seed metrics (e.g. dataset_candidate/metrics.json) do not satisfy results.",
+        "Framework noise (.deepscientist_npm, skills/templates, runtime) is excluded from code/results/paper.",
+        "Manifest status is informational; disk presence is authoritative."
+      ]
+    },
+    "idea_generation": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-002_evaluating_assisting_exploration_strateg/workspace/researchclaw_2026-08-31_11-28-59",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-002_evaluating_assisting_exploration_strateg",
+      "idea_path": "~/ai_scientist_inputs/ICSE-2025-002_evaluating_assisting_exploration_strateg/workspace/researchclaw_2026-08-31_11-28-59/artifacts/idea.json",
+      "status": "ok",
+      "dimensions": {
+        "novelty": {
+          "score": 1.0,
+          "justification": "The artifact contains no core method, e.g., 'all three perspectives is missing or blank' and 'Please re-paste or upload the hypotheses', so there is no idea to compare against the Solution Space.",
+          "rubric": "Existing: the idea's core method is already clearly present or solved in the Solution Space; only tiny parameter / test-case changes.",
+          "category": "Existing",
+          "nearest_solution_space_ids": [],
+          "differentiation": "No research method or direction is proposed; the artifact only states that hypotheses cannot be synthesized because source content is missing."
+        },
+        "feasibility": {
+          "score": 1.0,
+          "justification": "No plan, tooling, or evaluation is specified. The text only says 'I can’t synthesize the hypotheses because the content for all three perspectives is missing or blank', so as written it is not executable research.",
+          "rubric": "Theoretically infeasible / compute catastrophe: NP-hard-scale computation, must dynamically reproduce extremely complex system-level vulnerability environments, or depends on unavailable closed-source model internal weights; not doable by a single person."
+        },
+        "clarity": {
+          "score": 1.0,
+          "justification": "The artifact lacks a defined problem or solution; it states 'I don’t want to invent hypotheses' and asks for missing inputs, leaving only a meta-request rather than a research idea.",
+          "rubric": "Vague concept: full of empty buzzwords; problem undefined; method only gives a high-level direction with little substance."
+        }
+      },
+      "overall_score": 1.0,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "novelty",
+        "feasibility",
+        "clarity"
+      ],
+      "solution_space": {
+        "status": "ok",
+        "paper_count": 40,
+        "entry_count": 40,
+        "cache_hit": true,
+        "source_file": "~/ai_scientist_inputs/ICSE-2025-002_evaluating_assisting_exploration_strateg/mineru_sections.json",
+        "stats": {
+          "papers": 40,
+          "extracted": 40,
+          "usable_abstracts": 25,
+          "citation_meta_abstracts": 0,
+          "missing_abstracts": 15,
+          "mineru_titles": 40,
+          "related_work_titles": 27,
+          "abstracts_attached": 25,
+          "related_work_extras": 0,
+          "batches": 3
+        },
+        "error": null
+      },
+      "notes": [
+        "Scores the intermediate idea artifact (not the final paper).",
+        "Dimensions: novelty, feasibility, clarity (each 1-5). Excitement removed.",
+        "Novelty is scored against a Solution Space built from mineru REFERENCES titles (+ related_work.json abstracts when matched)."
+      ],
+      "idea_via": "candidate",
+      "idea_relative": "artifacts/idea.json",
+      "summary": "The submitted idea artifact is incomplete: it explicitly says hypothesis content from all three perspectives is missing and asks for it to be re-pasted. No research question, method, experiment plan, or evaluation criteria are proposed. Consequently, novelty, feasibility, and clarity cannot be meaningfully assessed, and the artifact does not constitute a scoreable research idea.",
+      "strengths": [
+        "Transparently avoids fabricating hypotheses from absent source content.",
+        "Clearly identifies that required inputs are missing."
+      ],
+      "weaknesses": [
+        "Contains no actual research hypothesis or method.",
+        "Provides no experimental design or evaluation plan.",
+        "Cannot be compared to prior work in the Solution Space because no technical core is present."
+      ],
+      "llm_meta": {
+        "model": "deepseek-v4-pro-0813",
+        "base_url": "https://api-sg.umodelverse.ai/v1",
+        "usage": {
+          "completion_tokens": 1377,
+          "completion_tokens_details": {
+            "reasoning_tokens": 973
+          },
+          "prompt_tokens": 4246,
+          "prompt_tokens_details": {
+            "cached_tokens": 4096
+          },
+          "total_tokens": 5623
+        },
+        "attempt": 0
+      }
+    },
+    "peer_review": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-002_evaluating_assisting_exploration_strateg/workspace/researchclaw_2026-08-31_11-28-59",
+      "review_report": null,
+      "paper_pdf": null,
+      "paper_tex": null,
+      "status": "not_provided",
+      "dimensions": {},
+      "overall_score": null,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "soundness",
+        "significance",
+        "novelty",
+        "presentation",
+        "credibility"
+      ],
+      "notes": [
+        "Stanford Agentic Reviewer (paperreview.ai): manual download to artifacts/peer_review/stanford_apr.md, or pass --auto-paperreview.",
+        "Dimensions: soundness, significance, novelty, presentation, credibility (each 1-5)."
+      ],
+      "paperreview": {
+        "status": "skipped",
+        "reason": "no_pdf"
+      },
+      "optional": true,
+      "hint": "Optional external review (Stanford APR). Upload paper/main.pdf to https://paperreview.ai/ , save review to ~/ai_scientist_inputs/ICSE-2025-002_evaluating_assisting_exploration_strateg/workspace/researchclaw_2026-08-31_11-28-59/artifacts/peer_review/stanford_apr.md"
+    },
+    "alignment": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-002_evaluating_assisting_exploration_strateg/workspace/researchclaw_2026-08-31_11-28-59",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-002_evaluating_assisting_exploration_strateg",
+      "status": "missing_agent_paper_or_metrics",
+      "original": {
+        "status": "ok",
+        "task_dir": "~/ai_scientist_inputs/ICSE-2025-002_evaluating_assisting_exploration_strateg",
+        "paper_title": "Tumbling Down the Rabbit Hole: How do Assisting Exploration Strategies Facilitate Grey-box Fuzzing?",
+        "task_id": "ICSE-2025-002",
+        "selection": {
+          "num_blocks": 7,
+          "total_chars": 31998,
+          "inferred_roles": {
+            "abstract": 1,
+            "introduction": 1,
+            "experiment": 3,
+            "discussion": 1,
+            "conclusion": 1
+          },
+          "mineru_raw_keys": {
+            "field:abstract": 1,
+            "field:introduction": 1,
+            "field:experiment": 1,
+            "other": 3,
+            "conclusion": 1
+          },
+          "infer_reasons": {
+            "top_level_field": 3,
+            "body_override": 2,
+            "title": 2
+          },
+          "rescued_from_other": 3,
+          "note": "mineru key is unreliable; blocks are selected by title/body/inheritance. rescued_from_other counts sections labeled other but treated as typed roles."
+        },
+        "claims": [],
+        "metrics": [],
+        "overall_conclusion": null,
+        "comparable_notes": null,
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 3500,
+            "completion_tokens_details": {
+              "reasoning_tokens": 3500
+            },
+            "prompt_tokens": 9570,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 13070
+          },
+          "attempt": 0
+        },
+        "cache_hit": true
+      },
+      "agent": {
+        "status": "missing_agent_paper_or_metrics",
+        "run_dir": "~/ai_scientist_inputs/ICSE-2025-002_evaluating_assisting_exploration_strateg/workspace/researchclaw_2026-08-31_11-28-59"
+      }
+    },
+    "experiment_analysis": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-002_evaluating_assisting_exploration_strateg/workspace/researchclaw_2026-08-31_11-28-59",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-002_evaluating_assisting_exploration_strateg",
+      "status": "ok",
+      "metrics_path": null,
+      "experiment_success": {
+        "status": "failed_or_incomplete",
+        "success": false,
+        "metrics_path": null,
+        "absolute_metrics_path": null,
+        "checks": {
+          "has_results_file": false,
+          "non_stub": false,
+          "numeric_leaf_count": 0,
+          "min_numeric_ok": false
+        },
+        "manifest_hints": {
+          "status": {
+            "pipeline": false,
+            "idea": true,
+            "code": true,
+            "results": false,
+            "paper": false
+          },
+          "returncode": 1,
+          "benchmark_complete": null,
+          "artifacts_metrics_flag": false
+        },
+        "warnings": [
+          "manifest.returncode=1"
+        ],
+        "suspicious_values": [],
+        "note": "success=true requires substantive results (framework-aware path) with >=3 numeric leaves. Supports metrics.json, results.json, experiment_results.txt, etc. Manifest returncode/benchmark_complete are soft warnings only."
+      },
+      "idea_code_consistency": {
+        "status": "ok",
+        "idea_path": "artifacts/idea.json",
+        "code_files": [
+          "stage-10/experiment/main.py"
+        ],
+        "score_scale": "1-5",
+        "score": 1.0,
+        "label": "severe_mismatch",
+        "justification": "The research idea contains no substantive hypotheses, predictions, failure conditions, or evaluation protocol because the source perspectives are missing. The experiment code is a generic logistic regression training/evaluation pipeline that does not instantiate any stated hypothesis, method, or evaluation plan.",
+        "matched_elements": [
+          "Presence of an experiment pipeline (data, model, train, evaluate)",
+          "Logistic regression as a possible baseline method"
+        ],
+        "missing_or_divergent_elements": [
+          "Stated hypotheses from innovator, pragmatist, and contrarian perspectives",
+          "Measurable predictions and failure conditions",
+          "Research method tied to a specific problem",
+          "Evaluation protocol/metrics connected to hypotheses",
+          "Baselines or comparisons required by the idea"
+        ],
+        "rubric": "Severe mismatch: code implements a different problem/method than the idea, or is unrelated boilerplate.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 374,
+            "completion_tokens_details": {
+              "reasoning_tokens": 190
+            },
+            "prompt_tokens": 742,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 1116
+          },
+          "attempt": 0
+        }
+      },
+      "setup_coverage": {
+        "status": "ok",
+        "overall_coverage": 0.037037037037037035,
+        "datasets": {
+          "gold_count": 1,
+          "hit_count": 0,
+          "miss_count": 1,
+          "coverage": 0.0,
+          "hits": [],
+          "misses": [
+            "Fuzzing evaluation benchmark (21 real-world programs)"
+          ]
+        },
+        "baselines": {
+          "gold_count": 9,
+          "hit_count": 1,
+          "miss_count": 8,
+          "coverage": 0.1111111111111111,
+          "hits": [
+            "REDQUEEN (AFL++ redqueen mode)"
+          ],
+          "misses": [
+            "AFL",
+            "AFL++",
+            "MOpt-AFL",
+            "FairFuzz",
+            "QSYM",
+            "MEUZZ",
+            "Pangolin",
+            "Angora"
+          ]
+        },
+        "metrics": {
+          "gold_count": 1,
+          "hit_count": 0,
+          "miss_count": 1,
+          "coverage": 0.0,
+          "hits": [],
+          "misses": [
+            "Edge coverage"
+          ]
+        },
+        "agent_protocol": {},
+        "gold_protocol": {
+          "timeout_hours": 24
+        },
+        "dataset_dirs": [
+          "dataset_candidate"
+        ],
+        "flags": {
+          "weaker_baseline_suspected": true,
+          "weak_protocol": [],
+          "synthetic_data": "synthetic_allowed_by_task",
+          "gold_allows_synthetic": true
+        },
+        "gold_sources": [
+          "~/ai_scientist_inputs/ICSE-2025-002_evaluating_assisting_exploration_strateg/task.md",
+          "~/ai_scientist_inputs/ICSE-2025-002_evaluating_assisting_exploration_strateg/metadata.json"
+        ],
+        "note": "Coverage is name/alias matching against task.md Datasets/Baselines/Metrics. weak_protocol flags large reductions in trials/timeout vs Constraints. Synthetic corpora are not penalized when the task itself requires synthesis."
+      },
+      "ablation_significance": {
+        "status": "ok",
+        "idea_path": "artifacts/idea.json",
+        "significance_signals_rule_based": {
+          "signals": [],
+          "artifact_paths": [],
+          "has_any_significance_artifact": false
+        },
+        "evidence_format": null,
+        "study_type": "pilot",
+        "components": [
+          {
+            "name": "Train/validation/test split",
+            "role": "dataset split",
+            "ablation_expected": false,
+            "significance_expected": false,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "Single pipeline with no comparison variants; removing the split is not a meaningful ablation here.",
+            "significance_status": "not_required",
+            "significance_evidence": "Single-run pilot; no repeated trials or performance metrics reported."
+          },
+          {
+            "name": "Logistic regression model",
+            "role": "module",
+            "ablation_expected": false,
+            "significance_expected": false,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "Only model shown; no removable method components or alternative model variants are specified.",
+            "significance_status": "not_required",
+            "significance_evidence": "No statistical comparison planned or possible with the available evidence."
+          },
+          {
+            "name": "Training procedure",
+            "role": "module",
+            "ablation_expected": false,
+            "significance_expected": false,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "Boilerplate training loop; no alternative training strategies or ablations specified.",
+            "significance_status": "not_required",
+            "significance_evidence": "Descriptive single-run training; formal significance testing is not standard."
+          },
+          {
+            "name": "Evaluation instrumentation",
+            "role": "instrumentation",
+            "ablation_expected": false,
+            "significance_expected": false,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "Evaluation saves metrics only; there is no comparison or removable instrumentation component to ablate.",
+            "significance_status": "not_required",
+            "significance_evidence": "No metrics are present in the provided evidence, consistent with a pilot or incomplete run."
+          }
+        ],
+        "ablation_coverage_score": 1.0,
+        "overall_ablation_ok": true,
+        "overall_significance_ok": true,
+        "summary": "The available evidence describes a minimal single-model logistic regression pilot with missing hypotheses and no final metrics. No ablation or statistical testing is expected for this study type, so the pipeline is not assessed as deficient on those grounds.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 1564,
+            "completion_tokens_details": {
+              "reasoning_tokens": 1033
+            },
+            "prompt_tokens": 1049,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 2613
+          },
+          "attempt": 0
+        }
+      },
+      "results_paper_consistency": {
+        "status": "missing_metrics"
+      },
+      "scores": {
+        "experiment_success": false,
+        "idea_code_score": 1.0,
+        "setup_coverage": 0.037037037037037035,
+        "ablation_coverage_score": 1.0,
+        "overall_ablation_ok": true,
+        "overall_significance_ok": true,
+        "results_paper_score": null,
+        "hiding_unfavorable_suspected": null
+      },
+      "notes": [
+        "Axes 1,2,3,4,6 in experiment_analysis (figures excluded).",
+        "setup_coverage matches task.md Datasets/Baselines/Metrics; weak_protocol flags reductions vs Constraints.",
+        "Axis 6: final normalized results vs paper; interim run logs not used as ground truth."
+      ]
+    },
+    "literature_review": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-002_evaluating_assisting_exploration_strateg/workspace/researchclaw_2026-08-31_11-28-59",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-002_evaluating_assisting_exploration_strateg",
+      "status": "ok",
+      "as_of_year": 2026,
+      "agent_ref_count": 46,
+      "sources": [
+        {
+          "path": "~/ai_scientist_inputs/ICSE-2025-002_evaluating_assisting_exploration_strateg/workspace/researchclaw_2026-08-31_11-28-59/stage-05/shortlist.jsonl",
+          "kind": "shortlist"
+        },
+        {
+          "path": "~/ai_scientist_inputs/ICSE-2025-002_evaluating_assisting_exploration_strateg/workspace/researchclaw_2026-08-31_11-28-59/stage-04/references.bib",
+          "kind": "bib"
+        }
+      ],
+      "collection_audit": {
+        "cited_keys_count": 0,
+        "filter_mode": "non_bib_sources",
+        "bib_total_before_filter": 46,
+        "bib_after_filter": 0,
+        "uncited_bib_skipped": 46,
+        "agent_ref_count": 46
+      },
+      "fabrication": {
+        "status": "ok",
+        "scholarly_count": 46,
+        "verified_count": 44,
+        "fake_count": 0,
+        "lookup_failed_count": 2,
+        "non_paper_count": 0,
+        "fabrication_rate": 0.0,
+        "items": [
+          {
+            "title": "Z3: An Efficient SMT Solver",
+            "doi": "10.1007/978-3-540-78800-3_24",
+            "arxiv_id": "",
+            "year": 2008,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Z3: An Efficient SMT Solver",
+            "resolved_year": 2008,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "moura2008efficient",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "LLVM: A compilation framework for lifelong program analysis &amp; transformation",
+            "doi": "10.1109/cgo.2004.1281665",
+            "arxiv_id": "",
+            "year": 2004,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "LLVM: a compilation framework for lifelong program analysis & transformation",
+            "resolved_year": 2004,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "lattner2004llvm",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Driller: Augmenting Fuzzing Through Selective Symbolic Execution",
+            "doi": "10.14722/ndss.2016.23368",
+            "arxiv_id": "",
+            "year": 2016,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Driller: Augmenting Fuzzing Through Selective Symbolic Execution",
+            "resolved_year": 2016,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "stephens2016driller",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Coverage-based Greybox Fuzzing as Markov Chain",
+            "doi": "10.1145/2976749.2978428",
+            "arxiv_id": "",
+            "year": 2016,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Coverage-Based Greybox Fuzzing as Markov Chain",
+            "resolved_year": 2016,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "bohme2016coveragebased",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Evaluating Fuzz Testing",
+            "doi": "10.1145/3243734.3243804",
+            "arxiv_id": "",
+            "year": 2018,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Evaluating Fuzz Testing",
+            "resolved_year": 2018,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "klees2018evaluating",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Angora: Efficient Fuzzing by Principled Search",
+            "doi": "10.1109/sp.2018.00046",
+            "arxiv_id": "1803.01307",
+            "year": 2018,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Angora: Efficient Fuzzing by Principled Search",
+            "resolved_year": 2018,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "chen2018angora",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Hybrid Concolic Testing",
+            "doi": "10.1109/icse.2007.41",
+            "arxiv_id": "",
+            "year": 2007,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Hybrid Concolic Testing",
+            "resolved_year": 2007,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "majumdar2007hybrid",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "FairFuzz: a targeted mutation strategy for increasing greybox fuzz testing coverage",
+            "doi": "10.1145/3238147.3238176",
+            "arxiv_id": "",
+            "year": 2018,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "FairFuzz: A Targeted Mutation Strategy for Increasing Greybox Fuzz Testing Coverage",
+            "resolved_year": 2017,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "lemieux2018fairfuzz",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "REDQUEEN: Fuzzing with Input-to-State Correspondence",
+            "doi": "10.14722/ndss.2019.23371",
+            "arxiv_id": "",
+            "year": 2019,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "REDQUEEN: Fuzzing with Input-to-State Correspondence",
+            "resolved_year": 2019,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "aschermann2019redqueen",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Mann–Whitney U Test",
+            "doi": "10.1007/978-3-319-30634-6_4",
+            "arxiv_id": "",
+            "year": 2016,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Mann–Whitney U Test",
+            "resolved_year": 2016,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "macfarland2016mannwhitney",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Steelix: program-state based binary fuzzing",
+            "doi": "10.1145/3106237.3106295",
+            "arxiv_id": "",
+            "year": 2017,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Steelix: program-state based binary fuzzing",
+            "resolved_year": 2017,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "li2017steelix",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Superion: Grammar-Aware Greybox Fuzzing",
+            "doi": "10.1109/icse.2019.00081",
+            "arxiv_id": "",
+            "year": 2019,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Superion: Grammar-Aware Greybox Fuzzing",
+            "resolved_year": 2018,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "wang2019superion",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Fuzzing: State of the Art",
+            "doi": "10.1109/tr.2018.2834476",
+            "arxiv_id": "",
+            "year": 2018,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Fuzzing: State of the Art",
+            "resolved_year": 2018,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "liang2018fuzzing",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "NEUZZ: Efficient Fuzzing with Neural Program Smoothing",
+            "doi": "10.1109/sp.2019.00052",
+            "arxiv_id": "1807.05620",
+            "year": 2019,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "NEUZZ: Efficient Fuzzing with Neural Program Smoothing",
+            "resolved_year": 2018,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "she2019neuzz",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "FuzzBench: an open fuzzer benchmarking platform and service",
+            "doi": "10.1145/3468264.3473932",
+            "arxiv_id": "",
+            "year": 2021,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "FuzzBench: an open fuzzer benchmarking platform and service",
+            "resolved_year": 2021,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "metzman2021fuzzbench",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "SAVIOR: Towards Bug-Driven Hybrid Testing",
+            "doi": "10.1109/sp40000.2020.00002",
+            "arxiv_id": "",
+            "year": 2020,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "SAVIOR: Towards Bug-Driven Hybrid Testing",
+            "resolved_year": 2019,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "chen2020savior",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Not All Coverage Measurements Are Equal: Fuzzing by Coverage Accounting for Input Prioritization",
+            "doi": "10.14722/ndss.2020.24422",
+            "arxiv_id": "",
+            "year": 2020,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Not All Coverage Measurements Are Equal: Fuzzing by Coverage Accounting for Input Prioritization",
+            "resolved_year": 2020,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "wang2020coverage",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "ProFuzzer: On-the-fly Input Type Probing for Better Zero-Day Vulnerability Discovery",
+            "doi": "10.1109/sp.2019.00057",
+            "arxiv_id": "",
+            "year": 2019,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated.",
+              "Saw 1 conclusive miss(es) mixed with 2 API error(s)."
+            ],
+            "cite_key": "you2019profuzzer",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Seed selection for successful fuzzing",
+            "doi": "10.1145/3460319.3464795",
+            "arxiv_id": "",
+            "year": 2021,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Seed selection for successful fuzzing",
+            "resolved_year": 2021,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "herrera2021seed",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "On the reliability of coverage-based fuzzer benchmarking",
+            "doi": "10.1145/3510003.3510230",
+            "arxiv_id": "",
+            "year": 2022,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "On the Reliability of Coverage-Based Fuzzer Benchmarking",
+            "resolved_year": 2022,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "bohme2022reliability",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Pangolin: Incremental Hybrid Fuzzing with Polyhedral Path Abstraction",
+            "doi": "10.1109/sp40000.2020.00063",
+            "arxiv_id": "",
+            "year": 2020,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Pangolin: Incremental Hybrid Fuzzing with Polyhedral Path Abstraction",
+            "resolved_year": 2020,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "huang2020pangolin",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Chopped symbolic execution",
+            "doi": "10.1145/3180155.3180251",
+            "arxiv_id": "",
+            "year": 2018,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Chopped Symbolic Execution",
+            "resolved_year": 2018,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "trabish2018chopped",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "MemorySanitizer: Fast detector of uninitialized memory use in C&amp;#x002B;&amp;#x002B;",
+            "doi": "10.1109/cgo.2015.7054186",
+            "arxiv_id": "",
+            "year": 2015,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "MemorySanitizer: Fast detector of uninitialized memory use in C++",
+            "resolved_year": 2015,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "stepanov2015memorysanitizer",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "WEIZZ: automatic grey-box fuzzing for structured binary formats",
+            "doi": "10.1145/3395363.3397372",
+            "arxiv_id": "",
+            "year": 2020,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "WEIZZ: automatic grey-box fuzzing for structured binary formats",
+            "resolved_year": 2019,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "fioraldi2020weizz",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "One fuzzing strategy to rule them all",
+            "doi": "10.1145/3510003.3510174",
+            "arxiv_id": "",
+            "year": 2022,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "One Fuzzing Strategy to Rule Them All",
+            "resolved_year": 2022,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "wu2022fuzzing",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "PATA: Fuzzing with Path Aware Taint Analysis",
+            "doi": "10.1109/sp46214.2022.9833594",
+            "arxiv_id": "",
+            "year": 2022,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "PATA: Fuzzing with Path Aware Taint Analysis",
+            "resolved_year": 2022,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "liang2022pata",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "History-driven test program synthesis for JVM testing",
+            "doi": "10.1145/3510003.3510059",
+            "arxiv_id": "",
+            "year": 2022,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "History-Driven Test Program Synthesis for JVM Testing",
+            "resolved_year": 2022,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "zhao2022historydriven",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "JITfuzz: Coverage-guided Fuzzing for JVM Just-in-Time Compilers",
+            "doi": "10.1109/icse48619.2023.00017",
+            "arxiv_id": "",
+            "year": 2023,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "JITfuzz: Coverage-guided Fuzzing for JVM Just-in-Time Compilers",
+            "resolved_year": 2023,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "wu2023jitfuzz",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Fuzzing: on the exponential cost of vulnerability discovery",
+            "doi": "10.1145/3368089.3409729",
+            "arxiv_id": "",
+            "year": 2020,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Fuzzing: on the exponential cost of vulnerability discovery",
+            "resolved_year": 2020,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "bohme2020fuzzing",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "MTFuzz: fuzzing with a multi-task neural network",
+            "doi": "10.1145/3368089.3409723",
+            "arxiv_id": "",
+            "year": 2020,
+            "status": "verified",
+            "matched_via": "arxiv_title",
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "she2020mtfuzz",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Static Program Analysis as a Fuzzing Aid",
+            "doi": "10.1007/978-3-319-66332-6_2",
+            "arxiv_id": "",
+            "year": 2017,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Static Program Analysis as a Fuzzing Aid",
+            "resolved_year": 2017,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "shastry2017static",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "PathAFL: Path-Coverage Assisted Fuzzing",
+            "doi": "10.1145/3320269.3384736",
+            "arxiv_id": "",
+            "year": 2020,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "PathAFL: Path-Coverage Assisted Fuzzing",
+            "resolved_year": 2020,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "yan2020pathafl",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "BeDivFuzz",
+            "doi": "10.1145/3510003.3510182",
+            "arxiv_id": "",
+            "year": 2022,
+            "status": "verified",
+            "matched_via": "arxiv_title",
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "nguyen2022bedivfuzz",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Evaluating and Improving Hybrid Fuzzing",
+            "doi": "10.1109/icse48619.2023.00045",
+            "arxiv_id": "",
+            "year": 2023,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated.",
+              "Saw 1 conclusive miss(es) mixed with 2 API error(s)."
+            ],
+            "cite_key": "jiang2023evaluating",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Learning input tokens for effective fuzzing",
+            "doi": "10.1145/3395363.3397348",
+            "arxiv_id": "",
+            "year": 2020,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Learning input tokens for effective fuzzing",
+            "resolved_year": 2020,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "mathis2020learning",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "EMS: History-Driven Mutation for Coverage-based Fuzzing",
+            "doi": "10.14722/ndss.2022.23162",
+            "arxiv_id": "",
+            "year": 2022,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "EMS: History-Driven Mutation for Coverage-based Fuzzing",
+            "resolved_year": 2022,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "lyu2022historydriven",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "CONFETTI",
+            "doi": "10.1145/3510003.3510628",
+            "arxiv_id": "",
+            "year": 2022,
+            "status": "verified",
+            "matched_via": "arxiv_title",
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "kukucka2022confetti",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Evaluating and improving neural program-smoothing-based fuzzing",
+            "doi": "10.1145/3510003.3510089",
+            "arxiv_id": "",
+            "year": 2022,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Evaluating and Improving Neural Program-Smoothing-based Fuzzing",
+            "resolved_year": 2022,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "wu2022evaluating",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Vectorizing Program Ingredients for Better JVM Testing",
+            "doi": "10.1145/3597926.3598075",
+            "arxiv_id": "",
+            "year": 2023,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Vectorizing Program Ingredients for Better JVM Testing",
+            "resolved_year": 2023,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "gao2023vectorizing",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "SJFuzz: Seed and Mutator Scheduling for JVM Fuzzing",
+            "doi": "10.1145/3611643.3616277",
+            "arxiv_id": "",
+            "year": 2023,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "SJFuzz: Seed and Mutator Scheduling for JVM Fuzzing",
+            "resolved_year": 2023,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "wu2023sjfuzz",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Simulee",
+            "doi": "10.1145/3377811.3380358",
+            "arxiv_id": "",
+            "year": 2020,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Simulee: Detecting CUDA Synchronization Bugs via Memory-Access Modeling",
+            "resolved_year": 2020,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "wu2020simulee",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "QATest: A Uniform Fuzzing Framework for Question Answering Systems",
+            "doi": "10.1145/3551349.3556929",
+            "arxiv_id": "",
+            "year": 2022,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "QATest: A Uniform Fuzzing Framework for Question Answering Systems",
+            "resolved_year": 2022,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "liu2022qatest",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Enhancing Coverage-Guided Fuzzing via Phantom Program",
+            "doi": "10.1145/3611643.3616294",
+            "arxiv_id": "",
+            "year": 2023,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Enhancing Coverage-Guided Fuzzing via Phantom Program",
+            "resolved_year": 2023,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "wu2023enhancing",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Industrial Deployment of Compiler Fuzzing Techniques for Two GPU Shading Languages",
+            "doi": "10.1109/icst57152.2023.00042",
+            "arxiv_id": "",
+            "year": 2023,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Industrial Deployment of Compiler Fuzzing Techniques for Two GPU Shading Languages",
+            "resolved_year": 2023,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "donaldson2023industrial",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "FuzzingDriver: the Missing Dictionary to Increase Code Coverage in Fuzzers",
+            "doi": "10.1109/saner53432.2022.00042",
+            "arxiv_id": "",
+            "year": 2022,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "FuzzingDriver: the Missing Dictionary to Increase Code Coverage in Fuzzers",
+            "resolved_year": 2022,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "ebrahim2022fuzzingdriver",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "pbSE: Phase-Based Symbolic Execution",
+            "doi": "10.1109/dsn.2017.48",
+            "arxiv_id": "",
+            "year": 2017,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "pbSE: Phase-Based Symbolic Execution",
+            "resolved_year": 2017,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "xiao2017pbse",
+            "source_kind": "shortlist"
+          }
+        ],
+        "cache_path": "~/ai_scientist_evals/ICSE-2025-002_evaluating_assisting_exploration_strateg/reference_verify_cache.json",
+        "override_path": "~/ai_scientist_evals/ICSE-2025-002_evaluating_assisting_exploration_strateg/reference_verify_overrides.json",
+        "note": "fabrication_rate = fake / (verified + fake); lookup_failed (API errors) excluded. GitHub/docs/tool URLs are non_paper and excluded from the rate. To manually correct a false negative, edit reference_verify_overrides.json (key=normalized title / doi / cite_key; value=\"verified\" or a result dict), then re-run."
+      },
+      "coverage": {
+        "status": "ok",
+        "gold_source": "~/ai_scientist_inputs/ICSE-2025-002_evaluating_assisting_exploration_strateg/mineru_sections.json",
+        "gold_count": 40,
+        "gold_is_original_paper_references": true,
+        "gold_is_openalex_subset": false,
+        "agent_count": 46,
+        "intersection_size": 27,
+        "recall": 0.675,
+        "precision": 0.5869565217391305,
+        "matched_gold_keys": [
+          "aschermann2019redqueen",
+          "bohme2016coveragebased",
+          "bohme2022reliability",
+          "donaldson2023industrial",
+          "ebrahim2022fuzzingdriver",
+          "gao2023vectorizing",
+          "herrera2021seed",
+          "huang2020pangolin",
+          "jiang2023evaluating",
+          "klees2018evaluating",
+          "kukucka2022confetti",
+          "lemieux2018fairfuzz",
+          "macfarland2016mannwhitney",
+          "majumdar2007hybrid",
+          "mathis2020learning",
+          "metzman2021fuzzbench",
+          "nguyen2022bedivfuzz",
+          "shastry2017static",
+          "stepanov2015memorysanitizer",
+          "trabish2018chopped",
+          "wang2019superion",
+          "wang2020coverage",
+          "wu2022evaluating",
+          "wu2022fuzzing",
+          "wu2023enhancing",
+          "you2019profuzzer",
+          "zhao2022historydriven"
+        ],
+        "primary_metric": "recall",
+        "note": "Primary metric is recall against the original paper bibliography (titles from mineru_sections.json REFERENCES; related_work.json used only to enrich DOI/year or as fallback if mineru titles are empty). Denominator = |original paper references|. Precision is secondary (agent may cite valid extra papers)."
+      },
+      "recency": {
+        "status": "ok",
+        "dated_count": 46,
+        "unknown_year_count": 0,
+        "year_histogram": {
+          "2004": 1,
+          "2007": 1,
+          "2008": 1,
+          "2015": 1,
+          "2016": 3,
+          "2017": 4,
+          "2018": 6,
+          "2019": 4,
+          "2020": 7,
+          "2021": 2,
+          "2022": 10,
+          "2023": 6
+        },
+        "windows": {
+          "3": {
+            "years": 3,
+            "cutoff_year_inclusive": 2023,
+            "recent_count": 6,
+            "recent_ratio": 0.13043478260869565
+          },
+          "5": {
+            "years": 5,
+            "cutoff_year_inclusive": 2021,
+            "recent_count": 18,
+            "recent_ratio": 0.391304347826087
+          }
+        }
+      },
+      "scores": {
+        "fabrication_rate": 0.0,
+        "coverage_recall": 0.675,
+        "coverage_precision": 0.5869565217391305,
+        "recency_ratio_3y": 0.13043478260869565,
+        "recency_ratio_5y": 0.391304347826087
+      }
+    }
+  },
+  "scores": {
+    "completeness": {
+      "complete": false,
+      "overall_score": 0.4,
+      "required_score": 0.5,
+      "bonus_score": 0.09
+    },
+    "peer_review": {
+      "status": "not_provided",
+      "optional": true,
+      "overall_score": null,
+      "score_scale": "1-5",
+      "scoring_method": null
+    },
+    "idea_generation": {
+      "status": "ok",
+      "overall_score": 1.0,
+      "dimensions": {
+        "novelty": 1.0,
+        "feasibility": 1.0,
+        "clarity": 1.0
+      },
+      "novelty_category": "Existing",
+      "solution_space_status": "ok"
+    },
+    "alignment": {
+      "status": "missing_agent_paper_or_metrics",
+      "direction_consistency": null,
+      "overall_alignment_score": null
+    },
+    "literature_review": {
+      "fabrication_rate": 0.0,
+      "coverage_recall": 0.675,
+      "coverage_precision": 0.5869565217391305,
+      "recency_ratio_3y": 0.13043478260869565,
+      "recency_ratio_5y": 0.391304347826087
+    },
+    "experiment_analysis": {
+      "experiment_success": false,
+      "idea_code_score": 1.0,
+      "setup_coverage": 0.037037037037037035,
+      "ablation_coverage_score": 1.0,
+      "overall_ablation_ok": true,
+      "overall_significance_ok": true,
+      "results_paper_score": null,
+      "hiding_unfavorable_suspected": null
+    }
+  },
+  "fair_scores": {
+    "applicable_axes": [
+      "completeness",
+      "idea_generation",
+      "literature_review",
+      "experiment_analysis"
+    ],
+    "skipped_axes": [
+      {
+        "axis": "peer_review",
+        "reason": "optional_external_review"
+      }
+    ],
+    "fair_mean_0_1": 0.3452,
+    "note": "fair_mean_0_1 averages only applicable axes; optional peer review and framework-inapplicable literature are excluded from the denominator."
+  },
+  "evals_root": "~/ai_scientist_evals",
+  "claims_cache": "~/ai_scientist_evals/ICSE-2025-002_evaluating_assisting_exploration_strateg/original_claims.json",
+  "solution_space_cache": "~/ai_scientist_evals/ICSE-2025-002_evaluating_assisting_exploration_strateg/solution_space.json"
+}

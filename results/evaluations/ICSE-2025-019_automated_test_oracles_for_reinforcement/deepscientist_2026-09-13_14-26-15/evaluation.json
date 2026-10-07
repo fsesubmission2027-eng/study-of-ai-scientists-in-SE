@@ -1,0 +1,1461 @@
+{
+  "run_dir": "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement/workspace/deepscientist_2026-09-13_14-26-15",
+  "task_dir": "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement",
+  "framework": "deepscientist",
+  "fairness_audit": [
+    {
+      "axis": "completeness",
+      "was_unfair": "Required both paper.tex AND paper.pdf; any tool missing one failed equally.",
+      "fix": "Paper gate: PDF=1.0; TeX-only=0.5; ``complete`` requires PDF."
+    },
+    {
+      "axis": "completeness",
+      "was_unfair": "``results`` counted stub/seed JSON (dataset_candidate/metrics.json).",
+      "fix": "``results`` requires substantive numeric results via results_normalize."
+    },
+    {
+      "axis": "experiment_success",
+      "was_unfair": "Only metrics.json; ignored results.json / experiment_results.txt.",
+      "fix": "Framework-ordered result candidates + normalized loaders."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Penalized tools with no bib; airesearcher has no workspace references.",
+      "fix": "literature_applicable=false → status not_applicable; excluded from fair aggregate."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "related_work.json subset as gold made recall hard to interpret.",
+      "fix": "Coverage gold is original paper REFERENCES from mineru; related_work only enriches metadata/fallback."
+    },
+    {
+      "axis": "peer_review",
+      "was_unfair": "Missing Stanford report looked like evaluation failure.",
+      "fix": "status not_provided; optional axis, never counts as tool failure."
+    },
+    {
+      "axis": "paths/find_results",
+      "was_unfair": "Picked downloads/** and sandbox noise (e.g. airesearcher LLVM tree).",
+      "fix": "Exclude downloads/, seeds/, dataset_candidate/, sandbox junk paths."
+    },
+    {
+      "axis": "paths/framework_noise",
+      "was_unfair": "DeepScientist .deepscientist_npm / runtime / skills templates counted as code/paper/results.",
+      "fix": "FRAMEWORK_NOISE_DIRS+markers; quest worktree + eval_output results; paper md drafts; reject template tex."
+    },
+    {
+      "axis": "paths/paper_tex",
+      "was_unfair": "tiny_scientist / ACL runs store paper under latex/*.tex; evaluator only looked at paper/main.tex.",
+      "fix": "latex/**/*.tex with substantive-body heuristic; find_paper_document uses same rules."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Entire custom.bib (300+ anthology entries) verified when paper had zero \\cite commands.",
+      "fix": "collect_agent_references filters bib to in-text cite keys; skips uncited bulk bib (>40 entries)."
+    },
+    {
+      "axis": "paths/ai_scientist_summaries",
+      "was_unfair": "AI Scientist can persist substantive results and paper-like drafts in *_summary.json logs rather than paper/main.tex or results/**/*.json.",
+      "fix": "Treat draft_summary/research_summary as weak paper documents and summary JSONs as result candidates."
+    },
+    {
+      "axis": "framework/ai_scientist_v2",
+      "was_unfair": "Manifest framework ``ai_scientist_v2`` fell through to profile ``unknown``, skipping AI-Scientist idea/result path priorities.",
+      "fix": "Normalize ``ai_scientist_v2`` (and common aliases) to profile key ``ai_scientist``."
+    },
+    {
+      "axis": "idea_generation",
+      "was_unfair": "plan.md/todos.md weak proxies scored same as structured idea.json.",
+      "fix": "Framework idea_priority tried first; missing idea → not_applicable where appropriate."
+    }
+  ],
+  "generated_at": "2026-10-01T14:45:21",
+  "axes": [
+    "alignment",
+    "completeness",
+    "experiment_analysis",
+    "idea_generation",
+    "literature_review",
+    "peer_review"
+  ],
+  "results": {
+    "completeness": {
+      "framework": "deepscientist",
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement/workspace/deepscientist_2026-09-13_14-26-15",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement",
+      "complete": true,
+      "required_score": 1.0,
+      "bonus_score": 0.06,
+      "overall_score": 0.8402,
+      "missing": [],
+      "required": {
+        "idea": {
+          "path": "idea.md",
+          "bytes": 582,
+          "via": "candidate"
+        },
+        "code": {
+          "count": 1536,
+          "files": [
+            {
+              "path": "project/RL-Oracle-Lyapunov-v1/RLTestingLyapunov/Evaluation.py",
+              "bytes": 894,
+              "via": "glob"
+            },
+            {
+              "path": "project/RL-Oracle-Lyapunov-v1/RLTestingLyapunov/LPEA_Env.py",
+              "bytes": 2739,
+              "via": "glob"
+            },
+            {
+              "path": "project/RL-Oracle-Lyapunov-v1/RLTestingLyapunov/LPEA_Oracle.py",
+              "bytes": 2366,
+              "via": "glob"
+            },
+            {
+              "path": "project/RL-Oracle-Lyapunov-v1/RLTestingLyapunov/Lyaponov_oracle_util.py",
+              "bytes": 8193,
+              "via": "glob"
+            },
+            {
+              "path": "project/RL-Oracle-Lyapunov-v1/RLTestingLyapunov/Util.py",
+              "bytes": 5488,
+              "via": "glob"
+            },
+            {
+              "path": "project/RL-Oracle-Lyapunov-v1/RLTestingLyapunov/bug_injection.py",
+              "bytes": 159,
+              "via": "glob"
+            },
+            {
+              "path": "project/RL-Oracle-Lyapunov-v1/RLTestingLyapunov/bug_lib.py",
+              "bytes": 23387,
+              "via": "glob"
+            },
+            {
+              "path": "project/RL-Oracle-Lyapunov-v1/RLTestingLyapunov/config_parser.py",
+              "bytes": 373,
+              "via": "glob"
+            },
+            {
+              "path": "project/RL-Oracle-Lyapunov-v1/archived_code/stable_baselines3/__init__.py",
+              "bytes": 939,
+              "via": "glob"
+            },
+            {
+              "path": "project/RL-Oracle-Lyapunov-v1/archived_code/stable_baselines3/a2c/__init__.py",
+              "bytes": 189,
+              "via": "glob"
+            },
+            {
+              "path": "project/RL-Oracle-Lyapunov-v1/archived_code/stable_baselines3/a2c/a2c.py",
+              "bytes": 9207,
+              "via": "glob"
+            },
+            {
+              "path": "project/RL-Oracle-Lyapunov-v1/archived_code/stable_baselines3/a2c/policies.py",
+              "bytes": 301,
+              "via": "glob"
+            },
+            {
+              "path": "project/RL-Oracle-Lyapunov-v1/archived_code/stable_baselines3/common/atari_wrappers.py",
+              "bytes": 11290,
+              "via": "glob"
+            },
+            {
+              "path": "project/RL-Oracle-Lyapunov-v1/archived_code/stable_baselines3/common/base_class.py",
+              "bytes": 36960,
+              "via": "glob"
+            },
+            {
+              "path": "project/RL-Oracle-Lyapunov-v1/archived_code/stable_baselines3/common/buffers.py",
+              "bytes": 34591,
+              "via": "glob"
+            },
+            {
+              "path": "project/RL-Oracle-Lyapunov-v1/archived_code/stable_baselines3/common/callbacks.py",
+              "bytes": 27118,
+              "via": "glob"
+            },
+            {
+              "path": "project/RL-Oracle-Lyapunov-v1/archived_code/stable_baselines3/common/distributions.py",
+              "bytes": 27792,
+              "via": "glob"
+            },
+            {
+              "path": "project/RL-Oracle-Lyapunov-v1/archived_code/stable_baselines3/common/env_checker.py",
+              "bytes": 22097,
+              "via": "glob"
+            },
+            {
+              "path": "project/RL-Oracle-Lyapunov-v1/archived_code/stable_baselines3/common/env_util.py",
+              "bytes": 7630,
+              "via": "glob"
+            },
+            {
+              "path": "project/RL-Oracle-Lyapunov-v1/archived_code/stable_baselines3/common/envs/__init__.py",
+              "bytes": 533,
+              "via": "glob"
+            },
+            {
+              "path": "project/RL-Oracle-Lyapunov-v1/archived_code/stable_baselines3/common/envs/bit_flipping_env.py",
+              "bytes": 9212,
+              "via": "glob"
+            },
+            {
+              "path": "project/RL-Oracle-Lyapunov-v1/archived_code/stable_baselines3/common/envs/identity_env.py",
+              "bytes": 6029,
+              "via": "glob"
+            },
+            {
+              "path": "project/RL-Oracle-Lyapunov-v1/archived_code/stable_baselines3/common/envs/multi_input_envs.py",
+              "bytes": 6499,
+              "via": "glob"
+            },
+            {
+              "path": "project/RL-Oracle-Lyapunov-v1/archived_code/stable_baselines3/common/evaluation.py",
+              "bytes": 6451,
+              "via": "glob"
+            },
+            {
+              "path": "project/RL-Oracle-Lyapunov-v1/archived_code/stable_baselines3/common/logger.py",
+              "bytes": 24237,
+              "via": "glob"
+            },
+            {
+              "path": "project/RL-Oracle-Lyapunov-v1/archived_code/stable_baselines3/common/monitor.py",
+              "bytes": 9087,
+              "via": "glob"
+            },
+            {
+              "path": "project/RL-Oracle-Lyapunov-v1/archived_code/stable_baselines3/common/noise.py",
+              "bytes": 5541,
+              "via": "glob"
+            },
+            {
+              "path": "project/RL-Oracle-Lyapunov-v1/archived_code/stable_baselines3/common/off_policy_algorithm.py",
+              "bytes": 26840,
+              "via": "glob"
+            },
+            {
+              "path": "project/RL-Oracle-Lyapunov-v1/archived_code/stable_baselines3/common/on_policy_algorithm.py",
+              "bytes": 13430,
+              "via": "glob"
+            },
+            {
+              "path": "project/RL-Oracle-Lyapunov-v1/archived_code/stable_baselines3/common/policies.py",
+              "bytes": 42988,
+              "via": "glob"
+            }
+          ]
+        },
+        "results": {
+          "substantive": true,
+          "normalized_path": "results/metrics.json",
+          "numeric_leaf_count": 207,
+          "discovered_files": [
+            {
+              "path": "results/metrics.json",
+              "bytes": 7472,
+              "via": "candidate"
+            },
+            {
+              "path": "DeepScientist/quests/001/.ds/worktrees/idea-idea-45be2346/artifacts/reports/report-1d672e67.json",
+              "bytes": 2824,
+              "via": "glob"
+            },
+            {
+              "path": "DeepScientist/quests/001/.ds/worktrees/idea-idea-45be2346/artifacts/reports/report-5c3854f9.json",
+              "bytes": 2808,
+              "via": "glob"
+            },
+            {
+              "path": "DeepScientist/quests/001/.ds/worktrees/idea-idea-45be2346/artifacts/reports/report-74437e3c.json",
+              "bytes": 2570,
+              "via": "glob"
+            },
+            {
+              "path": "DeepScientist/quests/001/.ds/worktrees/idea-idea-45be2346/artifacts/reports/report-7dfcd6a6.json",
+              "bytes": 3486,
+              "via": "glob"
+            },
+            {
+              "path": "results/RESULT.json",
+              "bytes": 2346,
+              "via": "glob"
+            },
+            {
+              "path": "results/mibo_features/a2c_bug-1_s1_a0.json",
+              "bytes": 289,
+              "via": "glob"
+            },
+            {
+              "path": "results/mibo_features/a2c_bug-1_s1_a1.json",
+              "bytes": 287,
+              "via": "glob"
+            },
+            {
+              "path": "results/mibo_features/a2c_bug-1_s1_a2.json",
+              "bytes": 289,
+              "via": "glob"
+            },
+            {
+              "path": "results/mibo_features/a2c_bug-1_s1_a3.json",
+              "bytes": 287,
+              "via": "glob"
+            },
+            {
+              "path": "results/mibo_features/a2c_bug-1_s1_a4.json",
+              "bytes": 287,
+              "via": "glob"
+            },
+            {
+              "path": "results/mibo_features/a2c_bug-1_s1_a5.json",
+              "bytes": 287,
+              "via": "glob"
+            },
+            {
+              "path": "results/mibo_features/a2c_bug-1_s1_a6.json",
+              "bytes": 289,
+              "via": "glob"
+            },
+            {
+              "path": "results/mibo_features/a2c_bug-1_s1_a7.json",
+              "bytes": 289,
+              "via": "glob"
+            },
+            {
+              "path": "results/mibo_features/a2c_bug-1_s2_a0.json",
+              "bytes": 287,
+              "via": "glob"
+            },
+            {
+              "path": "results/mibo_features/a2c_bug-1_s2_a1.json",
+              "bytes": 288,
+              "via": "glob"
+            },
+            {
+              "path": "results/mibo_features/a2c_bug-1_s2_a2.json",
+              "bytes": 289,
+              "via": "glob"
+            },
+            {
+              "path": "results/mibo_features/a2c_bug-1_s2_a3.json",
+              "bytes": 286,
+              "via": "glob"
+            },
+            {
+              "path": "results/mibo_features/a2c_bug-1_s2_a4.json",
+              "bytes": 289,
+              "via": "glob"
+            },
+            {
+              "path": "results/mibo_features/a2c_bug-1_s2_a5.json",
+              "bytes": 288,
+              "via": "glob"
+            }
+          ],
+          "metrics_keys_sample": [
+            "oracle",
+            "scope",
+            "accuracy",
+            "precision",
+            "recall",
+            "f1",
+            "false_positive_count",
+            "false_negative_count",
+            "true_positive_count",
+            "true_negative_count",
+            "roc_auc",
+            "n_instances",
+            "per_algorithm",
+            "overall",
+            "comparison"
+          ]
+        },
+        "paper": {
+          "tex": {
+            "path": "paper/main.tex",
+            "bytes": 16656,
+            "via": "candidate"
+          },
+          "pdf": {
+            "path": "paper/main.pdf",
+            "bytes": 254828,
+            "via": "candidate"
+          },
+          "md": null,
+          "json": null,
+          "status": "pdf",
+          "score": 1.0
+        }
+      },
+      "bonus": {
+        "experiment_plan": null,
+        "experiment_log": null,
+        "review": {
+          "path": "artifacts/peer_review/paperreview.token.txt",
+          "bytes": 44,
+          "via": "glob"
+        },
+        "readme": {
+          "path": "README.md",
+          "bytes": 493,
+          "via": "candidate"
+        },
+        "narrative": null,
+        "bib": null
+      },
+      "manifest_status": {
+        "launched": true
+      },
+      "gate_scores": {
+        "idea": 1.0,
+        "code": 1.0,
+        "results": 1.0,
+        "paper": 1.0
+      },
+      "fairness": {
+        "gates": [
+          "idea",
+          "code",
+          "results",
+          "paper"
+        ],
+        "paper_gate_rule": "PDF=1.0; TeX-only/md_only/json_only=0.5; complete requires PDF",
+        "results_gate_rule": "substantive numeric results via framework-aware normalize_results",
+        "audit_ref": "framework_profile.FAIRNESS_AUDIT"
+      },
+      "notes": [
+        "Required: idea, code, substantive results, paper (PDF full; TeX/markdown/JSON draft half).",
+        "Stub/seed metrics (e.g. dataset_candidate/metrics.json) do not satisfy results.",
+        "Framework noise (.deepscientist_npm, skills/templates, runtime) is excluded from code/results/paper.",
+        "Manifest status is informational; disk presence is authoritative."
+      ]
+    },
+    "idea_generation": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement/workspace/deepscientist_2026-09-13_14-26-15",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement",
+      "idea_path": "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement/workspace/deepscientist_2026-09-13_14-26-15/idea.md",
+      "status": "ok",
+      "dimensions": {
+        "novelty": {
+          "score": 3.0,
+          "justification": "The core method is to \"Fuse multiple behavior-only invariants of a trained RL agent (Lyapunov potential-decrease I1, action-field directional consistency I2, action-field magnitude regularity I3, model-free empirical convergence ratio I4) into one automatically-thresholded score.\" This meaningfully extends prior oracle directions such as R4, R16, and R19, and imports the Lyapunov perspective from R5, but the fusion-of-invariants paradigm is an incremental extension rather than a new testing paradigm.",
+          "rubric": "Incremental: a meaningful extension or optimization of prior baseline work that fixes a concrete prior limitation, but the core paradigm is unchanged.",
+          "category": "Incremental",
+          "nearest_solution_space_ids": [
+            "R4",
+            "R5",
+            "R16",
+            "R19"
+          ],
+          "differentiation": "Unlike general oracle surveys or metamorphic/property-based oracle work, MIBO proposes a fusion of multiple continuous behavior-only invariants for RL agents—Lyapunov potential-decrease, action-field consistency/magnitude, and empirical convergence—with automatic thresholding, compared against a single-invariant LPEA baseline."
+        },
+        "feasibility": {
+          "score": 3.0,
+          "justification": "The idea requires \"multiple behavior-only invariants of a trained RL agent\" and comparison \"on the LPEA bug benchmark (A2C/PPO/TD3).\" This implies nontrivial but standard engineering: extracting several behavioral invariants from agent interaction traces, implementing fusion and thresholding, and evaluating on an available benchmark. There is no sign of compute catastrophe or extreme tooling burden.",
+          "rubric": "Moderate workload (sweet spot): needs nontrivial coding such as scripting existing open-source tools (parsers, CFG extractors) or building a custom graph-processing pipeline; standard research engineering effort."
+        },
+        "clarity": {
+          "score": 3.0,
+          "justification": "The idea names the components and the comparison target, but leaves key mechanisms underspecified: \"Fuse multiple behavior-only invariants ... into one automatically-thresholded score\" does not explain how thresholding or fusion works, how I2/I3 are computed, or full evaluation beyond AUC.",
+          "rubric": "Complete frame but missing details: What/Why/How are present, yet key technical execution details or specific comparison plans are underspecified."
+        }
+      },
+      "overall_score": 3.0,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "novelty",
+        "feasibility",
+        "clarity"
+      ],
+      "solution_space": {
+        "status": "ok",
+        "paper_count": 27,
+        "entry_count": 27,
+        "cache_hit": true,
+        "source_file": "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement/mineru_sections.json",
+        "stats": {
+          "papers": 27,
+          "extracted": 27,
+          "usable_abstracts": 12,
+          "citation_meta_abstracts": 0,
+          "missing_abstracts": 15,
+          "mineru_titles": 26,
+          "related_work_titles": 19,
+          "abstracts_attached": 12,
+          "related_work_extras": 1,
+          "batches": 2
+        },
+        "error": null
+      },
+      "notes": [
+        "Scores the intermediate idea artifact (not the final paper).",
+        "Dimensions: novelty, feasibility, clarity (each 1-5). Excitement removed.",
+        "Novelty is scored against a Solution Space built from mineru REFERENCES titles (+ related_work.json abstracts when matched)."
+      ],
+      "idea_via": "candidate",
+      "idea_relative": "idea.md",
+      "summary": "MIBO proposes fusing several behavior-only invariants—Lyapunov potential decrease, action-field consistency/magnitude, and empirical convergence—into an automatically thresholded oracle for RL bugs, evaluated against LPEA on A2C/PPO/TD3. The plan is moderately novel and feasible, but technical details are thin. The stated outcome that fusion underperforms the single I1 invariant weakens the contribution, though the model-free I4 invariant may still be valuable.",
+      "strengths": [
+        "Respects the behavior-only oracle constraint by relying on trained agent behavior rather than source code.",
+        "Combines control-theoretic and model-free signals, including a Lyapunov-based invariant.",
+        "Uses a concrete benchmark with A2C/PPO/TD3 and reports quantitative AUC outcomes.",
+        "Provides a clear comparison against a single-invariant LPEA oracle."
+      ],
+      "weaknesses": [
+        "The stated fusion result is negative: fusion does not beat I1 (0.653 vs 0.828 AUC).",
+        "Fusion and automatic thresholding mechanism are not described in enough detail.",
+        "Invariants I2 and I3 are only named, not formally defined.",
+        "Does not discuss false-positive/false-negative trade-offs or algorithm-specific behavior beyond the AUC comparison."
+      ],
+      "llm_meta": {
+        "model": "deepseek-v4-pro-0813",
+        "base_url": "https://api-sg.umodelverse.ai/v1",
+        "usage": {
+          "completion_tokens": 2210,
+          "completion_tokens_details": {
+            "reasoning_tokens": 1496
+          },
+          "prompt_tokens": 4166,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "total_tokens": 6376
+        },
+        "attempt": 0
+      }
+    },
+    "peer_review": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement/workspace/deepscientist_2026-09-13_14-26-15",
+      "review_report": "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement/workspace/deepscientist_2026-09-13_14-26-15/artifacts/peer_review/stanford_apr.md",
+      "paper_pdf": "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement/workspace/deepscientist_2026-09-13_14-26-15/paper/main.pdf",
+      "paper_tex": "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement/workspace/deepscientist_2026-09-13_14-26-15/paper/main.tex",
+      "status": "ok",
+      "dimensions": {},
+      "overall_score": 5.8,
+      "score_scale": "1-10",
+      "dimension_order": [],
+      "notes": [
+        "Scored from paperreview.ai (Stanford APR) native ratings; benchmark 5-dimension LLM rubric skipped.",
+        "Overall scale: 1-10."
+      ],
+      "paperreview": {
+        "status": "fetched",
+        "token_file": "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement/workspace/deepscientist_2026-09-13_14-26-15/artifacts/peer_review/paperreview.token.txt",
+        "json": "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement/workspace/deepscientist_2026-09-13_14-26-15/artifacts/peer_review/stanford_apr.json",
+        "markdown": "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement/workspace/deepscientist_2026-09-13_14-26-15/artifacts/peer_review/stanford_apr.md",
+        "apr_scores": {
+          "scale": "1-10",
+          "overall": 5.8,
+          "dimensions": {}
+        },
+        "pdf_rebuild": null
+      },
+      "scoring_method": "paperreview_apr",
+      "scoring_source": "paperreview_json",
+      "apr_dimensions": {},
+      "summary": "",
+      "red_flags": []
+    },
+    "alignment": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement/workspace/deepscientist_2026-09-13_14-26-15",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement",
+      "status": "ok",
+      "original": {
+        "paper_title": "A Test Oracle for Reinforcement Learning Software based on Lyapunov Stability Control Theory",
+        "selection": {
+          "num_blocks": 7,
+          "total_chars": 31998,
+          "inferred_roles": {
+            "abstract": 1,
+            "introduction": 1,
+            "experiment": 4,
+            "conclusion": 1
+          },
+          "mineru_raw_keys": {
+            "field:abstract": 1,
+            "field:introduction": 1,
+            "field:experiment": 1,
+            "other": 3,
+            "conclusion": 1
+          },
+          "infer_reasons": {
+            "top_level_field": 3,
+            "inherited": 2,
+            "body_override": 1,
+            "title": 1
+          },
+          "rescued_from_other": 3,
+          "note": "mineru key is unreliable; blocks are selected by title/body/inheritance. rescued_from_other counts sections labeled other but treated as typed roles."
+        },
+        "claims": [
+          {
+            "id": "C1",
+            "statement": "The proposed LPEA(ϑ=100%, θ=75%) oracle outperforms the human oracle on accuracy, precision, recall, F1 score, true positive rate, true negative rate, false positive rate"
+          }
+        ],
+        "metrics": [],
+        "overall_conclusion": null,
+        "comparable_notes": null,
+        "cache_hit": true
+      },
+      "agent": {
+        "status": "ok",
+        "run_dir": "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement/workspace/deepscientist_2026-09-13_14-26-15",
+        "claims": [
+          {
+            "id": "A1",
+            "statement": "The single Lyapunov invariant remains the strongest overall bug detector on the LPEA benchmark, with ROC-AUC 0.828.",
+            "direction": "neutral",
+            "metric_names": [
+              "lpea_overall_roc_auc"
+            ],
+            "evidence_quote": "the single Lyapunov invariant remains the strongest detector (ROC-AUC 0.828)",
+            "confidence": 0.97
+          },
+          {
+            "id": "A2",
+            "statement": "Naively fusing all invariants in MIBO degrades detection relative to the single Lyapunov invariant, reducing overall ROC-AUC from 0.828 to 0.653.",
+            "direction": "degrades",
+            "metric_names": [
+              "mibo_overall_roc_auc",
+              "lpea_overall_roc_auc"
+            ],
+            "evidence_quote": "naively fusing all invariants degrades it (ROC-AUC 0.653)",
+            "confidence": 0.97
+          },
+          {
+            "id": "A3",
+            "statement": "The model-free convergence invariant is a strong white-box-free alternative, achieving overall ROC-AUC 0.762 without requiring knowledge of the system dynamics.",
+            "direction": "mixed",
+            "metric_names": [
+              "mibo_model_free_overall_roc_auc"
+            ],
+            "evidence_quote": "the model-free convergence invariant is a strong, white-box-free alternative (ROC-AUC 0.762) that requires no knowledge of the dynamics",
+            "confidence": 0.97
+          }
+        ],
+        "metrics": [
+          {
+            "name": "lpea_overall_roc_auc",
+            "value": 0.828042328042328,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "Overall LPEA benchmark (n=39, 21 buggy, 18 bugless)",
+            "is_sota_or_best": true,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "the single Lyapunov invariant remains the strongest detector (ROC-AUC 0.828)",
+            "confidence": 0.97
+          },
+          {
+            "name": "lpea_overall_accuracy",
+            "value": 0.7948717948717948,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "Overall LPEA benchmark (n=39, 21 buggy, 18 bugless)",
+            "is_sota_or_best": true,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "metrics.json: overall.lpea.accuracy",
+            "confidence": 0.9
+          },
+          {
+            "name": "lpea_overall_precision",
+            "value": 0.8823529411764706,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "Overall LPEA benchmark (n=39, 21 buggy, 18 bugless)",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "metrics.json: overall.lpea.precision",
+            "confidence": 0.9
+          },
+          {
+            "name": "lpea_overall_recall",
+            "value": 0.7142857142857143,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "Overall LPEA benchmark (n=39, 21 buggy, 18 bugless)",
+            "is_sota_or_best": true,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "metrics.json: overall.lpea.recall",
+            "confidence": 0.9
+          },
+          {
+            "name": "lpea_overall_f1",
+            "value": 0.7894736842105262,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "Overall LPEA benchmark (n=39, 21 buggy, 18 bugless)",
+            "is_sota_or_best": true,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "metrics.json: overall.lpea.f1",
+            "confidence": 0.9
+          },
+          {
+            "name": "mibo_overall_roc_auc",
+            "value": 0.6534391534391535,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "Overall LPEA benchmark (n=39, 21 buggy, 18 bugless)",
+            "is_sota_or_best": false,
+            "baseline_name": "LPEA overall ROC-AUC",
+            "baseline_value": 0.828042328042328,
+            "evidence_quote": "naively fusing all invariants degrades it (ROC-AUC 0.653)",
+            "confidence": 0.97
+          },
+          {
+            "name": "mibo_overall_accuracy",
+            "value": 0.7435897435897436,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "Overall LPEA benchmark (n=39, 21 buggy, 18 bugless)",
+            "is_sota_or_best": false,
+            "baseline_name": "LPEA overall accuracy",
+            "baseline_value": 0.7948717948717948,
+            "evidence_quote": "metrics.json: overall.mibo.accuracy",
+            "confidence": 0.9
+          },
+          {
+            "name": "mibo_overall_precision",
+            "value": 0.9230769230769231,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "Overall LPEA benchmark (n=39, 21 buggy, 18 bugless)",
+            "is_sota_or_best": true,
+            "baseline_name": "LPEA overall precision",
+            "baseline_value": 0.8823529411764706,
+            "evidence_quote": "metrics.json: overall.mibo.precision",
+            "confidence": 0.9
+          },
+          {
+            "name": "mibo_overall_recall",
+            "value": 0.5714285714285714,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "Overall LPEA benchmark (n=39, 21 buggy, 18 bugless)",
+            "is_sota_or_best": false,
+            "baseline_name": "LPEA overall recall",
+            "baseline_value": 0.7142857142857143,
+            "evidence_quote": "metrics.json: overall.mibo.recall",
+            "confidence": 0.9
+          },
+          {
+            "name": "mibo_overall_f1",
+            "value": 0.7058823529411765,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "Overall LPEA benchmark (n=39, 21 buggy, 18 bugless)",
+            "is_sota_or_best": false,
+            "baseline_name": "LPEA overall F1",
+            "baseline_value": 0.7894736842105262,
+            "evidence_quote": "metrics.json: overall.mibo.f1",
+            "confidence": 0.9
+          },
+          {
+            "name": "mibo_model_free_overall_roc_auc",
+            "value": 0.761904761904762,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "Overall LPEA benchmark (n=39, 21 buggy, 18 bugless)",
+            "is_sota_or_best": false,
+            "baseline_name": "LPEA overall ROC-AUC",
+            "baseline_value": 0.828042328042328,
+            "evidence_quote": "the model-free convergence invariant is a strong, white-box-free alternative (ROC-AUC 0.762) that requires no knowledge of the dynamics",
+            "confidence": 0.97
+          },
+          {
+            "name": "mibo_model_free_overall_accuracy",
+            "value": 0.7692307692307693,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "Overall LPEA benchmark (n=39, 21 buggy, 18 bugless)",
+            "is_sota_or_best": false,
+            "baseline_name": "LPEA overall accuracy",
+            "baseline_value": 0.7948717948717948,
+            "evidence_quote": "metrics.json: overall.mibo_model_free.accuracy",
+            "confidence": 0.9
+          },
+          {
+            "name": "mibo_model_free_overall_precision",
+            "value": 0.875,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "Overall LPEA benchmark (n=39, 21 buggy, 18 bugless)",
+            "is_sota_or_best": false,
+            "baseline_name": "LPEA overall precision",
+            "baseline_value": 0.8823529411764706,
+            "evidence_quote": "metrics.json: overall.mibo_model_free.precision",
+            "confidence": 0.9
+          },
+          {
+            "name": "mibo_model_free_overall_recall",
+            "value": 0.6666666666666666,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "Overall LPEA benchmark (n=39, 21 buggy, 18 bugless)",
+            "is_sota_or_best": false,
+            "baseline_name": "LPEA overall recall",
+            "baseline_value": 0.7142857142857143,
+            "evidence_quote": "metrics.json: overall.mibo_model_free.recall",
+            "confidence": 0.9
+          },
+          {
+            "name": "mibo_model_free_overall_f1",
+            "value": 0.7567567567567567,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "Overall LPEA benchmark (n=39, 21 buggy, 18 bugless)",
+            "is_sota_or_best": false,
+            "baseline_name": "LPEA overall F1",
+            "baseline_value": 0.7894736842105262,
+            "evidence_quote": "metrics.json: overall.mibo_model_free.f1",
+            "confidence": 0.9
+          },
+          {
+            "name": "overall_per_invariant_auc_I1_decay_frac",
+            "value": 0.828042328042328,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "Overall per-invariant ablation (n=39)",
+            "is_sota_or_best": true,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "metrics.json: overall.per_invariant_auc.I1_decay_frac",
+            "confidence": 0.9
+          },
+          {
+            "name": "overall_per_invariant_auc_I2_min_cos",
+            "value": 0.611111111111111,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "Overall per-invariant ablation (n=39)",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "metrics.json: overall.per_invariant_auc.I2_min_cos",
+            "confidence": 0.9
+          },
+          {
+            "name": "overall_per_invariant_auc_I3_max_dis",
+            "value": 0.5873015873015873,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "Overall per-invariant ablation (n=39)",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "metrics.json: overall.per_invariant_auc.I3_max_dis",
+            "confidence": 0.9
+          },
+          {
+            "name": "overall_per_invariant_auc_I3_max_mag",
+            "value": 0.5555555555555556,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "Overall per-invariant ablation (n=39)",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "metrics.json: overall.per_invariant_auc.I3_max_mag",
+            "confidence": 0.9
+          },
+          {
+            "name": "overall_per_invariant_auc_I4_conv_ratio",
+            "value": 0.761904761904762,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "Overall per-invariant ablation (n=39)",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "metrics.json: overall.per_invariant_auc.I4_conv_ratio",
+            "confidence": 0.9
+          }
+        ],
+        "overall_conclusion": "MIBO shows that the single Lyapunov invariant is the strongest detector (ROC-AUC 0.828), naive fusion of all invariants degrades detection (ROC-AUC 0.653), and the model-free convergence invariant is a strong white-box-free alternative (ROC-AUC 0.762).",
+        "sources": {
+          "metrics_path": "results/metrics.json",
+          "paper_tex_path": "paper/main.tex"
+        },
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 11849,
+            "completion_tokens_details": {
+              "reasoning_tokens": 8772
+            },
+            "prompt_tokens": 5034,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 16883
+          },
+          "attempt": 0
+        }
+      },
+      "comparison": {
+        "status": "ok",
+        "claim_alignment": [
+          {
+            "original_claim_id": "C1",
+            "agent_claim_id": "A1",
+            "label": "incomparable",
+            "rationale": "Original C1 claims LPEA(ϑ=100%, θ=75%) outperforms a human oracle on accuracy, precision, recall, F1, TPR, TNR, and FPR, while agent A1 reports standalone LPEA benchmark performance and does not provide or compare against human oracle results."
+          }
+        ],
+        "metric_alignment": [],
+        "summary": {
+          "direction_consistency": "same_direction_incomparable",
+          "consistent_claim_ratio": 0.0,
+          "has_comparable_metrics": false,
+          "sota_improvement_summary": "Agent reports LPEA single Lyapunov ROC-AUC 0.828 as strongest and model-free convergence ROC-AUC 0.762, but no human oracle comparison is provided.",
+          "overall_alignment_score": 0.4,
+          "score_rationale": "The agent works on the same LPEA/Lyapunov test oracle problem and reports favorable LPEA metrics, but it does not address the original claim's human-oracle comparison, so the single claim is incomparable rather than confirmed or conflicted."
+        },
+        "warnings": [
+          "Original extraction contains no metric values; human oracle baseline and TPR/TNR/FPR values are absent in the agent extraction.",
+          "Agent comparisons (MIBO fusion, model-free invariant) use ROC-AUC and do not recreate the original human oracle comparison protocol."
+        ],
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 3141,
+            "completion_tokens_details": {
+              "reasoning_tokens": 2786
+            },
+            "prompt_tokens": 4111,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 7252
+          },
+          "attempt": 0
+        }
+      },
+      "overall_alignment_score": 0.4,
+      "direction_consistency": "same_direction_incomparable"
+    },
+    "experiment_analysis": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement/workspace/deepscientist_2026-09-13_14-26-15",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement",
+      "status": "ok",
+      "metrics_path": "results/metrics.json",
+      "experiment_success": {
+        "status": "ok",
+        "success": true,
+        "metrics_path": "results/metrics.json",
+        "absolute_metrics_path": "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement/workspace/deepscientist_2026-09-13_14-26-15/results/metrics.json",
+        "checks": {
+          "has_results_file": true,
+          "non_stub": true,
+          "numeric_leaf_count": 207,
+          "min_numeric_ok": true
+        },
+        "manifest_hints": {
+          "status": {
+            "launched": true
+          },
+          "returncode": 0,
+          "benchmark_complete": null,
+          "artifacts_metrics_flag": false
+        },
+        "warnings": [],
+        "suspicious_values": [],
+        "note": "success=true requires substantive results (framework-aware path) with >=3 numeric leaves. Supports metrics.json, results.json, experiment_results.txt, etc. Manifest returncode/benchmark_complete are soft warnings only."
+      },
+      "idea_code_consistency": {
+        "status": "ok",
+        "idea_path": "idea.md",
+        "code_files": [
+          "project/RL-Oracle-Lyapunov-v1/RLTestingLyapunov/Evaluation.py",
+          "project/RL-Oracle-Lyapunov-v1/RLTestingLyapunov/LPEA_Env.py",
+          "project/RL-Oracle-Lyapunov-v1/RLTestingLyapunov/LPEA_Oracle.py",
+          "project/RL-Oracle-Lyapunov-v1/RLTestingLyapunov/Lyaponov_oracle_util.py"
+        ],
+        "score_scale": "1-5",
+        "score": 2.0,
+        "label": "weak",
+        "justification": "The code implements an LPEA oracle baseline in the same domain: it trains A2C/PPO/TD3 agents on the LPEA environment and computes several behavior metrics related to Lyapunov potential decrease, action/state directional consistency, and magnitude regularity. However, the core MIBO idea is missing: there is no fusion of I1-I4 into a single automatically-thresholded score, no model-free empirical convergence ratio I4, no comparison against the single-invariant LPEA oracle via AUC, and no entrypoint reporting the stated measured outcomes. Evaluation.py only sweeps LPEA_Oracle thresholds and prints buggy/bug-less decisions.",
+        "matched_elements": [
+          "LPEA environment and bug benchmark with A2C/PPO/TD3 training",
+          "Behavior metric computation for Lyapunov potential decrease (I1) and parts of action/state directional and magnitude regularity (I2/I3)",
+          "Threshold sweep using LPEA_Oracle"
+        ],
+        "missing_or_divergent_elements": [
+          "M"
+        ],
+        "rubric": "Weak alignment: only superficial overlap; core hypothesis, method, or evaluation in the idea is missing or replaced.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 1842,
+            "completion_tokens_details": {
+              "reasoning_tokens": 1594
+            },
+            "prompt_tokens": 507,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 2349
+          },
+          "attempt": 0
+        }
+      },
+      "setup_coverage": {
+        "status": "ok",
+        "overall_coverage": 0.9583333333333334,
+        "datasets": {
+          "gold_count": 2,
+          "hit_count": 2,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "RL Software Bug Benchmark (LPEA AE artifact)",
+            "RL Software Bug Benchmark"
+          ],
+          "misses": []
+        },
+        "baselines": {
+          "gold_count": 1,
+          "hit_count": 1,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "Human Oracle (STARLA-expanded)"
+          ],
+          "misses": []
+        },
+        "metrics": {
+          "gold_count": 8,
+          "hit_count": 7,
+          "miss_count": 1,
+          "coverage": 0.875,
+          "hits": [
+            "False Positive Count (FP)",
+            "True Negative Count (TN)",
+            "False Negative Count (FN)",
+            "Accuracy",
+            "Precision",
+            "Recall",
+            "F1 Score"
+          ],
+          "misses": [
+            "ROC AUC"
+          ]
+        },
+        "agent_protocol": {},
+        "gold_protocol": {},
+        "dataset_dirs": [
+          "dataset_candidate"
+        ],
+        "flags": {
+          "weaker_baseline_suspected": false,
+          "weak_protocol": [],
+          "synthetic_data": "unexpected_synthetic_or_local_only_data",
+          "gold_allows_synthetic": false
+        },
+        "gold_sources": [
+          "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement/task.md",
+          "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement/metadata.json"
+        ],
+        "note": "Coverage is name/alias matching against task.md Datasets/Baselines/Metrics. weak_protocol flags large reductions in trials/timeout vs Constraints. Synthetic corpora are not penalized when the task itself requires synthesis."
+      },
+      "ablation_significance": {
+        "status": "ok",
+        "idea_path": "idea.md",
+        "significance_signals_rule_based": {
+          "signals": [
+            "file:stats.py:scipy.stats"
+          ],
+          "artifact_paths": [
+            "project/.venv/lib/python3.10/site-packages/cvxpy/atoms/stats.py",
+            "project/.venv/lib/python3.10/site-packages/scipy/stats/stats.py"
+          ],
+          "has_any_significance_artifact": true
+        },
+        "evidence_format": "raw_json",
+        "study_type": "new_method_empirical_comparison",
+        "components": [
+          {
+            "name": "I1 Lyapunov potential-decrease invariant",
+            "role": "baseline single-invariant LPEA",
+            "ablation_expected": false,
+            "ablation_status": "not_required",
+            "evidence": "Used as LPEA baseline; included as per_invariant_auc."
+          },
+          {
+            "name": "I2 action-field directional consistency",
+            "role": "added invariant module",
+            "ablation_expected": true,
+            "ablation_status": "partial",
+            "evidence": "I2 per-invariant AUROC is reported, but no leave-one-out MIBO without I2."
+          },
+          {
+            "name": "I3 action-field magnitude regularity",
+            "role": "added invariant module",
+            "ablation_expected": true,
+            "ablation_status": "partial",
+            "evidence": "I3 per-invariant AUROC is reported, but no leave-one-out MIBO without I3."
+          },
+          {
+            "name": "I4 model-free empirical convergence ratio",
+            "role": "added invariant and model-free oracle",
+            "ablation_expected": true,
+            "ablation_status": "present",
+            "evidence": "mibo_model_free and I4 per-invariant AUROC provide a standalone model-free comparison."
+          },
+          {
+            "name": "Fusion/logistic-regression automatic thresholding",
+            "role": "fusion and thresholding module",
+            "ablation_expected": true,
+            "ablation_status": "partial",
+            "evidence": "LPEA single-invariant scoring is compared, but no full leave-one-out fusion ablation."
+          }
+        ],
+        "ablation_coverage_score": null,
+        "overall_ablation_ok": null,
+        "overall_significance_ok": false,
+        "summary": "",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 1351,
+            "completion_tokens_details": {
+              "reasoning_tokens": 898
+            },
+            "prompt_tokens": 2764,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 4115
+          },
+          "attempt": 0
+        }
+      },
+      "results_paper_consistency": {
+        "status": "ok",
+        "paper_tex": "paper/main.tex",
+        "paper_kind": "paper_tex",
+        "results_format": "raw_json",
+        "digest_hint": {
+          "unfavorable_count": 0,
+          "trial_fail_count": 0,
+          "trial_success_count": 0,
+          "metadata": {}
+        },
+        "score_scale": "1-5",
+        "method": "Direct LLM comparison: agent's FINAL results artifact (metrics.json summary) vs paper Results/Discussion/Conclusion. Interim failed runs are NOT evidence unless still present in the final metrics file.",
+        "score": 4.0,
+        "consistency_label": "mostly",
+        "hiding_unfavorable_suspected": false,
+        "hiding_confidence": 0.15,
+        "justification": "The paper's overall numbers match the final results exactly, including the per-invariant AUCs, overall LPEA and MIBO model-free metrics, and fusion confusion-matrix metrics. However, some qualitative claims are overstated: the paper says I2/I3 are only slightly above chance and that I4 is a clear second, but per algorithm I2 is moderately strong and sometimes comparable to or better than I4. PPO fusion is near chance and is not discussed at the per-algorithm level, but the paper does acknowledge that fusion overall fails to improve, so this is not treated as hidden.",
+        "supported_claims": [
+          "Overall per-invariant ROC-AUC values match: I1 0.828, I2 0.611, I3 0.587/0.556, I4 0.762.",
+          "LPEA overall accuracy 0.795 and ROC-AUC 0.828 match the final results.",
+          "MIBO model-free overall accuracy 0.769 and ROC-AUC 0.762 match the final results.",
+          "Full fusion overall ROC-AUC is 0.653, below I1 and I4, so fusion does not improve on single invariants.",
+          "Youden operating point confusion-matrix metrics match: LPEA FP=2/FN=6, model-free FP=2/FN=7, fusion FP=1/FN=9.",
+          "Per-algorithm LPEA and model-free I4 AUCs match the reported A2C, PPO, and TD3 pattern."
+        ],
+        "unsupported_or_overstated_claims": [
+          "The claim that action-field signals I2 and I3 are only slightly above chance is too broad; per-algorithm I2 is moderately strong, e.g., PPO 0.786 and A2C 0.778.",
+          "The claim that I4 is a clear second-best invariant is true overall but not consistently across algorithms; for PPO, I2 0.786 exceeds I4 0.714, and for TD3 I2 0.688 is close to I4 0.708.",
+          "The statement that I2/I3 are weak on all three algorithms overlooks the moderate per-algorithm I2 performance."
+        ],
+        "numeric_mismatches": [],
+        "unfavorable_in_final_results": [
+          "PPO fusion MIBO performs near chance at the Youden operating point: ROC-AUC 0.524, accuracy 0.615, recall 0.286, FN=5.",
+          "PPO LPEA has low Youden recall 0.429 and accuracy 0.692 despite a high ranking ROC-AUC 0.881.",
+          "Overall fusion has lower ROC-AUC 0.653 and high FN=9 compared with single-invariant baselines."
+        ],
+        "unfavorable_acknowledged_in_paper": [
+          "Full fusion does not improve on either and is not a better detector than LPEA in this configuration.",
+          "Fusion at the Youden operating point shifts toward high precision at the cost of recall; FP=1, FN=9, recall 0.571, precision 0.923.",
+          "Action-field signals I2/I3 carry little signal and act as noise when fused."
+        ],
+        "unfavorable_missing_from_paper": [],
+        "rubric": "Mostly consistent: reported conclusions track the metrics; negative/failed settings are acknowledged with only minor gaps.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 2804,
+            "completion_tokens_details": {
+              "reasoning_tokens": 1966
+            },
+            "prompt_tokens": 5801,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 8605
+          },
+          "attempt": 1
+        }
+      },
+      "scores": {
+        "experiment_success": true,
+        "idea_code_score": 2.0,
+        "setup_coverage": 0.9583333333333334,
+        "ablation_coverage_score": null,
+        "overall_ablation_ok": null,
+        "overall_significance_ok": false,
+        "results_paper_score": 4.0,
+        "hiding_unfavorable_suspected": false
+      },
+      "notes": [
+        "Axes 1,2,3,4,6 in experiment_analysis (figures excluded).",
+        "setup_coverage matches task.md Datasets/Baselines/Metrics; weak_protocol flags reductions vs Constraints.",
+        "Axis 6: final normalized results vs paper; interim run logs not used as ground truth."
+      ]
+    },
+    "literature_review": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement/workspace/deepscientist_2026-09-13_14-26-15",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement",
+      "status": "ok",
+      "as_of_year": 2026,
+      "agent_ref_count": 5,
+      "sources": [
+        {
+          "path": "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement/workspace/deepscientist_2026-09-13_14-26-15/DeepScientist/quests/001/literature/literature_survey.md",
+          "kind": "literature_survey"
+        },
+        {
+          "path": "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement/workspace/deepscientist_2026-09-13_14-26-15/DeepScientist/quests/001/literature/arxiv/index.json",
+          "kind": "arxiv_index"
+        },
+        {
+          "path": "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement/workspace/deepscientist_2026-09-13_14-26-15/paper/main.tex",
+          "kind": "thebibliography"
+        }
+      ],
+      "collection_audit": {
+        "cited_keys_count": 6,
+        "filter_mode": "paper_cite_keys",
+        "bib_total_before_filter": 0,
+        "bib_after_filter": 0,
+        "uncited_bib_skipped": 0,
+        "cited_keys_sample": [
+          "henderson",
+          "lpea",
+          "metamorphic_rl",
+          "ml_testing_survey",
+          "sb3",
+          "starla"
+        ],
+        "thebibliography_after_filter": 5,
+        "agent_ref_count": 5
+      },
+      "fabrication": {
+        "status": "ok",
+        "scholarly_count": 5,
+        "verified_count": 4,
+        "fake_count": 0,
+        "lookup_failed_count": 1,
+        "insufficient_metadata_count": 0,
+        "non_paper_count": 0,
+        "fabrication_rate": 0.0,
+        "items": [
+          {
+            "title": "LPEA: A Test Oracle for Reinforcement Learning Software based on Lyapunov Stability Control Theory",
+            "doi": "10.5281/zenodo.14759447",
+            "arxiv_id": "",
+            "year": 2025,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "A Test Oracle for Reinforcement Learning Software Based on Lyapunov Stability Control Theory",
+            "resolved_year": 2025,
+            "notes": [],
+            "cache_hit": true,
+            "cite_key": "lpea",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "Dormann, Stable-Baselines3: Reliable Reinforcement Learning Implementations",
+            "doi": "",
+            "arxiv_id": "",
+            "year": 2021,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Stable-Baselines3: Reliable Reinforcement Learning Implementations",
+            "resolved_year": 2021,
+            "notes": [],
+            "cache_hit": true,
+            "cite_key": "sb3",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "P.~Henderson, R.~Islam, P.~Bachman, J.~Pineau, D.~Precup, D.~Meger, Deep Reinforcement Learning that Matters. arXiv:1709.06560",
+            "doi": "",
+            "arxiv_id": "1709.06560",
+            "year": null,
+            "status": "verified",
+            "matched_via": "s2_arxiv",
+            "resolved_title": "Deep Reinforcement Learning that Matters",
+            "resolved_year": 2017,
+            "notes": [],
+            "cache_hit": true,
+            "cite_key": "henderson",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "Liu, Machine Learning Testing: Survey, Landscapes and Horizons",
+            "doi": "",
+            "arxiv_id": "",
+            "year": null,
+            "status": "verified",
+            "matched_via": "arxiv_title",
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "ml_testing_survey",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "Metamorphic and property-based testing approaches for reinforcement learning (survey line)",
+            "doi": "",
+            "arxiv_id": "",
+            "year": null,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated.",
+              "Saw 1 conclusive miss(es) mixed with 1 API error(s)."
+            ],
+            "cite_key": "metamorphic_rl",
+            "source_kind": "thebibliography"
+          }
+        ],
+        "cache_path": "~/ai_scientist_evals/ICSE-2025-019_automated_test_oracles_for_reinforcement/reference_verify_cache.json",
+        "override_path": "~/ai_scientist_evals/ICSE-2025-019_automated_test_oracles_for_reinforcement/reference_verify_overrides.json",
+        "note": "fabrication_rate = fake / (verified + fake). lookup_failed (API errors) and insufficient_metadata are excluded and retried or skipped. GitHub/docs/tool URLs are non_paper and excluded from the rate. To manually correct a false negative, edit reference_verify_overrides.json (key=normalized title / doi / cite_key; value=\"verified\" or a result dict), then re-run."
+      },
+      "coverage": {
+        "status": "ok",
+        "gold_source": "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement/mineru_sections.json",
+        "gold_count": 26,
+        "gold_is_original_paper_references": true,
+        "gold_is_openalex_subset": false,
+        "agent_count": 5,
+        "intersection_size": 1,
+        "recall": 0.038461538461538464,
+        "precision": 0.2,
+        "matched_gold_keys": [
+          "mineru_ref_12"
+        ],
+        "primary_metric": "recall",
+        "note": "Primary metric is recall against the original paper bibliography (titles from mineru_sections.json REFERENCES; related_work.json used only to enrich DOI/year or as fallback if mineru titles are empty). Denominator = |original paper references|. Precision is secondary (agent may cite valid extra papers)."
+      },
+      "recency": {
+        "status": "ok",
+        "dated_count": 3,
+        "unknown_year_count": 2,
+        "year_histogram": {
+          "2017": 1,
+          "2021": 1,
+          "2025": 1
+        },
+        "windows": {
+          "3": {
+            "years": 3,
+            "cutoff_year_inclusive": 2023,
+            "recent_count": 1,
+            "recent_ratio": 0.3333333333333333
+          },
+          "5": {
+            "years": 5,
+            "cutoff_year_inclusive": 2021,
+            "recent_count": 2,
+            "recent_ratio": 0.6666666666666666
+          }
+        }
+      },
+      "scores": {
+        "fabrication_rate": 0.0,
+        "coverage_recall": 0.038461538461538464,
+        "coverage_precision": 0.2,
+        "recency_ratio_3y": 0.3333333333333333,
+        "recency_ratio_5y": 0.6666666666666666
+      }
+    }
+  },
+  "scores": {
+    "completeness": {
+      "complete": true,
+      "overall_score": 0.8402,
+      "required_score": 1.0,
+      "bonus_score": 0.06
+    },
+    "peer_review": {
+      "status": "ok",
+      "optional": false,
+      "overall_score": 5.8,
+      "score_scale": "1-10",
+      "scoring_method": "paperreview_apr"
+    },
+    "idea_generation": {
+      "status": "ok",
+      "overall_score": 3.0,
+      "dimensions": {
+        "novelty": 3.0,
+        "feasibility": 3.0,
+        "clarity": 3.0
+      },
+      "novelty_category": "Incremental",
+      "solution_space_status": "ok"
+    },
+    "alignment": {
+      "status": "ok",
+      "direction_consistency": "same_direction_incomparable",
+      "overall_alignment_score": 0.4
+    },
+    "literature_review": {
+      "fabrication_rate": 0.0,
+      "coverage_recall": 0.038461538461538464,
+      "coverage_precision": 0.2,
+      "recency_ratio_3y": 0.3333333333333333,
+      "recency_ratio_5y": 0.6666666666666666
+    },
+    "experiment_analysis": {
+      "experiment_success": true,
+      "idea_code_score": 2.0,
+      "setup_coverage": 0.9583333333333334,
+      "ablation_coverage_score": null,
+      "overall_ablation_ok": null,
+      "overall_significance_ok": false,
+      "results_paper_score": 4.0,
+      "hiding_unfavorable_suspected": false
+    }
+  },
+  "fair_scores": {
+    "applicable_axes": [
+      "completeness",
+      "idea_generation",
+      "peer_review",
+      "alignment",
+      "literature_review",
+      "experiment_analysis"
+    ],
+    "skipped_axes": [],
+    "fair_mean_0_1": 0.6378,
+    "note": "fair_mean_0_1 averages only applicable axes; optional peer review and framework-inapplicable literature are excluded from the denominator."
+  },
+  "evals_root": "~/ai_scientist_evals",
+  "claims_cache": "~/ai_scientist_evals/ICSE-2025-019_automated_test_oracles_for_reinforcement/original_claims.json",
+  "solution_space_cache": "~/ai_scientist_evals/ICSE-2025-019_automated_test_oracles_for_reinforcement/solution_space.json"
+}

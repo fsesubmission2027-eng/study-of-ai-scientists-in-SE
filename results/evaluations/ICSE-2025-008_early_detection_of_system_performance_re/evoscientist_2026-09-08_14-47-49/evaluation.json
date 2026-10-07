@@ -1,0 +1,1764 @@
+{
+  "run_dir": "~/ai_scientist_inputs/ICSE-2025-008_early_detection_of_system_performance_re/workspace/evoscientist_2026-09-08_14-47-49",
+  "task_dir": "~/ai_scientist_inputs/ICSE-2025-008_early_detection_of_system_performance_re",
+  "framework": "evoscientist",
+  "fairness_audit": [
+    {
+      "axis": "completeness",
+      "was_unfair": "Required both paper.tex AND paper.pdf; any tool missing one failed equally.",
+      "fix": "Paper gate: PDF=1.0; TeX-only=0.5; ``complete`` requires PDF."
+    },
+    {
+      "axis": "completeness",
+      "was_unfair": "``results`` counted stub/seed JSON (dataset_candidate/metrics.json).",
+      "fix": "``results`` requires substantive numeric results via results_normalize."
+    },
+    {
+      "axis": "experiment_success",
+      "was_unfair": "Only metrics.json; ignored results.json / experiment_results.txt.",
+      "fix": "Framework-ordered result candidates + normalized loaders."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Penalized tools with no bib; airesearcher has no workspace references.",
+      "fix": "literature_applicable=false → status not_applicable; excluded from fair aggregate."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "related_work.json subset as gold made recall hard to interpret.",
+      "fix": "Coverage gold is original paper REFERENCES from mineru; related_work only enriches metadata/fallback."
+    },
+    {
+      "axis": "peer_review",
+      "was_unfair": "Missing Stanford report looked like evaluation failure.",
+      "fix": "status not_provided; optional axis, never counts as tool failure."
+    },
+    {
+      "axis": "paths/find_results",
+      "was_unfair": "Picked downloads/** and sandbox noise (e.g. airesearcher LLVM tree).",
+      "fix": "Exclude downloads/, seeds/, dataset_candidate/, sandbox junk paths."
+    },
+    {
+      "axis": "paths/framework_noise",
+      "was_unfair": "DeepScientist .deepscientist_npm / runtime / skills templates counted as code/paper/results.",
+      "fix": "FRAMEWORK_NOISE_DIRS+markers; quest worktree + eval_output results; paper md drafts; reject template tex."
+    },
+    {
+      "axis": "paths/paper_tex",
+      "was_unfair": "tiny_scientist / ACL runs store paper under latex/*.tex; evaluator only looked at paper/main.tex.",
+      "fix": "latex/**/*.tex with substantive-body heuristic; find_paper_document uses same rules."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Entire custom.bib (300+ anthology entries) verified when paper had zero \\cite commands.",
+      "fix": "collect_agent_references filters bib to in-text cite keys; skips uncited bulk bib (>40 entries)."
+    },
+    {
+      "axis": "paths/ai_scientist_summaries",
+      "was_unfair": "AI Scientist can persist substantive results and paper-like drafts in *_summary.json logs rather than paper/main.tex or results/**/*.json.",
+      "fix": "Treat draft_summary/research_summary as weak paper documents and summary JSONs as result candidates."
+    },
+    {
+      "axis": "framework/ai_scientist_v2",
+      "was_unfair": "Manifest framework ``ai_scientist_v2`` fell through to profile ``unknown``, skipping AI-Scientist idea/result path priorities.",
+      "fix": "Normalize ``ai_scientist_v2`` (and common aliases) to profile key ``ai_scientist``."
+    },
+    {
+      "axis": "idea_generation",
+      "was_unfair": "plan.md/todos.md weak proxies scored same as structured idea.json.",
+      "fix": "Framework idea_priority tried first; missing idea → not_applicable where appropriate."
+    }
+  ],
+  "generated_at": "2026-10-01T13:00:32",
+  "axes": [
+    "alignment",
+    "completeness",
+    "experiment_analysis",
+    "idea_generation",
+    "literature_review",
+    "peer_review"
+  ],
+  "results": {
+    "completeness": {
+      "framework": "evoscientist",
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-008_early_detection_of_system_performance_re/workspace/evoscientist_2026-09-08_14-47-49",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-008_early_detection_of_system_performance_re",
+      "complete": true,
+      "required_score": 1.0,
+      "bonus_score": 0.13,
+      "overall_score": 0.8521,
+      "missing": [],
+      "required": {
+        "idea": {
+          "path": "plan.md",
+          "bytes": 2440,
+          "via": "candidate"
+        },
+        "code": {
+          "count": 881,
+          "files": [
+            {
+              "path": "code/analyze.py",
+              "bytes": 7763,
+              "via": "glob"
+            },
+            {
+              "path": "code/arch_extract.py",
+              "bytes": 5124,
+              "via": "glob"
+            },
+            {
+              "path": "code/arch_extract_trainticket.py",
+              "bytes": 2723,
+              "via": "glob"
+            },
+            {
+              "path": "code/detect.py",
+              "bytes": 4269,
+              "via": "glob"
+            },
+            {
+              "path": "code/inject.py",
+              "bytes": 3547,
+              "via": "glob"
+            },
+            {
+              "path": "code/propagate.py",
+              "bytes": 4283,
+              "via": "glob"
+            },
+            {
+              "path": "code/results_metrics.py",
+              "bytes": 5341,
+              "via": "glob"
+            },
+            {
+              "path": "code/run_component.py",
+              "bytes": 5415,
+              "via": "glob"
+            },
+            {
+              "path": "project/analyze.py",
+              "bytes": 7763,
+              "via": "glob"
+            },
+            {
+              "path": "project/arch_extract.py",
+              "bytes": 5124,
+              "via": "glob"
+            },
+            {
+              "path": "project/arch_extract_trainticket.py",
+              "bytes": 2723,
+              "via": "glob"
+            },
+            {
+              "path": "project/benchmarks/PerfBenchmarkDataGeneratorTest.java",
+              "bytes": 1673,
+              "via": "glob"
+            },
+            {
+              "path": "project/benchmarks/PerfBenchmarkShaTest.java",
+              "bytes": 1622,
+              "via": "glob"
+            },
+            {
+              "path": "project/benchmarks/PerfBenchmarkSlopeOneTest.java",
+              "bytes": 1967,
+              "via": "glob"
+            },
+            {
+              "path": "project/detect.py",
+              "bytes": 4269,
+              "via": "glob"
+            },
+            {
+              "path": "project/inject.py",
+              "bytes": 3547,
+              "via": "glob"
+            },
+            {
+              "path": "project/propagate.py",
+              "bytes": 4283,
+              "via": "glob"
+            },
+            {
+              "path": "project/results_metrics.py",
+              "bytes": 5341,
+              "via": "glob"
+            },
+            {
+              "path": "project/run_component.py",
+              "bytes": 5415,
+              "via": "glob"
+            },
+            {
+              "path": "project/teastore/examples/locust/locustfile.py",
+              "bytes": 4638,
+              "via": "glob"
+            },
+            {
+              "path": "project/teastore/interfaces/tools.descartes.teastore.entities/src/main/java/tools/descartes/teastore/entities/Category.java",
+              "bytes": 2637,
+              "via": "glob"
+            },
+            {
+              "path": "project/teastore/interfaces/tools.descartes.teastore.entities/src/main/java/tools/descartes/teastore/entities/ImageSize.java",
+              "bytes": 3428,
+              "via": "glob"
+            },
+            {
+              "path": "project/teastore/interfaces/tools.descartes.teastore.entities/src/main/java/tools/descartes/teastore/entities/ImageSizePreset.java",
+              "bytes": 1111,
+              "via": "glob"
+            },
+            {
+              "path": "project/teastore/interfaces/tools.descartes.teastore.entities/src/main/java/tools/descartes/teastore/entities/Order.java",
+              "bytes": 6290,
+              "via": "glob"
+            },
+            {
+              "path": "project/teastore/interfaces/tools.descartes.teastore.entities/src/main/java/tools/descartes/teastore/entities/OrderItem.java",
+              "bytes": 4273,
+              "via": "glob"
+            },
+            {
+              "path": "project/teastore/interfaces/tools.descartes.teastore.entities/src/main/java/tools/descartes/teastore/entities/Product.java",
+              "bytes": 4070,
+              "via": "glob"
+            },
+            {
+              "path": "project/teastore/interfaces/tools.descartes.teastore.entities/src/main/java/tools/descartes/teastore/entities/User.java",
+              "bytes": 3833,
+              "via": "glob"
+            },
+            {
+              "path": "project/teastore/interfaces/tools.descartes.teastore.entities/src/main/java/tools/descartes/teastore/entities/message/SessionBlob.java",
+              "bytes": 2039,
+              "via": "glob"
+            },
+            {
+              "path": "project/teastore/interfaces/tools.descartes.teastore.entities/src/test/java/tools/descartes/teastore/entities/InterfaceTests.java",
+              "bytes": 693,
+              "via": "glob"
+            },
+            {
+              "path": "project/teastore/services/tools.descartes.teastore.auth/src/main/java/tools/descartes/teastore/auth/rest/AuthCartRest.java",
+              "bytes": 4361,
+              "via": "glob"
+            }
+          ]
+        },
+        "results": {
+          "substantive": true,
+          "normalized_path": "results/predictions.json",
+          "numeric_leaf_count": 11124,
+          "discovered_files": [
+            {
+              "path": "experiment_results/metrics.json",
+              "bytes": 6429,
+              "via": "candidate"
+            },
+            {
+              "path": "results/metrics.json",
+              "bytes": 6429,
+              "via": "candidate"
+            },
+            {
+              "path": "results/analysis_summary.json",
+              "bytes": 2103,
+              "via": "glob"
+            },
+            {
+              "path": "results/architecture.json",
+              "bytes": 1998,
+              "via": "glob"
+            },
+            {
+              "path": "results/detection.json",
+              "bytes": 11568,
+              "via": "glob"
+            },
+            {
+              "path": "results/measurements.json",
+              "bytes": 7702,
+              "via": "glob"
+            },
+            {
+              "path": "results/measurements_raw_ns.json",
+              "bytes": 6269,
+              "via": "glob"
+            },
+            {
+              "path": "results/predictions.json",
+              "bytes": 5367475,
+              "via": "glob"
+            },
+            {
+              "path": "results/trainticket_architecture.json",
+              "bytes": 10415,
+              "via": "glob"
+            }
+          ],
+          "metrics_keys_sample": [
+            "50.0",
+            "100.0",
+            "200.0"
+          ]
+        },
+        "paper": {
+          "tex": {
+            "path": "paper/main.tex",
+            "bytes": 13016,
+            "via": "candidate"
+          },
+          "pdf": {
+            "path": "paper/main.pdf",
+            "bytes": 298782,
+            "via": "candidate"
+          },
+          "md": {
+            "path": "paper/paper.md",
+            "bytes": 14546,
+            "via": "candidate"
+          },
+          "json": null,
+          "status": "pdf",
+          "score": 1.0
+        }
+      },
+      "bonus": {
+        "experiment_plan": {
+          "path": "plan.md",
+          "bytes": 2440,
+          "via": "candidate"
+        },
+        "experiment_log": {
+          "path": "evoscientist_run.log",
+          "bytes": 67634,
+          "via": "glob"
+        },
+        "review": {
+          "path": "artifacts/peer_review/paperreview.token.txt",
+          "bytes": 44,
+          "via": "glob"
+        },
+        "readme": {
+          "path": "README.md",
+          "bytes": 4296,
+          "via": "candidate"
+        },
+        "narrative": null,
+        "bib": null
+      },
+      "manifest_status": {
+        "research_request": true,
+        "plan": true,
+        "metrics": true,
+        "paper_tex": true,
+        "paper_pdf": false,
+        "readme": true
+      },
+      "gate_scores": {
+        "idea": 1.0,
+        "code": 1.0,
+        "results": 1.0,
+        "paper": 1.0
+      },
+      "fairness": {
+        "gates": [
+          "idea",
+          "code",
+          "results",
+          "paper"
+        ],
+        "paper_gate_rule": "PDF=1.0; TeX-only/md_only/json_only=0.5; complete requires PDF",
+        "results_gate_rule": "substantive numeric results via framework-aware normalize_results",
+        "audit_ref": "framework_profile.FAIRNESS_AUDIT"
+      },
+      "notes": [
+        "Required: idea, code, substantive results, paper (PDF full; TeX/markdown/JSON draft half).",
+        "Stub/seed metrics (e.g. dataset_candidate/metrics.json) do not satisfy results.",
+        "Framework noise (.deepscientist_npm, skills/templates, runtime) is excluded from code/results/paper.",
+        "Manifest status is informational; disk presence is authoritative."
+      ]
+    },
+    "idea_generation": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-008_early_detection_of_system_performance_re/workspace/evoscientist_2026-09-08_14-47-49",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-008_early_detection_of_system_performance_re",
+      "idea_path": "~/ai_scientist_inputs/ICSE-2025-008_early_detection_of_system_performance_re/workspace/evoscientist_2026-09-08_14-47-49/plan.md",
+      "status": "ok",
+      "dimensions": {
+        "novelty": {
+          "score": 3.0,
+          "justification": "The idea is described as 'static, uncertainty-aware early detection of system-level performance regressions from component-level test timings + an auto-synthesized architectural model'. The Solution Space already contains model-based performance prediction (R4/R8), architectural traceability for microservice performance engineering (R15), and performance-aware unit tests (R26), so the core approach is not new; TopoProp is a meaningful but not paradigm-changing extension.",
+          "rubric": "Incremental: a meaningful extension or optimization of prior baseline work that fixes a concrete prior limitation, but the core paradigm is unchanged.",
+          "category": "Incremental",
+          "nearest_solution_space_ids": [
+            "R4",
+            "R8",
+            "R15",
+            "R26"
+          ],
+          "differentiation": "TopoProp extends prior model-based/component-level performance prediction and performance-aware unit testing by auto-synthesizing an architectural model and propagating component timings with uncertainty without full system-level test data. R4/R8/R15 already use model-driven architecture-based prediction, while R26 uses performance-aware unit tests and revision history; this idea changes the evidence source and adds uncertainty-aware static propagation, but the core component-to-system prediction paradigm remains."
+        },
+        "feasibility": {
+          "score": 3.0,
+          "justification": "The plan says 'No Docker/Podman daemon → system-level JMeter load tests not runnable; oracle = paper's published Table I/II' and 'No Kieker → wall-clock component microbenchmark timing (30 reps) instead of function-level tracing.' These are significant practical adaptations, but the remaining work uses open-source Java/Maven subjects and Python tooling with moderate resources; the engineering burden is nontrivial but not extreme or infeasible for a single researcher.",
+          "rubric": "Moderate workload (sweet spot): needs nontrivial coding such as scripting existing open-source tools (parsers, CFG extractors) or building a custom graph-processing pipeline; standard research engineering effort."
+        },
+        "clarity": {
+          "score": 3.0,
+          "justification": "The artifact gives a concrete stage table, success signals, commands, and reduced protocol, e.g. '3 locs x 4 intensities x 30 reps on TeaStore' and 'TP/TN/FP/FN, threshold sweep'. However, the actual TopoProp propagation mechanism is only named, not specified: contributions 'C1/C2/C3' and hypotheses 'H1-H3' are referenced but never defined, and the baseline comparison is vague: 'evaluated against the ICSE 2025 baseline (Liao et al.)'.",
+          "rubric": "Complete frame but missing details: What/Why/How are present, yet key technical execution details or specific comparison plans are underspecified."
+        }
+      },
+      "overall_score": 3.0,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "novelty",
+        "feasibility",
+        "clarity"
+      ],
+      "solution_space": {
+        "status": "ok",
+        "paper_count": 59,
+        "entry_count": 59,
+        "cache_hit": true,
+        "source_file": "~/ai_scientist_inputs/ICSE-2025-008_early_detection_of_system_performance_re/mineru_sections.json",
+        "stats": {
+          "papers": 59,
+          "extracted": 59,
+          "usable_abstracts": 44,
+          "citation_meta_abstracts": 0,
+          "missing_abstracts": 15,
+          "mineru_titles": 57,
+          "related_work_titles": 49,
+          "abstracts_attached": 44,
+          "related_work_extras": 2,
+          "batches": 4
+        },
+        "error": null
+      },
+      "notes": [
+        "Scores the intermediate idea artifact (not the final paper).",
+        "Dimensions: novelty, feasibility, clarity (each 1-5). Excitement removed.",
+        "Novelty is scored against a Solution Space built from mineru REFERENCES titles (+ related_work.json abstracts when matched)."
+      ],
+      "idea_via": "candidate",
+      "idea_relative": "plan.md",
+      "summary": "TopoProp proposes static, uncertainty-aware prediction of microservice system-level performance regressions from component-level test timings and an auto-synthesized architectural model. It is an incremental extension of existing model-based performance prediction and performance-aware unit testing, not a paradigm shift. The plan is staged and practical, but it substitutes published Table I/II results for actual system-level load tests and leaves the core propagation algorithm and baseline details unspecified. Moderate feasibility and clarity yield a solid but incomplete proposal.",
+      "strengths": [
+        "Explicit reduced protocol documents environment limitations and substitutions clearly.",
+        "Concrete component-level measurement design: 3 injection locations x 4 intensities x 30 repetitions.",
+        "Uses open-source TeaStore/TrainTicket subjects and standard Maven/Python tooling.",
+        "Defines success signals and detection metrics such as TP/TN/FP/FN with threshold sweep."
+      ],
+      "weaknesses": [
+        "Using the paper's published Table I/II as oracle instead of running system-level JMeter load tests weakens validity of regression prediction.",
+        "Core TopoProp propagation/uncertainty method is not specified; only C1/C2/C3 and H1-H3 are named.",
+        "Baseline comparison is underspecified beyond 'ICSE 2025 baseline (Liao et al.)'.",
+        "Wall-clock microbenchmark timing instead of Kieker tracing may add noise and reduce comparability."
+      ],
+      "llm_meta": {
+        "model": "deepseek-v4-pro-0813",
+        "base_url": "https://api-sg.umodelverse.ai/v1",
+        "usage": {
+          "completion_tokens": 2944,
+          "completion_tokens_details": {
+            "reasoning_tokens": 2130
+          },
+          "prompt_tokens": 6070,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "total_tokens": 9014
+        },
+        "attempt": 0
+      }
+    },
+    "peer_review": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-008_early_detection_of_system_performance_re/workspace/evoscientist_2026-09-08_14-47-49",
+      "review_report": "~/ai_scientist_inputs/ICSE-2025-008_early_detection_of_system_performance_re/workspace/evoscientist_2026-09-08_14-47-49/artifacts/peer_review/stanford_apr.md",
+      "paper_pdf": "~/ai_scientist_inputs/ICSE-2025-008_early_detection_of_system_performance_re/workspace/evoscientist_2026-09-08_14-47-49/paper/main.pdf",
+      "paper_tex": "~/ai_scientist_inputs/ICSE-2025-008_early_detection_of_system_performance_re/workspace/evoscientist_2026-09-08_14-47-49/paper/main.tex",
+      "status": "ok",
+      "dimensions": {},
+      "overall_score": 4.4,
+      "score_scale": "1-10",
+      "dimension_order": [],
+      "notes": [
+        "Scored from paperreview.ai (Stanford APR) native ratings; benchmark 5-dimension LLM rubric skipped.",
+        "Overall scale: 1-10."
+      ],
+      "paperreview": {
+        "status": "fetched",
+        "token_file": "~/ai_scientist_inputs/ICSE-2025-008_early_detection_of_system_performance_re/workspace/evoscientist_2026-09-08_14-47-49/artifacts/peer_review/paperreview.token.txt",
+        "json": "~/ai_scientist_inputs/ICSE-2025-008_early_detection_of_system_performance_re/workspace/evoscientist_2026-09-08_14-47-49/artifacts/peer_review/stanford_apr.json",
+        "markdown": "~/ai_scientist_inputs/ICSE-2025-008_early_detection_of_system_performance_re/workspace/evoscientist_2026-09-08_14-47-49/artifacts/peer_review/stanford_apr.md",
+        "apr_scores": {
+          "scale": "1-10",
+          "overall": 4.4,
+          "dimensions": {
+            "Claims_Support": -1.0,
+            "Experimental_Soundness": -1.0,
+            "Writing_Clarity": 0.0,
+            "Prior_Work_Context": 0.0,
+            "Question_Importance": 1.0,
+            "Originality": 0.0,
+            "Value_to_Community": 0.0
+          }
+        },
+        "pdf_rebuild": null
+      },
+      "scoring_method": "paperreview_apr",
+      "scoring_source": "paperreview_json",
+      "apr_dimensions": {
+        "Claims_Support": -1.0,
+        "Experimental_Soundness": -1.0,
+        "Writing_Clarity": 0.0,
+        "Prior_Work_Context": 0.0,
+        "Question_Importance": 1.0,
+        "Originality": 0.0,
+        "Value_to_Community": 0.0
+      },
+      "summary": "",
+      "red_flags": []
+    },
+    "alignment": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-008_early_detection_of_system_performance_re/workspace/evoscientist_2026-09-08_14-47-49",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-008_early_detection_of_system_performance_re",
+      "status": "ok",
+      "original": {
+        "paper_title": "Early Detection of Performance Regressions by Bridging Local Performance Data and Architectural Models",
+        "selection": {
+          "num_blocks": 6,
+          "total_chars": 31939,
+          "inferred_roles": {
+            "abstract": 1,
+            "introduction": 1,
+            "experiment": 3,
+            "conclusion": 1
+          },
+          "mineru_raw_keys": {
+            "field:abstract": 1,
+            "field:introduction": 1,
+            "field:experiment": 1,
+            "experiment": 2,
+            "conclusion": 1
+          },
+          "infer_reasons": {
+            "top_level_field": 3,
+            "body_override": 2,
+            "title": 1
+          },
+          "rescued_from_other": 0,
+          "note": "mineru key is unreliable; blocks are selected by title/body/inheritance. rescued_from_other counts sections labeled other but treated as typed roles."
+        },
+        "claims": [
+          {
+            "id": "C1",
+            "statement": "The proposed approach can effectively detect end-to-end system performance regressions from local performance deviations with different intensities.",
+            "direction": "improves",
+            "metric_names": [
+              "outcome",
+              "true_positive",
+              "true_negative"
+            ],
+            "evidence_quote": "our approach can effectively detect system performance regressions with different intensities of local performance deviations",
+            "confidence": 0.9
+          },
+          {
+            "id": "C2",
+            "statement": "The proposed approach can detect regressions as early as the development phase, before full system performance testing is available.",
+            "direction": "improves",
+            "metric_names": [],
+            "evidence_quote": "our approach can detect regressions as early as in the development phase, in contrast to existing approaches that require the system to be fully built and deployed",
+            "confidence": 0.95
+          },
+          {
+            "id": "C3",
+            "statement": "Significant local performance deviations do not always cause system-level performance regressions, and the approach avoids false alarms in fixed-workload cases without system regressions.",
+            "direction": "improves",
+            "metric_names": [
+              "false_positive"
+            ],
+            "evidence_quote": "Our approach does not generate false alarms when there is local performance deviation but no system performance regression.",
+            "confidence": 0.9
+          },
+          {
+            "id": "C4",
+            "statement": "Under various workloads, the approach maintains effectiveness: TeaStore is consistent with system testing in seven out of nine cases, and TrainTicket model predictions align except for an undetectable L1 case.",
+            "direction": "mixed",
+            "metric_names": [
+              "outcome"
+            ],
+            "evidence_quote": "for TeaStore, our approach maintains consistency with the performance testing results in seven out of nine cases",
+            "confidence": 0.85
+          }
+        ],
+        "metrics": [
+          {
+            "name": "fixed_workload_TeaStore_L1_Low_response_time_testing_mpd_ms",
+            "value": 7.02,
+            "unit": "ms",
+            "higher_is_better": false,
+            "setting": "TeaStore fixed-workload L1 Low",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "performance testing MPD (ms) 7.02",
+            "confidence": 0.95
+          },
+          {
+            "name": "fixed_workload_TeaStore_L1_Low_response_time_model_mpd_ms",
+            "value": 7.6,
+            "unit": "ms",
+            "higher_is_better": false,
+            "setting": "TeaStore fixed-workload L1 Low",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "model prediction MPD (ms) 7.60",
+            "confidence": 0.95
+          },
+          {
+            "name": "fixed_workload_TeaStore_L1_Low_cpu_testing_mpd_percent",
+            "value": 6.53,
+            "unit": "%",
+            "higher_is_better": false,
+            "setting": "TeaStore fixed-workload L1 Low",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "CPU testing MPD 6.53",
+            "confidence": 0.9
+          },
+          {
+            "name": "fixed_workload_TeaStore_L1_Low_cpu_model_mpd_percent",
+            "value": 6.09,
+            "unit": "%",
+            "higher_is_better": false,
+            "setting": "TeaStore fixed-workload L1 Low",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "CPU model prediction MPD 6.09",
+            "confidence": 0.9
+          }
+        ],
+        "overall_conclusion": "The proposed approach bridges component-level performance deviation detection and architectural models to infer system-level performance regressions early in the development phase. Across TeaStore and TrainTicket benchmarks, fixed-workload evaluations show that the approach detects most injected regressions while avoiding false alarms in no-regression cases, and various-workload evaluations show maintained consistency in most cases.",
+        "comparable_notes": "The comparison uses open-source systems TeaStore and TrainTicket, injected regressions at L1-L3, Low/Medium/High intensities, component-level tests repeated 30 times, system performance tests run 15 minutes with 5-minute warm-up and repeated 3 times, and regression outcomes derived from response time effect size and CPU MPD differences.",
+        "cache_hit": true
+      },
+      "agent": {
+        "status": "ok",
+        "run_dir": "~/ai_scientist_inputs/ICSE-2025-008_early_detection_of_system_performance_re/workspace/evoscientist_2026-09-08_14-47-49",
+        "claims": [
+          {
+            "id": "A1",
+            "statement": "TopoProp statically synthesizes the architectural model from source code and deployment configuration, removing the need for system-level test data.",
+            "direction": "improves",
+            "metric_names": [],
+            "evidence_quote": "synthesizes the architectural model statically from source code and deployment configuration (service topology, cross-service call graph, and per-request invocation counts)",
+            "confidence": 0.93
+          },
+          {
+            "id": "A2",
+            "statement": "Component-level busy-wait slowdown is measurable, statistically significant, and monotone at L1, L2, and L3.",
+            "direction": "degrades",
+            "metric_names": [
+              "L1 low local mean difference",
+              "L1 medium local mean difference",
+              "L1 high local mean difference",
+              "L2 low local mean difference",
+              "L2 medium local mean difference",
+              "L2 high local mean difference"
+            ],
+            "evidence_quote": "The busy-wait injection produces a measurable, statistically significant, and monotone local slowdown at every location (Mann-Whitney p<10^{-9}, Cliff's Delta \\approx 1.0).",
+            "confidence": 0.95
+          },
+          {
+            "id": "A3",
+            "statement": "The statically extracted topology matches the documented architecture.",
+            "direction": "no_difference",
+            "metric_names": [],
+            "evidence_quote": "the statically-extracted topology matches the documented architecture",
+            "confidence": 0.9
+          },
+          {
+            "id": "A4",
+            "statement": "Propagated predictions reproduce the published hot-vs-cold location effect: L1 regresses, L3 never does, without any system-level test data.",
+            "direction": "mixed",
+            "metric_names": [
+              "L1 high predicted mean performance degradation response time at 50 req/s",
+              "L3 low predicted mean performance degradation response time at 50 req/s"
+            ],
+            "evidence_quote": "propagation reproduces the paper's hot-vs-cold location effect (L1 regresses, L3 never does) without any system-level test data",
+            "confidence": 0.93
+          },
+          {
+            "id": "A5",
+            "statement": "Holding a local slowdown fixed, predicted impact grows with workload intensity.",
+            "direction": "degrades",
+            "metric_names": [
+              "L1 low predicted mean performance degradation response time at 50 req/s",
+              "L1 low predicted mean performance degradation response time at 100 req/s",
+              "L1 low predicted mean performance degradation response time at 200 req/s",
+              "L1 low amplification factor at 50 req/s",
+              "L1 low amplification factor at 100 req/s",
+              "L1 low amplification factor at 200 req/s"
+            ],
+            "evidence_quote": "holding a local slowdown fixed, predicted impact grows with workload intensity",
+            "confidence": 0.93
+          },
+          {
+            "id": "A6",
+            "statement": "TopoProp adds calibrated uncertainty-aware detection via Monte-Carlo propagation and a threshold sweep.",
+            "direction": "improves",
+            "metric_names": [],
+            "evidence_quote": "propagates uncertainty by Monte-Carlo sampling the measured component-slowdown distribution through an open queueing-network solver, yielding a predictive distribution of end-to-end response-time and CPU degradation with confidence intervals and calibrated detection thresholds.",
+            "confidence": 0.92
+          },
+          {
+            "id": "A7",
+            "statement": "The Liao et al. baseline detects 7 of 9 regressions with no false positives.",
+            "direction": "improves",
+            "metric_names": [],
+            "evidence_quote": "their evaluation on TeaStore and TrainTicket shows the approach detects 7/9 regressions with no false positives.",
+            "confidence": 0.9
+          },
+          {
+            "id": "A8",
+            "statement": "TopoProp removes the last system-level-testing dependency from the baseline and adds uncertainty calibration the baseline cannot express.",
+            "direction": "improves",
+            "metric_names": [],
+            "evidence_quote": "TopoProp removes the last system-level-testing dependency from the baseline and adds uncertainty calibration it cannot express.",
+            "confidence": 0.92
+          },
+          {
+            "id": "A9",
+            "statement": "The startup-only L3 component has zero steady-state impact by construction.",
+            "direction": "no_difference",
+            "metric_names": [
+              "L3 low predicted mean performance degradation response time at 50 req/s",
+              "L3 medium predicted mean performance degradation response time at 50 req/s",
+              "L3 high predicted mean performance degradation response time at 50 req/s"
+            ],
+            "evidence_quote": "L3 ($c_c{=}0$) has zero steady-state impact by construction, encoding the paper's ``executed once at startup'' observation.",
+            "confidence": 0.97
+          }
+        ],
+        "metrics": [
+          {
+            "name": "L1 low local mean difference",
+            "value": 10.031296983160667,
+            "unit": "ms",
+            "higher_is_better": false,
+            "setting": "TeaStore L1 SlopeOneRecommender low busy-wait intensity, workload 50 req/s",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "local_md_ms: 10.031296983160667",
+            "confidence": 0.99
+          },
+          {
+            "name": "L1 medium local mean difference",
+            "value": 50.091167277805994,
+            "unit": "ms",
+            "higher_is_better": false,
+            "setting": "TeaStore L1 SlopeOneRecommender medium busy-wait intensity, workload 50 req/s",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "local_md_ms: 50.091167277805994",
+            "confidence": 0.99
+          },
+          {
+            "name": "L1 high local mean difference",
+            "value": 250.14684266073863,
+            "unit": "ms",
+            "higher_is_better": false,
+            "setting": "TeaStore L1 SlopeOneRecommender high busy-wait intensity, workload 50 req/s",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "local_md_ms: 250.14684266073863",
+            "confidence": 0.99
+          },
+          {
+            "name": "L2 low local mean difference",
+            "value": 10.056092935132668,
+            "unit": "ms",
+            "higher_is_better": false,
+            "setting": "TeaStore L2 ShaSecurityProvider low busy-wait intensity, workload 50 req/s",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "local_md_ms: 10.056092935132668",
+            "confidence": 0.99
+          },
+          {
+            "name": "L2 medium local mean difference",
+            "value": 50.305703275557335,
+            "unit": "ms",
+            "higher_is_better": false,
+            "setting": "TeaStore L2 ShaSecurityProvider medium busy-wait intensity, workload 50 req/s",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "local_md_ms: 50.305703275557335",
+            "confidence": 0.99
+          },
+          {
+            "name": "L2 high local mean difference",
+            "value": 250.5154394545093,
+            "unit": "ms",
+            "higher_is_better": false,
+            "setting": "TeaStore L2 ShaSecurityProvider high busy-wait intensity, workload 50 req/s",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "local_md_ms: 250.5154394545093",
+            "confidence": 0.99
+          },
+          {
+            "name": "L1 low predicted mean performance degradation response time at 50 req/s",
+            "value": 10.572464032069789,
+            "unit": "ms",
+            "higher_is_better": false,
+            "setting": "TeaStore L1 SlopeOneRecommender low busy-wait intensity, workload 50 req/s",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "mpd_response_time_ms mean: 10.572464032069789",
+            "confidence": 0.99
+          },
+          {
+            "name": "L1 medium predicted mean performance degradation response time at 50 req/s",
+            "value": 52.793524954005974,
+            "unit": "ms",
+            "higher_is_better": false,
+            "setting": "TeaStore L1 SlopeOneRecommender medium busy-wait intensity, workload 50 req/s",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "mpd_response_time_ms mean: 52.793524954005974",
+            "confidence": 0.99
+          },
+          {
+            "name": "L1 high predicted mean performance degradation response time at 50 req/s",
+            "value": 263.64126340957915,
+            "unit": "ms",
+            "higher_is_better": false,
+            "setting": "TeaStore L1 SlopeOneRecommender high busy-wait intensity, workload 50 req/s",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "mpd_response_time_ms mean: 263.64126340957915",
+            "confidence": 0.99
+          },
+          {
+            "name": "L2 low predicted mean performance degradation response time at 50 req/s",
+            "value": 1.5931600208582464,
+            "unit": "ms",
+            "higher_is_better": false,
+            "setting": "TeaStore L2 ShaSecurityProvider low busy-wait intensity, workload 50 req/s",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "mpd_response_time_ms mean: 1.5931600208582464",
+            "confidence": 0.99
+          },
+          {
+            "name": "L2 medium predicted mean performance degradation response time at 50 req/s",
+            "value": 7.969822792887826,
+            "unit": "ms",
+            "higher_is_better": false,
+            "setting": "TeaStore L2 ShaSecurityProvider medium busy-wait intensity, workload 50 req/s",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "mpd_response_time_ms mean: 7.969822792887826",
+            "confidence": 0.99
+          },
+          {
+            "name": "L2 high predicted mean performance degradation response time at 50 req/s",
+            "value": 39.68843349668084,
+            "unit": "ms",
+            "higher_is_better": false,
+            "setting": "TeaStore L2 ShaSecurityProvider high busy-wait intensity, workload 50 req/s",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "mpd_response_time_ms mean: 39.68843349668084",
+            "confidence": 0.99
+          },
+          {
+            "name": "L3 low predicted mean performance degradation response time at 50 req/s",
+            "value": 0.0,
+            "unit": "ms",
+            "higher_is_better": false,
+            "setting": "TeaStore L3 DataGenerator low busy-wait intensity, workload 50 req/s",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "mpd_response_time_ms mean: 0.0",
+            "confidence": 0.99
+          },
+          {
+            "name": "L3 medium predicted mean performance degradation response time at 50 req/s",
+            "value": 0.0,
+            "unit": "ms",
+            "higher_is_better": false,
+            "setting": "TeaStore L3 DataGenerator medium busy-wait intensity, workload 50 req/s",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "mpd_response_time_ms mean: 0.0",
+            "confidence": 0.99
+          },
+          {
+            "name": "L3 high predicted mean performance degradation response time at 50 req/s",
+            "value": 0.0,
+            "unit": "ms",
+            "higher_is_better": false,
+            "setting": "TeaStore L3 DataGenerator high busy-wait intensity, workload 50 req/s",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "mpd_response_time_ms mean: 0.0",
+            "confidence": 0.99
+          },
+          {
+            "name": "L1 low predicted mean performance degradation response time at 100 req/s",
+            "value": 11.175293368336096,
+            "unit": "ms",
+            "higher_is_better": false,
+            "setting": "TeaStore L1 SlopeOneRecommender low busy-wait intensity, workload 100 req/s",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "mpd_response_time_ms mean: 11.175293368336096",
+            "confidence": 0.99
+          },
+          {
+            "name": "L1 low predicted mean performance degradation response time at 200 req/s",
+            "value": 12.613890474507864,
+            "unit": "ms",
+            "higher_is_better": false,
+            "setting": "TeaStore L1 SlopeOneRecommender low busy-wait intensity, workload 200 req/s",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "mpd_response_time_ms mean: 12.613890474507864",
+            "confidence": 0.99
+          },
+          {
+            "name": "L1 low amplification factor at 50 req/s",
+            "value": 1.0539478724070865,
+            "unit": "ratio",
+            "higher_is_better": false,
+            "setting": "TeaStore L1 SlopeOneRecommender low busy-wait intensity, workload 50 req/s",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "amplification_mean: 1.0539478724070865",
+            "confidence": 0.99
+          },
+          {
+            "name": "L1 low amplification factor at 100 req/s",
+            "value": 1.1140479280665356,
+            "unit": "ratio",
+            "higher_is_better": false,
+            "setting": "TeaStore L1 SlopeOneRecommender low busy-wait intensity, workload 100 req/s",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "amplification_mean: 1.1140479280665356",
+            "confidence": 0.99
+          },
+          {
+            "name": "L1 low amplification factor at 200 req/s",
+            "value": 1.257450388593033,
+            "unit": "ratio",
+            "higher_is_better": false,
+            "setting": "TeaStore L1 SlopeOneRecommender low busy-wait intensity, workload 200 req/s",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "amplification_mean: 1.257450388593033",
+            "confidence": 0.99
+          }
+        ],
+        "overall_conclusion": "TopoProp replaces the system-level-testing dependency of the baseline with static architectural synthesis and Monte-Carlo uncertainty propagation, reproduces the published hot-vs-cold regression effect on TeaStore (L1 regresses, L3 never does) without system-level test data, and adds calibrated detection thresholds; local slowdowns are measurable and monotone, and predicted impact grows with workload intensity.",
+        "sources": {
+          "metrics_path": "results/predictions.json",
+          "paper_tex_path": "paper/main.tex"
+        },
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 9149,
+            "completion_tokens_details": {
+              "reasoning_tokens": 5303
+            },
+            "prompt_tokens": 4957,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 14106
+          },
+          "attempt": 0
+        }
+      },
+      "comparison": {
+        "status": "ok",
+        "claim_alignment": [
+          {
+            "original_claim_id": "C1",
+            "agent_claim_id": "A4",
+            "label": "partial",
+            "rationale": "Agent reproduces the TeaStore hot-vs-cold regression effect from local deviations without system-level test data, but does not report full detection outcomes or TrainTicket coverage, so the broad detection claim is only partially supported."
+          },
+          {
+            "original_claim_id": "C2",
+            "agent_claim_id": "A1",
+            "label": "consistent",
+            "rationale": "Both claims state that architectural/static synthesis enables regression detection without requiring full system-level testing; same direction."
+          },
+          {
+            "original_claim_id": "C3",
+            "agent_claim_id": "A9",
+            "label": "partial",
+            "rationale": "Agent supports the mechanism that a local deviation, such as startup-only L3, need not cause system-level regression, but it does not directly re-evaluate false-alarm avoidance in no-regression fixed-workload cases."
+          },
+          {
+            "original_claim_id": "C4",
+            "agent_claim_id": "A7",
+            "label": "partial",
+            "rationale": "Agent restates the 7/9 TeaStore detection with no false positives but does not evaluate the various-workload condition or TrainTicket, so only part of the original claim is covered."
+          }
+        ],
+        "metric_alignment": [
+          {
+            "original_metric": "fixed_workload_TeaStore_L1_Low_response_time_testing_mpd_ms",
+            "agent_metric": "L1 low predicted mean performance degradation response time at 50 req/s",
+            "comparable": false,
+            "original_value": 7.02,
+            "agent_value": 10.572464032069789,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Protocols differ: original is fixed-workload system testing MPD, while agent reports static-model Monte-Carlo predicted degradation at a specified workload."
+          },
+          {
+            "original_metric": "fixed_workload_TeaStore_L1_Low_response_time_model_mpd_ms",
+            "agent_metric": "L1 low predicted mean performance degradation response time at 50 req/s",
+            "comparable": false,
+            "original_value": 7.6,
+            "agent_value": 10.572464032069789,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Different modeling/evaluation protocol and workload specification prevent direct comparison despite both being TeaStore L1 low response-time degradation predictions."
+          },
+          {
+            "original_metric": "fixed_workload_TeaStore_L1_Low_cpu_testing_mpd_percent",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 6.53,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Agent does not report a comparable CPU testing MPD metric."
+          },
+          {
+            "original_metric": "fixed_workload_TeaStore_L1_Low_cpu_model_mpd_percent",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 6.09,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Agent does not report a comparable CPU model prediction MPD metric."
+          }
+        ],
+        "summary": {
+          "direction_consistency": "consistent",
+          "consistent_claim_ratio": 0.25,
+          "has_comparable_metrics": false,
+          "sota_improvement_summary": "N/A; no comparable metric deltas were computed because the agent used reduced TeaStore predicted-degradation metrics rather than the original fixed-workload testing/model MPD metrics.",
+          "overall_alignment_score": 0.62,
+          "score_rationale": "The agent works on the same early regression-detection problem and the comparable claim directions generally agree, but coverage is reduced because TrainTicket, full detection metrics, and comparable fixed-workload metrics are missing."
+        },
+        "warnings": [
+          "Agent evaluation is reduced to TeaStore and does not include TrainTicket.",
+          "Metric protocols differ substantially, so original fixed-workload testing/model MPD values were not directly compared with agent predicted degradation values.",
+          "Agent claims about baseline 7/9 detection with no false positives repeat the original result rather than independently re-evaluating the full various-workload setting."
+        ],
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 6262,
+            "completion_tokens_details": {
+              "reasoning_tokens": 5187
+            },
+            "prompt_tokens": 5163,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 11425
+          },
+          "attempt": 0
+        }
+      },
+      "overall_alignment_score": 0.62,
+      "direction_consistency": "consistent"
+    },
+    "experiment_analysis": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-008_early_detection_of_system_performance_re/workspace/evoscientist_2026-09-08_14-47-49",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-008_early_detection_of_system_performance_re",
+      "status": "ok",
+      "metrics_path": "results/predictions.json",
+      "experiment_success": {
+        "status": "ok",
+        "success": true,
+        "metrics_path": "results/predictions.json",
+        "absolute_metrics_path": "~/ai_scientist_inputs/ICSE-2025-008_early_detection_of_system_performance_re/workspace/evoscientist_2026-09-08_14-47-49/results/predictions.json",
+        "checks": {
+          "has_results_file": true,
+          "non_stub": true,
+          "numeric_leaf_count": 11124,
+          "min_numeric_ok": true
+        },
+        "manifest_hints": {
+          "status": {
+            "research_request": true,
+            "plan": true,
+            "metrics": true,
+            "paper_tex": true,
+            "paper_pdf": false,
+            "readme": true
+          },
+          "returncode": 0,
+          "benchmark_complete": true,
+          "artifacts_metrics_flag": false
+        },
+        "warnings": [],
+        "suspicious_values": [],
+        "note": "success=true requires substantive results (framework-aware path) with >=3 numeric leaves. Supports metrics.json, results.json, experiment_results.txt, etc. Manifest returncode/benchmark_complete are soft warnings only."
+      },
+      "idea_code_consistency": {
+        "status": "ok",
+        "idea_path": "idea.md",
+        "code_files": [
+          "project/teastore/interfaces/tools.descartes.teastore.entities/src/main/java/tools/descartes/teastore/entities/Category.java",
+          "project/teastore/interfaces/tools.descartes.teastore.entities/src/main/java/tools/descartes/teastore/entities/ImageSize.java",
+          "project/teastore/interfaces/tools.descartes.teastore.entities/src/main/java/tools/descartes/teastore/entities/ImageSizePreset.java",
+          "project/teastore/interfaces/tools.descartes.teastore.entities/src/main/java/tools/descartes/teastore/entities/Order.java"
+        ],
+        "score_scale": "1-5",
+        "score": 1.0,
+        "label": "severe_mismatch",
+        "justification": "The provided code consists solely of basic TeaStore entity classes (Category, ImageSize, ImageSizePreset, Order) and does not implement any part of the proposed TopoProp pipeline. There is no static architecture extraction, regression injection, component-level measurement, uncertainty-aware Monte Carlo queueing propagation, calibrated detection, or evaluation protocol. The code is unrelated boilerplate from the TeaStore codebase and does not realize the stated research idea.",
+        "matched_elements": [
+          "Uses TeaStore as the target system, which is the application under study in the idea."
+        ],
+        "missing_or_divergent_elements": [
+          "Static architecture extraction (arch_extract.py / architecture.json)",
+          "Regression injection into L1/L2/L3 components",
+          "Component-level slowndown measurement and Java timing harness",
+          "Uncertainty-aware Monte Carlo queueing propagation",
+          "Calibrated detection and TP/TN/FP/FN evaluation",
+          "Any experiment entrypoints, metrics, or hypothesis tests",
+          "All TopoProp-specific algorithmic contributions"
+        ],
+        "rubric": "Severe mismatch: code implements a different problem/method than the idea, or is unrelated boilerplate.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 426,
+            "completion_tokens_details": {
+              "reasoning_tokens": 178
+            },
+            "prompt_tokens": 5674,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 6100
+          },
+          "attempt": 0
+        }
+      },
+      "setup_coverage": {
+        "status": "ok",
+        "overall_coverage": 1.0,
+        "datasets": {
+          "gold_count": 2,
+          "hit_count": 2,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "TeaStore",
+            "TrainTicket"
+          ],
+          "misses": []
+        },
+        "baselines": {
+          "gold_count": 0,
+          "hit_count": 0,
+          "miss_count": 0,
+          "coverage": null,
+          "hits": [],
+          "misses": []
+        },
+        "metrics": {
+          "gold_count": 3,
+          "hit_count": 3,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "Response time deviation",
+            "CPU usage deviation",
+            "Detection accuracy"
+          ],
+          "misses": []
+        },
+        "agent_protocol": {},
+        "gold_protocol": {},
+        "dataset_dirs": [
+          "dataset_candidate"
+        ],
+        "flags": {
+          "weaker_baseline_suspected": false,
+          "weak_protocol": [],
+          "synthetic_data": "unexpected_synthetic_or_local_only_data",
+          "gold_allows_synthetic": false
+        },
+        "gold_sources": [
+          "~/ai_scientist_inputs/ICSE-2025-008_early_detection_of_system_performance_re/task.md",
+          "~/ai_scientist_inputs/ICSE-2025-008_early_detection_of_system_performance_re/metadata.json"
+        ],
+        "note": "Coverage is name/alias matching against task.md Datasets/Baselines/Metrics. weak_protocol flags large reductions in trials/timeout vs Constraints. Synthetic corpora are not penalized when the task itself requires synthesis."
+      },
+      "ablation_significance": {
+        "status": "ok",
+        "idea_path": "idea.md",
+        "significance_signals_rule_based": {
+          "signals": [
+            "paper_contains:bootstrap",
+            "paper_contains:confidence interval",
+            "paper_contains:mann-whitney",
+            "paper_contains:p<",
+            "paper_contains:significant"
+          ],
+          "artifact_paths": [],
+          "has_any_significance_artifact": true
+        },
+        "evidence_format": "raw_json_truncated",
+        "study_type": "new_method",
+        "components": [
+          {
+            "name": "Static architecture extraction",
+            "role": "module",
+            "ablation_expected": true,
+            "significance_expected": false,
+            "ablation_status": "missing",
+            "ablation_evidence": "No controlled comparison or removal of the static extraction module is present; only a documented topology check is claimed.",
+            "significance_status": "not_required",
+            "significance_evidence": null
+          }
+        ],
+        "ablation_coverage_score": null,
+        "overall_ablation_ok": null,
+        "overall_significance_ok": null,
+        "summary": "",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 607,
+            "completion_tokens_details": {
+              "reasoning_tokens": 492
+            },
+            "prompt_tokens": 370,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 977
+          },
+          "attempt": 2
+        }
+      },
+      "results_paper_consistency": {
+        "status": "ok",
+        "paper_tex": "paper/main.tex",
+        "paper_kind": "paper_tex",
+        "results_format": "raw_json_truncated",
+        "digest_hint": {
+          "unfavorable_count": 0,
+          "trial_fail_count": 0,
+          "trial_success_count": 0,
+          "metadata": {}
+        },
+        "score_scale": "1-5",
+        "method": "Direct LLM comparison: agent's FINAL results artifact (metrics.json summary) vs paper Results/Discussion/Conclusion. Interim failed runs are NOT evidence unless still present in the final metrics file.",
+        "score": 4.0,
+        "consistency_label": "mostly",
+        "hiding_unfavorable_suspected": false,
+        "hiding_confidence": 0.9,
+        "justification": "The supplied FINAL EXPERIMENTAL RESULTS directly support the paper's L1 low response-time MPD at 50 req/s: the results mean is 10.572 ms and the paper reports 10.57 ms. No unfavorable final outcomes are present, and the paper's stated reduced protocol is consistent with the available metric. Other reported values, such as L1 medium/high, L2, L3, detection metrics, and RQ2 workload-intensity results, are not present in the supplied final-results excerpt, so they cannot be confirmed from this extract but are not directly contradicted.",
+        "supported_claims": [
+          "L1 low response-time MPD at 50 req/s is approximately 10.57 ms."
+        ],
+        "unsupported_or_overstated_claims": [
+          "Full RQ1 table values for L1 medium/high, L2, and L3 are not present in the supplied final results excerpt.",
+          "Detection/oracle metrics and RQ2 workload-intensity table values are not present in the supplied final results excerpt."
+        ],
+        "numeric_mismatches": [],
+        "unfavorable_in_final_results": [],
+        "unfavorable_acknowledged_in_paper": [],
+        "unfavorable_missing_from_paper": [],
+        "rubric": "Mostly consistent: reported conclusions track the metrics; negative/failed settings are acknowledged with only minor gaps.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 1273,
+            "completion_tokens_details": {
+              "reasoning_tokens": 958
+            },
+            "prompt_tokens": 11654,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 12927
+          },
+          "attempt": 1
+        }
+      },
+      "scores": {
+        "experiment_success": true,
+        "idea_code_score": 1.0,
+        "setup_coverage": 1.0,
+        "ablation_coverage_score": null,
+        "overall_ablation_ok": null,
+        "overall_significance_ok": null,
+        "results_paper_score": 4.0,
+        "hiding_unfavorable_suspected": false
+      },
+      "notes": [
+        "Axes 1,2,3,4,6 in experiment_analysis (figures excluded).",
+        "setup_coverage matches task.md Datasets/Baselines/Metrics; weak_protocol flags reductions vs Constraints.",
+        "Axis 6: final normalized results vs paper; interim run logs not used as ground truth."
+      ]
+    },
+    "literature_review": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-008_early_detection_of_system_performance_re/workspace/evoscientist_2026-09-08_14-47-49",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-008_early_detection_of_system_performance_re",
+      "status": "ok",
+      "as_of_year": 2026,
+      "agent_ref_count": 14,
+      "sources": [
+        {
+          "path": "~/ai_scientist_inputs/ICSE-2025-008_early_detection_of_system_performance_re/workspace/evoscientist_2026-09-08_14-47-49/paper/main.tex",
+          "kind": "thebibliography"
+        }
+      ],
+      "collection_audit": {
+        "cited_keys_count": 14,
+        "filter_mode": "paper_cite_keys",
+        "bib_total_before_filter": 0,
+        "bib_after_filter": 0,
+        "uncited_bib_skipped": 0,
+        "cited_keys_sample": [
+          "balsamo2004",
+          "bause1993",
+          "becker2007",
+          "chen2017",
+          "cortellessa2022",
+          "delgado2021",
+          "didona2015",
+          "ding2020",
+          "foo2015",
+          "laaber2020",
+          "liao2025",
+          "nguyen2016",
+          "woodside2009",
+          "zhang2020"
+        ],
+        "thebibliography_after_filter": 14,
+        "agent_ref_count": 14
+      },
+      "fabrication": {
+        "status": "ok",
+        "scholarly_count": 14,
+        "verified_count": 3,
+        "fake_count": 1,
+        "lookup_failed_count": 10,
+        "insufficient_metadata_count": 0,
+        "non_paper_count": 0,
+        "fabrication_rate": 0.25,
+        "items": [
+          {
+            "title": "Early Detection of Performance Regressions by Bridging Local Performance Data and Architectural Models",
+            "doi": "10.1109/icse55347.2025.00026",
+            "arxiv_id": "2408.08148",
+            "year": 2025,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Early Detection of Performance Regressions by Bridging Local Performance Data and Architectural Models",
+            "resolved_year": 2024,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "liao2025",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "Control charts for performance regression",
+            "doi": "",
+            "arxiv_id": "",
+            "year": 2016,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated.",
+              "Saw 1 conclusive miss(es) mixed with 1 API error(s)."
+            ],
+            "cite_key": "nguyen2016",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "An industrial case study on automated detection of performance regressions",
+            "doi": "",
+            "arxiv_id": "",
+            "year": 2015,
+            "status": "fabricated_or_unfound",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "Not found on Semantic Scholar or arXiv with DOI/arxiv/title lookup."
+            ],
+            "cite_key": "foo2015",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "Ensemble models for workload-adaptive performance regression",
+            "doi": "",
+            "arxiv_id": "",
+            "year": 2020,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated.",
+              "Saw 1 conclusive miss(es) mixed with 1 API error(s)."
+            ],
+            "cite_key": "zhang2020",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "Combining analytical modeling and ML for performance prediction",
+            "doi": "",
+            "arxiv_id": "",
+            "year": 2015,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated.",
+              "Saw 1 conclusive miss(es) mixed with 1 API error(s)."
+            ],
+            "cite_key": "didona2015",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "An exploratory study of performance-regression-introducing code changes",
+            "doi": "",
+            "arxiv_id": "",
+            "year": 2017,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated.",
+              "Saw 1 conclusive miss(es) mixed with 1 API error(s)."
+            ],
+            "cite_key": "chen2017",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "Towards the use of readily available tests as performance tests",
+            "doi": "",
+            "arxiv_id": "",
+            "year": 2020,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated.",
+              "Saw 1 conclusive miss(es) mixed with 1 API error(s)."
+            ],
+            "cite_key": "ding2020",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "An evaluation of open-source software microbenchmark suites",
+            "doi": "",
+            "arxiv_id": "",
+            "year": 2020,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated."
+            ],
+            "cite_key": "laaber2020",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "Performance mutation testing",
+            "doi": "",
+            "arxiv_id": "",
+            "year": 2021,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated.",
+              "Saw 1 conclusive miss(es) mixed with 1 API error(s)."
+            ],
+            "cite_key": "delgado2021",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "Queueing Petri nets---a formalism for combined qualitative and quantitative analysis",
+            "doi": "",
+            "arxiv_id": "",
+            "year": 1993,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated."
+            ],
+            "cite_key": "bause1993",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "Model-based performance prediction: a survey",
+            "doi": "",
+            "arxiv_id": "",
+            "year": 2004,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated.",
+              "Saw 1 conclusive miss(es) mixed with 1 API error(s)."
+            ],
+            "cite_key": "balsamo2004",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "The Palladio component model",
+            "doi": "10.1016/j.jss.2008.03.066",
+            "arxiv_id": "",
+            "year": 2007,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "The Palladio component model for model-driven performance prediction",
+            "resolved_year": 2009,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "becker2007",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "Model-driven continuous performance engineering in microservices",
+            "doi": "",
+            "arxiv_id": "",
+            "year": 2022,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated.",
+              "Saw 1 conclusive miss(es) mixed with 1 API error(s)."
+            ],
+            "cite_key": "cortellessa2022",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "Layered queueing networks",
+            "doi": "10.1007/978-3-319-66335-7_18",
+            "arxiv_id": "",
+            "year": 2009,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Tulsa: A Tool for Transforming UML to Layered Queueing Networks for Performance Analysis of Data Intensive Applications",
+            "resolved_year": 2017,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "woodside2009",
+            "source_kind": "thebibliography"
+          }
+        ],
+        "cache_path": "~/ai_scientist_evals/ICSE-2025-008_early_detection_of_system_performance_re/reference_verify_cache.json",
+        "override_path": "~/ai_scientist_evals/ICSE-2025-008_early_detection_of_system_performance_re/reference_verify_overrides.json",
+        "note": "fabrication_rate = fake / (verified + fake). lookup_failed (API errors) and insufficient_metadata are excluded and retried or skipped. GitHub/docs/tool URLs are non_paper and excluded from the rate. To manually correct a false negative, edit reference_verify_overrides.json (key=normalized title / doi / cite_key; value=\"verified\" or a result dict), then re-run."
+      },
+      "coverage": {
+        "status": "ok",
+        "gold_source": "~/ai_scientist_inputs/ICSE-2025-008_early_detection_of_system_performance_re/mineru_sections.json",
+        "gold_count": 57,
+        "gold_is_original_paper_references": true,
+        "gold_is_openalex_subset": false,
+        "agent_count": 14,
+        "intersection_size": 5,
+        "recall": 0.08771929824561403,
+        "precision": 0.35714285714285715,
+        "matched_gold_keys": [
+          "becker2007modelbased",
+          "chen2017exploratory",
+          "delgadoperez2020performance",
+          "franks2008enhanced",
+          "laaber2018evaluation"
+        ],
+        "primary_metric": "recall",
+        "note": "Primary metric is recall against the original paper bibliography (titles from mineru_sections.json REFERENCES; related_work.json used only to enrich DOI/year or as fallback if mineru titles are empty). Denominator = |original paper references|. Precision is secondary (agent may cite valid extra papers)."
+      },
+      "recency": {
+        "status": "ok",
+        "dated_count": 14,
+        "unknown_year_count": 0,
+        "year_histogram": {
+          "1993": 1,
+          "2004": 1,
+          "2009": 1,
+          "2015": 2,
+          "2016": 1,
+          "2017": 2,
+          "2020": 3,
+          "2021": 1,
+          "2022": 1,
+          "2024": 1
+        },
+        "windows": {
+          "3": {
+            "years": 3,
+            "cutoff_year_inclusive": 2023,
+            "recent_count": 1,
+            "recent_ratio": 0.07142857142857142
+          },
+          "5": {
+            "years": 5,
+            "cutoff_year_inclusive": 2021,
+            "recent_count": 3,
+            "recent_ratio": 0.21428571428571427
+          }
+        }
+      },
+      "scores": {
+        "fabrication_rate": 0.25,
+        "coverage_recall": 0.08771929824561403,
+        "coverage_precision": 0.35714285714285715,
+        "recency_ratio_3y": 0.07142857142857142,
+        "recency_ratio_5y": 0.21428571428571427
+      }
+    }
+  },
+  "scores": {
+    "completeness": {
+      "complete": true,
+      "overall_score": 0.8521,
+      "required_score": 1.0,
+      "bonus_score": 0.13
+    },
+    "peer_review": {
+      "status": "ok",
+      "optional": false,
+      "overall_score": 4.4,
+      "score_scale": "1-10",
+      "scoring_method": "paperreview_apr"
+    },
+    "idea_generation": {
+      "status": "ok",
+      "overall_score": 3.0,
+      "dimensions": {
+        "novelty": 3.0,
+        "feasibility": 3.0,
+        "clarity": 3.0
+      },
+      "novelty_category": "Incremental",
+      "solution_space_status": "ok"
+    },
+    "alignment": {
+      "status": "ok",
+      "direction_consistency": "consistent",
+      "overall_alignment_score": 0.62
+    },
+    "literature_review": {
+      "fabrication_rate": 0.25,
+      "coverage_recall": 0.08771929824561403,
+      "coverage_precision": 0.35714285714285715,
+      "recency_ratio_3y": 0.07142857142857142,
+      "recency_ratio_5y": 0.21428571428571427
+    },
+    "experiment_analysis": {
+      "experiment_success": true,
+      "idea_code_score": 1.0,
+      "setup_coverage": 1.0,
+      "ablation_coverage_score": null,
+      "overall_ablation_ok": null,
+      "overall_significance_ok": null,
+      "results_paper_score": 4.0,
+      "hiding_unfavorable_suspected": false
+    }
+  },
+  "fair_scores": {
+    "applicable_axes": [
+      "completeness",
+      "idea_generation",
+      "peer_review",
+      "alignment",
+      "literature_review",
+      "experiment_analysis"
+    ],
+    "skipped_axes": [],
+    "fair_mean_0_1": 0.6188,
+    "note": "fair_mean_0_1 averages only applicable axes; optional peer review and framework-inapplicable literature are excluded from the denominator."
+  },
+  "evals_root": "~/ai_scientist_evals",
+  "claims_cache": "~/ai_scientist_evals/ICSE-2025-008_early_detection_of_system_performance_re/original_claims.json",
+  "solution_space_cache": "~/ai_scientist_evals/ICSE-2025-008_early_detection_of_system_performance_re/solution_space.json"
+}

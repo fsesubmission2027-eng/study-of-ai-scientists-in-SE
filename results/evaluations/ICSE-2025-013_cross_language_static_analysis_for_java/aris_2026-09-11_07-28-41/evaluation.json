@@ -1,0 +1,1122 @@
+{
+  "run_dir": "~/ai_scientist_inputs/ICSE-2025-013_cross_language_static_analysis_for_java/workspace/aris_2026-09-11_07-28-41",
+  "task_dir": "~/ai_scientist_inputs/ICSE-2025-013_cross_language_static_analysis_for_java",
+  "framework": "aris",
+  "fairness_audit": [
+    {
+      "axis": "completeness",
+      "was_unfair": "Required both paper.tex AND paper.pdf; any tool missing one failed equally.",
+      "fix": "Paper gate: PDF=1.0; TeX-only=0.5; ``complete`` requires PDF."
+    },
+    {
+      "axis": "completeness",
+      "was_unfair": "``results`` counted stub/seed JSON (dataset_candidate/metrics.json).",
+      "fix": "``results`` requires substantive numeric results via results_normalize."
+    },
+    {
+      "axis": "experiment_success",
+      "was_unfair": "Only metrics.json; ignored results.json / experiment_results.txt.",
+      "fix": "Framework-ordered result candidates + normalized loaders."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Penalized tools with no bib; airesearcher has no workspace references.",
+      "fix": "literature_applicable=false → status not_applicable; excluded from fair aggregate."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "related_work.json subset as gold made recall hard to interpret.",
+      "fix": "Coverage gold is original paper REFERENCES from mineru; related_work only enriches metadata/fallback."
+    },
+    {
+      "axis": "peer_review",
+      "was_unfair": "Missing Stanford report looked like evaluation failure.",
+      "fix": "status not_provided; optional axis, never counts as tool failure."
+    },
+    {
+      "axis": "paths/find_results",
+      "was_unfair": "Picked downloads/** and sandbox noise (e.g. airesearcher LLVM tree).",
+      "fix": "Exclude downloads/, seeds/, dataset_candidate/, sandbox junk paths."
+    },
+    {
+      "axis": "paths/framework_noise",
+      "was_unfair": "DeepScientist .deepscientist_npm / runtime / skills templates counted as code/paper/results.",
+      "fix": "FRAMEWORK_NOISE_DIRS+markers; quest worktree + eval_output results; paper md drafts; reject template tex."
+    },
+    {
+      "axis": "paths/paper_tex",
+      "was_unfair": "tiny_scientist / ACL runs store paper under latex/*.tex; evaluator only looked at paper/main.tex.",
+      "fix": "latex/**/*.tex with substantive-body heuristic; find_paper_document uses same rules."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Entire custom.bib (300+ anthology entries) verified when paper had zero \\cite commands.",
+      "fix": "collect_agent_references filters bib to in-text cite keys; skips uncited bulk bib (>40 entries)."
+    },
+    {
+      "axis": "paths/ai_scientist_summaries",
+      "was_unfair": "AI Scientist can persist substantive results and paper-like drafts in *_summary.json logs rather than paper/main.tex or results/**/*.json.",
+      "fix": "Treat draft_summary/research_summary as weak paper documents and summary JSONs as result candidates."
+    },
+    {
+      "axis": "framework/ai_scientist_v2",
+      "was_unfair": "Manifest framework ``ai_scientist_v2`` fell through to profile ``unknown``, skipping AI-Scientist idea/result path priorities.",
+      "fix": "Normalize ``ai_scientist_v2`` (and common aliases) to profile key ``ai_scientist``."
+    },
+    {
+      "axis": "idea_generation",
+      "was_unfair": "plan.md/todos.md weak proxies scored same as structured idea.json.",
+      "fix": "Framework idea_priority tried first; missing idea → not_applicable where appropriate."
+    }
+  ],
+  "generated_at": "2026-10-01T01:36:11",
+  "axes": [
+    "alignment",
+    "completeness",
+    "experiment_analysis",
+    "idea_generation",
+    "literature_review",
+    "peer_review"
+  ],
+  "results": {
+    "completeness": {
+      "framework": "aris",
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-013_cross_language_static_analysis_for_java/workspace/aris_2026-09-11_07-28-41",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-013_cross_language_static_analysis_for_java",
+      "complete": true,
+      "required_score": 1.0,
+      "bonus_score": 0.17,
+      "overall_score": 0.8589,
+      "missing": [],
+      "required": {
+        "idea": {
+          "path": "idea-stage/IDEA_REPORT.md",
+          "bytes": 7990,
+          "via": "candidate"
+        },
+        "code": {
+          "count": 8,
+          "files": [
+            {
+              "path": "project/ablation_flow_sensitivity.py",
+              "bytes": 2606,
+              "via": "glob"
+            },
+            {
+              "path": "project/experiment_runner.py",
+              "bytes": 9326,
+              "via": "glob"
+            },
+            {
+              "path": "project/jnslice/__init__.py",
+              "bytes": 196,
+              "via": "glob"
+            },
+            {
+              "path": "project/jnslice/cextract.py",
+              "bytes": 21685,
+              "via": "glob"
+            },
+            {
+              "path": "project/jnslice/java_extract.py",
+              "bytes": 8191,
+              "via": "glob"
+            },
+            {
+              "path": "project/jnslice/jni_spec.py",
+              "bytes": 5844,
+              "via": "glob"
+            },
+            {
+              "path": "project/jnslice/oracle.py",
+              "bytes": 6796,
+              "via": "glob"
+            },
+            {
+              "path": "project/jnslice/resolver.py",
+              "bytes": 8698,
+              "via": "glob"
+            }
+          ]
+        },
+        "results": {
+          "substantive": true,
+          "normalized_path": "results/metrics.json",
+          "numeric_leaf_count": 255,
+          "discovered_files": [
+            {
+              "path": "results/metrics.json",
+              "bytes": 10191,
+              "via": "candidate"
+            },
+            {
+              "path": "results/ablation_x11color.json",
+              "bytes": 2062,
+              "via": "glob"
+            },
+            {
+              "path": "results/interactions_0.json",
+              "bytes": 534851,
+              "via": "glob"
+            },
+            {
+              "path": "results/interactions_1.json",
+              "bytes": 75684,
+              "via": "glob"
+            },
+            {
+              "path": "results/interactions_2.json",
+              "bytes": 2384,
+              "via": "glob"
+            },
+            {
+              "path": "results/interactions_3.json",
+              "bytes": 888,
+              "via": "glob"
+            },
+            {
+              "path": "results/interactions_4.json",
+              "bytes": 124,
+              "via": "glob"
+            },
+            {
+              "path": "results/per_subject_0.json",
+              "bytes": 1616,
+              "via": "glob"
+            },
+            {
+              "path": "results/per_subject_1.json",
+              "bytes": 1573,
+              "via": "glob"
+            },
+            {
+              "path": "results/per_subject_2.json",
+              "bytes": 1568,
+              "via": "glob"
+            },
+            {
+              "path": "results/per_subject_3.json",
+              "bytes": 1550,
+              "via": "glob"
+            },
+            {
+              "path": "results/per_subject_4.json",
+              "bytes": 1547,
+              "via": "glob"
+            }
+          ],
+          "metrics_keys_sample": [
+            "generated_by",
+            "experiment_command",
+            "subjects",
+            "ground_truth_disclosure",
+            "hardware_disclosure"
+          ]
+        },
+        "paper": {
+          "tex": {
+            "path": "paper/main.tex",
+            "bytes": 16772,
+            "via": "candidate"
+          },
+          "pdf": {
+            "path": "paper/main.pdf",
+            "bytes": 294104,
+            "via": "candidate"
+          },
+          "md": null,
+          "json": null,
+          "status": "pdf",
+          "score": 1.0
+        }
+      },
+      "bonus": {
+        "experiment_plan": {
+          "path": "refine-logs/EXPERIMENT_PLAN.md",
+          "bytes": 1772,
+          "via": "candidate"
+        },
+        "experiment_log": {
+          "path": "aris_run.log",
+          "bytes": 342038,
+          "via": "glob"
+        },
+        "review": {
+          "path": "review-stage/AUTO_REVIEW.md",
+          "bytes": 3089,
+          "via": "candidate"
+        },
+        "readme": {
+          "path": "README_BENCHMARK.md",
+          "bytes": 948,
+          "via": "candidate"
+        },
+        "narrative": {
+          "path": "NARRATIVE_REPORT.md",
+          "bytes": 6645,
+          "via": "candidate"
+        },
+        "bib": {
+          "path": "paper/references.bib",
+          "bytes": 3825,
+          "via": "candidate"
+        }
+      },
+      "manifest_status": {
+        "idea": true,
+        "experiment_plan": true,
+        "experiment_log": false,
+        "metrics": true,
+        "review": true,
+        "narrative": true,
+        "paper_tex": true,
+        "paper_pdf": true
+      },
+      "gate_scores": {
+        "idea": 1.0,
+        "code": 1.0,
+        "results": 1.0,
+        "paper": 1.0
+      },
+      "fairness": {
+        "gates": [
+          "idea",
+          "code",
+          "results",
+          "paper"
+        ],
+        "paper_gate_rule": "PDF=1.0; TeX-only/md_only/json_only=0.5; complete requires PDF",
+        "results_gate_rule": "substantive numeric results via framework-aware normalize_results",
+        "audit_ref": "framework_profile.FAIRNESS_AUDIT"
+      },
+      "notes": [
+        "Required: idea, code, substantive results, paper (PDF full; TeX/markdown/JSON draft half).",
+        "Stub/seed metrics (e.g. dataset_candidate/metrics.json) do not satisfy results.",
+        "Framework noise (.deepscientist_npm, skills/templates, runtime) is excluded from code/results/paper.",
+        "Manifest status is informational; disk presence is authoritative."
+      ]
+    },
+    "idea_generation": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-013_cross_language_static_analysis_for_java/workspace/aris_2026-09-11_07-28-41",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-013_cross_language_static_analysis_for_java",
+      "idea_path": "~/ai_scientist_inputs/ICSE-2025-013_cross_language_static_analysis_for_java/workspace/aris_2026-09-11_07-28-41/idea-stage/IDEA_REPORT.md",
+      "status": "ok",
+      "dimensions": {
+        "novelty": {
+          "score": 3.0,
+          "justification": "The core method is an extension of prior cross-language static analysis: 'SSA-over-slice flow sensitivity — the exact fix JNIFER's own Threats section calls future work' (Incremental). The proposal sharpens this by adding 'memory SSA' for JNI-relevant locals/structures and an explicit fallback rather than inheriting whole-program PTA imprecision.",
+          "rubric": "Incremental: a meaningful extension or optimization of prior baseline work that fixes a concrete prior limitation, but the core paradigm is unchanged.",
+          "category": "Incremental",
+          "nearest_solution_space_ids": [
+            "R21",
+            "R22",
+            "R28"
+          ],
+          "differentiation": "Unlike R22's binary decompilation route and R21/R28's Android/Dalvik native-data-flow focus, this idea proposes source-level demand-driven slicing plus SSA renaming over the JNI-relevant C pointer domain, with an explicit Steensgaard fallback for unresolved aliases."
+        },
+        "feasibility": {
+          "score": 3.0,
+          "justification": "The plan requires nontrivial custom tooling: 'javalang (Java) + pycparser-on-preprocessed (C)', 'slice + SSA + flow-sensitive JNI-value propagation', and handling 'name mangling + full RegisterNatives table analysis + variadic Get*MethodID'. This is moderate research engineering rather than near-zero development or catastrophic.",
+          "rubric": "Moderate workload (sweet spot): needs nontrivial coding such as scripting existing open-source tools (parsers, CFG extractors) or building a custom graph-processing pipeline; standard research engineering effort."
+        },
+        "clarity": {
+          "score": 4.0,
+          "justification": "The pilot plan is concrete: 'Extractor', 'Resolver', 'Baselines', 'Oracle builder', 'Metrics runner'. The proposal also states numeric success criteria tied to JNIFER recall/precision anchors and discloses limitations such as dynamic RegisterNatives tables being out of scope.",
+          "rubric": "Clear and concrete: steps are explicit with a reasonable, specific experiment design (baseline tools, metric definitions); can be turned into a solid proposal."
+        }
+      },
+      "overall_score": 3.3,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "novelty",
+        "feasibility",
+        "clarity"
+      ],
+      "solution_space": {
+        "status": "ok",
+        "paper_count": 30,
+        "entry_count": 30,
+        "cache_hit": true,
+        "source_file": "~/ai_scientist_inputs/ICSE-2025-013_cross_language_static_analysis_for_java/mineru_sections.json",
+        "stats": {
+          "papers": 30,
+          "extracted": 30,
+          "usable_abstracts": 19,
+          "citation_meta_abstracts": 0,
+          "missing_abstracts": 11,
+          "mineru_titles": 29,
+          "related_work_titles": 24,
+          "abstracts_attached": 19,
+          "related_work_extras": 1,
+          "batches": 2
+        },
+        "error": null
+      },
+      "notes": [
+        "Scores the intermediate idea artifact (not the final paper).",
+        "Dimensions: novelty, feasibility, clarity (each 1-5). Excitement removed.",
+        "Novelty is scored against a Solution Space built from mineru REFERENCES titles (+ related_work.json abstracts when matched)."
+      ],
+      "idea_via": "candidate",
+      "idea_relative": "idea-stage/IDEA_REPORT.md",
+      "summary": "The proposal presents JN-Slice, a flow-sensitive, demand-driven SSA analysis over the JNI-relevant C pointer slice to improve JNI interaction precision while retaining recall. It is a meaningful incremental extension over prior JNI static analysis, with a clear extractor/resolver/baseline/oracle plan and explicit limitations. Main concerns are the proxy ground truth, scoped RegisterNatives handling, and non-trivial engineering burden.",
+      "strengths": [
+        "Concrete diagnosis of precision loss: 'flow-insensitive handling of the handful of C pointers that carry JNI-relevant values'.",
+        "Explicit sound fallback: 'demand-instantiated Steensgaard-style unification only for JNI-relevant pointers where strong updates cannot be proven'.",
+        "Controlled evaluation: 'JN-Sum-style and Native-Scanner-style baselines implemented in the same harness'.",
+        "Disclosed proxy ground truth with intended inter-rater agreement."
+      ],
+      "weaknesses": [],
+      "llm_meta": {
+        "model": "deepseek-v4-pro-0813",
+        "base_url": "https://api-sg.umodelverse.ai/v1",
+        "usage": {
+          "completion_tokens": 1790,
+          "completion_tokens_details": {
+            "reasoning_tokens": 1201
+          },
+          "prompt_tokens": 846,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "total_tokens": 2636
+        },
+        "attempt": 1
+      }
+    },
+    "peer_review": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-013_cross_language_static_analysis_for_java/workspace/aris_2026-09-11_07-28-41",
+      "review_report": "~/ai_scientist_inputs/ICSE-2025-013_cross_language_static_analysis_for_java/workspace/aris_2026-09-11_07-28-41/artifacts/peer_review/stanford_apr.md",
+      "paper_pdf": "~/ai_scientist_inputs/ICSE-2025-013_cross_language_static_analysis_for_java/workspace/aris_2026-09-11_07-28-41/paper/main.pdf",
+      "paper_tex": "~/ai_scientist_inputs/ICSE-2025-013_cross_language_static_analysis_for_java/workspace/aris_2026-09-11_07-28-41/paper/main.tex",
+      "status": "ok",
+      "dimensions": {},
+      "overall_score": 5.8,
+      "score_scale": "1-10",
+      "dimension_order": [],
+      "notes": [
+        "Scored from paperreview.ai (Stanford APR) native ratings; benchmark 5-dimension LLM rubric skipped.",
+        "Overall scale: 1-10."
+      ],
+      "paperreview": {
+        "status": "cached",
+        "hint": "Cached APR score found; no re-upload."
+      },
+      "scoring_method": "paperreview_apr",
+      "scoring_source": "paperreview_json",
+      "apr_dimensions": {},
+      "summary": "",
+      "red_flags": []
+    },
+    "alignment": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-013_cross_language_static_analysis_for_java/workspace/aris_2026-09-11_07-28-41",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-013_cross_language_static_analysis_for_java",
+      "status": "ok",
+      "original": {
+        "paper_title": "Interactive Cross-Language Pointer Analysis for Resolving Native Code in Java Programs",
+        "selection": {
+          "num_blocks": 7,
+          "total_chars": 31998,
+          "inferred_roles": {
+            "abstract": 1,
+            "introduction": 1,
+            "experiment": 4,
+            "conclusion": 1
+          },
+          "mineru_raw_keys": {
+            "field:abstract": 1,
+            "field:introduction": 1,
+            "field:experiment": 1,
+            "other": 3,
+            "conclusion": 1
+          },
+          "infer_reasons": {
+            "top_level_field": 3,
+            "body_override": 2,
+            "title": 2
+          },
+          "rescued_from_other": 3,
+          "note": "mineru key is unreliable; blocks are selected by title/body/inheritance. rescued_from_other counts sections labeled other but treated as typed roles."
+        },
+        "claims": [
+          {
+            "id": "C1",
+            "statement": "JNIFER is the first interactive cross-language pointer analysis for resolving native code in Java programs, integrating Java and C pointer analyses.",
+            "direction": "neutral",
+            "metric_names": [],
+            "evidence_quote": "we introduce JNIFER, the first interactive cross-language pointer analysis for resolving native code in Java programs.",
+            "confidence": 0.98
+          },
+          {
+            "id": "C2",
+            "statement": "JNIFER significantly outperforms state-of-the-art analyzers JN-Sum and Native-Scanner in soundness, achieving 91.6%"
+          }
+        ],
+        "metrics": [],
+        "overall_conclusion": null,
+        "comparable_notes": null,
+        "cache_hit": true
+      },
+      "agent": {
+        "status": "ok",
+        "run_dir": "~/ai_scientist_inputs/ICSE-2025-013_cross_language_static_analysis_for_java/workspace/aris_2026-09-11_07-28-41",
+        "claims": [
+          {
+            "id": "A1",
+            "statement": "JN-Slice is a flow-sensitive, demand-driven resolver of JNI interactions.",
+            "direction": "neutral",
+            "metric_names": [],
+            "evidence_quote": "This paper presents JN-Slice, a flow-sensitive, demand-driven resolver of JNI interactions.",
+            "confidence": 0.95
+          },
+          {
+            "id": "A2",
+            "statement": "JN-Slice propagates a small JNI value domain through C function bodies with strong last-write updates on locals.",
+            "direction": "neutral",
+            "metric_names": [],
+            "evidence_quote": "JN-Slice propagates a small JNI value domain (class names, method and field signatures) through C function bodies with strong (last-write) updates on locals",
+            "confidence": 0.95
+          },
+          {
+            "id": "A3",
+            "statement": "JN-Slice resolves full JNI binding, including dynamic registration via RegisterNatives, which name-matching baselines cannot.",
+            "direction": "improves",
+            "metric_names": [
+              "openjdk8_registernatives_jnslice"
+            ]
+          }
+        ],
+        "metrics": [],
+        "overall_conclusion": null,
+        "sources": {
+          "metrics_path": "results/metrics.json",
+          "paper_tex_path": "paper/main.tex"
+        },
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 1924,
+            "completion_tokens_details": {
+              "reasoning_tokens": 1651
+            },
+            "prompt_tokens": 528,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 2452
+          },
+          "attempt": 0
+        }
+      },
+      "comparison": {
+        "status": "ok",
+        "claim_alignment": [
+          {
+            "claim_id": "C1",
+            "original_claim": "JNIFER is the first interactive cross-language pointer analysis for resolving native code in Java programs.",
+            "agent_evidence": "Agent introduces JN-Slice as a flow-sensitive, demand-driven resolver of JNI interactions; no mention of JNIFER or interactive cross-language pointer analysis.",
+            "label": "incomparable",
+            "explanation": "The agent addresses a related JNI/native-code resolution problem but uses a different system and does not address the claim that JNIFER is the first interactive cross-language pointer analysis."
+          },
+          {
+            "claim_id": "C2",
+            "original_claim": "JNIFER significantly outperforms state-of-the-art analyzers JN-Sum and Native-Scanner in soundness, achieving 91.6%.",
+            "agent_evidence": "Agent claims JN-Slice resolves full JNI binding including dynamic registration via RegisterNatives, which name-matching baselines cannot; no soundness metric or comparison to JN-Sum/Native-Scanner/JNIFER.",
+            "label": "incomparable",
+            "explanation": "The agent makes a capability claim about a different tool and different baseline class, without evidence on the original soundness comparison metric, so the original comparison cannot be assessed."
+          }
+        ],
+        "metric_alignment": [],
+        "summary": {
+          "direction_consistency": "same_direction_incomparable",
+          "consistent_claim_ratio": 0.0,
+          "has_comparable_metrics": false,
+          "sota_improvement_summary": "N/A",
+          "overall_alignment_score": 0.35,
+          "score_rationale": "Both original claims involve JNI/native-code resolution, and the agent works in the same broad direction, but the agent uses JN-Slice rather than JNIFER and provides no directly comparable evidence or metrics for the original claims. This yields low-to-moderate alignment with no confirmed consistency or conflict.",
+          "warnings": [
+            "Original claim C2 appears truncated in the provided extraction and lacks a fully closed claims object.",
+            "Neither extraction contains formal metric entries, so metric-level comparison could not be performed.",
+            "Agent output does not mention JNIFER, JN-Sum, or Native-Scanner explicitly.",
+            "The 91.6% soundness figure is not represented in the agent output."
+          ]
+        },
+        "warnings": [],
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 1712,
+            "completion_tokens_details": {
+              "reasoning_tokens": 1173
+            },
+            "prompt_tokens": 2918,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 4630
+          },
+          "attempt": 0
+        }
+      },
+      "overall_alignment_score": 0.35,
+      "direction_consistency": "same_direction_incomparable"
+    },
+    "experiment_analysis": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-013_cross_language_static_analysis_for_java/workspace/aris_2026-09-11_07-28-41",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-013_cross_language_static_analysis_for_java",
+      "status": "ok",
+      "metrics_path": "results/metrics.json",
+      "experiment_success": {
+        "status": "ok",
+        "success": true,
+        "metrics_path": "results/metrics.json",
+        "absolute_metrics_path": "~/ai_scientist_inputs/ICSE-2025-013_cross_language_static_analysis_for_java/workspace/aris_2026-09-11_07-28-41/results/metrics.json",
+        "checks": {
+          "has_results_file": true,
+          "non_stub": true,
+          "numeric_leaf_count": 255,
+          "min_numeric_ok": true
+        },
+        "manifest_hints": {
+          "status": {
+            "idea": true,
+            "experiment_plan": true,
+            "experiment_log": false,
+            "metrics": true,
+            "review": true,
+            "narrative": true,
+            "paper_tex": true,
+            "paper_pdf": true
+          },
+          "returncode": 1,
+          "benchmark_complete": false,
+          "artifacts_metrics_flag": false
+        },
+        "warnings": [
+          "manifest.returncode=1",
+          "manifest.benchmark_complete=false"
+        ],
+        "suspicious_values": [],
+        "note": "success=true requires substantive results (framework-aware path) with >=3 numeric leaves. Supports metrics.json, results.json, experiment_results.txt, etc. Manifest returncode/benchmark_complete are soft warnings only."
+      },
+      "idea_code_consistency": {
+        "status": "ok",
+        "idea_path": "idea-stage/IDEA_REPORT.md",
+        "code_files": [
+          "project/experiment_runner.py"
+        ],
+        "score_scale": "1-5",
+        "score": 4.0,
+        "label": "strong",
+        "justification": "The runner implements the planned experiment harness: it extracts Java/C artifacts, builds static J→C and RegisterNatives ground truth, runs the JN-Slice resolver plus JN-Sum and Native-Scanner baselines, and outputs metrics. The module names and orchestration align with the stated pilot plan. However, the actual flow-sensitive SSA/slicing implementation is not shown in this snippet, and the C→J oracle appears to use a named-entity existence check rather than a full dual-reviewed manual oracle.",
+        "matched_elements": [
+          "Java/C artifact collection",
+          "Ground-truth construction for J→C and RegisterNatives",
+          "JN-Slice resolver execution",
+          "JN-Sum and Native-Scanner baselines",
+          "Timing and metrics collection"
+        ],
+        "missing_or_divergent_elements": [],
+        "rubric": "Strong alignment: code largely implements the idea's method and evaluation; only minor omissions or declared simplifications.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 1156,
+            "completion_tokens_details": {
+              "reasoning_tokens": 906
+            },
+            "prompt_tokens": 2264,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 3420
+          },
+          "attempt": 0
+        }
+      },
+      "setup_coverage": {
+        "status": "ok",
+        "overall_coverage": 0.8333333333333334,
+        "datasets": {
+          "gold_count": 5,
+          "hit_count": 5,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "OpenJDK 8",
+            "aspectj-1.6.9",
+            "lucene-4.3.0",
+            "tomcat-native-1.2.23",
+            "log4j-1.2.16"
+          ],
+          "misses": []
+        },
+        "baselines": {
+          "gold_count": 2,
+          "hit_count": 1,
+          "miss_count": 1,
+          "coverage": 0.5,
+          "hits": [
+            "Native-Scanner"
+          ],
+          "misses": [
+            "JN-Sum"
+          ]
+        },
+        "metrics": {
+          "gold_count": 3,
+          "hit_count": 3,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "Soundness (Recall)",
+            "Precision",
+            "Efficiency"
+          ],
+          "misses": []
+        },
+        "agent_protocol": {},
+        "gold_protocol": {},
+        "dataset_dirs": [
+          "dataset_candidate"
+        ],
+        "flags": {
+          "weaker_baseline_suspected": true,
+          "weak_protocol": [],
+          "synthetic_data": "unexpected_synthetic_or_local_only_data",
+          "gold_allows_synthetic": false
+        },
+        "gold_sources": [
+          "~/ai_scientist_inputs/ICSE-2025-013_cross_language_static_analysis_for_java/task.md",
+          "~/ai_scientist_inputs/ICSE-2025-013_cross_language_static_analysis_for_java/metadata.json"
+        ],
+        "note": "Coverage is name/alias matching against task.md Datasets/Baselines/Metrics. weak_protocol flags large reductions in trials/timeout vs Constraints. Synthetic corpora are not penalized when the task itself requires synthesis."
+      },
+      "ablation_significance": {
+        "status": "ok",
+        "idea_path": "idea-stage/IDEA_REPORT.md",
+        "significance_signals_rule_based": {
+          "signals": [],
+          "artifact_paths": [],
+          "has_any_significance_artifact": false
+        },
+        "evidence_format": "raw_json_truncated",
+        "study_type": null,
+        "components": [],
+        "ablation_coverage_score": null,
+        "overall_ablation_ok": null,
+        "overall_significance_ok": null,
+        "summary": "",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 308,
+            "completion_tokens_details": {
+              "reasoning_tokens": 306
+            },
+            "prompt_tokens": 2797,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 3105
+          },
+          "attempt": 0
+        }
+      },
+      "results_paper_consistency": {
+        "status": "ok",
+        "paper_tex": "paper/main.tex",
+        "paper_kind": "paper_tex",
+        "results_format": "raw_json",
+        "digest_hint": {
+          "unfavorable_count": 0,
+          "trial_fail_count": 0,
+          "trial_success_count": 0,
+          "metadata": {}
+        },
+        "score_scale": "1-5",
+        "method": "Direct LLM comparison: agent's FINAL results artifact (metrics.json summary) vs paper Results/Discussion/Conclusion. Interim failed runs are NOT evidence unless still present in the final metrics file.",
+        "score": 3.0,
+        "consistency_label": "mixed",
+        "hiding_unfavorable_suspected": false,
+        "hiding_confidence": 0.85,
+        "justification": "The paper's main results for OpenJDK (RegisterNatives recall 42/42, J2C 2424/2424, C-to-Java counts and proxy precision, scanner baseline, and timings) match the final results. However, the flow-sensitivity ablation on X11Color.c is not present in the final experimental results and is treated as a headline conclusion, and the three-orders-of-magnitude claim for Native Scanner candidates is quantitatively overstated relative to the 56 vs 20,149 counts. A few zero/unverified precision cells in non-OpenJDK subjects are also not discussed.",
+        "supported_claims": [
+          "Paper correctly reports OpenJDK 8 2,104 C/C++ files and 9,437 Java files.",
+          "Paper correctly reports the RegisterNatives-bound ground truth disclosure and that JNSlice resolves 42/42 RegisterNatives-bound native methods while JNSum-style resolves 0.",
+          "Paper correctly reports JNSlice Java-to-C plain name-mangling resolves 2,424/2,424 reachable declarations.",
+          "Paper correctly reports C-to-Java JNSlice resolved counts: 56 method calls, 37 object creations, and 204 field accesses, with proxy precision 91.1%, 91.9%, and 99.0%.",
+          "Paper correctly reports the native scanner emits 20,149 candidate method calls.",
+          "Paper's reported wall-clock times match the final results totals (e.g., OpenJDK 263.3s, Tomcat 0.4s, Lucene 289.3s, Log4j 3.5s, AspectJ 52.8s)."
+        ],
+        "unsupported_or_overstated_claims": [
+          "The paper's statement that flow-sensitive JNSlice 'distinguishes the four X11Color.c creation-target constants' and reports 4 object creations and 3 method calls for X11Color.c is not present in the final results, so it cannot be verified against the agent's final experimental data.",
+          "The paper's claim that the Native Scanner baseline emits 'three orders of magnitude more' candidates is numerically overstated: 20,149 vs 56 and 20,149 vs 37 are roughly two orders of magnitude, not three.",
+          "The conclusion states JNSlice 'resolves all RegisterNatives-bound native methods ... in OpenJDK 8 and four real-world applications', but the four applications have 0 RegisterNatives-bound methods; this is not supported as an application-specific result beyond OpenJDK."
+        ],
+        "numeric_mismatches": [
+          {
+            "paper": "Native Scanner emits 20,149 candidate method calls — three orders of magnitude more",
+            "results": "JNSlice resolved method calls: 56; object creations: 37; Native Scanner method calls: 20,149.",
+            "note": "Ratios are about 360x and 544x, i.e., roughly two orders of magnitude. The three-order-of-magnitude comparison is dubious."
+          }
+        ],
+        "unfavorable_in_final_results": [],
+        "unfavorable_acknowledged_in_paper": [],
+        "unfavorable_missing_from_paper": [],
+        "rubric": "Mixed: overall story roughly matches, but some claims are overstated or some negative cells are under-discussed.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 1869,
+            "completion_tokens_details": {
+              "reasoning_tokens": 1166
+            },
+            "prompt_tokens": 964,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 2833
+          },
+          "attempt": 2
+        }
+      },
+      "scores": {
+        "experiment_success": true,
+        "idea_code_score": 4.0,
+        "setup_coverage": 0.8333333333333334,
+        "ablation_coverage_score": null,
+        "overall_ablation_ok": null,
+        "overall_significance_ok": null,
+        "results_paper_score": 3.0,
+        "hiding_unfavorable_suspected": false
+      },
+      "notes": [
+        "Axes 1,2,3,4,6 in experiment_analysis (figures excluded).",
+        "setup_coverage matches task.md Datasets/Baselines/Metrics; weak_protocol flags reductions vs Constraints.",
+        "Axis 6: final normalized results vs paper; interim run logs not used as ground truth."
+      ]
+    },
+    "literature_review": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-013_cross_language_static_analysis_for_java/workspace/aris_2026-09-11_07-28-41",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-013_cross_language_static_analysis_for_java",
+      "status": "ok",
+      "as_of_year": 2026,
+      "agent_ref_count": 10,
+      "sources": [
+        {
+          "path": "~/ai_scientist_inputs/ICSE-2025-013_cross_language_static_analysis_for_java/workspace/aris_2026-09-11_07-28-41/paper/references.bib",
+          "kind": "bib"
+        }
+      ],
+      "collection_audit": {
+        "cited_keys_count": 10,
+        "filter_mode": "paper_cite_keys",
+        "bib_total_before_filter": 10,
+        "bib_after_filter": 10,
+        "uncited_bib_skipped": 0,
+        "cited_keys_sample": [
+          "ilea2007",
+          "jnifer2025",
+          "jnsaf2018",
+          "jnsum2020",
+          "jucify2022",
+          "livshits2015soundiness",
+          "multiql2023",
+          "nativescanner2020",
+          "svf2016",
+          "taie2023"
+        ],
+        "thebibliography_after_filter": 0,
+        "agent_ref_count": 10
+      },
+      "fabrication": {
+        "status": "ok",
+        "scholarly_count": 10,
+        "verified_count": 6,
+        "fake_count": 0,
+        "lookup_failed_count": 4,
+        "non_paper_count": 0,
+        "fabrication_rate": 0.0,
+        "items": [
+          {
+            "title": "Interactive Cross-Language Pointer Analysis for Resolving Native Code in Java Programs",
+            "doi": "10.1109/icse55347.2025.00075",
+            "arxiv_id": "",
+            "year": 2025,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Interactive Cross-Language Pointer Analysis for Resolving Native Code in Java Programs",
+            "resolved_year": 2025,
+            "notes": [],
+            "cache_hit": true,
+            "cite_key": "jnifer2025",
+            "source_kind": "bib"
+          },
+          {
+            "title": "Broadening Horizons of Multilingual Static Analysis: Semantic Summary Extraction from C Code for JNI Program Analysis",
+            "doi": "10.1145/3324884.3416558",
+            "arxiv_id": "",
+            "year": 2020,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Broadening Horizons of Multilingual Static Analysis: Semantic Summary Extraction from C Code for JNI Program Analysis",
+            "resolved_year": 2020,
+            "notes": [],
+            "cache_hit": true,
+            "cite_key": "jnsum2020",
+            "source_kind": "bib"
+          },
+          {
+            "title": "Identifying Java Calls in Native Code via Binary Scanning",
+            "doi": "10.1145/3395363.3397370",
+            "arxiv_id": "",
+            "year": 2020,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated."
+            ],
+            "cache_hit": true,
+            "cite_key": "nativescanner2020",
+            "source_kind": "bib"
+          },
+          {
+            "title": "Tai-e: A Developer-Friendly Static Analysis Framework for Java by Harnessing the Good Designs of Classics",
+            "doi": "10.1145/3597926.3598120",
+            "arxiv_id": "",
+            "year": 2023,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Tai-e: A Developer-Friendly Static Analysis Framework for Java by Harnessing the Good Designs of Classics",
+            "resolved_year": 2023,
+            "notes": [],
+            "cache_hit": true,
+            "cite_key": "taie2023",
+            "source_kind": "bib"
+          },
+          {
+            "title": "SVF: Interprocedural Static Value-Flow Analysis in LLVM",
+            "doi": "",
+            "arxiv_id": "",
+            "year": 2016,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated."
+            ],
+            "cache_hit": true,
+            "cite_key": "svf2016",
+            "source_kind": "bib"
+          },
+          {
+            "title": "In Defense of Soundiness: A Manifesto",
+            "doi": "",
+            "arxiv_id": "",
+            "year": 2015,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated."
+            ],
+            "cache_hit": true,
+            "cite_key": "livshits2015soundiness",
+            "source_kind": "bib"
+          },
+          {
+            "title": "Declarative Static Analysis for Multilingual Programs using CodeQL",
+            "doi": "",
+            "arxiv_id": "",
+            "year": 2023,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated."
+            ],
+            "cache_hit": true,
+            "cite_key": "multiql2023",
+            "source_kind": "bib"
+          },
+          {
+            "title": "ILEA: Inter-Language Analysis Across Java and C",
+            "doi": "10.1145/1297027.1297031",
+            "arxiv_id": "",
+            "year": 2007,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Ilea: inter-language analysis across java and c",
+            "resolved_year": 2007,
+            "notes": [],
+            "cache_hit": true,
+            "cite_key": "ilea2007",
+            "source_kind": "bib"
+          },
+          {
+            "title": "JN-SAF: Precise and Efficient NDK/JNI-Aware Inter-Language Static Analysis Framework for Security Vetting of Android Applications with Native Code",
+            "doi": "10.1145/3243734.3243835",
+            "arxiv_id": "",
+            "year": 2018,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "JN-SAF: Precise and Efficient NDK/JNI-aware Inter-language Static Analysis Framework for Security Vetting of Android Applications with Native Code",
+            "resolved_year": 2018,
+            "notes": [],
+            "cache_hit": true,
+            "cite_key": "jnsaf2018",
+            "source_kind": "bib"
+          },
+          {
+            "title": "JuCify: A Step Towards Android Code Unification for Enhanced Static Analysis",
+            "doi": "10.1145/3510003.3512766",
+            "arxiv_id": "2112.10469",
+            "year": 2022,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "JuCify: A Step Towards Android Code Unification for Enhanced Static Analysis",
+            "resolved_year": 2021,
+            "notes": [],
+            "cache_hit": true,
+            "cite_key": "jucify2022",
+            "source_kind": "bib"
+          }
+        ],
+        "cache_path": "~/ai_scientist_evals/ICSE-2025-013_cross_language_static_analysis_for_java/reference_verify_cache.json",
+        "override_path": "~/ai_scientist_evals/ICSE-2025-013_cross_language_static_analysis_for_java/reference_verify_overrides.json",
+        "note": "fabrication_rate = fake / (verified + fake); lookup_failed (API errors) excluded. GitHub/docs/tool URLs are non_paper and excluded from the rate. To manually correct a false negative, edit reference_verify_overrides.json (key=normalized title / doi / cite_key; value=\"verified\" or a result dict), then re-run."
+      },
+      "coverage": {
+        "status": "ok",
+        "gold_source": "~/ai_scientist_inputs/ICSE-2025-013_cross_language_static_analysis_for_java/mineru_sections.json",
+        "gold_count": 29,
+        "gold_is_original_paper_references": true,
+        "gold_is_openalex_subset": false,
+        "agent_count": 10,
+        "intersection_size": 5,
+        "recall": 0.1724137931034483,
+        "precision": 0.5,
+        "matched_gold_keys": [
+          "fourtounis2020identifying",
+          "livshits2015defense",
+          "mineru_ref_11",
+          "smaragdakis2015pointer",
+          "youn2023declarative"
+        ],
+        "primary_metric": "recall",
+        "note": "Primary metric is recall against the original paper bibliography (titles from mineru_sections.json REFERENCES; related_work.json used only to enrich DOI/year or as fallback if mineru titles are empty). Denominator = |original paper references|. Precision is secondary (agent may cite valid extra papers)."
+      },
+      "recency": {
+        "status": "ok",
+        "dated_count": 10,
+        "unknown_year_count": 0,
+        "year_histogram": {
+          "2007": 1,
+          "2015": 1,
+          "2016": 1,
+          "2018": 1,
+          "2020": 2,
+          "2021": 1,
+          "2023": 2,
+          "2025": 1
+        },
+        "windows": {
+          "3": {
+            "years": 3,
+            "cutoff_year_inclusive": 2023,
+            "recent_count": 3,
+            "recent_ratio": 0.3
+          },
+          "5": {
+            "years": 5,
+            "cutoff_year_inclusive": 2021,
+            "recent_count": 4,
+            "recent_ratio": 0.4
+          }
+        }
+      },
+      "scores": {
+        "fabrication_rate": 0.0,
+        "coverage_recall": 0.1724137931034483,
+        "coverage_precision": 0.5,
+        "recency_ratio_3y": 0.3,
+        "recency_ratio_5y": 0.4
+      }
+    }
+  },
+  "scores": {
+    "completeness": {
+      "complete": true,
+      "overall_score": 0.8589,
+      "required_score": 1.0,
+      "bonus_score": 0.17
+    },
+    "peer_review": {
+      "status": "ok",
+      "optional": false,
+      "overall_score": 5.8,
+      "score_scale": "1-10",
+      "scoring_method": "paperreview_apr"
+    },
+    "idea_generation": {
+      "status": "ok",
+      "overall_score": 3.3,
+      "dimensions": {
+        "novelty": 3.0,
+        "feasibility": 3.0,
+        "clarity": 4.0
+      },
+      "novelty_category": "Incremental",
+      "solution_space_status": "ok"
+    },
+    "alignment": {
+      "status": "ok",
+      "direction_consistency": "same_direction_incomparable",
+      "overall_alignment_score": 0.35
+    },
+    "literature_review": {
+      "fabrication_rate": 0.0,
+      "coverage_recall": 0.1724137931034483,
+      "coverage_precision": 0.5,
+      "recency_ratio_3y": 0.3,
+      "recency_ratio_5y": 0.4
+    },
+    "experiment_analysis": {
+      "experiment_success": true,
+      "idea_code_score": 4.0,
+      "setup_coverage": 0.8333333333333334,
+      "ablation_coverage_score": null,
+      "overall_ablation_ok": null,
+      "overall_significance_ok": null,
+      "results_paper_score": 3.0,
+      "hiding_unfavorable_suspected": false
+    }
+  },
+  "fair_scores": {
+    "applicable_axes": [
+      "completeness",
+      "idea_generation",
+      "peer_review",
+      "alignment",
+      "literature_review",
+      "experiment_analysis"
+    ],
+    "skipped_axes": [],
+    "fair_mean_0_1": 0.6482,
+    "note": "fair_mean_0_1 averages only applicable axes; optional peer review and framework-inapplicable literature are excluded from the denominator."
+  },
+  "evals_root": "~/ai_scientist_evals",
+  "claims_cache": "~/ai_scientist_evals/ICSE-2025-013_cross_language_static_analysis_for_java/original_claims.json",
+  "solution_space_cache": "~/ai_scientist_evals/ICSE-2025-013_cross_language_static_analysis_for_java/solution_space.json"
+}

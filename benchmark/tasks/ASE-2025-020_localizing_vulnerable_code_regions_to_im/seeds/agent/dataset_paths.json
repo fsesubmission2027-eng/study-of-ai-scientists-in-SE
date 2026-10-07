@@ -1,0 +1,69 @@
+{
+  "layout": "losver_vulnerability_datasets",
+  "layout_note": "Use the real LOSVER code plus Devign, Big-Vul, and PrimeVul through dataset_candidate/losver/. Function-level labels are included. Line-level GT for Big-Vul and PrimeVul can be recovered from before/after function pairs. Devign line-level GT is precomputed in devign/*_with_lines.jsonl (field lines_ground_truth) and can be regenerated offline from the bare FFmpeg/qemu clones under dataset_candidate/losver/repos.",
+  "workspace_symlink": "dataset_candidate/losver",
+  "repository": "https://github.com/waroad/losver",
+  "pinned_commit": "a158905cb45b4400f481f18eeb1cb4473ccfccdc",
+  "read_only": true,
+  "copy_note": "The shared package is read-only. Copy source_code/ and selected dataset jsonl files into project/ before editing scripts or writing checkpoints.",
+  "data_roots": {
+    "source_code": "dataset_candidate/losver/source_code",
+    "devign": "dataset_candidate/losver/datasets/devign",
+    "bigvul": "dataset_candidate/losver/datasets/bigvul",
+    "primevul": "dataset_candidate/losver/datasets/primevul",
+    "devign_train": "dataset_candidate/losver/datasets/devign/train.jsonl",
+    "devign_valid": "dataset_candidate/losver/datasets/devign/valid.jsonl",
+    "devign_test": "dataset_candidate/losver/datasets/devign/test.jsonl",
+    "devign_train_with_lines": "dataset_candidate/losver/datasets/devign/train_with_lines.jsonl",
+    "devign_valid_with_lines": "dataset_candidate/losver/datasets/devign/valid_with_lines.jsonl",
+    "devign_test_with_lines": "dataset_candidate/losver/datasets/devign/test_with_lines.jsonl",
+    "devign_line_gt_summary": "dataset_candidate/losver/datasets/devign/line_gt_summary.json",
+    "repos": "dataset_candidate/losver/repos",
+    "repo_ffmpeg": "dataset_candidate/losver/repos/FFmpeg",
+    "repo_qemu": "dataset_candidate/losver/repos/qemu",
+    "bigvul_json": "dataset_candidate/losver/datasets/bigvul/MSR_data_cleaned.json",
+    "bigvul_jsonl": "dataset_candidate/losver/datasets/bigvul/MSR_data_cleaned.jsonl",
+    "primevul_train": "dataset_candidate/losver/datasets/primevul/primevul_train_paired.jsonl",
+    "primevul_valid": "dataset_candidate/losver/datasets/primevul/primevul_valid_paired.jsonl",
+    "primevul_test": "dataset_candidate/losver/datasets/primevul/primevul_test_paired.jsonl",
+    "package_readme": "dataset_candidate/losver/source_code/readme.md"
+  },
+  "instance_layout": {
+    "devign_total": 27318,
+    "devign_splits": {
+      "train": 21854,
+      "valid": 2732,
+      "test": 2732
+    },
+    "bigvul_total": 217007,
+    "bigvul_vulnerable": 10895,
+    "primevul_paired_splits": {
+      "train": 7578,
+      "valid": 960,
+      "test": 870
+    },
+    "note": "Paper further filters Devign to 19,771 (UniXcoder 512-token, at least one modifiable line in window) and Big-Vul to 6,924 / 36 CWE IDs. PrimeVul uses the paired splits without extra filtering. The mounted PrimeVul paired train has 7,578 functions (HuggingFace colin/PrimeVul); the paper text cites 8,708."
+  },
+  "dataset_env": {
+    "LOSVER_HOME": "dataset_candidate/losver",
+    "DEVIGN_HOME": "dataset_candidate/losver/datasets/devign",
+    "BIGVUL_HOME": "dataset_candidate/losver/datasets/bigvul",
+    "PRIMEVUL_HOME": "dataset_candidate/losver/datasets/primevul",
+    "LOSVER_REPOS": "dataset_candidate/losver/repos"
+  },
+  "line_level_ground_truth": {
+    "devign": "Precomputed in devign/*_with_lines.jsonl. Field lines_ground_truth holds 0-based indices of modified lines within func; [-1] means the patched function could not be recovered (see line_gt_status). Filter those out, as the authors' convert_examples_to_features does.",
+    "bigvul": "Derive by diffing func_before against func_after in MSR_data_cleaned.jsonl.",
+    "primevul": "Derive from the paired vulnerable/patched records sharing a commit_id.",
+    "regenerate": "python build_devign_line_gt.py --repos $LOSVER_REPOS (offline; ports source_code/detection/devign_preprocess.py)"
+  },
+  "python_environment": {
+    "python": "/opt/ase-2025-020-venv/bin/python",
+    "activation": "source /opt/ase-2025-020-venv/bin/activate",
+    "note": "Prepared automatically at container startup with CPU torch + transformers; do not recreate a host .venv inside the shared mount. Reinstall a CUDA wheel only if GPU is available."
+  },
+  "not_provided": {
+    "figshare_checkpoints": "Author UniXcoder checkpoints are not mounted; train from scratch or document omission.",
+    "pretrained_plms": "UniXcoder / CodeBERT / CodeT5+ weights are not pre-cached; download with source_code/download_unixcoder.py or transformers."
+  }
+}

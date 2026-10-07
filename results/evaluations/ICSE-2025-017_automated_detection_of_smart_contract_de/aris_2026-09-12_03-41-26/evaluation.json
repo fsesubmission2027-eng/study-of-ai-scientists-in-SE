@@ -1,0 +1,1271 @@
+{
+  "run_dir": "~/ai_scientist_inputs/ICSE-2025-017_automated_detection_of_smart_contract_de/workspace/aris_2026-09-12_03-41-26",
+  "task_dir": "~/ai_scientist_inputs/ICSE-2025-017_automated_detection_of_smart_contract_de",
+  "framework": "aris",
+  "fairness_audit": [
+    {
+      "axis": "completeness",
+      "was_unfair": "Required both paper.tex AND paper.pdf; any tool missing one failed equally.",
+      "fix": "Paper gate: PDF=1.0; TeX-only=0.5; ``complete`` requires PDF."
+    },
+    {
+      "axis": "completeness",
+      "was_unfair": "``results`` counted stub/seed JSON (dataset_candidate/metrics.json).",
+      "fix": "``results`` requires substantive numeric results via results_normalize."
+    },
+    {
+      "axis": "experiment_success",
+      "was_unfair": "Only metrics.json; ignored results.json / experiment_results.txt.",
+      "fix": "Framework-ordered result candidates + normalized loaders."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Penalized tools with no bib; airesearcher has no workspace references.",
+      "fix": "literature_applicable=false → status not_applicable; excluded from fair aggregate."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "related_work.json subset as gold made recall hard to interpret.",
+      "fix": "Coverage gold is original paper REFERENCES from mineru; related_work only enriches metadata/fallback."
+    },
+    {
+      "axis": "peer_review",
+      "was_unfair": "Missing Stanford report looked like evaluation failure.",
+      "fix": "status not_provided; optional axis, never counts as tool failure."
+    },
+    {
+      "axis": "paths/find_results",
+      "was_unfair": "Picked downloads/** and sandbox noise (e.g. airesearcher LLVM tree).",
+      "fix": "Exclude downloads/, seeds/, dataset_candidate/, sandbox junk paths."
+    },
+    {
+      "axis": "paths/framework_noise",
+      "was_unfair": "DeepScientist .deepscientist_npm / runtime / skills templates counted as code/paper/results.",
+      "fix": "FRAMEWORK_NOISE_DIRS+markers; quest worktree + eval_output results; paper md drafts; reject template tex."
+    },
+    {
+      "axis": "paths/paper_tex",
+      "was_unfair": "tiny_scientist / ACL runs store paper under latex/*.tex; evaluator only looked at paper/main.tex.",
+      "fix": "latex/**/*.tex with substantive-body heuristic; find_paper_document uses same rules."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Entire custom.bib (300+ anthology entries) verified when paper had zero \\cite commands.",
+      "fix": "collect_agent_references filters bib to in-text cite keys; skips uncited bulk bib (>40 entries)."
+    },
+    {
+      "axis": "paths/ai_scientist_summaries",
+      "was_unfair": "AI Scientist can persist substantive results and paper-like drafts in *_summary.json logs rather than paper/main.tex or results/**/*.json.",
+      "fix": "Treat draft_summary/research_summary as weak paper documents and summary JSONs as result candidates."
+    },
+    {
+      "axis": "framework/ai_scientist_v2",
+      "was_unfair": "Manifest framework ``ai_scientist_v2`` fell through to profile ``unknown``, skipping AI-Scientist idea/result path priorities.",
+      "fix": "Normalize ``ai_scientist_v2`` (and common aliases) to profile key ``ai_scientist``."
+    },
+    {
+      "axis": "idea_generation",
+      "was_unfair": "plan.md/todos.md weak proxies scored same as structured idea.json.",
+      "fix": "Framework idea_priority tried first; missing idea → not_applicable where appropriate."
+    }
+  ],
+  "generated_at": "2026-10-01T12:15:41",
+  "axes": [
+    "alignment",
+    "completeness",
+    "experiment_analysis",
+    "idea_generation",
+    "literature_review",
+    "peer_review"
+  ],
+  "results": {
+    "completeness": {
+      "framework": "aris",
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-017_automated_detection_of_smart_contract_de/workspace/aris_2026-09-12_03-41-26",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-017_automated_detection_of_smart_contract_de",
+      "complete": true,
+      "required_score": 1.0,
+      "bonus_score": 0.17,
+      "overall_score": 0.8589,
+      "missing": [],
+      "required": {
+        "idea": {
+          "path": "idea-stage/IDEA_REPORT.md",
+          "bytes": 8378,
+          "via": "candidate"
+        },
+        "code": {
+          "count": 5,
+          "files": [
+            {
+              "path": "project/experiment_runner.py",
+              "bytes": 19741,
+              "via": "glob"
+            },
+            {
+              "path": "project/tondefect/__init__.py",
+              "bytes": 332,
+              "via": "glob"
+            },
+            {
+              "path": "project/tondefect/analyzer.py",
+              "bytes": 3500,
+              "via": "glob"
+            },
+            {
+              "path": "project/tondefect/rules.py",
+              "bytes": 19379,
+              "via": "glob"
+            },
+            {
+              "path": "project/tondefect/scanner.py",
+              "bytes": 9745,
+              "via": "glob"
+            }
+          ]
+        },
+        "results": {
+          "substantive": true,
+          "normalized_path": "results/detailed.json",
+          "numeric_leaf_count": 345,
+          "discovered_files": [
+            {
+              "path": "results/metrics.json",
+              "bytes": 2108,
+              "via": "candidate"
+            },
+            {
+              "path": "results/coverage.json",
+              "bytes": 109,
+              "via": "glob"
+            },
+            {
+              "path": "results/detailed.json",
+              "bytes": 11565,
+              "via": "glob"
+            }
+          ],
+          "metrics_keys_sample": [
+            "ablation_no_loop",
+            "ablation_no_oppath",
+            "full"
+          ]
+        },
+        "paper": {
+          "tex": {
+            "path": "paper/main.tex",
+            "bytes": 2719,
+            "via": "candidate"
+          },
+          "pdf": {
+            "path": "paper/main.pdf",
+            "bytes": 238346,
+            "via": "candidate"
+          },
+          "md": null,
+          "json": null,
+          "status": "pdf",
+          "score": 1.0
+        }
+      },
+      "bonus": {
+        "experiment_plan": {
+          "path": "refine-logs/EXPERIMENT_PLAN.md",
+          "bytes": 1333,
+          "via": "candidate"
+        },
+        "experiment_log": {
+          "path": "aris_run.log",
+          "bytes": 490471,
+          "via": "glob"
+        },
+        "review": {
+          "path": "review-stage/AUTO_REVIEW.md",
+          "bytes": 5429,
+          "via": "candidate"
+        },
+        "readme": {
+          "path": "README_BENCHMARK.md",
+          "bytes": 952,
+          "via": "candidate"
+        },
+        "narrative": {
+          "path": "NARRATIVE_REPORT.md",
+          "bytes": 8217,
+          "via": "candidate"
+        },
+        "bib": {
+          "path": "paper/references.bib",
+          "bytes": 1833,
+          "via": "candidate"
+        }
+      },
+      "manifest_status": {
+        "idea": true,
+        "experiment_plan": true,
+        "experiment_log": false,
+        "metrics": true,
+        "review": true,
+        "narrative": true,
+        "paper_tex": true,
+        "paper_pdf": true
+      },
+      "gate_scores": {
+        "idea": 1.0,
+        "code": 1.0,
+        "results": 1.0,
+        "paper": 1.0
+      },
+      "fairness": {
+        "gates": [
+          "idea",
+          "code",
+          "results",
+          "paper"
+        ],
+        "paper_gate_rule": "PDF=1.0; TeX-only/md_only/json_only=0.5; complete requires PDF",
+        "results_gate_rule": "substantive numeric results via framework-aware normalize_results",
+        "audit_ref": "framework_profile.FAIRNESS_AUDIT"
+      },
+      "notes": [
+        "Required: idea, code, substantive results, paper (PDF full; TeX/markdown/JSON draft half).",
+        "Stub/seed metrics (e.g. dataset_candidate/metrics.json) do not satisfy results.",
+        "Framework noise (.deepscientist_npm, skills/templates, runtime) is excluded from code/results/paper.",
+        "Manifest status is informational; disk presence is authoritative."
+      ]
+    },
+    "idea_generation": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-017_automated_detection_of_smart_contract_de/workspace/aris_2026-09-12_03-41-26",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-017_automated_detection_of_smart_contract_de",
+      "idea_path": "~/ai_scientist_inputs/ICSE-2025-017_automated_detection_of_smart_contract_de/workspace/aris_2026-09-12_03-41-26/idea-stage/IDEA_REPORT.md",
+      "status": "ok",
+      "dimensions": {
+        "novelty": {
+          "score": 3.0,
+          "justification": "The idea's core remains static CFG/SSA/data-flow defect detection as in Securify (R57), Defectchecker (R12), and NFT defect detection (R32). The proposal itself says it 're-produces the eight defect families' and 'matches its labels on the shared evaluation set', indicating extension of an existing paradigm. The claimed novelty is 'propagates integer op-code branch constraints (UBM), tracks slice consumption inside loops (LEP/ID)' and 'confidence-ranked triage', which is a meaningful targeted improvement but not a paradigm shift.",
+          "rubric": "Incremental: a meaningful extension or optimization of prior baseline work that fixes a concrete prior limitation, but the core paradigm is unchanged.",
+          "category": "Incremental",
+          "nearest_solution_space_ids": [
+            "R57",
+            "R12",
+            "R32",
+            "R11"
+          ],
+          "differentiation": "Unlike the solution-space entries, which target Ethereum/Solidity or generic smart-contract defects, TONDoctor is a compiler-free FunC/Tact-focused analyzer that adds path-sensitive op-code branch constraints for UBM, loop-aware slice/end_parse tracking for LEP/ID, and confidence-ranked triage. These are concrete TON-specific extensions rather than a new analysis paradigm."
+        },
+        "feasibility": {
+          "score": 3.0,
+          "justification": "The plan claims 'Feasibility: HIGH — evaluation data (1640 contracts + labels) is fully present; detector",
+          "rubric": "Moderate workload (sweet spot): needs nontrivial coding such as scripting existing open-source tools (parsers, CFG extractors) or building a custom graph-processing pipeline; standard research engineering effort."
+        },
+        "clarity": {
+          "score": null,
+          "justification": "",
+          "rubric": null
+        }
+      },
+      "overall_score": 3.0,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "novelty",
+        "feasibility",
+        "clarity"
+      ],
+      "solution_space": {
+        "status": "ok",
+        "paper_count": 59,
+        "entry_count": 59,
+        "cache_hit": true,
+        "source_file": "~/ai_scientist_inputs/ICSE-2025-017_automated_detection_of_smart_contract_de/mineru_sections.json",
+        "stats": {
+          "papers": 59,
+          "extracted": 59,
+          "usable_abstracts": 17,
+          "citation_meta_abstracts": 0,
+          "missing_abstracts": 42,
+          "mineru_titles": 58,
+          "related_work_titles": 18,
+          "abstracts_attached": 17,
+          "related_work_extras": 1,
+          "batches": 4
+        },
+        "error": null
+      },
+      "notes": [
+        "Scores the intermediate idea artifact (not the final paper).",
+        "Dimensions: novelty, feasibility, clarity (each 1-5). Excitement removed.",
+        "Novelty is scored against a Solution Space built from mineru REFERENCES titles (+ related_work.json abstracts when matched)."
+      ],
+      "idea_via": "candidate",
+      "idea_relative": "idea-stage/IDEA_REPORT.md",
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "llm_meta": {
+        "model": "deepseek-v4-pro-0813",
+        "base_url": "https://api-sg.umodelverse.ai/v1",
+        "usage": {
+          "completion_tokens": 1577,
+          "completion_tokens_details": {
+            "reasoning_tokens": 1267
+          },
+          "prompt_tokens": 569,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "total_tokens": 2146
+        },
+        "attempt": 0
+      }
+    },
+    "peer_review": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-017_automated_detection_of_smart_contract_de/workspace/aris_2026-09-12_03-41-26",
+      "review_report": "~/ai_scientist_inputs/ICSE-2025-017_automated_detection_of_smart_contract_de/workspace/aris_2026-09-12_03-41-26/artifacts/peer_review/stanford_apr.md",
+      "paper_pdf": "~/ai_scientist_inputs/ICSE-2025-017_automated_detection_of_smart_contract_de/workspace/aris_2026-09-12_03-41-26/paper/main.pdf",
+      "paper_tex": "~/ai_scientist_inputs/ICSE-2025-017_automated_detection_of_smart_contract_de/workspace/aris_2026-09-12_03-41-26/paper/main.tex",
+      "status": "ok",
+      "dimensions": {},
+      "overall_score": 3.9,
+      "score_scale": "1-10",
+      "dimension_order": [],
+      "notes": [
+        "Scored from paperreview.ai (Stanford APR) native ratings; benchmark 5-dimension LLM rubric skipped.",
+        "Overall scale: 1-10."
+      ],
+      "paperreview": {
+        "status": "fetched",
+        "token_file": "~/ai_scientist_inputs/ICSE-2025-017_automated_detection_of_smart_contract_de/workspace/aris_2026-09-12_03-41-26/artifacts/peer_review/paperreview.token.txt",
+        "json": "~/ai_scientist_inputs/ICSE-2025-017_automated_detection_of_smart_contract_de/workspace/aris_2026-09-12_03-41-26/artifacts/peer_review/stanford_apr.json",
+        "markdown": "~/ai_scientist_inputs/ICSE-2025-017_automated_detection_of_smart_contract_de/workspace/aris_2026-09-12_03-41-26/artifacts/peer_review/stanford_apr.md",
+        "apr_scores": {
+          "scale": "1-10",
+          "overall": 3.9,
+          "dimensions": {}
+        },
+        "pdf_rebuild": null
+      },
+      "scoring_method": "paperreview_apr",
+      "scoring_source": "paperreview_json",
+      "apr_dimensions": {},
+      "summary": "",
+      "red_flags": []
+    },
+    "alignment": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-017_automated_detection_of_smart_contract_de/workspace/aris_2026-09-12_03-41-26",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-017_automated_detection_of_smart_contract_de",
+      "status": "ok",
+      "original": {
+        "paper_title": "Enhancing The Open Network: Definition and Automated Detection of Smart Contract Defects",
+        "selection": {
+          "num_blocks": 7,
+          "total_chars": 31998,
+          "inferred_roles": {
+            "abstract": 1,
+            "introduction": 1,
+            "experiment": 4,
+            "conclusion": 1
+          },
+          "mineru_raw_keys": {
+            "field:abstract": 1,
+            "field:introduction": 1,
+            "field:experiment": 1,
+            "other": 3,
+            "conclusion": 1
+          },
+          "infer_reasons": {
+            "top_level_field": 3,
+            "inherited": 2,
+            "title": 2
+          },
+          "rescued_from_other": 3,
+          "note": "mineru key is unreliable; blocks are selected by title/body/inheritance. rescued_from_other counts sections labeled other but treated as typed roles."
+        },
+        "claims": [
+          {
+            "id": "C1",
+            "statement": "The paper defines eight types of FunC smart contract defects, five specific to TON blockchain, and provides code examples for each.",
+            "direction": "neutral",
+            "metric_names": [],
+            "evidence_quote": "we ultimately define eight types of FunC smart contract defects ... the latter five are specific to TON.",
+            "confidence": 0.98
+          },
+          {
+            "id": "C2",
+            "statement": "TONScanner, a static analysis framework, detects the eight TON smart contract defects by converting FunC source code to SSA-form IR and using data dependency, call graph, taint analysis, and cell construct analyzers.",
+            "direction": "neutral",
+            "metric_names": [],
+            "evidence_quote": "TONScanner integrates the Data Dependency, Call Graph, Taint Analysis, and a customized Cell Construct as analyzers.",
+            "confidence": 0.98
+          },
+          {
+            "id": "C3",
+            "statement": "Across 1,640 collected FunC and Tact contracts, TONScanner reported 14,995 total defects, and 94% of contracts contain at least one defect.",
+            "direction": "neutral",
+            "metric_names": [
+              "defects_total",
+              "contracts_with_defect_percentage"
+            ],
+            "evidence_quote": "we find a total of 14,995 defects ... 1,545 smart contracts contain at least one defect",
+            "confidence": 0.95
+          },
+          {
+            "id": "C4",
+            "statement": "On the FunC dataset, TONScanner achieves 95.09% overall precision, with per-defect precision of 93.06% for UBM, 83.75% for ID, and 97.85% for LEP; other five defects are 100%.",
+            "direction": "improves",
+            "metric_names": [
+              "precision",
+              "overall_precision"
+            ],
+            "evidence_quote": "the overall precision of TONScanner achieves 95.09% on the FunC dataset",
+            "confidence": 0.98
+          },
+          {
+            "id": "C5",
+            "statement": "On the Tact dataset, TONScanner achieves 100% precision on all manually sampled defect types.",
+            "direction": "improves",
+            "metric_names": [
+              "precision"
+            ],
+            "evidence_quote": "For the remaining 5 defects, our tool achieves 100% precision",
+            "confidence": 0.95
+          },
+          {
+            "id": "C6",
+            "statement": "The most prevalent defects differ by language: in FunC contracts UR and LEP are most common; in Tact contracts UR, LEP and ID are prevalent along with UBM.",
+            "direction": "neutral",
+            "metric_names": [],
+            "evidence_quote": "For FunC contracts, UR and LEP are the most common defects. ... For Tact contracts, UR, LEP and ID are prevalent",
+            "confidence": 0.9
+          }
+        ],
+        "metrics": [],
+        "overall_conclusion": null,
+        "comparable_notes": null,
+        "cache_hit": true
+      },
+      "agent": {
+        "status": "ok",
+        "run_dir": "~/ai_scientist_inputs/ICSE-2025-017_automated_detection_of_smart_contract_de/workspace/aris_2026-09-12_03-41-26",
+        "claims": [
+          {
+            "id": "A1",
+            "statement": "TONDoctor is a compiler-free, zero-dependency, single-command-reproducible detector for eight TON smart-contract defect families.",
+            "direction": "neutral",
+            "metric_names": [],
+            "evidence_quote": "We present TONDoctor, a compiler-free, zero-dependency, single-command-reproducible detector for the same eight families, plus a reproducible evaluation harness over the 1640-contract TONScanner corpus.",
+            "confidence": 0.95
+          },
+          {
+            "id": "A2",
+            "statement": "TONDoctor recovers the reference-documented loop-contained LEP false negatives via loop-aware slice analysis, at a modest precision cost.",
+            "direction": "mixed",
+            "metric_names": [
+              "full_func_overall_weighted_precision",
+              "ablation_no_loop_func_overall_weighted_precision",
+              "full_tact_overall_weighted_precision",
+              "ablation_no_loop_tact_overall_weighted_precision"
+            ],
+            "evidence_quote": "TONDoctor recovers the reference-documented loop-contained LEP false negatives via a loop-aware slice analysis, at a modest precision cost that we quantify.",
+            "confidence": 0.95
+          },
+          {
+            "id": "A3",
+            "statement": "The authors deliberately do not claim precision parity with TONScanner because the corpus's only per-instance ground truth is a sparse illustrative audit.",
+            "direction": "neutral",
+            "metric_names": [],
+            "evidence_quote": "We deliberately do not claim precision parity with TONScanner: the corpus's only per-instance ground truth is a sparse illustrative audit, so we report oracle agreement as a bounded lower bound and distinguish raw detector alerts from validated defects.",
+            "confidence": 0.95
+          },
+          {
+            "id": "A4",
+            "statement": "Enabling loop-aware slice analysis reduces overall weighted precision modestly relative to the no-loop ablation, in both FunC and Tact configurations.",
+            "direction": "degrades",
+            "metric_names": [
+              "full_func_overall_weighted_precision",
+              "ablation_no_loop_func_overall_weighted_precision",
+              "full_tact_overall_weighted_precision",
+              "ablation_no_loop_tact_overall_weighted_precision"
+            ],
+            "evidence_quote": "TONDoctor recovers the reference-documented loop-contained LEP false negatives via a loop-aware slice analysis, at a modest precision cost that we quantify.",
+            "confidence": 0.85
+          },
+          {
+            "id": "A5",
+            "statement": "Removing the oppath component produces no observed change in overall weighted precision relative to the full configuration.",
+            "direction": "no_difference",
+            "metric_names": [
+              "full_func_overall_weighted_precision",
+              "ablation_no_oppath_func_overall_weighted_precision",
+              "full_tact_overall_weighted_precision",
+              "ablation_no_oppath_tact_overall_weighted_precision"
+            ],
+            "evidence_quote": "full: func overall_weighted_precision 0.1785, tact overall_weighted_precision 0.4464; ablation_no_oppath: func overall_weighted_precision 0.1785, tact overall_weighted_precision 0.4464.",
+            "confidence": 0.9
+          }
+        ],
+        "metrics": [
+          {
+            "name": "full_func_overall_weighted_precision",
+            "value": 0.1785,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "full FunC",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "full func overall_weighted_precision: 0.1785",
+            "confidence": 1.0
+          },
+          {
+            "name": "full_tact_overall_weighted_precision",
+            "value": 0.4464,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "full Tact",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "full tact overall_weighted_precision: 0.4464",
+            "confidence": 1.0
+          },
+          {
+            "name": "ablation_no_loop_func_overall_weighted_precision",
+            "value": 0.1828,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "ablation_no_loop FunC",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "ablation_no_loop func overall_weighted_precision: 0.1828",
+            "confidence": 1.0
+          },
+          {
+            "name": "ablation_no_loop_tact_overall_weighted_precision",
+            "value": 0.4499,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "ablation_no_loop Tact",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "ablation_no_loop tact overall_weighted_precision: 0.4499",
+            "confidence": 1.0
+          },
+          {
+            "name": "ablation_no_oppath_func_overall_weighted_precision",
+            "value": 0.1785,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "ablation_no_oppath FunC",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "ablation_no_oppath func overall_weighted_precision: 0.1785",
+            "confidence": 1.0
+          },
+          {
+            "name": "ablation_no_oppath_tact_overall_weighted_precision",
+            "value": 0.4464,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "ablation_no_oppath Tact",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "ablation_no_oppath tact overall_weighted_precision: 0.4464",
+            "confidence": 1.0
+          },
+          {
+            "name": "full_func_PrecisionLoss_precision",
+            "value": 0.1579,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "full FunC PrecisionLoss",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "full func PrecisionLoss precision: 0.1579",
+            "confidence": 1.0
+          },
+          {
+            "name": "full_func_PrecisionLoss_recall",
+            "value": 0.6,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "full FunC PrecisionLoss",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "full func PrecisionLoss recall: 0.6",
+            "confidence": 1.0
+          },
+          {
+            "name": "full_tact_PrecisionLoss_precision",
+            "value": 0.0769,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "full Tact PrecisionLoss",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "full tact PrecisionLoss precision: 0.0769",
+            "confidence": 1.0
+          },
+          {
+            "name": "full_tact_PrecisionLoss_recall",
+            "value": 0.5,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "full Tact PrecisionLoss",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "full tact PrecisionLoss recall: 0.5",
+            "confidence": 1.0
+          }
+        ],
+        "overall_conclusion": "TONDoctor is a compiler-free, reproducible detector for eight TON smart-contract defect families that recovers reference-documented loop-contained LEP false negatives via loop-aware slice analysis, at a modest precision cost, while explicitly avoiding precision-parity claims with TONScanner.",
+        "sources": {
+          "metrics_path": "results/detailed.json",
+          "paper_tex_path": "paper/main.tex"
+        },
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 6755,
+            "completion_tokens_details": {
+              "reasoning_tokens": 4802
+            },
+            "prompt_tokens": 2032,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 8787
+          },
+          "attempt": 0
+        }
+      },
+      "comparison": {
+        "status": "ok",
+        "claim_alignment": [
+          {
+            "original_claim_id": "C1",
+            "agent_claim_id": "A1",
+            "label": "partial",
+            "rationale": "Agent explicitly targets the same eight TON smart-contract defect families, but it does not restate their definitions, the five TON-specific types, or provide code examples."
+          },
+          {
+            "original_claim_id": "C2",
+            "agent_claim_id": "A1",
+            "label": "incomparable",
+            "rationale": "The original claim describes TONScanner's SSA-form IR and analyzer architecture, while the agent describes TONDoctor as compiler-free and does not address TONScanner internals."
+          },
+          {
+            "original_claim_id": "C3",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "Agent uses the same 1,640-contract TONScanner corpus but does not report total defects of 14,995 or the 94% affected-contract figure."
+          },
+          {
+            "original_claim_id": "C4",
+            "agent_claim_id": "A3",
+            "label": "incomparable",
+            "rationale": "Original reports TONScanner's manually validated 95.09% overall precision on FunC; the agent reports oracle-based weighted precision and explicitly disclaims precision parity due sparse ground truth."
+          },
+          {
+            "original_claim_id": "C5",
+            "agent_claim_id": "A3",
+            "label": "incomparable",
+            "rationale": "Agent does not evaluate TONScanner's 100% Tact precision; it reports a different weighted-precision measure and disclaims parity with TONScanner."
+          },
+          {
+            "original_claim_id": "C6",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "Agent does not report language-specific defect prevalence rankings for FunC and Tact contracts."
+          }
+        ],
+        "metric_alignment": [
+          {
+            "original_metric": "defects_total",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 14995,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Agent does not report a total defect count over the corpus."
+          },
+          {
+            "original_metric": "contracts_with_defect_percentage",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 94.0,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Agent does not report the percentage of contracts containing at least one defect."
+          },
+          {
+            "original_metric": "overall_precision",
+            "agent_metric": "full_func_overall_weighted_precision",
+            "comparable": false,
+            "original_value": 0.9509,
+            "agent_value": 0.1785,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "TONScanner's manually validated precision and TONDoctor's oracle-based weighted precision use different protocols, so the values are not directly comparable."
+          },
+          {
+            "original_metric": "precision",
+            "agent_metric": "full_func_PrecisionLoss_precision",
+            "comparable": false,
+            "original_value": null,
+            "agent_value": 0.1579,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Original per-defect precision covers UBM, ID, LEP, and other types; the agent reports only a different PrecisionLoss precision under a different validation protocol."
+          }
+        ],
+        "summary": {
+          "direction_consistency": "same_direction_incomparable",
+          "consistent_claim_ratio": 0.0,
+          "has_comparable_metrics": false,
+          "sota_improvement_summary": "N/A",
+          "overall_alignment_score": 0.4,
+          "score_rationale": "The agent works on the same eight TON defect families and corpus, but its detector and precision methodology differ enough that most original TONScanner-specific claims are missing or incomparable rather than directly agreeing or conflicting."
+        },
+        "warnings": [
+          "TONDoctor's lower weighted precision should not be interpreted as a conflict with TONScanner's reported precision because the validation protocols and ground truth differ.",
+          "Agent does not reproduce the original total defect count, affected-contract percentage, or language-specific prevalence claims."
+        ],
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 7903,
+            "completion_tokens_details": {
+              "reasoning_tokens": 6831
+            },
+            "prompt_tokens": 3580,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 11483
+          },
+          "attempt": 0
+        }
+      },
+      "overall_alignment_score": 0.4,
+      "direction_consistency": "same_direction_incomparable"
+    },
+    "experiment_analysis": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-017_automated_detection_of_smart_contract_de/workspace/aris_2026-09-12_03-41-26",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-017_automated_detection_of_smart_contract_de",
+      "status": "ok",
+      "metrics_path": "results/detailed.json",
+      "experiment_success": {
+        "status": "ok",
+        "success": true,
+        "metrics_path": "results/detailed.json",
+        "absolute_metrics_path": "~/ai_scientist_inputs/ICSE-2025-017_automated_detection_of_smart_contract_de/workspace/aris_2026-09-12_03-41-26/results/detailed.json",
+        "checks": {
+          "has_results_file": true,
+          "non_stub": true,
+          "numeric_leaf_count": 345,
+          "min_numeric_ok": true
+        },
+        "manifest_hints": {
+          "status": {
+            "idea": true,
+            "experiment_plan": true,
+            "experiment_log": false,
+            "metrics": true,
+            "review": true,
+            "narrative": true,
+            "paper_tex": true,
+            "paper_pdf": true
+          },
+          "returncode": 1,
+          "benchmark_complete": false,
+          "artifacts_metrics_flag": false
+        },
+        "warnings": [
+          "manifest.returncode=1",
+          "manifest.benchmark_complete=false"
+        ],
+        "suspicious_values": [],
+        "note": "success=true requires substantive results (framework-aware path) with >=3 numeric leaves. Supports metrics.json, results.json, experiment_results.txt, etc. Manifest returncode/benchmark_complete are soft warnings only."
+      },
+      "idea_code_consistency": {
+        "status": "ok",
+        "idea_path": "idea-stage/IDEA_REPORT.md",
+        "code_files": [
+          "project/experiment_runner.py"
+        ],
+        "score_scale": "1-5",
+        "score": 4.0,
+        "label": "strong",
+        "justification": "The experiment runner directly implements the stated evaluation protocol: RQ1 prevalence over 1640 source files, RQ2/RQ3 precision and recall against the manual inline DEFECT oracle, coverage tracking, per-family TP/FP/FN, weighted precision, and ablation detections. It imports the intended tondefect Analyzer and maps canonical defect families. However, the provided excerpt does not show the analyzer internals for path-sensitive op-code constraints, loop-aware slice tracking, confidence-ranked triage, or TONScanner baseline/statistical comparisons, so those critical method components are only assumed from imports and docstrings rather than verified in the visible code.",
+        "matched_elements": [
+          "RQ1 prevalence scan on 1640 compilation units",
+          "RQ2/RQ3 precision/recall against manual `;; DEFECT:` oracle",
+          "Coverage and skipped-file reporting",
+          "Per-family TP/FP/FN and weighted precision outputs",
+          "Ablation detections (full + ablations)",
+          "Canonical eight-defect family mapping"
+        ],
+        "missing_or_divergent_elements": [
+          "Analyzer internals implementing path-sensitive UBM op-code constraints not shown",
+          "Loop-aware LEP/ID slice tracking not shown",
+          "Confidence-ranked triage logic not shown",
+          "TONScanner baseline comparison and McNemar/bootstrap significance not visible",
+          "Only the experiment runner is shown, not the full detector implementation"
+        ],
+        "rubric": "Strong alignment: code largely implements the idea's method and evaluation; only minor omissions or declared simplifications.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 1917,
+            "completion_tokens_details": {
+              "reasoning_tokens": 1590
+            },
+            "prompt_tokens": 3308,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 5225
+          },
+          "attempt": 0
+        }
+      },
+      "setup_coverage": {
+        "status": "ok",
+        "overall_coverage": 1.0,
+        "datasets": {
+          "gold_count": 2,
+          "hit_count": 2,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "TON FunC Smart Contracts",
+            "TON Tact Smart Contracts"
+          ],
+          "misses": []
+        },
+        "baselines": {
+          "gold_count": 0,
+          "hit_count": 0,
+          "miss_count": 0,
+          "coverage": null,
+          "hits": [],
+          "misses": []
+        },
+        "metrics": {
+          "gold_count": 2,
+          "hit_count": 2,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "Precision per defect",
+            "Overall precision"
+          ],
+          "misses": []
+        },
+        "agent_protocol": {},
+        "gold_protocol": {},
+        "dataset_dirs": [
+          "dataset_candidate"
+        ],
+        "flags": {
+          "weaker_baseline_suspected": false,
+          "weak_protocol": [],
+          "synthetic_data": "synthetic_allowed_by_task",
+          "gold_allows_synthetic": true
+        },
+        "gold_sources": [
+          "~/ai_scientist_inputs/ICSE-2025-017_automated_detection_of_smart_contract_de/task.md",
+          "~/ai_scientist_inputs/ICSE-2025-017_automated_detection_of_smart_contract_de/metadata.json"
+        ],
+        "note": "Coverage is name/alias matching against task.md Datasets/Baselines/Metrics. weak_protocol flags large reductions in trials/timeout vs Constraints. Synthetic corpora are not penalized when the task itself requires synthesis."
+      },
+      "ablation_significance": {
+        "status": "ok",
+        "idea_path": "idea-stage/IDEA_REPORT.md",
+        "significance_signals_rule_based": {
+          "signals": [],
+          "artifact_paths": [],
+          "has_any_significance_artifact": false
+        },
+        "evidence_format": "raw_json_truncated",
+        "study_type": "new_method",
+        "components": [
+          {
+            "name": "Op-code branch constraint propagation (-op-path)",
+            "role": "module",
+            "ablation_expected": true,
+            "significance_expected": true,
+            "ablation_status": "present",
+            "ablation_evidence": "Metrics include ablation_no_oppath for FunC and Tact; full and no_oppath are identical, indicating this path may not be active.",
+            "significance_status": "missing",
+            "significance_evidence": "No CIs, p-values, bootstrap, or McNemar artifacts found."
+          },
+          {
+            "name": "Loop-aware slice/end_parse analysis (-loop)",
+            "role": "module",
+            "ablation_expected": true,
+            "significance_expected": true,
+            "ablation_status": "present",
+            "ablation_evidence": "Metrics include ablation_no_loop for FunC and Tact; full differs from no_loop.",
+            "significance_status": "missing",
+            "significance_evidence": "No CIs, p-values, bootstrap, or McNemar artifacts found."
+          },
+          {
+            "name": "Confidence-ranked triage",
+            "role": "module",
+            "ablation_expected": false,
+            "significance_expected": false,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "Not present in final evaluation metrics or paper method excerpt.",
+            "significance_status": "not_required",
+            "significance_evidence": "Not evaluated."
+          },
+          {
+            "name": "TONScanner baseline comparison",
+            "role": "baseline",
+            "ablation_expected": false,
+            "significance_expected": true,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "No direct TONScanner baseline metrics are reported in visible metrics; only TONDoctor own ablations.",
+            "significance_status": "missing",
+            "significance_evidence": "No comparative significance test against TONScanner reported."
+          }
+        ],
+        "ablation_coverage_score": 1.0,
+        "overall_ablation_ok": true,
+        "overall_significance_ok": false,
+        "summary": "The expected module ablations (-op-path and -loop) are present. However, no significance tests, confidence intervals, or bootstrap/McNemar artifacts were found for the full vs ablation comparisons or against the baseline; also full and no_oppath are identical, suggesting the op-path ablation is not informative as run.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 2185,
+            "completion_tokens_details": {
+              "reasoning_tokens": 1622
+            },
+            "prompt_tokens": 2955,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 5140
+          },
+          "attempt": 2
+        }
+      },
+      "results_paper_consistency": {
+        "status": "ok",
+        "paper_tex": "paper/main.tex",
+        "paper_kind": "paper_tex",
+        "results_format": "raw_json",
+        "digest_hint": {
+          "unfavorable_count": 0,
+          "trial_fail_count": 0,
+          "trial_success_count": 0,
+          "metadata": {}
+        },
+        "score_scale": "1-5",
+        "method": "Direct LLM comparison: agent's FINAL results artifact (metrics.json summary) vs paper Results/Discussion/Conclusion. Interim failed runs are NOT evidence unless still present in the final metrics file.",
+        "score": 3.0,
+        "consistency_label": "mixed",
+        "hiding_unfavorable_suspected": true,
+        "hiding_confidence": null,
+        "justification": "",
+        "supported_claims": [
+          "Loop-aware slice analysis recovers loop-contained LEP false negatives: Func LEP recall improves from 0.9396 to 0.989, and Tact full LEP recall reaches 0.9709.",
+          "The precision cost for loop-aware LEP recovery is modest in relative terms, e.g., Func LEP precision 0.1687 vs. no-loop 0.174 and Tact 0.2387 vs. 0.2457.",
+          "The paper avoids claiming precision parity and explicitly says oracle agreement is a bounded lower bound."
+        ],
+        "unsupported_or_overstated_claims": [
+          "No direct numeric false claims are detected in the excerpt; however, the abstract-level claim of modest precision cost omits the full-pipeline and per-family low precision outcomes."
+        ],
+        "numeric_mismatches": [],
+        "unfavorable_in_final_results": [
+          "Func overall weighted precision is low (0.1785), and Tact overall weighted precision is moderate-low (0.4464).",
+          "Func full precision is 0.0 for BadRandomness, GlobalVarRedefined, ImproperFunctionModifier, and UncheckedReturn, with 112, 268, 40, and 397 false positives and no ground-truth instances.",
+          "Func InconsistentData recall is 0.0 (4/4 false negatives).",
+          "Tact UncheckedBouncedMessage recall is 0.1282 (34/39 false negatives).",
+          "Tact PrecisionLoss precision is 0.0769.",
+          "Tact LackEndParse precision is 0.2387."
+        ],
+        "unfavorable_acknowledged_in_paper": [
+          "The paper explicitly disclaims precision parity with the reference detector.",
+          "The paper states that precision cost is quantified and frames oracle agreement as a bounded lower bound.",
+          "The paper distinguishes raw detector alerts from validated defects."
+        ],
+        "unfavorable_missing_from_paper": [],
+        "rubric": "Mixed: overall story roughly matches, but some claims are overstated or some negative cells are under-discussed.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 705,
+            "completion_tokens_details": {
+              "reasoning_tokens": 158
+            },
+            "prompt_tokens": 2764,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 3469
+          },
+          "attempt": 2
+        }
+      },
+      "scores": {
+        "experiment_success": true,
+        "idea_code_score": 4.0,
+        "setup_coverage": 1.0,
+        "ablation_coverage_score": 1.0,
+        "overall_ablation_ok": true,
+        "overall_significance_ok": false,
+        "results_paper_score": 3.0,
+        "hiding_unfavorable_suspected": true
+      },
+      "notes": [
+        "Axes 1,2,3,4,6 in experiment_analysis (figures excluded).",
+        "setup_coverage matches task.md Datasets/Baselines/Metrics; weak_protocol flags reductions vs Constraints.",
+        "Axis 6: final normalized results vs paper; interim run logs not used as ground truth."
+      ]
+    },
+    "literature_review": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-017_automated_detection_of_smart_contract_de/workspace/aris_2026-09-12_03-41-26",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-017_automated_detection_of_smart_contract_de",
+      "status": "ok",
+      "as_of_year": 2026,
+      "agent_ref_count": 5,
+      "sources": [
+        {
+          "path": "~/ai_scientist_inputs/ICSE-2025-017_automated_detection_of_smart_contract_de/workspace/aris_2026-09-12_03-41-26/paper/references.bib",
+          "kind": "bib"
+        }
+      ],
+      "collection_audit": {
+        "cited_keys_count": 0,
+        "filter_mode": "small_uncited_bib",
+        "bib_total_before_filter": 5,
+        "bib_after_filter": 5,
+        "uncited_bib_skipped": 0,
+        "agent_ref_count": 5
+      },
+      "fabrication": {
+        "status": "ok",
+        "scholarly_count": 5,
+        "verified_count": 3,
+        "fake_count": 0,
+        "lookup_failed_count": 2,
+        "non_paper_count": 0,
+        "fabrication_rate": 0.0,
+        "items": [
+          {
+            "title": "Enhancing The Open Network: Definition and Automated Detection of Smart Contract Defects",
+            "doi": "10.1109/icse55347.2025.00119",
+            "arxiv_id": "2501.06459",
+            "year": 2025,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Enhancing the Open Network: Definition and Automated Detection of Smart Contract Defects",
+            "resolved_year": 2025,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "tonscanner",
+            "source_kind": "bib"
+          },
+          {
+            "title": "Slither: A Static Analysis Framework for Smart Contracts",
+            "doi": "",
+            "arxiv_id": "",
+            "year": 2019,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated."
+            ],
+            "cite_key": "slither",
+            "source_kind": "bib"
+          },
+          {
+            "title": "SmartCheck: Static Analysis of Ethereum Smart Contracts",
+            "doi": "",
+            "arxiv_id": "",
+            "year": 2018,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated."
+            ],
+            "cite_key": "smartcheck",
+            "source_kind": "bib"
+          },
+          {
+            "title": "Securify: Practical Security Analysis of Smart Contracts",
+            "doi": "10.1145/3243734.3243780",
+            "arxiv_id": "1806.01143",
+            "year": 2018,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Securify: Practical Security Analysis of Smart Contracts",
+            "resolved_year": 2018,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "securify",
+            "source_kind": "bib"
+          },
+          {
+            "title": "Empirical Study of Move Smart Contract Security: Introducing MoveScan for Enhanced Analysis",
+            "doi": "10.1145/3650212.3680391",
+            "arxiv_id": "",
+            "year": 2024,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Empirical Study of Move Smart Contract Security: Introducing MoveScan for Enhanced Analysis",
+            "resolved_year": 2024,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "movescan",
+            "source_kind": "bib"
+          }
+        ],
+        "cache_path": "~/ai_scientist_evals/ICSE-2025-017_automated_detection_of_smart_contract_de/reference_verify_cache.json",
+        "override_path": "~/ai_scientist_evals/ICSE-2025-017_automated_detection_of_smart_contract_de/reference_verify_overrides.json",
+        "note": "fabrication_rate = fake / (verified + fake); lookup_failed (API errors) excluded. GitHub/docs/tool URLs are non_paper and excluded from the rate. To manually correct a false negative, edit reference_verify_overrides.json (key=normalized title / doi / cite_key; value=\"verified\" or a result dict), then re-run."
+      },
+      "coverage": {
+        "status": "ok",
+        "gold_source": "~/ai_scientist_inputs/ICSE-2025-017_automated_detection_of_smart_contract_de/mineru_sections.json",
+        "gold_count": 58,
+        "gold_is_original_paper_references": true,
+        "gold_is_openalex_subset": false,
+        "agent_count": 5,
+        "intersection_size": 3,
+        "recall": 0.05172413793103448,
+        "precision": 0.6,
+        "matched_gold_keys": [
+          "atzei2017survey",
+          "mineru_ref_4",
+          "tsankov2018securify"
+        ],
+        "primary_metric": "recall",
+        "note": "Primary metric is recall against the original paper bibliography (titles from mineru_sections.json REFERENCES; related_work.json used only to enrich DOI/year or as fallback if mineru titles are empty). Denominator = |original paper references|. Precision is secondary (agent may cite valid extra papers)."
+      },
+      "recency": {
+        "status": "ok",
+        "dated_count": 5,
+        "unknown_year_count": 0,
+        "year_histogram": {
+          "2018": 2,
+          "2019": 1,
+          "2024": 1,
+          "2025": 1
+        },
+        "windows": {
+          "3": {
+            "years": 3,
+            "cutoff_year_inclusive": 2023,
+            "recent_count": 2,
+            "recent_ratio": 0.4
+          },
+          "5": {
+            "years": 5,
+            "cutoff_year_inclusive": 2021,
+            "recent_count": 2,
+            "recent_ratio": 0.4
+          }
+        }
+      },
+      "scores": {
+        "fabrication_rate": 0.0,
+        "coverage_recall": 0.05172413793103448,
+        "coverage_precision": 0.6,
+        "recency_ratio_3y": 0.4,
+        "recency_ratio_5y": 0.4
+      }
+    }
+  },
+  "scores": {
+    "completeness": {
+      "complete": true,
+      "overall_score": 0.8589,
+      "required_score": 1.0,
+      "bonus_score": 0.17
+    },
+    "peer_review": {
+      "status": "ok",
+      "optional": false,
+      "overall_score": 3.9,
+      "score_scale": "1-10",
+      "scoring_method": "paperreview_apr"
+    },
+    "idea_generation": {
+      "status": "ok",
+      "overall_score": 3.0,
+      "dimensions": {
+        "novelty": 3.0,
+        "feasibility": 3.0,
+        "clarity": null
+      },
+      "novelty_category": "Incremental",
+      "solution_space_status": "ok"
+    },
+    "alignment": {
+      "status": "ok",
+      "direction_consistency": "same_direction_incomparable",
+      "overall_alignment_score": 0.4
+    },
+    "literature_review": {
+      "fabrication_rate": 0.0,
+      "coverage_recall": 0.05172413793103448,
+      "coverage_precision": 0.6,
+      "recency_ratio_3y": 0.4,
+      "recency_ratio_5y": 0.4
+    },
+    "experiment_analysis": {
+      "experiment_success": true,
+      "idea_code_score": 4.0,
+      "setup_coverage": 1.0,
+      "ablation_coverage_score": 1.0,
+      "overall_ablation_ok": true,
+      "overall_significance_ok": false,
+      "results_paper_score": 3.0,
+      "hiding_unfavorable_suspected": true
+    }
+  },
+  "fair_scores": {
+    "applicable_axes": [
+      "completeness",
+      "idea_generation",
+      "peer_review",
+      "alignment",
+      "literature_review",
+      "experiment_analysis"
+    ],
+    "skipped_axes": [],
+    "fair_mean_0_1": 0.6207,
+    "note": "fair_mean_0_1 averages only applicable axes; optional peer review and framework-inapplicable literature are excluded from the denominator."
+  },
+  "evals_root": "~/ai_scientist_evals",
+  "claims_cache": "~/ai_scientist_evals/ICSE-2025-017_automated_detection_of_smart_contract_de/original_claims.json",
+  "solution_space_cache": "~/ai_scientist_evals/ICSE-2025-017_automated_detection_of_smart_contract_de/solution_space.json"
+}

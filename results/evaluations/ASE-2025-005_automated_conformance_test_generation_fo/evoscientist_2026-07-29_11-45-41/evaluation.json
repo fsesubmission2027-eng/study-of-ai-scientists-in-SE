@@ -1,0 +1,1411 @@
+{
+  "generated_at": "2026-08-21T07:30:10",
+  "run_dir": "~/ai_scientist_inputs/ASE-2025-005_automated_conformance_test_generation_fo/workspace/evoscientist_2026-07-29_11-45-41",
+  "task_dir": "~/ai_scientist_inputs/ASE-2025-005_automated_conformance_test_generation_fo",
+  "framework": "evoscientist",
+  "fairness_audit": [
+    {
+      "axis": "completeness",
+      "was_unfair": "Required both paper.tex AND paper.pdf; any tool missing one failed equally.",
+      "fix": "Paper gate: PDF=1.0; TeX-only=0.5; ``complete`` requires PDF."
+    },
+    {
+      "axis": "completeness",
+      "was_unfair": "``results`` counted stub/seed JSON (dataset_candidate/metrics.json).",
+      "fix": "``results`` requires substantive numeric results via results_normalize."
+    },
+    {
+      "axis": "experiment_success",
+      "was_unfair": "Only metrics.json; ignored results.json / experiment_results.txt.",
+      "fix": "Framework-ordered result candidates + normalized loaders."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Penalized tools with no bib; airesearcher has no workspace references.",
+      "fix": "literature_applicable=false → status not_applicable; excluded from fair aggregate."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "related_work.json subset as gold made recall hard to interpret.",
+      "fix": "Coverage gold is original paper REFERENCES from mineru; related_work only enriches metadata/fallback."
+    },
+    {
+      "axis": "peer_review",
+      "was_unfair": "Missing Stanford report looked like evaluation failure.",
+      "fix": "status not_provided; optional axis, never counts as tool failure."
+    },
+    {
+      "axis": "paths/find_results",
+      "was_unfair": "Picked downloads/** and sandbox noise (e.g. airesearcher LLVM tree).",
+      "fix": "Exclude downloads/, seeds/, dataset_candidate/, sandbox junk paths."
+    },
+    {
+      "axis": "paths/framework_noise",
+      "was_unfair": "DeepScientist .deepscientist_npm / runtime / skills templates counted as code/paper/results.",
+      "fix": "FRAMEWORK_NOISE_DIRS+markers; quest worktree + eval_output results; paper md drafts; reject template tex."
+    },
+    {
+      "axis": "paths/paper_tex",
+      "was_unfair": "tiny_scientist / ACL runs store paper under latex/*.tex; evaluator only looked at paper/main.tex.",
+      "fix": "latex/**/*.tex with substantive-body heuristic; find_paper_document uses same rules."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Entire custom.bib (300+ anthology entries) verified when paper had zero \\cite commands.",
+      "fix": "collect_agent_references filters bib to in-text cite keys; skips uncited bulk bib (>40 entries)."
+    },
+    {
+      "axis": "paths/ai_scientist_summaries",
+      "was_unfair": "AI Scientist can persist substantive results and paper-like drafts in *_summary.json logs rather than paper/main.tex or results/**/*.json.",
+      "fix": "Treat draft_summary/research_summary as weak paper documents and summary JSONs as result candidates."
+    },
+    {
+      "axis": "idea_generation",
+      "was_unfair": "plan.md/todos.md weak proxies scored same as structured idea.json.",
+      "fix": "Framework idea_priority tried first; missing idea → not_applicable where appropriate."
+    }
+  ],
+  "axes": [
+    "alignment",
+    "completeness",
+    "experiment_analysis",
+    "idea_generation",
+    "literature_review",
+    "peer_review"
+  ],
+  "results": {
+    "completeness": {
+      "framework": "evoscientist",
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-005_automated_conformance_test_generation_fo/workspace/evoscientist_2026-07-29_11-45-41",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-005_automated_conformance_test_generation_fo",
+      "complete": true,
+      "required_score": 1.0,
+      "bonus_score": 0.09,
+      "overall_score": 0.8453,
+      "missing": [],
+      "required": {
+        "idea": {
+          "path": "plan.md",
+          "bytes": 3596,
+          "via": "candidate"
+        },
+        "code": {
+          "count": 1,
+          "files": [
+            {
+              "path": "project/specflow.py",
+              "bytes": 46082,
+              "via": "glob"
+            }
+          ]
+        },
+        "results": {
+          "substantive": true,
+          "normalized_path": "results/metrics.json",
+          "numeric_leaf_count": 27,
+          "discovered_files": [
+            {
+              "path": "results/metrics.json",
+              "bytes": 840,
+              "via": "candidate"
+            }
+          ],
+          "metrics_keys_sample": [
+            "success_rate",
+            "success_ratio",
+            "success_rate_95ci",
+            "validity_rate",
+            "validity_rate_95ci",
+            "mean_time",
+            "mean_time_to_trigger",
+            "time_95ci",
+            "confidence_interval_95",
+            "total_tests",
+            "generated_test_count",
+            "test_validity_rate",
+            "valid_tests",
+            "invalid_tests",
+            "wasmtime_pass",
+            "wasmtime_fail",
+            "generation_failures",
+            "engine_execution_failures",
+            "spec_coverage_pct",
+            "unique_instructions_covered",
+            "total_instructions_cataloged",
+            "generation_throughput_tests_per_sec",
+            "feature_profile",
+            "random_seed",
+            "experiment_timestamp"
+          ]
+        },
+        "paper": {
+          "tex": {
+            "path": "paper/main.tex",
+            "bytes": 21148,
+            "via": "candidate"
+          },
+          "pdf": {
+            "path": "paper/main.pdf",
+            "bytes": 196253,
+            "via": "compiled_promoted"
+          },
+          "md": null,
+          "json": null,
+          "status": "pdf",
+          "score": 1.0
+        }
+      },
+      "bonus": {
+        "experiment_plan": {
+          "path": "plan.md",
+          "bytes": 3596,
+          "via": "candidate"
+        },
+        "experiment_log": {
+          "path": "evoscientist_run.log",
+          "bytes": 50938,
+          "via": "glob"
+        },
+        "review": null,
+        "readme": {
+          "path": "README.md",
+          "bytes": 2319,
+          "via": "candidate"
+        },
+        "narrative": null,
+        "bib": null
+      },
+      "manifest_status": {
+        "research_request": true,
+        "plan": true,
+        "metrics": true,
+        "paper_tex": true,
+        "paper_pdf": false,
+        "readme": true
+      },
+      "gate_scores": {
+        "idea": 1.0,
+        "code": 1.0,
+        "results": 1.0,
+        "paper": 1.0
+      },
+      "fairness": {
+        "gates": [
+          "idea",
+          "code",
+          "results",
+          "paper"
+        ],
+        "paper_gate_rule": "PDF=1.0; TeX-only/md_only/json_only=0.5; complete requires PDF",
+        "results_gate_rule": "substantive numeric results via framework-aware normalize_results",
+        "audit_ref": "framework_profile.FAIRNESS_AUDIT"
+      },
+      "notes": [
+        "Required: idea, code, substantive results, paper (PDF full; TeX/markdown/JSON draft half).",
+        "Stub/seed metrics (e.g. dataset_candidate/metrics.json) do not satisfy results.",
+        "Framework noise (.deepscientist_npm, skills/templates, runtime) is excluded from code/results/paper.",
+        "Manifest status is informational; disk presence is authoritative."
+      ]
+    },
+    "idea_generation": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-005_automated_conformance_test_generation_fo/workspace/evoscientist_2026-07-29_11-45-41",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-005_automated_conformance_test_generation_fo",
+      "idea_path": "~/ai_scientist_inputs/ASE-2025-005_automated_conformance_test_generation_fo/workspace/evoscientist_2026-07-29_11-45-41/plan.md",
+      "status": "ok",
+      "dimensions": {
+        "novelty": {
+          "score": 4.0,
+          "justification": "The idea combines the mechanized specification DSL (SpecTec) with test generation in a non-obvious way: leveraging reduction rules for deterministic oracles. This is not present in any solution space entry; the closest are fuzzers that do not use formal semantics for oracle computation. It is a novel application of a specification tool to testing, yielding a 1+1>2 effect.",
+          "rubric": "Novel Combo / Cross-domain: spots a non-obvious link across areas and cleverly imports an existing method from another domain to address the current pain point, yielding a 1+1>2 effect.",
+          "category": "Novel Combo",
+          "nearest_solution_space_ids": [
+            "R7",
+            "R4",
+            "R5",
+            "R6",
+            "R12"
+          ],
+          "differentiation": "Unlike mutation-based or grammar-based fuzzers (R4, R5, R6, R12) that rely on random generation and differential testing, SpecFlow uses the formal reduction rules from SpecTec (R7) to compute deterministic expected outputs, providing ground-truth assertions. It also introduces feature-profile-aware generation by filtering instructions from the specification, which is not present in existing tools."
+        },
+        "feasibility": {
+          "score": 4.0,
+          "justification": "The plan describes a Python-based framework built on existing open-source tools (wat2wasm, wasm-validate, wasmtime). The implementation is already completed with results reported, indicating low engineering barrier. Core logic can be quickly built on standard libraries; no extreme infrastructure required.",
+          "rubric": "Low barrier / easy to implement: core logic can be quickly built on existing Python libraries or common ML frameworks; only small changes to a standard evaluation flow (e.g. prompt strategy tweaks or swapping metrics)."
+        },
+        "clarity": {
+          "score": 4.0,
+          "justification": "The plan is concrete: it states clear research questions, a three-stage experiment design with specific baselines, metrics, and success criteria. Results are provided with confidence intervals. Limitations are discussed. While it lacks pseudocode or deep architectural detail, it is sufficiently explicit to be turned into a solid proposal.",
+          "rubric": "Clear and concrete: steps are explicit with a reasonable, specific experiment design (baseline tools, metric definitions); can be turned into a solid proposal."
+        }
+      },
+      "overall_score": 4.0,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "novelty",
+        "feasibility",
+        "clarity"
+      ],
+      "solution_space": {
+        "status": "ok",
+        "paper_count": 15,
+        "entry_count": 15,
+        "cache_hit": true,
+        "source_file": "~/ai_scientist_inputs/ASE-2025-005_automated_conformance_test_generation_fo/mineru_sections.json",
+        "stats": {
+          "papers": 15,
+          "extracted": 15,
+          "usable_abstracts": 10,
+          "citation_meta_abstracts": 0,
+          "missing_abstracts": 5,
+          "mineru_titles": 15,
+          "related_work_titles": 12,
+          "abstracts_attached": 10,
+          "related_work_extras": 0,
+          "batches": 1
+        },
+        "error": null
+      },
+      "notes": [
+        "Scores the intermediate idea artifact (not the final paper).",
+        "Dimensions: novelty, feasibility, clarity (each 1-5). Excitement removed.",
+        "Novelty is scored against a Solution Space built from mineru REFERENCES titles (+ related_work.json abstracts when matched)."
+      ],
+      "idea_via": "candidate",
+      "idea_relative": "plan.md",
+      "summary": "SpecFlow generates WebAssembly conformance tests from the SpecTec mechanized specification by using reduction rules to compute deterministic oracles and filtering instructions per engine feature profile. The idea is a novel combination of formal semantics and test generation, achieving high validity (89.8%) and instruction coverage (55%). It is feasible, already implemented, and clearly described with concrete experiments and results.",
+      "strengths": [
+        "Novel use of SpecTec reduction rules for deterministic test oracles, moving beyond random/differential fuzzing.",
+        "Feature-profile-aware generation adapts tests to different engine capabilities.",
+        "Clear experiment design with concrete metrics, baselines, and already-obtained results demonstrating effectiveness."
+      ],
+      "weaknesses": [
+        "Instruction coverage metric may underestimate official suite due to S-expression format; limited coverage of memory and control flow instructions.",
+        "Non-deterministic instructions (e.g., float min/max with NaN) are not handled, requiring separate oracle strategies.",
+        "The 15% execution failure rate indicates incorrect expected results for complex instructions, suggesting oracle limitations."
+      ],
+      "llm_meta": {
+        "model": "deepseek-v4-pro",
+        "base_url": "https://api-sg.umodelverse.ai/v1",
+        "usage": {
+          "completion_tokens": 2508,
+          "completion_tokens_details": {
+            "reasoning_tokens": 1877
+          },
+          "prompt_tokens": 3570,
+          "prompt_tokens_details": null,
+          "reasoning_tokens": 1877,
+          "total_tokens": 6078
+        },
+        "attempt": 0
+      }
+    },
+    "peer_review": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-005_automated_conformance_test_generation_fo/workspace/evoscientist_2026-07-29_11-45-41",
+      "review_report": "~/ai_scientist_inputs/ASE-2025-005_automated_conformance_test_generation_fo/workspace/evoscientist_2026-07-29_11-45-41/artifacts/peer_review/stanford_apr.md",
+      "paper_pdf": "~/ai_scientist_inputs/ASE-2025-005_automated_conformance_test_generation_fo/workspace/evoscientist_2026-07-29_11-45-41/paper/main.pdf",
+      "paper_tex": "~/ai_scientist_inputs/ASE-2025-005_automated_conformance_test_generation_fo/workspace/evoscientist_2026-07-29_11-45-41/paper/main.tex",
+      "status": "ok",
+      "dimensions": {},
+      "overall_score": 4.4,
+      "score_scale": "1-10",
+      "dimension_order": [],
+      "notes": [
+        "Scored from paperreview.ai (Stanford APR) native ratings; benchmark 5-dimension LLM rubric skipped.",
+        "Overall scale: 1-10."
+      ],
+      "paperreview": {
+        "status": "fetched",
+        "token_file": "~/ai_scientist_inputs/ASE-2025-005_automated_conformance_test_generation_fo/workspace/evoscientist_2026-07-29_11-45-41/artifacts/peer_review/paperreview.token.txt",
+        "json": "~/ai_scientist_inputs/ASE-2025-005_automated_conformance_test_generation_fo/workspace/evoscientist_2026-07-29_11-45-41/artifacts/peer_review/stanford_apr.json",
+        "markdown": "~/ai_scientist_inputs/ASE-2025-005_automated_conformance_test_generation_fo/workspace/evoscientist_2026-07-29_11-45-41/artifacts/peer_review/stanford_apr.md",
+        "apr_scores": {
+          "scale": "1-10",
+          "overall": 4.4,
+          "dimensions": {
+            "Claims_Support": 0.0,
+            "Experimental_Soundness": -1.0,
+            "Writing_Clarity": 0.0,
+            "Prior_Work_Context": 0.0,
+            "Question_Importance": 1.0,
+            "Originality": 0.0,
+            "Value_to_Community": 0.0
+          }
+        },
+        "pdf_rebuild": null
+      },
+      "scoring_method": "paperreview_apr",
+      "scoring_source": "paperreview_json",
+      "apr_dimensions": {
+        "Claims_Support": 0.0,
+        "Experimental_Soundness": -1.0,
+        "Writing_Clarity": 0.0,
+        "Prior_Work_Context": 0.0,
+        "Question_Importance": 1.0,
+        "Originality": 0.0,
+        "Value_to_Community": 0.0
+      },
+      "summary": "",
+      "red_flags": []
+    },
+    "alignment": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-005_automated_conformance_test_generation_fo/workspace/evoscientist_2026-07-29_11-45-41",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-005_automated_conformance_test_generation_fo",
+      "status": "ok",
+      "original": {
+        "paper_title": "WEST: Specification-Based Test Generation for WebAssembly",
+        "selection": {
+          "num_blocks": 10,
+          "total_chars": 31998,
+          "inferred_roles": {
+            "abstract": 1,
+            "introduction": 1,
+            "experiment": 6,
+            "method": 1,
+            "conclusion": 1
+          },
+          "mineru_raw_keys": {
+            "field:abstract": 1,
+            "field:introduction": 1,
+            "field:experiment": 1,
+            "other": 6,
+            "conclusion": 1
+          },
+          "infer_reasons": {
+            "top_level_field": 3,
+            "body": 1,
+            "inherited": 1,
+            "body_override": 3,
+            "title": 2
+          },
+          "rescued_from_other": 6,
+          "note": "mineru key is unreliable; blocks are selected by title/body/inheritance. rescued_from_other counts sections labeled other but treated as typed roles."
+        },
+        "claims": [
+          {
+            "id": "C1",
+            "statement": "WEST reveals 16 bugs across four Wasm engine implementations, 11 of which are confirmed and fixed.",
+            "direction": "improves",
+            "metric_names": [
+              "bugs_found"
+            ],
+            "evidence_quote": "it reveals 16 bugs across four Wasm engine implementations, 11 of which are confirmed and fixed.",
+            "confidence": 1.0
+          },
+          {
+            "id": "C2",
+            "statement": "WEST generates valid tests with around 90% validity rate across all engines.",
+            "direction": "neutral",
+            "metric_names": [
+              "valid_rate"
+            ],
+            "evidence_quote": "around 90% of the tests generated by WEST are valid across all engines.",
+            "confidence": 1.0
+          },
+          {
+            "id": "C3",
+            "statement": "WEST achieves specification coverage comparable to the official hand-written test suite, with a coverage ratio exceeding 98% for all engines.",
+            "direction": "no_difference",
+            "metric_names": [
+              "coverage_ratio"
+            ],
+            "evidence_quote": "The ratio exceeds 98% for all engines, demonstrating that the coverage of the automatically generated tests is comparable to that of the official hand-written test suite across all engines.",
+            "confidence": 1.0
+          },
+          {
+            "id": "C4",
+            "statement": "WEST requires minimal manual adaptation to target different versions or subsets of the Wasm specification.",
+            "direction": "improves",
+            "metric_names": [],
+            "evidence_quote": "Our approach requires minimal manual adaptation to target different versions or subsets of the Wasm specification",
+            "confidence": 0.9
+          }
+        ],
+        "metrics": [
+          {
+            "name": "bugs_found",
+            "value": 16,
+            "unit": "count",
+            "higher_is_better": true,
+            "setting": "across four Wasm engines (SpiderMonkey, JavaScriptCore, Wasmtime, Wasmer)",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "we found and reported 16 unique bugs from four of five target engines",
+            "confidence": 1.0
+          },
+          {
+            "name": "valid_rate",
+            "value": 91.16,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "V8 engine, Wasm 3.0 draft specification, 24h generation",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "V8 ... 91.16%",
+            "confidence": 1.0
+          },
+          {
+            "name": "valid_rate",
+            "value": 91.01,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "SpiderMonkey engine, Wasm 3.0 draft specification, 24h generation",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "SpiderMonkey ... 91.01%",
+            "confidence": 1.0
+          },
+          {
+            "name": "valid_rate",
+            "value": 91.8,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "JavaScriptCore engine, Wasm 3.0 except multi-memory and memory64, 24h generation",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "JavaScriptCore ... 91.80%",
+            "confidence": 1.0
+          },
+          {
+            "name": "valid_rate",
+            "value": 90.91,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "Wasmtime engine, Wasm 3.0 except exception handling, 24h generation",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "Wasmtime ... 90.91%",
+            "confidence": 1.0
+          },
+          {
+            "name": "valid_rate",
+            "value": 89.95,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "Wasmer engine, Wasm 2.0, 24h generation",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "Wasmer ... 89.95%",
+            "confidence": 1.0
+          },
+          {
+            "name": "coverage_ratio",
+            "value": 98.76,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "V8 engine, AL instruction coverage vs official test suite",
+            "is_sota_or_best": false,
+            "baseline_name": "official test suite",
+            "baseline_value": 100.0,
+            "evidence_quote": "V8 ... 98.76%",
+            "confidence": 1.0
+          },
+          {
+            "name": "coverage_ratio",
+            "value": 98.19,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "SpiderMonkey engine, AL instruction coverage vs official test suite",
+            "is_sota_or_best": false,
+            "baseline_name": "official test suite",
+            "baseline_value": 100.0,
+            "evidence_quote": "SpiderMonkey ... 98.19%",
+            "confidence": 1.0
+          },
+          {
+            "name": "coverage_ratio",
+            "value": 99.43,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "JavaScriptCore engine, AL instruction coverage vs official test suite",
+            "is_sota_or_best": false,
+            "baseline_name": "official test suite",
+            "baseline_value": 100.0,
+            "evidence_quote": "JavaScriptCore ... 99.43%",
+            "confidence": 1.0
+          },
+          {
+            "name": "coverage_ratio",
+            "value": 98.91,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "Wasmtime engine, AL instruction coverage vs official test suite",
+            "is_sota_or_best": false,
+            "baseline_name": "official test suite",
+            "baseline_value": 100.0,
+            "evidence_quote": "Wasmtime ... 98.91%",
+            "confidence": 1.0
+          },
+          {
+            "name": "coverage_ratio",
+            "value": 99.93,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "Wasmer engine, AL instruction coverage vs official test suite",
+            "is_sota_or_best": false,
+            "baseline_name": "official test suite",
+            "baseline_value": 100.0,
+            "evidence_quote": "Wasmer ... 99.93%",
+            "confidence": 1.0
+          }
+        ],
+        "overall_conclusion": "WEST is a specification-based test generation framework that automatically produces valid and diverse Wasm test cases from mechanized specifications. It revealed 16 bugs (11 fixed) across four engines, achieved ~90% validity, and coverage comparable to the official test suite, demonstrating its effectiveness and adaptability.",
+        "comparable_notes": "Experiments used engine-specific specifications derived from Wasm 3.0 by removing unsupported features. Tests were generated for 24 hours with a 3-second timeout per test. Validity was checked using the official Wasm reference interpreter. Coverage was measured via SpecTec's indirect interpreter at the instruction level. For browser engines, tests were translated to JavaScript harnesses. These details are important for fair comparison.",
+        "cache_hit": true
+      },
+      "agent": {
+        "status": "ok",
+        "run_dir": "~/ai_scientist_inputs/ASE-2025-005_automated_conformance_test_generation_fo/workspace/evoscientist_2026-07-29_11-45-41",
+        "claims": [
+          {
+            "id": "A1",
+            "statement": "SpecFlow achieves 89.8% module validity on 500 generated tests.",
+            "direction": "neutral",
+            "metric_names": [
+              "module_validity_rate"
+            ],
+            "evidence_quote": "SpecFlow achieves 89.8% module validity ... on 500 generated tests",
+            "confidence": 1.0
+          },
+          {
+            "id": "A2",
+            "statement": "SpecFlow achieves 83.0% wasmtime execution pass rate on 500 generated tests.",
+            "direction": "neutral",
+            "metric_names": [
+              "wasmtime_pass_rate"
+            ],
+            "evidence_quote": "83.0% wasmtime execution pass rate on 500 generated tests",
+            "confidence": 1.0
+          },
+          {
+            "id": "A3",
+            "statement": "SpecFlow achieves 55.0% instruction-level coverage of the specification's execution semantics.",
+            "direction": "neutral",
+            "metric_names": [
+              "instruction_coverage_pct"
+            ],
+            "evidence_quote": "55.0% instruction-level coverage of the specification's execution semantics",
+            "confidence": 1.0
+          },
+          {
+            "id": "A4",
+            "statement": "SpecFlow's deterministic oracle covers 128 numeric instructions across i32, i64, f32, and f64 types.",
+            "direction": "neutral",
+            "metric_names": [],
+            "evidence_quote": "A deterministic oracle for computing expected results of Wasm instructions, covering 128 numeric instructions across i32, i64, f32, and f64 types.",
+            "confidence": 1.0
+          },
+          {
+            "id": "A5",
+            "statement": "SpecFlow supports feature-profile-aware generation, adapting to different engine capability subsets.",
+            "direction": "improves",
+            "metric_names": [],
+            "evidence_quote": "The framework supports feature-profile-aware generation, adapting to different engine capability subsets.",
+            "confidence": 0.7
+          },
+          {
+            "id": "A6",
+            "statement": "SpecFlow's approach enables efficient, practical test generation for production Wasm engines.",
+            "direction": "improves",
+            "metric_names": [],
+            "evidence_quote": "Our approach demonstrates that combining a specification-derived instruction catalog with deterministic expected-result computation enables efficient, practical test generation for production Wasm engines.",
+            "confidence": 0.7
+          },
+          {
+            "id": "A7",
+            "statement": "SpecFlow provides an instruction-level coverage metric for comparing generated test suites against the official conformance suite.",
+            "direction": "neutral",
+            "metric_names": [
+              "instruction_coverage_pct"
+            ],
+            "evidence_quote": "An instruction-level coverage metric for comparing generated test suites against the official conformance suite.",
+            "confidence": 1.0
+          }
+        ],
+        "metrics": [
+          {
+            "name": "module_validity_rate",
+            "value": 0.898,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "wasmtime-base",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "SpecFlow achieves 89.8% module validity ... on 500 generated tests",
+            "confidence": 1.0
+          },
+          {
+            "name": "wasmtime_pass_rate",
+            "value": 0.83,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "wasmtime-base",
+            "is_sota_or_best": false,
+            "baseline_name": null
+          }
+        ],
+        "overall_conclusion": null,
+        "sources": {
+          "metrics_path": "results/metrics.json",
+          "paper_tex_path": "paper/main.tex"
+        },
+        "llm_meta": {
+          "model": "deepseek-v4-pro",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 1595,
+            "completion_tokens_details": {
+              "reasoning_tokens": 786
+            },
+            "prompt_tokens": 869,
+            "prompt_tokens_details": null,
+            "reasoning_tokens": 786,
+            "total_tokens": 2464
+          },
+          "attempt": 0
+        }
+      },
+      "comparison": {
+        "status": "ok",
+        "claim_alignment": [
+          {
+            "original_claim_id": "C1",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "Agent does not report any bug discovery or count; no claim about finding bugs."
+          },
+          {
+            "original_claim_id": "C2",
+            "agent_claim_id": "A1",
+            "label": "consistent",
+            "rationale": "Agent reports 89.8% module validity, consistent with original's 'around 90% validity rate'. However, agent tested only on wasmtime, while original tested across multiple engines."
+          },
+          {
+            "original_claim_id": "C3",
+            "agent_claim_id": "A3",
+            "label": "incomparable",
+            "rationale": "Original coverage ratio is relative to official test suite coverage (98%+); agent's 55% is absolute instruction-level coverage of specification semantics, not directly comparable."
+          },
+          {
+            "original_claim_id": "C4",
+            "agent_claim_id": "A5",
+            "label": "consistent",
+            "rationale": "Both claim minimal manual adaptation / feature-profile-aware generation for different specification subsets."
+          }
+        ],
+        "metric_alignment": [
+          {
+            "original_metric": "bugs_found",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 16,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Agent does not report any bug count metric."
+          },
+          {
+            "original_metric": "valid_rate",
+            "agent_metric": "module_validity_rate",
+            "comparable": true,
+            "original_value": 90.91,
+            "agent_value": 89.8,
+            "delta_abs": -1.11,
+            "delta_rel": -1.22,
+            "direction_vs_original_sota": "worse",
+            "rationale": "Compared to original's Wasmtime validity of 90.91%, agent's 89.8% is slightly lower. Original tested multiple engines; agent only wasmtime."
+          },
+          {
+            "original_metric": "coverage_ratio",
+            "agent_metric": "instruction_coverage_pct",
+            "comparable": false,
+            "original_value": 98.76,
+            "agent_value": 55.0,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Original coverage ratio is relative to official suite; agent's 55% is absolute coverage of spec semantics, not comparable."
+          }
+        ],
+        "summary": {
+          "direction_consistency": "mixed",
+          "consistent_claim_ratio": 0.5,
+          "has_comparable_metrics": true,
+          "sota_improvement_summary": "Agent's validity rate on wasmtime is slightly lower than original's (89.8% vs 90.91%), no SOTA improvement claimed.",
+          "overall_alignment_score": 0.65,
+          "score_rationale": "Agent works on same research problem (specification-based Wasm test generation) with consistent validity rate and adaptability claims, but misses bug finding and coverage ratio is incomparable. Partial alignment."
+        },
+        "warnings": [
+          "Agent only evaluated on wasmtime, while original tested across five engines.",
+          "Agent's coverage metric is absolute, not relative to official suite, so coverage comparison is not possible."
+        ],
+        "llm_meta": {
+          "model": "deepseek-v4-pro",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 3080,
+            "completion_tokens_details": {
+              "reasoning_tokens": 2276
+            },
+            "prompt_tokens": 3300,
+            "prompt_tokens_details": null,
+            "reasoning_tokens": 2276,
+            "total_tokens": 6380
+          },
+          "attempt": 0
+        }
+      },
+      "overall_alignment_score": 0.65,
+      "direction_consistency": "mixed"
+    },
+    "experiment_analysis": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-005_automated_conformance_test_generation_fo/workspace/evoscientist_2026-07-29_11-45-41",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-005_automated_conformance_test_generation_fo",
+      "status": "ok",
+      "metrics_path": "results/metrics.json",
+      "experiment_success": {
+        "status": "ok",
+        "success": true,
+        "metrics_path": "results/metrics.json",
+        "absolute_metrics_path": "~/ai_scientist_inputs/ASE-2025-005_automated_conformance_test_generation_fo/workspace/evoscientist_2026-07-29_11-45-41/results/metrics.json",
+        "checks": {
+          "has_results_file": true,
+          "non_stub": true,
+          "numeric_leaf_count": 27,
+          "min_numeric_ok": true
+        },
+        "manifest_hints": {
+          "status": {
+            "research_request": true,
+            "plan": true,
+            "metrics": true,
+            "paper_tex": true,
+            "paper_pdf": false,
+            "readme": true
+          },
+          "returncode": 0,
+          "benchmark_complete": true,
+          "artifacts_metrics_flag": false
+        },
+        "warnings": [],
+        "suspicious_values": [],
+        "note": "success=true requires substantive results (framework-aware path) with >=3 numeric leaves. Supports metrics.json, results.json, experiment_results.txt, etc. Manifest returncode/benchmark_complete are soft warnings only."
+      },
+      "idea_code_consistency": {
+        "status": "ok",
+        "idea_path": "plan.md",
+        "code_files": [
+          "project/specflow.py"
+        ],
+        "score_scale": "1-5",
+        "score": 2.0,
+        "label": "weak",
+        "justification": "The code implements a spec parser and a hardcoded instruction catalog, which are supporting components of the SpecFlow idea. However, the core innovations—reduction-rule-guided test generation, deterministic oracle, feature-profile-aware generation, and coverage tracking—are not present in the provided snippet. The experiment entrypoints and evaluation protocol are missing, making the code only superficially aligned with the research idea.",
+        "matched_elements": [
+          "Parsing of reduction rules from .watsup files",
+          "Instruction catalog definition (partial)"
+        ],
+        "missing_or_divergent_elements": [
+          "Test generation logic using reduction rules",
+          "Deterministic oracle computation",
+          "Feature-profile-aware filtering",
+          "Instruction-catalog coverage tracking",
+          "Experiment entrypoints (generation, validation, execution)",
+          "Evaluation protocol (validity, pass rate, coverage measurement)"
+        ],
+        "rubric": "Weak alignment: only superficial overlap; core hypothesis, method, or evaluation in the idea is missing or replaced.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 909,
+            "completion_tokens_details": {
+              "reasoning_tokens": 703
+            },
+            "prompt_tokens": 2050,
+            "prompt_tokens_details": null,
+            "reasoning_tokens": 703,
+            "total_tokens": 2959
+          },
+          "attempt": 0
+        }
+      },
+      "setup_coverage": {
+        "status": "ok",
+        "overall_coverage": 1.0,
+        "datasets": {
+          "gold_count": 2,
+          "hit_count": 2,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "Mechanized Wasm Specification (SpecTec format)",
+            "Engine-specific specification subsets"
+          ],
+          "misses": []
+        },
+        "baselines": {
+          "gold_count": 1,
+          "hit_count": 1,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "Official Wasm conformance test suite"
+          ],
+          "misses": []
+        },
+        "metrics": {
+          "gold_count": 3,
+          "hit_count": 3,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "Bugs found",
+            "Test validity rate",
+            "Specification coverage"
+          ],
+          "misses": []
+        },
+        "agent_protocol": {},
+        "gold_protocol": {
+          "timeout_hours": 24
+        },
+        "dataset_dirs": [
+          "dataset_candidate"
+        ],
+        "flags": {
+          "weaker_baseline_suspected": false,
+          "weak_protocol": [],
+          "synthetic_data": "synthetic_allowed_by_task",
+          "gold_allows_synthetic": true
+        },
+        "gold_sources": [
+          "~/ai_scientist_inputs/ASE-2025-005_automated_conformance_test_generation_fo/task.md",
+          "~/ai_scientist_inputs/ASE-2025-005_automated_conformance_test_generation_fo/metadata.json"
+        ],
+        "note": "Coverage is name/alias matching against task.md Datasets/Baselines/Metrics. weak_protocol flags large reductions in trials/timeout vs Constraints. Synthetic corpora are not penalized when the task itself requires synthesis."
+      },
+      "ablation_significance": {
+        "status": "ok",
+        "idea_path": "plan.md",
+        "significance_signals_rule_based": {
+          "signals": [
+            "metrics_contains:confidence_interval"
+          ],
+          "artifact_paths": [],
+          "has_any_significance_artifact": true
+        },
+        "evidence_format": "raw_json",
+        "study_type": "new_method",
+        "components": [
+          {
+            "name": "Deterministic Oracle",
+            "role": "module",
+            "ablation_expected": true,
+            "significance_expected": true,
+            "ablation_status": "missing",
+            "ablation_evidence": "No experiment compares SpecFlow with vs. without the deterministic oracle; only the full system is evaluated.",
+            "significance_status": "missing",
+            "significance_evidence": "No ablation comparison performed, so no significance test for this component."
+          },
+          {
+            "name": "Feature-Profile-Aware Generation",
+            "role": "module",
+            "ablation_expected": true,
+            "significance_expected": true,
+            "ablation_status": "missing",
+            "ablation_evidence": "No experiment compares generation with vs. without feature-profile filtering; only the wasmtime-base profile is used.",
+            "significance_status": "missing",
+            "significance_evidence": "No ablation comparison performed, so no significance test for this component."
+          },
+          {
+            "name": "Instruction-Catalog Coverage Tracking",
+            "role": "instrumentation",
+            "ablation_expected": false,
+            "significance_expected": false,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "Coverage tracking is an evaluation metric, not a generation component; removing it would not affect test generation.",
+            "significance_status": "not_required",
+            "significance_evidence": "Not applicable."
+          }
+        ],
+        "ablation_coverage_score": 0.0,
+        "overall_ablation_ok": false,
+        "overall_significance_ok": true,
+        "summary": "SpecFlow introduces three innovations but the experiment only evaluates the full system without ablating the deterministic oracle or feature-profile-aware generation. No comparison with a random baseline is performed in this run. Significance is adequately reported via confidence intervals for the main results.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 2004,
+            "completion_tokens_details": {
+              "reasoning_tokens": 1574
+            },
+            "prompt_tokens": 3281,
+            "prompt_tokens_details": null,
+            "reasoning_tokens": 1574,
+            "total_tokens": 5285
+          },
+          "attempt": 0
+        }
+      },
+      "results_paper_consistency": {
+        "status": "ok",
+        "paper_tex": "paper/main.tex",
+        "paper_kind": "paper_tex",
+        "results_format": "raw_json",
+        "digest_hint": {
+          "unfavorable_count": 0,
+          "trial_fail_count": 0,
+          "trial_success_count": 0,
+          "metadata": {}
+        },
+        "score_scale": "1-5",
+        "method": "Direct LLM comparison: agent's FINAL results artifact (metrics.json summary) vs paper Results/Discussion/Conclusion. Interim failed runs are NOT evidence unless still present in the final metrics file.",
+        "score": 4.0,
+        "consistency_label": "mostly",
+        "hiding_unfavorable_suspected": false,
+        "hiding_confidence": 0.1,
+        "justification": "The paper's reported numbers for total tests, validity, pass/fail counts, and coverage percentages match the final results exactly, except for a minor discrepancy in the pass rate 95% confidence interval (paper: [79.6%, 86.4%] vs. results: [79.8%, 86.2%]). The paper acknowledges the 17% failure rate and attributes it to oracle precision issues, and it transparently reports zero coverage for several instruction categories. Overall, the narrative aligns with the metrics.",
+        "supported_claims": [
+          "Generated 500 test cases",
+          "Module valid: 449 (89.8%)",
+          "Module invalid: 51 (10.2%)",
+          "wasmtime pass: 415 (83.0%)",
+          "wasmtime fail: 85 (17.0%)",
+          "Validity rate 95% CI: [87.0%, 92.4%]",
+          "Instruction coverage: 104/189 (55.0%)",
+          "Numeric coverage: 98/128 (76.6%)",
+          "Parametric coverage: 2/2 (100%)",
+          "Memory coverage: 4/27 (14.8%)",
+          "Control, Variable, Reference, SIMD coverage: 0%",
+          "Generation throughput: ~17,000 tests/sec",
+          "17% failure rate due to oracle precision issues",
+          "Limitations: bounded instruction coverage, oracle precision, single-engine, no negative tests"
+        ],
+        "unsupported_or_overstated_claims": [
+          "Pass rate 95% CI reported as [79.6%, 86.4%] differs slightly from final results [79.8%, 86.2%]"
+        ],
+        "numeric_mismatches": [
+          {
+            "paper": "Pass rate 95% CI: [79.6%, 86.4%]",
+            "results": "[0.798, 0.862] i.e., [79.8%, 86.2%]",
+            "note": "Minor discrepancy likely due to rounding or CI calculation method; lower bound off by 0.2%, upper bound off by 0.2%."
+          }
+        ],
+        "unfavorable_in_final_results": [
+          "17% wasmtime failure rate",
+          "0% coverage for Control, Variable, Reference, SIMD instructions",
+          "14.8% memory instruction coverage"
+        ],
+        "unfavorable_acknowledged_in_paper": [
+          "17% failure rate discussed and attributed to oracle precision",
+          "0% coverage categories explicitly listed as limitations",
+          "Memory coverage noted as low due to setup requirements"
+        ],
+        "unfavorable_missing_from_paper": [],
+        "rubric": "Mostly consistent: reported conclusions track the metrics; negative/failed settings are acknowledged with only minor gaps.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 2569,
+            "completion_tokens_details": {
+              "reasoning_tokens": 1932
+            },
+            "prompt_tokens": 4543,
+            "prompt_tokens_details": null,
+            "reasoning_tokens": 1932,
+            "total_tokens": 7112
+          },
+          "attempt": 0
+        }
+      },
+      "scores": {
+        "experiment_success": true,
+        "idea_code_score": 2.0,
+        "setup_coverage": 1.0,
+        "ablation_coverage_score": 0.0,
+        "overall_ablation_ok": false,
+        "overall_significance_ok": true,
+        "results_paper_score": 4.0,
+        "hiding_unfavorable_suspected": false
+      },
+      "notes": [
+        "Axes 1,2,3,4,6 in experiment_analysis (figures excluded).",
+        "setup_coverage matches task.md Datasets/Baselines/Metrics; weak_protocol flags reductions vs Constraints.",
+        "Axis 6: final normalized results vs paper; interim run logs not used as ground truth."
+      ]
+    },
+    "literature_review": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-005_automated_conformance_test_generation_fo/workspace/evoscientist_2026-07-29_11-45-41",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-005_automated_conformance_test_generation_fo",
+      "status": "ok",
+      "as_of_year": 2026,
+      "agent_ref_count": 13,
+      "sources": [
+        {
+          "path": "~/ai_scientist_inputs/ASE-2025-005_automated_conformance_test_generation_fo/workspace/evoscientist_2026-07-29_11-45-41/paper/main.tex",
+          "kind": "thebibliography"
+        }
+      ],
+      "collection_audit": {
+        "cited_keys_count": 13,
+        "filter_mode": "paper_cite_keys",
+        "bib_total_before_filter": 0,
+        "bib_after_filter": 0,
+        "uncited_bib_skipped": 0,
+        "cited_keys_sample": [
+          "lwdiff-icse2025",
+          "p4-dangling-2026",
+          "rgfuzz-sp2025",
+          "spectec-arxiv2023",
+          "spectec-oopsla2024",
+          "sql-conformance-vldb2024",
+          "wadiff-ase2023",
+          "waltzz-usenix2025",
+          "wasm-smith",
+          "wasm-spec",
+          "wasm-spec-repo",
+          "wasmaker-issta2024",
+          "west-ase2025"
+        ],
+        "thebibliography_after_filter": 13,
+        "agent_ref_count": 13
+      },
+      "fabrication": {
+        "status": "ok",
+        "scholarly_count": 10,
+        "verified_count": 6,
+        "fake_count": 0,
+        "lookup_failed_count": 4,
+        "non_paper_count": 3,
+        "fabrication_rate": 0.0,
+        "items": [
+          {
+            "title": "WebAssembly Specification, Release 2.0",
+            "doi": "",
+            "arxiv_id": "",
+            "year": 2022,
+            "status": "non_paper",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "Treated as tool/docs/repo resource, not a scholarly paper."
+            ],
+            "cite_key": "wasm-spec",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "WebAssembly/spec: WebAssembly Specification and Reference Test Suite",
+            "doi": "",
+            "arxiv_id": "",
+            "year": null,
+            "status": "non_paper",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "Treated as tool/docs/repo resource, not a scholarly paper."
+            ],
+            "cite_key": "wasm-spec-repo",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "wasm-smith: WebAssembly Fuzzer",
+            "doi": "",
+            "arxiv_id": "",
+            "year": null,
+            "status": "non_paper",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "Treated as tool/docs/repo resource, not a scholarly paper."
+            ],
+            "cite_key": "wasm-smith",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "Bringing the WebAssembly Standard up to Speed with SpecTec",
+            "doi": "10.1145/3656440",
+            "arxiv_id": "",
+            "year": 2024,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Bringing the WebAssembly Standard up to Speed with SpecTec",
+            "resolved_year": 2024,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "spectec-oopsla2024",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "Wasm SpecTec: Engineering a Formal Language Standard",
+            "doi": "",
+            "arxiv_id": "2311.07223",
+            "year": 2023,
+            "status": "verified",
+            "matched_via": "s2_arxiv",
+            "resolved_title": "Wasm SpecTec: Engineering a Formal Language Standard",
+            "resolved_year": 2023,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "spectec-arxiv2023",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "WEST: Specification-Based Test Generation for WebAssembly",
+            "doi": "10.1109/ase63991.2025.00119",
+            "arxiv_id": "",
+            "year": 2025,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "WEST: Specification-Based Test Generation for WebAssembly",
+            "resolved_year": 2025,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "west-ase2025",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "WADIFF: A Differential Testing Framework for WebAssembly Runtimes",
+            "doi": "10.1109/ase56229.2023.00188",
+            "arxiv_id": "",
+            "year": 2023,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "WADIFF: A Differential Testing Framework for WebAssembly Runtimes",
+            "resolved_year": 2023,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "wadiff-ase2023",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "WASMaker: Differential Testing of WebAssembly Runtimes via Semantic-Aware Binary Generation",
+            "doi": "10.1145/3650212.3680358",
+            "arxiv_id": "",
+            "year": 2024,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "WASMaker: Differential Testing of WebAssembly Runtimes via Semantic-Aware Binary Generation",
+            "resolved_year": 2024,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "wasmaker-issta2024",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "LWDIFF: an LLM-Assisted Differential Testing Framework for WebAssembly Runtimes",
+            "doi": "",
+            "arxiv_id": "",
+            "year": 2025,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated."
+            ],
+            "cite_key": "lwdiff-icse2025",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "RGFuzz: Rule-Guided Fuzzer for WebAssembly Runtimes",
+            "doi": "",
+            "arxiv_id": "",
+            "year": 2025,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated.",
+              "Saw 1 conclusive miss(es) mixed with 1 API error(s)."
+            ],
+            "cite_key": "rgfuzz-sp2025",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "Waltzz: WebAssembly Runtime Fuzzing with Stack-Invariant Transformation",
+            "doi": "",
+            "arxiv_id": "",
+            "year": 2025,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated.",
+              "Saw 1 conclusive miss(es) mixed with 1 API error(s)."
+            ],
+            "cite_key": "waltzz-usenix2025",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "Semantic Conformance Testing of Relational DBMS",
+            "doi": "",
+            "arxiv_id": "",
+            "year": 2024,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated.",
+              "Saw 1 conclusive miss(es) mixed with 1 API error(s)."
+            ],
+            "cite_key": "sql-conformance-vldb2024",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "Failing with Purpose: Dangling Coverage-Guided Negative Test Generation from a Mechanized P4 Type System",
+            "doi": "10.1145/3797109",
+            "arxiv_id": "",
+            "year": 2026,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Failing with Purpose: Dangling Coverage-Guided Negative Test Generation from a Mechanized P4 Type System",
+            "resolved_year": 2026,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "p4-dangling-2026",
+            "source_kind": "thebibliography"
+          }
+        ],
+        "cache_path": "~/ai_scientist_evals/ASE-2025-005_automated_conformance_test_generation_fo/reference_verify_cache.json",
+        "override_path": "~/ai_scientist_evals/ASE-2025-005_automated_conformance_test_generation_fo/reference_verify_overrides.json",
+        "note": "fabrication_rate = fake / (verified + fake); lookup_failed (API errors) excluded. GitHub/docs/tool URLs are non_paper and excluded from the rate. To manually correct a false negative, edit reference_verify_overrides.json (key=normalized title / doi / cite_key; value=\"verified\" or a result dict), then re-run."
+      },
+      "coverage": {
+        "status": "ok",
+        "gold_source": "~/ai_scientist_inputs/ASE-2025-005_automated_conformance_test_generation_fo/mineru_sections.json",
+        "gold_count": 15,
+        "gold_is_original_paper_references": true,
+        "gold_is_openalex_subset": false,
+        "agent_count": 13,
+        "intersection_size": 2,
+        "recall": 0.13333333333333333,
+        "precision": 0.15384615384615385,
+        "matched_gold_keys": [
+          "cao2024wasmaker",
+          "youn2024bringing"
+        ],
+        "primary_metric": "recall",
+        "note": "Primary metric is recall against the original paper bibliography (titles from mineru_sections.json REFERENCES; related_work.json used only to enrich DOI/year or as fallback if mineru titles are empty). Denominator = |original paper references|. Precision is secondary (agent may cite valid extra papers)."
+      },
+      "recency": {
+        "status": "ok",
+        "dated_count": 10,
+        "unknown_year_count": 0,
+        "year_histogram": {
+          "2023": 2,
+          "2024": 3,
+          "2025": 4,
+          "2026": 1
+        },
+        "windows": {
+          "3": {
+            "years": 3,
+            "cutoff_year_inclusive": 2023,
+            "recent_count": 10,
+            "recent_ratio": 1.0
+          },
+          "5": {
+            "years": 5,
+            "cutoff_year_inclusive": 2021,
+            "recent_count": 10,
+            "recent_ratio": 1.0
+          }
+        }
+      },
+      "scores": {
+        "fabrication_rate": 0.0,
+        "coverage_recall": 0.13333333333333333,
+        "coverage_precision": 0.15384615384615385,
+        "recency_ratio_3y": 1.0,
+        "recency_ratio_5y": 1.0
+      }
+    }
+  },
+  "scores": {
+    "completeness": {
+      "complete": true,
+      "overall_score": 0.8453,
+      "required_score": 1.0,
+      "bonus_score": 0.09
+    },
+    "peer_review": {
+      "status": "ok",
+      "optional": false,
+      "overall_score": 4.4,
+      "score_scale": "1-10",
+      "scoring_method": "paperreview_apr"
+    },
+    "idea_generation": {
+      "status": "ok",
+      "overall_score": 4.0,
+      "dimensions": {
+        "novelty": 4.0,
+        "feasibility": 4.0,
+        "clarity": 4.0
+      },
+      "novelty_category": "Novel Combo",
+      "solution_space_status": "ok"
+    },
+    "alignment": {
+      "status": "ok",
+      "direction_consistency": "mixed",
+      "overall_alignment_score": 0.65
+    },
+    "literature_review": {
+      "fabrication_rate": 0.0,
+      "coverage_recall": 0.13333333333333333,
+      "coverage_precision": 0.15384615384615385,
+      "recency_ratio_3y": 1.0,
+      "recency_ratio_5y": 1.0
+    },
+    "experiment_analysis": {
+      "experiment_success": true,
+      "idea_code_score": 2.0,
+      "setup_coverage": 1.0,
+      "ablation_coverage_score": 0.0,
+      "overall_ablation_ok": false,
+      "overall_significance_ok": true,
+      "results_paper_score": 4.0,
+      "hiding_unfavorable_suspected": false
+    }
+  },
+  "fair_scores": {
+    "applicable_axes": [
+      "completeness",
+      "idea_generation",
+      "peer_review",
+      "alignment",
+      "literature_review",
+      "experiment_analysis"
+    ],
+    "skipped_axes": [],
+    "fair_mean_0_1": 0.7335,
+    "note": "fair_mean_0_1 averages only applicable axes; optional peer review and framework-inapplicable literature are excluded from the denominator."
+  },
+  "evals_root": "~/ai_scientist_evals",
+  "claims_cache": "~/ai_scientist_evals/ASE-2025-005_automated_conformance_test_generation_fo/original_claims.json",
+  "solution_space_cache": "~/ai_scientist_evals/ASE-2025-005_automated_conformance_test_generation_fo/solution_space.json"
+}

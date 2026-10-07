@@ -1,0 +1,793 @@
+{
+  "generated_at": "2026-08-24T11:05:59",
+  "run_dir": "~/ai_scientist_inputs/ASE-2025-020_localizing_vulnerable_code_regions_to_im/workspace/researchclaw_2026-08-14_10-54-09",
+  "task_dir": "~/ai_scientist_inputs/ASE-2025-020_localizing_vulnerable_code_regions_to_im",
+  "framework": "researchclaw",
+  "fairness_audit": [
+    {
+      "axis": "completeness",
+      "was_unfair": "Required both paper.tex AND paper.pdf; any tool missing one failed equally.",
+      "fix": "Paper gate: PDF=1.0; TeX-only=0.5; ``complete`` requires PDF."
+    },
+    {
+      "axis": "completeness",
+      "was_unfair": "``results`` counted stub/seed JSON (dataset_candidate/metrics.json).",
+      "fix": "``results`` requires substantive numeric results via results_normalize."
+    },
+    {
+      "axis": "experiment_success",
+      "was_unfair": "Only metrics.json; ignored results.json / experiment_results.txt.",
+      "fix": "Framework-ordered result candidates + normalized loaders."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Penalized tools with no bib; airesearcher has no workspace references.",
+      "fix": "literature_applicable=false → status not_applicable; excluded from fair aggregate."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "related_work.json subset as gold made recall hard to interpret.",
+      "fix": "Coverage gold is original paper REFERENCES from mineru; related_work only enriches metadata/fallback."
+    },
+    {
+      "axis": "peer_review",
+      "was_unfair": "Missing Stanford report looked like evaluation failure.",
+      "fix": "status not_provided; optional axis, never counts as tool failure."
+    },
+    {
+      "axis": "paths/find_results",
+      "was_unfair": "Picked downloads/** and sandbox noise (e.g. airesearcher LLVM tree).",
+      "fix": "Exclude downloads/, seeds/, dataset_candidate/, sandbox junk paths."
+    },
+    {
+      "axis": "paths/framework_noise",
+      "was_unfair": "DeepScientist .deepscientist_npm / runtime / skills templates counted as code/paper/results.",
+      "fix": "FRAMEWORK_NOISE_DIRS+markers; quest worktree + eval_output results; paper md drafts; reject template tex."
+    },
+    {
+      "axis": "paths/paper_tex",
+      "was_unfair": "tiny_scientist / ACL runs store paper under latex/*.tex; evaluator only looked at paper/main.tex.",
+      "fix": "latex/**/*.tex with substantive-body heuristic; find_paper_document uses same rules."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Entire custom.bib (300+ anthology entries) verified when paper had zero \\cite commands.",
+      "fix": "collect_agent_references filters bib to in-text cite keys; skips uncited bulk bib (>40 entries)."
+    },
+    {
+      "axis": "paths/ai_scientist_summaries",
+      "was_unfair": "AI Scientist can persist substantive results and paper-like drafts in *_summary.json logs rather than paper/main.tex or results/**/*.json.",
+      "fix": "Treat draft_summary/research_summary as weak paper documents and summary JSONs as result candidates."
+    },
+    {
+      "axis": "idea_generation",
+      "was_unfair": "plan.md/todos.md weak proxies scored same as structured idea.json.",
+      "fix": "Framework idea_priority tried first; missing idea → not_applicable where appropriate."
+    }
+  ],
+  "axes": [
+    "alignment",
+    "completeness",
+    "experiment_analysis",
+    "idea_generation",
+    "literature_review",
+    "peer_review"
+  ],
+  "results": {
+    "completeness": {
+      "framework": "researchclaw",
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-020_localizing_vulnerable_code_regions_to_im/workspace/researchclaw_2026-08-14_10-54-09",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-020_localizing_vulnerable_code_regions_to_im",
+      "complete": false,
+      "required_score": 0.25,
+      "bonus_score": 0.03,
+      "overall_score": 0.2,
+      "missing": [
+        "code",
+        "results",
+        "paper"
+      ],
+      "required": {
+        "idea": {
+          "path": "artifacts/idea.json",
+          "bytes": 195,
+          "via": "candidate"
+        },
+        "code": {
+          "count": 0,
+          "files": []
+        },
+        "results": {
+          "substantive": false,
+          "normalized_path": null,
+          "numeric_leaf_count": 0,
+          "discovered_files": [],
+          "metrics_keys_sample": []
+        },
+        "paper": {
+          "tex": null,
+          "pdf": null,
+          "md": null,
+          "json": null,
+          "status": "missing",
+          "score": 0.0
+        }
+      },
+      "bonus": {
+        "experiment_plan": null,
+        "experiment_log": {
+          "path": "researchclaw_run.log",
+          "bytes": 1068,
+          "via": "glob"
+        },
+        "review": null,
+        "readme": null,
+        "narrative": null,
+        "bib": null
+      },
+      "manifest_status": {
+        "pipeline": false,
+        "idea": false,
+        "code": false,
+        "results": false,
+        "paper": false
+      },
+      "gate_scores": {
+        "idea": 1.0,
+        "code": 0.0,
+        "results": 0.0,
+        "paper": 0.0
+      },
+      "fairness": {
+        "gates": [
+          "idea",
+          "code",
+          "results",
+          "paper"
+        ],
+        "paper_gate_rule": "PDF=1.0; TeX-only/md_only/json_only=0.5; complete requires PDF",
+        "results_gate_rule": "substantive numeric results via framework-aware normalize_results",
+        "audit_ref": "framework_profile.FAIRNESS_AUDIT"
+      },
+      "notes": [
+        "Required: idea, code, substantive results, paper (PDF full; TeX/markdown/JSON draft half).",
+        "Stub/seed metrics (e.g. dataset_candidate/metrics.json) do not satisfy results.",
+        "Framework noise (.deepscientist_npm, skills/templates, runtime) is excluded from code/results/paper.",
+        "Manifest status is informational; disk presence is authoritative."
+      ]
+    },
+    "idea_generation": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-020_localizing_vulnerable_code_regions_to_im/workspace/researchclaw_2026-08-14_10-54-09",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-020_localizing_vulnerable_code_regions_to_im",
+      "idea_path": "~/ai_scientist_inputs/ASE-2025-020_localizing_vulnerable_code_regions_to_im/workspace/researchclaw_2026-08-14_10-54-09/artifacts/idea.json",
+      "status": "ok",
+      "dimensions": {
+        "novelty": {
+          "score": 1.0,
+          "justification": "The artifact contains only the research question 'How can a PLM-based vulnerability detector be guided to focus on critical code regions without explicit vulnerability location annotations?' and no actual method. Closest Solution Space entries such as R31, R12, and R39 already address line-level semantic structure learning and PLM-based fault localization, so the stated direction is already present in the space.",
+          "rubric": "Existing: the idea's core method is already clearly present or solved in the Solution Space; only tiny parameter / test-case changes.",
+          "category": "Existing",
+          "nearest_solution_space_ids": [
+            "R31",
+            "R12",
+            "R39"
+          ],
+          "differentiation": "No concrete method is proposed, so no differentiation from existing work can be established."
+        },
+        "feasibility": {
+          "score": 1.0,
+          "justification": "The artifact provides no implementation plan, architecture, dataset usage, training procedure, or evaluation design. Without any concrete proposal, the engineering/compute burden cannot be assessed and the idea is not actionable as specified.",
+          "rubric": "Theoretically infeasible / compute catastrophe: NP-hard-scale computation, must dynamically reproduce extremely complex system-level vulnerability environments, or depends on unavailable closed-source model internal weights; not doable by a single person."
+        },
+        "clarity": {
+          "score": 1.0,
+          "justification": "The artifact is only a high-level research question: 'How can a PLM-based vulnerability detector be guided to focus on critical code regions without explicit vulnerability location annotations?' It lacks What/Why/How, technical execution details, baselines, metrics, and experiment design.",
+          "rubric": "Vague concept: full of empty buzzwords; problem undefined; method only gives a high-level direction with little substance."
+        }
+      },
+      "overall_score": 1.0,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "novelty",
+        "feasibility",
+        "clarity"
+      ],
+      "solution_space": {
+        "status": "ok",
+        "paper_count": 50,
+        "entry_count": 50,
+        "cache_hit": true,
+        "source_file": "~/ai_scientist_inputs/ASE-2025-020_localizing_vulnerable_code_regions_to_im/mineru_sections.json",
+        "stats": {
+          "papers": 50,
+          "extracted": 50,
+          "usable_abstracts": 27,
+          "citation_meta_abstracts": 3,
+          "missing_abstracts": 20,
+          "mineru_titles": 48,
+          "related_work_titles": 35,
+          "abstracts_attached": 30,
+          "related_work_extras": 2,
+          "batches": 3
+        },
+        "error": null
+      },
+      "notes": [
+        "Scores the intermediate idea artifact (not the final paper).",
+        "Dimensions: novelty, feasibility, clarity (each 1-5). Excitement removed.",
+        "Novelty is scored against a Solution Space built from mineru REFERENCES titles (+ related_work.json abstracts when matched)."
+      ],
+      "idea_via": "candidate",
+      "idea_relative": "artifacts/idea.json",
+      "summary": "The provided idea artifact contains only a research question and no actual research idea, method, or experimental plan. It cannot be evaluated for novelty, feasibility, or clarity beyond noting the absence of substance. The stated direction overlaps with existing Solution Space work on line-level semantic learning and PLM-based fault localization, but no concrete contribution is proposed.",
+      "strengths": [
+        "Identifies a relevant problem about guiding PLM-based vulnerability detectors toward critical code regions."
+      ],
+      "weaknesses": [
+        "No concrete method or technical contribution is proposed.",
+        "No experiment design, baselines, metrics, or feasibility analysis are provided.",
+        "Cannot be differentiated from existing Solution Space entries because the artifact lacks implementation details."
+      ],
+      "llm_meta": {
+        "model": "deepseek-v4-pro-0813",
+        "base_url": "https://api-sg.umodelverse.ai/v1",
+        "usage": {
+          "completion_tokens": 1299,
+          "completion_tokens_details": {
+            "reasoning_tokens": 846
+          },
+          "prompt_tokens": 5440,
+          "prompt_tokens_details": {
+            "cached_tokens": 4096
+          },
+          "total_tokens": 6739
+        },
+        "attempt": 0
+      }
+    },
+    "peer_review": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-020_localizing_vulnerable_code_regions_to_im/workspace/researchclaw_2026-08-14_10-54-09",
+      "review_report": null,
+      "paper_pdf": null,
+      "paper_tex": null,
+      "status": "not_provided",
+      "dimensions": {},
+      "overall_score": null,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "soundness",
+        "significance",
+        "novelty",
+        "presentation",
+        "credibility"
+      ],
+      "notes": [
+        "Stanford Agentic Reviewer (paperreview.ai): manual download to artifacts/peer_review/stanford_apr.md, or pass --auto-paperreview.",
+        "Dimensions: soundness, significance, novelty, presentation, credibility (each 1-5)."
+      ],
+      "paperreview": {
+        "status": "skipped",
+        "reason": "no_pdf"
+      },
+      "optional": true,
+      "hint": "Optional external review (Stanford APR). Upload paper/main.pdf to https://paperreview.ai/ , save review to ~/ai_scientist_inputs/ASE-2025-020_localizing_vulnerable_code_regions_to_im/workspace/researchclaw_2026-08-14_10-54-09/artifacts/peer_review/stanford_apr.md"
+    },
+    "alignment": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-020_localizing_vulnerable_code_regions_to_im/workspace/researchclaw_2026-08-14_10-54-09",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-020_localizing_vulnerable_code_regions_to_im",
+      "status": "missing_agent_paper_or_metrics",
+      "original": {
+        "status": "ok",
+        "task_dir": "~/ai_scientist_inputs/ASE-2025-020_localizing_vulnerable_code_regions_to_im",
+        "paper_title": "LOSVER: Line-Level Modifiability Signal-Guided Vulnerability Detection and Classification",
+        "task_id": "ASE-2025-020",
+        "selection": {
+          "num_blocks": 6,
+          "total_chars": 31998,
+          "inferred_roles": {
+            "abstract": 1,
+            "introduction": 1,
+            "experiment": 3,
+            "conclusion": 1
+          },
+          "mineru_raw_keys": {
+            "field:abstract": 1,
+            "field:introduction": 1,
+            "field:experiment": 1,
+            "other": 2,
+            "conclusion": 1
+          },
+          "infer_reasons": {
+            "top_level_field": 3,
+            "body_override": 2,
+            "title": 1
+          },
+          "rescued_from_other": 2,
+          "note": "mineru key is unreliable; blocks are selected by title/body/inheritance. rescued_from_other counts sections labeled other but treated as typed roles."
+        },
+        "claims": [
+          {
+            "id": "C1",
+            "statement": "LOSVER consistently improves vulnerability detection accuracy over base PLMs on Devign, with absolute accuracy improvements of 2-4 percentage points across CodeBERT, CodeT5+, and UniXcoder.",
+            "direction": "improves",
+            "metric_names": [
+              "accuracy"
+            ],
+            "evidence_quote": "Across all PLMs, LOSVER provided consistent performance gains, achieving absolute accuracy improvements of 2–4 percentage points over the base models.",
+            "confidence": 0.95
+          },
+          {
+            "id": "C2",
+            "statement": "Applying LOSVER to UniXcoder with a 512-token limit on Devign increases accuracy from 65.94% to 69.94% and F1-score from 0.5234 to 0.6337.",
+            "direction": "improves",
+            "metric_names": [
+              "accuracy",
+              "f1_score"
+            ],
+            "evidence_quote": "integrating LOSVER with UniXcoder increased the accuracy from 65.94% to 69.94%, and the F1-score from 0.5234 to 0.6337.",
+            "confidence": 0.98
+          },
+          {
+            "id": "C3",
+            "statement": "LOSVER improves multi-class CWE ID classification on Big-Vul across PLM backbones; the best LOSVER (UniXcoder, 512-token) reaches weighted F1 73.17%, outperforming base UniXcoder (71.10%) and AIBugHunter (69.16%).",
+            "direction": "improves",
+            "metric_names": [
+              "weighted_f1"
+            ],
+            "evidence_quote": "The best result was achieved by LOSVER (UniXcoder, 512-token), which achieved a weighted F1-score of 73.17%, outperforming the base UniXcoder (71.10%) and AIBugHunter (69.16%).",
+            "confidence": 0.97
+          },
+          {
+            "id": "C4",
+            "statement": "On PrimeVul paired vulnerability detection, LOSVER improves pair-wise correct prediction from 0.1011 to 0.1401 with predicted modifiable lines; using ground-truth modified lines raises it to 0.3316.",
+            "direction": "improves",
+            "metric_names": [
+              "pair-wise_correct_prediction"
+            ],
+            "evidence_quote": "LOSVER improved the pair-wise correct prediction (P-C) from 0.1011 to 0.1401... replacing them with the ground-truth modified lines increased the score dramatically to 0.3316",
+            "confidence": 0.95
+          },
+          {
+            "id": "C5",
+            "statement": "Detection accuracy increases monotonically as modifiable-line localization accuracy improves; the oracle (100% corrected) condition reaches 75.37% accuracy on Devign, compared with 69.94% for the LOSVER baseline.",
+            "direction": "improves",
+            "metric_names": [
+              "accuracy"
+            ],
+            "evidence_quote": "detection accuracy improved steadily with localization quality... the 100% correction (oracle) condition reached 75.37% accuracy—an absolute improvement of 5.43 percentage points over the 69.94% LOSVER baseline",
+            "confidence": 0.97
+          },
+          {
+            "id": "C6",
+            "statement": "The Modifiable Line Localizer substantially outperforms LLMAO on line-level localization top-k accuracy on filtered Devign (top-1 55.1% vs 28.1%, top-3 70.5% vs 39.0%, top-5 78.4% vs 60.3%).",
+            "direction": "improves",
+            "metric_names": [
+              "top1_accuracy",
+              "top3_accuracy",
+              "top5_accuracy"
+            ],
+            "evidence_quote": "the localizer achieved top-1, top-3, and top-5 accuracies of 55.1%, 70.5%, and 78.4%, respectively... substantially outperform LLMAO",
+            "confidence": 0.93
+          },
+          {
+            "id": "C7",
+            "statement": "Zero-shot GPT-4o benefits from LOSVER-style predicted modifiable line markers: F1-score increases from 0.3007 to 0.3711, while accuracy remains around 54%.",
+            "direction": "mixed",
+            "metric_names": [
+              "f1_score",
+              "accuracy"
+            ],
+            "evidence_quote": "Adding special tokens <!> before predicted modifiable lines increased the F1-score from 0.3007 to 0.3711, while accuracy remained around 54%.",
+            "confidence": 0.9
+          },
+          {
+            "id": "C8",
+            "statement": "LOSVER outperforms prior state-of-the-art methods CSLS and AIBugHunter on detection and classification tasks under the paper's evaluation settings.",
+            "direction": "improves",
+            "metric_names": [
+              "accuracy",
+              "weighted_f1"
+            ],
+            "evidence_quote": "LOSVER also outperforms prior state-of-the-art methods such as CSLS [36] and AIBugHunter [43] on both tasks.",
+            "confidence": 0.9
+          }
+        ],
+        "metrics": [
+          {
+            "name": "accuracy",
+            "value": 65.94,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "Devign vulnerability detection, UniXcoder 512-token",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "UniXcoder ... 65.94",
+            "confidence": 0.98
+          },
+          {
+            "name": "accuracy",
+            "value": 69.94,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "Devign vulnerability detection, LOSVER (UniXcoder, 512-token)",
+            "is_sota_or_best": false,
+            "baseline_name": "UniXcoder",
+            "baseline_value": 65.94,
+            "evidence_quote": "integrating LOSVER with UniXcoder increased the accuracy from 65.94% to 69.94%",
+            "confidence": 0.98
+          },
+          {
+            "name": "f1_score",
+            "value": 0.6337,
+            "unit": "ratio",
+            "higher_is_better": true,
+            "setting": "Devign vulnerability detection, LOSVER (UniXcoder, 512-token)",
+            "is_sota_or_best": false,
+            "baseline_name": "UniXcoder",
+            "baseline_value": 0.5234,
+            "evidence_quote": "F1-score from 0.5234 to 0.6337",
+            "confidence": 0.98
+          },
+          {
+            "name": "accuracy",
+            "value": 70.56,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "Devign vulnerability detection, UniXcoder 1,024-token limit trained/evaluated on 512-token filtered dataset",
+            "is_sota_or_best": true,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "It achieved the best performance among all settings, with an accuracy of 70.56%",
+            "confidence": 0.95
+          },
+          {
+            "name": "precision",
+            "value": 0.7087,
+            "unit": "ratio",
+            "higher_is_better": true,
+            "setting": "Devign vulnerability detection, UniXcoder 1,024-token limit trained/evaluated on 512-token filtered dataset",
+            "is_sota_or_best": true,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "precision of 0.7087",
+            "confidence": 0.95
+          },
+          {
+            "name": "recall",
+            "value": 0.5569,
+            "unit": "ratio",
+            "higher_is_better": true,
+            "setting": "Devign vulnerability detection, UniXcoder 1,024-token limit trained/evaluated on 512-token filtered dataset",
+            "is_sota_or_best": true,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "recall of 0.5569",
+            "confidence": 0.95
+          },
+          {
+            "name": "f1_score",
+            "value": 0.6237,
+            "unit": "ratio",
+            "higher_is_better": true,
+            "setting": "Devign vulnerability detection, UniXcoder 1,024-token limit trained/evaluated on 512-token filtered dataset",
+            "is_sota_or_best": true,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "F1-score of 0.6237",
+            "confidence": 0.95
+          },
+          {
+            "name": "accuracy",
+            "value": 64.51,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "Devign vulnerability detection, CodeBERT 512-token",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "CodeBERT ... 64.51",
+            "confidence": 0.9
+          },
+          {
+            "name": "accuracy",
+            "value": 66.67,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "Devign vulnerability detection, LOSVER (CodeBERT, 512-token)",
+            "is_sota_or_best": false,
+            "baseline_name": "CodeBERT",
+            "baseline_value": 64.51,
+            "evidence_quote": "LOSVER (CodeBERT) ... 66.67",
+            "confidence": 0.9
+          },
+          {
+            "name": "accuracy",
+            "value": 65.46,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "Devign vulnerability detection, CodeT5+ 512-token",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "CodeT5+ ... 65.46",
+            "confidence": 0.9
+          },
+          {
+            "name": "accuracy",
+            "value": 69.29,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "Devign vulnerability detection, LOSVER (CodeT5+, 512-token)",
+            "is_sota_or_best": false,
+            "baseline_name": "CodeT5+",
+            "baseline_value": 65.46,
+            "evidence_quote": "LOSVER (CodeT5+) ... 69.29",
+            "confidence": 0.9
+          }
+        ],
+        "overall_conclusion": null,
+        "comparable_notes": null,
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 3652,
+            "completion_tokens_details": {
+              "reasoning_tokens": 1191
+            },
+            "prompt_tokens": 2762,
+            "prompt_tokens_details": {
+              "cached_tokens": 2048
+            },
+            "total_tokens": 6414
+          },
+          "attempt": 1
+        },
+        "cache_hit": true
+      },
+      "agent": {
+        "status": "missing_agent_paper_or_metrics",
+        "run_dir": "~/ai_scientist_inputs/ASE-2025-020_localizing_vulnerable_code_regions_to_im/workspace/researchclaw_2026-08-14_10-54-09"
+      }
+    },
+    "experiment_analysis": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-020_localizing_vulnerable_code_regions_to_im/workspace/researchclaw_2026-08-14_10-54-09",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-020_localizing_vulnerable_code_regions_to_im",
+      "status": "ok",
+      "metrics_path": null,
+      "experiment_success": {
+        "status": "failed_or_incomplete",
+        "success": false,
+        "metrics_path": null,
+        "absolute_metrics_path": null,
+        "checks": {
+          "has_results_file": false,
+          "non_stub": false,
+          "numeric_leaf_count": 0,
+          "min_numeric_ok": false
+        },
+        "manifest_hints": {
+          "status": {
+            "pipeline": false,
+            "idea": false,
+            "code": false,
+            "results": false,
+            "paper": false
+          },
+          "returncode": 1,
+          "benchmark_complete": null,
+          "artifacts_metrics_flag": false
+        },
+        "warnings": [
+          "manifest.returncode=1"
+        ],
+        "suspicious_values": [],
+        "note": "success=true requires substantive results (framework-aware path) with >=3 numeric leaves. Supports metrics.json, results.json, experiment_results.txt, etc. Manifest returncode/benchmark_complete are soft warnings only."
+      },
+      "idea_code_consistency": {
+        "status": "missing_code",
+        "idea_path": "artifacts/idea.json"
+      },
+      "setup_coverage": {
+        "status": "ok",
+        "overall_coverage": 0.0,
+        "datasets": {
+          "gold_count": 3,
+          "hit_count": 0,
+          "miss_count": 3,
+          "coverage": 0.0,
+          "hits": [],
+          "misses": [
+            "Devign",
+            "Big-Vul",
+            "PrimeVul"
+          ]
+        },
+        "baselines": {
+          "gold_count": 5,
+          "hit_count": 0,
+          "miss_count": 5,
+          "coverage": 0.0,
+          "hits": [],
+          "misses": [
+            "UniXcoder (base-9, fine-tuned)",
+            "CodeT5+ (encoder-only 220M)",
+            "Roberta-based PLM (e.g., CodeBERT)",
+            "CSLS",
+            "AIBugHunter"
+          ]
+        },
+        "metrics": {
+          "gold_count": 5,
+          "hit_count": 0,
+          "miss_count": 5,
+          "coverage": 0.0,
+          "hits": [],
+          "misses": [
+            "Accuracy (binary detection)",
+            "Weighted F1-score (classification)",
+            "Top-N Accuracy (line localization)",
+            "Line-level F1-score",
+            "Pair-wise accuracy"
+          ]
+        },
+        "agent_protocol": {},
+        "gold_protocol": {},
+        "dataset_dirs": [
+          "dataset_candidate"
+        ],
+        "flags": {
+          "weaker_baseline_suspected": true,
+          "weak_protocol": [],
+          "synthetic_data": "unexpected_synthetic_or_local_only_data",
+          "gold_allows_synthetic": false
+        },
+        "gold_sources": [
+          "~/ai_scientist_inputs/ASE-2025-020_localizing_vulnerable_code_regions_to_im/task.md",
+          "~/ai_scientist_inputs/ASE-2025-020_localizing_vulnerable_code_regions_to_im/metadata.json"
+        ],
+        "note": "Coverage is name/alias matching against task.md Datasets/Baselines/Metrics. weak_protocol flags large reductions in trials/timeout vs Constraints. Synthetic corpora are not penalized when the task itself requires synthesis."
+      },
+      "ablation_significance": {
+        "status": "ok",
+        "idea_path": "artifacts/idea.json",
+        "significance_signals_rule_based": {
+          "signals": [],
+          "artifact_paths": [],
+          "has_any_significance_artifact": false
+        },
+        "evidence_format": null,
+        "study_type": "other",
+        "components": [],
+        "ablation_coverage_score": 1.0,
+        "overall_ablation_ok": true,
+        "overall_significance_ok": true,
+        "summary": "The provided idea is only a research question and does not specify a concrete method, baselines, dataset splits, hyperparameters, or instrumentation. No experiment evidence or results were supplied. Therefore no key method components could be extracted, no ablations were expected, and formal significance testing was not required for this unspecified run.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 1365,
+            "completion_tokens_details": {
+              "reasoning_tokens": 1245
+            },
+            "prompt_tokens": 823,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 2188
+          },
+          "attempt": 0
+        }
+      },
+      "results_paper_consistency": {
+        "status": "missing_metrics"
+      },
+      "scores": {
+        "experiment_success": false,
+        "idea_code_score": null,
+        "setup_coverage": 0.0,
+        "ablation_coverage_score": 1.0,
+        "overall_ablation_ok": true,
+        "overall_significance_ok": true,
+        "results_paper_score": null,
+        "hiding_unfavorable_suspected": null
+      },
+      "notes": [
+        "Axes 1,2,3,4,6 in experiment_analysis (figures excluded).",
+        "setup_coverage matches task.md Datasets/Baselines/Metrics; weak_protocol flags reductions vs Constraints.",
+        "Axis 6: final normalized results vs paper; interim run logs not used as ground truth."
+      ]
+    },
+    "literature_review": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-020_localizing_vulnerable_code_regions_to_im/workspace/researchclaw_2026-08-14_10-54-09",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-020_localizing_vulnerable_code_regions_to_im",
+      "status": "not_applicable",
+      "as_of_year": 2026,
+      "agent_ref_count": 0,
+      "sources": [],
+      "collection_audit": {
+        "cited_keys_count": 0,
+        "filter_mode": "none",
+        "bib_total_before_filter": 0,
+        "bib_after_filter": 0,
+        "uncited_bib_skipped": 0
+      },
+      "fabrication": null,
+      "coverage": null,
+      "recency": null,
+      "reason": "no_reference_artifacts",
+      "hint": "No literature artifacts found (bib / thebibliography / shortlist / related_work.txt / arxiv index). Marked not_applicable rather than failure — tool may not emit references in-run."
+    }
+  },
+  "scores": {
+    "completeness": {
+      "complete": false,
+      "overall_score": 0.2,
+      "required_score": 0.25,
+      "bonus_score": 0.03
+    },
+    "peer_review": {
+      "status": "not_provided",
+      "optional": true,
+      "overall_score": null,
+      "score_scale": "1-5",
+      "scoring_method": null
+    },
+    "idea_generation": {
+      "status": "ok",
+      "overall_score": 1.0,
+      "dimensions": {
+        "novelty": 1.0,
+        "feasibility": 1.0,
+        "clarity": 1.0
+      },
+      "novelty_category": "Existing",
+      "solution_space_status": "ok"
+    },
+    "alignment": {
+      "status": "missing_agent_paper_or_metrics",
+      "direction_consistency": null,
+      "overall_alignment_score": null
+    },
+    "literature_review": {
+      "fabrication_rate": null,
+      "coverage_recall": null,
+      "recency_ratio_3y": null,
+      "recency_ratio_5y": null
+    },
+    "experiment_analysis": {
+      "experiment_success": false,
+      "idea_code_score": null,
+      "setup_coverage": 0.0,
+      "ablation_coverage_score": 1.0,
+      "overall_ablation_ok": true,
+      "overall_significance_ok": true,
+      "results_paper_score": null,
+      "hiding_unfavorable_suspected": null
+    }
+  },
+  "fair_scores": {
+    "applicable_axes": [
+      "completeness",
+      "idea_generation",
+      "experiment_analysis"
+    ],
+    "skipped_axes": [
+      {
+        "axis": "peer_review",
+        "reason": "optional_external_review"
+      },
+      {
+        "axis": "literature_review",
+        "reason": "not_applicable"
+      }
+    ],
+    "fair_mean_0_1": 0.15,
+    "note": "fair_mean_0_1 averages only applicable axes; optional peer review and framework-inapplicable literature are excluded from the denominator."
+  },
+  "evals_root": "~/ai_scientist_evals",
+  "claims_cache": "~/ai_scientist_evals/ASE-2025-020_localizing_vulnerable_code_regions_to_im/original_claims.json",
+  "solution_space_cache": "~/ai_scientist_evals/ASE-2025-020_localizing_vulnerable_code_regions_to_im/solution_space.json"
+}

@@ -1,0 +1,65 @@
+{
+  "dataset_root": "dataset_candidate/kaggle_notebooks",
+  "construction_required": true,
+  "construction_note": "This corpus is NOT pre-downloaded. Construct it from public Kaggle kernels via the Kaggle API/CLI. If credentials are missing, document the blocker instead of fabricating notebooks.",
+  "kaggle": {
+    "config_dir": "/shared/kaggle",
+    "access_token_file": "/shared/kaggle/access_token",
+    "credentials_file": "/shared/kaggle/kaggle.json",
+    "host_path": "~/.kaggle/access_token",
+    "env_var": "KAGGLE_API_TOKEN",
+    "docs": "https://www.kaggle.com/docs/api",
+    "auth_note": "Prefer KAGGLE_API_TOKEN (injected from benchmark_credentials.yaml) or ~/.kaggle/access_token. Legacy kaggle.json also works.",
+    "example_commands": [
+      "kaggle kernels list -s ttest_ind --page-size 20",
+      "kaggle kernels list -s ttest_1samp --page-size 20",
+      "kaggle kernels list -s f_oneway --page-size 20",
+      "kaggle kernels list -s linregress --page-size 20",
+      "kaggle kernels pull <owner>/<slug> -p dataset_candidate/kaggle_notebooks/python/",
+      "kaggle datasets download -d <owner>/<dataset> -p dataset_candidate/kaggle_notebooks/data/ --unzip"
+    ]
+  },
+  "construction_steps": [
+    "Step 1 — Auth: KAGGLE_API_TOKEN is available in the container env (from benchmark credentials). Fallback files: /shared/kaggle/access_token or kaggle.json.",
+    "Step 2 — Search: For each target function, list kernels with `kaggle kernels list -s <name>`.",
+    "Step 3 — Download: Pull candidate .ipynb / .Rmd kernels and their public datasets.",
+    "Step 4 — Filter: Keep notebooks with real call sites, public data, runtime <10 minutes, no non-trivial errors.",
+    "Step 5 — Persist: Save under dataset_candidate/kaggle_notebooks/{python,r}/ with a manifest.json listing kernel id, language, functions used, and run status."
+  ],
+  "recommended_scale": {
+    "note": "Full paper uses 128 notebooks. Use a reduced subset for a single benchmark run.",
+    "minimal": "20 Python notebooks covering ttest_ind, ttest_1samp, f_oneway, linregress",
+    "medium": "40–60 notebooks (Python primary; R optional)",
+    "full": "128 notebooks as in the paper"
+  },
+  "target_functions": {
+    "python": [
+      "scipy.stats.ttest_1samp",
+      "scipy.stats.ttest_ind",
+      "scipy.stats.ttest_rel",
+      "scipy.stats.f_oneway",
+      "scipy.stats.linregress"
+    ],
+    "r": [
+      "t.test",
+      "aov",
+      "lm"
+    ]
+  },
+  "directory_layout": {
+    "dataset_candidate/kaggle_notebooks/": "Root corpus directory (create this)",
+    "dataset_candidate/kaggle_notebooks/python/": "Downloaded Jupyter notebooks",
+    "dataset_candidate/kaggle_notebooks/r/": "Downloaded R Markdown notebooks (optional)",
+    "dataset_candidate/kaggle_notebooks/data/": "Public datasets referenced by notebooks",
+    "dataset_candidate/kaggle_notebooks/manifest.json": "Kernel metadata and filter outcomes"
+  },
+  "manifest_record_format": {
+    "kernel_ref": "owner/slug",
+    "language": "python|r",
+    "path": "dataset_candidate/kaggle_notebooks/python/....ipynb",
+    "functions": ["ttest_ind"],
+    "public_data": true,
+    "runtime_ok": true,
+    "notes": ""
+  }
+}

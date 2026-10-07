@@ -1,0 +1,40 @@
+{
+  "forbid_synthetic_pilot": true,
+  "agent_data_note": "Use mounted LPEA AE artifact at `dataset_candidate/lpea-oracle-icse2025/`. Prefer `RL-Oracle-Lyapunov-v1/RLTestingLyapunov/` for oracle/bug-injection scripts and `bug_library/` for the Excel bug taxonomy. Shared mount is read-only — copy under `project/` before editing SB3 or injecting bugs.",
+  "required_metrics": [
+    "accuracy",
+    "precision",
+    "recall",
+    "f1",
+    "false_positive_count",
+    "false_negative_count",
+    "roc_auc"
+  ],
+  "benchmark_rules": [
+    "Read `dataset_candidate/dataset_paths.json` and `dataset_candidate/lpea-oracle-icse2025/`; use env `LPEA_ORACLE_HOME` / `LPEA_REPO_HOME` / `LPEA_TESTING_HOME` / `LPEA_BUG_LIB_HOME`.",
+    "Oracle decisions must use only trained-agent behaviour (no white-box access to implementation internals for the judgement step).",
+    "Evaluate on the paper-style SB3 bug benchmark: A2C/PPO/TD3 with injectable bugs (ids 0-43) plus bug-less (-1) and harmless variations.",
+    "Primary metrics: Accuracy / Precision / Recall / F1 / FP / FN / ROC-AUC vs human oracle baseline.",
+    "Shared mount is read-only. Copy `RL-Oracle-Lyapunov-v1` under `project/` before bug injection or SB3 edits.",
+    "Paper full LPEA eval can take up to ~129h on a laptop GPU; disclose reduced I/J, algorithm subset, or seed count when sandbox time/memory is limited.",
+    "Do not silently invent a different RL library corpus when the LPEA artifact is mounted."
+  ],
+  "non_goals": [
+    "Using only a single CartPole demo run as the sole evaluation",
+    "Judging correctness from source diffs alone (violates black-box oracle constraint)",
+    "Ignoring the human-oracle / STARLA-style baseline comparison when claiming superiority"
+  ],
+  "dataset_env": {
+    "LPEA_ORACLE_HOME": "dataset_candidate/lpea-oracle-icse2025",
+    "LPEA_REPO_HOME": "dataset_candidate/lpea-oracle-icse2025/RL-Oracle-Lyapunov-v1",
+    "LPEA_TESTING_HOME": "dataset_candidate/lpea-oracle-icse2025/RL-Oracle-Lyapunov-v1/RLTestingLyapunov",
+    "LPEA_BUG_LIB_HOME": "dataset_candidate/lpea-oracle-icse2025/bug_library",
+    "LPEA_SB3_HOME": "dataset_candidate/lpea-oracle-icse2025/RL-Oracle-Lyapunov-v1"
+  },
+  "exclude_from_agent": [
+    "container_setup.sh",
+    "README.md",
+    "benchmark_config.json",
+    "requirements.txt"
+  ]
+}

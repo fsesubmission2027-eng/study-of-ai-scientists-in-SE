@@ -1,0 +1,839 @@
+{
+  "run_dir": "~/ai_scientist_inputs/ISSTA-2025-002_identifying_safe_pid_parameter_ranges_fo/workspace/ai_scientist_2026-09-18_11-05-41",
+  "task_dir": "~/ai_scientist_inputs/ISSTA-2025-002_identifying_safe_pid_parameter_ranges_fo",
+  "framework": "ai_scientist",
+  "fairness_audit": [
+    {
+      "axis": "completeness",
+      "was_unfair": "Required both paper.tex AND paper.pdf; any tool missing one failed equally.",
+      "fix": "Paper gate: PDF=1.0; TeX-only=0.5; ``complete`` requires PDF."
+    },
+    {
+      "axis": "completeness",
+      "was_unfair": "``results`` counted stub/seed JSON (dataset_candidate/metrics.json).",
+      "fix": "``results`` requires substantive numeric results via results_normalize."
+    },
+    {
+      "axis": "experiment_success",
+      "was_unfair": "Only metrics.json; ignored results.json / experiment_results.txt.",
+      "fix": "Framework-ordered result candidates + normalized loaders."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Penalized tools with no bib; airesearcher has no workspace references.",
+      "fix": "literature_applicable=false → status not_applicable; excluded from fair aggregate."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "related_work.json subset as gold made recall hard to interpret.",
+      "fix": "Coverage gold is original paper REFERENCES from mineru; related_work only enriches metadata/fallback."
+    },
+    {
+      "axis": "peer_review",
+      "was_unfair": "Missing Stanford report looked like evaluation failure.",
+      "fix": "status not_provided; optional axis, never counts as tool failure."
+    },
+    {
+      "axis": "paths/find_results",
+      "was_unfair": "Picked downloads/** and sandbox noise (e.g. airesearcher LLVM tree).",
+      "fix": "Exclude downloads/, seeds/, dataset_candidate/, sandbox junk paths."
+    },
+    {
+      "axis": "paths/framework_noise",
+      "was_unfair": "DeepScientist .deepscientist_npm / runtime / skills templates counted as code/paper/results.",
+      "fix": "FRAMEWORK_NOISE_DIRS+markers; quest worktree + eval_output results; paper md drafts; reject template tex."
+    },
+    {
+      "axis": "paths/paper_tex",
+      "was_unfair": "tiny_scientist / ACL runs store paper under latex/*.tex; evaluator only looked at paper/main.tex.",
+      "fix": "latex/**/*.tex with substantive-body heuristic; find_paper_document uses same rules."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Entire custom.bib (300+ anthology entries) verified when paper had zero \\cite commands.",
+      "fix": "collect_agent_references filters bib to in-text cite keys; skips uncited bulk bib (>40 entries)."
+    },
+    {
+      "axis": "paths/ai_scientist_summaries",
+      "was_unfair": "AI Scientist can persist substantive results and paper-like drafts in *_summary.json logs rather than paper/main.tex or results/**/*.json.",
+      "fix": "Treat draft_summary/research_summary as weak paper documents and summary JSONs as result candidates."
+    },
+    {
+      "axis": "framework/ai_scientist_v2",
+      "was_unfair": "Manifest framework ``ai_scientist_v2`` fell through to profile ``unknown``, skipping AI-Scientist idea/result path priorities.",
+      "fix": "Normalize ``ai_scientist_v2`` (and common aliases) to profile key ``ai_scientist``."
+    },
+    {
+      "axis": "idea_generation",
+      "was_unfair": "plan.md/todos.md weak proxies scored same as structured idea.json.",
+      "fix": "Framework idea_priority tried first; missing idea → not_applicable where appropriate."
+    }
+  ],
+  "generated_at": "2026-10-01T15:13:01",
+  "axes": [
+    "alignment",
+    "completeness",
+    "experiment_analysis",
+    "idea_generation",
+    "literature_review",
+    "peer_review"
+  ],
+  "results": {
+    "completeness": {
+      "framework": "ai_scientist",
+      "run_dir": "~/ai_scientist_inputs/ISSTA-2025-002_identifying_safe_pid_parameter_ranges_fo/workspace/ai_scientist_2026-09-18_11-05-41",
+      "task_dir": "~/ai_scientist_inputs/ISSTA-2025-002_identifying_safe_pid_parameter_ranges_fo",
+      "complete": false,
+      "required_score": 0.75,
+      "bonus_score": 0.03,
+      "overall_score": 0.6,
+      "missing": [
+        "paper"
+      ],
+      "required": {
+        "idea": {
+          "path": "session/idea.json",
+          "bytes": 10959,
+          "via": "candidate"
+        },
+        "code": {
+          "count": 5,
+          "files": [
+            {
+              "path": "experiments/2026-09-18_11-08-50_identifying_safe_pid_parameter_ranges_for_drones_attempt_0/logs/0-run/experiment_results/experiment_4879030845094ba1acb08f42cc419791_proc_310/experiment_code.py",
+              "bytes": 11464,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-09-18_11-08-50_identifying_safe_pid_parameter_ranges_for_drones_attempt_0/logs/0-run/experiment_results/experiment_4879030845094ba1acb08f42cc419791_proc_310/plotting_code.py",
+              "bytes": 7812,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-09-18_11-08-50_identifying_safe_pid_parameter_ranges_for_drones_attempt_0/logs/0-run/experiment_results/experiment_df9e9826a24d4747a4d45c129ee4d7e8_proc_309/experiment_code.py",
+              "bytes": 5860,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-09-18_11-08-50_identifying_safe_pid_parameter_ranges_for_drones_attempt_0/logs/0-run/experiment_results/experiment_df9e9826a24d4747a4d45c129ee4d7e8_proc_309/plotting_code.py",
+              "bytes": 2488,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-09-18_11-08-50_identifying_safe_pid_parameter_ranges_for_drones_attempt_0/logs/0-run/stage_1_initial_implementation_1_preliminary/best_solution_c960f4b709f74fdfa1097966143563f8.py",
+              "bytes": 12326,
+              "via": "glob"
+            }
+          ]
+        },
+        "results": {
+          "substantive": true,
+          "normalized_path": "experiments/2026-09-18_11-08-50_identifying_safe_pid_parameter_ranges_for_drones_attempt_0/logs/0-run/experiment_results/experiment_4879030845094ba1acb08f42cc419791_proc_310/experiment_data.npy",
+          "numeric_leaf_count": 421,
+          "discovered_files": [
+            {
+              "path": "session/data/metrics.json",
+              "bytes": 340,
+              "via": "candidate"
+            },
+            {
+              "path": "experiments/2026-09-18_11-08-50_identifying_safe_pid_parameter_ranges_for_drones_attempt_0/logs/0-run/experiment_results/experiment_4879030845094ba1acb08f42cc419791_proc_310/experiment_data.npy",
+              "bytes": 14203,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-09-18_11-08-50_identifying_safe_pid_parameter_ranges_for_drones_attempt_0/logs/0-run/experiment_results/experiment_4879030845094ba1acb08f42cc419791_proc_310/test_ground_truth.npy",
+              "bytes": 16128,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-09-18_11-08-50_identifying_safe_pid_parameter_ranges_for_drones_attempt_0/logs/0-run/experiment_results/experiment_4879030845094ba1acb08f42cc419791_proc_310/test_predictions.npy",
+              "bytes": 16128,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-09-18_11-08-50_identifying_safe_pid_parameter_ranges_for_drones_attempt_0/logs/0-run/experiment_results/experiment_4879030845094ba1acb08f42cc419791_proc_310/test_probabilities.npy",
+              "bytes": 8128,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-09-18_11-08-50_identifying_safe_pid_parameter_ranges_for_drones_attempt_0/logs/0-run/experiment_results/experiment_df9e9826a24d4747a4d45c129ee4d7e8_proc_309/experiment_data.npy",
+              "bytes": 17994,
+              "via": "glob"
+            }
+          ],
+          "metrics_keys_sample": [
+            "pid_benchmark"
+          ]
+        },
+        "paper": {
+          "tex": null,
+          "pdf": null,
+          "md": null,
+          "json": null,
+          "status": "missing",
+          "score": 0.0
+        }
+      },
+      "bonus": {
+        "experiment_plan": null,
+        "experiment_log": {
+          "path": "ai_scientist_run.log",
+          "bytes": 287549,
+          "via": "glob"
+        },
+        "review": null,
+        "readme": null,
+        "narrative": null,
+        "bib": null
+      },
+      "manifest_status": {
+        "pipeline": false
+      },
+      "gate_scores": {
+        "idea": 1.0,
+        "code": 1.0,
+        "results": 1.0,
+        "paper": 0.0
+      },
+      "fairness": {
+        "gates": [
+          "idea",
+          "code",
+          "results",
+          "paper"
+        ],
+        "paper_gate_rule": "PDF=1.0; TeX-only/md_only/json_only=0.5; complete requires PDF",
+        "results_gate_rule": "substantive numeric results via framework-aware normalize_results",
+        "audit_ref": "framework_profile.FAIRNESS_AUDIT"
+      },
+      "notes": [
+        "Required: idea, code, substantive results, paper (PDF full; TeX/markdown/JSON draft half).",
+        "Stub/seed metrics (e.g. dataset_candidate/metrics.json) do not satisfy results.",
+        "Framework noise (.deepscientist_npm, skills/templates, runtime) is excluded from code/results/paper.",
+        "Manifest status is informational; disk presence is authoritative."
+      ]
+    },
+    "idea_generation": {
+      "run_dir": "~/ai_scientist_inputs/ISSTA-2025-002_identifying_safe_pid_parameter_ranges_fo/workspace/ai_scientist_2026-09-18_11-05-41",
+      "task_dir": "~/ai_scientist_inputs/ISSTA-2025-002_identifying_safe_pid_parameter_ranges_fo",
+      "idea_path": "~/ai_scientist_inputs/ISSTA-2025-002_identifying_safe_pid_parameter_ranges_fo/workspace/ai_scientist_2026-09-18_11-05-41/session/idea.json",
+      "status": "ok",
+      "dimensions": {
+        "novelty": {
+          "score": 1.0,
+          "justification": "The idea contains no proposed core method beyond background such as \"Existing approaches (e.g., fuzzing) treat each PID parameter independently...\"; its only concrete directive is \"Use RouthSearch AE at dataset_candidate/routhsearch-issta2025/\", which is an existing tool/dataset rather than a novel contribution.",
+          "rubric": "Existing: the idea's core method is already clearly present or solved in the Solution Space; only tiny parameter / test-case changes.",
+          "category": "Existing",
+          "nearest_solution_space_ids": [
+            "R14",
+            "R15"
+          ],
+          "differentiation": "No new method is articulated; the artifact only restates the task and points to the existing RouthSearch AE dataset, so there is no differentiation from prior range-search work such as ICSEARCHER or learning-guided parameter search."
+        },
+        "feasibility": {
+          "score": 3.0,
+          "justification": "The artifact notes open-source ArduPilot/PX4 simulators and instructs to \"Prefer reusing oracle code and sample oracle_logs over claiming a full 7000 CPU-hour ground-truth remine or 48h×8-mode campaign without evidence\". This reduces compute burden, but because no concrete search/classification method is specified, the implementation workload is unclear; standard research engineering would be needed to build any new contribution on top of RouthSearch.",
+          "rubric": "Moderate workload (sweet spot): needs nontrivial coding such as scripting existing open-source tools (parsers, CFG extractors) or building a custom graph-processing pipeline; standard research engineering effort."
+        },
+        "clarity": {
+          "score": 2.0,
+          "justification": "The artifact provides a research question and metrics such as \"Accuracy\" and \"Number of misconfigurations discovered\", but never states a solution mechanism; key details such as the search algorithm, boundary representation, oracle criteria, or comparison methodology are absent. It reads more like a task prompt than a concrete proposal.",
+          "rubric": "Broken logic: states a problem but the proposed solution does not match it, or never mentions experiments / evaluation."
+        }
+      },
+      "overall_score": 1.5,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "novelty",
+        "feasibility",
+        "clarity"
+      ],
+      "solution_space": {
+        "status": "ok",
+        "paper_count": 61,
+        "entry_count": 61,
+        "cache_hit": false,
+        "source_file": "~/ai_scientist_inputs/ISSTA-2025-002_identifying_safe_pid_parameter_ranges_fo/mineru_sections.json",
+        "stats": {
+          "papers": 61,
+          "extracted": 61,
+          "usable_abstracts": 21,
+          "citation_meta_abstracts": 0,
+          "missing_abstracts": 40,
+          "mineru_titles": 59,
+          "related_work_titles": 33,
+          "abstracts_attached": 21,
+          "related_work_extras": 2,
+          "batches": 4
+        },
+        "error": null
+      },
+      "notes": [
+        "Scores the intermediate idea artifact (not the final paper).",
+        "Dimensions: novelty, feasibility, clarity (each 1-5). Excitement removed.",
+        "Novelty is scored against a Solution Space built from mineru REFERENCES titles (+ related_work.json abstracts when matched)."
+      ],
+      "idea_via": "candidate",
+      "idea_relative": "session/idea.json",
+      "summary": "The artifact restates the PID safe-range task and dataset instructions but does not propose a concrete method. It references RouthSearch AE and baseline PGFuzz, yet provides no algorithm, boundary model, or experimental execution plan beyond metrics. Relative to R14/R15, it offers no new technical contribution, and clarity is low because the how is missing. Feasibility is moderate only because the provided dataset/code and simulators lower compute cost; otherwise the plan is un-assessable.",
+      "strengths": [
+        "Clear problem motivation around 3D PID parameter interdependencies and expensive simulation",
+        "Names concrete simulation environments (ArduPilot SITL, PX4 jMAVSim) and baseline PGFuzz",
+        "Provides metrics and dataset path, and sensibly warns against full 7000 CPU-hour benchmark recomputation"
+      ],
+      "weaknesses": [
+        "No proposed method or algorithm; the artifact is essentially a task description",
+        "No novelty relative to R14/R15; restates known range-search problem",
+        "Missing technical execution details, search algorithm choice, oracle criteria, or comparison plan"
+      ],
+      "llm_meta": {
+        "model": "deepseek-v4-pro-0813",
+        "base_url": "https://api-sg.umodelverse.ai/v1",
+        "usage": {
+          "completion_tokens": 2783,
+          "completion_tokens_details": {
+            "reasoning_tokens": 2161
+          },
+          "prompt_tokens": 7216,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "total_tokens": 9999
+        },
+        "attempt": 0
+      }
+    },
+    "peer_review": {
+      "run_dir": "~/ai_scientist_inputs/ISSTA-2025-002_identifying_safe_pid_parameter_ranges_fo/workspace/ai_scientist_2026-09-18_11-05-41",
+      "review_report": null,
+      "paper_pdf": null,
+      "paper_tex": null,
+      "status": "not_provided",
+      "dimensions": {},
+      "overall_score": null,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "soundness",
+        "significance",
+        "novelty",
+        "presentation",
+        "credibility"
+      ],
+      "notes": [
+        "Stanford Agentic Reviewer (paperreview.ai): manual download to artifacts/peer_review/stanford_apr.md, or pass --auto-paperreview.",
+        "Dimensions: soundness, significance, novelty, presentation, credibility (each 1-5)."
+      ],
+      "paperreview": {
+        "status": "skipped",
+        "reason": "no_pdf"
+      },
+      "optional": true,
+      "hint": "Optional external review (Stanford APR). Upload paper/main.pdf to https://paperreview.ai/ , save review to ~/ai_scientist_inputs/ISSTA-2025-002_identifying_safe_pid_parameter_ranges_fo/workspace/ai_scientist_2026-09-18_11-05-41/artifacts/peer_review/stanford_apr.md"
+    },
+    "alignment": {
+      "run_dir": "~/ai_scientist_inputs/ISSTA-2025-002_identifying_safe_pid_parameter_ranges_fo/workspace/ai_scientist_2026-09-18_11-05-41",
+      "task_dir": "~/ai_scientist_inputs/ISSTA-2025-002_identifying_safe_pid_parameter_ranges_fo",
+      "status": "missing_agent_paper_or_metrics",
+      "original": {
+        "status": "ok",
+        "task_dir": "~/ai_scientist_inputs/ISSTA-2025-002_identifying_safe_pid_parameter_ranges_fo",
+        "paper_title": "RouthSearch: Inferring PID Parameter Specification for Flight Control Program by Coordinate Search",
+        "task_id": "ISSTA-2025-002",
+        "selection": {
+          "num_blocks": 7,
+          "total_chars": 31998,
+          "inferred_roles": {
+            "abstract": 1,
+            "introduction": 1,
+            "experiment": 3,
+            "discussion": 1,
+            "conclusion": 1
+          },
+          "mineru_raw_keys": {
+            "field:abstract": 1,
+            "field:introduction": 1,
+            "field:experiment": 1,
+            "other": 3,
+            "conclusion": 1
+          },
+          "infer_reasons": {
+            "top_level_field": 3,
+            "title": 4
+          },
+          "rescued_from_other": 3,
+          "note": "mineru key is unreliable; blocks are selected by title/body/inheritance. rescued_from_other counts sections labeled other but treated as typed roles."
+        },
+        "claims": [
+          {
+            "id": "C1",
+            "statement": "RouthSearch determines valid ranges of three-dimensional PID parameters with 92.0% accuracy compared to ground truth across eight flight modes in PX4 and ArduPilot.",
+            "direction": "neutral",
+            "metric_names": [
+              "accuracy"
+            ],
+            "evidence_quote": "determine the valid ranges of the three-dimensional PID parameters with an accuracy of 92.0% when compared to the ground truth",
+            "confidence": 0.95
+          },
+          {
+            "id": "C2",
+            "statement": "RouthSearch discovers 3,853 sets of PID misconfigurations within 48 hours, while PGFuzz discovers only 449 sets.",
+            "direction": "improves",
+            "metric_names": [
+              "misconfigurations_discovered_in_48h"
+            ],
+            "evidence_quote": "RouthSearch discovers 3,853 sets of PID misconfigurations within 48 hours, while the STOA work PGFuzz only discovers 449 sets",
+            "confidence": 0.95
+          },
+          {
+            "id": "C3",
+            "statement": "RouthSearch significantly outperforms prior work PGFuzz by 8.58 times in total PID misconfiguration discovery.",
+            "direction": "improves",
+            "metric_names": [
+              "improvement_factor"
+            ],
+            "evidence_quote": "significantly outperforming prior works by 8.58 times",
+            "confidence": 0.9
+          },
+          {
+            "id": "C4",
+            "statement": "RouthSearch helps detect three bugs in ArduPilot and PX4.",
+            "direction": "improves",
+            "metric_names": [
+              "bugs_detected"
+            ],
+            "evidence_quote": "our method helps to detect three bugs in ArduPilot and PX4",
+            "confidence": 0.9
+          },
+          {
+            "id": "C5",
+            "statement": "In bug discovery, RouthSearch exclusively found Bugs 1 and 2, which PGFuzz failed to discover, and RouthSearch consistently identified Bug 3 in 1.5 minutes whereas PGFuzz required 8.86 hours and only found it in two of three runs.",
+            "direction": "improves",
+            "metric_names": [
+              "bug_detection_time_minutes",
+              "bugs_detected"
+            ],
+            "evidence_quote": "While PGFuzz occasionally found Bug 3 in only two of the three runs and required 8.86 hours for detection in those instances, RouthSearch consistently identified the same bug in just 1.5 minutes.",
+            "confidence": 0.85
+          },
+          {
+            "id": "C6",
+            "statement": "In the case study, RouthSearch discovered 2,002 PID misconfigurations compared to 7 found by PGFuzz.",
+            "direction": "improves",
+            "metric_names": [
+              "misconfigurations_discovered_case_study"
+            ],
+            "evidence_quote": "RouthSearchdiscovered 2, 002 PID misconfigurations, compared to the 7 found by PGFuzz.",
+            "confidence": 0.7
+          }
+        ],
+        "metrics": [
+          {
+            "name": "accuracy",
+            "value": 92.0,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "boundary identification accuracy over eight flight modes in ArduPilot and PX4",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "accuracy of 92.0% when compared to the ground truth",
+            "confidence": 0.95
+          },
+          {
+            "name": "misconfigurations_discovered_in_48h",
+            "value": 3853.0,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "PID misconfiguration discovery over 48 hours across eight flight modes",
+            "is_sota_or_best": true,
+            "baseline_name": "PGFuzz",
+            "baseline_value": 449.0,
+            "evidence_quote": "RouthSearch discovers 3,853 sets of PID misconfigurations within 48 hours, while the STOA work PGFuzz only discovers 449 sets",
+            "confidence": 0.95
+          },
+          {
+            "name": "improvement_factor",
+            "value": 8.58,
+            "unit": "ratio",
+            "higher_is_better": true,
+            "setting": "misconfiguration discovery in 48 hours compared with PGFuzz",
+            "is_sota_or_best": true,
+            "baseline_name": "PGFuzz",
+            "baseline_value": null,
+            "evidence_quote": "significantly outperforming prior works by 8.58 times",
+            "confidence": 0.9
+          },
+          {
+            "name": "bugs_detected",
+            "value": 3.0,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "bugs found in ArduPilot and PX4 using RouthSearch",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "our method helps to detect three bugs in ArduPilot and PX4",
+            "confidence": 0.9
+          },
+          {
+            "name": "bug_detection_time_minutes",
+            "value": 1.5,
+            "unit": null,
+            "higher_is_better": false,
+            "setting": "Bug 3 detection time for RouthSearch; PGFuzz required 8.86 hours",
+            "is_sota_or_best": true,
+            "baseline_name": "PGFuzz",
+            "baseline_value": 8.86,
+            "evidence_quote": "RouthSearch consistently identified the same bug in just 1.5 minutes",
+            "confidence": 0.85
+          },
+          {
+            "name": "misconfigurations_discovered_case_study",
+            "value": 2002.0,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "case study bug discovery misconfigurations in ArduPilot and PX4",
+            "is_sota_or_best": true,
+            "baseline_name": "PGFuzz",
+            "baseline_value": 7.0,
+            "evidence_quote": "RouthSearchdiscovered 2, 002 PID misconfigurations, compared to the 7 found by PGFuzz.",
+            "confidence": 0.7
+          }
+        ],
+        "overall_conclusion": "RouthSearch combines the Routh-Hurwitz stability criterion with coordinate search to determine valid 3D PID parameter ranges. Across eight flight modes in ArduPilot and PX4, it achieved 92.0% accuracy and found 3,853 misconfigurations in 48 hours versus PGFuzz's 449, an 8.58x improvement. It also helped detect three bugs in ArduPilot and PX4.",
+        "comparable_notes": "Fair comparison details: experiments used ArduPilot SITL and PX4 jMAVSim with default settings; PGFuzz search space was aligned to PID control parameters and its online oracle was replaced with the same offline misbehavior validator; PGFuzz was run three times due randomness; ground truth was obtained by systematic exploration across the documented PID parameter space for each flight mode, requiring about 7000 CPU hours.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 5068,
+            "completion_tokens_details": {
+              "reasoning_tokens": 3415
+            },
+            "prompt_tokens": 7437,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 12505
+          },
+          "attempt": 0
+        },
+        "cache_hit": false
+      },
+      "agent": {
+        "status": "missing_agent_paper_or_metrics",
+        "run_dir": "~/ai_scientist_inputs/ISSTA-2025-002_identifying_safe_pid_parameter_ranges_fo/workspace/ai_scientist_2026-09-18_11-05-41"
+      }
+    },
+    "experiment_analysis": {
+      "run_dir": "~/ai_scientist_inputs/ISSTA-2025-002_identifying_safe_pid_parameter_ranges_fo/workspace/ai_scientist_2026-09-18_11-05-41",
+      "task_dir": "~/ai_scientist_inputs/ISSTA-2025-002_identifying_safe_pid_parameter_ranges_fo",
+      "status": "ok",
+      "metrics_path": null,
+      "experiment_success": {
+        "status": "failed_or_incomplete",
+        "success": false,
+        "metrics_path": null,
+        "absolute_metrics_path": null,
+        "checks": {
+          "has_results_file": false,
+          "non_stub": false,
+          "numeric_leaf_count": 0,
+          "min_numeric_ok": false
+        },
+        "manifest_hints": {
+          "status": {
+            "pipeline": false
+          },
+          "returncode": 1,
+          "benchmark_complete": null,
+          "artifacts_metrics_flag": false
+        },
+        "warnings": [
+          "manifest.returncode=1"
+        ],
+        "suspicious_values": [],
+        "note": "success=true requires substantive results (framework-aware path) with >=3 numeric leaves. Supports metrics.json, results.json, experiment_results.txt, etc. Manifest returncode/benchmark_complete are soft warnings only."
+      },
+      "idea_code_consistency": {
+        "status": "ok",
+        "idea_path": "session/idea.json",
+        "code_files": [
+          "experiments/2026-09-18_11-08-50_identifying_safe_pid_parameter_ranges_for_drones_attempt_0/logs/0-run/experiment_results/experiment_4879030845094ba1acb08f42cc419791_proc_310/experiment_code.py",
+          "experiments/2026-09-18_11-08-50_identifying_safe_pid_parameter_ranges_for_drones_attempt_0/logs/0-run/experiment_results/experiment_4879030845094ba1acb08f42cc419791_proc_310/plotting_code.py",
+          "experiments/2026-09-18_11-08-50_identifying_safe_pid_parameter_ranges_for_drones_attempt_0/logs/0-run/experiment_results/experiment_df9e9826a24d4747a4d45c129ee4d7e8_proc_309/experiment_code.py",
+          "experiments/2026-09-18_11-08-50_identifying_safe_pid_parameter_ranges_for_drones_attempt_0/logs/0-run/experiment_results/experiment_df9e9826a24d4747a4d45c129ee4d7e8_proc_309/plotting_code.py"
+        ],
+        "score_scale": "1-5",
+        "score": 2.0,
+        "label": "weak",
+        "justification": "The code addresses PID parameter validity as a supervised binary classification problem over P/I/D inputs, which overlaps with the idea's topic. However, it does not implement the proposed efficient search/boundary identification method, does not use UAV simulation for evaluation, does not compare against PGFuzz, and does not report the required time-budget misconfiguration-discovery metric. The core research question about searching multidimensional safe parameter ranges and search-algorithm comparison is replaced by training an MLP classifier, largely on synthetic data.",
+        "matched_elements": [
+          "Uses PID P/I/D parameters as model inputs",
+          "Classifies PID configurations as valid/invalid",
+          "Attempts to load the RouthSearch dataset candidate",
+          "Reports classification accuracy/F1"
+        ],
+        "missing_or_divergent_elements": [
+          "No ArduPilot SITL or PX4 jMAVSim simulation-based evaluation",
+          "No safe parameter range boundary identification or search algorithm",
+          "No PGFuzz baseline comparison",
+          "No RQ3 search algorithm comparison (hill climbing, genetic algorithms)",
+          "No 48-hour misconfiguration discovery metric",
+          "No multi-flight-mode protocol",
+          "Uses synthetic ellipsoid data rather than simulation-derived ground truth"
+        ],
+        "rubric": "Weak alignment: only superficial overlap; core hypothesis, method, or evaluation in the idea is missing or replaced.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 773,
+            "completion_tokens_details": {
+              "reasoning_tokens": 489
+            },
+            "prompt_tokens": 5182,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 5955
+          },
+          "attempt": 0
+        }
+      },
+      "setup_coverage": {
+        "status": "ok",
+        "overall_coverage": 0.5,
+        "datasets": {
+          "gold_count": 1,
+          "hit_count": 1,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "PID parameter validity benchmark"
+          ],
+          "misses": []
+        },
+        "baselines": {
+          "gold_count": 1,
+          "hit_count": 0,
+          "miss_count": 1,
+          "coverage": 0.0,
+          "hits": [],
+          "misses": [
+            "PGFuzz"
+          ]
+        },
+        "metrics": {
+          "gold_count": 2,
+          "hit_count": 1,
+          "miss_count": 1,
+          "coverage": 0.5,
+          "hits": [
+            "Accuracy"
+          ],
+          "misses": [
+            "Number of misconfigurations discovered"
+          ]
+        },
+        "agent_protocol": {},
+        "gold_protocol": {},
+        "dataset_dirs": [
+          "dataset_candidate"
+        ],
+        "flags": {
+          "weaker_baseline_suspected": true,
+          "weak_protocol": [],
+          "synthetic_data": "synthetic_allowed_by_task",
+          "gold_allows_synthetic": true
+        },
+        "gold_sources": [
+          "~/ai_scientist_inputs/ISSTA-2025-002_identifying_safe_pid_parameter_ranges_fo/task.md",
+          "~/ai_scientist_inputs/ISSTA-2025-002_identifying_safe_pid_parameter_ranges_fo/metadata.json"
+        ],
+        "note": "Coverage is name/alias matching against task.md Datasets/Baselines/Metrics. weak_protocol flags large reductions in trials/timeout vs Constraints. Synthetic corpora are not penalized when the task itself requires synthesis."
+      },
+      "ablation_significance": {
+        "status": "ok",
+        "idea_path": "session/idea.json",
+        "significance_signals_rule_based": {
+          "signals": [],
+          "artifact_paths": [],
+          "has_any_significance_artifact": false
+        },
+        "evidence_format": null,
+        "study_type": "empirical_comparison",
+        "components": [
+          {
+            "name": "Neural network PID validity classifier",
+            "role": "core_method",
+            "ablation_expected": false,
+            "significance_expected": false,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "No removable submodules are described; ablation would not be meaningful for this single classifier design.",
+            "significance_status": "not_required",
+            "significance_evidence": ""
+          },
+          {
+            "name": "PID parameter validity benchmark",
+            "role": "dataset",
+            "ablation_expected": false,
+            "significance_expected": false,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "Dataset construction is external; no dataset ablation expected.",
+            "significance_status": "not_required",
+            "significance_evidence": ""
+          },
+          {
+            "name": "PGFuzz baseline",
+            "role": "baseline",
+            "ablation_expected": false,
+            "significance_expected": true,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "Baseline is the comparison rather than an ablated component.",
+            "significance_status": "missing",
+            "significance_evidence": "No comparative metrics or statistical tests against PGFuzz are provided in the evidence."
+          },
+          {
+            "name": "Search algorithm variants (hill climbing, genetic algorithms)",
+            "role": "experiment_condition",
+            "ablation_expected": false,
+            "significance_expected": true,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "RQ3 is a controlled comparison condition rather than a module ablation.",
+            "significance_status": "missing",
+            "significance_evidence": "No RQ3 results or statistical tests are reported."
+          }
+        ],
+        "ablation_coverage_score": 1.0,
+        "overall_ablation_ok": true,
+        "overall_significance_ok": false,
+        "summary": "The run is an empirical comparison of a neural network PID validity classifier against a PGFuzz baseline and search algorithm variants, but final metrics and statistical significance tests are absent from the provided evidence. No component-level ablations are expected from the described method.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 3312,
+            "completion_tokens_details": {
+              "reasoning_tokens": 2799
+            },
+            "prompt_tokens": 4292,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 7604
+          },
+          "attempt": 1
+        }
+      },
+      "results_paper_consistency": {
+        "status": "missing_metrics"
+      },
+      "scores": {
+        "experiment_success": false,
+        "idea_code_score": 2.0,
+        "setup_coverage": 0.5,
+        "ablation_coverage_score": 1.0,
+        "overall_ablation_ok": true,
+        "overall_significance_ok": false,
+        "results_paper_score": null,
+        "hiding_unfavorable_suspected": null
+      },
+      "notes": [
+        "Axes 1,2,3,4,6 in experiment_analysis (figures excluded).",
+        "setup_coverage matches task.md Datasets/Baselines/Metrics; weak_protocol flags reductions vs Constraints.",
+        "Axis 6: final normalized results vs paper; interim run logs not used as ground truth."
+      ]
+    },
+    "literature_review": {
+      "run_dir": "~/ai_scientist_inputs/ISSTA-2025-002_identifying_safe_pid_parameter_ranges_fo/workspace/ai_scientist_2026-09-18_11-05-41",
+      "task_dir": "~/ai_scientist_inputs/ISSTA-2025-002_identifying_safe_pid_parameter_ranges_fo",
+      "status": "not_applicable",
+      "as_of_year": 2026,
+      "agent_ref_count": 0,
+      "sources": [],
+      "collection_audit": {
+        "cited_keys_count": 0,
+        "filter_mode": "none",
+        "bib_total_before_filter": 0,
+        "bib_after_filter": 0,
+        "uncited_bib_skipped": 0
+      },
+      "fabrication": null,
+      "coverage": null,
+      "recency": null,
+      "reason": "no_reference_artifacts",
+      "hint": "No literature artifacts found (bib / thebibliography / shortlist / related_work.txt / arxiv index). Marked not_applicable rather than failure — tool may not emit references in-run."
+    }
+  },
+  "scores": {
+    "completeness": {
+      "complete": false,
+      "overall_score": 0.6,
+      "required_score": 0.75,
+      "bonus_score": 0.03
+    },
+    "peer_review": {
+      "status": "not_provided",
+      "optional": true,
+      "overall_score": null,
+      "score_scale": "1-5",
+      "scoring_method": null
+    },
+    "idea_generation": {
+      "status": "ok",
+      "overall_score": 1.5,
+      "dimensions": {
+        "novelty": 1.0,
+        "feasibility": 3.0,
+        "clarity": 2.0
+      },
+      "novelty_category": "Existing",
+      "solution_space_status": "ok"
+    },
+    "alignment": {
+      "status": "missing_agent_paper_or_metrics",
+      "direction_consistency": null,
+      "overall_alignment_score": null
+    },
+    "literature_review": {
+      "fabrication_rate": null,
+      "coverage_recall": null,
+      "recency_ratio_3y": null,
+      "recency_ratio_5y": null
+    },
+    "experiment_analysis": {
+      "experiment_success": false,
+      "idea_code_score": 2.0,
+      "setup_coverage": 0.5,
+      "ablation_coverage_score": 1.0,
+      "overall_ablation_ok": true,
+      "overall_significance_ok": false,
+      "results_paper_score": null,
+      "hiding_unfavorable_suspected": null
+    }
+  },
+  "fair_scores": {
+    "applicable_axes": [
+      "completeness",
+      "idea_generation",
+      "experiment_analysis"
+    ],
+    "skipped_axes": [
+      {
+        "axis": "peer_review",
+        "reason": "optional_external_review"
+      },
+      {
+        "axis": "literature_review",
+        "reason": "not_applicable"
+      }
+    ],
+    "fair_mean_0_1": 0.45,
+    "note": "fair_mean_0_1 averages only applicable axes; optional peer review and framework-inapplicable literature are excluded from the denominator."
+  },
+  "evals_root": "~/ai_scientist_evals",
+  "claims_cache": "~/ai_scientist_evals/ISSTA-2025-002_identifying_safe_pid_parameter_ranges_fo/original_claims.json",
+  "solution_space_cache": "~/ai_scientist_evals/ISSTA-2025-002_identifying_safe_pid_parameter_ranges_fo/solution_space.json"
+}

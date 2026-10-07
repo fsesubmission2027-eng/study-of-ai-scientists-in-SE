@@ -1,0 +1,72 @@
+# Benchmark task profile: code on deepseek-v4-pro-0813, tool-calling stages on DeepSeek-V3.2-Exp
+data_dir: "data"
+preprocess_data: False
+
+goal: null
+eval: null
+
+log_dir: logs
+workspace_dir: workspaces
+
+copy_data: True
+
+exp_name: run
+
+exec:
+  timeout: 3600
+  agent_file_name: runfile.py
+  format_tb_ipython: False
+
+generate_report: True
+report:
+  model: deepseek-v4-pro-0813
+  temp: 1.0
+
+experiment:
+  num_syn_datasets: 1
+
+debug:
+  stage4: False
+
+agent:
+  type: parallel
+  num_workers: 4
+  stages:
+    stage1_max_iters: 20
+    stage2_max_iters: 12
+    stage3_max_iters: 12
+    stage4_max_iters: 18
+  steps: 5
+  k_fold_validation: 1
+  multi_seed_eval:
+    num_seeds: 3
+  expose_prediction: False
+  data_preview: False
+
+  code:
+    model: deepseek-v4-pro-0813
+    temp: 1.0
+    max_tokens: 12000
+
+  feedback:
+    model: deepseek-ai/DeepSeek-V3.2-Exp
+    temp: 0.5
+    max_tokens: 8192
+
+  select_node:
+    model: deepseek-ai/DeepSeek-V3.2-Exp
+    temp: 0.3
+
+  summary:
+    model: deepseek-ai/DeepSeek-V3.2-Exp
+    temp: 0.5
+
+  vlm_feedback:
+    model: gpt-4o-mini
+    temp: 0.5
+    max_tokens: null
+
+  search:
+    max_debug_depth: 3
+    debug_prob: 0.5
+    num_drafts: 3

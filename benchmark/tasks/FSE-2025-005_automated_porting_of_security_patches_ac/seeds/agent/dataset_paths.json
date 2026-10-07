@@ -1,0 +1,44 @@
+{
+  "dataset_root": "dataset_candidate/cve_patches",
+  "construction_required": true,
+  "construction_note": "This dataset does NOT exist pre-downloaded. You must construct it from public NVD/CVE records and GitHub commits. Follow the four-step protocol below.",
+  "construction_steps": [
+    "Step 1 — Collect: Use the NVD REST API (https://services.nvd.nist.gov/rest/json/cves/2.0) to query CVE entries for C projects. Filter for entries with GitHub references. Use PyGithub or the GitHub REST API to fetch the associated commits.",
+    "Step 2 — Expand: For each CVE commit, search for additional related commits in the same repo using edit-distance heuristics on diff hunks or commit message keywords (e.g., 'fix', 'patch', 'CVE', 'security').",
+    "Step 3 — Filter & Pair: Keep only function-level changes (parse with tree-sitter or ctags). For each CVE, identify the earliest pre-patch function and the latest post-patch function in the patched branch. These form the (original_before, original_after) pair. Pair with a target-branch vulnerable function (unfixed variant) if multiple branches exist.",
+    "Step 4 — Split: Sort by commit date. Before 2023-08-23 → fine-tuning set. After 2023-08-23 → evaluation set."
+  ],
+  "recommended_scale": {
+    "note": "Full paper scale (2,842 fine-tuning / 694 evaluation CVEs) is not feasible in a single run. Use a reduced scope.",
+    "minimal": "50 CVEs from popular C projects (Linux, OpenSSL, curl) — evaluation only with zero-shot LLM baselines",
+    "medium": "200 CVEs — evaluation only with zero-shot LLM baselines",
+    "full_with_gpu": "694 CVEs evaluation + 2,842 fine-tuning (requires GPU >=48GB for LoRA fine-tuning)"
+  },
+  "recommended_sources": [
+    "Linux kernel: https://github.com/torvalds/linux",
+    "OpenSSL: https://github.com/openssl/openssl",
+    "curl: https://github.com/curl/curl",
+    "libpng: https://github.com/glennrp/libpng",
+    "FFmpeg: https://github.com/FFmpeg/FFmpeg"
+  ],
+  "nvd_api": {
+    "base_url": "https://services.nvd.nist.gov/rest/json/cves/2.0",
+    "example_query": "?keywordSearch=linux+kernel&startIndex=0&resultsPerPage=100",
+    "note": "API key not required but rate-limited; add Nvd-Api-Key header if available"
+  },
+  "directory_layout": {
+    "dataset_candidate/cve_patches/": "Root dataset directory (create this)",
+    "dataset_candidate/cve_patches/raw/": "Raw CVE records and commit diffs",
+    "dataset_candidate/cve_patches/processed/": "Function-level patch pairs (JSON/CSV)",
+    "dataset_candidate/cve_patches/finetune/": "Fine-tuning split (before 2023-08-23)",
+    "dataset_candidate/cve_patches/eval/": "Evaluation split (after 2023-08-23)"
+  },
+  "sample_record_format": {
+    "cve_id": "CVE-YYYY-NNNNN",
+    "project": "linux",
+    "original_branch_before": "<C function source before patch>",
+    "original_branch_after": "<C function source after patch>",
+    "target_branch_vulnerable": "<C function in target branch, unfixed>",
+    "target_branch_fix": "<Human-written fix for target branch — evaluation only>"
+  }
+}

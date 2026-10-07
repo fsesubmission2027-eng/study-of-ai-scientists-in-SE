@@ -1,0 +1,1898 @@
+{
+  "run_dir": "~/ai_scientist_inputs/FSE-2025-005_automated_porting_of_security_patches_ac/workspace/evoscientist_2026-08-19_10-43-32",
+  "task_dir": "~/ai_scientist_inputs/FSE-2025-005_automated_porting_of_security_patches_ac",
+  "framework": "evoscientist",
+  "fairness_audit": [
+    {
+      "axis": "completeness",
+      "was_unfair": "Required both paper.tex AND paper.pdf; any tool missing one failed equally.",
+      "fix": "Paper gate: PDF=1.0; TeX-only=0.5; ``complete`` requires PDF."
+    },
+    {
+      "axis": "completeness",
+      "was_unfair": "``results`` counted stub/seed JSON (dataset_candidate/metrics.json).",
+      "fix": "``results`` requires substantive numeric results via results_normalize."
+    },
+    {
+      "axis": "experiment_success",
+      "was_unfair": "Only metrics.json; ignored results.json / experiment_results.txt.",
+      "fix": "Framework-ordered result candidates + normalized loaders."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Penalized tools with no bib; airesearcher has no workspace references.",
+      "fix": "literature_applicable=false → status not_applicable; excluded from fair aggregate."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "related_work.json subset as gold made recall hard to interpret.",
+      "fix": "Coverage gold is original paper REFERENCES from mineru; related_work only enriches metadata/fallback."
+    },
+    {
+      "axis": "peer_review",
+      "was_unfair": "Missing Stanford report looked like evaluation failure.",
+      "fix": "status not_provided; optional axis, never counts as tool failure."
+    },
+    {
+      "axis": "paths/find_results",
+      "was_unfair": "Picked downloads/** and sandbox noise (e.g. airesearcher LLVM tree).",
+      "fix": "Exclude downloads/, seeds/, dataset_candidate/, sandbox junk paths."
+    },
+    {
+      "axis": "paths/framework_noise",
+      "was_unfair": "DeepScientist .deepscientist_npm / runtime / skills templates counted as code/paper/results.",
+      "fix": "FRAMEWORK_NOISE_DIRS+markers; quest worktree + eval_output results; paper md drafts; reject template tex."
+    },
+    {
+      "axis": "paths/paper_tex",
+      "was_unfair": "tiny_scientist / ACL runs store paper under latex/*.tex; evaluator only looked at paper/main.tex.",
+      "fix": "latex/**/*.tex with substantive-body heuristic; find_paper_document uses same rules."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Entire custom.bib (300+ anthology entries) verified when paper had zero \\cite commands.",
+      "fix": "collect_agent_references filters bib to in-text cite keys; skips uncited bulk bib (>40 entries)."
+    },
+    {
+      "axis": "paths/ai_scientist_summaries",
+      "was_unfair": "AI Scientist can persist substantive results and paper-like drafts in *_summary.json logs rather than paper/main.tex or results/**/*.json.",
+      "fix": "Treat draft_summary/research_summary as weak paper documents and summary JSONs as result candidates."
+    },
+    {
+      "axis": "framework/ai_scientist_v2",
+      "was_unfair": "Manifest framework ``ai_scientist_v2`` fell through to profile ``unknown``, skipping AI-Scientist idea/result path priorities.",
+      "fix": "Normalize ``ai_scientist_v2`` (and common aliases) to profile key ``ai_scientist``."
+    },
+    {
+      "axis": "idea_generation",
+      "was_unfair": "plan.md/todos.md weak proxies scored same as structured idea.json.",
+      "fix": "Framework idea_priority tried first; missing idea → not_applicable where appropriate."
+    }
+  ],
+  "generated_at": "2026-10-01T11:14:02",
+  "axes": [
+    "alignment",
+    "completeness",
+    "experiment_analysis",
+    "idea_generation",
+    "literature_review",
+    "peer_review"
+  ],
+  "results": {
+    "completeness": {
+      "framework": "evoscientist",
+      "run_dir": "~/ai_scientist_inputs/FSE-2025-005_automated_porting_of_security_patches_ac/workspace/evoscientist_2026-08-19_10-43-32",
+      "task_dir": "~/ai_scientist_inputs/FSE-2025-005_automated_porting_of_security_patches_ac",
+      "complete": true,
+      "required_score": 1.0,
+      "bonus_score": 0.09,
+      "overall_score": 0.8453,
+      "missing": [],
+      "required": {
+        "idea": {
+          "path": "plan.md",
+          "bytes": 1007,
+          "via": "candidate"
+        },
+        "code": {
+          "count": 4,
+          "files": [
+            {
+              "path": "project/build_dataset.py",
+              "bytes": 13588,
+              "via": "glob"
+            },
+            {
+              "path": "project/create_divergent_dataset.py",
+              "bytes": 22873,
+              "via": "glob"
+            },
+            {
+              "path": "project/run_experiments.py",
+              "bytes": 15334,
+              "via": "glob"
+            },
+            {
+              "path": "project/vulnsliceport.py",
+              "bytes": 67408,
+              "via": "glob"
+            }
+          ]
+        },
+        "results": {
+          "substantive": true,
+          "normalized_path": "results/experiment_results.json",
+          "numeric_leaf_count": 600,
+          "discovered_files": [
+            {
+              "path": "experiment_results/metrics.json",
+              "bytes": 95,
+              "via": "candidate"
+            },
+            {
+              "path": "results/metrics.json",
+              "bytes": 95,
+              "via": "candidate"
+            },
+            {
+              "path": "results/metrics_full.json",
+              "bytes": 1161,
+              "via": "glob"
+            },
+            {
+              "path": "results/experiment_results.json",
+              "bytes": 48630,
+              "via": "glob"
+            }
+          ],
+          "metrics_keys_sample": []
+        },
+        "paper": {
+          "tex": {
+            "path": "paper/main.tex",
+            "bytes": 48634,
+            "via": "candidate"
+          },
+          "pdf": {
+            "path": "paper/main.pdf",
+            "bytes": 235609,
+            "via": "candidate"
+          },
+          "md": null,
+          "json": null,
+          "status": "pdf",
+          "score": 1.0
+        }
+      },
+      "bonus": {
+        "experiment_plan": {
+          "path": "plan.md",
+          "bytes": 1007,
+          "via": "candidate"
+        },
+        "experiment_log": {
+          "path": "evoscientist_run.log",
+          "bytes": 64963,
+          "via": "glob"
+        },
+        "review": null,
+        "readme": {
+          "path": "README.md",
+          "bytes": 5654,
+          "via": "candidate"
+        },
+        "narrative": null,
+        "bib": null
+      },
+      "manifest_status": {
+        "research_request": true,
+        "plan": true,
+        "metrics": true,
+        "paper_tex": true,
+        "paper_pdf": true,
+        "readme": true
+      },
+      "gate_scores": {
+        "idea": 1.0,
+        "code": 1.0,
+        "results": 1.0,
+        "paper": 1.0
+      },
+      "fairness": {
+        "gates": [
+          "idea",
+          "code",
+          "results",
+          "paper"
+        ],
+        "paper_gate_rule": "PDF=1.0; TeX-only/md_only/json_only=0.5; complete requires PDF",
+        "results_gate_rule": "substantive numeric results via framework-aware normalize_results",
+        "audit_ref": "framework_profile.FAIRNESS_AUDIT"
+      },
+      "notes": [
+        "Required: idea, code, substantive results, paper (PDF full; TeX/markdown/JSON draft half).",
+        "Stub/seed metrics (e.g. dataset_candidate/metrics.json) do not satisfy results.",
+        "Framework noise (.deepscientist_npm, skills/templates, runtime) is excluded from code/results/paper.",
+        "Manifest status is informational; disk presence is authoritative."
+      ]
+    },
+    "idea_generation": {
+      "run_dir": "~/ai_scientist_inputs/FSE-2025-005_automated_porting_of_security_patches_ac/workspace/evoscientist_2026-08-19_10-43-32",
+      "task_dir": "~/ai_scientist_inputs/FSE-2025-005_automated_porting_of_security_patches_ac",
+      "idea_path": "~/ai_scientist_inputs/FSE-2025-005_automated_porting_of_security_patches_ac/workspace/evoscientist_2026-08-19_10-43-32/plan.md",
+      "status": "ok",
+      "dimensions": {
+        "novelty": {
+          "score": 2.0,
+          "justification": "The core method is only described as '4-stage pipeline (slicing, CPG, porting, verification)' and asks whether 'self-verification improve correctness'. This appears to splice known patch-porting, semantic/CPG, and verification components already represented by R31/R57/R38/R43, without deep mechanism innovation at the junction.",
+          "rubric": "Trivial Mashup: a hard splice of existing technique A with technique B (e.g. swapping one module for an LLM) without deep mechanism innovation at the junction.",
+          "category": "Trivial Mashup",
+          "nearest_solution_space_ids": [
+            "R31",
+            "R57",
+            "R38",
+            "R43"
+          ],
+          "differentiation": "The named combination of slicing, CPG, porting, and self-verification is not explicitly present as one system in the Solution Space, but each component maps to existing patch-porting, semantic-analysis, and verification work; no junction mechanism is described."
+        },
+        "feasibility": {
+          "score": 3.0,
+          "justification": "The plan claims 'Implementation ✅' and reports 'Results on 41 evaluation pairs', but building a custom slicing/CPG/verification pipeline is nontrivial engineering. The artifact gives no evidence that the burden is reduced below standard research engineering effort.",
+          "rubric": "Moderate workload (sweet spot): needs nontrivial coding such as scripting existing open-source tools (parsers, CFG extractors) or building a custom graph-processing pipeline; standard research engineering effort."
+        },
+        "clarity": {
+          "score": 3.0,
+          "justification": "The artifact provides RQs and a results table, but the method is only '4-stage pipeline (slicing, CPG, porting, verification)' with no algorithm, CPG construction, verification design, or baseline configuration. Key technical execution details are missing.",
+          "rubric": "Complete frame but missing details: What/Why/How are present, yet key technical execution details or specific comparison plans are underspecified."
+        }
+      },
+      "overall_score": 2.5,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "novelty",
+        "feasibility",
+        "clarity"
+      ],
+      "solution_space": {
+        "status": "ok",
+        "paper_count": 84,
+        "entry_count": 84,
+        "cache_hit": true,
+        "source_file": "~/ai_scientist_inputs/FSE-2025-005_automated_porting_of_security_patches_ac/mineru_sections.json",
+        "stats": {
+          "papers": 84,
+          "extracted": 84,
+          "usable_abstracts": 20,
+          "citation_meta_abstracts": 1,
+          "missing_abstracts": 63,
+          "mineru_titles": 60,
+          "related_work_titles": 29,
+          "abstracts_attached": 21,
+          "related_work_extras": 24,
+          "batches": 5
+        },
+        "error": null
+      },
+      "notes": [
+        "Scores the intermediate idea artifact (not the final paper).",
+        "Dimensions: novelty, feasibility, clarity (each 1-5). Excitement removed.",
+        "Novelty is scored against a Solution Space built from mineru REFERENCES titles (+ related_work.json abstracts when matched)."
+      ],
+      "idea_via": "candidate",
+      "idea_relative": "plan.md",
+      "summary": "VulnSlicePort proposes a 4-stage pipeline (slicing, CPG, porting, verification) for porting security patches across divergent C branches. The artifact reports results on 41 evaluation pairs, but lacks method details. Novelty is limited relative to existing semantic/zero-shot patch porting work; it appears to combine known components without deep mechanism innovation. Feasibility is moderate, and clarity is only a high-level plan. Overall, the idea is under-specified and incremental.",
+      "strengths": [
+        "Defines clear RQs and evaluation metrics (E-M%, Succ%, C-B).",
+        "Includes baselines and ablation/self-verification questions.",
+        "Reports concrete experimental results on 41 pairs."
+      ],
+      "weaknesses": [
+        "No technical details for slicing, CPG, porting, or verification stages.",
+        "Very small evaluation set (41 pairs) and limited dataset construction description.",
+        "Novelty is unclear relative to existing semantic/zero-shot patch porting work.",
+        "No limitations, threats to validity, or failure analysis."
+      ],
+      "llm_meta": {
+        "model": "deepseek-v4-pro-0813",
+        "base_url": "https://api-sg.umodelverse.ai/v1",
+        "usage": {
+          "completion_tokens": 3449,
+          "completion_tokens_details": {
+            "reasoning_tokens": 2864
+          },
+          "prompt_tokens": 6341,
+          "prompt_tokens_details": {
+            "cached_tokens": 4096
+          },
+          "total_tokens": 9790
+        },
+        "attempt": 0
+      }
+    },
+    "peer_review": {
+      "run_dir": "~/ai_scientist_inputs/FSE-2025-005_automated_porting_of_security_patches_ac/workspace/evoscientist_2026-08-19_10-43-32",
+      "review_report": "~/ai_scientist_inputs/FSE-2025-005_automated_porting_of_security_patches_ac/workspace/evoscientist_2026-08-19_10-43-32/artifacts/peer_review/stanford_apr.md",
+      "paper_pdf": "~/ai_scientist_inputs/FSE-2025-005_automated_porting_of_security_patches_ac/workspace/evoscientist_2026-08-19_10-43-32/paper/main.pdf",
+      "paper_tex": "~/ai_scientist_inputs/FSE-2025-005_automated_porting_of_security_patches_ac/workspace/evoscientist_2026-08-19_10-43-32/paper/main.tex",
+      "status": "ok",
+      "dimensions": {},
+      "overall_score": 3.3,
+      "score_scale": "1-10",
+      "dimension_order": [],
+      "notes": [
+        "Scored from paperreview.ai (Stanford APR) native ratings; benchmark 5-dimension LLM rubric skipped.",
+        "Overall scale: 1-10."
+      ],
+      "paperreview": {
+        "status": "cached",
+        "hint": "Cached APR score found; no re-upload."
+      },
+      "scoring_method": "paperreview_apr",
+      "scoring_source": "paperreview_json",
+      "apr_dimensions": {
+        "Claims_Support": -1.0,
+        "Experimental_Soundness": -1.0,
+        "Writing_Clarity": -1.0,
+        "Prior_Work_Context": 0.0,
+        "Question_Importance": 1.0,
+        "Originality": 0.0,
+        "Value_to_Community": -1.0
+      },
+      "summary": "",
+      "red_flags": []
+    },
+    "alignment": {
+      "run_dir": "~/ai_scientist_inputs/FSE-2025-005_automated_porting_of_security_patches_ac/workspace/evoscientist_2026-08-19_10-43-32",
+      "task_dir": "~/ai_scientist_inputs/FSE-2025-005_automated_porting_of_security_patches_ac",
+      "status": "ok",
+      "original": {
+        "paper_title": "Mystique: Automated Vulnerability Patch Porting with Semantic and Syntactic-Enhanced LLM",
+        "selection": {
+          "num_blocks": 7,
+          "total_chars": 31998,
+          "inferred_roles": {
+            "abstract": 1,
+            "introduction": 1,
+            "experiment": 3,
+            "discussion": 1,
+            "conclusion": 1
+          },
+          "mineru_raw_keys": {
+            "field:abstract": 1,
+            "field:introduction": 1,
+            "field:experiment": 1,
+            "other": 3,
+            "conclusion": 1
+          },
+          "infer_reasons": {
+            "top_level_field": 3,
+            "title": 4
+          },
+          "rescued_from_other": 3,
+          "note": "mineru key is unreliable; blocks are selected by title/body/inheritance. rescued_from_other counts sections labeled other but treated as typed roles."
+        },
+        "claims": [
+          {
+            "id": "C1",
+            "statement": "Mystique achieves a success rate of 0.954 at function level and 0.924 at CVE level on the patch porting dataset.",
+            "direction": "improves",
+            "metric_names": [
+              "success_ratio"
+            ],
+            "evidence_quote": "Mystique achieved a success rate of 0.954 at function level and of 0.924 at CVE level",
+            "confidence": 0.98
+          },
+          {
+            "id": "C2",
+            "statement": "Mystique outperforms state-of-the-art approaches by at least 13.2% at function level and 12.3% at CVE level.",
+            "direction": "improves",
+            "metric_names": [
+              "success_ratio"
+            ],
+            "evidence_quote": "outperforming state-of-the-art approaches by at least 13.2% at function level and 12.3% at CVE level.",
+            "confidence": 0.98
+          },
+          {
+            "id": "C3",
+            "statement": "Compared with the best state-of-the-art baseline TSBPORT, Mystique improves Succ rate by 0.111 (13.2%) at function level and 0.101 (12.3%) at CVE level.",
+            "direction": "improves",
+            "metric_names": [
+              "success_ratio"
+            ],
+            "evidence_quote": "Mystique not only improves in the Succ rate by 0.101 (12.3%) and 0.111 (13.2%) at CVE and function level",
+            "confidence": 0.95
+          },
+          {
+            "id": "C4",
+            "statement": "Mystique achieves the highest Code BLEU of 0.921 on failed patches, indicating failed patches are closer to true patches than baselines.",
+            "direction": "improves",
+            "metric_names": [
+              "code_bleu"
+            ],
+            "evidence_quote": "C-B, which assesses the closeness of failed patches to the true patch, is highest for Mystique at 0.921",
+            "confidence": 0.95
+          },
+          {
+            "id": "C5",
+            "statement": "Mystique outperforms the LLM-based PPatHF by 140% at CVE level and 73.5% at function level in Succ rate.",
+            "direction": "improves",
+            "metric_names": [
+              "success_ratio"
+            ],
+            "evidence_quote": "Mystique markedly outperforms it in the Succ rate at CVE and function level by 0.539 (140%) and 0.404 (73.5%)",
+            "confidence": 0.95
+          },
+          {
+            "id": "C6",
+            "statement": "Mystique outperforms GPT-4o by 29.1% at CVE level and 18.5% at function level in Succ rate.",
+            "direction": "improves",
+            "metric_names": [
+              "success_ratio"
+            ],
+            "evidence_quote": "Mystique significantly surpasses GPT-4o in the Succ rate by 0.208 (29.1%) and 0.149 (18.5%) at CVE and function level",
+            "confidence": 0.95
+          },
+          {
+            "id": "C7",
+            "statement": "Mystique shows superior generality across different projects, bugs, and programming languages, outperforming state-of-the-art approaches by at least 112.5%, 18.6%, and 15.4% at function level in three generality tasks.",
+            "direction": "improves",
+            "metric_names": [
+              "success_ratio"
+            ],
+            "evidence_quote": "Mystique exhibits superior generality, outperforming the state-of-the-art approaches by at least 112.5%, 18.6%, and 15.4% at function level in the three generality tasks.",
+            "confidence": 0.8
+          },
+          {
+            "id": "C8",
+            "statement": "In cross-LLM porting, Mystique-StarCoder improves function-level Succ from 0.550 to 0.806 and CVE-level Succ from 0.385 to 0.710 over PPatHF-StarCoder.",
+            "direction": "improves",
+            "metric_names": [
+              "success_ratio"
+            ],
+            "evidence_quote": "Succ rises from 0.385 to 0.710 at the CVE level and from 0.550 to 0.806 at the function level.",
+            "confidence": 0.95
+          },
+          {
+            "id": "C9",
+            "statement": "In cross-project porting, Mystique achieves function-level Succ of 0.894 (L./O.) and 0.950 (O./L.), compared to PPatHF's 0.357 and 0.447.",
+            "direction": "improves",
+            "metric_names": [
+              "success_ratio"
+            ],
+            "evidence_quote": "288 (0.894) ... 985 (0.950)",
+            "confidence": 0.9
+          },
+          {
+            "id": "C10",
+            "statement": "Mystique successfully ported patches for 34 real-world vulnerable branches, with 29 successfully merged.",
+            "direction": "improves",
+            "metric_names": [
+              "merged_count"
+            ],
+            "evidence_quote": "Mystique successfully ported patches for 34 real-world vulnerable branches.",
+            "confidence": 0.9
+          },
+          {
+            "id": "C11",
+            "statement": "Ablation study and parameter sensitivity analysis evaluate the contribution of each critical module and parameter in Mystique.",
+            "direction": "neutral",
+            "metric_names": [],
+            "evidence_quote": "we conduct an ablation study and parameter sensitivity analysis to evaluate the contribution of each critical module and parameter in Mystique.",
+            "confidence": 0.9
+          },
+          {
+            "id": "C12",
+            "statement": "Failure analysis of 62 failed functions shows 35 signature-related, 19 LLM-related, 6 tool-related, and 2 branch-related failures.",
+            "direction": "neutral",
+            "metric_names": [
+              "failure_count"
+            ],
+            "evidence_quote": "there are 62 functions that Mystique fails to patch. The majority of failures are signature-related (35 failures)",
+            "confidence": 0.9
+          },
+          {
+            "id": "C13",
+            "statement": "The evaluation uses 694 CVEs involving 1,359 vulnerable functions for patch porting, with 2,842 CVEs and 4,618 patch pairs for fine-tuning.",
+            "direction": "neutral",
+            "metric_names": [
+              "dataset_size"
+            ],
+            "evidence_quote": "694 CVEs with their 1,359 patch pairs at function level for the patch porting task and 2,842 CVEs with their 4,618 patch pairs at function level for the fine-tuning task.",
+            "confidence": 0.95
+          }
+        ],
+        "metrics": [
+          {
+            "name": "success_ratio",
+            "value": 0.954,
+            "unit": "ratio",
+            "higher_is_better": true,
+            "setting": "Mystique function-level patch porting on 694 CVEs / 1,359 functions",
+            "is_sota_or_best": true,
+            "baseline_name": "TSBPORT",
+            "baseline_value": 0.843,
+            "evidence_quote": "1,297 (0.954)",
+            "confidence": 0.98
+          },
+          {
+            "name": "success_ratio",
+            "value": 0.924,
+            "unit": "ratio",
+            "higher_is_better": true,
+            "setting": "Mystique CVE-level patch porting on 694 CVEs",
+            "is_sota_or_best": true,
+            "baseline_name": "TSBPORT",
+            "baseline_value": 0.823,
+            "evidence_quote": "641 (0.924)",
+            "confidence": 0.98
+          },
+          {
+            "name": "exact_match",
+            "value": 0.944,
+            "unit": "ratio",
+            "higher_is_better": true,
+            "setting": "Mystique function-level exact match on 1,359 functions",
+            "is_sota_or_best": true,
+            "baseline_name": "TSBPORT",
+            "baseline_value": 0.829,
+            "evidence_quote": "1,283 (0.944)",
+            "confidence": 0.95
+          },
+          {
+            "name": "exact_match",
+            "value": 0.905,
+            "unit": "ratio",
+            "higher_is_better": true,
+            "setting": "Mystique CVE-level exact match on 694 CVEs",
+            "is_sota_or_best": true,
+            "baseline_name": "TSBPORT",
+            "baseline_value": 0.803,
+            "evidence_quote": "628 (0.905)",
+            "confidence": 0.95
+          },
+          {
+            "name": "code_bleu",
+            "value": 0.921,
+            "unit": "ratio",
+            "higher_is_better": true,
+            "setting": "Mystique failed patches similarity to human ported patches",
+            "is_sota_or_best": true,
+            "baseline_name": "TSBPORT",
+            "baseline_value": 0.919,
+            "evidence_quote": "C-B ... is highest for Mystique at 0.921",
+            "confidence": 0.95
+          },
+          {
+            "name": "failure_rate",
+            "value": 0.046,
+            "unit": "ratio",
+            "higher_is_better": false,
+            "setting": "Mystique function-level failure rate on 1,359 functions",
+            "is_sota_or_best": true,
+            "baseline_name": "TSBPORT",
+            "baseline_value": 0.157,
+            "evidence_quote": "62 (0.046)",
+            "confidence": 0.95
+          },
+          {
+            "name": "success_ratio",
+            "value": 0.806,
+            "unit": "ratio",
+            "higher_is_better": true,
+            "setting": "Mystique-StarCoder function-level cross-LLM porting",
+            "is_sota_or_best": true,
+            "baseline_name": "PPatHF-StarCoder",
+            "baseline_value": 0.55,
+            "evidence_quote": "Succ rises ... from 0.550 to 0.806 at the function level",
+            "confidence": 0.95
+          },
+          {
+            "name": "success_ratio",
+            "value": 0.71,
+            "unit": "ratio",
+            "higher_is_better": true,
+            "setting": "Mystique-StarCoder CVE-level cross-LLM porting",
+            "is_sota_or_best": true,
+            "baseline_name": "PPatHF-StarCoder",
+            "baseline_value": 0.385,
+            "evidence_quote": "Succ rises from 0.385 to 0.710 at the CVE level",
+            "confidence": 0.95
+          },
+          {
+            "name": "success_ratio",
+            "value": 0.894,
+            "unit": "ratio",
+            "higher_is_better": true,
+            "setting": "Mystique cross-project L./O. function-level",
+            "is_sota_or_best": true,
+            "baseline_name": "PPatHF",
+            "baseline_value": 0.357,
+            "evidence_quote": "288 (0.894)",
+            "confidence": 0.9
+          },
+          {
+            "name": "success_ratio",
+            "value": 0.95,
+            "unit": "ratio",
+            "higher_is_better": true,
+            "setting": "Mystique cross-project O./L. function-level",
+            "is_sota_or_best": true,
+            "baseline_name": "PPatHF",
+            "baseline_value": 0.447,
+            "evidence_quote": "985 (0.950)",
+            "confidence": 0.9
+          }
+        ],
+        "overall_conclusion": "Mystique, an LLM-based patch porting approach with semantic/syntactic signature extraction and iterative checking-refining, achieves 0.954 function-level and 0.924 CVE-level success, outperforming TSBPORT by 13.2% and 12.3% respectively. It also demonstrates better generality across LLMs, projects, bugs, and Java, and successfully ports 34 real-world vulnerable branches.",
+        "comparable_notes": "Fair comparison should use the same 694 CVE / 1,359 function patch porting dataset and the same fine-tuning split (pre/post CodeLlama release date). PPatHF was fine-tuned on a larger commit-history dataset (23,561 Linux + 7,913 other commits) rather than the same patch porting task. FixMorph was evaluated only on Linux subset due to compilation constraints. Metrics include Exact Match, Success (semantic equivalence), Failure rate, and Code BLEU; success is based on semantic equivalence to manually ported patches.",
+        "cache_hit": true
+      },
+      "agent": {
+        "status": "ok",
+        "run_dir": "~/ai_scientist_inputs/FSE-2025-005_automated_porting_of_security_patches_ac/workspace/evoscientist_2026-08-19_10-43-32",
+        "claims": [
+          {
+            "id": "A1",
+            "statement": "VulnSlicePort addresses automated security patch porting through vulnerability-preserving slicing, CPG-enhanced LLM prompting, and iterative self-verification.",
+            "direction": "neutral",
+            "metric_names": [],
+            "evidence_quote": "We present VulnSlicePort, a system that addresses this gap through three interconnected mechanisms: (1) vulnerability-preserving slicing... (2) Code Property Graph (CPG) construction... and (3) an iterative self-verification loop...",
+            "confidence": 0.95
+          },
+          {
+            "id": "A2",
+            "statement": "Existing automated patch porting tools either operate at the syntactic hunk level or use LLMs at function granularity without distinguishing security-critical changes from incidental ones.",
+            "direction": "neutral",
+            "metric_names": [],
+            "evidence_quote": "Existing automated patch porting tools either operate at the syntactic hunk level, missing the semantic context needed for correct integration, or leverage large language models (LLMs) to port patches at function granularity but treat the patch as a general-purpose code transformation without distinguishing security-critical changes from incidental ones.",
+            "confidence": 0.9
+          },
+          {
+            "id": "A3",
+            "statement": "Manual security patch porting is slow, labor-intensive, and error-prone, with studies reporting approximately 30% of Linux kernel stable backports introduce regressions due to semantic mismatches.",
+            "direction": "neutral",
+            "metric_names": [],
+            "evidence_quote": "Manual security patch porting is slow, labor-intensive, and error-prone... Studies of Linux kernel stable backports report that approximately 30% of patch backports introduce regressions due to semantic mismatches between branches.",
+            "confidence": 0.9
+          },
+          {
+            "id": "A4",
+            "statement": "In deterministic mode, PPatHF achieves the best overall performance among evaluated methods.",
+            "direction": "improves",
+            "metric_names": [
+              "exact_match",
+              "success",
+              "code_bleu"
+            ],
+            "evidence_quote": "In deterministic mode, PPatHF achieves the best overall performance (26.8% E-M, 90.2% Succ, 0.907 Code BLEU), while VulnSlicePort achieves 14.6% E-M, 73.2% Succ, and 0.795 Code BLEU.",
+            "confidence": 0.95
+          },
+          {
+            "id": "A5",
+            "statement": "VulnSlicePort achieves 14.6% exact match, 73.2% success, and 0.795 Code BLEU in deterministic mode.",
+            "direction": "neutral",
+            "metric_names": [
+              "exact_match",
+              "success",
+              "code_bleu"
+            ],
+            "evidence_quote": "VulnSlicePort achieves 14.6% E-M, 73.2% Succ, and 0.795 Code BLEU.",
+            "confidence": 0.95
+          },
+          {
+            "id": "A6",
+            "statement": "Removing CPG context or self-verification reduces Code BLEU by 0.007-0.008 points, confirming their contribution to partial correctness.",
+            "direction": "degrades",
+            "metric_names": [
+              "code_bleu"
+            ],
+            "evidence_quote": "Ablations reveal that removing CPG context or self-verification reduces Code BLEU by 0.007--0.008 points, confirming their contribution to partial correctness even when they do not alter the success/failure classification.",
+            "confidence": 0.9
+          },
+          {
+            "id": "A7",
+            "statement": "Deterministic results establish a performance floor, and LLM-backed porting is expected to substantially improve all metrics.",
+            "direction": "improves",
+            "metric_names": [
+              "exact_match",
+              "success",
+              "code_bleu"
+            ],
+            "evidence_quote": "These deterministic results establish a performance floor; we expect LLM-backed porting to substantially improve all metrics.",
+            "confidence": 0.7
+          },
+          {
+            "id": "A8",
+            "statement": "Evaluation uses 41 function-level CVE patch pairs from Linux kernel and OpenSSL, spanning 18 distinct CVEs and temporally split at August 2023, compared against four baselines and three ablations.",
+            "direction": "neutral",
+            "metric_names": [],
+            "evidence_quote": "We evaluate VulnSlicePort on a dataset of 41 function-level CVE patch pairs from the Linux kernel and OpenSSL (spanning 18 distinct CVEs, temporally split at August 2023), comparing against four baselines (NaiveDiffCopy, TSBPORT, PPatHF, RawLLM) and three ablations.",
+            "confidence": 0.95
+          },
+          {
+            "id": "A9",
+            "statement": "NaiveDiffCopy achieves mean exact match of 15.0%, mean success of 70.0%, and mean Code BLEU of 0.800 across 20 CVE records.",
+            "direction": "neutral",
+            "metric_names": [
+              "exact_match",
+              "success",
+              "code_bleu"
+            ],
+            "evidence_quote": "Aggregated from results/experiment_results.json (20 NaiveDiffCopy records).",
+            "confidence": 0.95
+          }
+        ],
+        "metrics": [
+          {
+            "name": "PPatHF exact_match",
+            "value": 26.8,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "deterministic mode",
+            "is_sota_or_best": true,
+            "baseline_name": "VulnSlicePort",
+            "baseline_value": 14.6,
+            "evidence_quote": "In deterministic mode, PPatHF achieves the best overall performance (26.8% E-M, 90.2% Succ, 0.907 Code BLEU), while VulnSlicePort achieves 14.6% E-M, 73.2% Succ, and 0.795 Code BLEU.",
+            "confidence": 0.95
+          },
+          {
+            "name": "PPatHF success",
+            "value": 90.2,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "deterministic mode",
+            "is_sota_or_best": true,
+            "baseline_name": "VulnSlicePort",
+            "baseline_value": 73.2,
+            "evidence_quote": "In deterministic mode, PPatHF achieves the best overall performance (26.8% E-M, 90.2% Succ, 0.907 Code BLEU), while VulnSlicePort achieves 14.6% E-M, 73.2% Succ, and 0.795 Code BLEU.",
+            "confidence": 0.95
+          },
+          {
+            "name": "PPatHF code_bleu",
+            "value": 0.907,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "deterministic mode",
+            "is_sota_or_best": true,
+            "baseline_name": "VulnSlicePort",
+            "baseline_value": 0.795,
+            "evidence_quote": "In deterministic mode, PPatHF achieves the best overall performance (26.8% E-M, 90.2% Succ, 0.907 Code BLEU), while VulnSlicePort achieves 14.6% E-M, 73.2% Succ, and 0.795 Code BLEU.",
+            "confidence": 0.95
+          },
+          {
+            "name": "VulnSlicePort exact_match",
+            "value": 14.6,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "deterministic mode",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "VulnSlicePort achieves 14.6% E-M, 73.2% Succ, and 0.795 Code BLEU.",
+            "confidence": 0.95
+          },
+          {
+            "name": "VulnSlicePort success",
+            "value": 73.2,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "deterministic mode",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "VulnSlicePort achieves 14.6% E-M, 73.2% Succ, and 0.795 Code BLEU.",
+            "confidence": 0.95
+          },
+          {
+            "name": "VulnSlicePort code_bleu",
+            "value": 0.795,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "deterministic mode",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "VulnSlicePort achieves 14.6% E-M, 73.2% Succ, and 0.795 Code BLEU.",
+            "confidence": 0.95
+          },
+          {
+            "name": "NaiveDiffCopy exact_match mean",
+            "value": 15.0,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "20 CVE records from results/experiment_results.json",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "Aggregated from results/experiment_results.json (20 NaiveDiffCopy records).",
+            "confidence": 0.95
+          },
+          {
+            "name": "NaiveDiffCopy success mean",
+            "value": 70.0,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "20 CVE records from results/experiment_results.json",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "Aggregated from results/experiment_results.json (20 NaiveDiffCopy records).",
+            "confidence": 0.95
+          },
+          {
+            "name": "NaiveDiffCopy code_bleu mean",
+            "value": 0.800020558481106,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "20 CVE records from results/experiment_results.json",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "Aggregated from results/experiment_results.json (20 NaiveDiffCopy records).",
+            "confidence": 0.95
+          }
+        ],
+        "overall_conclusion": "VulnSlicePort introduces vulnerability-preserving slicing, CPG-enhanced prompting, and iterative self-verification for security patch porting. In deterministic mode, PPatHF is the best overall method with 26.8% exact match, 90.2% success, and 0.907 Code BLEU, while VulnSlicePort achieves 14.6% exact match, 73.2% success, and 0.795 Code BLEU. Ablations show removing CPG context or self-verification reduces Code BLEU by 0.007-0.008 points. NaiveDiffCopy aggregate across 20 records is 15.0% exact match, 70.0% success, and 0.800 Code BLEU.",
+        "sources": {
+          "metrics_path": "results/experiment_results.json",
+          "paper_tex_path": "paper/main.tex"
+        },
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 8920,
+            "completion_tokens_details": {
+              "reasoning_tokens": 6307
+            },
+            "prompt_tokens": 3328,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 12248
+          },
+          "attempt": 0
+        }
+      },
+      "comparison": {
+        "status": "ok",
+        "claim_alignment": [
+          {
+            "original_claim_id": "C1",
+            "agent_claim_id": null,
+            "label": "incomparable",
+            "rationale": "Agent does not evaluate Mystique; it reports VulnSlicePort and baseline results on a different reduced dataset, so Mystique's 0.954/0.924 success rates cannot be compared."
+          },
+          {
+            "original_claim_id": "C2",
+            "agent_claim_id": null,
+            "label": "incomparable",
+            "rationale": "Agent does not evaluate Mystique or report its relative improvement over SOTA; it reports PPatHF as best among evaluated methods under a different protocol."
+          },
+          {
+            "original_claim_id": "C3",
+            "agent_claim_id": null,
+            "label": "incomparable",
+            "rationale": "Agent does not report Mystique vs TSBPORT success rates; TSBPORT is mentioned as a baseline but no comparable Mystique-TSBPORT delta is provided."
+          },
+          {
+            "original_claim_id": "C4",
+            "agent_claim_id": "A5",
+            "label": "incomparable",
+            "rationale": "Agent reports Code BLEU for overall deterministic outputs, not Code BLEU on failed patches, and does not evaluate Mystique."
+          },
+          {
+            "original_claim_id": "C5",
+            "agent_claim_id": "A4",
+            "label": "incomparable",
+            "rationale": "Agent reports PPatHF as best among evaluated methods, but Mystique is not evaluated and the dataset/protocol differ, so the original Mystique > PPatHF claim cannot be compared."
+          },
+          {
+            "original_claim_id": "C6",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "Agent does not evaluate GPT-4o or compare Mystique to GPT-4o."
+          },
+          {
+            "original_claim_id": "C7",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "Agent does not evaluate cross-project, cross-bug, or cross-language generality."
+          },
+          {
+            "original_claim_id": "C8",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "Agent does not evaluate cross-LLM porting with StarCoder or any Mystique-StarCoder variant."
+          },
+          {
+            "original_claim_id": "C9",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "Agent does not evaluate cross-project porting or report Mystique vs PPatHF cross-project success."
+          },
+          {
+            "original_claim_id": "C10",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "Agent does not report real-world vulnerable branch porting or merged counts."
+          },
+          {
+            "original_claim_id": "C11",
+            "agent_claim_id": "A6",
+            "label": "partial",
+            "rationale": "Agent conducts an ablation study on CPG context and self-verification, but does not perform parameter sensitivity analysis and evaluates a different system."
+          },
+          {
+            "original_claim_id": "C12",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "Agent does not report failure analysis or failure counts."
+          },
+          {
+            "original_claim_id": "C13",
+            "agent_claim_id": "A8",
+            "label": "incomparable",
+            "rationale": "Agent uses 41 function-level CVE patch pairs from 18 CVEs, whereas the original uses 694 CVEs and 1,359 functions; protocols differ."
+          }
+        ],
+        "metric_alignment": [
+          {
+            "original_metric": "success_ratio",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 0.954,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Original is Mystique function-level success on 1,359 functions; agent does not report Mystique success and uses a reduced 41-pair dataset."
+          },
+          {
+            "original_metric": "success_ratio",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 0.924,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Original is Mystique CVE-level success on 694 CVEs; agent does not report Mystique CVE-level success."
+          },
+          {
+            "original_metric": "exact_match",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 0.944,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Original is Mystique function-level exact match; agent reports exact match for PPatHF/VulnSlicePort/NaiveDiffCopy but not Mystique and on a different dataset."
+          },
+          {
+            "original_metric": "exact_match",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 0.905,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Original is Mystique CVE-level exact match; agent does not report Mystique CVE-level exact match."
+          },
+          {
+            "original_metric": "code_bleu",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 0.921,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Original Code BLEU is for failed patches; agent Code BLEU is overall deterministic output, so settings differ."
+          },
+          {
+            "original_metric": "failure_rate",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 0.046,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Agent does not report failure rate."
+          },
+          {
+            "original_metric": "success_ratio",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 0.806,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Original is Mystique-StarCoder cross-LLM function-level success; agent does not evaluate cross-LLM porting."
+          },
+          {
+            "original_metric": "success_ratio",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 0.71,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Original is Mystique-StarCoder cross-LLM CVE-level success; agent does not evaluate cross-LLM porting."
+          },
+          {
+            "original_metric": "success_ratio",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 0.894,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Original is Mystique cross-project L./O. success; agent does not evaluate cross-project porting."
+          },
+          {
+            "original_metric": "success_ratio",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 0.95,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Original is Mystique cross-project O./L. success; agent does not evaluate cross-project porting."
+          }
+        ],
+        "summary": {
+          "direction_consistency": "same_direction_incomparable",
+          "consistent_claim_ratio": 0.0,
+          "has_comparable_metrics": false,
+          "sota_improvement_summary": "N/A - no comparable metrics; agent does not evaluate Mystique and reports PPatHF as best in deterministic mode on a reduced 41-pair dataset.",
+          "overall_alignment_score": 0.35,
+          "score_rationale": "Agent addresses the same security patch porting problem but uses a different method and reduced protocol, and does not evaluate Mystique; no comparable metrics, so score is mid-low per same-direction incomparable rule."
+        },
+        "warnings": [
+          "Agent does not implement or evaluate Mystique; original Mystique performance claims cannot be verified.",
+          "Agent uses a reduced dataset of 41 function-level CVE patch pairs (18 CVEs) versus original 694 CVEs/1,359 functions.",
+          "Agent reports PPatHF as best in deterministic mode, which may appear to conflict with original Mystique > PPatHF, but protocols differ and Mystique is not evaluated.",
+          "Agent metrics are percentages for exact_match/success while original ratios are 0-1; units differ.",
+          "Agent's Code BLEU is overall deterministic, not failed-patch closeness as in original C4."
+        ],
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 8462,
+            "completion_tokens_details": {
+              "reasoning_tokens": 6242
+            },
+            "prompt_tokens": 6470,
+            "prompt_tokens_details": {
+              "cached_tokens": 2048
+            },
+            "total_tokens": 14932
+          },
+          "attempt": 0
+        }
+      },
+      "overall_alignment_score": 0.35,
+      "direction_consistency": "same_direction_incomparable"
+    },
+    "experiment_analysis": {
+      "run_dir": "~/ai_scientist_inputs/FSE-2025-005_automated_porting_of_security_patches_ac/workspace/evoscientist_2026-08-19_10-43-32",
+      "task_dir": "~/ai_scientist_inputs/FSE-2025-005_automated_porting_of_security_patches_ac",
+      "status": "ok",
+      "metrics_path": "results/experiment_results.json",
+      "experiment_success": {
+        "status": "ok",
+        "success": true,
+        "metrics_path": "results/experiment_results.json",
+        "absolute_metrics_path": "~/ai_scientist_inputs/FSE-2025-005_automated_porting_of_security_patches_ac/workspace/evoscientist_2026-08-19_10-43-32/results/experiment_results.json",
+        "checks": {
+          "has_results_file": true,
+          "non_stub": true,
+          "numeric_leaf_count": 600,
+          "min_numeric_ok": true
+        },
+        "manifest_hints": {
+          "status": {
+            "research_request": true,
+            "plan": true,
+            "metrics": true,
+            "paper_tex": true,
+            "paper_pdf": true,
+            "readme": true
+          },
+          "returncode": 0,
+          "benchmark_complete": true,
+          "artifacts_metrics_flag": false
+        },
+        "warnings": [],
+        "suspicious_values": [],
+        "note": "success=true requires substantive results (framework-aware path) with >=3 numeric leaves. Supports metrics.json, results.json, experiment_results.txt, etc. Manifest returncode/benchmark_complete are soft warnings only."
+      },
+      "idea_code_consistency": {
+        "status": "ok",
+        "idea_path": "plan.md",
+        "code_files": [
+          "project/run_experiments.py"
+        ],
+        "score_scale": "1-5",
+        "score": 2.0,
+        "label": "weak",
+        "justification": "The code imports and runs a VulnSlicePort-style porting engine, so it shares the general security-patch porting topic, but the experiment runner uses a small set of synthetic C test cases rather than the stated 41 evaluation pairs from Linux kernel/OpenSSL. It does not implement or invoke the required baselines (NaiveDiffCopy, TSBPORT, PPatHF, RawLLM), does not evaluate the reported E-M%, Succ%, and C-B metrics on the real dataset, and does not include the ablation or self-verification studies from the idea.",
+        "matched_elements": [
+          "Uses a VulnSlicePort-related porting pipeline",
+          "Computes patch porting outputs for C code examples",
+          "Includes evaluation metrics such as exact match, CodeBLEU, and semantic signature match"
+        ],
+        "missing_or_divergent_elements": [
+          "Real 41-pair evaluation dataset from Linux kernel and OpenSSL",
+          "Baselines: NaiveDiffCopy, TSBPORT, PPatHF, RawLLM",
+          "Reported E-M%, Succ%, and C-B evaluation protocol",
+          "Ablation study for slicing, CPG, and verification",
+          "Self-verification improvement experiment (RQ3)",
+          "Finetune split and dataset construction details"
+        ],
+        "rubric": "Weak alignment: only superficial overlap; core hypothesis, method, or evaluation in the idea is missing or replaced.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 828,
+            "completion_tokens_details": {
+              "reasoning_tokens": 527
+            },
+            "prompt_tokens": 1645,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 2473
+          },
+          "attempt": 0
+        }
+      },
+      "setup_coverage": {
+        "status": "ok",
+        "overall_coverage": 0.8095238095238094,
+        "datasets": {
+          "gold_count": 1,
+          "hit_count": 1,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "CVE-based C repository patch porting dataset"
+          ],
+          "misses": []
+        },
+        "baselines": {
+          "gold_count": 7,
+          "hit_count": 3,
+          "miss_count": 4,
+          "coverage": 0.42857142857142855,
+          "hits": [
+            "FixMorph",
+            "TSBPORT",
+            "PPatHF"
+          ],
+          "misses": [
+            "GPT-3.5",
+            "GPT-4o",
+            "CodeLlama (13B instruct)",
+            "StarCoder (15.5B)"
+          ]
+        },
+        "metrics": {
+          "gold_count": 4,
+          "hit_count": 4,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "Exactly Match (E-M)",
+            "Success (Succ)",
+            "Failure (Fail)",
+            "Code BLEU (C-B)"
+          ],
+          "misses": []
+        },
+        "agent_protocol": {},
+        "gold_protocol": {},
+        "dataset_dirs": [
+          "dataset_candidate"
+        ],
+        "flags": {
+          "weaker_baseline_suspected": true,
+          "weak_protocol": [],
+          "synthetic_data": "synthetic_allowed_by_task",
+          "gold_allows_synthetic": true
+        },
+        "gold_sources": [
+          "~/ai_scientist_inputs/FSE-2025-005_automated_porting_of_security_patches_ac/task.md",
+          "~/ai_scientist_inputs/FSE-2025-005_automated_porting_of_security_patches_ac/metadata.json"
+        ],
+        "note": "Coverage is name/alias matching against task.md Datasets/Baselines/Metrics. weak_protocol flags large reductions in trials/timeout vs Constraints. Synthetic corpora are not penalized when the task itself requires synthesis."
+      },
+      "ablation_significance": {
+        "status": "ok",
+        "idea_path": "plan.md",
+        "significance_signals_rule_based": {
+          "signals": [
+            "paper_contains:significant"
+          ],
+          "artifact_paths": [],
+          "has_any_significance_artifact": true
+        },
+        "evidence_format": "raw_json_truncated",
+        "study_type": "new_method",
+        "components": [
+          {
+            "name": "Vulnerability Slice Extraction",
+            "role": "module",
+            "ablation_expected": true,
+            "significance_expected": true,
+            "ablation_status": "missing",
+            "ablation_evidence": "RQ2 asks for the contribution of slicing, but the results table and metrics.json contain only full-method baselines and VulnSlicePort; no VulnSlicePort-without-slicing variant is reported.",
+            "significance_status": "missing",
+            "significance_evidence": "No CI, bootstrap, p-value, or statistical test is reported for the slicing ablation."
+          },
+          {
+            "name": "CPG Construction",
+            "role": "module",
+            "ablation_expected": true,
+            "significance_expected": true,
+            "ablation_status": "missing",
+            "ablation_evidence": "RQ2 asks for the contribution of CPG construction, but no VulnSlicePort-without-CPG variant appears in the results table, metrics.json, or code flags.",
+            "significance_status": "missing",
+            "significance_evidence": "No statistical comparison is provided for the CPG ablation."
+          },
+          {
+            "name": "LLM-Assisted Porting",
+            "role": "module",
+            "ablation_expected": false,
+            "significance_expected": true,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "Core porting stage; not treated as a removable ablation in the study design.",
+            "significance_status": "missing",
+            "significance_evidence": "No statistical tests compare full VulnSlicePort against baselines."
+          },
+          {
+            "name": "Iterative Self-Verification",
+            "role": "module",
+            "ablation_expected": true,
+            "significance_expected": true,
+            "ablation_status": "missing",
+            "ablation_evidence": "RQ3 asks whether self-verification improves correctness, but no VulnSlicePort-without-verification variant is reported in the results or code.",
+            "significance_status": "missing",
+            "significance_evidence": "No CI, bootstrap, p-value, or statistical test is reported for the verification ablation."
+          },
+          {
+            "name": "Baselines (NaiveDiffCopy, TSBPORT, PPatHF, RawLLM)",
+            "role": "baseline",
+            "ablation_expected": false,
+            "significance_expected": true,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "Baselines are the comparison set, not removable method components.",
+            "significance_status": "missing",
+            "significance_evidence": "Only aggregate E-M%, Succ%, and C-B are reported; no statistical tests or confidence intervals compare methods."
+          },
+          {
+            "name": "Dataset split (41 eval + 13 finetune pairs, split at 2023-08-23)",
+            "role": "dataset split",
+            "ablation_expected": false,
+            "significance_expected": false,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "Dataset construction is not an ablation target.",
+            "significance_status": "not_required",
+            "significance_evidence": "Descriptive dataset split; formal significance testing is not required for this component."
+          }
+        ],
+        "ablation_coverage_score": 0.0,
+        "overall_ablation_ok": false,
+        "overall_significance_ok": false,
+        "summary": "VulnSlicePort is a new method with four stages and baseline comparisons. The study promises ablations for slicing, CPG, and verification (RQ2/RQ3), but the reported results contain only full-method baselines and VulnSlicePort, with no component-removal variants. No statistical significance tests, confidence intervals, or bootstrap analyses are reported for any comparison.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 4870,
+            "completion_tokens_details": {
+              "reasoning_tokens": 4001
+            },
+            "prompt_tokens": 6096,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 10966
+          },
+          "attempt": 0
+        }
+      },
+      "results_paper_consistency": {
+        "status": "ok",
+        "paper_tex": "paper/main.tex",
+        "paper_kind": "paper_tex",
+        "results_format": "raw_json_truncated",
+        "digest_hint": {
+          "unfavorable_count": 49,
+          "trial_fail_count": 0,
+          "trial_success_count": 0,
+          "metadata": {}
+        },
+        "score_scale": "1-5",
+        "method": "Direct LLM comparison: agent's FINAL results artifact (metrics.json summary) vs paper Results/Discussion/Conclusion. Interim failed runs are NOT evidence unless still present in the final metrics file.",
+        "score": 3.0,
+        "consistency_label": "mixed",
+        "hiding_unfavorable_suspected": true,
+        "hiding_confidence": 0.6,
+        "justification": "The main success-rate claims for PPatHF (90.2%) and RawLLM (65.9%) match the final results exactly, and the paper acknowledges that PPatHF outperforms VulnSlicePort. However, the conclusion selectively compares VulnSlicePort only to RawLLM while omitting that TSBPORT also outperforms VulnSlicePort (75.6% vs 73.2% claimed). Exact-match rates are defined but not reported and are low in the final results. The ablation claim about CPG and self-verification improving Code BLEU is unsupported because no ablation results are present in the final results.",
+        "supported_claims": [
+          "PPatHF success rate 90.2% matches final results (37/41).",
+          "RawLLM success rate 65.9% matches final results (27/41).",
+          "PPatHF is the most effective baseline in the final results.",
+          "VulnSlicePort outperforming RawLLM by about 7.3 percentage points is consistent with the paper's reported numbers, though full VulnSlicePort results are truncated."
+        ],
+        "unsupported_or_overstated_claims": [
+          "Ablation studies confirm CPG context and self-verification improve Code BLEU: no ablation results are present in the final results.",
+          "VulnSlicePort achieves 73.2% Succ: the final results are truncated after cve-030, so the full 41-case rate cannot be verified."
+        ],
+        "numeric_mismatches": [
+          {
+            "paper": "VulnSlicePort achieves 73.2% Succ",
+            "results": "Final results truncated after cve-030; available partial is 23/31 = 74.2%",
+            "note": "Not necessarily a contradiction; 30/41 = 73.2% would require 7 successes in the missing 10 cases."
+          }
+        ],
+        "unfavorable_in_final_results": [
+          "VulnSlicePort success is below PPatHF (90.2%) and TSBPORT (75.6%).",
+          "Exact-match rates are low: TSBPORT 2.4%, RawLLM 17.1%, NaiveDiffCopy 19.5%, PPatHF 26.8%.",
+          "RawLLM fails on 14/41 cases.",
+          "VulnSlicePort fails on multiple cases in the available partial data, including cve-000, cve-003, cve-004, cve-008, cve-010, cve-011, cve-015, and cve-029."
+        ],
+        "unfavorable_acknowledged_in_paper": [
+          "PPatHF is acknowledged as the most effective baseline and exceeds VulnSlicePort.",
+          "Heuristic semantic equivalence and deterministic fallback limitations are acknowledged.",
+          "Dataset size and language scope limitations are acknowledged."
+        ],
+        "unfavorable_missing_from_paper": [],
+        "rubric": "Mixed: overall story roughly matches, but some claims are overstated or some negative cells are under-discussed.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 11036,
+            "completion_tokens_details": {
+              "reasoning_tokens": 10283
+            },
+            "prompt_tokens": 15845,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 26881
+          },
+          "attempt": 0
+        }
+      },
+      "scores": {
+        "experiment_success": true,
+        "idea_code_score": 2.0,
+        "setup_coverage": 0.8095238095238094,
+        "ablation_coverage_score": 0.0,
+        "overall_ablation_ok": false,
+        "overall_significance_ok": false,
+        "results_paper_score": 3.0,
+        "hiding_unfavorable_suspected": true
+      },
+      "notes": [
+        "Axes 1,2,3,4,6 in experiment_analysis (figures excluded).",
+        "setup_coverage matches task.md Datasets/Baselines/Metrics; weak_protocol flags reductions vs Constraints.",
+        "Axis 6: final normalized results vs paper; interim run logs not used as ground truth."
+      ]
+    },
+    "literature_review": {
+      "run_dir": "~/ai_scientist_inputs/FSE-2025-005_automated_porting_of_security_patches_ac/workspace/evoscientist_2026-08-19_10-43-32",
+      "task_dir": "~/ai_scientist_inputs/FSE-2025-005_automated_porting_of_security_patches_ac",
+      "status": "ok",
+      "as_of_year": 2026,
+      "agent_ref_count": 20,
+      "sources": [
+        {
+          "path": "~/ai_scientist_inputs/FSE-2025-005_automated_porting_of_security_patches_ac/workspace/evoscientist_2026-08-19_10-43-32/paper/main.tex",
+          "kind": "thebibliography"
+        },
+        {
+          "path": "~/ai_scientist_inputs/FSE-2025-005_automated_porting_of_security_patches_ac/workspace/evoscientist_2026-08-19_10-43-32/paper/paper.tex",
+          "kind": "thebibliography"
+        }
+      ],
+      "collection_audit": {
+        "cited_keys_count": 20,
+        "filter_mode": "paper_cite_keys",
+        "bib_total_before_filter": 0,
+        "bib_after_filter": 0,
+        "uncited_bib_skipped": 0,
+        "cited_keys_sample": [
+          "almaamari_arxiv2026",
+          "ast_edit_distance_acl2024",
+          "backporting_taxonomy_issta2021",
+          "ccbert_icsme2023",
+          "fiber_usenix2018",
+          "fixmorph_2018",
+          "linux_backport_2021",
+          "llmport_ase2025",
+          "mip_2026",
+          "mvp_usenix2020",
+          "mystique_pacmse2025",
+          "patchagent_usenix2025",
+          "ppathf_issta2024",
+          "ps3_icse2023",
+          "robin_tosem2023",
+          "tsbport_2021",
+          "vrpilot_aiware2024",
+          "vul_r2_ase2025",
+          "vulslicer_jss2022",
+          "yamaguchi2014modeling"
+        ],
+        "thebibliography_after_filter": 40,
+        "agent_ref_count": 20
+      },
+      "fabrication": {
+        "status": "ok",
+        "scholarly_count": 20,
+        "verified_count": 3,
+        "fake_count": 3,
+        "lookup_failed_count": 14,
+        "insufficient_metadata_count": 0,
+        "non_paper_count": 0,
+        "fabrication_rate": 0.5,
+        "items": [
+          {
+            "title": "Automated characterization of software vulnerabilities",
+            "doi": "",
+            "arxiv_id": "",
+            "year": 2021,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated."
+            ],
+            "cite_key": "linux_backport_2021",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "The sound of silence: Mining security vulnerabilities from secret integration channels",
+            "doi": "10.1145/3411495.3421360",
+            "arxiv_id": "2009.01694",
+            "year": 2021,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "The Sound of Silence: Mining Security Vulnerabilities from Secret Integration Channels in Open-Source Projects",
+            "resolved_year": 2020,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "backporting_taxonomy_issta2021",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "FixMorph: Automated patch porting via tree-based edit operations",
+            "doi": "",
+            "arxiv_id": "",
+            "year": 2018,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated."
+            ],
+            "cite_key": "fixmorph_2018",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "TSBPORT: Semantic patch porting for security fixes",
+            "doi": "",
+            "arxiv_id": "",
+            "year": 2021,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated."
+            ],
+            "cite_key": "tsbport_2021",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "PPatHF: Patch porting via hierarchical function reduction and LLM",
+            "doi": "",
+            "arxiv_id": "",
+            "year": 2024,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated."
+            ],
+            "cite_key": "ppathf_issta2024",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "Mystique: Semantic slicing for LLM-based security patch porting",
+            "doi": "",
+            "arxiv_id": "",
+            "year": 2025,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated."
+            ],
+            "cite_key": "mystique_pacmse2025",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "LLMPort: Few-shot and zero-shot patch porting with large language models",
+            "doi": "",
+            "arxiv_id": "",
+            "year": 2025,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated.",
+              "Saw 1 conclusive miss(es) mixed with 1 API error(s)."
+            ],
+            "cite_key": "llmport_ase2025",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "MIP: Multi-function patch porting for security fixes",
+            "doi": "",
+            "arxiv_id": "",
+            "year": 2026,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated.",
+              "Saw 1 conclusive miss(es) mixed with 1 API error(s)."
+            ],
+            "cite_key": "mip_2026",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "VRpilot: Interactive vulnerability repair with LLM agents",
+            "doi": "",
+            "arxiv_id": "",
+            "year": 2024,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated."
+            ],
+            "cite_key": "vrpilot_aiware2024",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "Vul-R2: Retrieval-augmented vulnerability repair with LLMs",
+            "doi": "",
+            "arxiv_id": "",
+            "year": 2025,
+            "status": "fabricated_or_unfound",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "Not found on Semantic Scholar or arXiv with DOI/arxiv/title lookup."
+            ],
+            "cite_key": "vul_r2_ase2025",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "Why LLMs fail at vulnerability repair: A systematic study",
+            "doi": "",
+            "arxiv_id": "2601.00000",
+            "year": 2026,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated.",
+              "Saw 2 conclusive miss(es) mixed with 1 API error(s)."
+            ],
+            "cite_key": "almaamari_arxiv2026",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "PATCHAGENT: Multi-agent framework for automated program repair",
+            "doi": "",
+            "arxiv_id": "",
+            "year": 2025,
+            "status": "fabricated_or_unfound",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "Not found on Semantic Scholar or arXiv with DOI/arxiv/title lookup."
+            ],
+            "cite_key": "patchagent_usenix2025",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "VulSlicer: Vulnerability detection through backward program slicing",
+            "doi": "",
+            "arxiv_id": "",
+            "year": 2022,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated.",
+              "Saw 1 conclusive miss(es) mixed with 1 API error(s)."
+            ],
+            "cite_key": "vulslicer_jss2022",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "MVP: Detecting vulnerabilities using patch-enhanced vulnerability signatures",
+            "doi": "",
+            "arxiv_id": "",
+            "year": 2020,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "MVP: Detecting Vulnerabilities using Patch-Enhanced Vulnerability Signatures",
+            "resolved_year": 2020,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "mvp_usenix2020",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "PS3: Precise semantic signature for security patches",
+            "doi": "",
+            "arxiv_id": "",
+            "year": 2023,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated."
+            ],
+            "cite_key": "ps3_icse2023",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "FIBER: Precise patch presence test through fine-grained binary analysis",
+            "doi": "",
+            "arxiv_id": "",
+            "year": 2018,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated.",
+              "Saw 1 conclusive miss(es) mixed with 1 API error(s)."
+            ],
+            "cite_key": "fiber_usenix2018",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "Robin: Supporting patch comprehension through impact analysis",
+            "doi": "",
+            "arxiv_id": "",
+            "year": 2023,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated.",
+              "Saw 1 conclusive miss(es) mixed with 1 API error(s)."
+            ],
+            "cite_key": "robin_tosem2023",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "CCBERT: Self-supervised code change representation learning",
+            "doi": "",
+            "arxiv_id": "",
+            "year": 2023,
+            "status": "verified",
+            "matched_via": "arxiv_title",
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "ccbert_icsme2023",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "AST edit distance for code change representation",
+            "doi": "",
+            "arxiv_id": "",
+            "year": 2024,
+            "status": "fabricated_or_unfound",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "Not found on Semantic Scholar or arXiv with DOI/arxiv/title lookup."
+            ],
+            "cite_key": "ast_edit_distance_acl2024",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "Modeling and discovering vulnerabilities with code property graphs",
+            "doi": "",
+            "arxiv_id": "",
+            "year": 2014,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated.",
+              "Saw 1 conclusive miss(es) mixed with 1 API error(s)."
+            ],
+            "cite_key": "yamaguchi2014modeling",
+            "source_kind": "thebibliography"
+          }
+        ],
+        "cache_path": "~/ai_scientist_evals/FSE-2025-005_automated_porting_of_security_patches_ac/reference_verify_cache.json",
+        "override_path": "~/ai_scientist_evals/FSE-2025-005_automated_porting_of_security_patches_ac/reference_verify_overrides.json",
+        "note": "fabrication_rate = fake / (verified + fake). lookup_failed (API errors) and insufficient_metadata are excluded and retried or skipped. GitHub/docs/tool URLs are non_paper and excluded from the rate. To manually correct a false negative, edit reference_verify_overrides.json (key=normalized title / doi / cite_key; value=\"verified\" or a result dict), then re-run."
+      },
+      "coverage": {
+        "status": "ok",
+        "gold_source": "~/ai_scientist_inputs/FSE-2025-005_automated_porting_of_security_patches_ac/mineru_sections.json",
+        "gold_count": 60,
+        "gold_is_original_paper_references": true,
+        "gold_is_openalex_subset": false,
+        "agent_count": 20,
+        "intersection_size": 1,
+        "recall": 0.016666666666666666,
+        "precision": 0.05,
+        "matched_gold_keys": [
+          "mineru_ref_48"
+        ],
+        "primary_metric": "recall",
+        "note": "Primary metric is recall against the original paper bibliography (titles from mineru_sections.json REFERENCES; related_work.json used only to enrich DOI/year or as fallback if mineru titles are empty). Denominator = |original paper references|. Precision is secondary (agent may cite valid extra papers)."
+      },
+      "recency": {
+        "status": "ok",
+        "dated_count": 20,
+        "unknown_year_count": 0,
+        "year_histogram": {
+          "2014": 1,
+          "2018": 2,
+          "2020": 2,
+          "2021": 2,
+          "2022": 1,
+          "2023": 3,
+          "2024": 3,
+          "2025": 4,
+          "2026": 2
+        },
+        "windows": {
+          "3": {
+            "years": 3,
+            "cutoff_year_inclusive": 2023,
+            "recent_count": 12,
+            "recent_ratio": 0.6
+          },
+          "5": {
+            "years": 5,
+            "cutoff_year_inclusive": 2021,
+            "recent_count": 15,
+            "recent_ratio": 0.75
+          }
+        }
+      },
+      "scores": {
+        "fabrication_rate": 0.5,
+        "coverage_recall": 0.016666666666666666,
+        "coverage_precision": 0.05,
+        "recency_ratio_3y": 0.6,
+        "recency_ratio_5y": 0.75
+      }
+    }
+  },
+  "scores": {
+    "completeness": {
+      "complete": true,
+      "overall_score": 0.8453,
+      "required_score": 1.0,
+      "bonus_score": 0.09
+    },
+    "peer_review": {
+      "status": "ok",
+      "optional": false,
+      "overall_score": 3.3,
+      "score_scale": "1-10",
+      "scoring_method": "paperreview_apr"
+    },
+    "idea_generation": {
+      "status": "ok",
+      "overall_score": 2.5,
+      "dimensions": {
+        "novelty": 2.0,
+        "feasibility": 3.0,
+        "clarity": 3.0
+      },
+      "novelty_category": "Trivial Mashup",
+      "solution_space_status": "ok"
+    },
+    "alignment": {
+      "status": "ok",
+      "direction_consistency": "same_direction_incomparable",
+      "overall_alignment_score": 0.35
+    },
+    "literature_review": {
+      "fabrication_rate": 0.5,
+      "coverage_recall": 0.016666666666666666,
+      "coverage_precision": 0.05,
+      "recency_ratio_3y": 0.6,
+      "recency_ratio_5y": 0.75
+    },
+    "experiment_analysis": {
+      "experiment_success": true,
+      "idea_code_score": 2.0,
+      "setup_coverage": 0.8095238095238094,
+      "ablation_coverage_score": 0.0,
+      "overall_ablation_ok": false,
+      "overall_significance_ok": false,
+      "results_paper_score": 3.0,
+      "hiding_unfavorable_suspected": true
+    }
+  },
+  "fair_scores": {
+    "applicable_axes": [
+      "completeness",
+      "idea_generation",
+      "peer_review",
+      "alignment",
+      "literature_review",
+      "experiment_analysis"
+    ],
+    "skipped_axes": [],
+    "fair_mean_0_1": 0.5424,
+    "note": "fair_mean_0_1 averages only applicable axes; optional peer review and framework-inapplicable literature are excluded from the denominator."
+  },
+  "evals_root": "~/ai_scientist_evals",
+  "claims_cache": "~/ai_scientist_evals/FSE-2025-005_automated_porting_of_security_patches_ac/original_claims.json",
+  "solution_space_cache": "~/ai_scientist_evals/FSE-2025-005_automated_porting_of_security_patches_ac/solution_space.json"
+}

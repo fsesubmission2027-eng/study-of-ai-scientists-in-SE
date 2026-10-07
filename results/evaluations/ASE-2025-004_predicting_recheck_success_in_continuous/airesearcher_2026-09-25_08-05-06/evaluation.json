@@ -1,0 +1,727 @@
+{
+  "generated_at": "2026-09-30T10:56:36",
+  "run_dir": "~/ai_scientist_inputs/ASE-2025-004_predicting_recheck_success_in_continuous/workspace/airesearcher_2026-09-25_08-05-06",
+  "task_dir": "~/ai_scientist_inputs/ASE-2025-004_predicting_recheck_success_in_continuous",
+  "framework": "airesearcher",
+  "fairness_audit": [
+    {
+      "axis": "completeness",
+      "was_unfair": "Required both paper.tex AND paper.pdf; any tool missing one failed equally.",
+      "fix": "Paper gate: PDF=1.0; TeX-only=0.5; ``complete`` requires PDF."
+    },
+    {
+      "axis": "completeness",
+      "was_unfair": "``results`` counted stub/seed JSON (dataset_candidate/metrics.json).",
+      "fix": "``results`` requires substantive numeric results via results_normalize."
+    },
+    {
+      "axis": "experiment_success",
+      "was_unfair": "Only metrics.json; ignored results.json / experiment_results.txt.",
+      "fix": "Framework-ordered result candidates + normalized loaders."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Penalized tools with no bib; airesearcher has no workspace references.",
+      "fix": "literature_applicable=false → status not_applicable; excluded from fair aggregate."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "related_work.json subset as gold made recall hard to interpret.",
+      "fix": "Coverage gold is original paper REFERENCES from mineru; related_work only enriches metadata/fallback."
+    },
+    {
+      "axis": "peer_review",
+      "was_unfair": "Missing Stanford report looked like evaluation failure.",
+      "fix": "status not_provided; optional axis, never counts as tool failure."
+    },
+    {
+      "axis": "paths/find_results",
+      "was_unfair": "Picked downloads/** and sandbox noise (e.g. airesearcher LLVM tree).",
+      "fix": "Exclude downloads/, seeds/, dataset_candidate/, sandbox junk paths."
+    },
+    {
+      "axis": "paths/framework_noise",
+      "was_unfair": "DeepScientist .deepscientist_npm / runtime / skills templates counted as code/paper/results.",
+      "fix": "FRAMEWORK_NOISE_DIRS+markers; quest worktree + eval_output results; paper md drafts; reject template tex."
+    },
+    {
+      "axis": "paths/paper_tex",
+      "was_unfair": "tiny_scientist / ACL runs store paper under latex/*.tex; evaluator only looked at paper/main.tex.",
+      "fix": "latex/**/*.tex with substantive-body heuristic; find_paper_document uses same rules."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Entire custom.bib (300+ anthology entries) verified when paper had zero \\cite commands.",
+      "fix": "collect_agent_references filters bib to in-text cite keys; skips uncited bulk bib (>40 entries)."
+    },
+    {
+      "axis": "paths/ai_scientist_summaries",
+      "was_unfair": "AI Scientist can persist substantive results and paper-like drafts in *_summary.json logs rather than paper/main.tex or results/**/*.json.",
+      "fix": "Treat draft_summary/research_summary as weak paper documents and summary JSONs as result candidates."
+    },
+    {
+      "axis": "framework/ai_scientist_v2",
+      "was_unfair": "Manifest framework ``ai_scientist_v2`` fell through to profile ``unknown``, skipping AI-Scientist idea/result path priorities.",
+      "fix": "Normalize ``ai_scientist_v2`` (and common aliases) to profile key ``ai_scientist``."
+    },
+    {
+      "axis": "idea_generation",
+      "was_unfair": "plan.md/todos.md weak proxies scored same as structured idea.json.",
+      "fix": "Framework idea_priority tried first; missing idea → not_applicable where appropriate."
+    }
+  ],
+  "axes": [
+    "alignment",
+    "completeness",
+    "experiment_analysis",
+    "idea_generation",
+    "literature_review",
+    "peer_review"
+  ],
+  "results": {
+    "completeness": {
+      "framework": "airesearcher",
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-004_predicting_recheck_success_in_continuous/workspace/airesearcher_2026-09-25_08-05-06",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-004_predicting_recheck_success_in_continuous",
+      "complete": false,
+      "required_score": 0.5,
+      "bonus_score": 0.05,
+      "overall_score": 0.4,
+      "missing": [
+        "idea",
+        "results"
+      ],
+      "required": {
+        "idea": null,
+        "code": {
+          "count": 16,
+          "files": [
+            {
+              "path": ".airesearcher-benchmark/metaprompt.py",
+              "bytes": 4707,
+              "via": "glob"
+            },
+            {
+              "path": "project/analysis/ablation.py",
+              "bytes": 4853,
+              "via": "glob"
+            },
+            {
+              "path": "project/analysis/sensitivity.py",
+              "bytes": 5609,
+              "via": "glob"
+            },
+            {
+              "path": "project/analysis/visualize.py",
+              "bytes": 5891,
+              "via": "glob"
+            },
+            {
+              "path": "project/data_processing/pipeline.py",
+              "bytes": 6690,
+              "via": "glob"
+            },
+            {
+              "path": "project/model/baseline.py",
+              "bytes": 1243,
+              "via": "glob"
+            },
+            {
+              "path": "project/model/importance.py",
+              "bytes": 4508,
+              "via": "glob"
+            },
+            {
+              "path": "project/model/logistic_model.py",
+              "bytes": 7983,
+              "via": "glob"
+            },
+            {
+              "path": "project/model/rcs.py",
+              "bytes": 4731,
+              "via": "glob"
+            },
+            {
+              "path": "project/run_training_testing.py",
+              "bytes": 8824,
+              "via": "glob"
+            },
+            {
+              "path": "project/testing/metrics.py",
+              "bytes": 9486,
+              "via": "glob"
+            },
+            {
+              "path": "project/training/trainer.py",
+              "bytes": 4079,
+              "via": "glob"
+            },
+            {
+              "path": "references/JIT-Smart/baselines/ngram/ngram_model/src/ngram_model/ng.java",
+              "bytes": 4392,
+              "via": "glob"
+            },
+            {
+              "path": "references/JIT-Smart/baselines/ngram/nnnnn/src/ng.java",
+              "bytes": 4620,
+              "via": "glob"
+            },
+            {
+              "path": "references/flake16-framework/experiment.py",
+              "bytes": 22025,
+              "via": "glob"
+            },
+            {
+              "path": "references/flake16-framework/test_experiment.py",
+              "bytes": 4789,
+              "via": "glob"
+            }
+          ]
+        },
+        "results": {
+          "substantive": false,
+          "normalized_path": null,
+          "numeric_leaf_count": 0,
+          "discovered_files": [],
+          "metrics_keys_sample": []
+        },
+        "paper": {
+          "tex": null,
+          "pdf": {
+            "path": "paper/main.pdf",
+            "bytes": 41700,
+            "via": "compiled_from_md"
+          },
+          "md": {
+            "path": "paper/paper.md",
+            "bytes": 8347,
+            "via": "candidate"
+          },
+          "json": null,
+          "status": "pdf",
+          "score": 1.0
+        }
+      },
+      "bonus": {
+        "experiment_plan": null,
+        "experiment_log": {
+          "path": "airesearcher_run.log",
+          "bytes": 3634889,
+          "via": "glob"
+        },
+        "review": null,
+        "readme": {
+          "path": "README_BENCHMARK.md",
+          "bytes": 885,
+          "via": "candidate"
+        },
+        "narrative": null,
+        "bib": null
+      },
+      "manifest_status": {
+        "pipeline": false,
+        "research_brief": true,
+        "instance": true,
+        "source_papers": true,
+        "metrics": false,
+        "project": true,
+        "paper": true
+      },
+      "gate_scores": {
+        "idea": 0.0,
+        "code": 1.0,
+        "results": 0.0,
+        "paper": 1.0
+      },
+      "fairness": {
+        "gates": [
+          "idea",
+          "code",
+          "results",
+          "paper"
+        ],
+        "paper_gate_rule": "PDF=1.0; TeX-only/md_only/json_only=0.5; complete requires PDF",
+        "results_gate_rule": "substantive numeric results via framework-aware normalize_results",
+        "audit_ref": "framework_profile.FAIRNESS_AUDIT"
+      },
+      "notes": [
+        "Required: idea, code, substantive results, paper (PDF full; TeX/markdown/JSON draft half).",
+        "Stub/seed metrics (e.g. dataset_candidate/metrics.json) do not satisfy results.",
+        "Framework noise (.deepscientist_npm, skills/templates, runtime) is excluded from code/results/paper.",
+        "Manifest status is informational; disk presence is authoritative."
+      ]
+    },
+    "idea_generation": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-004_predicting_recheck_success_in_continuous/workspace/airesearcher_2026-09-25_08-05-06",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-004_predicting_recheck_success_in_continuous",
+      "idea_path": null,
+      "status": "missing_idea",
+      "dimensions": {},
+      "overall_score": null,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "novelty",
+        "feasibility",
+        "clarity"
+      ],
+      "solution_space": null,
+      "notes": [
+        "Scores the intermediate idea artifact (not the final paper).",
+        "Dimensions: novelty, feasibility, clarity (each 1-5). Excitement removed.",
+        "Novelty is scored against a Solution Space built from mineru REFERENCES titles (+ related_work.json abstracts when matched)."
+      ],
+      "hint": "No idea artifact found under candidates like artifacts/idea.json, idea-stage/IDEA_REPORT.md, session/idea.json, tiny_idea.json, selected_idea.md."
+    },
+    "peer_review": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-004_predicting_recheck_success_in_continuous/workspace/airesearcher_2026-09-25_08-05-06",
+      "review_report": "~/ai_scientist_inputs/ASE-2025-004_predicting_recheck_success_in_continuous/workspace/airesearcher_2026-09-25_08-05-06/artifacts/peer_review/stanford_apr.md",
+      "paper_pdf": "~/ai_scientist_inputs/ASE-2025-004_predicting_recheck_success_in_continuous/workspace/airesearcher_2026-09-25_08-05-06/paper/main.pdf",
+      "paper_tex": null,
+      "status": "ok",
+      "dimensions": {},
+      "overall_score": 3.3,
+      "score_scale": "1-10",
+      "dimension_order": [],
+      "notes": [
+        "Scored from paperreview.ai (Stanford APR) native ratings; benchmark 5-dimension LLM rubric skipped.",
+        "Overall scale: 1-10."
+      ],
+      "paperreview": {
+        "status": "fetched",
+        "token_file": "~/ai_scientist_inputs/ASE-2025-004_predicting_recheck_success_in_continuous/workspace/airesearcher_2026-09-25_08-05-06/artifacts/peer_review/paperreview.token.txt",
+        "json": "~/ai_scientist_inputs/ASE-2025-004_predicting_recheck_success_in_continuous/workspace/airesearcher_2026-09-25_08-05-06/artifacts/peer_review/stanford_apr.json",
+        "markdown": "~/ai_scientist_inputs/ASE-2025-004_predicting_recheck_success_in_continuous/workspace/airesearcher_2026-09-25_08-05-06/artifacts/peer_review/stanford_apr.md",
+        "apr_scores": {
+          "scale": "1-10",
+          "overall": 3.3,
+          "dimensions": {
+            "Claims_Support": -1.0,
+            "Experimental_Soundness": -1.0,
+            "Writing_Clarity": -1.0,
+            "Prior_Work_Context": 0.0,
+            "Question_Importance": 1.0,
+            "Originality": -1.0,
+            "Value_to_Community": -1.0
+          }
+        },
+        "pdf_rebuild": null
+      },
+      "scoring_method": "paperreview_apr",
+      "scoring_source": "paperreview_json",
+      "apr_dimensions": {
+        "Claims_Support": -1.0,
+        "Experimental_Soundness": -1.0,
+        "Writing_Clarity": -1.0,
+        "Prior_Work_Context": 0.0,
+        "Question_Importance": 1.0,
+        "Originality": -1.0,
+        "Value_to_Community": -1.0
+      },
+      "summary": "",
+      "red_flags": []
+    },
+    "alignment": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-004_predicting_recheck_success_in_continuous/workspace/airesearcher_2026-09-25_08-05-06",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-004_predicting_recheck_success_in_continuous",
+      "status": "ok",
+      "original": {
+        "paper_title": "Rechecking Recheck Requests in Continuous Integration: An Empirical Study of OpenStack",
+        "selection": {
+          "num_blocks": 7,
+          "total_chars": 31998,
+          "inferred_roles": {
+            "abstract": 1,
+            "introduction": 1,
+            "experiment": 4,
+            "conclusion": 1
+          },
+          "mineru_raw_keys": {
+            "field:abstract": 1,
+            "field:introduction": 1,
+            "field:experiment": 1,
+            "other": 3,
+            "conclusion": 1
+          },
+          "infer_reasons": {
+            "top_level_field": 3,
+            "body_override": 3,
+            "title": 1
+          },
+          "rescued_from_other": 3,
+          "note": "mineru key is unreliable; blocks are selected by title/body/inheritance. rescued_from_other counts sections labeled other but treated as typed roles."
+        },
+        "claims": [
+          {
+            "id": "C1",
+            "statement": "A statistical model trained on OpenStack recheck requests can discriminate between successful and failed rechecks well, outperforming baseline approaches by 23.6 percentage points in AUROC (0.736).",
+            "direction": "improves",
+            "metric_names": [
+              "AUROC"
+            ],
+            "evidence_quote": "our model can differentiate successful and failed rechecks well, outperforming baseline approaches by 23.6 percentage points in terms of AUROC (0.736)",
+            "confidence": 0.98
+          },
+          {
+            "id": "C6",
+            "statement": "Skipping rechecks predicted to fail would avoid 86.49% of wasted rechecks and save roughly 262 years of compute time.",
+            "direction": "improves",
+            "metric_names": [
+              "wasted_rechecks_avoided",
+              "compute_time_saved"
+            ],
+            "evidence_quote": "Applying our model to skip recheck requests when they are predicted to fail would avoid 86.49% of wasted rechecks, saving roughly 262 years of compute time.",
+            "confidence": 0.98
+          }
+        ],
+        "metrics": [],
+        "overall_conclusion": null,
+        "comparable_notes": null,
+        "cache_hit": true
+      },
+      "agent": {
+        "status": "ok",
+        "run_dir": "~/ai_scientist_inputs/ASE-2025-004_predicting_recheck_success_in_continuous/workspace/airesearcher_2026-09-25_08-05-06",
+        "claims": [
+          {
+            "id": "A1",
+            "statement": "The closed-form L2-regularized logistic regression with restricted cubic splines achieves AUROC 0.792 and AUPRC 0.415, substantially outperforming the random-guessing baseline AUROC 0.500.",
+            "direction": "improves",
+            "metric_names": [
+              "AUROC",
+              "AUPRC"
+            ],
+            "evidence_quote": "The model achieves AUROC 0.792 and AUPRC 0.415, substantially outperforming the random-guessing baseline (AUROC 0.500), demonstrating that recheck outcomes are predictable.",
+            "confidence": 0.98
+          },
+          {
+            "id": "A2",
+            "statement": "The mini-batch gradient descent model after exactly 2 epochs also exceeds random chance with AUROC 0.663 and AUPRC 0.274.",
+            "direction": "improves",
+            "metric_names": [
+              "AUROC",
+              "AUPRC"
+            ],
+            "evidence_quote": "The 2-epoch mini-batch model also exceeds chance (0.66), showing that even a short training budget captures meaningful signal.",
+            "confidence": 0.95
+          },
+          {
+            "id": "A3",
+            "statement": "The closed-form logistic regression model has better calibration than the mini-batch and random-guessing alternatives.",
+            "direction": "improves",
+            "metric_names": [
+              "Brier score"
+            ],
+            "evidence_quote": "The Brier score of the `lrm` model (0.107) is lower than both alternatives, indicating better calibration.",
+            "confidence": 0.96
+          },
+          {
+            "id": "A4",
+            "statement": "The optimism estimate is approximately 0.007, indicating negligible overfitting for the regularized model.",
+            "direction": "no_difference",
+            "metric_names": [
+              "Optimism estimate"
+            ],
+            "evidence_quote": "The optimism estimate is small (≈0.007), indicating negligible overfitting for this well-regularized linear model.",
+            "confidence": 0.94
+          }
+        ],
+        "metrics": [],
+        "overall_conclusion": null,
+        "sources": {
+          "metrics_path": null,
+          "paper_tex_path": "paper/paper.md"
+        },
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 1123,
+            "completion_tokens_details": {
+              "reasoning_tokens": 662
+            },
+            "prompt_tokens": 727,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 1850
+          },
+          "attempt": 2
+        }
+      },
+      "comparison": {
+        "status": "ok",
+        "claim_alignment": [
+          {
+            "original_claim_id": "C1",
+            "agent_claim_id": "A1",
+            "label": "consistent",
+            "rationale": "Both report that a statistical model can discriminate successful from failed recheck outcomes. Agent A1 reports AUROC 0.792 with a random-guessing baseline, same direction as the original claim of AUROC 0.736 and improved discrimination."
+          },
+          {
+            "original_claim_id": "C6",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "No agent claim addresses skipping rechecks predicted to fail, wasted rechecks avoided, or compute time saved."
+          }
+        ],
+        "metric_alignment": [
+          {
+            "original_metric": "AUROC",
+            "agent_metric": "AUROC",
+            "comparable": true,
+            "original_value": 0.736,
+            "agent_value": 0.792,
+            "delta_abs": 0.056,
+            "delta_rel": 0.0761,
+            "direction_vs_original_sota": "better",
+            "rationale": "Both report AUROC for recheck outcome prediction. Agent-reported AUROC 0.792 is higher than the original reported 0.736, but the baselines differ, so this is a directional numeric comparison only."
+          },
+          {
+            "original_metric": "wasted_rechecks_avoided",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": "86.49%",
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Agent did not report any metric for avoided wasted rechecks or a skip-predicted-fail simulation."
+          },
+          {
+            "original_metric": "compute_time_saved",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": "262 years",
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Agent did not report compute-time savings from skipping predicted-to-fail rechecks."
+          }
+        ],
+        "summary": {
+          "direction_consistency": "mixed",
+          "consistent_claim_ratio": 0.5,
+          "has_comparable_metrics": true,
+          "sota_improvement_summary": "Agent AUROC 0.792 is 5.6 points higher than the original reported AUROC 0.736, but the operational savings claims are not addressed.",
+          "overall_alignment_score": 0.55,
+          "score_rationale": "Core predictive claim is consistent, but the impact/savings claim is missing. No conflicting claims. Overall direction aligns on the main modeling problem."
+        },
+        "warnings": [
+          "Original claim C6 about wasted rechecks and compute-time savings is not addressed by the agent.",
+          "Agent baseline comparison is to random guessing, not necessarily the original paper's baseline approaches."
+        ],
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 2581,
+            "completion_tokens_details": {
+              "reasoning_tokens": 1887
+            },
+            "prompt_tokens": 2949,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 5530
+          },
+          "attempt": 1
+        }
+      },
+      "overall_alignment_score": 0.55,
+      "direction_consistency": "mixed"
+    },
+    "experiment_analysis": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-004_predicting_recheck_success_in_continuous/workspace/airesearcher_2026-09-25_08-05-06",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-004_predicting_recheck_success_in_continuous",
+      "status": "ok",
+      "metrics_path": null,
+      "experiment_success": {
+        "status": "failed_or_incomplete",
+        "success": false,
+        "metrics_path": null,
+        "absolute_metrics_path": null,
+        "checks": {
+          "has_results_file": false,
+          "non_stub": false,
+          "numeric_leaf_count": 0,
+          "min_numeric_ok": false
+        },
+        "manifest_hints": {
+          "status": {
+            "pipeline": false,
+            "research_brief": true,
+            "instance": true,
+            "source_papers": true,
+            "metrics": false,
+            "project": true,
+            "paper": true
+          },
+          "returncode": 1,
+          "benchmark_complete": null,
+          "artifacts_metrics_flag": false
+        },
+        "warnings": [
+          "manifest.returncode=1"
+        ],
+        "suspicious_values": [],
+        "note": "success=true requires substantive results (framework-aware path) with >=3 numeric leaves. Supports metrics.json, results.json, experiment_results.txt, etc. Manifest returncode/benchmark_complete are soft warnings only."
+      },
+      "idea_code_consistency": {
+        "status": "missing_idea"
+      },
+      "setup_coverage": {
+        "status": "ok",
+        "overall_coverage": 1.0,
+        "datasets": {
+          "gold_count": 1,
+          "hit_count": 1,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "OpenStack Recheck Dataset"
+          ],
+          "misses": []
+        },
+        "baselines": {
+          "gold_count": 1,
+          "hit_count": 1,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "Random Guessing"
+          ],
+          "misses": []
+        },
+        "metrics": {
+          "gold_count": 4,
+          "hit_count": 4,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "AUROC",
+            "Brier Score",
+            "AUPRC",
+            "Optimism"
+          ],
+          "misses": []
+        },
+        "agent_protocol": {},
+        "gold_protocol": {},
+        "dataset_dirs": [
+          "dataset_candidate"
+        ],
+        "flags": {
+          "weaker_baseline_suspected": false,
+          "weak_protocol": [],
+          "synthetic_data": "synthetic_allowed_by_task",
+          "gold_allows_synthetic": true
+        },
+        "gold_sources": [
+          "~/ai_scientist_inputs/ASE-2025-004_predicting_recheck_success_in_continuous/task.md",
+          "~/ai_scientist_inputs/ASE-2025-004_predicting_recheck_success_in_continuous/metadata.json"
+        ],
+        "note": "Coverage is name/alias matching against task.md Datasets/Baselines/Metrics. weak_protocol flags large reductions in trials/timeout vs Constraints. Synthetic corpora are not penalized when the task itself requires synthesis."
+      },
+      "ablation_significance": {
+        "status": "missing_idea"
+      },
+      "results_paper_consistency": {
+        "status": "missing_metrics"
+      },
+      "scores": {
+        "experiment_success": false,
+        "idea_code_score": null,
+        "setup_coverage": 1.0,
+        "ablation_coverage_score": null,
+        "overall_ablation_ok": null,
+        "overall_significance_ok": null,
+        "results_paper_score": null,
+        "hiding_unfavorable_suspected": null
+      },
+      "notes": [
+        "Axes 1,2,3,4,6 in experiment_analysis (figures excluded).",
+        "setup_coverage matches task.md Datasets/Baselines/Metrics; weak_protocol flags reductions vs Constraints.",
+        "Axis 6: final normalized results vs paper; interim run logs not used as ground truth."
+      ]
+    },
+    "literature_review": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-004_predicting_recheck_success_in_continuous/workspace/airesearcher_2026-09-25_08-05-06",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-004_predicting_recheck_success_in_continuous",
+      "status": "not_applicable",
+      "framework": "airesearcher",
+      "reason": "Framework does not produce workspace reference artifacts for fair comparison.",
+      "scores": null
+    }
+  },
+  "scores": {
+    "completeness": {
+      "complete": false,
+      "overall_score": 0.4,
+      "required_score": 0.5,
+      "bonus_score": 0.05
+    },
+    "peer_review": {
+      "status": "ok",
+      "optional": false,
+      "overall_score": 3.3,
+      "score_scale": "1-10",
+      "scoring_method": "paperreview_apr"
+    },
+    "idea_generation": {
+      "status": "missing_idea",
+      "overall_score": null,
+      "dimensions": {
+        "novelty": null,
+        "feasibility": null,
+        "clarity": null
+      },
+      "novelty_category": null,
+      "solution_space_status": null
+    },
+    "alignment": {
+      "status": "ok",
+      "direction_consistency": "mixed",
+      "overall_alignment_score": 0.55
+    },
+    "literature_review": {
+      "fabrication_rate": null,
+      "coverage_recall": null,
+      "recency_ratio_3y": null,
+      "recency_ratio_5y": null
+    },
+    "experiment_analysis": {
+      "experiment_success": false,
+      "idea_code_score": null,
+      "setup_coverage": 1.0,
+      "ablation_coverage_score": null,
+      "overall_ablation_ok": null,
+      "overall_significance_ok": null,
+      "results_paper_score": null,
+      "hiding_unfavorable_suspected": null
+    }
+  },
+  "fair_scores": {
+    "applicable_axes": [
+      "completeness",
+      "peer_review",
+      "alignment",
+      "experiment_analysis"
+    ],
+    "skipped_axes": [
+      {
+        "axis": "idea_generation",
+        "reason": "missing_idea"
+      },
+      {
+        "axis": "literature_review",
+        "reason": "not_applicable"
+      }
+    ],
+    "fair_mean_0_1": 0.47,
+    "note": "fair_mean_0_1 averages only applicable axes; optional peer review and framework-inapplicable literature are excluded from the denominator."
+  },
+  "evals_root": "~/ai_scientist_evals",
+  "claims_cache": "~/ai_scientist_evals/ASE-2025-004_predicting_recheck_success_in_continuous/original_claims.json",
+  "solution_space_cache": "~/ai_scientist_evals/ASE-2025-004_predicting_recheck_success_in_continuous/solution_space.json"
+}

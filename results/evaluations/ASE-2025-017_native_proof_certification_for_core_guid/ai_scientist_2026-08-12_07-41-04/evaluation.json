@@ -1,0 +1,1148 @@
+{
+  "run_dir": "~/ai_scientist_inputs/ASE-2025-017_native_proof_certification_for_core_guid/workspace/ai_scientist_2026-08-12_07-41-04",
+  "task_dir": "~/ai_scientist_inputs/ASE-2025-017_native_proof_certification_for_core_guid",
+  "framework": "ai_scientist",
+  "fairness_audit": [
+    {
+      "axis": "completeness",
+      "was_unfair": "Required both paper.tex AND paper.pdf; any tool missing one failed equally.",
+      "fix": "Paper gate: PDF=1.0; TeX-only=0.5; ``complete`` requires PDF."
+    },
+    {
+      "axis": "completeness",
+      "was_unfair": "``results`` counted stub/seed JSON (dataset_candidate/metrics.json).",
+      "fix": "``results`` requires substantive numeric results via results_normalize."
+    },
+    {
+      "axis": "experiment_success",
+      "was_unfair": "Only metrics.json; ignored results.json / experiment_results.txt.",
+      "fix": "Framework-ordered result candidates + normalized loaders."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Penalized tools with no bib; airesearcher has no workspace references.",
+      "fix": "literature_applicable=false → status not_applicable; excluded from fair aggregate."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "related_work.json subset as gold made recall hard to interpret.",
+      "fix": "Coverage gold is original paper REFERENCES from mineru; related_work only enriches metadata/fallback."
+    },
+    {
+      "axis": "peer_review",
+      "was_unfair": "Missing Stanford report looked like evaluation failure.",
+      "fix": "status not_provided; optional axis, never counts as tool failure."
+    },
+    {
+      "axis": "paths/find_results",
+      "was_unfair": "Picked downloads/** and sandbox noise (e.g. airesearcher LLVM tree).",
+      "fix": "Exclude downloads/, seeds/, dataset_candidate/, sandbox junk paths."
+    },
+    {
+      "axis": "paths/framework_noise",
+      "was_unfair": "DeepScientist .deepscientist_npm / runtime / skills templates counted as code/paper/results.",
+      "fix": "FRAMEWORK_NOISE_DIRS+markers; quest worktree + eval_output results; paper md drafts; reject template tex."
+    },
+    {
+      "axis": "paths/paper_tex",
+      "was_unfair": "tiny_scientist / ACL runs store paper under latex/*.tex; evaluator only looked at paper/main.tex.",
+      "fix": "latex/**/*.tex with substantive-body heuristic; find_paper_document uses same rules."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Entire custom.bib (300+ anthology entries) verified when paper had zero \\cite commands.",
+      "fix": "collect_agent_references filters bib to in-text cite keys; skips uncited bulk bib (>40 entries)."
+    },
+    {
+      "axis": "paths/ai_scientist_summaries",
+      "was_unfair": "AI Scientist can persist substantive results and paper-like drafts in *_summary.json logs rather than paper/main.tex or results/**/*.json.",
+      "fix": "Treat draft_summary/research_summary as weak paper documents and summary JSONs as result candidates."
+    },
+    {
+      "axis": "framework/ai_scientist_v2",
+      "was_unfair": "Manifest framework ``ai_scientist_v2`` fell through to profile ``unknown``, skipping AI-Scientist idea/result path priorities.",
+      "fix": "Normalize ``ai_scientist_v2`` (and common aliases) to profile key ``ai_scientist``."
+    },
+    {
+      "axis": "idea_generation",
+      "was_unfair": "plan.md/todos.md weak proxies scored same as structured idea.json.",
+      "fix": "Framework idea_priority tried first; missing idea → not_applicable where appropriate."
+    }
+  ],
+  "generated_at": "2026-10-01T15:12:57",
+  "axes": [
+    "alignment",
+    "completeness",
+    "experiment_analysis",
+    "idea_generation",
+    "literature_review",
+    "peer_review"
+  ],
+  "results": {
+    "completeness": {
+      "framework": "ai_scientist",
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-017_native_proof_certification_for_core_guid/workspace/ai_scientist_2026-08-12_07-41-04",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-017_native_proof_certification_for_core_guid",
+      "complete": false,
+      "required_score": 0.875,
+      "bonus_score": 0.03,
+      "overall_score": 0.7,
+      "missing": [],
+      "required": {
+        "idea": {
+          "path": "session/idea.json",
+          "bytes": 11325,
+          "via": "candidate"
+        },
+        "code": {
+          "count": 35,
+          "files": [
+            {
+              "path": "experiments/2026-08-12_07-44-11_native_proof_certification_for_core_guided_maxsa_attempt_0/auto_plot_aggregator.py",
+              "bytes": 7863,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-08-12_07-44-11_native_proof_certification_for_core_guided_maxsa_attempt_0/logs/0-run/experiment_results/experiment_07b6d7d736e740f49ac114a48ed9a124_proc_6355/experiment_code.py",
+              "bytes": 6417,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-08-12_07-44-11_native_proof_certification_for_core_guided_maxsa_attempt_0/logs/0-run/experiment_results/experiment_07b6d7d736e740f49ac114a48ed9a124_proc_6355/plotting_code.py",
+              "bytes": 4069,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-08-12_07-44-11_native_proof_certification_for_core_guided_maxsa_attempt_0/logs/0-run/experiment_results/experiment_10aa64f3be544259ac1ddd1be10b9957_proc_6272/experiment_code.py",
+              "bytes": 2398,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-08-12_07-44-11_native_proof_certification_for_core_guided_maxsa_attempt_0/logs/0-run/experiment_results/experiment_10aa64f3be544259ac1ddd1be10b9957_proc_6272/plotting_code.py",
+              "bytes": 3300,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-08-12_07-44-11_native_proof_certification_for_core_guided_maxsa_attempt_0/logs/0-run/experiment_results/experiment_11d0c9a6506d4c9f99be5ca3d0b17b0d_proc_6097/experiment_code.py",
+              "bytes": 201,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-08-12_07-44-11_native_proof_certification_for_core_guided_maxsa_attempt_0/logs/0-run/experiment_results/experiment_11d0c9a6506d4c9f99be5ca3d0b17b0d_proc_6097/plotting_code.py",
+              "bytes": 52,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-08-12_07-44-11_native_proof_certification_for_core_guided_maxsa_attempt_0/logs/0-run/experiment_results/experiment_25aa75a15cc944f39662ade3771e0419_proc_6269/plotting_code.py",
+              "bytes": 52,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-08-12_07-44-11_native_proof_certification_for_core_guided_maxsa_attempt_0/logs/0-run/experiment_results/experiment_370750b360ac4b1a82ac2e509d7d70f9_proc_6499/plotting_code.py",
+              "bytes": 52,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-08-12_07-44-11_native_proof_certification_for_core_guided_maxsa_attempt_0/logs/0-run/experiment_results/experiment_37f605ad2ca5486cbd17af2c2968a3ef_proc_6352/experiment_code.py",
+              "bytes": 201,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-08-12_07-44-11_native_proof_certification_for_core_guided_maxsa_attempt_0/logs/0-run/experiment_results/experiment_37f605ad2ca5486cbd17af2c2968a3ef_proc_6352/plotting_code.py",
+              "bytes": 52,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-08-12_07-44-11_native_proof_certification_for_core_guided_maxsa_attempt_0/logs/0-run/experiment_results/experiment_4748bfa194cc479abe741ba535e2b089_proc_6496/experiment_code.py",
+              "bytes": 201,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-08-12_07-44-11_native_proof_certification_for_core_guided_maxsa_attempt_0/logs/0-run/experiment_results/experiment_4748bfa194cc479abe741ba535e2b089_proc_6496/plotting_code.py",
+              "bytes": 52,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-08-12_07-44-11_native_proof_certification_for_core_guided_maxsa_attempt_0/logs/0-run/experiment_results/experiment_567503c1064d489c920f199c0d51524b_proc_6097/plotting_code.py",
+              "bytes": 52,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-08-12_07-44-11_native_proof_certification_for_core_guided_maxsa_attempt_0/logs/0-run/experiment_results/experiment_63a7700d147540e38653ab5a24ae8341_proc_6353/plotting_code.py",
+              "bytes": 52,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-08-12_07-44-11_native_proof_certification_for_core_guided_maxsa_attempt_0/logs/0-run/experiment_results/experiment_6749b04138c34eea8dcd8abb6b9c502e_proc_6352/experiment_code.py",
+              "bytes": 6930,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-08-12_07-44-11_native_proof_certification_for_core_guided_maxsa_attempt_0/logs/0-run/experiment_results/experiment_6749b04138c34eea8dcd8abb6b9c502e_proc_6352/plotting_code.py",
+              "bytes": 4282,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-08-12_07-44-11_native_proof_certification_for_core_guided_maxsa_attempt_0/logs/0-run/experiment_results/experiment_67f24a0a79ed4d0497d3d24a0438e432_proc_6355/plotting_code.py",
+              "bytes": 52,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-08-12_07-44-11_native_proof_certification_for_core_guided_maxsa_attempt_0/logs/0-run/experiment_results/experiment_ad124834d0b2480498ad9a7e633799bd_proc_6096/experiment_code.py",
+              "bytes": 201,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-08-12_07-44-11_native_proof_certification_for_core_guided_maxsa_attempt_0/logs/0-run/experiment_results/experiment_ad124834d0b2480498ad9a7e633799bd_proc_6096/plotting_code.py",
+              "bytes": 52,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-08-12_07-44-11_native_proof_certification_for_core_guided_maxsa_attempt_0/logs/0-run/experiment_results/experiment_aefaf4842c6e4654b49c39849825565f_proc_6499/plotting_code.py",
+              "bytes": 52,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-08-12_07-44-11_native_proof_certification_for_core_guided_maxsa_attempt_0/logs/0-run/experiment_results/experiment_af9b3f87c2c545818728432c4f732194_proc_6097/experiment_code.py",
+              "bytes": 14130,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-08-12_07-44-11_native_proof_certification_for_core_guided_maxsa_attempt_0/logs/0-run/experiment_results/experiment_af9b3f87c2c545818728432c4f732194_proc_6097/plotting_code.py",
+              "bytes": 2602,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-08-12_07-44-11_native_proof_certification_for_core_guided_maxsa_attempt_0/logs/0-run/experiment_results/experiment_d0b727d06d65434c89fbb1e2c12ac551_proc_6270/experiment_code.py",
+              "bytes": 2197,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-08-12_07-44-11_native_proof_certification_for_core_guided_maxsa_attempt_0/logs/0-run/experiment_results/experiment_d0b727d06d65434c89fbb1e2c12ac551_proc_6270/plotting_code.py",
+              "bytes": 3300,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-08-12_07-44-11_native_proof_certification_for_core_guided_maxsa_attempt_0/logs/0-run/experiment_results/experiment_d210d34675494ad7b9233da2e725459c_proc_6098/plotting_code.py",
+              "bytes": 52,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-08-12_07-44-11_native_proof_certification_for_core_guided_maxsa_attempt_0/logs/0-run/experiment_results/experiment_dd3355573fbd4c399550621a8f2eeb7c_proc_6353/experiment_code.py",
+              "bytes": 201,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-08-12_07-44-11_native_proof_certification_for_core_guided_maxsa_attempt_0/logs/0-run/experiment_results/experiment_dd3355573fbd4c399550621a8f2eeb7c_proc_6353/plotting_code.py",
+              "bytes": 52,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-08-12_07-44-11_native_proof_certification_for_core_guided_maxsa_attempt_0/logs/0-run/experiment_results/experiment_f81d3e12f1aa41f7936cbf06c305e3ce_proc_6099/experiment_code.py",
+              "bytes": 201,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-08-12_07-44-11_native_proof_certification_for_core_guided_maxsa_attempt_0/logs/0-run/experiment_results/experiment_f81d3e12f1aa41f7936cbf06c305e3ce_proc_6099/plotting_code.py",
+              "bytes": 52,
+              "via": "glob"
+            }
+          ]
+        },
+        "results": {
+          "substantive": true,
+          "normalized_path": "experiments/2026-08-12_07-44-11_native_proof_certification_for_core_guided_maxsa_attempt_0/logs/0-run/experiment_results/experiment_f935c051f0a245b49c818e447f54bac6_proc_6099/experiment_data.npy",
+          "numeric_leaf_count": 1380,
+          "discovered_files": [
+            {
+              "path": "session/data/metrics.json",
+              "bytes": 686,
+              "via": "candidate"
+            },
+            {
+              "path": "experiments/2026-08-12_07-44-11_native_proof_certification_for_core_guided_maxsa_attempt_0/logs/0-run/ablation_summary.json",
+              "bytes": 571,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-08-12_07-44-11_native_proof_certification_for_core_guided_maxsa_attempt_0/logs/0-run/baseline_summary.json",
+              "bytes": 39440,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-08-12_07-44-11_native_proof_certification_for_core_guided_maxsa_attempt_0/logs/0-run/draft_summary.json",
+              "bytes": 2432,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-08-12_07-44-11_native_proof_certification_for_core_guided_maxsa_attempt_0/logs/0-run/experiment_results/experiment_07b6d7d736e740f49ac114a48ed9a124_proc_6355/experiment_data.npy",
+              "bytes": 1205,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-08-12_07-44-11_native_proof_certification_for_core_guided_maxsa_attempt_0/logs/0-run/experiment_results/experiment_6749b04138c34eea8dcd8abb6b9c502e_proc_6352/experiment_data.npy",
+              "bytes": 1217,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-08-12_07-44-11_native_proof_certification_for_core_guided_maxsa_attempt_0/logs/0-run/experiment_results/experiment_af9b3f87c2c545818728432c4f732194_proc_6097/experiment_data.npy",
+              "bytes": 410,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-08-12_07-44-11_native_proof_certification_for_core_guided_maxsa_attempt_0/logs/0-run/experiment_results/experiment_af9b3f87c2c545818728432c4f732194_proc_6097/proof_sizes.npy",
+              "bytes": 128,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-08-12_07-44-11_native_proof_certification_for_core_guided_maxsa_attempt_0/logs/0-run/experiment_results/experiment_af9b3f87c2c545818728432c4f732194_proc_6097/verification_throughput.npy",
+              "bytes": 128,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-08-12_07-44-11_native_proof_certification_for_core_guided_maxsa_attempt_0/logs/0-run/experiment_results/experiment_af9b3f87c2c545818728432c4f732194_proc_6097/verification_times.npy",
+              "bytes": 128,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-08-12_07-44-11_native_proof_certification_for_core_guided_maxsa_attempt_0/logs/0-run/experiment_results/experiment_f935c051f0a245b49c818e447f54bac6_proc_6099/experiment_data.npy",
+              "bytes": 145681,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-08-12_07-44-11_native_proof_certification_for_core_guided_maxsa_attempt_0/logs/0-run/research_summary.json",
+              "bytes": 545,
+              "via": "glob"
+            }
+          ],
+          "metrics_keys_sample": [
+            "synthetic_proofs"
+          ]
+        },
+        "paper": {
+          "tex": null,
+          "pdf": null,
+          "md": null,
+          "json": {
+            "path": "experiments/2026-08-12_07-44-11_native_proof_certification_for_core_guided_maxsa_attempt_0/logs/0-run/draft_summary.json",
+            "bytes": 2432,
+            "via": "glob"
+          },
+          "status": "json_only",
+          "score": 0.5
+        }
+      },
+      "bonus": {
+        "experiment_plan": null,
+        "experiment_log": {
+          "path": "ai_scientist_run.log",
+          "bytes": 1108304,
+          "via": "glob"
+        },
+        "review": null,
+        "readme": null,
+        "narrative": null,
+        "bib": null
+      },
+      "manifest_status": {
+        "pipeline": false
+      },
+      "gate_scores": {
+        "idea": 1.0,
+        "code": 1.0,
+        "results": 1.0,
+        "paper": 0.5
+      },
+      "fairness": {
+        "gates": [
+          "idea",
+          "code",
+          "results",
+          "paper"
+        ],
+        "paper_gate_rule": "PDF=1.0; TeX-only/md_only/json_only=0.5; complete requires PDF",
+        "results_gate_rule": "substantive numeric results via framework-aware normalize_results",
+        "audit_ref": "framework_profile.FAIRNESS_AUDIT"
+      },
+      "notes": [
+        "Required: idea, code, substantive results, paper (PDF full; TeX/markdown/JSON draft half).",
+        "Stub/seed metrics (e.g. dataset_candidate/metrics.json) do not satisfy results.",
+        "Framework noise (.deepscientist_npm, skills/templates, runtime) is excluded from code/results/paper.",
+        "Manifest status is informational; disk presence is authoritative."
+      ]
+    },
+    "idea_generation": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-017_native_proof_certification_for_core_guid/workspace/ai_scientist_2026-08-12_07-41-04",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-017_native_proof_certification_for_core_guid",
+      "idea_path": "~/ai_scientist_inputs/ASE-2025-017_native_proof_certification_for_core_guid/workspace/ai_scientist_2026-08-12_07-41-04/session/idea.json",
+      "status": "ok",
+      "dimensions": {
+        "novelty": {
+          "score": 3.0,
+          "justification": "The idea states it will 'avoid the overhead of translating to general pseudo-Boolean formalisms' and produce 'Native Proof Certification for Core-Guided MaxSAT Solvers.' However, R58 already uses 'pseudo-Boolean proof logging to certify core-guided MaxSAT, including structure sharing, weight-aware core extraction, and hardening,' and R63 introduces 'MS-Builder and MS-Checker to generate and verify Max-SAT certificates.' Thus the idea is an incremental variant rather than a new paradigm.",
+          "rubric": "Incremental: a meaningful extension or optimization of prior baseline work that fixes a concrete prior limitation, but the core paradigm is unchanged.",
+          "category": "Incremental",
+          "nearest_solution_space_ids": [
+            "R58",
+            "R63",
+            "R55",
+            "R49",
+            "R50"
+          ],
+          "differentiation": "The idea proposes a native, domain-specific proof format for OLL core-guided MaxSAT steps (core extraction, clique detection, hardening, totalizer updates, bound adjustments) rather than translating to pseudo-Boolean proofs. R58 already certifies core-guided MaxSAT using pseudo-Boolean proof logging, and R63 provides Max-SAT certificates via SAT resolution refutations, so the core certification goal is not new; only the avoidance of PB translation is a potential incremental contribution."
+        },
+        "feasibility": {
+          "score": 2.0,
+          "justification": "The proposal demands a general framework that 'should be integrable with any OLL-based solver without requiring changes to its core logic' and must meet strict constraints: 'Verification must complete within 2× the solving time and 16 GB memory on competition-grade instances.' Building a native proof format, logging all OLL steps, and an independent checker for 571 competition instances is a major engineering effort, and the idea provides no concrete design to reduce that burden.",
+          "rubric": "Extreme engineering barrier: requires building complex low-level tooling from scratch (custom compiler plugins, new vulnerability execution sandboxes), or an extremely heavy experimental pipeline with multi-month development."
+        },
+        "clarity": {
+          "score": 2.0,
+          "justification": "The text gives a problem, RQs, dataset, and metrics, but the actual method is only a high-level requirement: 'Generated proofs must capture all steps of the OLL algorithm (core extraction, clique detection, hardening, totalizer updates, bound adjustments).' There is no description of the proof format, inference rules, checker algorithm, or integration mechanism, so the proposed solution is underspecified.",
+          "rubric": "Broken logic: states a problem but the proposed solution does not match it, or never mentions experiments / evaluation."
+        }
+      },
+      "overall_score": 2.0,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "novelty",
+        "feasibility",
+        "clarity"
+      ],
+      "solution_space": {
+        "status": "ok",
+        "paper_count": 63,
+        "entry_count": 63,
+        "cache_hit": true,
+        "source_file": "~/ai_scientist_inputs/ASE-2025-017_native_proof_certification_for_core_guid/mineru_sections.json",
+        "stats": {
+          "papers": 63,
+          "extracted": 63,
+          "usable_abstracts": 24,
+          "citation_meta_abstracts": 0,
+          "missing_abstracts": 39,
+          "mineru_titles": 59,
+          "related_work_titles": 47,
+          "abstracts_attached": 24,
+          "related_work_extras": 4,
+          "batches": 4
+        },
+        "error": null
+      },
+      "notes": [
+        "Scores the intermediate idea artifact (not the final paper).",
+        "Dimensions: novelty, feasibility, clarity (each 1-5). Excitement removed.",
+        "Novelty is scored against a Solution Space built from mineru REFERENCES titles (+ related_work.json abstracts when matched)."
+      ],
+      "idea_via": "candidate",
+      "idea_relative": "session/idea.json",
+      "summary": "The idea targets native proof certification for core-guided MaxSAT solvers, aiming to avoid pseudo-Boolean translation overhead. It is motivated and has clear evaluation questions, but the method is not actually specified beyond requirements. Relative to the solution space, certified core-guided MaxSAT already exists via pseudo-Boolean proofs and Max-SAT certificates, so the contribution appears incremental. Feasibility is low because a general proof-logging framework with strict verification constraints on competition instances is a large engineering task without a concrete design.",
+      "strengths": [
+        "Clear research questions and quantitative metrics for overhead, proof size, and verification cost.",
+        "Uses the real 2024 MaxSAT Competition weighted exact benchmark set.",
+        "Identifies a concrete limitation of pseudo-Boolean proof translation overhead."
+      ],
+      "weaknesses": [
+        "No concrete proof format, inference rules, or checker algorithm is described.",
+        "Baseline 'certified-cgss' is not specified, weakening comparison plans.",
+        "Novelty is limited because certified core-guided MaxSAT and Max-SAT certificates already exist in the solution space.",
+        "Strict integration and verification constraints create high engineering risk without a detailed implementation plan."
+      ],
+      "llm_meta": {
+        "model": "deepseek-v4-pro-0813",
+        "base_url": "https://api-sg.umodelverse.ai/v1",
+        "usage": {
+          "completion_tokens": 2317,
+          "completion_tokens_details": {
+            "reasoning_tokens": 1575
+          },
+          "prompt_tokens": 6722,
+          "prompt_tokens_details": {
+            "cached_tokens": 4096
+          },
+          "total_tokens": 9039
+        },
+        "attempt": 0
+      }
+    },
+    "peer_review": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-017_native_proof_certification_for_core_guid/workspace/ai_scientist_2026-08-12_07-41-04",
+      "review_report": null,
+      "paper_pdf": null,
+      "paper_tex": null,
+      "status": "not_provided",
+      "dimensions": {},
+      "overall_score": null,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "soundness",
+        "significance",
+        "novelty",
+        "presentation",
+        "credibility"
+      ],
+      "notes": [
+        "Stanford Agentic Reviewer (paperreview.ai): manual download to artifacts/peer_review/stanford_apr.md, or pass --auto-paperreview.",
+        "Dimensions: soundness, significance, novelty, presentation, credibility (each 1-5)."
+      ],
+      "paperreview": {
+        "status": "skipped",
+        "reason": "no_pdf"
+      },
+      "optional": true,
+      "hint": "Optional external review (Stanford APR). Upload paper/main.pdf to https://paperreview.ai/ , save review to ~/ai_scientist_inputs/ASE-2025-017_native_proof_certification_for_core_guid/workspace/ai_scientist_2026-08-12_07-41-04/artifacts/peer_review/stanford_apr.md"
+    },
+    "alignment": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-017_native_proof_certification_for_core_guid/workspace/ai_scientist_2026-08-12_07-41-04",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-017_native_proof_certification_for_core_guid",
+      "status": "ok",
+      "original": {
+        "paper_title": "Efficient and Verifiable Proof Logging for MaxSAT Solving",
+        "selection": {
+          "num_blocks": 6,
+          "total_chars": 31666,
+          "inferred_roles": {
+            "abstract": 1,
+            "introduction": 1,
+            "experiment": 3,
+            "conclusion": 1
+          },
+          "mineru_raw_keys": {
+            "field:abstract": 1,
+            "field:introduction": 1,
+            "field:experiment": 1,
+            "other": 2,
+            "conclusion": 1
+          },
+          "infer_reasons": {
+            "top_level_field": 3,
+            "body_override": 2,
+            "title": 1
+          },
+          "rescued_from_other": 2,
+          "note": "mineru key is unreliable; blocks are selected by title/body/inheritance. rescued_from_other counts sections labeled other but treated as typed roles."
+        },
+        "claims": [
+          {
+            "id": "C1",
+            "statement": "The framework is the first MaxSAT-specific proof-logging framework for core-guided OLL solvers.",
+            "direction": "neutral",
+            "metric_names": [],
+            "evidence_quote": "the first MaxSAT-specific proof-logging framework for core-guided OLL solvers",
+            "confidence": 1.0
+          },
+          {
+            "id": "C2",
+            "statement": "The implementation captures the full OLL workflow and integrates into EvalMaxSAT, a top-ranked OLL solver.",
+            "direction": "neutral",
+            "metric_names": [],
+            "evidence_quote": "we implement both a human-readable normal logger and a compact binary DAG logger within EvalMaxSAT",
+            "confidence": 1.0
+          },
+          {
+            "id": "C3",
+            "statement": "Proof logging adds negligible runtime overhead in both normal and DAG modes.",
+            "direction": "no_difference",
+            "metric_names": [
+              "median_runtime_overhead_standard",
+              "median_runtime_overhead_dag"
+            ],
+            "evidence_quote": "proof logging does not add meaningful runtime cost",
+            "confidence": 0.95
+          }
+        ],
+        "metrics": [],
+        "overall_conclusion": null,
+        "comparable_notes": null,
+        "cache_hit": true
+      },
+      "agent": {
+        "status": "ok",
+        "run_dir": "~/ai_scientist_inputs/ASE-2025-017_native_proof_certification_for_core_guid/workspace/ai_scientist_2026-08-12_07-41-04",
+        "claims": [
+          {
+            "id": "A1",
+            "statement": "The proposed pipeline converts soft clauses in weighted partial MaxSAT instances into relaxed clauses with indicator variables and uses the Glucose SAT solver via PySAT to perform iterative cardinality constrained search to find minimal violated soft clauses.",
+            "direction": "neutral",
+            "metric_names": [],
+            "evidence_quote": "Convert soft clauses in weighted partial MaxSAT instances into relaxed clauses with indicator variables. Use the Glucose SAT solver (via PySAT) to perform iterative cardinality constrained search to find minimal violated soft clauses.",
+            "confidence": 0.9
+          },
+          {
+            "id": "A2",
+            "statement": "After solving, certificates containing the optimal cost and model are produced and verified with a lightweight verifier that checks hard clause satisfaction and ensures the total weight of violated soft clauses matches the reported optimal cost.",
+            "direction": "neutral",
+            "metric_names": [],
+            "evidence_quote": "After solving, produce certificates containing the optimal cost and model. Verify certificates with a lightweight verifier that checks hard clause satisfaction and ensures the total weight of violated soft clauses matches the reported optimal cost.",
+            "confidence": 0.9
+          },
+          {
+            "id": "A3",
+            "statement": "Verification throughput is intended to be computed as proof size in GB divided by verification time in seconds, with the median throughput across sampled instances reported as the baseline metric.",
+            "direction": "neutral",
+            "metric_names": [
+              "Verification Throughput"
+            ],
+            "evidence_quote": "Compute Verification Throughput as proof size (GB) divided by verification time (seconds). The median throughput across sampled instances is reported as the baseline metric.",
+            "confidence": 0.85
+          },
+          {
+            "id": "A4",
+            "statement": "The implementation plans to aggregate results from multiple random seeds to ensure statistical robustness.",
+            "direction": "neutral",
+            "metric_names": [],
+            "evidence_quote": "plans to aggregate results from multiple random seeds to ensure statistical robustness.",
+            "confidence": 0.8
+          },
+          {
+            "id": "A5",
+            "statement": "Establishing a baseline for verification throughput in MaxSAT solving is considered crucial for future work on rigorous optimality proofs.",
+            "direction": "neutral",
+            "metric_names": [],
+            "evidence_quote": "Establishing a baseline for verification throughput in MaxSAT solving is crucial for future work on rigorous optimality proofs.",
+            "confidence": 0.7
+          }
+        ],
+        "metrics": [],
+        "overall_conclusion": "The excerpt describes an initial implementation and planned baseline for MaxSAT verification throughput, but reports no numerical results.",
+        "sources": {
+          "metrics_path": null,
+          "paper_tex_path": "experiments/2026-08-12_07-44-11_native_proof_certification_for_core_guided_maxsa_attempt_0/logs/0-run/draft_summary.json"
+        },
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 1216,
+            "completion_tokens_details": {
+              "reasoning_tokens": 641
+            },
+            "prompt_cache_hit_tokens": 0,
+            "prompt_cache_miss_tokens": 827,
+            "prompt_tokens": 827,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 2043
+          },
+          "attempt": 0
+        }
+      },
+      "comparison": {
+        "status": "ok",
+        "claim_alignment": [
+          {
+            "original_claim_id": "C1",
+            "agent_claim_id": null,
+            "label": "incomparable",
+            "rationale": "Agent describes a MaxSAT solving/certification pipeline but does not address the claimed first proof-logging framework for core-guided OLL solvers; protocol and evidence differ."
+          },
+          {
+            "original_claim_id": "C2",
+            "agent_claim_id": null,
+            "label": "incomparable",
+            "rationale": "Agent does not mention EvalMaxSAT or integration of a full OLL workflow; evidence for the original implementation claim is missing."
+          },
+          {
+            "original_claim_id": "C3",
+            "agent_claim_id": null,
+            "label": "incomparable",
+            "rationale": "Agent reports no runtime overhead measurements for normal or DAG proof logging modes, so the negligible-overhead claim cannot be compared."
+          }
+        ],
+        "metric_alignment": [
+          {
+            "original_metric": "median_runtime_overhead_standard",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": null,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "No value reported in original extraction and no corresponding metric in agent extraction."
+          },
+          {
+            "original_metric": "median_runtime_overhead_dag",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": null,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "No value reported in original extraction and no corresponding metric in agent extraction."
+          }
+        ],
+        "summary": {
+          "direction_consistency": "same_direction_incomparable",
+          "consistent_claim_ratio": 0.0,
+          "has_comparable_metrics": false,
+          "sota_improvement_summary": "N/A",
+          "overall_alignment_score": 0.4,
+          "score_rationale": "Agent works on the same broad MaxSAT proof certification direction but presents a preliminary pipeline with no comparable claims or numerical metrics."
+        },
+        "warnings": [
+          "Agent extraction reports no numerical results and only a planned/implicit baseline.",
+          "Original extraction contains named metrics but no values, so no deltas can be computed.",
+          "No EvalMaxSAT or core-guided OLL proof-logging details appear in the agent extraction."
+        ],
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 2422,
+            "completion_tokens_details": {
+              "reasoning_tokens": 1834
+            },
+            "prompt_cache_hit_tokens": 0,
+            "prompt_cache_miss_tokens": 1667,
+            "prompt_tokens": 1667,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 4089
+          },
+          "attempt": 0
+        }
+      },
+      "overall_alignment_score": 0.4,
+      "direction_consistency": "same_direction_incomparable"
+    },
+    "experiment_analysis": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-017_native_proof_certification_for_core_guid/workspace/ai_scientist_2026-08-12_07-41-04",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-017_native_proof_certification_for_core_guid",
+      "status": "ok",
+      "metrics_path": null,
+      "experiment_success": {
+        "status": "failed_or_incomplete",
+        "success": false,
+        "metrics_path": null,
+        "absolute_metrics_path": null,
+        "checks": {
+          "has_results_file": false,
+          "non_stub": false,
+          "numeric_leaf_count": 0,
+          "min_numeric_ok": false
+        },
+        "manifest_hints": {
+          "status": {
+            "pipeline": false
+          },
+          "returncode": 1,
+          "benchmark_complete": null,
+          "artifacts_metrics_flag": false
+        },
+        "warnings": [
+          "manifest.returncode=1"
+        ],
+        "suspicious_values": [],
+        "note": "success=true requires substantive results (framework-aware path) with >=3 numeric leaves. Supports metrics.json, results.json, experiment_results.txt, etc. Manifest returncode/benchmark_complete are soft warnings only."
+      },
+      "idea_code_consistency": {
+        "status": "ok",
+        "idea_path": "session/idea.json",
+        "code_files": [
+          "experiments/2026-08-12_07-44-11_native_proof_certification_for_core_guided_maxsa_attempt_0/auto_plot_aggregator.py",
+          "experiments/2026-08-12_07-44-11_native_proof_certification_for_core_guided_maxsa_attempt_0/logs/0-run/experiment_results/experiment_07b6d7d736e740f49ac114a48ed9a124_proc_6355/experiment_code.py",
+          "experiments/2026-08-12_07-44-11_native_proof_certification_for_core_guided_maxsa_attempt_0/logs/0-run/experiment_results/experiment_07b6d7d736e740f49ac114a48ed9a124_proc_6355/plotting_code.py",
+          "experiments/2026-08-12_07-44-11_native_proof_certification_for_core_guided_maxsa_attempt_0/logs/0-run/experiment_results/experiment_10aa64f3be544259ac1ddd1be10b9957_proc_6272/experiment_code.py"
+        ],
+        "score_scale": "1-5",
+        "score": 1.0,
+        "label": "severe_mismatch",
+        "justification": "The experiment code does not implement a MaxSAT solver, proof certification, core-guided OLL reasoning, or any verifiable proof generation. Instead, it contains unrelated synthetic scripts: one performs linear regression hyperparameter tuning over learning rates, and another simulates fake MaxSAT-like metrics using IMDB/MNIST/SQuAD fallback data. The plotting code visualizes validation loss and synthetic metrics rather than proof-logging overhead, proof size, or verification time on MaxSAT competition benchmarks.",
+        "matched_elements": [
+          "Some variable names and metric names superficially mention proof size, verification time, and overhead.",
+          "The idea of comparing overhead and proof size is nominally reflected in synthetic metric keys."
+        ],
+        "missing_or_divergent_elements": [
+          "Actual core-guided MaxSAT solver implementation",
+          "OLL algorithm steps: core extraction, clique detection, hardening, totalizer updates, bound adjustments",
+          "Native proof logging and certificate generation",
+          "Independent proof verification",
+          "2024 MaxSAT Competition weighted exact benchmark dataset",
+          "VeriPB/pseudo-Boolean baseline comparison",
+          "Evaluation protocol for RQ1-RQ3 with bootstrap confidence intervals",
+          "Real proof size and verification time measurements"
+        ],
+        "rubric": "Severe mismatch: code implements a different problem/method than the idea, or is unrelated boilerplate.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 511,
+            "completion_tokens_details": {
+              "reasoning_tokens": 230
+            },
+            "prompt_tokens": 5130,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 5641
+          },
+          "attempt": 0
+        }
+      },
+      "setup_coverage": {
+        "status": "ok",
+        "overall_coverage": 1.0,
+        "datasets": {
+          "gold_count": 1,
+          "hit_count": 1,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "2024 MaxSAT Competition Weighted Exact Track Benchmark Set"
+          ],
+          "misses": []
+        },
+        "baselines": {
+          "gold_count": 1,
+          "hit_count": 1,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "certified-cgss (pseudo-Boolean proof generator for VeriPB)"
+          ],
+          "misses": []
+        },
+        "metrics": {
+          "gold_count": 5,
+          "hit_count": 5,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "Proof-logging overhead (IR)",
+            "Proof size",
+            "Verification time",
+            "Verification overhead (VO)",
+            "Proof size ratio"
+          ],
+          "misses": []
+        },
+        "agent_protocol": {},
+        "gold_protocol": {},
+        "dataset_dirs": [
+          "dataset_candidate"
+        ],
+        "flags": {
+          "weaker_baseline_suspected": false,
+          "weak_protocol": [],
+          "synthetic_data": "unexpected_synthetic_or_local_only_data",
+          "gold_allows_synthetic": false
+        },
+        "gold_sources": [
+          "~/ai_scientist_inputs/ASE-2025-017_native_proof_certification_for_core_guid/task.md",
+          "~/ai_scientist_inputs/ASE-2025-017_native_proof_certification_for_core_guid/metadata.json"
+        ],
+        "note": "Coverage is name/alias matching against task.md Datasets/Baselines/Metrics. weak_protocol flags large reductions in trials/timeout vs Constraints. Synthetic corpora are not penalized when the task itself requires synthesis."
+      },
+      "ablation_significance": {
+        "status": "ok",
+        "idea_path": "session/idea.json",
+        "significance_signals_rule_based": {
+          "signals": [],
+          "artifact_paths": [],
+          "has_any_significance_artifact": false
+        },
+        "evidence_format": null,
+        "study_type": "new_method",
+        "components": [
+          {
+            "name": "Native proof logging for core-guided MaxSAT",
+            "role": "module",
+            "ablation_expected": true,
+            "significance_expected": true,
+            "ablation_status": "missing",
+            "ablation_evidence": "No on/off or logging-mode comparison; metrics.json is empty and the experiment code does not implement proof logging for MaxSAT competition instances.",
+            "significance_status": "missing",
+            "significance_evidence": "No bootstrap CI or p-values reported despite the metric definition specifying 95% bootstrap confidence intervals."
+          },
+          {
+            "name": "Lightweight verifier",
+            "role": "module",
+            "ablation_expected": true,
+            "significance_expected": true,
+            "ablation_status": "missing",
+            "ablation_evidence": "No verifier comparison, correctness check, or overhead ablation; no proof artifacts are present.",
+            "significance_status": "missing",
+            "significance_evidence": "No statistical tests or confidence intervals for verifier performance."
+          },
+          {
+            "name": "Iterative cardinality constrained search (Glucose/PySAT)",
+            "role": "module",
+            "ablation_expected": true,
+            "significance_expected": true,
+            "ablation_status": "missing",
+            "ablation_evidence": "No comparison against core-guided MaxSAT or alternative search strategies; experiment code uses synthetic IMDB/MNIST/SQuAD-derived variable counts rather than competition instances.",
+            "significance_status": "missing",
+            "significance_evidence": "No statistical tests reported for search strategy comparisons."
+          },
+          {
+            "name": "certified-cgss pseudo-Boolean proof generator",
+            "role": "baseline",
+            "ablation_expected": false,
+            "significance_expected": true,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "Baseline comparison, not an ablation target.",
+            "significance_status": "missing",
+            "significance_evidence": "No baseline results or significance tests comparing proof size or verification overhead against certified-cgss."
+          },
+          {
+            "name": "2024 MaxSAT Competition benchmark set",
+            "role": "dataset split",
+            "ablation_expected": false,
+            "significance_expected": false,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "Dataset split is not an ablation target.",
+            "significance_status": "not_required",
+            "significance_evidence": "Descriptive benchmark evaluation."
+          },
+          {
+            "name": "Multiple random seeds",
+            "role": "instrumentation",
+            "ablation_expected": false,
+            "significance_expected": true,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "Not an ablation target.",
+            "significance_status": "missing",
+            "significance_evidence": "Paper mentions planned aggregation across seeds but no seed-based confidence intervals or tests are present in results."
+          }
+        ],
+        "ablation_coverage_score": 0.0,
+        "overall_ablation_ok": false,
+        "overall_significance_ok": false,
+        "summary": "The run does not implement the proposed MaxSAT proof-certification method on the stated benchmark; evidence is synthetic and lacks the certified-cgss baseline, proof artifacts, and any statistical results. Expected ablations for proof logging, verifier, and search strategy are missing, and significance testing is absent.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 5751,
+            "completion_tokens_details": {
+              "reasoning_tokens": 4978
+            },
+            "prompt_tokens": 3354,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 9105
+          },
+          "attempt": 0
+        }
+      },
+      "results_paper_consistency": {
+        "status": "missing_metrics"
+      },
+      "scores": {
+        "experiment_success": false,
+        "idea_code_score": 1.0,
+        "setup_coverage": 1.0,
+        "ablation_coverage_score": 0.0,
+        "overall_ablation_ok": false,
+        "overall_significance_ok": false,
+        "results_paper_score": null,
+        "hiding_unfavorable_suspected": null
+      },
+      "notes": [
+        "Axes 1,2,3,4,6 in experiment_analysis (figures excluded).",
+        "setup_coverage matches task.md Datasets/Baselines/Metrics; weak_protocol flags reductions vs Constraints.",
+        "Axis 6: final normalized results vs paper; interim run logs not used as ground truth."
+      ]
+    },
+    "literature_review": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-017_native_proof_certification_for_core_guid/workspace/ai_scientist_2026-08-12_07-41-04",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-017_native_proof_certification_for_core_guid",
+      "status": "ok",
+      "as_of_year": 2026,
+      "agent_ref_count": 3,
+      "sources": [
+        {
+          "path": "~/ai_scientist_inputs/ASE-2025-017_native_proof_certification_for_core_guid/workspace/ai_scientist_2026-08-12_07-41-04/experiments/2026-08-12_07-44-11_native_proof_certification_for_core_guided_maxsa_attempt_0/cached_citations.bib",
+          "kind": "bib"
+        }
+      ],
+      "collection_audit": {
+        "cited_keys_count": 0,
+        "filter_mode": "small_uncited_bib",
+        "bib_total_before_filter": 3,
+        "bib_after_filter": 3,
+        "uncited_bib_skipped": 0,
+        "agent_ref_count": 3
+      },
+      "fabrication": {
+        "status": "ok",
+        "scholarly_count": 3,
+        "verified_count": 3,
+        "fake_count": 0,
+        "lookup_failed_count": 0,
+        "non_paper_count": 0,
+        "fabrication_rate": 0.0,
+        "items": [
+          {
+            "title": "Certified Core-Guided MaxSAT Solving",
+            "doi": "10.1007/978-3-031-38499-8_1",
+            "arxiv_id": "",
+            "year": 2023,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Certified Core-Guided MaxSAT Solving",
+            "resolved_year": 2023,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "berg2023certifiedcm",
+            "source_kind": "bib"
+          },
+          {
+            "title": "On Solving the Partial MAX-SAT Problem",
+            "doi": "10.1007/11814948_25",
+            "arxiv_id": "",
+            "year": 2006,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "On Solving the Partial MAX-SAT Problem",
+            "resolved_year": 2006,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "fu2006onst",
+            "source_kind": "bib"
+          },
+          {
+            "title": "Practically Feasible Proof Logging for Pseudo-Boolean Optimization",
+            "doi": "10.4230/lipics.cp.2025.21",
+            "arxiv_id": "",
+            "year": 2025,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Practically Feasible Proof Logging for Pseudo-Boolean Optimization",
+            "resolved_year": 2025,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "koops2025practicallyfp",
+            "source_kind": "bib"
+          }
+        ],
+        "cache_path": "~/ai_scientist_evals/ASE-2025-017_native_proof_certification_for_core_guid/reference_verify_cache.json",
+        "override_path": "~/ai_scientist_evals/ASE-2025-017_native_proof_certification_for_core_guid/reference_verify_overrides.json",
+        "note": "fabrication_rate = fake / (verified + fake); lookup_failed (API errors) excluded. GitHub/docs/tool URLs are non_paper and excluded from the rate. To manually correct a false negative, edit reference_verify_overrides.json (key=normalized title / doi / cite_key; value=\"verified\" or a result dict), then re-run."
+      },
+      "coverage": {
+        "status": "ok",
+        "gold_source": "~/ai_scientist_inputs/ASE-2025-017_native_proof_certification_for_core_guid/mineru_sections.json",
+        "gold_count": 59,
+        "gold_is_original_paper_references": true,
+        "gold_is_openalex_subset": false,
+        "agent_count": 3,
+        "intersection_size": 3,
+        "recall": 0.05084745762711865,
+        "precision": 1.0,
+        "matched_gold_keys": [
+          "berg2023certified",
+          "boros2002pseudoboolean",
+          "fu2006solving"
+        ],
+        "primary_metric": "recall",
+        "note": "Primary metric is recall against the original paper bibliography (titles from mineru_sections.json REFERENCES; related_work.json used only to enrich DOI/year or as fallback if mineru titles are empty). Denominator = |original paper references|. Precision is secondary (agent may cite valid extra papers)."
+      },
+      "recency": {
+        "status": "ok",
+        "dated_count": 3,
+        "unknown_year_count": 0,
+        "year_histogram": {
+          "2006": 1,
+          "2023": 1,
+          "2025": 1
+        },
+        "windows": {
+          "3": {
+            "years": 3,
+            "cutoff_year_inclusive": 2023,
+            "recent_count": 2,
+            "recent_ratio": 0.6666666666666666
+          },
+          "5": {
+            "years": 5,
+            "cutoff_year_inclusive": 2021,
+            "recent_count": 2,
+            "recent_ratio": 0.6666666666666666
+          }
+        }
+      },
+      "scores": {
+        "fabrication_rate": 0.0,
+        "coverage_recall": 0.05084745762711865,
+        "coverage_precision": 1.0,
+        "recency_ratio_3y": 0.6666666666666666,
+        "recency_ratio_5y": 0.6666666666666666
+      }
+    }
+  },
+  "scores": {
+    "completeness": {
+      "complete": false,
+      "overall_score": 0.7,
+      "required_score": 0.875,
+      "bonus_score": 0.03
+    },
+    "peer_review": {
+      "status": "not_provided",
+      "optional": true,
+      "overall_score": null,
+      "score_scale": "1-5",
+      "scoring_method": null
+    },
+    "idea_generation": {
+      "status": "ok",
+      "overall_score": 2.0,
+      "dimensions": {
+        "novelty": 3.0,
+        "feasibility": 2.0,
+        "clarity": 2.0
+      },
+      "novelty_category": "Incremental",
+      "solution_space_status": "ok"
+    },
+    "alignment": {
+      "status": "ok",
+      "direction_consistency": "same_direction_incomparable",
+      "overall_alignment_score": 0.4
+    },
+    "literature_review": {
+      "fabrication_rate": 0.0,
+      "coverage_recall": 0.05084745762711865,
+      "coverage_precision": 1.0,
+      "recency_ratio_3y": 0.6666666666666666,
+      "recency_ratio_5y": 0.6666666666666666
+    },
+    "experiment_analysis": {
+      "experiment_success": false,
+      "idea_code_score": 1.0,
+      "setup_coverage": 1.0,
+      "ablation_coverage_score": 0.0,
+      "overall_ablation_ok": false,
+      "overall_significance_ok": false,
+      "results_paper_score": null,
+      "hiding_unfavorable_suspected": null
+    }
+  },
+  "fair_scores": {
+    "applicable_axes": [
+      "completeness",
+      "idea_generation",
+      "alignment",
+      "literature_review",
+      "experiment_analysis"
+    ],
+    "skipped_axes": [
+      {
+        "axis": "peer_review",
+        "reason": "optional_external_review"
+      }
+    ],
+    "fair_mean_0_1": 0.5295,
+    "note": "fair_mean_0_1 averages only applicable axes; optional peer review and framework-inapplicable literature are excluded from the denominator."
+  },
+  "evals_root": "~/ai_scientist_evals",
+  "claims_cache": "~/ai_scientist_evals/ASE-2025-017_native_proof_certification_for_core_guid/original_claims.json",
+  "solution_space_cache": "~/ai_scientist_evals/ASE-2025-017_native_proof_certification_for_core_guid/solution_space.json"
+}

@@ -1,0 +1,68 @@
+{
+  "layout": "icse2025_cdfuzz_empirical_study",
+  "layout_note": "ICSE 2025 CDFUZZ / assisting-exploration study artifact. Bundles CDFuzz (AFL fork), per-benchmark seed corpora, demo jhead workflow, and build-bench.sh to compile real-world fuzz targets. Benchmark binaries are NOT prebuilt.",
+  "workspace_symlink": "dataset_candidate/fuzzing-empirical-study",
+  "repository": "https://github.com/SophrosyneX/Fuzzing-empirical-study.git",
+  "paper_repository": "https://github.com/GhabiX/CDFuzz.git",
+  "paper_doi": "10.1109/ICSE55347.2025.00044",
+  "arxiv_id": "2409.14541",
+  "read_only": true,
+  "copy_note": "The shared artifact is read-only. Copy fuzzer sources or build scripts into project/ before modifying. Write compiled targets, fuzz output, and metrics under project/ or results/.",
+  "data_roots": {
+    "artifact_root": "dataset_candidate/fuzzing-empirical-study",
+    "cdfuzz_source": "dataset_candidate/fuzzing-empirical-study/CDFuzz",
+    "cdfuzz_llvm_mode": "dataset_candidate/fuzzing-empirical-study/CDFuzz/llvm_mode",
+    "seed_corpora": "dataset_candidate/fuzzing-empirical-study/Experiment/seed",
+    "build_bench_script": "dataset_candidate/fuzzing-empirical-study/Experiment/build-bench.sh",
+    "demo_jhead": "dataset_candidate/fuzzing-empirical-study/Demo/jhead",
+    "demo_fuzzing": "dataset_candidate/fuzzing-empirical-study/Demo/fuzzing",
+    "meta": "dataset_candidate/fuzzing-empirical-study/.artifact_meta.txt"
+  },
+  "benchmark_programs_paper": [
+    "readelf", "nm", "objdump", "size", "strip",
+    "djpeg", "tcpdump", "xmllint", "jhead", "pngfix",
+    "tiffinfo", "xmlwf", "tiff2bw", "mutool",
+    "libjpeg-turbo", "libpng", "libxml2", "re2", "jsoncpp", "sqlite3", "bloaty"
+  ],
+  "seed_corpora_in_artifact": [
+    "readelf", "nm", "objdump", "size", "strip",
+    "djpeg", "tcpdump", "xmllint", "jhead", "pngfix",
+    "tiffinfo", "xmlwf", "tiff2bw", "mutool", "harfbuzz", "pngtest"
+  ],
+  "instance_counts": {
+    "git_clone_approx": "15M",
+    "seed_corpora_dirs": 16,
+    "paper_benchmark_programs": 21,
+    "build_bench_targets_scripted": 14,
+    "note": "Git clone is ~15 MB. Full evaluation requires building all 21 programs (Experiment/build-bench.sh plus extra targets), installing 9 fuzzers + CDFUZZ, and running 21×10×24h×5 campaigns — expect multi-GB disk for builds and thousands of CPU-hours."
+  },
+  "dataset_env": {
+    "FUZZING_EMPIRICAL_STUDY_HOME": "dataset_candidate/fuzzing-empirical-study",
+    "CDFUZZ_HOME": "dataset_candidate/fuzzing-empirical-study/CDFuzz",
+    "FUZZER_SEED_ROOT": "dataset_candidate/fuzzing-empirical-study/Experiment/seed"
+  },
+  "python_environment": {
+    "python": "/opt/icse-2025-002-venv/bin/python",
+    "activation": "source /opt/icse-2025-002-venv/bin/activate",
+    "note": "Prepared at container startup. LLVM-13, clang, AFL++, and build-essential are on PATH."
+  },
+  "toolchain": {
+    "llvm13_bin": "/usr/lib/llvm-13/bin",
+    "afl_plus_plus": "afl-fuzz (system package)",
+    "cdfuzz_build": "make && make -C llvm_mode inside CDFuzz/ with LLVM_CONFIG=llvm-config-13"
+  },
+  "paper_protocol": {
+    "benchmark_programs": 21,
+    "studied_fuzzers": ["AFL", "AFL++", "MOpt", "FairFuzz", "QSYM", "MEUZZ", "Pangolin", "Angora", "REDQUEEN"],
+    "novel_fuzzer": "CDFUZZ",
+    "time_budget_hours": 24,
+    "repeats": 5,
+    "instrumentation": "AFL llvm-mode with LLVM-13",
+    "primary_metric": "edge_coverage via afl-showmap"
+  },
+  "not_provided": {
+    "prebuilt_benchmark_binaries": "Agent must compile all targets with afl-clang-fast (extend build-bench.sh as needed).",
+    "prebuilt_fuzzer_binaries": "Agent must clone, build, and configure all nine studied fuzzers plus CDFUZZ from upstream sources.",
+    "fuzzingdriver_dictionaries": "Agent must generate dictionaries via FuzzingDriver or an equivalent automated LLVM/CodeQL pipeline."
+  }
+}

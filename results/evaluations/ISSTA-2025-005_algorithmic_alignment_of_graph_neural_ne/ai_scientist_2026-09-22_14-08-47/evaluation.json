@@ -1,0 +1,677 @@
+{
+  "run_dir": "~/ai_scientist_inputs/ISSTA-2025-005_algorithmic_alignment_of_graph_neural_ne/workspace/ai_scientist_2026-09-22_14-08-47",
+  "task_dir": "~/ai_scientist_inputs/ISSTA-2025-005_algorithmic_alignment_of_graph_neural_ne",
+  "framework": "ai_scientist",
+  "fairness_audit": [
+    {
+      "axis": "completeness",
+      "was_unfair": "Required both paper.tex AND paper.pdf; any tool missing one failed equally.",
+      "fix": "Paper gate: PDF=1.0; TeX-only=0.5; ``complete`` requires PDF."
+    },
+    {
+      "axis": "completeness",
+      "was_unfair": "``results`` counted stub/seed JSON (dataset_candidate/metrics.json).",
+      "fix": "``results`` requires substantive numeric results via results_normalize."
+    },
+    {
+      "axis": "experiment_success",
+      "was_unfair": "Only metrics.json; ignored results.json / experiment_results.txt.",
+      "fix": "Framework-ordered result candidates + normalized loaders."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Penalized tools with no bib; airesearcher has no workspace references.",
+      "fix": "literature_applicable=false → status not_applicable; excluded from fair aggregate."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "related_work.json subset as gold made recall hard to interpret.",
+      "fix": "Coverage gold is original paper REFERENCES from mineru; related_work only enriches metadata/fallback."
+    },
+    {
+      "axis": "peer_review",
+      "was_unfair": "Missing Stanford report looked like evaluation failure.",
+      "fix": "status not_provided; optional axis, never counts as tool failure."
+    },
+    {
+      "axis": "paths/find_results",
+      "was_unfair": "Picked downloads/** and sandbox noise (e.g. airesearcher LLVM tree).",
+      "fix": "Exclude downloads/, seeds/, dataset_candidate/, sandbox junk paths."
+    },
+    {
+      "axis": "paths/framework_noise",
+      "was_unfair": "DeepScientist .deepscientist_npm / runtime / skills templates counted as code/paper/results.",
+      "fix": "FRAMEWORK_NOISE_DIRS+markers; quest worktree + eval_output results; paper md drafts; reject template tex."
+    },
+    {
+      "axis": "paths/paper_tex",
+      "was_unfair": "tiny_scientist / ACL runs store paper under latex/*.tex; evaluator only looked at paper/main.tex.",
+      "fix": "latex/**/*.tex with substantive-body heuristic; find_paper_document uses same rules."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Entire custom.bib (300+ anthology entries) verified when paper had zero \\cite commands.",
+      "fix": "collect_agent_references filters bib to in-text cite keys; skips uncited bulk bib (>40 entries)."
+    },
+    {
+      "axis": "paths/ai_scientist_summaries",
+      "was_unfair": "AI Scientist can persist substantive results and paper-like drafts in *_summary.json logs rather than paper/main.tex or results/**/*.json.",
+      "fix": "Treat draft_summary/research_summary as weak paper documents and summary JSONs as result candidates."
+    },
+    {
+      "axis": "framework/ai_scientist_v2",
+      "was_unfair": "Manifest framework ``ai_scientist_v2`` fell through to profile ``unknown``, skipping AI-Scientist idea/result path priorities.",
+      "fix": "Normalize ``ai_scientist_v2`` (and common aliases) to profile key ``ai_scientist``."
+    },
+    {
+      "axis": "idea_generation",
+      "was_unfair": "plan.md/todos.md weak proxies scored same as structured idea.json.",
+      "fix": "Framework idea_priority tried first; missing idea → not_applicable where appropriate."
+    }
+  ],
+  "generated_at": "2026-10-01T15:13:02",
+  "axes": [
+    "alignment",
+    "completeness",
+    "experiment_analysis",
+    "idea_generation",
+    "literature_review",
+    "peer_review"
+  ],
+  "results": {
+    "completeness": {
+      "framework": "ai_scientist",
+      "run_dir": "~/ai_scientist_inputs/ISSTA-2025-005_algorithmic_alignment_of_graph_neural_ne/workspace/ai_scientist_2026-09-22_14-08-47",
+      "task_dir": "~/ai_scientist_inputs/ISSTA-2025-005_algorithmic_alignment_of_graph_neural_ne",
+      "complete": false,
+      "required_score": 0.75,
+      "bonus_score": 0.03,
+      "overall_score": 0.6,
+      "missing": [
+        "paper"
+      ],
+      "required": {
+        "idea": {
+          "path": "session/idea.json",
+          "bytes": 11829,
+          "via": "candidate"
+        },
+        "code": {
+          "count": 3,
+          "files": [
+            {
+              "path": "experiments/2026-09-22_14-11-15_algorithmic_alignment_of_graph_neural_networks_f_attempt_0/logs/0-run/experiment_results/experiment_73da20950e9e42859b13746042e9a129_proc_407/experiment_code.py",
+              "bytes": 12963,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-09-22_14-11-15_algorithmic_alignment_of_graph_neural_networks_f_attempt_0/logs/0-run/experiment_results/experiment_73da20950e9e42859b13746042e9a129_proc_407/plotting_code.py",
+              "bytes": 4915,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-09-22_14-11-15_algorithmic_alignment_of_graph_neural_networks_f_attempt_0/logs/0-run/stage_1_initial_implementation_1_preliminary/best_solution_73da20950e9e42859b13746042e9a129.py",
+              "bytes": 12963,
+              "via": "glob"
+            }
+          ]
+        },
+        "results": {
+          "substantive": true,
+          "normalized_path": "experiments/2026-09-22_14-11-15_algorithmic_alignment_of_graph_neural_networks_f_attempt_0/logs/0-run/experiment_results/experiment_73da20950e9e42859b13746042e9a129_proc_407/experiment_data.npy",
+          "numeric_leaf_count": 104,
+          "discovered_files": [
+            {
+              "path": "session/data/metrics.json",
+              "bytes": 259,
+              "via": "candidate"
+            },
+            {
+              "path": "experiments/2026-09-22_14-11-15_algorithmic_alignment_of_graph_neural_networks_f_attempt_0/logs/0-run/experiment_results/experiment_73da20950e9e42859b13746042e9a129_proc_407/experiment_data.npy",
+              "bytes": 123143,
+              "via": "glob"
+            }
+          ],
+          "metrics_keys_sample": [
+            "synthetic_dfa"
+          ]
+        },
+        "paper": {
+          "tex": null,
+          "pdf": null,
+          "md": null,
+          "json": null,
+          "status": "missing",
+          "score": 0.0
+        }
+      },
+      "bonus": {
+        "experiment_plan": null,
+        "experiment_log": {
+          "path": "ai_scientist_run.log",
+          "bytes": 339729,
+          "via": "glob"
+        },
+        "review": null,
+        "readme": null,
+        "narrative": null,
+        "bib": null
+      },
+      "manifest_status": {
+        "pipeline": false
+      },
+      "gate_scores": {
+        "idea": 1.0,
+        "code": 1.0,
+        "results": 1.0,
+        "paper": 0.0
+      },
+      "fairness": {
+        "gates": [
+          "idea",
+          "code",
+          "results",
+          "paper"
+        ],
+        "paper_gate_rule": "PDF=1.0; TeX-only/md_only/json_only=0.5; complete requires PDF",
+        "results_gate_rule": "substantive numeric results via framework-aware normalize_results",
+        "audit_ref": "framework_profile.FAIRNESS_AUDIT"
+      },
+      "notes": [
+        "Required: idea, code, substantive results, paper (PDF full; TeX/markdown/JSON draft half).",
+        "Stub/seed metrics (e.g. dataset_candidate/metrics.json) do not satisfy results.",
+        "Framework noise (.deepscientist_npm, skills/templates, runtime) is excluded from code/results/paper.",
+        "Manifest status is informational; disk presence is authoritative."
+      ]
+    },
+    "idea_generation": {
+      "run_dir": "~/ai_scientist_inputs/ISSTA-2025-005_algorithmic_alignment_of_graph_neural_ne/workspace/ai_scientist_2026-09-22_14-08-47",
+      "task_dir": "~/ai_scientist_inputs/ISSTA-2025-005_algorithmic_alignment_of_graph_neural_ne",
+      "idea_path": "~/ai_scientist_inputs/ISSTA-2025-005_algorithmic_alignment_of_graph_neural_ne/workspace/ai_scientist_2026-09-22_14-08-47/session/idea.json",
+      "status": "ok",
+      "dimensions": {
+        "novelty": {
+          "score": 3.0,
+          "justification": "The proposal centers on 'Algorithmic Alignment of Graph Neural Networks for Emulating Data-Flow Analysis' and mentions bridging gaps via 'per-state independent computation (noninterference only)' and staged input consumption. This is closest to R57/R28 DeepDFA ('dataflow analysis-inspired graph learning... simulate dataflow computation') and R24 ('algorithmic alignment enables out-of-distribution generalization') plus R23 neural execution. The core DFA-inspired GNN paradigm already exists; the idea mainly adds explicit alignment constraints and evaluation questions, so it is incremental rather than a new paradigm.",
+          "rubric": "Incremental: a meaningful extension or optimization of prior baseline work that fixes a concrete prior limitation, but the core paradigm is unchanged.",
+          "category": "Incremental",
+          "nearest_solution_space_ids": [
+            "R57",
+            "R28",
+            "R24",
+            "R23"
+          ],
+          "differentiation": "Extends existing dataflow-inspired GNN work by foregrounding algorithmic alignment, noninterference, staged input injection, and trajectory-length/sample-efficiency evaluation, but the artifact does not describe a concrete new architecture beyond the baselines."
+        },
+        "feasibility": {
+          "score": 3.0,
+          "justification": "The work uses a provided artifact: 'Use mounted DFA-GNN artifact at dataset_candidate/dfagnns-issta2025/' and existing code under DFAGNNs. Training is 'restricted to programs with at most 50 CFG nodes; testing is performed on programs with up to 1000 nodes.' This requires modifying/training GNNs and running multiple datasets, but not building complex low-level tooling or sandboxes, so it is moderate research engineering.",
+          "rubric": "Moderate workload (sweet spot): needs nontrivial coding such as scripting existing open-source tools (parsers, CFG extractors) or building a custom graph-processing pipeline; standard research engineering effort."
+        },
+        "clarity": {
+          "score": 3.0,
+          "justification": "The artifact gives a clear research frame: 'To what extent can Graph Neural Networks be designed to align with data-flow analysis algorithms...' with datasets, baselines, metrics, and sub-questions. However, the proposed aligned GNN architecture is not concretely specified; only baselines are named, e.g., 'Standard GNN' and 'GNN with per-state independent computation (noninterference only)', and no training protocol, loss, or hyperparameters are described. Thus it is a complete frame but missing key technical details.",
+          "rubric": "Complete frame but missing details: What/Why/How are present, yet key technical execution details or specific comparison plans are underspecified."
+        }
+      },
+      "overall_score": 2.8,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "novelty",
+        "feasibility",
+        "clarity"
+      ],
+      "solution_space": {
+        "status": "ok",
+        "paper_count": 61,
+        "entry_count": 61,
+        "cache_hit": false,
+        "source_file": "~/ai_scientist_inputs/ISSTA-2025-005_algorithmic_alignment_of_graph_neural_ne/mineru_sections.json",
+        "stats": {
+          "papers": 61,
+          "extracted": 61,
+          "usable_abstracts": 14,
+          "citation_meta_abstracts": 0,
+          "missing_abstracts": 47,
+          "mineru_titles": 50,
+          "related_work_titles": 20,
+          "abstracts_attached": 14,
+          "related_work_extras": 11,
+          "batches": 4
+        },
+        "error": null
+      },
+      "notes": [
+        "Scores the intermediate idea artifact (not the final paper).",
+        "Dimensions: novelty, feasibility, clarity (each 1-5). Excitement removed.",
+        "Novelty is scored against a Solution Space built from mineru REFERENCES titles (+ related_work.json abstracts when matched)."
+      ],
+      "idea_via": "candidate",
+      "idea_relative": "session/idea.json",
+      "summary": "This idea studies whether GNNs can be algorithmically aligned with data-flow analysis to improve size generalization, trajectory extrapolation, and sample efficiency. It identifies relevant misalignments such as noninterference and staged input injection and defines strong datasets, baselines, and metrics. However, it does not propose a concrete new GNN architecture or training mechanism. Relative to DeepDFA and neural algorithmic reasoning references, the contribution appears incremental. Feasibility is moderate due to the provided code/data, but clarity is weakened by the missing model-level specification.",
+      "strengths": [
+        "Clearly identifies DFA-GNN misalignments: dense vector mixing versus bit-vector noninterference and staged input consumption.",
+        "Provides a concrete evaluation setup with POJ-104 size splits, metrics, and sub-questions."
+      ],
+      "weaknesses": [],
+      "llm_meta": {
+        "model": "deepseek-v4-pro-0813",
+        "base_url": "https://api-sg.umodelverse.ai/v1",
+        "usage": {
+          "completion_tokens": 1559,
+          "completion_tokens_details": {
+            "reasoning_tokens": 897
+          },
+          "prompt_tokens": 926,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "total_tokens": 2485
+        },
+        "attempt": 0
+      }
+    },
+    "peer_review": {
+      "run_dir": "~/ai_scientist_inputs/ISSTA-2025-005_algorithmic_alignment_of_graph_neural_ne/workspace/ai_scientist_2026-09-22_14-08-47",
+      "review_report": null,
+      "paper_pdf": null,
+      "paper_tex": null,
+      "status": "not_provided",
+      "dimensions": {},
+      "overall_score": null,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "soundness",
+        "significance",
+        "novelty",
+        "presentation",
+        "credibility"
+      ],
+      "notes": [
+        "Stanford Agentic Reviewer (paperreview.ai): manual download to artifacts/peer_review/stanford_apr.md, or pass --auto-paperreview.",
+        "Dimensions: soundness, significance, novelty, presentation, credibility (each 1-5)."
+      ],
+      "paperreview": {
+        "status": "skipped",
+        "reason": "no_pdf"
+      },
+      "optional": true,
+      "hint": "Optional external review (Stanford APR). Upload paper/main.pdf to https://paperreview.ai/ , save review to ~/ai_scientist_inputs/ISSTA-2025-005_algorithmic_alignment_of_graph_neural_ne/workspace/ai_scientist_2026-09-22_14-08-47/artifacts/peer_review/stanford_apr.md"
+    },
+    "alignment": {
+      "run_dir": "~/ai_scientist_inputs/ISSTA-2025-005_algorithmic_alignment_of_graph_neural_ne/workspace/ai_scientist_2026-09-22_14-08-47",
+      "task_dir": "~/ai_scientist_inputs/ISSTA-2025-005_algorithmic_alignment_of_graph_neural_ne",
+      "status": "missing_agent_paper_or_metrics",
+      "original": {
+        "status": "ok",
+        "task_dir": "~/ai_scientist_inputs/ISSTA-2025-005_algorithmic_alignment_of_graph_neural_ne",
+        "paper_title": "Bridging the Gaps Between Graph Neural Networks and Data-Flow Analysis: The Closer, the Better",
+        "task_id": "ISSTA-2025-005",
+        "selection": {
+          "num_blocks": 6,
+          "total_chars": 31998,
+          "inferred_roles": {
+            "abstract": 1,
+            "introduction": 1,
+            "experiment": 3,
+            "conclusion": 1
+          },
+          "mineru_raw_keys": {
+            "field:abstract": 1,
+            "field:introduction": 1,
+            "field:experiment": 1,
+            "other": 2,
+            "conclusion": 1
+          },
+          "infer_reasons": {
+            "top_level_field": 3,
+            "title": 3
+          },
+          "rescued_from_other": 2,
+          "note": "mineru key is unreliable; blocks are selected by title/body/inheritance. rescued_from_other counts sections labeled other but treated as typed roles."
+        },
+        "claims": [
+          {
+            "claim_text": "GNNs with higher algorithmic alignment to DFA, such as DFA-GNN+, exhibit superior generalization and sample efficiency compared with less aligned GNNs.",
+            "direction": "improves",
+            "metric_names": [
+              "M-F1",
+              "L-F1"
+            ],
+            "evidence_quote": "Results demonstrate that GNNs with higher algorithmic alignment, such as DFA-GNN+, exhibit superior generalization and sample efficiency, accurately scaling to 10 times larger inputs with minimal training data.",
+            "confidence": 0.9
+          }
+        ],
+        "metrics": [],
+        "overall_conclusion": null,
+        "comparable_notes": null,
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 670,
+            "completion_tokens_details": {
+              "reasoning_tokens": 527
+            },
+            "prompt_tokens": 400,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 1070
+          },
+          "attempt": 1
+        },
+        "cache_hit": true
+      },
+      "agent": {
+        "status": "missing_agent_paper_or_metrics",
+        "run_dir": "~/ai_scientist_inputs/ISSTA-2025-005_algorithmic_alignment_of_graph_neural_ne/workspace/ai_scientist_2026-09-22_14-08-47"
+      }
+    },
+    "experiment_analysis": {
+      "run_dir": "~/ai_scientist_inputs/ISSTA-2025-005_algorithmic_alignment_of_graph_neural_ne/workspace/ai_scientist_2026-09-22_14-08-47",
+      "task_dir": "~/ai_scientist_inputs/ISSTA-2025-005_algorithmic_alignment_of_graph_neural_ne",
+      "status": "ok",
+      "metrics_path": null,
+      "experiment_success": {
+        "status": "failed_or_incomplete",
+        "success": false,
+        "metrics_path": null,
+        "absolute_metrics_path": null,
+        "checks": {
+          "has_results_file": false,
+          "non_stub": false,
+          "numeric_leaf_count": 0,
+          "min_numeric_ok": false
+        },
+        "manifest_hints": {
+          "status": {
+            "pipeline": false
+          },
+          "returncode": 1,
+          "benchmark_complete": null,
+          "artifacts_metrics_flag": false
+        },
+        "warnings": [
+          "manifest.returncode=1"
+        ],
+        "suspicious_values": [],
+        "note": "success=true requires substantive results (framework-aware path) with >=3 numeric leaves. Supports metrics.json, results.json, experiment_results.txt, etc. Manifest returncode/benchmark_complete are soft warnings only."
+      },
+      "idea_code_consistency": {
+        "status": "ok",
+        "idea_path": "session/idea.json",
+        "code_files": [
+          "experiments/2026-09-22_14-11-15_algorithmic_alignment_of_graph_neural_networks_f_attempt_0/logs/0-run/experiment_results/experiment_73da20950e9e42859b13746042e9a129_proc_407/experiment_code.py",
+          "experiments/2026-09-22_14-11-15_algorithmic_alignment_of_graph_neural_networks_f_attempt_0/logs/0-run/experiment_results/experiment_73da20950e9e42859b13746042e9a129_proc_407/plotting_code.py",
+          "experiments/2026-09-22_14-11-15_algorithmic_alignment_of_graph_neural_networks_f_attempt_0/logs/0-run/stage_1_initial_implementation_1_preliminary/best_solution_73da20950e9e42859b13746042e9a129.py"
+        ],
+        "score_scale": "1-5",
+        "score": 3.0,
+        "label": "partial",
+        "justification": "The code implements a GNN-based data-flow analysis emulator with standard and noninterference baselines on synthetic gen-kill bit-vector DFA graphs, which matches the core algorithmic-alignment direction. However, it replaces the stated POJ-104 real program datasets and size-based generalization protocol with synthetic data, and the visible code does not implement trajectory supervision, truncated trajectory training, mean-step F1, or sample-efficiency evaluation from the idea.",
+        "matched_elements": [
+          "Graph neural network message passing for DFA-like state propagation",
+          "Standard GNN baseline and noninterference/independent state-computation baseline",
+          "Bit-vector gen-kill DFA facts associated with control-flow graph nodes",
+          "Small vs large graph generalization evaluation using final-state F1",
+          "Probing for the provided DFAGNNs/real-graph artifact"
+        ],
+        "missing_or_divergent_elements": [
+          "Uses synthetic gen-kill DFA data instead of POJ-104/0/50, 500/600, 600/700, and 900/1000 datasets",
+          "No trajectory supervision vs no-trajectory-supervision comparison is implemented in visible code",
+          "No truncated training sets with 10, 5, or 1 step evaluation",
+          "Mean step F1 and last-step precision/recall/F1 metrics from the idea are not clearly reported",
+          "Sample efficiency research question is not evaluated",
+          "Real POJ-104 data is only probed, not integrated into training/evaluation"
+        ],
+        "rubric": "Partial alignment: main direction matches, but important components from the idea (baselines, metrics, protocol, subjects) are dropped or altered without clear mapping.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 1030,
+            "completion_tokens_details": {
+              "reasoning_tokens": 682
+            },
+            "prompt_tokens": 4523,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 5553
+          },
+          "attempt": 0
+        }
+      },
+      "setup_coverage": {
+        "status": "ok",
+        "overall_coverage": 0.4666666666666666,
+        "datasets": {
+          "gold_count": 5,
+          "hit_count": 2,
+          "miss_count": 3,
+          "coverage": 0.4,
+          "hits": [
+            "POJ-104/0/50 training set",
+            "Truncated training sets (10, 5, 1 step)"
+          ],
+          "misses": [
+            "POJ-104/500/600 test set",
+            "POJ-104/600/700 test set",
+            "POJ-104/900/1000 test set"
+          ]
+        },
+        "baselines": {
+          "gold_count": 2,
+          "hit_count": 2,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "Standard GNN (no DFA-specific alignment)",
+            "GNN with per-state independent computation (noninterference only)"
+          ],
+          "misses": []
+        },
+        "metrics": {
+          "gold_count": 4,
+          "hit_count": 0,
+          "miss_count": 4,
+          "coverage": 0.0,
+          "hits": [],
+          "misses": [
+            "Last-step precision",
+            "Last-step recall",
+            "Last-step F1 score",
+            "Mean step F1 score"
+          ]
+        },
+        "agent_protocol": {},
+        "gold_protocol": {},
+        "dataset_dirs": [
+          "dataset_candidate"
+        ],
+        "flags": {
+          "weaker_baseline_suspected": false,
+          "weak_protocol": [],
+          "synthetic_data": "synthetic_allowed_by_task",
+          "gold_allows_synthetic": true
+        },
+        "gold_sources": [
+          "~/ai_scientist_inputs/ISSTA-2025-005_algorithmic_alignment_of_graph_neural_ne/task.md",
+          "~/ai_scientist_inputs/ISSTA-2025-005_algorithmic_alignment_of_graph_neural_ne/metadata.json"
+        ],
+        "note": "Coverage is name/alias matching against task.md Datasets/Baselines/Metrics. weak_protocol flags large reductions in trials/timeout vs Constraints. Synthetic corpora are not penalized when the task itself requires synthesis."
+      },
+      "ablation_significance": {
+        "status": "ok",
+        "idea_path": "session/idea.json",
+        "significance_signals_rule_based": {
+          "signals": [],
+          "artifact_paths": [],
+          "has_any_significance_artifact": false
+        },
+        "evidence_format": null,
+        "study_type": "new_method",
+        "components": [
+          {
+            "name": "Per-state independent computation (noninterference)",
+            "role": "module",
+            "ablation_expected": true,
+            "significance_expected": true,
+            "ablation_status": "present",
+            "ablation_evidence": "Code defines standard and noninterference GNN variants and plotting compares train/val loss and F1 for standard vs noninterference on synthetic DFA graphs.",
+            "significance_status": "missing",
+            "significance_evidence": "No statistical tests, confidence intervals, bootstrap, or p-values are reported; plots show mean/std curves but no formal comparison."
+          },
+          {
+            "name": "Staged input injection",
+            "role": "module",
+            "ablation_expected": true,
+            "significance_expected": true,
+            "ablation_status": "missing",
+            "ablation_evidence": "No model variant or code path implements staged input injection; only standard and noninterference variants appear.",
+            "significance_status": "missing",
+            "significance_evidence": "No comparison or statistical evidence for staged input injection."
+          },
+          {
+            "name": "Standard GNN baseline",
+            "role": "baseline",
+            "ablation_expected": false,
+            "significance_expected": true,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "Baseline comparison, not removable component; included in standard vs noninterference evaluation.",
+            "significance_status": "missing",
+            "significance_evidence": "No formal test comparing standard GNN to aligned variants."
+          }
+        ],
+        "ablation_coverage_score": 0.5,
+        "overall_ablation_ok": false,
+        "overall_significance_ok": false,
+        "summary": "The run includes a controlled comparison for the noninterference module (standard vs noninterference GNN variants on synthetic DFA data) but lacks an ablation for staged input injection. No statistical significance tests, confidence intervals, or p-values are reported across comparisons.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 2711,
+            "completion_tokens_details": {
+              "reasoning_tokens": 2257
+            },
+            "prompt_tokens": 4415,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 7126
+          },
+          "attempt": 1
+        }
+      },
+      "results_paper_consistency": {
+        "status": "missing_metrics"
+      },
+      "scores": {
+        "experiment_success": false,
+        "idea_code_score": 3.0,
+        "setup_coverage": 0.4666666666666666,
+        "ablation_coverage_score": 0.5,
+        "overall_ablation_ok": false,
+        "overall_significance_ok": false,
+        "results_paper_score": null,
+        "hiding_unfavorable_suspected": null
+      },
+      "notes": [
+        "Axes 1,2,3,4,6 in experiment_analysis (figures excluded).",
+        "setup_coverage matches task.md Datasets/Baselines/Metrics; weak_protocol flags reductions vs Constraints.",
+        "Axis 6: final normalized results vs paper; interim run logs not used as ground truth."
+      ]
+    },
+    "literature_review": {
+      "run_dir": "~/ai_scientist_inputs/ISSTA-2025-005_algorithmic_alignment_of_graph_neural_ne/workspace/ai_scientist_2026-09-22_14-08-47",
+      "task_dir": "~/ai_scientist_inputs/ISSTA-2025-005_algorithmic_alignment_of_graph_neural_ne",
+      "status": "not_applicable",
+      "as_of_year": 2026,
+      "agent_ref_count": 0,
+      "sources": [],
+      "collection_audit": {
+        "cited_keys_count": 0,
+        "filter_mode": "none",
+        "bib_total_before_filter": 0,
+        "bib_after_filter": 0,
+        "uncited_bib_skipped": 0
+      },
+      "fabrication": null,
+      "coverage": null,
+      "recency": null,
+      "reason": "no_reference_artifacts",
+      "hint": "No literature artifacts found (bib / thebibliography / shortlist / related_work.txt / arxiv index). Marked not_applicable rather than failure — tool may not emit references in-run."
+    }
+  },
+  "scores": {
+    "completeness": {
+      "complete": false,
+      "overall_score": 0.6,
+      "required_score": 0.75,
+      "bonus_score": 0.03
+    },
+    "peer_review": {
+      "status": "not_provided",
+      "optional": true,
+      "overall_score": null,
+      "score_scale": "1-5",
+      "scoring_method": null
+    },
+    "idea_generation": {
+      "status": "ok",
+      "overall_score": 2.8,
+      "dimensions": {
+        "novelty": 3.0,
+        "feasibility": 3.0,
+        "clarity": 3.0
+      },
+      "novelty_category": "Incremental",
+      "solution_space_status": "ok"
+    },
+    "alignment": {
+      "status": "missing_agent_paper_or_metrics",
+      "direction_consistency": null,
+      "overall_alignment_score": null
+    },
+    "literature_review": {
+      "fabrication_rate": null,
+      "coverage_recall": null,
+      "recency_ratio_3y": null,
+      "recency_ratio_5y": null
+    },
+    "experiment_analysis": {
+      "experiment_success": false,
+      "idea_code_score": 3.0,
+      "setup_coverage": 0.4666666666666666,
+      "ablation_coverage_score": 0.5,
+      "overall_ablation_ok": false,
+      "overall_significance_ok": false,
+      "results_paper_score": null,
+      "hiding_unfavorable_suspected": null
+    }
+  },
+  "fair_scores": {
+    "applicable_axes": [
+      "completeness",
+      "idea_generation",
+      "experiment_analysis"
+    ],
+    "skipped_axes": [
+      {
+        "axis": "peer_review",
+        "reason": "optional_external_review"
+      },
+      {
+        "axis": "literature_review",
+        "reason": "not_applicable"
+      }
+    ],
+    "fair_mean_0_1": 0.5552,
+    "note": "fair_mean_0_1 averages only applicable axes; optional peer review and framework-inapplicable literature are excluded from the denominator."
+  },
+  "evals_root": "~/ai_scientist_evals",
+  "claims_cache": "~/ai_scientist_evals/ISSTA-2025-005_algorithmic_alignment_of_graph_neural_ne/original_claims.json",
+  "solution_space_cache": "~/ai_scientist_evals/ISSTA-2025-005_algorithmic_alignment_of_graph_neural_ne/solution_space.json"
+}

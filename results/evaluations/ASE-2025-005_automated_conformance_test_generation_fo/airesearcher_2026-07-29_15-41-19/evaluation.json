@@ -1,0 +1,788 @@
+{
+  "generated_at": "2026-08-20T14:09:21",
+  "run_dir": "~/ai_scientist_inputs/ASE-2025-005_automated_conformance_test_generation_fo/workspace/airesearcher_2026-07-29_15-41-19",
+  "task_dir": "~/ai_scientist_inputs/ASE-2025-005_automated_conformance_test_generation_fo",
+  "framework": "airesearcher",
+  "fairness_audit": [
+    {
+      "axis": "completeness",
+      "was_unfair": "Required both paper.tex AND paper.pdf; any tool missing one failed equally.",
+      "fix": "Paper gate: PDF=1.0; TeX-only=0.5; ``complete`` requires PDF."
+    },
+    {
+      "axis": "completeness",
+      "was_unfair": "``results`` counted stub/seed JSON (dataset_candidate/metrics.json).",
+      "fix": "``results`` requires substantive numeric results via results_normalize."
+    },
+    {
+      "axis": "experiment_success",
+      "was_unfair": "Only metrics.json; ignored results.json / experiment_results.txt.",
+      "fix": "Framework-ordered result candidates + normalized loaders."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Penalized tools with no bib; airesearcher has no workspace references.",
+      "fix": "literature_applicable=false → status not_applicable; excluded from fair aggregate."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "related_work.json subset as gold made recall hard to interpret.",
+      "fix": "Coverage gold is original paper REFERENCES from mineru; related_work only enriches metadata/fallback."
+    },
+    {
+      "axis": "peer_review",
+      "was_unfair": "Missing Stanford report looked like evaluation failure.",
+      "fix": "status not_provided; optional axis, never counts as tool failure."
+    },
+    {
+      "axis": "paths/find_results",
+      "was_unfair": "Picked downloads/** and sandbox noise (e.g. airesearcher LLVM tree).",
+      "fix": "Exclude downloads/, seeds/, dataset_candidate/, sandbox junk paths."
+    },
+    {
+      "axis": "paths/framework_noise",
+      "was_unfair": "DeepScientist .deepscientist_npm / runtime / skills templates counted as code/paper/results.",
+      "fix": "FRAMEWORK_NOISE_DIRS+markers; quest worktree + eval_output results; paper md drafts; reject template tex."
+    },
+    {
+      "axis": "paths/paper_tex",
+      "was_unfair": "tiny_scientist / ACL runs store paper under latex/*.tex; evaluator only looked at paper/main.tex.",
+      "fix": "latex/**/*.tex with substantive-body heuristic; find_paper_document uses same rules."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Entire custom.bib (300+ anthology entries) verified when paper had zero \\cite commands.",
+      "fix": "collect_agent_references filters bib to in-text cite keys; skips uncited bulk bib (>40 entries)."
+    },
+    {
+      "axis": "paths/ai_scientist_summaries",
+      "was_unfair": "AI Scientist can persist substantive results and paper-like drafts in *_summary.json logs rather than paper/main.tex or results/**/*.json.",
+      "fix": "Treat draft_summary/research_summary as weak paper documents and summary JSONs as result candidates."
+    },
+    {
+      "axis": "idea_generation",
+      "was_unfair": "plan.md/todos.md weak proxies scored same as structured idea.json.",
+      "fix": "Framework idea_priority tried first; missing idea → not_applicable where appropriate."
+    }
+  ],
+  "axes": [
+    "alignment",
+    "completeness",
+    "experiment_analysis",
+    "idea_generation",
+    "literature_review",
+    "peer_review"
+  ],
+  "results": {
+    "completeness": {
+      "framework": "airesearcher",
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-005_automated_conformance_test_generation_fo/workspace/airesearcher_2026-07-29_15-41-19",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-005_automated_conformance_test_generation_fo",
+      "complete": false,
+      "required_score": 0.25,
+      "bonus_score": 0.05,
+      "overall_score": 0.2,
+      "missing": [
+        "idea",
+        "results",
+        "paper"
+      ],
+      "required": {
+        "idea": null,
+        "code": {
+          "count": 77,
+          "files": [
+            {
+              "path": ".airesearcher-benchmark/metaprompt.py",
+              "bytes": 6835,
+              "via": "glob"
+            },
+            {
+              "path": "annotations/test/build.py",
+              "bytes": 8406,
+              "via": "glob"
+            },
+            {
+              "path": "annotations/test/sync-js-api.py",
+              "bytes": 1414,
+              "via": "glob"
+            },
+            {
+              "path": "binaryen/check.py",
+              "bytes": 19345,
+              "via": "glob"
+            },
+            {
+              "path": "binaryen/scripts/__init__.py",
+              "bytes": 684,
+              "via": "glob"
+            },
+            {
+              "path": "binaryen/scripts/auto_update_tests.py",
+              "bytes": 7599,
+              "via": "glob"
+            },
+            {
+              "path": "binaryen/scripts/bundle_clusterfuzz.py",
+              "bytes": 7223,
+              "via": "glob"
+            },
+            {
+              "path": "binaryen/scripts/foreach.py",
+              "bytes": 1836,
+              "via": "glob"
+            },
+            {
+              "path": "binaryen/scripts/fuzz_opt.py",
+              "bytes": 127255,
+              "via": "glob"
+            },
+            {
+              "path": "binaryen/scripts/fuzz_passes.py",
+              "bytes": 4196,
+              "via": "glob"
+            },
+            {
+              "path": "binaryen/scripts/fuzz_passes_wast.py",
+              "bytes": 3702,
+              "via": "glob"
+            },
+            {
+              "path": "binaryen/scripts/fuzz_relooper.py",
+              "bytes": 12277,
+              "via": "glob"
+            },
+            {
+              "path": "binaryen/scripts/gen-s-parser.py",
+              "bytes": 51503,
+              "via": "glob"
+            },
+            {
+              "path": "binaryen/scripts/not.py",
+              "bytes": 966,
+              "via": "glob"
+            },
+            {
+              "path": "binaryen/scripts/port_passes_tests_to_lit.py",
+              "bytes": 4231,
+              "via": "glob"
+            },
+            {
+              "path": "binaryen/scripts/strip_local_names.py",
+              "bytes": 339,
+              "via": "glob"
+            },
+            {
+              "path": "binaryen/scripts/update_help_checks.py",
+              "bytes": 1805,
+              "via": "glob"
+            },
+            {
+              "path": "binaryen/scripts/update_lit_checks.py",
+              "bytes": 17789,
+              "via": "glob"
+            },
+            {
+              "path": "binaryen/test/__init__.py",
+              "bytes": 709,
+              "via": "glob"
+            },
+            {
+              "path": "binaryen/third_party/setup.py",
+              "bytes": 7644,
+              "via": "glob"
+            },
+            {
+              "path": "bulk-memory-operations/test/build.py",
+              "bytes": 8406,
+              "via": "glob"
+            },
+            {
+              "path": "bulk-memory-operations/test/sync-js-api.py",
+              "bytes": 1414,
+              "via": "glob"
+            },
+            {
+              "path": "exception-handling/test/build.py",
+              "bytes": 8406,
+              "via": "glob"
+            },
+            {
+              "path": "exception-handling/test/sync-js-api.py",
+              "bytes": 1414,
+              "via": "glob"
+            },
+            {
+              "path": "function-references/test/build.py",
+              "bytes": 8406,
+              "via": "glob"
+            },
+            {
+              "path": "function-references/test/sync-js-api.py",
+              "bytes": 1414,
+              "via": "glob"
+            },
+            {
+              "path": "gc/test/build.py",
+              "bytes": 8406,
+              "via": "glob"
+            },
+            {
+              "path": "gc/test/sync-js-api.py",
+              "bytes": 1414,
+              "via": "glob"
+            },
+            {
+              "path": "memory64/test/build.py",
+              "bytes": 8406,
+              "via": "glob"
+            },
+            {
+              "path": "memory64/test/sync-js-api.py",
+              "bytes": 1414,
+              "via": "glob"
+            }
+          ]
+        },
+        "results": {
+          "substantive": false,
+          "normalized_path": null,
+          "numeric_leaf_count": 0,
+          "discovered_files": [],
+          "metrics_keys_sample": []
+        },
+        "paper": {
+          "tex": null,
+          "pdf": null,
+          "md": null,
+          "json": null,
+          "status": "missing",
+          "score": 0.0
+        }
+      },
+      "bonus": {
+        "experiment_plan": null,
+        "experiment_log": {
+          "path": "airesearcher_run.log",
+          "bytes": 1303344,
+          "via": "glob"
+        },
+        "review": null,
+        "readme": {
+          "path": "README_BENCHMARK.md",
+          "bytes": 885,
+          "via": "candidate"
+        },
+        "narrative": null,
+        "bib": null
+      },
+      "manifest_status": {
+        "pipeline": false,
+        "research_brief": true,
+        "instance": true,
+        "source_papers": true,
+        "metrics": false,
+        "project": false,
+        "paper": false
+      },
+      "gate_scores": {
+        "idea": 0.0,
+        "code": 1.0,
+        "results": 0.0,
+        "paper": 0.0
+      },
+      "fairness": {
+        "gates": [
+          "idea",
+          "code",
+          "results",
+          "paper"
+        ],
+        "paper_gate_rule": "PDF=1.0; TeX-only/md_only/json_only=0.5; complete requires PDF",
+        "results_gate_rule": "substantive numeric results via framework-aware normalize_results",
+        "audit_ref": "framework_profile.FAIRNESS_AUDIT"
+      },
+      "notes": [
+        "Required: idea, code, substantive results, paper (PDF full; TeX/markdown/JSON draft half).",
+        "Stub/seed metrics (e.g. dataset_candidate/metrics.json) do not satisfy results.",
+        "Framework noise (.deepscientist_npm, skills/templates, runtime) is excluded from code/results/paper.",
+        "Manifest status is informational; disk presence is authoritative."
+      ]
+    },
+    "idea_generation": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-005_automated_conformance_test_generation_fo/workspace/airesearcher_2026-07-29_15-41-19",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-005_automated_conformance_test_generation_fo",
+      "idea_path": null,
+      "status": "missing_idea",
+      "dimensions": {},
+      "overall_score": null,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "novelty",
+        "feasibility",
+        "clarity"
+      ],
+      "solution_space": null,
+      "notes": [
+        "Scores the intermediate idea artifact (not the final paper).",
+        "Dimensions: novelty, feasibility, clarity (each 1-5). Excitement removed.",
+        "Novelty is scored against a Solution Space built from mineru REFERENCES titles (+ related_work.json abstracts when matched)."
+      ],
+      "hint": "No idea artifact found under candidates like artifacts/idea.json, idea-stage/IDEA_REPORT.md, session/idea.json, tiny_idea.json, selected_idea.md."
+    },
+    "peer_review": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-005_automated_conformance_test_generation_fo/workspace/airesearcher_2026-07-29_15-41-19",
+      "review_report": null,
+      "paper_pdf": null,
+      "paper_tex": null,
+      "status": "not_provided",
+      "dimensions": {},
+      "overall_score": null,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "soundness",
+        "significance",
+        "novelty",
+        "presentation",
+        "credibility"
+      ],
+      "notes": [
+        "Stanford Agentic Reviewer (paperreview.ai): manual download to artifacts/peer_review/stanford_apr.md, or pass --auto-paperreview.",
+        "Dimensions: soundness, significance, novelty, presentation, credibility (each 1-5)."
+      ],
+      "paperreview": null,
+      "optional": true,
+      "hint": "Optional external review (Stanford APR). Upload paper/main.pdf to https://paperreview.ai/ , save review to ~/ai_scientist_inputs/ASE-2025-005_automated_conformance_test_generation_fo/workspace/airesearcher_2026-07-29_15-41-19/artifacts/peer_review/stanford_apr.md"
+    },
+    "alignment": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-005_automated_conformance_test_generation_fo/workspace/airesearcher_2026-07-29_15-41-19",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-005_automated_conformance_test_generation_fo",
+      "status": "missing_agent_paper_or_metrics",
+      "original": {
+        "status": "ok",
+        "task_dir": "~/ai_scientist_inputs/ASE-2025-005_automated_conformance_test_generation_fo",
+        "paper_title": "WEST: Specification-Based Test Generation for WebAssembly",
+        "task_id": "ASE-2025-005",
+        "selection": {
+          "num_blocks": 10,
+          "total_chars": 31998,
+          "inferred_roles": {
+            "abstract": 1,
+            "introduction": 1,
+            "experiment": 6,
+            "method": 1,
+            "conclusion": 1
+          },
+          "mineru_raw_keys": {
+            "field:abstract": 1,
+            "field:introduction": 1,
+            "field:experiment": 1,
+            "other": 6,
+            "conclusion": 1
+          },
+          "infer_reasons": {
+            "top_level_field": 3,
+            "body": 1,
+            "inherited": 1,
+            "body_override": 3,
+            "title": 2
+          },
+          "rescued_from_other": 6,
+          "note": "mineru key is unreliable; blocks are selected by title/body/inheritance. rescued_from_other counts sections labeled other but treated as typed roles."
+        },
+        "claims": [
+          {
+            "id": "C1",
+            "statement": "WEST reveals 16 bugs across four Wasm engine implementations, 11 of which are confirmed and fixed.",
+            "direction": "improves",
+            "metric_names": [
+              "bugs_found"
+            ],
+            "evidence_quote": "it reveals 16 bugs across four Wasm engine implementations, 11 of which are confirmed and fixed.",
+            "confidence": 1.0
+          },
+          {
+            "id": "C2",
+            "statement": "WEST generates valid tests with around 90% validity rate across all engines.",
+            "direction": "neutral",
+            "metric_names": [
+              "valid_rate"
+            ],
+            "evidence_quote": "around 90% of the tests generated by WEST are valid across all engines.",
+            "confidence": 1.0
+          },
+          {
+            "id": "C3",
+            "statement": "WEST achieves specification coverage comparable to the official hand-written test suite, with a coverage ratio exceeding 98% for all engines.",
+            "direction": "no_difference",
+            "metric_names": [
+              "coverage_ratio"
+            ],
+            "evidence_quote": "The ratio exceeds 98% for all engines, demonstrating that the coverage of the automatically generated tests is comparable to that of the official hand-written test suite across all engines.",
+            "confidence": 1.0
+          },
+          {
+            "id": "C4",
+            "statement": "WEST requires minimal manual adaptation to target different versions or subsets of the Wasm specification.",
+            "direction": "improves",
+            "metric_names": [],
+            "evidence_quote": "Our approach requires minimal manual adaptation to target different versions or subsets of the Wasm specification",
+            "confidence": 0.9
+          }
+        ],
+        "metrics": [
+          {
+            "name": "bugs_found",
+            "value": 16,
+            "unit": "count",
+            "higher_is_better": true,
+            "setting": "across four Wasm engines (SpiderMonkey, JavaScriptCore, Wasmtime, Wasmer)",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "we found and reported 16 unique bugs from four of five target engines",
+            "confidence": 1.0
+          },
+          {
+            "name": "valid_rate",
+            "value": 91.16,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "V8 engine, Wasm 3.0 draft specification, 24h generation",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "V8 ... 91.16%",
+            "confidence": 1.0
+          },
+          {
+            "name": "valid_rate",
+            "value": 91.01,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "SpiderMonkey engine, Wasm 3.0 draft specification, 24h generation",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "SpiderMonkey ... 91.01%",
+            "confidence": 1.0
+          },
+          {
+            "name": "valid_rate",
+            "value": 91.8,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "JavaScriptCore engine, Wasm 3.0 except multi-memory and memory64, 24h generation",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "JavaScriptCore ... 91.80%",
+            "confidence": 1.0
+          },
+          {
+            "name": "valid_rate",
+            "value": 90.91,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "Wasmtime engine, Wasm 3.0 except exception handling, 24h generation",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "Wasmtime ... 90.91%",
+            "confidence": 1.0
+          },
+          {
+            "name": "valid_rate",
+            "value": 89.95,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "Wasmer engine, Wasm 2.0, 24h generation",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "Wasmer ... 89.95%",
+            "confidence": 1.0
+          },
+          {
+            "name": "coverage_ratio",
+            "value": 98.76,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "V8 engine, AL instruction coverage vs official test suite",
+            "is_sota_or_best": false,
+            "baseline_name": "official test suite",
+            "baseline_value": 100.0,
+            "evidence_quote": "V8 ... 98.76%",
+            "confidence": 1.0
+          },
+          {
+            "name": "coverage_ratio",
+            "value": 98.19,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "SpiderMonkey engine, AL instruction coverage vs official test suite",
+            "is_sota_or_best": false,
+            "baseline_name": "official test suite",
+            "baseline_value": 100.0,
+            "evidence_quote": "SpiderMonkey ... 98.19%",
+            "confidence": 1.0
+          },
+          {
+            "name": "coverage_ratio",
+            "value": 99.43,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "JavaScriptCore engine, AL instruction coverage vs official test suite",
+            "is_sota_or_best": false,
+            "baseline_name": "official test suite",
+            "baseline_value": 100.0,
+            "evidence_quote": "JavaScriptCore ... 99.43%",
+            "confidence": 1.0
+          },
+          {
+            "name": "coverage_ratio",
+            "value": 98.91,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "Wasmtime engine, AL instruction coverage vs official test suite",
+            "is_sota_or_best": false,
+            "baseline_name": "official test suite",
+            "baseline_value": 100.0,
+            "evidence_quote": "Wasmtime ... 98.91%",
+            "confidence": 1.0
+          },
+          {
+            "name": "coverage_ratio",
+            "value": 99.93,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "Wasmer engine, AL instruction coverage vs official test suite",
+            "is_sota_or_best": false,
+            "baseline_name": "official test suite",
+            "baseline_value": 100.0,
+            "evidence_quote": "Wasmer ... 99.93%",
+            "confidence": 1.0
+          }
+        ],
+        "overall_conclusion": "WEST is a specification-based test generation framework that automatically produces valid and diverse Wasm test cases from mechanized specifications. It revealed 16 bugs (11 fixed) across four engines, achieved ~90% validity, and coverage comparable to the official test suite, demonstrating its effectiveness and adaptability.",
+        "comparable_notes": "Experiments used engine-specific specifications derived from Wasm 3.0 by removing unsupported features. Tests were generated for 24 hours with a 3-second timeout per test. Validity was checked using the official Wasm reference interpreter. Coverage was measured via SpecTec's indirect interpreter at the instruction level. For browser engines, tests were translated to JavaScript harnesses. These details are important for fair comparison.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 3201,
+            "completion_tokens_details": {
+              "reasoning_tokens": 1398
+            },
+            "prompt_tokens": 7757,
+            "prompt_tokens_details": null,
+            "reasoning_tokens": 1398,
+            "total_tokens": 10958
+          },
+          "attempt": 0
+        },
+        "cache_hit": true
+      },
+      "agent": {
+        "status": "missing_agent_paper_or_metrics",
+        "run_dir": "~/ai_scientist_inputs/ASE-2025-005_automated_conformance_test_generation_fo/workspace/airesearcher_2026-07-29_15-41-19"
+      }
+    },
+    "experiment_analysis": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-005_automated_conformance_test_generation_fo/workspace/airesearcher_2026-07-29_15-41-19",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-005_automated_conformance_test_generation_fo",
+      "status": "ok",
+      "metrics_path": null,
+      "experiment_success": {
+        "status": "failed_or_incomplete",
+        "success": false,
+        "metrics_path": null,
+        "absolute_metrics_path": null,
+        "checks": {
+          "has_results_file": false,
+          "non_stub": false,
+          "numeric_leaf_count": 0,
+          "min_numeric_ok": false
+        },
+        "manifest_hints": {
+          "status": {
+            "pipeline": false,
+            "research_brief": true,
+            "instance": true,
+            "source_papers": true,
+            "metrics": false,
+            "project": false,
+            "paper": false
+          },
+          "returncode": 1,
+          "benchmark_complete": null,
+          "artifacts_metrics_flag": false
+        },
+        "warnings": [
+          "manifest.returncode=1"
+        ],
+        "suspicious_values": [],
+        "note": "success=true requires substantive results (framework-aware path) with >=3 numeric leaves. Supports metrics.json, results.json, experiment_results.txt, etc. Manifest returncode/benchmark_complete are soft warnings only."
+      },
+      "idea_code_consistency": {
+        "status": "missing_idea"
+      },
+      "setup_coverage": {
+        "status": "ok",
+        "overall_coverage": 1.0,
+        "datasets": {
+          "gold_count": 2,
+          "hit_count": 2,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "Mechanized Wasm Specification (SpecTec format)",
+            "Engine-specific specification subsets"
+          ],
+          "misses": []
+        },
+        "baselines": {
+          "gold_count": 1,
+          "hit_count": 1,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "Official Wasm conformance test suite"
+          ],
+          "misses": []
+        },
+        "metrics": {
+          "gold_count": 3,
+          "hit_count": 3,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "Bugs found",
+            "Test validity rate",
+            "Specification coverage"
+          ],
+          "misses": []
+        },
+        "agent_protocol": {},
+        "gold_protocol": {
+          "timeout_hours": 24
+        },
+        "dataset_dirs": [
+          "dataset_candidate"
+        ],
+        "flags": {
+          "weaker_baseline_suspected": false,
+          "weak_protocol": [],
+          "synthetic_data": "synthetic_allowed_by_task",
+          "gold_allows_synthetic": true
+        },
+        "gold_sources": [
+          "~/ai_scientist_inputs/ASE-2025-005_automated_conformance_test_generation_fo/task.md",
+          "~/ai_scientist_inputs/ASE-2025-005_automated_conformance_test_generation_fo/metadata.json"
+        ],
+        "note": "Coverage is name/alias matching against task.md Datasets/Baselines/Metrics. weak_protocol flags large reductions in trials/timeout vs Constraints. Synthetic corpora are not penalized when the task itself requires synthesis."
+      },
+      "ablation_significance": {
+        "status": "missing_idea"
+      },
+      "results_paper_consistency": {
+        "status": "missing_metrics"
+      },
+      "scores": {
+        "experiment_success": false,
+        "idea_code_score": null,
+        "setup_coverage": 1.0,
+        "ablation_coverage_score": null,
+        "overall_ablation_ok": null,
+        "overall_significance_ok": null,
+        "results_paper_score": null,
+        "hiding_unfavorable_suspected": null
+      },
+      "notes": [
+        "Axes 1,2,3,4,6 in experiment_analysis (figures excluded).",
+        "setup_coverage matches task.md Datasets/Baselines/Metrics; weak_protocol flags reductions vs Constraints.",
+        "Axis 6: final normalized results vs paper; interim run logs not used as ground truth."
+      ]
+    },
+    "literature_review": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-005_automated_conformance_test_generation_fo/workspace/airesearcher_2026-07-29_15-41-19",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-005_automated_conformance_test_generation_fo",
+      "status": "not_applicable",
+      "framework": "airesearcher",
+      "reason": "Framework does not produce workspace reference artifacts for fair comparison.",
+      "scores": null
+    }
+  },
+  "scores": {
+    "completeness": {
+      "complete": false,
+      "overall_score": 0.2,
+      "required_score": 0.25,
+      "bonus_score": 0.05
+    },
+    "peer_review": {
+      "status": "not_provided",
+      "optional": true,
+      "overall_score": null,
+      "score_scale": "1-5",
+      "scoring_method": null
+    },
+    "idea_generation": {
+      "status": "missing_idea",
+      "overall_score": null,
+      "dimensions": {
+        "novelty": null,
+        "feasibility": null,
+        "clarity": null
+      },
+      "novelty_category": null,
+      "solution_space_status": null
+    },
+    "alignment": {
+      "status": "missing_agent_paper_or_metrics",
+      "direction_consistency": null,
+      "overall_alignment_score": null
+    },
+    "literature_review": {
+      "fabrication_rate": null,
+      "coverage_recall": null,
+      "recency_ratio_3y": null,
+      "recency_ratio_5y": null
+    },
+    "experiment_analysis": {
+      "experiment_success": false,
+      "idea_code_score": null,
+      "setup_coverage": 1.0,
+      "ablation_coverage_score": null,
+      "overall_ablation_ok": null,
+      "overall_significance_ok": null,
+      "results_paper_score": null,
+      "hiding_unfavorable_suspected": null
+    }
+  },
+  "fair_scores": {
+    "applicable_axes": [
+      "completeness",
+      "experiment_analysis"
+    ],
+    "skipped_axes": [
+      {
+        "axis": "idea_generation",
+        "reason": "missing_idea"
+      },
+      {
+        "axis": "peer_review",
+        "reason": "optional_external_review"
+      },
+      {
+        "axis": "literature_review",
+        "reason": "not_applicable"
+      }
+    ],
+    "fair_mean_0_1": 0.375,
+    "note": "fair_mean_0_1 averages only applicable axes; optional peer review and framework-inapplicable literature are excluded from the denominator."
+  },
+  "evals_root": "~/ai_scientist_evals",
+  "claims_cache": "~/ai_scientist_evals/ASE-2025-005_automated_conformance_test_generation_fo/original_claims.json",
+  "solution_space_cache": "~/ai_scientist_evals/ASE-2025-005_automated_conformance_test_generation_fo/solution_space.json"
+}

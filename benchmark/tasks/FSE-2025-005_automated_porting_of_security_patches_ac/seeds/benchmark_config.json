@@ -1,0 +1,43 @@
+{
+  "forbid_synthetic_pilot": true,
+  "agent_data_note": "Construct the CVE-based C patch porting dataset by collecting CVE patches from NVD/GitHub following the four-step process described in the task brief. Store under `dataset_candidate/cve_patches/`. Do NOT use synthetic or toy patch pairs as the evaluation corpus.",
+  "required_metrics": [
+    "exact_match_function_level",
+    "success_rate_function_level",
+    "code_bleu"
+  ],
+  "benchmark_rules": [
+    "Construct the dataset from public NVD CVE records and GitHub commits via the four-step process: (1) collect CVE patches for C projects, (2) expand with additional commits matching edit distance or commit messages, (3) filter to function-level changes and pair earliest vs. latest patches per CVE, (4) split temporally (before/after 2023-08-23) into fine-tuning and evaluation sets.",
+    "Store the constructed dataset under `dataset_candidate/cve_patches/` inside the container workspace.",
+    "Evaluation must use the temporally-split evaluation set (after 2023-08-23); do not mix fine-tuning data into evaluation.",
+    "Report Exactly Match (E-M), Success (Succ), Failure (Fail), and Code BLEU (C-B) at both function level and CVE level.",
+    "Compare against at least one baseline: GPT-3.5 / GPT-4o (zero-shot), FixMorph (if installable), or TSBPORT (if installable).",
+    "The ground-truth target fix is strictly for evaluation only; do not include it in the model input.",
+    "Due to scale constraints, a smaller subset of CVEs (e.g., 50-200 CVEs) is acceptable; document the subset clearly.",
+    "Fine-tuning with LoRA requires a GPU with >=48GB VRAM (A100); if GPU is unavailable, evaluate using zero-shot LLM baselines only."
+  ],
+  "non_goals": [
+    "Using author-provided private dataset without constructing from public sources",
+    "Claiming full reproduction without constructing the dataset per the described protocol",
+    "Evaluating on the fine-tuning split (temporal leakage)"
+  ],
+  "dataset_construction": {
+    "sources": ["NVD CVE records", "GitHub public commits"],
+    "language": "C",
+    "split_date": "2023-08-23",
+    "fine_tuning_set": {"cves": 2842, "function_pairs": 4618},
+    "evaluation_set": {"cves": 694, "function_pairs": 1359},
+    "access": "constructable",
+    "construction_steps": [
+      "1. Query NVD API for CVE entries referencing GitHub C project commits",
+      "2. Expand commit set using edit distance or commit message heuristics",
+      "3. Manually (or heuristically) filter to function-level changes; pair earliest vs. latest patch per CVE",
+      "4. Split by commit date: before 2023-08-23 (fine-tuning), after (evaluation)"
+    ]
+  },
+  "exclude_from_agent": [
+    "container_setup.sh",
+    "README.md",
+    "benchmark_config.json"
+  ]
+}

@@ -1,0 +1,1533 @@
+{
+  "run_dir": "~/ai_scientist_inputs/ASE-2025-016_reducing_redundant_monitor_creation_and/workspace/evoscientist_2026-08-10_12-16-51",
+  "task_dir": "~/ai_scientist_inputs/ASE-2025-016_reducing_redundant_monitor_creation_and",
+  "framework": "evoscientist",
+  "fairness_audit": [
+    {
+      "axis": "completeness",
+      "was_unfair": "Required both paper.tex AND paper.pdf; any tool missing one failed equally.",
+      "fix": "Paper gate: PDF=1.0; TeX-only=0.5; ``complete`` requires PDF."
+    },
+    {
+      "axis": "completeness",
+      "was_unfair": "``results`` counted stub/seed JSON (dataset_candidate/metrics.json).",
+      "fix": "``results`` requires substantive numeric results via results_normalize."
+    },
+    {
+      "axis": "experiment_success",
+      "was_unfair": "Only metrics.json; ignored results.json / experiment_results.txt.",
+      "fix": "Framework-ordered result candidates + normalized loaders."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Penalized tools with no bib; airesearcher has no workspace references.",
+      "fix": "literature_applicable=false → status not_applicable; excluded from fair aggregate."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "related_work.json subset as gold made recall hard to interpret.",
+      "fix": "Coverage gold is original paper REFERENCES from mineru; related_work only enriches metadata/fallback."
+    },
+    {
+      "axis": "peer_review",
+      "was_unfair": "Missing Stanford report looked like evaluation failure.",
+      "fix": "status not_provided; optional axis, never counts as tool failure."
+    },
+    {
+      "axis": "paths/find_results",
+      "was_unfair": "Picked downloads/** and sandbox noise (e.g. airesearcher LLVM tree).",
+      "fix": "Exclude downloads/, seeds/, dataset_candidate/, sandbox junk paths."
+    },
+    {
+      "axis": "paths/framework_noise",
+      "was_unfair": "DeepScientist .deepscientist_npm / runtime / skills templates counted as code/paper/results.",
+      "fix": "FRAMEWORK_NOISE_DIRS+markers; quest worktree + eval_output results; paper md drafts; reject template tex."
+    },
+    {
+      "axis": "paths/paper_tex",
+      "was_unfair": "tiny_scientist / ACL runs store paper under latex/*.tex; evaluator only looked at paper/main.tex.",
+      "fix": "latex/**/*.tex with substantive-body heuristic; find_paper_document uses same rules."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Entire custom.bib (300+ anthology entries) verified when paper had zero \\cite commands.",
+      "fix": "collect_agent_references filters bib to in-text cite keys; skips uncited bulk bib (>40 entries)."
+    },
+    {
+      "axis": "paths/ai_scientist_summaries",
+      "was_unfair": "AI Scientist can persist substantive results and paper-like drafts in *_summary.json logs rather than paper/main.tex or results/**/*.json.",
+      "fix": "Treat draft_summary/research_summary as weak paper documents and summary JSONs as result candidates."
+    },
+    {
+      "axis": "framework/ai_scientist_v2",
+      "was_unfair": "Manifest framework ``ai_scientist_v2`` fell through to profile ``unknown``, skipping AI-Scientist idea/result path priorities.",
+      "fix": "Normalize ``ai_scientist_v2`` (and common aliases) to profile key ``ai_scientist``."
+    },
+    {
+      "axis": "idea_generation",
+      "was_unfair": "plan.md/todos.md weak proxies scored same as structured idea.json.",
+      "fix": "Framework idea_priority tried first; missing idea → not_applicable where appropriate."
+    }
+  ],
+  "generated_at": "2026-08-24T16:23:10",
+  "axes": [
+    "alignment",
+    "completeness",
+    "experiment_analysis",
+    "idea_generation",
+    "literature_review",
+    "peer-review",
+    "peer_review"
+  ],
+  "results": {
+    "completeness": {
+      "framework": "evoscientist",
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-016_reducing_redundant_monitor_creation_and/workspace/evoscientist_2026-08-10_12-16-51",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-016_reducing_redundant_monitor_creation_and",
+      "complete": true,
+      "required_score": 1.0,
+      "bonus_score": 0.09,
+      "overall_score": 0.8453,
+      "missing": [],
+      "required": {
+        "idea": {
+          "path": "plan.md",
+          "bytes": 2845,
+          "via": "candidate"
+        },
+        "code": {
+          "count": 7,
+          "files": [
+            {
+              "path": "project/cachemop/__init__.py",
+              "bytes": 91,
+              "via": "glob"
+            },
+            {
+              "path": "project/cachemop/cachemop.py",
+              "bytes": 8257,
+              "via": "glob"
+            },
+            {
+              "path": "project/cachemop/experiment_runner.py",
+              "bytes": 9538,
+              "via": "glob"
+            },
+            {
+              "path": "project/cachemop/experiment_runner_v2.py",
+              "bytes": 9316,
+              "via": "glob"
+            },
+            {
+              "path": "project/cachemop/simulator.py",
+              "bytes": 13042,
+              "via": "glob"
+            },
+            {
+              "path": "project/cachemop/simulator_v2.py",
+              "bytes": 9488,
+              "via": "glob"
+            },
+            {
+              "path": "project/cachemop/trace_model.py",
+              "bytes": 2636,
+              "via": "glob"
+            }
+          ]
+        },
+        "results": {
+          "substantive": true,
+          "normalized_path": "results/metrics.json",
+          "numeric_leaf_count": 41,
+          "discovered_files": [
+            {
+              "path": "results/metrics.json",
+              "bytes": 2868,
+              "via": "candidate"
+            }
+          ],
+          "metrics_keys_sample": [
+            "required_metrics",
+            "optional_metrics",
+            "additional_metrics",
+            "experiment_artifacts"
+          ]
+        },
+        "paper": {
+          "tex": {
+            "path": "paper/main.tex",
+            "bytes": 23255,
+            "via": "candidate"
+          },
+          "pdf": {
+            "path": "paper/main.pdf",
+            "bytes": 181792,
+            "via": "compiled_promoted"
+          },
+          "md": {
+            "path": "paper/paper.md",
+            "bytes": 43930,
+            "via": "candidate"
+          },
+          "json": null,
+          "status": "pdf",
+          "score": 1.0
+        }
+      },
+      "bonus": {
+        "experiment_plan": {
+          "path": "plan.md",
+          "bytes": 2845,
+          "via": "candidate"
+        },
+        "experiment_log": {
+          "path": "evoscientist_run.log",
+          "bytes": 41765,
+          "via": "glob"
+        },
+        "review": null,
+        "readme": {
+          "path": "README.md",
+          "bytes": 3059,
+          "via": "candidate"
+        },
+        "narrative": null,
+        "bib": null
+      },
+      "manifest_status": {
+        "research_request": true,
+        "plan": true,
+        "metrics": true,
+        "paper_tex": true,
+        "paper_pdf": false,
+        "readme": true
+      },
+      "gate_scores": {
+        "idea": 1.0,
+        "code": 1.0,
+        "results": 1.0,
+        "paper": 1.0
+      },
+      "fairness": {
+        "gates": [
+          "idea",
+          "code",
+          "results",
+          "paper"
+        ],
+        "paper_gate_rule": "PDF=1.0; TeX-only/md_only/json_only=0.5; complete requires PDF",
+        "results_gate_rule": "substantive numeric results via framework-aware normalize_results",
+        "audit_ref": "framework_profile.FAIRNESS_AUDIT"
+      },
+      "notes": [
+        "Required: idea, code, substantive results, paper (PDF full; TeX/markdown/JSON draft half).",
+        "Stub/seed metrics (e.g. dataset_candidate/metrics.json) do not satisfy results.",
+        "Framework noise (.deepscientist_npm, skills/templates, runtime) is excluded from code/results/paper.",
+        "Manifest status is informational; disk presence is authoritative."
+      ]
+    },
+    "idea_generation": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-016_reducing_redundant_monitor_creation_and/workspace/evoscientist_2026-08-10_12-16-51",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-016_reducing_redundant_monitor_creation_and",
+      "idea_path": "~/ai_scientist_inputs/ASE-2025-016_reducing_redundant_monitor_creation_and/workspace/evoscientist_2026-08-10_12-16-51/plan.md",
+      "status": "ok",
+      "dimensions": {
+        "novelty": {
+          "score": 3.0,
+          "justification": "The core method is 'deterministic trace memoization (DTM)' combined with 'frequency-guided probabilistic decay (FPD)' to reduce redundant monitor creation/event signaling. This is a meaningful extension of sampling-based RV (R11) and explicit-trace monitoring (R29), but the underlying mechanisms are known; the plan does not describe a fundamentally new monitoring paradigm.",
+          "rubric": "Incremental: a meaningful extension or optimization of prior baseline work that fixes a concrete prior limitation, but the core paradigm is unchanged.",
+          "category": "Incremental",
+          "nearest_solution_space_ids": [
+            "R11",
+            "R29",
+            "R41"
+          ],
+          "differentiation": "CacheMOP combines deterministic trace memoization (DTM) with frequency-guided probabilistic decay (FPD), whereas R11 uses generic sampling without deterministic trace preservation, R29 targets faster explicit-trace monitoring but lacks the frequency-guided decay component, and R41 provides controllable overhead via instrumentation rather than trace-level memoization plus decay. The idea extends these by aiming to guarantee violation preservation while using decay to reduce redundant event signaling."
+        },
+        "feasibility": {
+          "score": 3.0,
+          "justification": "The plan calls for a 'CacheMOP simulation framework' using Python 3.11 and pandas, operating on an existing Valg dataset. This is realistically implementable, but substantial engineering remains: parsing trace data, implementing DTM/FPD, and computing baseline metrics from JavaMOP/TraceMOP artifacts require nontrivial coding. The plan gives no low-level algorithm, so this is a moderate workload rather than a simple out-of-box evaluation.",
+          "rubric": "Moderate workload (sweet spot): needs nontrivial coding such as scripting existing open-source tools (parsers, CFG extractors) or building a custom graph-processing pipeline; standard research engineering effort."
+        },
+        "clarity": {
+          "score": 3.0,
+          "justification": "The plan defines stages, metrics, and success signals clearly, e.g., 'Speedup vs JavaMOP > 2.06x' and 'Violation Preservation >= 100%'. However, the proposed methods are never concretely specified: it says 'CacheMOP — deterministic trace memoization + FPD' and expects a 'clear novelty statement, algorithm description', but no actual algorithm, trace representation, decay update rule, or baseline data extraction procedure is provided. This leaves key technical details underspecified.",
+          "rubric": "Complete frame but missing details: What/Why/How are present, yet key technical execution details or specific comparison plans are underspecified."
+        }
+      },
+      "overall_score": 3.0,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "novelty",
+        "feasibility",
+        "clarity"
+      ],
+      "solution_space": {
+        "status": "ok",
+        "paper_count": 103,
+        "entry_count": 103,
+        "cache_hit": true,
+        "source_file": "~/ai_scientist_inputs/ASE-2025-016_reducing_redundant_monitor_creation_and/mineru_sections.json",
+        "stats": {
+          "papers": 103,
+          "extracted": 103,
+          "usable_abstracts": 48,
+          "citation_meta_abstracts": 0,
+          "missing_abstracts": 55,
+          "mineru_titles": 95,
+          "related_work_titles": 81,
+          "abstracts_attached": 48,
+          "related_work_extras": 8,
+          "batches": 6
+        },
+        "error": null
+      },
+      "notes": [
+        "Scores the intermediate idea artifact (not the final paper).",
+        "Dimensions: novelty, feasibility, clarity (each 1-5). Excitement removed.",
+        "Novelty is scored against a Solution Space built from mineru REFERENCES titles (+ related_work.json abstracts when matched)."
+      ],
+      "idea_via": "candidate",
+      "idea_relative": "plan.md",
+      "summary": "CacheMOP is an incremental combination of deterministic trace memoization and frequency-guided probabilistic decay to reduce runtime verification overhead in testing. The experiment plan is structured with concrete metrics and benchmarks, but the method itself is not defined beyond named components. Feasibility is moderate given a Python simulation on an existing dataset. Clarity is limited by the absence of algorithmic details, making this a solid but under-specified proposal.",
+      "strengths": [
+        "Clear experiment staging from literature survey to paper writing.",
+        "Concrete quantitative targets based on Valg baselines.",
+        "Uses an existing open benchmark and standard metrics.",
+        "Aims to preserve violation detection, a key practical concern."
+      ],
+      "weaknesses": [
+        "DTM and FPD are not algorithmically defined; no pseudocode or mechanism details.",
+        "No description of how baseline JavaMOP/TraceMOP timing data are obtained or reproduced.",
+        "Unrealistic metric targets such as 'Unique Trace Coverage >= 100%' and 'Violation Preservation >= 100%' are asserted without supporting analysis.",
+        "Lack of comparison or citation to specific prior techniques in the Solution Space beyond high-level names."
+      ],
+      "llm_meta": {
+        "model": "deepseek-v4-pro-0813",
+        "base_url": "https://api-sg.umodelverse.ai/v1",
+        "usage": {
+          "completion_tokens": 2296,
+          "completion_tokens_details": {
+            "reasoning_tokens": 1577
+          },
+          "prompt_tokens": 6418,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "total_tokens": 8714
+        },
+        "attempt": 0
+      }
+    },
+    "peer_review": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-016_reducing_redundant_monitor_creation_and/workspace/evoscientist_2026-08-10_12-16-51",
+      "review_report": "~/ai_scientist_inputs/ASE-2025-016_reducing_redundant_monitor_creation_and/workspace/evoscientist_2026-08-10_12-16-51/artifacts/peer_review/stanford_apr.md",
+      "paper_pdf": "~/ai_scientist_inputs/ASE-2025-016_reducing_redundant_monitor_creation_and/workspace/evoscientist_2026-08-10_12-16-51/paper/main.pdf",
+      "paper_tex": "~/ai_scientist_inputs/ASE-2025-016_reducing_redundant_monitor_creation_and/workspace/evoscientist_2026-08-10_12-16-51/paper/main.tex",
+      "status": "ok",
+      "dimensions": {},
+      "overall_score": 4.4,
+      "score_scale": "1-10",
+      "dimension_order": [],
+      "notes": [
+        "Scored from paperreview.ai (Stanford APR) native ratings; benchmark 5-dimension LLM rubric skipped.",
+        "Overall scale: 1-10."
+      ],
+      "paperreview": {
+        "status": "cached",
+        "hint": "Cached APR score found; no re-upload."
+      },
+      "scoring_method": "paperreview_apr",
+      "scoring_source": "paperreview_json",
+      "apr_dimensions": {
+        "Claims_Support": -1.0,
+        "Experimental_Soundness": -1.0,
+        "Writing_Clarity": 0.0,
+        "Prior_Work_Context": 0.0,
+        "Question_Importance": 1.0,
+        "Originality": 0.0,
+        "Value_to_Community": 0.0
+      },
+      "summary": "",
+      "red_flags": []
+    },
+    "alignment": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-016_reducing_redundant_monitor_creation_and/workspace/evoscientist_2026-08-10_12-16-51",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-016_reducing_redundant_monitor_creation_and",
+      "status": "ok",
+      "original": {
+        "paper_title": "Faster Runtime Verification during Testing via Feedback-Guided Selective Monitoring",
+        "selection": {
+          "num_blocks": 8,
+          "total_chars": 31920,
+          "inferred_roles": {
+            "abstract": 1,
+            "introduction": 1,
+            "experiment": 3,
+            "background": 1,
+            "discussion": 1,
+            "conclusion": 1
+          },
+          "mineru_raw_keys": {
+            "field:abstract": 1,
+            "field:introduction": 1,
+            "field:experiment": 1,
+            "other": 3,
+            "discussion": 1,
+            "conclusion": 1
+          },
+          "infer_reasons": {
+            "top_level_field": 3,
+            "title": 3,
+            "inherited": 2
+          },
+          "rescued_from_other": 3,
+          "note": "mineru key is unreliable; blocks are selected by title/body/inheritance. rescued_from_other counts sections labeled other but treated as typed roles."
+        },
+        "claims": [
+          {
+            "id": "C1",
+            "claim": "The paper introduces a two-armed bandit approach (Valg) with Thompson sampling and dynamic decision thresholds to classify runtime-monitor (non)parametric events as redundant or necessary.",
+            "confidence": "high"
+          },
+          {
+            "id": "C2",
+            "claim": "Prior work reported 99.87% redundancy among runtime monitors for parametric events.",
+            "confidence": "high"
+          },
+          {
+            "id": "C3",
+            "claim": "Valg formulates parametric and nonparametric event selection as a two-armed bandit; each controlled event is a Bernoulli trial with posterior Beta distributions updated from reward outcomes.",
+            "confidence": "high"
+          },
+          {
+            "id": "C4",
+            "claim": "Valg accelerates JavaMOP and TraceMOP by maximum end-to-end speedups of 20.2x and 551.5x, respectively.",
+            "confidence": "high"
+          },
+          {
+            "id": "C5",
+            "claim": "Default Valg preserves 99.6% of violations and 76.7% of unique traces on average.",
+            "confidence": "high"
+          },
+          {
+            "id": "C6",
+            "claim": "Hyperparameter tuning raises average unique-trace preservation to 95.1% with negligible end-to-end slowdown for JavaMOP and minor slowdown for TraceMOP.",
+            "confidence": "high"
+          },
+          {
+            "id": "C7",
+            "claim": "Tuned policies transfer across 1,472 revisions of 46 projects, preserving speed and coverage while occasionally improving unique traces.",
+            "confidence": "high"
+          },
+          {
+            "id": "C8",
+            "claim": "Valg outperforms JavaMOP in 56 of 64 projects end-to-end, reducing time by 37.5% on average and up to 95.1%.",
+            "confidence": "high"
+          },
+          {
+            "id": "C9",
+            "claim": "Valg outperforms TraceMOP in 57 of 58 projects end-to-end, reducing time by 54.4% on average and up to 99.8%.",
+            "confidence": "high"
+          },
+          {
+            "id": "C10",
+            "claim": "Valg eliminates 96.4% of redundant parametric traces and 98.7% of redundant violating nonparametric events; monitoring-only speedups reach 625x and 909.1x.",
+            "confidence": "high"
+          },
+          {
+            "id": "C11",
+            "claim": "Valg integrates with eMOP optimizations, preserving more than 99.6% of violations and adding speedups of 2.8% and 11.5% for ps1^c and ps3^cl.",
+            "confidence": "high"
+          },
+          {
+            "id": "C12",
+            "claim": "Valg misses only 0.4% of violations across projects; the missed violations are still detected in prior or subsequent revisions without false positives.",
+            "confidence": "medium"
+          },
+          {
+            "id": "C13",
+            "claim": "Valg dominates landmarks, ps1^c, and ps3^cl in speed-coverage trade-off.",
+            "confidence": "medium"
+          },
+          {
+            "id": "C14",
+            "claim": "JavaMOP and TraceMOP runtime-monitor tools rewrite JVM bytecode, while Valg is orthogonal/plugin-based and does not require source-code modification.",
+            "confidence": "medium"
+          },
+          {
+            "id": "C15",
+            "claim": "Valg uses both selective monitor creation and selective nonparametric event signaling to reduce runtime overhead."
+          }
+        ],
+        "metrics": [],
+        "overall_conclusion": null,
+        "comparable_notes": null,
+        "cache_hit": true
+      },
+      "agent": {
+        "status": "ok",
+        "run_dir": "~/ai_scientist_inputs/ASE-2025-016_reducing_redundant_monitor_creation_and/workspace/evoscientist_2026-08-10_12-16-51",
+        "claims": [
+          {
+            "id": "A1",
+            "statement": "CacheMOP achieves an average 19.7× speedup over JavaMOP.",
+            "direction": "improves",
+            "metric_names": [
+              "speedup_vs_javamop_average"
+            ],
+            "evidence_quote": "achieves an average 19.7× speedup over JavaMOP",
+            "confidence": 0.95
+          },
+          {
+            "id": "A2",
+            "statement": "CacheMOP achieves an average 19.5× speedup over TraceMOP.",
+            "direction": "improves",
+            "metric_names": [
+              "speedup_vs_tracemop_average"
+            ],
+            "evidence_quote": "19.5× speedup over TraceMOP",
+            "confidence": 0.95
+          },
+          {
+            "id": "A3",
+            "statement": "CacheMOP preserves 100% of specification violations across all projects.",
+            "direction": "no_difference",
+            "metric_names": [
+              "violation_preservation_average"
+            ],
+            "evidence_quote": "preserving 100% of specification violations",
+            "confidence": 0.95
+          },
+          {
+            "id": "A4",
+            "statement": "CacheMOP preserves 100% of unique traces across all projects.",
+            "direction": "no_difference",
+            "metric_names": [
+              "unique_trace_coverage_average"
+            ],
+            "evidence_quote": "100% of unique traces across all projects",
+            "confidence": 0.95
+          },
+          {
+            "id": "A5",
+            "statement": "CacheMOP improves over ValgJ by 9.7×.",
+            "direction": "improves",
+            "metric_names": [
+              "cachemop_improvement_over_valgj"
+            ],
+            "evidence_quote": "9.7× improvement over ValgJ",
+            "confidence": 0.9
+          },
+          {
+            "id": "A6",
+            "statement": "CacheMOP improves over ValgT by 3.1×.",
+            "direction": "improves",
+            "metric_names": [
+              "cachemop_improvement_over_valgt"
+            ],
+            "evidence_quote": "3.1× improvement over ValgT",
+            "confidence": 0.9
+          },
+          {
+            "id": "A7",
+            "statement": "CacheMOP requires only a single tunable parameter and operates without per-project training.",
+            "direction": "improves",
+            "metric_names": [],
+            "evidence_quote": "requires only a single tunable parameter and operates without per-project training",
+            "confidence": 0.9
+          },
+          {
+            "id": "A8",
+            "statement": "Deterministic Trace Memoization caches trace fingerprints and verdicts, provably skipping duplicate monitoring without losing violations.",
+            "direction": "improves",
+            "metric_names": [],
+            "evidence_quote": "DTM caches trace fingerprints and their verdicts, provably skipping duplicate monitoring without losing violations",
+            "confidence": 0.9
+          },
+          {
+            "id": "A9",
+            "statement": "Frequency-Guided Probabilistic Decay applies adaptive probabilistic filtering to similar-but-not-identical traces with burst detection for fast violation recovery.",
+            "direction": "improves",
+            "metric_names": [],
+            "evidence_quote": "FPD applies adaptive probabilistic filtering to similar-but-not-identical traces with burst detection for fast violation recovery",
+            "confidence": 0.85
+          },
+          {
+            "id": "A10",
+            "statement": "Valg suffers probabilistic violation loss, losing up to 43% of unique traces.",
+            "direction": "degrades",
+            "metric_names": [],
+            "evidence_quote": "losing up to 43% of unique traces",
+            "confidence": 0.85
+          },
+          {
+            "id": "A11",
+            "statement": "Valg requires five tunable hyperparameters that need per-project tuning via Optuna.",
+            "direction": "degrades",
+            "metric_names": [],
+            "evidence_quote": "Valg requires five tunable hyperparameters ... that need per-project tuning via Optuna",
+            "confidence": 0.9
+          },
+          {
+            "id": "A12",
+            "statement": "Over 99% of monitor instances for parametric specifications and over 99.99% of events for non-parametric specifications are redundant during testing.",
+            "direction": "neutral",
+            "metric_names": [],
+            "evidence_quote": "over 99% of monitor instances for parametric specifications and over 99.99% of events for non-parametric specifications are redundant",
+            "confidence": 0.9
+          },
+          {
+            "id": "A13",
+            "statement": "CacheMOP total skip rate averages 76.84% with a median of 89.8%.",
+            "direction": "improves",
+            "metric_names": [
+              "total_skip_rate_average",
+              "total_skip_rate_median"
+            ],
+            "evidence_quote": "metrics.json: total_skip_rate.average = 76.84, median = 89.8",
+            "confidence": 0.85
+          },
+          {
+            "id": "A14",
+            "statement": "The deterministic trace memoization cache hit rate averages 96.88% with a median of 100%.",
+            "direction": "improves",
+            "metric_names": [
+              "dtm_cache_hit_rate_average",
+              "dtm_cache_hit_rate_median"
+            ],
+            "evidence_quote": "metrics.json: dtm_cache_hit_rate.average = 96.88, median = 100.0",
+            "confidence": 0.85
+          },
+          {
+            "id": "A15",
+            "statement": "ValgJ average speedup is 2.03× and ValgT average speedup is 6.27×.",
+            "direction": "improves",
+            "metric_names": [
+              "valgj_avg_speedup",
+              "valgt_avg_speedup"
+            ],
+            "evidence_quote": "metrics.json: valg_baseline.valgj_avg_speedup = 2.03, valgt_avg_speedup = 6.27",
+            "confidence": 0.8
+          },
+          {
+            "id": "A16",
+            "statement": "CacheMOP median speedup is 9.01× over JavaMOP and 7.15× over TraceMOP.",
+            "direction": "improves",
+            "metric_names": [
+              "speedup_vs_javamop_median",
+              "speedup_vs_tracemop_median"
+            ],
+            "evidence_quote": "metrics.json: speedup.vs_javamop.median = 9.01, speedup.vs_tracemop.median = 7.15",
+            "confidence": 0.85
+          }
+        ],
+        "metrics": [
+          {
+            "name": "speedup_vs_javamop_average",
+            "value": 19.73,
+            "unit": "x",
+            "higher_is_better": true,
+            "setting": "64 Java projects from Valg benchmark",
+            "is_sota_or_best": true,
+            "baseline_name": "JavaMOP",
+            "baseline_value": 1.0,
+            "evidence_quote": "achieves an average 19.7× speedup over JavaMOP",
+            "confidence": 0.95
+          },
+          {
+            "name": "speedup_vs_javamop_median",
+            "value": 9.01,
+            "unit": "x",
+            "higher_is_better": true,
+            "setting": "64 Java projects from Valg benchmark",
+            "is_sota_or_best": false,
+            "baseline_name": "JavaMOP",
+            "baseline_value": 1.0,
+            "evidence_quote": "metrics.json: speedup.vs_javamop.median = 9.01",
+            "confidence": 0.9
+          },
+          {
+            "name": "speedup_vs_tracemop_average",
+            "value": 19.49,
+            "unit": "x",
+            "higher_is_better": true,
+            "setting": "64 Java projects from Valg benchmark",
+            "is_sota_or_best": true,
+            "baseline_name": "TraceMOP",
+            "baseline_value": 1.0,
+            "evidence_quote": "19.5× speedup over TraceMOP",
+            "confidence": 0.95
+          },
+          {
+            "name": "speedup_vs_tracemop_median",
+            "value": 7.15,
+            "unit": "x",
+            "higher_is_better": true,
+            "setting": "64 Java projects from Valg benchmark",
+            "is_sota_or_best": false,
+            "baseline_name": "TraceMOP",
+            "baseline_value": 1.0,
+            "evidence_quote": "metrics.json: speedup.vs_tracemop.median = 7.15",
+            "confidence": 0.9
+          },
+          {
+            "name": "violation_preservation_average",
+            "value": 100.0,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "64 Java projects from Valg benchmark",
+            "is_sota_or_best": true,
+            "baseline_name": "JavaMOP/TraceMOP full monitoring",
+            "baseline_value": 100.0,
+            "evidence_quote": "preserving 100% of specification violations",
+            "confidence": 0.95
+          },
+          {
+            "name": "unique_trace_coverage_average",
+            "value": 100.0,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "64 Java projects from Valg benchmark",
+            "is_sota_or_best": true,
+            "baseline_name": "JavaMOP/TraceMOP full monitoring",
+            "baseline_value": 100.0,
+            "evidence_quote": "100% of unique traces across all projects",
+            "confidence": 0.95
+          },
+          {
+            "name": "total_skip_rate_average",
+            "value": 76.84,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "64 Java projects from Valg benchmark",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "metrics.json: total_skip_rate.average = 76.84",
+            "confidence": 0.85
+          },
+          {
+            "name": "total_skip_rate_median",
+            "value": 89.8,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "64 Java projects from Valg benchmark",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "metrics.json: total_skip_rate.median = 89.8",
+            "confidence": 0.85
+          },
+          {
+            "name": "dtm_cache_hit_rate_average",
+            "value": 96.88,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "64 Java projects from Valg benchmark",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "metrics.json: dtm_cache_hit_rate.average = 96.88",
+            "confidence": 0.85
+          },
+          {
+            "name": "dtm_cache_hit_rate_median",
+            "value": 100.0,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "64 Java projects from Valg benchmark",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "metrics.json: dtm_cache_hit_rate.median = 100.0",
+            "confidence": 0.85
+          },
+          {
+            "name": "valgj_avg_speedup",
+            "value": 2.03,
+            "unit": "x",
+            "higher_is_better": true,
+            "setting": "Valg benchmark (computed from dataset_candidate/valg/data/rq1.csv)",
+            "is_sota_or_best": false,
+            "baseline_name": "JavaMOP",
+            "baseline_value": 1.0,
+            "evidence_quote": "metrics.json: valg_baseline.valgj_avg_speedup = 2.03",
+            "confidence": 0.8
+          },
+          {
+            "name": "valgj_median_speedup",
+            "value": 1.34,
+            "unit": "x",
+            "higher_is_better": true,
+            "setting": "Valg benchmark (computed from dataset_candidate/valg/data/rq1.csv)",
+            "is_sota_or_best": false,
+            "baseline_name": "JavaMOP",
+            "baseline_value": 1.0,
+            "evidence_quote": "metrics.json: valg_baseline.valgj_median_speedup = 1.34",
+            "confidence": 0.8
+          },
+          {
+            "name": "valgt_avg_speedup",
+            "value": 6.27,
+            "unit": "x",
+            "higher_is_better": true,
+            "setting": "Valg benchmark (computed from dataset_candidate/valg/data/rq1.csv)",
+            "is_sota_or_best": false,
+            "baseline_name": "TraceMOP",
+            "baseline_value": 1.0,
+            "evidence_quote": "metrics.json: valg_baseline.valgt_avg_speedup = 6.27",
+            "confidence": 0.8
+          },
+          {
+            "name": "valgt_median_speedup",
+            "value": 1.24,
+            "unit": "x",
+            "higher_is_better": true,
+            "setting": "Valg benchmark (computed from dataset_candidate/valg/data/rq1.csv)",
+            "is_sota_or_best": false,
+            "baseline_name": "TraceMOP",
+            "baseline_value": 1.0,
+            "evidence_quote": "metrics.json: valg_baseline.valgt_median_speedup = 1.24",
+            "confidence": 0.8
+          },
+          {
+            "name": "cachemop_improvement_over_valgj",
+            "value": 9.72,
+            "unit": "x",
+            "higher_is_better": true,
+            "setting": "CacheMOP avg speedup / ValgJ avg speedup",
+            "is_sota_or_best": true,
+            "baseline_name": "ValgJ",
+            "baseline_value": 2.03,
+            "evidence_quote": "9.7× improvement over ValgJ",
+            "confidence": 0.9
+          },
+          {
+            "name": "cachemop_improvement_over_valgt",
+            "value": 3.11,
+            "unit": "x",
+            "higher_is_better": true,
+            "setting": "CacheMOP avg speedup / ValgT avg speedup",
+            "is_sota_or_best": true,
+            "baseline_name": "ValgT",
+            "baseline_value": 6.27,
+            "evidence_quote": "3.1× improvement over ValgT",
+            "confidence": 0.9
+          },
+          {
+            "name": "num_projects_evaluated",
+            "value": 64,
+            "unit": "projects",
+            "higher_is_better": true,
+            "setting": "Valg benchmark",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "Evaluated on 64 Java projects from the Valg benchmark",
+            "confidence": 0.95
+          },
+          {
+            "name": "num_revisions_evaluated",
+            "value": 64,
+            "unit": "revisions",
+            "higher_is_better": true,
+            "setting": "Valg benchmark",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "metrics.json: num_revisions_evaluated = 64",
+            "confidence": 0.9
+          }
+        ],
+        "overall_conclusion": "CacheMOP achieves substantial speedups over JavaMOP and TraceMOP (19.7× and 19.5× average) while preserving 100% of specification violations and unique traces, improving over Valg by 9.7× and 3.1× respectively, with a single tunable parameter and no per-project training.",
+        "sources": {
+          "metrics_path": "results/metrics.json",
+          "paper_tex_path": "paper/main.tex"
+        },
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 13854,
+            "completion_tokens_details": {
+              "reasoning_tokens": 10085
+            },
+            "prompt_tokens": 3178,
+            "prompt_tokens_details": {
+              "cached_tokens": 2048
+            },
+            "total_tokens": 17032
+          },
+          "attempt": 0
+        }
+      },
+      "comparison": {
+        "status": "ok",
+        "claim_alignment": [
+          {
+            "original_claim_id": "C1",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "Agent introduces CacheMOP rather than Valg and does not describe Valg's two-armed bandit, Thompson sampling, or dynamic decision thresholds."
+          },
+          {
+            "original_claim_id": "C2",
+            "agent_claim_id": "A12",
+            "label": "consistent",
+            "rationale": "Agent reports over 99% redundancy for parametric monitor instances, consistent with the original prior-work claim of 99.87% parametric monitor redundancy."
+          },
+          {
+            "original_claim_id": "C3",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "Agent does not describe Valg's Bernoulli-trial/Beta-posterior bandit formulation for parametric and nonparametric event selection."
+          },
+          {
+            "original_claim_id": "C4",
+            "agent_claim_id": "A15",
+            "label": "incomparable",
+            "rationale": "Original reports maximum end-to-end speedups for Valg (20.2x and 551.5x), while agent reports average Valg speedups (2.03x and 6.27x); max vs average speedup is not directly comparable."
+          },
+          {
+            "original_claim_id": "C5",
+            "agent_claim_id": "A10",
+            "label": "partial",
+            "rationale": "Agent states Valg loses up to 43% of unique traces, partially addressing unique-trace preservation loss, but does not confirm the original 99.6% violation preservation or 76.7% average unique-trace preservation."
+          },
+          {
+            "original_claim_id": "C6",
+            "agent_claim_id": "A11",
+            "label": "partial",
+            "rationale": "Agent acknowledges Valg requires hyperparameter tuning, but does not report the original tuned 95.1% unique-trace preservation or the claimed negligible/minor slowdowns."
+          },
+          {
+            "original_claim_id": "C7",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "Agent does not address transfer of tuned policies across 1,472 revisions of 46 projects."
+          },
+          {
+            "original_claim_id": "C8",
+            "agent_claim_id": "A15",
+            "label": "partial",
+            "rationale": "Agent reports ValgJ average speedup of 2.03x, supporting the direction that Valg improves over JavaMOP, but does not confirm the 56/64 project count or the 37.5% average time reduction."
+          },
+          {
+            "original_claim_id": "C9",
+            "agent_claim_id": "A15",
+            "label": "partial",
+            "rationale": "Agent reports ValgT average speedup of 6.27x, supporting the direction that Valg improves over TraceMOP, but does not confirm the 57/58 project count or the 54.4% average time reduction."
+          },
+          {
+            "original_claim_id": "C10",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "Agent does not report Valg's elimination rates for redundant parametric traces or violating nonparametric events, nor the monitoring-only speedups of 625x and 909.1x."
+          },
+          {
+            "original_claim_id": "C11",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "Agent does not mention eMOP integration or the claimed speedups for ps1^c and ps3^cl."
+          },
+          {
+            "original_claim_id": "C12",
+            "agent_claim_id": "A10",
+            "label": "partial",
+            "rationale": "Agent qualitatively states Valg suffers probabilistic violation loss, which is consistent with missing some violations, but does not confirm the 0.4% violation-miss rate or detection in prior/subsequent revisions."
+          },
+          {
+            "original_claim_id": "C13",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "Agent does not compare Valg against landmarks, ps1^c, or ps3^cl in speed-coverage trade-off."
+          },
+          {
+            "original_claim_id": "C14",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "Agent does not address JVM bytecode rewriting by JavaMOP/TraceMOP or Valg's orthogonal/plugin-based design."
+          },
+          {
+            "original_claim_id": "C15",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "Agent does not describe Valg's use of selective monitor creation and selective nonparametric event signaling."
+          }
+        ],
+        "metric_alignment": [],
+        "summary": {
+          "direction_consistency": "consistent",
+          "consistent_claim_ratio": 0.0667,
+          "has_comparable_metrics": false,
+          "sota_improvement_summary": "N/A: original extraction contains no metrics for direct comparison; agent reports CacheMOP speedups over JavaMOP/TraceMOP and over Valg baselines, but these are not directly comparable to the original extracted claims.",
+          "overall_alignment_score": 0.45,
+          "score_rationale": "Agent works on the same runtime-verification overhead problem and same JavaMOP/TraceMOP benchmark family, and comparable/partial claims align in direction, but many Valg-specific claims are unaddressed and metrics are not directly comparable, so a mid-low score is appropriate."
+        },
+        "warnings": [
+          "Original extraction has no metrics, so metric_alignment is empty.",
+          "Agent describes a different method (CacheMOP) rather than reproducing Valg, so many original Valg-specific claims are missing.",
+          "Agent-reported Valg average speedups are not directly comparable to original maximum speedups or average time-reduction claims."
+        ],
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 7828,
+            "completion_tokens_details": {
+              "reasoning_tokens": 6478
+            },
+            "prompt_tokens": 5230,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 13058
+          },
+          "attempt": 0
+        }
+      },
+      "overall_alignment_score": 0.45,
+      "direction_consistency": "consistent"
+    },
+    "experiment_analysis": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-016_reducing_redundant_monitor_creation_and/workspace/evoscientist_2026-08-10_12-16-51",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-016_reducing_redundant_monitor_creation_and",
+      "status": "ok",
+      "metrics_path": "results/metrics.json",
+      "experiment_success": {
+        "status": "ok",
+        "success": true,
+        "metrics_path": "results/metrics.json",
+        "absolute_metrics_path": "~/ai_scientist_inputs/ASE-2025-016_reducing_redundant_monitor_creation_and/workspace/evoscientist_2026-08-10_12-16-51/results/metrics.json",
+        "checks": {
+          "has_results_file": true,
+          "non_stub": true,
+          "numeric_leaf_count": 41,
+          "min_numeric_ok": true
+        },
+        "manifest_hints": {
+          "status": {
+            "research_request": true,
+            "plan": true,
+            "metrics": true,
+            "paper_tex": true,
+            "paper_pdf": false,
+            "readme": true
+          },
+          "returncode": 0,
+          "benchmark_complete": true,
+          "artifacts_metrics_flag": false
+        },
+        "warnings": [],
+        "suspicious_values": [],
+        "note": "success=true requires substantive results (framework-aware path) with >=3 numeric leaves. Supports metrics.json, results.json, experiment_results.txt, etc. Manifest returncode/benchmark_complete are soft warnings only."
+      },
+      "idea_code_consistency": {
+        "status": "ok",
+        "idea_path": "plan.md",
+        "code_files": [
+          "project/cachemop/__init__.py",
+          "project/cachemop/cachemop.py",
+          "project/cachemop/experiment_runner.py",
+          "project/cachemop/experiment_runner_v2.py"
+        ],
+        "score_scale": "1-5",
+        "score": 4.0,
+        "label": null,
+        "justification": "The code implements the core CacheMOP idea combining DTM and FPD, includes experiment runners that evaluate against baselines using Valg benchmark data, and collects the specified metrics such as speedup, violation preservation, trace coverage, redundancy reduction, and DTM cache hit rate. However, the hyperparameter sweep (Stage 5) is not explicitly implemented in the provided code, and the DTM-only phase described in the three-phase policy is not clearly enforced in the should_monitor logic.",
+        "matched_elements": [
+          "CacheMOP class with deterministic trace memoization (DTM) and frequency-guided probabilistic decay (FPD)",
+          "Experiment runner using Valg benchmark data (rq1.csv and projects.csv)",
+          "Metrics: speedup vs JavaMOP, speedup vs TraceMOP, violation preservation, unique trace coverage, redundancy reduction, DTM cache hit rate",
+          "Output artifacts: cachemop_results.csv and cachemop_summary.csv",
+          "Simulation framework as specified in Stage 3",
+          "Burst detection mechanism on violation"
+        ],
+        "missing_or_divergent_elements": [
+          "No explicit hyperparameter sweep script for Stage 5 (lambda sensitivity analysis)",
+          "DTM-only phase is not separately enforced in should_monitor; code goes directly to DTM+FPD after warmup",
+          "Uses simulation rather than actual runtime verification instrumentation on Java programs"
+        ],
+        "rubric": "Strong alignment: code largely implements the idea's method and evaluation; only minor omissions or declared simplifications.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 1630,
+            "completion_tokens_details": {
+              "reasoning_tokens": 1320
+            },
+            "prompt_tokens": 2167,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 3797
+          },
+          "attempt": 0
+        }
+      },
+      "setup_coverage": {
+        "status": "ok",
+        "overall_coverage": 1.0,
+        "datasets": {
+          "gold_count": 2,
+          "hit_count": 2,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "Single-revision benchmark",
+            "Multi-revision benchmark"
+          ],
+          "misses": []
+        },
+        "baselines": {
+          "gold_count": 2,
+          "hit_count": 2,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "JavaMOP",
+            "TraceMOP"
+          ],
+          "misses": []
+        },
+        "metrics": {
+          "gold_count": 4,
+          "hit_count": 4,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "Speedup",
+            "Violation Preservation",
+            "Unique Trace Coverage",
+            "Redundancy Reduction"
+          ],
+          "misses": []
+        },
+        "agent_protocol": {},
+        "gold_protocol": {},
+        "dataset_dirs": [
+          "dataset_candidate"
+        ],
+        "flags": {
+          "weaker_baseline_suspected": false,
+          "weak_protocol": [],
+          "synthetic_data": "unexpected_synthetic_or_local_only_data",
+          "gold_allows_synthetic": false
+        },
+        "gold_sources": [
+          "~/ai_scientist_inputs/ASE-2025-016_reducing_redundant_monitor_creation_and/task.md",
+          "~/ai_scientist_inputs/ASE-2025-016_reducing_redundant_monitor_creation_and/metadata.json"
+        ],
+        "note": "Coverage is name/alias matching against task.md Datasets/Baselines/Metrics. weak_protocol flags large reductions in trials/timeout vs Constraints. Synthetic corpora are not penalized when the task itself requires synthesis."
+      },
+      "ablation_significance": {
+        "status": "ok",
+        "idea_path": "plan.md",
+        "significance_signals_rule_based": {
+          "signals": [],
+          "artifact_paths": [],
+          "has_any_significance_artifact": false
+        },
+        "evidence_format": "raw_json",
+        "study_type": null,
+        "components": [
+          {
+            "name": "DTM (deterministic trace memoization)",
+            "role": "module",
+            "ablation_expected": true,
+            "significance_expected": false,
+            "ablation_status": "missing",
+            "significance_status": "not_required"
+          },
+          {
+            "name": "FPD (frequency-guided probabilistic decay)",
+            "role": "module",
+            "ablation_expected": true,
+            "significance_expected": false,
+            "ablation_status": "missing",
+            "significance_status": "not_required"
+          },
+          {
+            "name": "JavaMOP baseline",
+            "role": "baseline",
+            "ablation_expected": false,
+            "significance_expected": true,
+            "ablation_status": "not_required",
+            "significance_status": "missing"
+          },
+          {
+            "name": "TraceMOP baseline",
+            "role": "baseline",
+            "ablation_expected": false,
+            "significance_expected": true,
+            "ablation_status": "not_required",
+            "significance_status": "missing"
+          },
+          {
+            "name": "Valg baseline",
+            "role": "baseline",
+            "ablation_expected": false,
+            "significance_expected": true,
+            "ablation_status": "not_required",
+            "significance_status": "missing"
+          }
+        ],
+        "ablation_coverage_score": 0.0,
+        "overall_ablation_ok": false,
+        "overall_significance_ok": false,
+        "summary": "",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 2495,
+            "completion_tokens_details": {
+              "reasoning_tokens": 2144
+            },
+            "prompt_tokens": 2666,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 5161
+          },
+          "attempt": 0
+        }
+      },
+      "results_paper_consistency": {
+        "status": "ok",
+        "paper_tex": "paper/main.tex",
+        "paper_kind": "paper_tex",
+        "results_format": "raw_json",
+        "digest_hint": {
+          "unfavorable_count": 0,
+          "trial_fail_count": 0,
+          "trial_success_count": 0,
+          "metadata": {}
+        },
+        "score_scale": "1-5",
+        "method": "Direct LLM comparison: agent's FINAL results artifact (metrics.json summary) vs paper Results/Discussion/Conclusion. Interim failed runs are NOT evidence unless still present in the final metrics file.",
+        "score": 4.0,
+        "consistency_label": "Mostly Consistent",
+        "hiding_unfavorable_suspected": false,
+        "hiding_confidence": "low",
+        "justification": "The paper's main quantitative claims (average speedups, 100% correctness/preservation, cache hit and skip rates) are supported by final results. However, the final results include redundancy_reduction of 0.0%, which the paper does not report; the paper instead discusses high total skip rate. Some additional claims (hyperparameter sweep 19.18x average speedup, Valg trace coverage 57-100%) are not present in the final results and are therefore unsupported. These issues are notable but do not appear to be deliberate hiding of clearly unfavorable final outcomes.",
+        "supported_claims": [
+          "Average speedups for baselines match final results (4.44x, 4.75x, 4.70x)",
+          "100% preservation/coverage matches final results",
+          "Cache hit rate average 96.88% and total skip rate average 76.84% match additional metrics"
+        ],
+        "unsupported_or_overstated_claims": [],
+        "numeric_mismatches": [
+          "Redundancy reduction: paper's setup includes this metric but final results show 0.0%, while paper claims high selective monitoring reductions via total skip rate"
+        ],
+        "unfavorable_in_final_results": [
+          "redundancy_reduction 0.0%",
+          "min speedup 1.0x (paper acknowledges minimal redundancy projects achieve 1.0-2.0x)",
+          "min skip rate 0 and min cache hit 0 (not reported by paper but not central)"
+        ],
+        "unfavorable_acknowledged_in_paper": [],
+        "unfavorable_missing_from_paper": [],
+        "rubric": "Mostly consistent: reported conclusions track the metrics; negative/failed settings are acknowledged with only minor gaps.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 2500,
+            "completion_tokens_details": {
+              "reasoning_tokens": 2500
+            },
+            "prompt_tokens": 2666,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 5166
+          },
+          "attempt": 0
+        }
+      },
+      "scores": {
+        "experiment_success": true,
+        "idea_code_score": 4.0,
+        "setup_coverage": 1.0,
+        "ablation_coverage_score": 0.0,
+        "overall_ablation_ok": false,
+        "overall_significance_ok": false,
+        "results_paper_score": 4.0,
+        "hiding_unfavorable_suspected": false
+      },
+      "notes": [
+        "Axes 1,2,3,4,6 in experiment_analysis (figures excluded).",
+        "setup_coverage matches task.md Datasets/Baselines/Metrics; weak_protocol flags reductions vs Constraints.",
+        "Axis 6: final normalized results vs paper; interim run logs not used as ground truth."
+      ]
+    },
+    "literature_review": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-016_reducing_redundant_monitor_creation_and/workspace/evoscientist_2026-08-10_12-16-51",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-016_reducing_redundant_monitor_creation_and",
+      "status": "ok",
+      "as_of_year": 2026,
+      "agent_ref_count": 7,
+      "sources": [
+        {
+          "path": "~/ai_scientist_inputs/ASE-2025-016_reducing_redundant_monitor_creation_and/workspace/evoscientist_2026-08-10_12-16-51/project/literature_synthesis.md",
+          "kind": "literature_synthesis"
+        },
+        {
+          "path": "~/ai_scientist_inputs/ASE-2025-016_reducing_redundant_monitor_creation_and/workspace/evoscientist_2026-08-10_12-16-51/paper/main.tex",
+          "kind": "thebibliography"
+        }
+      ],
+      "collection_audit": {
+        "cited_keys_count": 7,
+        "filter_mode": "paper_cite_keys",
+        "bib_total_before_filter": 0,
+        "bib_after_filter": 0,
+        "uncited_bib_skipped": 0,
+        "cited_keys_sample": [
+          "bodden2010clara",
+          "chen2009parametric",
+          "guan2021tracemop",
+          "jin2011garbage",
+          "jin2012javamop",
+          "kim2025valg",
+          "legunsen2015evolution"
+        ],
+        "thebibliography_after_filter": 7,
+        "agent_ref_count": 7
+      },
+      "fabrication": {
+        "status": "ok",
+        "scholarly_count": 7,
+        "verified_count": 6,
+        "fake_count": 1,
+        "lookup_failed_count": 0,
+        "non_paper_count": 0,
+        "fabrication_rate": 0.14285714285714285,
+        "items": [
+          {
+            "title": "Parametric Trace Slicing and Monitoring",
+            "doi": "10.1007/978-3-642-00768-2_23",
+            "arxiv_id": "",
+            "year": 2009,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Parametric Trace Slicing and Monitoring",
+            "resolved_year": 2009,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "chen2009parametric",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "JavaMOP: Efficient parametric runtime monitoring framework",
+            "doi": "10.1109/icse.2012.6227231",
+            "arxiv_id": "",
+            "year": 2012,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "JavaMOP: Efficient parametric runtime monitoring framework",
+            "resolved_year": 2012,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "jin2012javamop",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "TraceMOP: Tractable and Practical Explicit-Monitor Runtime Verification",
+            "doi": "",
+            "arxiv_id": "",
+            "year": 2021,
+            "status": "fabricated_or_unfound",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "notes": [
+              "Not found on Semantic Scholar or arXiv with DOI/arxiv/title lookup."
+            ],
+            "cache_hit": true,
+            "cite_key": "guan2021tracemop",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "Faster Runtime Verification during Testing via Feedback-Guided Selective Monitoring",
+            "doi": "10.1109/ase63991.2025.00189",
+            "arxiv_id": "",
+            "year": 2025,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Faster Runtime Verification during Testing via Feedback-Guided Selective Monitoring",
+            "resolved_year": 2025,
+            "notes": [],
+            "cache_hit": true,
+            "cite_key": "kim2025valg",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "Clara: Partially Evaluating Runtime Monitors at Compile Time",
+            "doi": "10.1007/978-3-642-16612-9_8",
+            "arxiv_id": "",
+            "year": 2010,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Clara: Partially Evaluating Runtime Monitors at Compile Time - Tutorial Supplement",
+            "resolved_year": 2010,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "bodden2010clara",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "Evolution-Aware Monitoring-Oriented Programming",
+            "doi": "10.1109/icse.2015.206",
+            "arxiv_id": "",
+            "year": 2015,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Evolution-Aware Monitoring-Oriented Programming",
+            "resolved_year": 2015,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "legunsen2015evolution",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "Garbage collection for monitoring parametric properties",
+            "doi": "10.1145/1993498.1993547",
+            "arxiv_id": "",
+            "year": 2011,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Garbage collection for monitoring parametric properties",
+            "resolved_year": 2011,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "jin2011garbage",
+            "source_kind": "thebibliography"
+          }
+        ],
+        "cache_path": "~/ai_scientist_evals/ASE-2025-016_reducing_redundant_monitor_creation_and/reference_verify_cache.json",
+        "override_path": "~/ai_scientist_evals/ASE-2025-016_reducing_redundant_monitor_creation_and/reference_verify_overrides.json",
+        "note": "fabrication_rate = fake / (verified + fake); lookup_failed (API errors) excluded. GitHub/docs/tool URLs are non_paper and excluded from the rate. To manually correct a false negative, edit reference_verify_overrides.json (key=normalized title / doi / cite_key; value=\"verified\" or a result dict), then re-run."
+      },
+      "coverage": {
+        "status": "ok",
+        "gold_source": "~/ai_scientist_inputs/ASE-2025-016_reducing_redundant_monitor_creation_and/mineru_sections.json",
+        "gold_count": 95,
+        "gold_is_original_paper_references": true,
+        "gold_is_openalex_subset": false,
+        "agent_count": 7,
+        "intersection_size": 3,
+        "recall": 0.031578947368421054,
+        "precision": 0.42857142857142855,
+        "matched_gold_keys": [
+          "chen2009parametric",
+          "guan2025tracemop",
+          "jin2011garbage"
+        ],
+        "primary_metric": "recall",
+        "note": "Primary metric is recall against the original paper bibliography (titles from mineru_sections.json REFERENCES; related_work.json used only to enrich DOI/year or as fallback if mineru titles are empty). Denominator = |original paper references|. Precision is secondary (agent may cite valid extra papers)."
+      },
+      "recency": {
+        "status": "ok",
+        "dated_count": 7,
+        "unknown_year_count": 0,
+        "year_histogram": {
+          "2009": 1,
+          "2010": 1,
+          "2011": 1,
+          "2012": 1,
+          "2015": 1,
+          "2021": 1,
+          "2025": 1
+        },
+        "windows": {
+          "3": {
+            "years": 3,
+            "cutoff_year_inclusive": 2023,
+            "recent_count": 1,
+            "recent_ratio": 0.14285714285714285
+          },
+          "5": {
+            "years": 5,
+            "cutoff_year_inclusive": 2021,
+            "recent_count": 2,
+            "recent_ratio": 0.2857142857142857
+          }
+        }
+      },
+      "scores": {
+        "fabrication_rate": 0.14285714285714285,
+        "coverage_recall": 0.031578947368421054,
+        "coverage_precision": 0.42857142857142855,
+        "recency_ratio_3y": 0.14285714285714285,
+        "recency_ratio_5y": 0.2857142857142857
+      }
+    }
+  },
+  "scores": {
+    "completeness": {
+      "complete": true,
+      "overall_score": 0.8453,
+      "required_score": 1.0,
+      "bonus_score": 0.09
+    },
+    "peer_review": {
+      "status": "ok",
+      "optional": false,
+      "overall_score": 4.4,
+      "score_scale": "1-10",
+      "scoring_method": "paperreview_apr"
+    },
+    "idea_generation": {
+      "status": "ok",
+      "overall_score": 3.0,
+      "dimensions": {
+        "novelty": 3.0,
+        "feasibility": 3.0,
+        "clarity": 3.0
+      },
+      "novelty_category": "Incremental",
+      "solution_space_status": "ok"
+    },
+    "alignment": {
+      "status": "ok",
+      "direction_consistency": "consistent",
+      "overall_alignment_score": 0.45
+    },
+    "literature_review": {
+      "fabrication_rate": 0.14285714285714285,
+      "coverage_recall": 0.031578947368421054,
+      "coverage_precision": 0.42857142857142855,
+      "recency_ratio_3y": 0.14285714285714285,
+      "recency_ratio_5y": 0.2857142857142857
+    },
+    "experiment_analysis": {
+      "experiment_success": true,
+      "idea_code_score": 4.0,
+      "setup_coverage": 1.0,
+      "ablation_coverage_score": 0.0,
+      "overall_ablation_ok": false,
+      "overall_significance_ok": false,
+      "results_paper_score": 4.0,
+      "hiding_unfavorable_suspected": false
+    }
+  },
+  "fair_scores": {
+    "applicable_axes": [
+      "completeness",
+      "idea_generation",
+      "peer_review",
+      "alignment",
+      "literature_review",
+      "experiment_analysis"
+    ],
+    "skipped_axes": [],
+    "fair_mean_0_1": 0.6223,
+    "note": "fair_mean_0_1 averages only applicable axes; optional peer review and framework-inapplicable literature are excluded from the denominator."
+  },
+  "evals_root": "~/ai_scientist_evals",
+  "claims_cache": "~/ai_scientist_evals/ASE-2025-016_reducing_redundant_monitor_creation_and/original_claims.json",
+  "solution_space_cache": "~/ai_scientist_evals/ASE-2025-016_reducing_redundant_monitor_creation_and/solution_space.json"
+}

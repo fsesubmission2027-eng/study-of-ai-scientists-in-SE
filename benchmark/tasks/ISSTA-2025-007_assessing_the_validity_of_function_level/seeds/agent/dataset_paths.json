@@ -1,0 +1,68 @@
+{
+  "layout": "topscorewrongexam_ml4vd",
+  "layout_note": "ISSTA 2025 Top Score on the Wrong Exam artifact: BigVul + Devign + DiverseVul original datasets, RQ1 labeled samples, and RQ2 word-count classifier scripts.",
+  "workspace_symlink": "dataset_candidate/topscorewrongexam-issta2025",
+  "paper_title": "Top Score on the Wrong Exam: On Benchmarking in Machine Learning for Vulnerability Detection",
+  "paper_venue": "ISSTA 2025",
+  "paper_doi": "https://doi.org/10.1145/3728887",
+  "replication_github": "https://github.com/niklasrisse/TopScoreWrongExam",
+  "bigvul_source_github": "https://github.com/ZJU-AutomatedSecurity/Big-Vul",
+  "bigvul_gdrive": "https://drive.google.com/file/d/1-0VhnHBp9IGh90s2wCNjeCMuy70HPl8X/view",
+  "devign_source_github": "https://github.com/microsoft/Devign",
+  "diversevul_source_github": "https://github.com/wagner-group/DiverseVul",
+  "read_only": true,
+  "copy_note": "Shared mount is read-only. Copy scripts or working copies under project/ before writes. Write metrics under project/ or results/.",
+  "paths": {
+    "artifact_root": "dataset_candidate/topscorewrongexam-issta2025",
+    "bigvul": "dataset_candidate/topscorewrongexam-issta2025/original_datasets/BigVul",
+    "bigvul_csv": "dataset_candidate/topscorewrongexam-issta2025/original_datasets/BigVul/MSR_data_cleaned.csv",
+    "devign": "dataset_candidate/topscorewrongexam-issta2025/original_datasets/Devign",
+    "devign_json": "dataset_candidate/topscorewrongexam-issta2025/original_datasets/Devign/function.json",
+    "diversevul": "dataset_candidate/topscorewrongexam-issta2025/original_datasets/DiverseVul",
+    "diversevul_json": "dataset_candidate/topscorewrongexam-issta2025/original_datasets/DiverseVul/diversevul_20230702.json",
+    "raw_samples": "dataset_candidate/topscorewrongexam-issta2025/raw_samples",
+    "labeled_samples": "dataset_candidate/topscorewrongexam-issta2025/labeled_samples",
+    "scripts": "dataset_candidate/topscorewrongexam-issta2025/scripts",
+    "rq2_scripts": "dataset_candidate/topscorewrongexam-issta2025/scripts/rq_2",
+    "archives": "dataset_candidate/topscorewrongexam-issta2025/archives",
+    "meta": "dataset_candidate/topscorewrongexam-issta2025/DOWNLOAD_META.txt"
+  },
+  "size_notes": {
+    "topscorewrongexam_lfs_without_bigvul": "~0.86 GiB (Devign function.json ~61.5 MiB; DiverseVul json ~737 MiB; samples/labels ~58 MiB)",
+    "bigvul_zip_download": "1541009577 bytes (~1.54 GiB Google Drive zip)",
+    "bigvul_csv_uncompressed": "10785616314 bytes (~10.8 GiB MSR_data_cleaned.csv)",
+    "on_disk_measured": "14040783445 bytes (~14 GiB total including BigVul zip+csv, Devign, DiverseVul, samples)"
+  },
+  "dataset_env": {
+    "TOPSCOREWRONGEXAM_HOME": "dataset_candidate/topscorewrongexam-issta2025",
+    "BIGVUL_HOME": "dataset_candidate/topscorewrongexam-issta2025/original_datasets/BigVul",
+    "DEVIGN_HOME": "dataset_candidate/topscorewrongexam-issta2025/original_datasets/Devign",
+    "DIVERSEVUL_HOME": "dataset_candidate/topscorewrongexam-issta2025/original_datasets/DiverseVul"
+  },
+  "python_environment": {
+    "python": "/opt/issta-2025-007-venv/bin/python",
+    "activation": "source /opt/issta-2025-007-venv/bin/activate",
+    "note": "scikit-learn + pandas + transformers (UniXcoder tokenizer) for RQ2 word-count HistGradientBoostingClassifier."
+  },
+  "toolchain": {
+    "rq2_entry": "scripts/rq_2/{bigvul,devign,diversevul}.py",
+    "sample_scripts": "scripts/{bigvul,devign,diversevul}_sample.py",
+    "primary_baselines_in_artifact": "HistGradientBoostingClassifier on token word counts"
+  },
+  "paper_protocol": {
+    "datasets": [
+      "BigVul",
+      "Devign",
+      "DiverseVul"
+    ],
+    "primary_metrics": [
+      "accuracy",
+      "precision",
+      "recall",
+      "f1_score",
+      "auc_roc",
+      "context_dependency_rate",
+      "cohens_kappa"
+    ]
+  }
+}

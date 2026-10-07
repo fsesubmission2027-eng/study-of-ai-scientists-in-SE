@@ -1,0 +1,991 @@
+{
+  "run_dir": "~/ai_scientist_inputs/FSE-2025-011_efficient_compiler_auto_tuning_for_optim/workspace/deepscientist_2026-08-29_07-15-54",
+  "task_dir": "~/ai_scientist_inputs/FSE-2025-011_efficient_compiler_auto_tuning_for_optim",
+  "framework": "deepscientist",
+  "fairness_audit": [
+    {
+      "axis": "completeness",
+      "was_unfair": "Required both paper.tex AND paper.pdf; any tool missing one failed equally.",
+      "fix": "Paper gate: PDF=1.0; TeX-only=0.5; ``complete`` requires PDF."
+    },
+    {
+      "axis": "completeness",
+      "was_unfair": "``results`` counted stub/seed JSON (dataset_candidate/metrics.json).",
+      "fix": "``results`` requires substantive numeric results via results_normalize."
+    },
+    {
+      "axis": "experiment_success",
+      "was_unfair": "Only metrics.json; ignored results.json / experiment_results.txt.",
+      "fix": "Framework-ordered result candidates + normalized loaders."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Penalized tools with no bib; airesearcher has no workspace references.",
+      "fix": "literature_applicable=false → status not_applicable; excluded from fair aggregate."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "related_work.json subset as gold made recall hard to interpret.",
+      "fix": "Coverage gold is original paper REFERENCES from mineru; related_work only enriches metadata/fallback."
+    },
+    {
+      "axis": "peer_review",
+      "was_unfair": "Missing Stanford report looked like evaluation failure.",
+      "fix": "status not_provided; optional axis, never counts as tool failure."
+    },
+    {
+      "axis": "paths/find_results",
+      "was_unfair": "Picked downloads/** and sandbox noise (e.g. airesearcher LLVM tree).",
+      "fix": "Exclude downloads/, seeds/, dataset_candidate/, sandbox junk paths."
+    },
+    {
+      "axis": "paths/framework_noise",
+      "was_unfair": "DeepScientist .deepscientist_npm / runtime / skills templates counted as code/paper/results.",
+      "fix": "FRAMEWORK_NOISE_DIRS+markers; quest worktree + eval_output results; paper md drafts; reject template tex."
+    },
+    {
+      "axis": "paths/paper_tex",
+      "was_unfair": "tiny_scientist / ACL runs store paper under latex/*.tex; evaluator only looked at paper/main.tex.",
+      "fix": "latex/**/*.tex with substantive-body heuristic; find_paper_document uses same rules."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Entire custom.bib (300+ anthology entries) verified when paper had zero \\cite commands.",
+      "fix": "collect_agent_references filters bib to in-text cite keys; skips uncited bulk bib (>40 entries)."
+    },
+    {
+      "axis": "paths/ai_scientist_summaries",
+      "was_unfair": "AI Scientist can persist substantive results and paper-like drafts in *_summary.json logs rather than paper/main.tex or results/**/*.json.",
+      "fix": "Treat draft_summary/research_summary as weak paper documents and summary JSONs as result candidates."
+    },
+    {
+      "axis": "framework/ai_scientist_v2",
+      "was_unfair": "Manifest framework ``ai_scientist_v2`` fell through to profile ``unknown``, skipping AI-Scientist idea/result path priorities.",
+      "fix": "Normalize ``ai_scientist_v2`` (and common aliases) to profile key ``ai_scientist``."
+    },
+    {
+      "axis": "idea_generation",
+      "was_unfair": "plan.md/todos.md weak proxies scored same as structured idea.json.",
+      "fix": "Framework idea_priority tried first; missing idea → not_applicable where appropriate."
+    }
+  ],
+  "generated_at": "2026-10-01T14:36:13",
+  "axes": [
+    "alignment",
+    "completeness",
+    "experiment_analysis",
+    "idea_generation",
+    "literature_review",
+    "peer_review"
+  ],
+  "results": {
+    "completeness": {
+      "framework": "deepscientist",
+      "run_dir": "~/ai_scientist_inputs/FSE-2025-011_efficient_compiler_auto_tuning_for_optim/workspace/deepscientist_2026-08-29_07-15-54",
+      "task_dir": "~/ai_scientist_inputs/FSE-2025-011_efficient_compiler_auto_tuning_for_optim",
+      "complete": true,
+      "required_score": 1.0,
+      "bonus_score": 0.0,
+      "overall_score": 0.83,
+      "missing": [],
+      "required": {
+        "idea": {
+          "path": "artifacts/idea/selected_idea.md",
+          "bytes": 2022,
+          "via": "candidate"
+        },
+        "code": {
+          "count": 3,
+          "files": [
+            {
+              "path": "experiments/main/analyze.py",
+              "bytes": 1570,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/main/run_pilot.py",
+              "bytes": 4321,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/main/tuner.py",
+              "bytes": 17273,
+              "via": "glob"
+            }
+          ]
+        },
+        "results": {
+          "substantive": true,
+          "normalized_path": "artifacts/reports/report-0e54020b.json",
+          "numeric_leaf_count": 15,
+          "discovered_files": [
+            {
+              "path": "DeepScientist/quests/001/.ds/worktrees/paper-paper-idea-001-idea-65e8abc0/artifacts/reports/report-1bcbd573.json",
+              "bytes": 4580,
+              "via": "glob"
+            },
+            {
+              "path": "DeepScientist/quests/001/.ds/worktrees/paper-paper-idea-001-idea-65e8abc0/artifacts/reports/report-2f799313.json",
+              "bytes": 2627,
+              "via": "glob"
+            },
+            {
+              "path": "DeepScientist/quests/001/.ds/worktrees/paper-paper-idea-001-idea-65e8abc0/artifacts/reports/report-76017593.json",
+              "bytes": 2897,
+              "via": "glob"
+            },
+            {
+              "path": "DeepScientist/quests/001/.ds/worktrees/paper-paper-idea-001-idea-65e8abc0/artifacts/reports/report-a5057142.json",
+              "bytes": 5402,
+              "via": "glob"
+            },
+            {
+              "path": "artifacts/reports/report-0e54020b.json",
+              "bytes": 3076,
+              "via": "glob"
+            },
+            {
+              "path": "artifacts/reports/report-611ab4a3.json",
+              "bytes": 2685,
+              "via": "glob"
+            }
+          ],
+          "metrics_keys_sample": [
+            "kind",
+            "schema_version",
+            "artifact_id",
+            "id",
+            "quest_id",
+            "created_at",
+            "updated_at",
+            "source",
+            "status",
+            "branch",
+            "head_commit",
+            "workspace_root",
+            "workspace_rel_path",
+            "report_type",
+            "run_id",
+            "title",
+            "verdict",
+            "metric",
+            "metric_direction",
+            "budget_s",
+            "programs",
+            "seeds",
+            "compiler",
+            "metrics_summary",
+            "metric_rows",
+            "summary",
+            "evidence_paths",
+            "note",
+            "anchor",
+            "semantic_key",
+            "guidance_vm"
+          ]
+        },
+        "paper": {
+          "tex": null,
+          "pdf": {
+            "path": "paper/main.pdf",
+            "bytes": 48868,
+            "via": "compiled_from_md"
+          },
+          "md": {
+            "path": "paper/paper.md",
+            "bytes": 11977,
+            "via": "candidate"
+          },
+          "json": null,
+          "status": "pdf",
+          "score": 1.0
+        }
+      },
+      "bonus": {
+        "experiment_plan": null,
+        "experiment_log": null,
+        "review": null,
+        "readme": null,
+        "narrative": null,
+        "bib": null
+      },
+      "manifest_status": {
+        "launched": true
+      },
+      "gate_scores": {
+        "idea": 1.0,
+        "code": 1.0,
+        "results": 1.0,
+        "paper": 1.0
+      },
+      "fairness": {
+        "gates": [
+          "idea",
+          "code",
+          "results",
+          "paper"
+        ],
+        "paper_gate_rule": "PDF=1.0; TeX-only/md_only/json_only=0.5; complete requires PDF",
+        "results_gate_rule": "substantive numeric results via framework-aware normalize_results",
+        "audit_ref": "framework_profile.FAIRNESS_AUDIT"
+      },
+      "notes": [
+        "Required: idea, code, substantive results, paper (PDF full; TeX/markdown/JSON draft half).",
+        "Stub/seed metrics (e.g. dataset_candidate/metrics.json) do not satisfy results.",
+        "Framework noise (.deepscientist_npm, skills/templates, runtime) is excluded from code/results/paper.",
+        "Manifest status is informational; disk presence is authoritative."
+      ]
+    },
+    "idea_generation": {
+      "run_dir": "~/ai_scientist_inputs/FSE-2025-011_efficient_compiler_auto_tuning_for_optim/workspace/deepscientist_2026-08-29_07-15-54",
+      "task_dir": "~/ai_scientist_inputs/FSE-2025-011_efficient_compiler_auto_tuning_for_optim",
+      "idea_path": "~/ai_scientist_inputs/FSE-2025-011_efficient_compiler_auto_tuning_for_optim/workspace/deepscientist_2026-08-29_07-15-54/artifacts/idea/selected_idea.md",
+      "status": "ok",
+      "dimensions": {
+        "novelty": {
+          "score": 3.0,
+          "justification": "The idea proposes 'learning flag importance and pairwise interactions online and using them to adaptively shrink the search space inside a preference-driven sampler'. Solution-space entry R16 already addresses 'learning and exploiting flags interactions'; R35 performs critical flag selection via one-time space reduction; R38 uses Bayesian optimization for autotuning. Thus the core remains within known learning-based flag-selection approaches, with the main novelty being the incremental online freeze/re-open adaptation.",
+          "rubric": "Incremental: a meaningful extension or optimization of prior baseline work that fixes a concrete prior limitation, but the core paradigm is unchanged.",
+          "category": "Incremental",
+          "nearest_solution_space_ids": [
+            "R16",
+            "R35",
+            "R38",
+            "R7"
+          ],
+          "differentiation": "LIFT adds an online adaptive space-reduction layer with flag freezing and a re-open rule, plus learned pairwise interactions inside a preference-driven sampler. R16 already learns flag interactions but in evolutionary optimization; R35 reduces the space only once; R38/BOCA uses Bayesian optimization. The continuous online freezing/re-opening mechanism is a meaningful extension rather than a new paradigm."
+        },
+        "feasibility": {
+          "score": 3.0,
+          "justification": "The proposed next stage is to 'implement lift_tuner.py and run the pilot comparison against PDCAT/RIO' on 3-4 programs at ~1250 s. This requires custom Bayesian importance/interaction tracking and a preference-driven sampler, but it builds on existing compiler-autotuning workflows and public benchmarks. It is nontrivial research engineering, yet doable for a single researcher; full benchmark replication would be much heavier.",
+          "rubric": "Moderate workload (sweet spot): needs nontrivial coding such as scripting existing open-source tools (parsers, CFG extractors) or building a custom graph-processing pipeline; standard research engineering effort."
+        },
+        "clarity": {
+          "score": 3.0,
+          "justification": "The artifact gives a clear what/why/how at a high level: 'Warm-start Beta prior → online per-flag importance (freeze settled flags) → online pairwise interaction ... → preference-driven sampling'. It also includes a falsification experiment and anti-win condition. However, key technical details are underspecified: exact Beta update rules, how pairwise interactions are learned and enforced, the frozen-flag re-open mechanism, and concrete speedup-trajectory metrics are not described.",
+          "rubric": "Complete frame but missing details: What/Why/How are present, yet key technical execution details or specific comparison plans are underspecified."
+        }
+      },
+      "overall_score": 3.0,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "novelty",
+        "feasibility",
+        "clarity"
+      ],
+      "solution_space": {
+        "status": "ok",
+        "paper_count": 39,
+        "entry_count": 39,
+        "cache_hit": true,
+        "source_file": "~/ai_scientist_inputs/FSE-2025-011_efficient_compiler_auto_tuning_for_optim/mineru_sections.json",
+        "stats": {
+          "papers": 39,
+          "extracted": 39,
+          "usable_abstracts": 19,
+          "citation_meta_abstracts": 0,
+          "missing_abstracts": 20,
+          "mineru_titles": 36,
+          "related_work_titles": 25,
+          "abstracts_attached": 19,
+          "related_work_extras": 3,
+          "batches": 3
+        },
+        "error": null
+      },
+      "notes": [
+        "Scores the intermediate idea artifact (not the final paper).",
+        "Dimensions: novelty, feasibility, clarity (each 1-5). Excitement removed.",
+        "Novelty is scored against a Solution Space built from mineru REFERENCES titles (+ related_work.json abstracts when matched)."
+      ],
+      "idea_via": "candidate",
+      "idea_relative": "artifacts/idea/selected_idea.md",
+      "summary": "LIFT proposes online learned flag importance and pairwise interactions to adaptively shrink compiler optimization search space within a preference-driven tuner. It is a plausible incremental extension over existing interaction-learning and critical-flag-selection work, with a reasonable pilot-style feasibility burden. The idea is well-framed with an explicit anti-win condition, but lacks algorithm-level detail and depends on a PDCAT baseline that is not present in the provided solution space.",
+      "strengths": [
+        "Clear focus on time-budgeted compiler auto-tuning and the smallest budget where gains are expected.",
+        "Explicit anti-win condition and falsification pilot make the idea testable.",
+        "Identifies a concrete limitation: static hand-coded constraints, independent flag updates, and one-time space reduction.",
+        "Mechanism summary gives a coherent pipeline from warm-start priors to freeze/re-open sampling."
+      ],
+      "weaknesses": [
+        "Technical execution details are under-specified: no pseudocode for Beta updates, interaction learning, or re-open rule.",
+        "Relies on PDCAT as a key baseline, but PDCAT is not defined in the provided solution space.",
+        "Novelty is incremental relative to existing interaction-learning and critical-flag-selection methods.",
+        "Residual risk of premature freezing is acknowledged, but the mitigation is only briefly mentioned."
+      ],
+      "llm_meta": {
+        "model": "deepseek-v4-pro-0813",
+        "base_url": "https://api-sg.umodelverse.ai/v1",
+        "usage": {
+          "completion_tokens": 1917,
+          "completion_tokens_details": {
+            "reasoning_tokens": 1167
+          },
+          "prompt_tokens": 4718,
+          "prompt_tokens_details": {
+            "cached_tokens": 4096
+          },
+          "total_tokens": 6635
+        },
+        "attempt": 0
+      }
+    },
+    "peer_review": {
+      "run_dir": "~/ai_scientist_inputs/FSE-2025-011_efficient_compiler_auto_tuning_for_optim/workspace/deepscientist_2026-08-29_07-15-54",
+      "review_report": "~/ai_scientist_inputs/FSE-2025-011_efficient_compiler_auto_tuning_for_optim/workspace/deepscientist_2026-08-29_07-15-54/artifacts/peer_review/stanford_apr.md",
+      "paper_pdf": "~/ai_scientist_inputs/FSE-2025-011_efficient_compiler_auto_tuning_for_optim/workspace/deepscientist_2026-08-29_07-15-54/paper/main.pdf",
+      "paper_tex": null,
+      "status": "ok",
+      "dimensions": {},
+      "overall_score": 5.8,
+      "score_scale": "1-10",
+      "dimension_order": [],
+      "notes": [
+        "Scored from paperreview.ai (Stanford APR) native ratings; benchmark 5-dimension LLM rubric skipped.",
+        "Overall scale: 1-10."
+      ],
+      "paperreview": {
+        "status": "fetched",
+        "token_file": "~/ai_scientist_inputs/FSE-2025-011_efficient_compiler_auto_tuning_for_optim/workspace/deepscientist_2026-08-29_07-15-54/artifacts/peer_review/paperreview.token.txt",
+        "json": "~/ai_scientist_inputs/FSE-2025-011_efficient_compiler_auto_tuning_for_optim/workspace/deepscientist_2026-08-29_07-15-54/artifacts/peer_review/stanford_apr.json",
+        "markdown": "~/ai_scientist_inputs/FSE-2025-011_efficient_compiler_auto_tuning_for_optim/workspace/deepscientist_2026-08-29_07-15-54/artifacts/peer_review/stanford_apr.md",
+        "apr_scores": {
+          "scale": "1-10",
+          "overall": 5.8,
+          "dimensions": {
+            "Claims_Support": 0.0,
+            "Experimental_Soundness": 0.0,
+            "Writing_Clarity": 1.0,
+            "Prior_Work_Context": 0.0,
+            "Question_Importance": 1.0,
+            "Originality": 0.0,
+            "Value_to_Community": 0.0
+          }
+        },
+        "pdf_rebuild": null
+      },
+      "scoring_method": "paperreview_apr",
+      "scoring_source": "paperreview_json",
+      "apr_dimensions": {
+        "Claims_Support": 0.0,
+        "Experimental_Soundness": 0.0,
+        "Writing_Clarity": 1.0,
+        "Prior_Work_Context": 0.0,
+        "Question_Importance": 1.0,
+        "Originality": 0.0,
+        "Value_to_Community": 0.0
+      },
+      "summary": "",
+      "red_flags": []
+    },
+    "alignment": {
+      "run_dir": "~/ai_scientist_inputs/FSE-2025-011_efficient_compiler_auto_tuning_for_optim/workspace/deepscientist_2026-08-29_07-15-54",
+      "task_dir": "~/ai_scientist_inputs/FSE-2025-011_efficient_compiler_auto_tuning_for_optim",
+      "status": "ok",
+      "original": {
+        "paper_title": "PDCAT: Preference-Driven Compiler Auto-Tuning",
+        "selection": {
+          "num_blocks": 7,
+          "total_chars": 31998,
+          "inferred_roles": {
+            "abstract": 1,
+            "introduction": 1,
+            "experiment": 3,
+            "discussion": 1,
+            "conclusion": 1
+          },
+          "mineru_raw_keys": {
+            "field:abstract": 1,
+            "field:introduction": 1,
+            "field:experiment": 1,
+            "other": 2,
+            "discussion": 1,
+            "conclusion": 1
+          },
+          "infer_reasons": {
+            "top_level_field": 3,
+            "title": 3,
+            "body": 1
+          },
+          "rescued_from_other": 2,
+          "note": "mineru key is unreliable; blocks are selected by title/body/inheritance. rescued_from_other counts sections labeled other but treated as typed roles."
+        },
+        "claims": [
+          {
+            "id": "C1",
+            "statement": "PDCAT improves acceleration performance over GCC default -O3 optimization setting on all selected cases at 5,000 seconds.",
+            "direction": "improves",
+            "metric_names": [
+              "speedup_over_O3"
+            ],
+            "evidence_quote": "PDCAT achieves 5.5%-81.2% acceleration performance over GCC default -O3 optimization setting in all 28 selected cases in 5,000 seconds.",
+            "confidence": 0.95
+          },
+          {
+            "id": "C2",
+            "statement": "PDCAT significantly outperforms four compared compiler auto-tuning techniques, including the state-of-the-art technique SRTuner.",
+            "direction": "improves",
+            "metric_names": [
+              "average_speedup_over_O3",
+              "best_result_count"
+            ],
+            "evidence_quote": "PDCAT significantly outperforms the four compared techniques, including the state-of-art technique SRTuner.",
+            "confidence": 0.95
+          },
+          {
+            "id": "C3",
+            "statement": "PDCAT achieves the best optimization result on 10/11/14 programs at 1,250/2,500/5,000 seconds, while RIO, CFSCA, CompTuner and SRTuner achieve best results on only 2/1/1, 5/3/2, 3/5/4 and 8/8/7 programs, respectively.",
+            "direction": "improves",
+            "metric_names": [
+              "best_result_count"
+            ],
+            "evidence_quote": "PDCAT achieves the best optimization result on 10/11/14 programs in 1,250/2,500/5,000 seconds, while the compared RIO, CFSCA, CompTuner and SRTuner achieve the best results on only 2/1/1, 5/3/2, 3/5/4 and 8/8/7, respectively.",
+            "confidence": 0.9
+          },
+          {
+            "id": "C4",
+            "statement": "PDCAT never achieves the worst result on 28 programs at 1,250/2,500/5,000 seconds, whereas baselines achieve worst results in multiple cases.",
+            "direction": "improves",
+            "metric_names": [
+              "worst_result_count"
+            ],
+            "evidence_quote": "PDCAT never achieves the worst results on 28 programs in 1,250/2,500/5,000 seconds, while the compared RIO, CFSCA, CompTuner and SRTuner achieve the worst results in 18/18/21, 3/3/3, 6/5/3 and 1/2/1, respectively.",
+            "confidence": 0.9
+          }
+        ],
+        "metrics": [],
+        "overall_conclusion": null,
+        "comparable_notes": null,
+        "cache_hit": true
+      },
+      "agent": {
+        "status": "ok",
+        "run_dir": "~/ai_scientist_inputs/FSE-2025-011_efficient_compiler_auto_tuning_for_optim/workspace/deepscientist_2026-08-29_07-15-54",
+        "claims": [],
+        "metrics": [],
+        "overall_conclusion": null,
+        "sources": {
+          "metrics_path": "artifacts/reports/report-0e54020b.json",
+          "paper_tex_path": "paper/paper.md"
+        },
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 5000,
+            "completion_tokens_details": {
+              "reasoning_tokens": 5000
+            },
+            "prompt_tokens": 3683,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 8683
+          },
+          "attempt": 0
+        }
+      },
+      "comparison": {
+        "status": "ok",
+        "claim_alignment": [
+          {
+            "original_claim_id": "C1",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "Agent extraction contains no claims, so this claim was not addressed."
+          },
+          {
+            "original_claim_id": "C2",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "Agent extraction contains no claims, so this claim was not addressed."
+          },
+          {
+            "original_claim_id": "C3",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "Agent extraction contains no claims, so this claim was not addressed."
+          },
+          {
+            "original_claim_id": "C4",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "Agent extraction contains no claims, so this claim was not addressed."
+          }
+        ],
+        "metric_alignment": [],
+        "summary": {
+          "direction_consistency": "unknown",
+          "consistent_claim_ratio": 0.0,
+          "has_comparable_metrics": false,
+          "sota_improvement_summary": "N/A",
+          "overall_alignment_score": 0.0,
+          "score_rationale": "Agent provided no extracted claims or metrics, so no direction can be verified against the original paper."
+        },
+        "warnings": [
+          "Agent extraction contains no claims or metrics; all original claims are marked missing."
+        ],
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 906,
+            "completion_tokens_details": {
+              "reasoning_tokens": 568
+            },
+            "prompt_tokens": 1527,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 2433
+          },
+          "attempt": 0
+        }
+      },
+      "overall_alignment_score": 0.0,
+      "direction_consistency": "unknown"
+    },
+    "experiment_analysis": {
+      "run_dir": "~/ai_scientist_inputs/FSE-2025-011_efficient_compiler_auto_tuning_for_optim/workspace/deepscientist_2026-08-29_07-15-54",
+      "task_dir": "~/ai_scientist_inputs/FSE-2025-011_efficient_compiler_auto_tuning_for_optim",
+      "status": "ok",
+      "metrics_path": "artifacts/reports/report-0e54020b.json",
+      "experiment_success": {
+        "status": "ok",
+        "success": true,
+        "metrics_path": "artifacts/reports/report-0e54020b.json",
+        "absolute_metrics_path": "~/ai_scientist_inputs/FSE-2025-011_efficient_compiler_auto_tuning_for_optim/workspace/deepscientist_2026-08-29_07-15-54/artifacts/reports/report-0e54020b.json",
+        "checks": {
+          "has_results_file": true,
+          "non_stub": true,
+          "numeric_leaf_count": 15,
+          "min_numeric_ok": true
+        },
+        "manifest_hints": {
+          "status": {
+            "launched": true
+          },
+          "returncode": 0,
+          "benchmark_complete": null,
+          "artifacts_metrics_flag": false
+        },
+        "warnings": [],
+        "suspicious_values": [],
+        "note": "success=true requires substantive results (framework-aware path) with >=3 numeric leaves. Supports metrics.json, results.json, experiment_results.txt, etc. Manifest returncode/benchmark_complete are soft warnings only."
+      },
+      "idea_code_consistency": {
+        "status": "ok",
+        "idea_path": "artifacts/idea/selected_idea.md",
+        "code_files": [
+          "experiments/main/analyze.py",
+          "experiments/main/run_pilot.py",
+          "experiments/main/tuner.py"
+        ],
+        "score_scale": "1-5",
+        "score": 3.0,
+        "label": null,
+        "justification": "",
+        "matched_elements": [
+          "1250-second pilot budget",
+          "programs and seeds",
+          "RIO, PDCAT, and LIFT method names",
+          "speedup-over-O3 evaluation",
+          "analyze.py result comparison"
+        ],
+        "missing_or_divergent_elements": [],
+        "rubric": "Partial alignment: main direction matches, but important components from the idea (baselines, metrics, protocol, subjects) are dropped or altered without clear mapping.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 1726,
+            "completion_tokens_details": {
+              "reasoning_tokens": 1496
+            },
+            "prompt_tokens": 2263,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 3989
+          },
+          "attempt": 0
+        }
+      },
+      "setup_coverage": {
+        "status": "ok",
+        "overall_coverage": 1.0,
+        "datasets": {
+          "gold_count": 2,
+          "hit_count": 2,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "cBench",
+            "PolyBench"
+          ],
+          "misses": []
+        },
+        "baselines": {
+          "gold_count": 4,
+          "hit_count": 4,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "RIO",
+            "CFSCA",
+            "CompTuner",
+            "SRTuner"
+          ],
+          "misses": []
+        },
+        "metrics": {
+          "gold_count": 1,
+          "hit_count": 1,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "Speedup ratio over -O3"
+          ],
+          "misses": []
+        },
+        "agent_protocol": {},
+        "gold_protocol": {},
+        "dataset_dirs": [
+          "dataset_candidate"
+        ],
+        "flags": {
+          "weaker_baseline_suspected": false,
+          "weak_protocol": [],
+          "synthetic_data": "unexpected_synthetic_or_local_only_data",
+          "gold_allows_synthetic": false
+        },
+        "gold_sources": [
+          "~/ai_scientist_inputs/FSE-2025-011_efficient_compiler_auto_tuning_for_optim/task.md",
+          "~/ai_scientist_inputs/FSE-2025-011_efficient_compiler_auto_tuning_for_optim/metadata.json"
+        ],
+        "note": "Coverage is name/alias matching against task.md Datasets/Baselines/Metrics. weak_protocol flags large reductions in trials/timeout vs Constraints. Synthetic corpora are not penalized when the task itself requires synthesis."
+      },
+      "ablation_significance": {
+        "status": "ok",
+        "idea_path": "artifacts/idea/selected_idea.md",
+        "significance_signals_rule_based": {
+          "signals": [],
+          "artifact_paths": [],
+          "has_any_significance_artifact": false
+        },
+        "evidence_format": "raw_json",
+        "study_type": "pilot",
+        "components": [
+          {
+            "name": "Warm-start Beta prior",
+            "role": "initialization",
+            "ablation_expected": false,
+            "significance_expected": false,
+            "ablation_status": "not_required",
+            "ablation_evidence": "Not a separately claimed removable contribution in the pilot comparison.",
+            "significance_status": "not_required",
+            "significance_evidence": "Pilot study; formal significance testing is not standard."
+          },
+          {
+            "name": "Online per-flag importance / freeze settled flags",
+            "role": "module",
+            "ablation_expected": true,
+            "significance_expected": false,
+            "ablation_status": "partial",
+            "ablation_evidence": "run_pilot.py supports lift-<variant> but pilot_results.json/metrics.json reports only full LIFT; no separate no-freeze ablation result rows are present.",
+            "significance_status": "not_required",
+            "significance_evidence": "Pilot comparison with 3 programs and 3 seeds; no formal statistical test expected or reported."
+          },
+          {
+            "name": "Online pairwise interaction / synergy coupling",
+            "role": "module",
+            "ablation_expected": true,
+            "significance_expected": false,
+            "ablation_status": "partial",
+            "ablation_evidence": "Only full LIFT is reported in the results; no separate no-interaction ablation rows are shown despite variant support in code.",
+            "significance_status": "not_required",
+            "significance_evidence": "Pilot comparison with 3 programs and 3 seeds; no formal statistical test expected or reported."
+          },
+          {
+            "name": "Preference-driven sampling over active flag set / re-open rule",
+            "role": "sampling",
+            "ablation_expected": false,
+            "significance_expected": false,
+            "ablation_status": "not_required",
+            "ablation_evidence": "Not a separately claimed removable contribution for this pilot comparison.",
+            "significance_status": "not_required",
+            "significance_evidence": "Pilot study; formal significance testing is not standard."
+          },
+          {
+            "name": "RIO baseline",
+            "role": "baseline",
+            "ablation_expected": false,
+            "significance_expected": false,
+            "ablation_status": "not_required",
+            "ablation_evidence": "Baseline for comparison; ablation is not applicable.",
+            "significance_status": "not_required",
+            "significance_evidence": "Pilot study; formal significance testing is not standard."
+          },
+          {
+            "name": "PDCAT baseline",
+            "role": "baseline",
+            "ablation_expected": false,
+            "significance_expected": false,
+            "ablation_status": "not_required",
+            "ablation_evidence": "Baseline for comparison; ablation is not applicable.",
+            "significance_status": "not_required",
+            "significance_evidence": "Pilot study; formal significance testing is not standard."
+          }
+        ],
+        "ablation_coverage_score": 0.5,
+        "overall_ablation_ok": false,
+        "overall_significance_ok": true,
+        "summary": "",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 2242,
+            "completion_tokens_details": {
+              "reasoning_tokens": 1520
+            },
+            "prompt_tokens": 980,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 3222
+          },
+          "attempt": 2
+        }
+      },
+      "results_paper_consistency": {
+        "status": "ok",
+        "paper_tex": "paper/paper.md",
+        "paper_kind": "paper_md",
+        "results_format": "raw_json",
+        "digest_hint": {
+          "unfavorable_count": 0,
+          "trial_fail_count": 0,
+          "trial_success_count": 0,
+          "metadata": {}
+        },
+        "score_scale": "1-5",
+        "method": "Direct LLM comparison: agent's FINAL results artifact (metrics.json summary) vs paper Results/Discussion/Conclusion. Interim failed runs are NOT evidence unless still present in the final metrics file.",
+        "score": 1.0,
+        "consistency_label": "severe",
+        "hiding_unfavorable_suspected": false,
+        "hiding_confidence": 0.85,
+        "justification": "The final experimental results are a 3-program, 3-seed pilot at 1250s. They report LIFT beats PDCAT on all three benchmarked kernels (macro-mean median speedup over -O3: LIFT 1.4498 vs PDCAT 1.4338). The paper reports an 8-kernel, 5-seed study and a central negative result: LIFT wins only 3 of 8 programs and has macro-mean median 1.637 vs PDCAT 1.730. These are not the same evaluation and contradict the final pilot's direction. The paper's core experimental evidence is unsupported by and inconsistent with the final metrics.",
+        "supported_claims": [
+          "The comparison uses a fixed 1250 s budget.",
+          "The comparison includes LIFT, RIO, and PDCAT using speedup over -O3 as the objective."
+        ],
+        "unsupported_or_overstated_claims": [
+          "Evaluation on eight PolyBench kernels with five seeds.",
+          "Central experimental conclusion that LIFT wins only 3 of 8 programs and does not reliably beat PDCAT.",
+          "Macro-mean median speedup of LIFT 1.637 vs PDCAT 1.730.",
+          "Ablation result that LIFT freezes 58-75 of 79 explorable flags.",
+          "atax-specific result with PDCAT reaching 3.34x vs LIFT 2.71x."
+        ],
+        "numeric_mismatches": [
+          {
+            "paper": "Eight PolyBench kernels, five seeds at 1250 s",
+            "results": "Three PolyBench kernels ("
+          }
+        ],
+        "unfavorable_in_final_results": [],
+        "unfavorable_acknowledged_in_paper": [],
+        "unfavorable_missing_from_paper": [],
+        "rubric": "Severe inconsistency or concealment: paper claims contradict metrics, invent numbers, or omit clear failures/negative findings that dominate the results.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 2265,
+            "completion_tokens_details": {
+              "reasoning_tokens": 1857
+            },
+            "prompt_tokens": 663,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 2928
+          },
+          "attempt": 1
+        }
+      },
+      "scores": {
+        "experiment_success": true,
+        "idea_code_score": 3.0,
+        "setup_coverage": 1.0,
+        "ablation_coverage_score": 0.5,
+        "overall_ablation_ok": false,
+        "overall_significance_ok": true,
+        "results_paper_score": 1.0,
+        "hiding_unfavorable_suspected": false
+      },
+      "notes": [
+        "Axes 1,2,3,4,6 in experiment_analysis (figures excluded).",
+        "setup_coverage matches task.md Datasets/Baselines/Metrics; weak_protocol flags reductions vs Constraints.",
+        "Axis 6: final normalized results vs paper; interim run logs not used as ground truth."
+      ]
+    },
+    "literature_review": {
+      "run_dir": "~/ai_scientist_inputs/FSE-2025-011_efficient_compiler_auto_tuning_for_optim/workspace/deepscientist_2026-08-29_07-15-54",
+      "task_dir": "~/ai_scientist_inputs/FSE-2025-011_efficient_compiler_auto_tuning_for_optim",
+      "status": "ok",
+      "as_of_year": 2026,
+      "agent_ref_count": 1,
+      "sources": [
+        {
+          "path": "~/ai_scientist_inputs/FSE-2025-011_efficient_compiler_auto_tuning_for_optim/workspace/deepscientist_2026-08-29_07-15-54/artifacts/idea/literature_survey.md",
+          "kind": "literature_survey"
+        }
+      ],
+      "collection_audit": {
+        "cited_keys_count": 0,
+        "filter_mode": "non_bib_sources",
+        "bib_total_before_filter": 0,
+        "bib_after_filter": 0,
+        "uncited_bib_skipped": 0,
+        "agent_ref_count": 1
+      },
+      "fabrication": {
+        "status": "ok",
+        "scholarly_count": 1,
+        "verified_count": 1,
+        "fake_count": 0,
+        "lookup_failed_count": 0,
+        "insufficient_metadata_count": 0,
+        "non_paper_count": 0,
+        "fabrication_rate": 0.0,
+        "items": [
+          {
+            "title": "PDCAT: Preference-Driven Compiler Auto-Tuning",
+            "doi": "10.1145/3715756",
+            "arxiv_id": "",
+            "year": 2025,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "PDCAT: Preference-Driven Compiler Auto-tuning",
+            "resolved_year": 2025,
+            "notes": [],
+            "cache_hit": true,
+            "cite_key": "",
+            "source_kind": "literature_survey"
+          }
+        ],
+        "cache_path": "~/ai_scientist_evals/FSE-2025-011_efficient_compiler_auto_tuning_for_optim/reference_verify_cache.json",
+        "override_path": "~/ai_scientist_evals/FSE-2025-011_efficient_compiler_auto_tuning_for_optim/reference_verify_overrides.json",
+        "note": "fabrication_rate = fake / (verified + fake). lookup_failed (API errors) and insufficient_metadata are excluded and retried or skipped. GitHub/docs/tool URLs are non_paper and excluded from the rate. To manually correct a false negative, edit reference_verify_overrides.json (key=normalized title / doi / cite_key; value=\"verified\" or a result dict), then re-run."
+      },
+      "coverage": {
+        "status": "ok",
+        "gold_source": "~/ai_scientist_inputs/FSE-2025-011_efficient_compiler_auto_tuning_for_optim/mineru_sections.json",
+        "gold_count": 36,
+        "gold_is_original_paper_references": true,
+        "gold_is_openalex_subset": false,
+        "agent_count": 1,
+        "intersection_size": 0,
+        "recall": 0.0,
+        "precision": 0.0,
+        "matched_gold_keys": [],
+        "primary_metric": "recall",
+        "note": "Primary metric is recall against the original paper bibliography (titles from mineru_sections.json REFERENCES; related_work.json used only to enrich DOI/year or as fallback if mineru titles are empty). Denominator = |original paper references|. Precision is secondary (agent may cite valid extra papers)."
+      },
+      "recency": {
+        "status": "ok",
+        "dated_count": 1,
+        "unknown_year_count": 0,
+        "year_histogram": {
+          "2025": 1
+        },
+        "windows": {
+          "3": {
+            "years": 3,
+            "cutoff_year_inclusive": 2023,
+            "recent_count": 1,
+            "recent_ratio": 1.0
+          },
+          "5": {
+            "years": 5,
+            "cutoff_year_inclusive": 2021,
+            "recent_count": 1,
+            "recent_ratio": 1.0
+          }
+        }
+      },
+      "scores": {
+        "fabrication_rate": 0.0,
+        "coverage_recall": 0.0,
+        "coverage_precision": 0.0,
+        "recency_ratio_3y": 1.0,
+        "recency_ratio_5y": 1.0
+      }
+    }
+  },
+  "scores": {
+    "completeness": {
+      "complete": true,
+      "overall_score": 0.83,
+      "required_score": 1.0,
+      "bonus_score": 0.0
+    },
+    "peer_review": {
+      "status": "ok",
+      "optional": false,
+      "overall_score": 5.8,
+      "score_scale": "1-10",
+      "scoring_method": "paperreview_apr"
+    },
+    "idea_generation": {
+      "status": "ok",
+      "overall_score": 3.0,
+      "dimensions": {
+        "novelty": 3.0,
+        "feasibility": 3.0,
+        "clarity": 3.0
+      },
+      "novelty_category": "Incremental",
+      "solution_space_status": "ok"
+    },
+    "alignment": {
+      "status": "ok",
+      "direction_consistency": "unknown",
+      "overall_alignment_score": 0.0
+    },
+    "literature_review": {
+      "fabrication_rate": 0.0,
+      "coverage_recall": 0.0,
+      "coverage_precision": 0.0,
+      "recency_ratio_3y": 1.0,
+      "recency_ratio_5y": 1.0
+    },
+    "experiment_analysis": {
+      "experiment_success": true,
+      "idea_code_score": 3.0,
+      "setup_coverage": 1.0,
+      "ablation_coverage_score": 0.5,
+      "overall_ablation_ok": false,
+      "overall_significance_ok": true,
+      "results_paper_score": 1.0,
+      "hiding_unfavorable_suspected": false
+    }
+  },
+  "fair_scores": {
+    "applicable_axes": [
+      "completeness",
+      "idea_generation",
+      "peer_review",
+      "alignment",
+      "literature_review",
+      "experiment_analysis"
+    ],
+    "skipped_axes": [],
+    "fair_mean_0_1": 0.5911,
+    "note": "fair_mean_0_1 averages only applicable axes; optional peer review and framework-inapplicable literature are excluded from the denominator."
+  },
+  "evals_root": "~/ai_scientist_evals",
+  "claims_cache": "~/ai_scientist_evals/FSE-2025-011_efficient_compiler_auto_tuning_for_optim/original_claims.json",
+  "solution_space_cache": "~/ai_scientist_evals/FSE-2025-011_efficient_compiler_auto_tuning_for_optim/solution_space.json"
+}

@@ -1,0 +1,1202 @@
+{
+  "generated_at": "2026-08-21T07:50:15",
+  "run_dir": "~/ai_scientist_inputs/ASE-2025-005_automated_conformance_test_generation_fo/workspace/researchclaw_2026-07-29_13-08-17",
+  "task_dir": "~/ai_scientist_inputs/ASE-2025-005_automated_conformance_test_generation_fo",
+  "framework": "researchclaw",
+  "fairness_audit": [
+    {
+      "axis": "completeness",
+      "was_unfair": "Required both paper.tex AND paper.pdf; any tool missing one failed equally.",
+      "fix": "Paper gate: PDF=1.0; TeX-only=0.5; ``complete`` requires PDF."
+    },
+    {
+      "axis": "completeness",
+      "was_unfair": "``results`` counted stub/seed JSON (dataset_candidate/metrics.json).",
+      "fix": "``results`` requires substantive numeric results via results_normalize."
+    },
+    {
+      "axis": "experiment_success",
+      "was_unfair": "Only metrics.json; ignored results.json / experiment_results.txt.",
+      "fix": "Framework-ordered result candidates + normalized loaders."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Penalized tools with no bib; airesearcher has no workspace references.",
+      "fix": "literature_applicable=false → status not_applicable; excluded from fair aggregate."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "related_work.json subset as gold made recall hard to interpret.",
+      "fix": "Coverage gold is original paper REFERENCES from mineru; related_work only enriches metadata/fallback."
+    },
+    {
+      "axis": "peer_review",
+      "was_unfair": "Missing Stanford report looked like evaluation failure.",
+      "fix": "status not_provided; optional axis, never counts as tool failure."
+    },
+    {
+      "axis": "paths/find_results",
+      "was_unfair": "Picked downloads/** and sandbox noise (e.g. airesearcher LLVM tree).",
+      "fix": "Exclude downloads/, seeds/, dataset_candidate/, sandbox junk paths."
+    },
+    {
+      "axis": "paths/framework_noise",
+      "was_unfair": "DeepScientist .deepscientist_npm / runtime / skills templates counted as code/paper/results.",
+      "fix": "FRAMEWORK_NOISE_DIRS+markers; quest worktree + eval_output results; paper md drafts; reject template tex."
+    },
+    {
+      "axis": "paths/paper_tex",
+      "was_unfair": "tiny_scientist / ACL runs store paper under latex/*.tex; evaluator only looked at paper/main.tex.",
+      "fix": "latex/**/*.tex with substantive-body heuristic; find_paper_document uses same rules."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Entire custom.bib (300+ anthology entries) verified when paper had zero \\cite commands.",
+      "fix": "collect_agent_references filters bib to in-text cite keys; skips uncited bulk bib (>40 entries)."
+    },
+    {
+      "axis": "paths/ai_scientist_summaries",
+      "was_unfair": "AI Scientist can persist substantive results and paper-like drafts in *_summary.json logs rather than paper/main.tex or results/**/*.json.",
+      "fix": "Treat draft_summary/research_summary as weak paper documents and summary JSONs as result candidates."
+    },
+    {
+      "axis": "idea_generation",
+      "was_unfair": "plan.md/todos.md weak proxies scored same as structured idea.json.",
+      "fix": "Framework idea_priority tried first; missing idea → not_applicable where appropriate."
+    }
+  ],
+  "axes": [
+    "alignment",
+    "completeness",
+    "experiment_analysis",
+    "idea_generation",
+    "literature_review",
+    "peer_review"
+  ],
+  "results": {
+    "completeness": {
+      "framework": "researchclaw",
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-005_automated_conformance_test_generation_fo/workspace/researchclaw_2026-07-29_13-08-17",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-005_automated_conformance_test_generation_fo",
+      "complete": false,
+      "required_score": 0.5,
+      "bonus_score": 0.09,
+      "overall_score": 0.4,
+      "missing": [
+        "results",
+        "paper"
+      ],
+      "required": {
+        "idea": {
+          "path": "stage-08/hypotheses.md",
+          "bytes": 6142,
+          "via": "candidate"
+        },
+        "code": {
+          "count": 12,
+          "files": [
+            {
+              "path": "stage-10/agent_runs/attempt_001/data.py",
+              "bytes": 4467,
+              "via": "glob"
+            },
+            {
+              "path": "stage-10/agent_runs/attempt_001/main.py",
+              "bytes": 1352,
+              "via": "glob"
+            },
+            {
+              "path": "stage-10/agent_runs/attempt_001/methods.py",
+              "bytes": 8210,
+              "via": "glob"
+            },
+            {
+              "path": "stage-10/agent_sandbox/_docker_project_1/data.py",
+              "bytes": 4467,
+              "via": "glob"
+            },
+            {
+              "path": "stage-10/agent_sandbox/_docker_project_1/experiment_harness.py",
+              "bytes": 4239,
+              "via": "glob"
+            },
+            {
+              "path": "stage-10/agent_sandbox/_docker_project_1/main.py",
+              "bytes": 1352,
+              "via": "glob"
+            },
+            {
+              "path": "stage-10/agent_sandbox/_docker_project_1/methods.py",
+              "bytes": 8210,
+              "via": "glob"
+            },
+            {
+              "path": "stage-10/experiment/config.py",
+              "bytes": 1530,
+              "via": "glob"
+            },
+            {
+              "path": "stage-10/experiment/data.py",
+              "bytes": 7716,
+              "via": "glob"
+            },
+            {
+              "path": "stage-10/experiment/experiment_config.py",
+              "bytes": 1530,
+              "via": "glob"
+            },
+            {
+              "path": "stage-10/experiment/main.py",
+              "bytes": 5602,
+              "via": "glob"
+            },
+            {
+              "path": "stage-10/experiment/methods.py",
+              "bytes": 9023,
+              "via": "glob"
+            }
+          ]
+        },
+        "results": {
+          "substantive": false,
+          "normalized_path": null,
+          "numeric_leaf_count": 0,
+          "discovered_files": [
+            {
+              "path": "stage-12/runs/run-1.json",
+              "bytes": 3268,
+              "via": "glob"
+            }
+          ],
+          "metrics_keys_sample": []
+        },
+        "paper": {
+          "tex": null,
+          "pdf": null,
+          "md": null,
+          "json": null,
+          "status": "missing",
+          "score": 0.0
+        }
+      },
+      "bonus": {
+        "experiment_plan": {
+          "path": "stage-09/exp_plan.yaml",
+          "bytes": 930,
+          "via": "candidate"
+        },
+        "experiment_log": {
+          "path": "researchclaw_run.log",
+          "bytes": 7138,
+          "via": "glob"
+        },
+        "review": null,
+        "readme": null,
+        "narrative": null,
+        "bib": {
+          "path": "stage-04/references.bib",
+          "bytes": 4349,
+          "via": "glob"
+        }
+      },
+      "manifest_status": null,
+      "gate_scores": {
+        "idea": 1.0,
+        "code": 1.0,
+        "results": 0.0,
+        "paper": 0.0
+      },
+      "fairness": {
+        "gates": [
+          "idea",
+          "code",
+          "results",
+          "paper"
+        ],
+        "paper_gate_rule": "PDF=1.0; TeX-only/md_only/json_only=0.5; complete requires PDF",
+        "results_gate_rule": "substantive numeric results via framework-aware normalize_results",
+        "audit_ref": "framework_profile.FAIRNESS_AUDIT"
+      },
+      "notes": [
+        "Required: idea, code, substantive results, paper (PDF full; TeX/markdown/JSON draft half).",
+        "Stub/seed metrics (e.g. dataset_candidate/metrics.json) do not satisfy results.",
+        "Framework noise (.deepscientist_npm, skills/templates, runtime) is excluded from code/results/paper.",
+        "Manifest status is informational; disk presence is authoritative."
+      ]
+    },
+    "idea_generation": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-005_automated_conformance_test_generation_fo/workspace/researchclaw_2026-07-29_13-08-17",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-005_automated_conformance_test_generation_fo",
+      "idea_path": "~/ai_scientist_inputs/ASE-2025-005_automated_conformance_test_generation_fo/workspace/researchclaw_2026-07-29_13-08-17/stage-08/hypotheses.md",
+      "status": "ok",
+      "dimensions": {
+        "novelty": {
+          "score": 4.0,
+          "justification": "The core method of spec-driven trap targeting via extracted type checker and Datalog is a non-obvious link between formal specification (R7) and grammar-based fuzzing (R12), yielding a 1+1>2 effect. No Solution Space entry combines mechanized spec extraction with Datalog-guided generation for semantic corner-case testing.",
+          "rubric": "Novel Combo / Cross-domain: spots a non-obvious link across areas and cleverly imports an existing method from another domain to address the current pain point, yielding a 1+1>2 effect.",
+          "category": "Novel Combo",
+          "nearest_solution_space_ids": [
+            "R7",
+            "R12",
+            "R4"
+          ],
+          "differentiation": "Proposes to automatically derive a type checker from Coq mechanization and use Datalog constraint solving with goal predicates to generate tests targeting specific traps, a combination not present in existing Wasm fuzzers (R4, R5, R6) or spec tools (R7)."
+        },
+        "feasibility": {
+          "score": 2.0,
+          "justification": "Requires building a complex pipeline: semi-automatic Coq extraction of a type checker, Datalog encoding of validation rules, integration with a solver, and coupling with a fuzzer. The Coq-to-Datalog workflow is non-trivial and the 30-minute scaling constraint for Datalog proof search is uncertain. This represents an extreme engineering barrier, not doable with simple scripting.",
+          "rubric": "Extreme engineering barrier: requires building complex low-level tooling from scratch (custom compiler plugins, new vulnerability execution sandboxes), or an extremely heavy experimental pipeline with multi-month development."
+        },
+        "clarity": {
+          "score": 4.0,
+          "justification": "Hypotheses are well-structured with measurable predictions, failure conditions, and explicit time/CPU budgets. The plan is concrete enough to be turned into a proposal, though some technical details (e.g., exact Coq extraction method, Datalog encoding specifics) are underspecified.",
+          "rubric": "Clear and concrete: steps are explicit with a reasonable, specific experiment design (baseline tools, metric definitions); can be turned into a solid proposal."
+        }
+      },
+      "overall_score": 3.0,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "novelty",
+        "feasibility",
+        "clarity"
+      ],
+      "solution_space": {
+        "status": "ok",
+        "paper_count": 15,
+        "entry_count": 15,
+        "cache_hit": true,
+        "source_file": "~/ai_scientist_inputs/ASE-2025-005_automated_conformance_test_generation_fo/mineru_sections.json",
+        "stats": {
+          "papers": 15,
+          "extracted": 15,
+          "usable_abstracts": 10,
+          "citation_meta_abstracts": 0,
+          "missing_abstracts": 5,
+          "mineru_titles": 15,
+          "related_work_titles": 12,
+          "abstracts_attached": 10,
+          "related_work_extras": 0,
+          "batches": 1
+        },
+        "error": null
+      },
+      "notes": [
+        "Scores the intermediate idea artifact (not the final paper).",
+        "Dimensions: novelty, feasibility, clarity (each 1-5). Excitement removed.",
+        "Novelty is scored against a Solution Space built from mineru REFERENCES titles (+ related_work.json abstracts when matched)."
+      ],
+      "idea_via": "candidate",
+      "idea_relative": "stage-08/hypotheses.md",
+      "summary": "The idea proposes a novel combination of mechanized specification extraction and Datalog-guided test generation to target semantic traps in WebAssembly engines, augmented by mutation fuzzing and feature-ignorant generation. While the approach is clever and clearly articulated, the heavy engineering burden of deriving a type checker from Coq and scaling Datalog solving makes feasibility a major concern, pulling the overall score down.",
+      "strengths": [
+        "Novel integration of formal specification with constraint-based test generation for targeted trap discovery.",
+        "Clear, falsifiable hypotheses with concrete metrics and failure conditions.",
+        "Addresses a real gap in automated conformance testing for evolving language specifications."
+      ],
+      "weaknesses": [
+        "High engineering complexity: Coq extraction and Datalog solver integration are non-trivial and may exceed practical development timelines.",
+        "Feasibility of Datalog proof search within the 30-minute budget is uncertain, risking rejection of the core hypothesis.",
+        "Reliance on a small instruction subset may limit generalizability to full WebAssembly with all proposals."
+      ],
+      "llm_meta": {
+        "model": "deepseek-v4-pro",
+        "base_url": "https://api-sg.umodelverse.ai/v1",
+        "usage": {
+          "completion_tokens": 2395,
+          "completion_tokens_details": {
+            "reasoning_tokens": 1798
+          },
+          "prompt_tokens": 4099,
+          "prompt_tokens_details": null,
+          "reasoning_tokens": 1798,
+          "total_tokens": 6494
+        },
+        "attempt": 0
+      }
+    },
+    "peer_review": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-005_automated_conformance_test_generation_fo/workspace/researchclaw_2026-07-29_13-08-17",
+      "review_report": null,
+      "paper_pdf": null,
+      "paper_tex": null,
+      "status": "not_provided",
+      "dimensions": {},
+      "overall_score": null,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "soundness",
+        "significance",
+        "novelty",
+        "presentation",
+        "credibility"
+      ],
+      "notes": [
+        "Stanford Agentic Reviewer (paperreview.ai): manual download to artifacts/peer_review/stanford_apr.md, or pass --auto-paperreview.",
+        "Dimensions: soundness, significance, novelty, presentation, credibility (each 1-5)."
+      ],
+      "paperreview": {
+        "status": "skipped",
+        "reason": "no_pdf"
+      },
+      "optional": true,
+      "hint": "Optional external review (Stanford APR). Upload paper/main.pdf to https://paperreview.ai/ , save review to ~/ai_scientist_inputs/ASE-2025-005_automated_conformance_test_generation_fo/workspace/researchclaw_2026-07-29_13-08-17/artifacts/peer_review/stanford_apr.md"
+    },
+    "alignment": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-005_automated_conformance_test_generation_fo/workspace/researchclaw_2026-07-29_13-08-17",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-005_automated_conformance_test_generation_fo",
+      "status": "missing_agent_paper_or_metrics",
+      "original": {
+        "status": "ok",
+        "task_dir": "~/ai_scientist_inputs/ASE-2025-005_automated_conformance_test_generation_fo",
+        "paper_title": "WEST: Specification-Based Test Generation for WebAssembly",
+        "task_id": "ASE-2025-005",
+        "selection": {
+          "num_blocks": 10,
+          "total_chars": 31998,
+          "inferred_roles": {
+            "abstract": 1,
+            "introduction": 1,
+            "experiment": 6,
+            "method": 1,
+            "conclusion": 1
+          },
+          "mineru_raw_keys": {
+            "field:abstract": 1,
+            "field:introduction": 1,
+            "field:experiment": 1,
+            "other": 6,
+            "conclusion": 1
+          },
+          "infer_reasons": {
+            "top_level_field": 3,
+            "body": 1,
+            "inherited": 1,
+            "body_override": 3,
+            "title": 2
+          },
+          "rescued_from_other": 6,
+          "note": "mineru key is unreliable; blocks are selected by title/body/inheritance. rescued_from_other counts sections labeled other but treated as typed roles."
+        },
+        "claims": [
+          {
+            "id": "C1",
+            "statement": "WEST reveals 16 bugs across four Wasm engine implementations, 11 of which are confirmed and fixed.",
+            "direction": "improves",
+            "metric_names": [
+              "bugs_found"
+            ],
+            "evidence_quote": "it reveals 16 bugs across four Wasm engine implementations, 11 of which are confirmed and fixed.",
+            "confidence": 1.0
+          },
+          {
+            "id": "C2",
+            "statement": "WEST generates valid tests with around 90% validity rate across all engines.",
+            "direction": "neutral",
+            "metric_names": [
+              "valid_rate"
+            ],
+            "evidence_quote": "around 90% of the tests generated by WEST are valid across all engines.",
+            "confidence": 1.0
+          },
+          {
+            "id": "C3",
+            "statement": "WEST achieves specification coverage comparable to the official hand-written test suite, with a coverage ratio exceeding 98% for all engines.",
+            "direction": "no_difference",
+            "metric_names": [
+              "coverage_ratio"
+            ],
+            "evidence_quote": "The ratio exceeds 98% for all engines, demonstrating that the coverage of the automatically generated tests is comparable to that of the official hand-written test suite across all engines.",
+            "confidence": 1.0
+          },
+          {
+            "id": "C4",
+            "statement": "WEST requires minimal manual adaptation to target different versions or subsets of the Wasm specification.",
+            "direction": "improves",
+            "metric_names": [],
+            "evidence_quote": "Our approach requires minimal manual adaptation to target different versions or subsets of the Wasm specification",
+            "confidence": 0.9
+          }
+        ],
+        "metrics": [
+          {
+            "name": "bugs_found",
+            "value": 16,
+            "unit": "count",
+            "higher_is_better": true,
+            "setting": "across four Wasm engines (SpiderMonkey, JavaScriptCore, Wasmtime, Wasmer)",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "we found and reported 16 unique bugs from four of five target engines",
+            "confidence": 1.0
+          },
+          {
+            "name": "valid_rate",
+            "value": 91.16,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "V8 engine, Wasm 3.0 draft specification, 24h generation",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "V8 ... 91.16%",
+            "confidence": 1.0
+          },
+          {
+            "name": "valid_rate",
+            "value": 91.01,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "SpiderMonkey engine, Wasm 3.0 draft specification, 24h generation",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "SpiderMonkey ... 91.01%",
+            "confidence": 1.0
+          },
+          {
+            "name": "valid_rate",
+            "value": 91.8,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "JavaScriptCore engine, Wasm 3.0 except multi-memory and memory64, 24h generation",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "JavaScriptCore ... 91.80%",
+            "confidence": 1.0
+          },
+          {
+            "name": "valid_rate",
+            "value": 90.91,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "Wasmtime engine, Wasm 3.0 except exception handling, 24h generation",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "Wasmtime ... 90.91%",
+            "confidence": 1.0
+          },
+          {
+            "name": "valid_rate",
+            "value": 89.95,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "Wasmer engine, Wasm 2.0, 24h generation",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "Wasmer ... 89.95%",
+            "confidence": 1.0
+          },
+          {
+            "name": "coverage_ratio",
+            "value": 98.76,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "V8 engine, AL instruction coverage vs official test suite",
+            "is_sota_or_best": false,
+            "baseline_name": "official test suite",
+            "baseline_value": 100.0,
+            "evidence_quote": "V8 ... 98.76%",
+            "confidence": 1.0
+          },
+          {
+            "name": "coverage_ratio",
+            "value": 98.19,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "SpiderMonkey engine, AL instruction coverage vs official test suite",
+            "is_sota_or_best": false,
+            "baseline_name": "official test suite",
+            "baseline_value": 100.0,
+            "evidence_quote": "SpiderMonkey ... 98.19%",
+            "confidence": 1.0
+          },
+          {
+            "name": "coverage_ratio",
+            "value": 99.43,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "JavaScriptCore engine, AL instruction coverage vs official test suite",
+            "is_sota_or_best": false,
+            "baseline_name": "official test suite",
+            "baseline_value": 100.0,
+            "evidence_quote": "JavaScriptCore ... 99.43%",
+            "confidence": 1.0
+          },
+          {
+            "name": "coverage_ratio",
+            "value": 98.91,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "Wasmtime engine, AL instruction coverage vs official test suite",
+            "is_sota_or_best": false,
+            "baseline_name": "official test suite",
+            "baseline_value": 100.0,
+            "evidence_quote": "Wasmtime ... 98.91%",
+            "confidence": 1.0
+          },
+          {
+            "name": "coverage_ratio",
+            "value": 99.93,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "Wasmer engine, AL instruction coverage vs official test suite",
+            "is_sota_or_best": false,
+            "baseline_name": "official test suite",
+            "baseline_value": 100.0,
+            "evidence_quote": "Wasmer ... 99.93%",
+            "confidence": 1.0
+          }
+        ],
+        "overall_conclusion": "WEST is a specification-based test generation framework that automatically produces valid and diverse Wasm test cases from mechanized specifications. It revealed 16 bugs (11 fixed) across four engines, achieved ~90% validity, and coverage comparable to the official test suite, demonstrating its effectiveness and adaptability.",
+        "comparable_notes": "Experiments used engine-specific specifications derived from Wasm 3.0 by removing unsupported features. Tests were generated for 24 hours with a 3-second timeout per test. Validity was checked using the official Wasm reference interpreter. Coverage was measured via SpecTec's indirect interpreter at the instruction level. For browser engines, tests were translated to JavaScript harnesses. These details are important for fair comparison.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 3201,
+            "completion_tokens_details": {
+              "reasoning_tokens": 1398
+            },
+            "prompt_tokens": 7757,
+            "prompt_tokens_details": null,
+            "reasoning_tokens": 1398,
+            "total_tokens": 10958
+          },
+          "attempt": 0
+        },
+        "cache_hit": true
+      },
+      "agent": {
+        "status": "missing_agent_paper_or_metrics",
+        "run_dir": "~/ai_scientist_inputs/ASE-2025-005_automated_conformance_test_generation_fo/workspace/researchclaw_2026-07-29_13-08-17"
+      }
+    },
+    "experiment_analysis": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-005_automated_conformance_test_generation_fo/workspace/researchclaw_2026-07-29_13-08-17",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-005_automated_conformance_test_generation_fo",
+      "status": "ok",
+      "metrics_path": null,
+      "experiment_success": {
+        "status": "failed_or_incomplete",
+        "success": false,
+        "metrics_path": null,
+        "absolute_metrics_path": null,
+        "checks": {
+          "has_results_file": false,
+          "non_stub": false,
+          "numeric_leaf_count": 0,
+          "min_numeric_ok": false
+        },
+        "manifest_hints": {
+          "status": null,
+          "returncode": null,
+          "benchmark_complete": null,
+          "artifacts_metrics_flag": false
+        },
+        "warnings": [],
+        "suspicious_values": [],
+        "note": "success=true requires substantive results (framework-aware path) with >=3 numeric leaves. Supports metrics.json, results.json, experiment_results.txt, etc. Manifest returncode/benchmark_complete are soft warnings only."
+      },
+      "idea_code_consistency": {
+        "status": "ok",
+        "idea_path": "stage-08/hypotheses.md",
+        "code_files": [
+          "stage-10/experiment/main.py"
+        ],
+        "score_scale": "1-5",
+        "score": 3.0,
+        "label": "partial",
+        "justification": "The code implements a general framework for generating WebAssembly modules with various methods (WasmSmith, Datalog with feature subsets, mutation fuzzing) and evaluating them, which aligns with the theme of comparing generation strategies. However, it fails to implement the specific trap-targeting mechanism of Hypothesis 1, uses synthetic seeds instead of real-world binaries for Hypothesis 2, and does not conduct the time-bounded fuzzing campaigns or measure the specific outcomes (unique bugs, trap rates) required by the hypotheses. The evaluation appears to be a static snapshot rather than a dynamic fuzzing process.",
+        "matched_elements": [
+          "Use of Datalog-based generation",
+          "Comparison of mutation fuzzing with different seeds",
+          "Feature-ignorant vs. pre-pruned generation"
+        ],
+        "missing_or_divergent_elements": [
+          "No trap-targeting goal predicates in Datalog (Hypothesis 1)",
+          "No real-world binary seed corpus for mutation fuzzer (Hypothesis 2)",
+          "No time-budgeted fuzzing campaigns (30 min, two weeks, 10,000 CPU-hours)",
+          "No measurement of unique engine crashes or trap-triggering rates",
+          "No explicit test of Hypothesis 3's bug-finding prediction"
+        ],
+        "rubric": "Partial alignment: main direction matches, but important components from the idea (baselines, metrics, protocol, subjects) are dropped or altered without clear mapping.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 1896,
+            "completion_tokens_details": {
+              "reasoning_tokens": 1604
+            },
+            "prompt_tokens": 2553,
+            "prompt_tokens_details": null,
+            "reasoning_tokens": 1604,
+            "total_tokens": 4449
+          },
+          "attempt": 0
+        }
+      },
+      "setup_coverage": {
+        "status": "ok",
+        "overall_coverage": 1.0,
+        "datasets": {
+          "gold_count": 2,
+          "hit_count": 2,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "Mechanized Wasm Specification (SpecTec format)",
+            "Engine-specific specification subsets"
+          ],
+          "misses": []
+        },
+        "baselines": {
+          "gold_count": 1,
+          "hit_count": 1,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "Official Wasm conformance test suite"
+          ],
+          "misses": []
+        },
+        "metrics": {
+          "gold_count": 3,
+          "hit_count": 3,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "Bugs found",
+            "Test validity rate",
+            "Specification coverage"
+          ],
+          "misses": []
+        },
+        "agent_protocol": {},
+        "gold_protocol": {
+          "timeout_hours": 24
+        },
+        "dataset_dirs": [
+          "dataset_candidate"
+        ],
+        "flags": {
+          "weaker_baseline_suspected": false,
+          "weak_protocol": [],
+          "synthetic_data": "synthetic_allowed_by_task",
+          "gold_allows_synthetic": true
+        },
+        "gold_sources": [
+          "~/ai_scientist_inputs/ASE-2025-005_automated_conformance_test_generation_fo/task.md",
+          "~/ai_scientist_inputs/ASE-2025-005_automated_conformance_test_generation_fo/metadata.json"
+        ],
+        "note": "Coverage is name/alias matching against task.md Datasets/Baselines/Metrics. weak_protocol flags large reductions in trials/timeout vs Constraints. Synthetic corpora are not penalized when the task itself requires synthesis."
+      },
+      "ablation_significance": {
+        "status": "ok",
+        "idea_path": "stage-08/hypotheses.md",
+        "significance_signals_rule_based": {
+          "signals": [],
+          "artifact_paths": [],
+          "has_any_significance_artifact": false
+        },
+        "evidence_format": null,
+        "study_type": "empirical_comparison",
+        "components": [
+          {
+            "name": "DatalogGenerator (full)",
+            "role": "proposed generator (Hypothesis 1, 3)",
+            "ablation_expected": false,
+            "significance_expected": true,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "N/A",
+            "significance_status": "missing",
+            "significance_evidence": "No statistical tests found in provided evidence (metrics.json empty, no code for tests)."
+          },
+          {
+            "name": "RandomGrammarGeneratorFiltering",
+            "role": "baseline generator (Hypothesis 1)",
+            "ablation_expected": false,
+            "significance_expected": true,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "N/A",
+            "significance_status": "missing",
+            "significance_evidence": "No statistical tests found in provided evidence (metrics.json empty, no code for tests)."
+          },
+          {
+            "name": "MutationFuzzer (Datalog-seeded)",
+            "role": "proposed augmented fuzzer (Hypothesis 2)",
+            "ablation_expected": false,
+            "significance_expected": true,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "N/A",
+            "significance_status": "missing",
+            "significance_evidence": "No statistical tests found in provided evidence (metrics.json empty, no code for tests)."
+          },
+          {
+            "name": "MutationFuzzer (Smith-seeded)",
+            "role": "baseline pure mutation fuzzer (Hypothesis 2)",
+            "ablation_expected": false,
+            "significance_expected": true,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "N/A",
+            "significance_status": "missing",
+            "significance_evidence": "No statistical tests found in provided evidence (metrics.json empty, no code for tests)."
+          },
+          {
+            "name": "DatalogGenerator (minimal)",
+            "role": "pre-pruned generator (Hypothesis 3)",
+            "ablation_expected": false,
+            "significance_expected": true,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "N/A",
+            "significance_status": "missing",
+            "significance_evidence": "No statistical tests found in provided evidence (metrics.json empty, no code for tests)."
+          },
+          {
+            "name": "WasmSmithGenerator",
+            "role": "baseline generator used for seeding (Hypothesis 2)",
+            "ablation_expected": false,
+            "significance_expected": true,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "N/A",
+            "significance_status": "missing",
+            "significance_evidence": "No statistical tests found in provided evidence (metrics.json empty, no code for tests)."
+          }
+        ],
+        "ablation_coverage_score": 1.0,
+        "overall_ablation_ok": true,
+        "overall_significance_ok": false,
+        "summary": "The study is an empirical comparison of several generators and fuzzers. No ablations are expected as the methods are compared as wholes. Significance testing is expected given the quantitative predictions, but no evidence of statistical tests is provided in the experiment evidence (metrics.json is empty). Thus, overall significance is not satisfied.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 2967,
+            "completion_tokens_details": {
+              "reasoning_tokens": 2152
+            },
+            "prompt_tokens": 2483,
+            "prompt_tokens_details": null,
+            "reasoning_tokens": 2152,
+            "total_tokens": 5450
+          },
+          "attempt": 0
+        }
+      },
+      "results_paper_consistency": {
+        "status": "missing_metrics"
+      },
+      "scores": {
+        "experiment_success": false,
+        "idea_code_score": 3.0,
+        "setup_coverage": 1.0,
+        "ablation_coverage_score": 1.0,
+        "overall_ablation_ok": true,
+        "overall_significance_ok": false,
+        "results_paper_score": null,
+        "hiding_unfavorable_suspected": null
+      },
+      "notes": [
+        "Axes 1,2,3,4,6 in experiment_analysis (figures excluded).",
+        "setup_coverage matches task.md Datasets/Baselines/Metrics; weak_protocol flags reductions vs Constraints.",
+        "Axis 6: final normalized results vs paper; interim run logs not used as ground truth."
+      ]
+    },
+    "literature_review": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-005_automated_conformance_test_generation_fo/workspace/researchclaw_2026-07-29_13-08-17",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-005_automated_conformance_test_generation_fo",
+      "status": "ok",
+      "as_of_year": 2026,
+      "agent_ref_count": 15,
+      "sources": [
+        {
+          "path": "~/ai_scientist_inputs/ASE-2025-005_automated_conformance_test_generation_fo/workspace/researchclaw_2026-07-29_13-08-17/stage-05/shortlist.jsonl",
+          "kind": "shortlist"
+        },
+        {
+          "path": "~/ai_scientist_inputs/ASE-2025-005_automated_conformance_test_generation_fo/workspace/researchclaw_2026-07-29_13-08-17/stage-04/references.bib",
+          "kind": "bib"
+        }
+      ],
+      "collection_audit": {
+        "cited_keys_count": 0,
+        "filter_mode": "non_bib_sources",
+        "bib_total_before_filter": 15,
+        "bib_after_filter": 0,
+        "uncited_bib_skipped": 15,
+        "agent_ref_count": 15
+      },
+      "fabrication": {
+        "status": "ok",
+        "scholarly_count": 15,
+        "verified_count": 12,
+        "fake_count": 0,
+        "lookup_failed_count": 3,
+        "non_paper_count": 0,
+        "fabrication_rate": 0.0,
+        "items": [
+          {
+            "title": "Finding and understanding bugs in C compilers",
+            "doi": "10.1145/1993498.1993532",
+            "arxiv_id": "",
+            "year": 2011,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated.",
+              "Saw 1 conclusive miss(es) mixed with 2 API error(s)."
+            ],
+            "cite_key": "yang2011finding",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "What you always wanted to know about Datalog (and never dared to ask)",
+            "doi": "10.1109/69.43410",
+            "arxiv_id": "",
+            "year": 1989,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "What you Always Wanted to Know About Datalog (And Never Dared to Ask)",
+            "resolved_year": 1989,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "ceri1989what",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Bringing the web up to speed with WebAssembly",
+            "doi": "10.1145/3062341.3062363",
+            "arxiv_id": "",
+            "year": 2017,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Bringing the web up to speed with WebAssembly",
+            "resolved_year": 2017,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "haas2017bringing",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "An execution model for serverless functions at the edge",
+            "doi": "10.1145/3302505.3310084",
+            "arxiv_id": "",
+            "year": 2019,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "An execution model for serverless functions at the edge",
+            "resolved_year": 2019,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "hall2019execution",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Grammar-based whitebox fuzzing",
+            "doi": "10.1145/1379022.1375607",
+            "arxiv_id": "",
+            "year": 2008,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Grammar-based whitebox fuzzing",
+            "resolved_year": 2008,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "godefroid2008grammarbased",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Two Mechanisations of WebAssembly 1.0",
+            "doi": "10.1007/978-3-030-90870-6_4",
+            "arxiv_id": "",
+            "year": 2021,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Two Mechanisations of WebAssembly 1.0",
+            "resolved_year": 2021,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "watt2021mechanisations",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Bringing the WebAssembly Standard up to Speed with SpecTec",
+            "doi": "10.1145/3656440",
+            "arxiv_id": "",
+            "year": 2024,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Bringing the WebAssembly Standard up to Speed with SpecTec",
+            "resolved_year": 2024,
+            "notes": [],
+            "cache_hit": true,
+            "cite_key": "youn2024bringing",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Aliasing Restrictions of C11 Formalized in Coq",
+            "doi": "10.1007/978-3-319-03545-1_4",
+            "arxiv_id": "",
+            "year": 2013,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Aliasing Restrictions of C11 Formalized in Coq",
+            "resolved_year": 2013,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "krebbers2013aliasing",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Potential of WebAssembly for Embedded Systems",
+            "doi": "10.1109/meco55406.2022.9797106",
+            "arxiv_id": "2405.09213",
+            "year": 2022,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Potential of WebAssembly for Embedded Systems",
+            "resolved_year": 2022,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "wallentowitz2022potential",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "WADIFF: A Differential Testing Framework for WebAssembly Runtimes",
+            "doi": "10.1109/ase56229.2023.00188",
+            "arxiv_id": "",
+            "year": 2023,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated.",
+              "Saw 1 conclusive miss(es) mixed with 2 API error(s)."
+            ],
+            "cite_key": "zhou2023wadiff",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "WasmRef-Isabelle: A Verified Monadic Interpreter and Industrial Fuzzing Oracle for WebAssembly",
+            "doi": "10.1145/3591224",
+            "arxiv_id": "",
+            "year": 2023,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "WasmRef-Isabelle: A Verified Monadic Interpreter and Industrial Fuzzing Oracle for WebAssembly",
+            "resolved_year": 2023,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "watt2023wasmrefisabelle",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Wapplique: Testing WebAssembly Runtime via Execution Context-Aware Bytecode Mutation",
+            "doi": "10.1145/3650212.3680340",
+            "arxiv_id": "",
+            "year": 2024,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Wapplique: Testing WebAssembly Runtime via Execution Context-Aware Bytecode Mutation",
+            "resolved_year": 2024,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "zhao2024wapplique",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "WASMaker: Differential Testing of WebAssembly Runtimes via Semantic-Aware Binary Generation",
+            "doi": "10.1145/3650212.3680358",
+            "arxiv_id": "",
+            "year": 2024,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "WASMaker: Differential Testing of WebAssembly Runtimes via Semantic-Aware Binary Generation",
+            "resolved_year": 2024,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "cao2024wasmaker",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "JISET",
+            "doi": "10.1145/3324884.3416632",
+            "arxiv_id": "",
+            "year": 2020,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated.",
+              "Saw 1 conclusive miss(es) mixed with 2 API error(s)."
+            ],
+            "cite_key": "park2020jiset",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "RGFuzz: Rule-Guided Fuzzer for WebAssembly Runtimes",
+            "doi": "10.1109/sp61157.2025.00003",
+            "arxiv_id": "",
+            "year": 2025,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "RGFuzz: Rule-Guided Fuzzer for WebAssembly Runtimes",
+            "resolved_year": 2025,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "park2025rgfuzz",
+            "source_kind": "shortlist"
+          }
+        ],
+        "cache_path": "~/ai_scientist_evals/ASE-2025-005_automated_conformance_test_generation_fo/reference_verify_cache.json",
+        "override_path": "~/ai_scientist_evals/ASE-2025-005_automated_conformance_test_generation_fo/reference_verify_overrides.json",
+        "note": "fabrication_rate = fake / (verified + fake); lookup_failed (API errors) excluded. GitHub/docs/tool URLs are non_paper and excluded from the rate. To manually correct a false negative, edit reference_verify_overrides.json (key=normalized title / doi / cite_key; value=\"verified\" or a result dict), then re-run."
+      },
+      "coverage": {
+        "status": "ok",
+        "gold_source": "~/ai_scientist_inputs/ASE-2025-005_automated_conformance_test_generation_fo/mineru_sections.json",
+        "gold_count": 15,
+        "gold_is_original_paper_references": true,
+        "gold_is_openalex_subset": false,
+        "agent_count": 15,
+        "intersection_size": 12,
+        "recall": 0.8,
+        "precision": 0.8,
+        "matched_gold_keys": [
+          "cao2024wasmaker",
+          "ceri1989what",
+          "godefroid2008grammarbased",
+          "haas2017bringing",
+          "hall2019execution",
+          "krebbers2013aliasing",
+          "wallentowitz2022potential",
+          "watt2021mechanisations",
+          "watt2023wasmrefisabelle",
+          "yang2011finding",
+          "youn2024bringing",
+          "zhao2024wapplique"
+        ],
+        "primary_metric": "recall",
+        "note": "Primary metric is recall against the original paper bibliography (titles from mineru_sections.json REFERENCES; related_work.json used only to enrich DOI/year or as fallback if mineru titles are empty). Denominator = |original paper references|. Precision is secondary (agent may cite valid extra papers)."
+      },
+      "recency": {
+        "status": "ok",
+        "dated_count": 15,
+        "unknown_year_count": 0,
+        "year_histogram": {
+          "1989": 1,
+          "2008": 1,
+          "2011": 1,
+          "2013": 1,
+          "2017": 1,
+          "2019": 1,
+          "2020": 1,
+          "2021": 1,
+          "2022": 1,
+          "2023": 2,
+          "2024": 3,
+          "2025": 1
+        },
+        "windows": {
+          "3": {
+            "years": 3,
+            "cutoff_year_inclusive": 2023,
+            "recent_count": 6,
+            "recent_ratio": 0.4
+          },
+          "5": {
+            "years": 5,
+            "cutoff_year_inclusive": 2021,
+            "recent_count": 8,
+            "recent_ratio": 0.5333333333333333
+          }
+        }
+      },
+      "scores": {
+        "fabrication_rate": 0.0,
+        "coverage_recall": 0.8,
+        "coverage_precision": 0.8,
+        "recency_ratio_3y": 0.4,
+        "recency_ratio_5y": 0.5333333333333333
+      }
+    }
+  },
+  "scores": {
+    "completeness": {
+      "complete": false,
+      "overall_score": 0.4,
+      "required_score": 0.5,
+      "bonus_score": 0.09
+    },
+    "peer_review": {
+      "status": "not_provided",
+      "optional": true,
+      "overall_score": null,
+      "score_scale": "1-5",
+      "scoring_method": null
+    },
+    "idea_generation": {
+      "status": "ok",
+      "overall_score": 3.0,
+      "dimensions": {
+        "novelty": 4.0,
+        "feasibility": 2.0,
+        "clarity": 4.0
+      },
+      "novelty_category": "Novel Combo",
+      "solution_space_status": "ok"
+    },
+    "alignment": {
+      "status": "missing_agent_paper_or_metrics",
+      "direction_consistency": null,
+      "overall_alignment_score": null
+    },
+    "literature_review": {
+      "fabrication_rate": 0.0,
+      "coverage_recall": 0.8,
+      "coverage_precision": 0.8,
+      "recency_ratio_3y": 0.4,
+      "recency_ratio_5y": 0.5333333333333333
+    },
+    "experiment_analysis": {
+      "experiment_success": false,
+      "idea_code_score": 3.0,
+      "setup_coverage": 1.0,
+      "ablation_coverage_score": 1.0,
+      "overall_ablation_ok": true,
+      "overall_significance_ok": false,
+      "results_paper_score": null,
+      "hiding_unfavorable_suspected": null
+    }
+  },
+  "fair_scores": {
+    "applicable_axes": [
+      "completeness",
+      "idea_generation",
+      "literature_review",
+      "experiment_analysis"
+    ],
+    "skipped_axes": [
+      {
+        "axis": "peer_review",
+        "reason": "optional_external_review"
+      }
+    ],
+    "fair_mean_0_1": 0.5917,
+    "note": "fair_mean_0_1 averages only applicable axes; optional peer review and framework-inapplicable literature are excluded from the denominator."
+  },
+  "evals_root": "~/ai_scientist_evals",
+  "claims_cache": "~/ai_scientist_evals/ASE-2025-005_automated_conformance_test_generation_fo/original_claims.json",
+  "solution_space_cache": "~/ai_scientist_evals/ASE-2025-005_automated_conformance_test_generation_fo/solution_space.json"
+}

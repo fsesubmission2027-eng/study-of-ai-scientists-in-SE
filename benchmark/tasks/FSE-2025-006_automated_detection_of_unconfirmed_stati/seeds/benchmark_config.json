@@ -1,0 +1,70 @@
+{
+  "forbid_synthetic_pilot": true,
+  "agent_data_note": "Construct a Kaggle notebook corpus that calls common hypothesis-testing / regression functions (scipy.stats / R stats). Store under `dataset_candidate/kaggle_notebooks/`. Do NOT invent fake notebooks or toy CSV-only stand-ins as the primary evaluation corpus.",
+  "required_metrics": [
+    "annotation_count",
+    "unconfirmed_assumption_warning_rate",
+    "potential_misuse_call_site_rate",
+    "significant_misuse_rate",
+    "runtime_overhead_factor"
+  ],
+  "benchmark_rules": [
+    "Construct the evaluation corpus via Kaggle API/CLI: search kernels that reference annotated statistical functions, then filter for (1) real function calls, (2) public datasets, (3) runtime under ~10 minutes, (4) executable without non-trivial errors.",
+    "Store notebooks under `dataset_candidate/kaggle_notebooks/` (Python .ipynb and/or R Markdown .Rmd) with accompanying public data when available.",
+    "Paper scale is 128 notebooks; a reduced subset (e.g., 20–40 notebooks covering the main annotated functions) is acceptable if documented clearly.",
+    "Implement an annotation-driven assumption checker (prob-check style) for at least Python scipy.stats functions; R support is desirable but optional if R runtime/packages are blocked.",
+    "Assumption checks must emit warnings only — do not change the return value of the original statistical function.",
+    "Report: annotation count (RQ1), fraction of calls/call-sites with unconfirmed assumptions (RQ2), significant-misuse rate among hypothesis tests (RQ3), and runtime overhead on synthetic samples.",
+    "If Kaggle credentials are missing (`KAGGLE_CONFIG_DIR` / `/shared/kaggle/kaggle.json`), document the blocker; do not silently switch to fabricated notebooks.",
+    "No GPU required."
+  ],
+  "non_goals": [
+    "Claiming full 128-notebook reproduction without documenting a reduced protocol",
+    "Using private Kaggle datasets",
+    "Altering statistical function outputs instead of warning-only checks",
+    "Treating hand-written toy scripts as a substitute for real notebooks when Kaggle access works"
+  ],
+  "dataset_construction": {
+    "name": "Kaggle Notebook Corpus (statistical functions)",
+    "access": "constructable",
+    "paper_scale": {"notebooks": 128, "annotated_calls": 1102},
+    "recommended_scale": {
+      "minimal": "20 notebooks covering ttest_ind, ttest_1samp, f_oneway, linregress",
+      "medium": "40–60 notebooks across Python scipy.stats (+ R if feasible)",
+      "full": "128 notebooks as in the paper"
+    },
+    "target_functions_python": [
+      "scipy.stats.ttest_1samp",
+      "scipy.stats.ttest_ind",
+      "scipy.stats.ttest_rel",
+      "scipy.stats.f_oneway",
+      "scipy.stats.linregress"
+    ],
+    "target_functions_r": [
+      "t.test",
+      "aov",
+      "lm"
+    ],
+    "assumptions": [
+      "normality",
+      "homoscedasticity / equal variance",
+      "independence",
+      "residual normality (regression)"
+    ],
+    "construction_steps": [
+      "1. Authenticate Kaggle CLI (token at /shared/kaggle/kaggle.json or $KAGGLE_CONFIG_DIR)",
+      "2. Search kernels for each target function name via `kaggle kernels list -s <func>` / Meta Kaggle",
+      "3. Download candidate notebooks + public datasets",
+      "4. Filter: actual call present, public data, runs <10 min, no non-trivial errors",
+      "5. Persist under dataset_candidate/kaggle_notebooks/{python,r}/"
+    ]
+  },
+  "dataset_env": {
+    "KAGGLE_CONFIG_DIR": "/shared/kaggle"
+  },
+  "exclude_from_agent": [
+    "container_setup.sh",
+    "README.md",
+    "benchmark_config.json"
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "required_metrics": [
+    "exact_match_function_level",
+    "success_rate_function_level",
+    "code_bleu"
+  ],
+  "optional_metrics": [
+    "exact_match_cve_level",
+    "success_rate_cve_level",
+    "failure_rate_function_level"
+  ],
+  "definitions": {
+    "exact_match_function_level": "Percentage of generated patches that are character-by-character identical to the human-written target fix at function level (E-M). Higher is better.",
+    "success_rate_function_level": "Percentage of generated patches that are semantically equivalent to the human-written target fix (Succ). Includes exact matches. Higher is better.",
+    "failure_rate_function_level": "Percentage of generated patches not semantically equivalent to the human fix (Fail = 100% - Succ%). Lower is better.",
+    "exact_match_cve_level": "Percentage of CVEs where ALL function-level patches are exact matches. Higher is better.",
+    "success_rate_cve_level": "Percentage of CVEs where ALL function-level patches are successes. Higher is better.",
+    "code_bleu": "Code-aware BLEU score (0-1) for failed patches measuring token-level similarity to the human fix. Higher is better. Use sacrebleu or a CodeBLEU implementation."
+  },
+  "reporting_format": {
+    "note": "Report results in a table with columns: Method | E-M (%) | Succ (%) | Fail (%) | C-B",
+    "example_row": {"method": "GPT-4o", "em_pct": 12.5, "succ_pct": 18.3, "fail_pct": 81.7, "code_bleu": 0.42},
+    "group_by": "Report separately for function-level and CVE-level if both are computed"
+  },
+  "evaluation_script_hint": "Use sacrebleu for BLEU: `pip install sacrebleu`. For CodeBLEU, use https://github.com/microsoft/CodeBLEU or implement the weighted combination of BLEU + AST match + data flow match for C code using tree-sitter."
+}

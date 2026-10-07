@@ -1,0 +1,37 @@
+{
+  "forbid_synthetic_pilot": true,
+  "agent_data_note": "Use mounted JNI subject programs at `dataset_candidate/jnifer-subjects/`. Subjects are OpenJDK 8, aspectj-1.6.9, lucene-4.3.0, tomcat-native-1.2.23, log4j-1.2.16. Build a cross-language (Java↔C/JNI) static analysis; compare against JN-Sum / Native-Scanner style baselines when feasible. Shared mount is read-only.",
+  "required_metrics": [
+    "soundness_recall",
+    "precision",
+    "analysis_time_sec"
+  ],
+  "benchmark_rules": [
+    "Read `dataset_candidate/dataset_paths.json` and `dataset_candidate/jnifer-subjects/`; use env `JNIFER_SUBJECTS_HOME` / per-subject `*_HOME` vars.",
+    "Subjects: openjdk8, aspectj-1.6.9, lucene-4.3.0, tomcat-native-1.2.23, log4j-1.2.16 (paper evaluation set).",
+    "Resolve both Java→C native method calls and C→Java JNI interactions (method calls, object creation, field accesses).",
+    "Primary metrics: soundness/recall vs dynamic or carefully constructed ground truth; precision via sampled manual/oracle checks; wall-clock analysis time.",
+    "Shared mount is read-only. Copy subjects under `project/` before edits, builds, or instrumentation.",
+    "Paper machine used 128GB RAM; if sandbox memory is lower, use a disclosed reduced subset and report it.",
+    "Do not treat Zenodo tool Docker images as the dataset; this mount is subjects-only."
+  ],
+  "non_goals": [
+    "Using only toy JNI snippets as the sole evaluation",
+    "Ignoring C→Java interactions and reporting Java-only analysis",
+    "Silently fabricating ground-truth interaction sets"
+  ],
+  "dataset_env": {
+    "JNIFER_SUBJECTS_HOME": "dataset_candidate/jnifer-subjects",
+    "OPENJDK8_HOME": "dataset_candidate/jnifer-subjects/subjects/openjdk8",
+    "ASPECTJ_HOME": "dataset_candidate/jnifer-subjects/subjects/aspectj-1.6.9",
+    "LUCENE_HOME": "dataset_candidate/jnifer-subjects/subjects/lucene-4.3.0",
+    "TOMCAT_NATIVE_HOME": "dataset_candidate/jnifer-subjects/subjects/tomcat-native-1.2.23",
+    "LOG4J_HOME": "dataset_candidate/jnifer-subjects/subjects/log4j-1.2.16"
+  },
+  "exclude_from_agent": [
+    "container_setup.sh",
+    "README.md",
+    "benchmark_config.json",
+    "requirements.txt"
+  ]
+}

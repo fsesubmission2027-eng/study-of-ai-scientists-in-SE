@@ -1,0 +1,937 @@
+{
+  "run_dir": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/workspace/ai_scientist_2026-07-11_09-18-22",
+  "task_dir": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo",
+  "framework": "ai_scientist",
+  "fairness_audit": [
+    {
+      "axis": "completeness",
+      "was_unfair": "Required both paper.tex AND paper.pdf; any tool missing one failed equally.",
+      "fix": "Paper gate: PDF=1.0; TeX-only=0.5; ``complete`` requires PDF."
+    },
+    {
+      "axis": "completeness",
+      "was_unfair": "``results`` counted stub/seed JSON (dataset_candidate/metrics.json).",
+      "fix": "``results`` requires substantive numeric results via results_normalize."
+    },
+    {
+      "axis": "experiment_success",
+      "was_unfair": "Only metrics.json; ignored results.json / experiment_results.txt.",
+      "fix": "Framework-ordered result candidates + normalized loaders."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Penalized tools with no bib; airesearcher has no workspace references.",
+      "fix": "literature_applicable=false → status not_applicable; excluded from fair aggregate."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "related_work.json subset as gold made recall hard to interpret.",
+      "fix": "Coverage gold is original paper REFERENCES from mineru; related_work only enriches metadata/fallback."
+    },
+    {
+      "axis": "peer_review",
+      "was_unfair": "Missing Stanford report looked like evaluation failure.",
+      "fix": "status not_provided; optional axis, never counts as tool failure."
+    },
+    {
+      "axis": "paths/find_results",
+      "was_unfair": "Picked downloads/** and sandbox noise (e.g. airesearcher LLVM tree).",
+      "fix": "Exclude downloads/, seeds/, dataset_candidate/, sandbox junk paths."
+    },
+    {
+      "axis": "paths/framework_noise",
+      "was_unfair": "DeepScientist .deepscientist_npm / runtime / skills templates counted as code/paper/results.",
+      "fix": "FRAMEWORK_NOISE_DIRS+markers; quest worktree + eval_output results; paper md drafts; reject template tex."
+    },
+    {
+      "axis": "paths/paper_tex",
+      "was_unfair": "tiny_scientist / ACL runs store paper under latex/*.tex; evaluator only looked at paper/main.tex.",
+      "fix": "latex/**/*.tex with substantive-body heuristic; find_paper_document uses same rules."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Entire custom.bib (300+ anthology entries) verified when paper had zero \\cite commands.",
+      "fix": "collect_agent_references filters bib to in-text cite keys; skips uncited bulk bib (>40 entries)."
+    },
+    {
+      "axis": "paths/ai_scientist_summaries",
+      "was_unfair": "AI Scientist can persist substantive results and paper-like drafts in *_summary.json logs rather than paper/main.tex or results/**/*.json.",
+      "fix": "Treat draft_summary/research_summary as weak paper documents and summary JSONs as result candidates."
+    },
+    {
+      "axis": "framework/ai_scientist_v2",
+      "was_unfair": "Manifest framework ``ai_scientist_v2`` fell through to profile ``unknown``, skipping AI-Scientist idea/result path priorities.",
+      "fix": "Normalize ``ai_scientist_v2`` (and common aliases) to profile key ``ai_scientist``."
+    },
+    {
+      "axis": "idea_generation",
+      "was_unfair": "plan.md/todos.md weak proxies scored same as structured idea.json.",
+      "fix": "Framework idea_priority tried first; missing idea → not_applicable where appropriate."
+    }
+  ],
+  "generated_at": "2026-10-01T15:13:00",
+  "axes": [
+    "alignment",
+    "completeness",
+    "experiment_analysis",
+    "idea_generation",
+    "literature_review",
+    "peer_review"
+  ],
+  "results": {
+    "completeness": {
+      "framework": "ai_scientist",
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/workspace/ai_scientist_2026-07-11_09-18-22",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo",
+      "complete": false,
+      "required_score": 0.75,
+      "bonus_score": 0.03,
+      "overall_score": 0.6,
+      "missing": [
+        "paper"
+      ],
+      "required": {
+        "idea": {
+          "path": "session/idea.json",
+          "bytes": 8006,
+          "via": "candidate"
+        },
+        "code": {
+          "count": 92,
+          "files": [
+            {
+              "path": "experiments/2026-07-11_09-20-59_pairsmell_propagation_attempt_0/logs/0-run/experiment_results/experiment_046478178b984d96b24244ff421c67cc_proc_827/experiment_code.py",
+              "bytes": 8513,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-07-11_09-20-59_pairsmell_propagation_attempt_0/logs/0-run/experiment_results/experiment_046478178b984d96b24244ff421c67cc_proc_827/plotting_code.py",
+              "bytes": 3482,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-07-11_09-20-59_pairsmell_propagation_attempt_0/logs/0-run/experiment_results/experiment_0d57714655524a83931ca2b76bcc8a06_proc_463/experiment_code.py",
+              "bytes": 7876,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-07-11_09-20-59_pairsmell_propagation_attempt_0/logs/0-run/experiment_results/experiment_0d57714655524a83931ca2b76bcc8a06_proc_463/plotting_code.py",
+              "bytes": 3100,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-07-11_09-20-59_pairsmell_propagation_attempt_0/logs/0-run/experiment_results/experiment_0ddb5df0211a4288bfbe077f10f18e75_proc_829/experiment_code.py",
+              "bytes": 10339,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-07-11_09-20-59_pairsmell_propagation_attempt_0/logs/0-run/experiment_results/experiment_0ddb5df0211a4288bfbe077f10f18e75_proc_829/plotting_code.py",
+              "bytes": 5426,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-07-11_09-20-59_pairsmell_propagation_attempt_0/logs/0-run/experiment_results/experiment_146eab0dfd734a648e37269c84f8b558_proc_461/experiment_code.py",
+              "bytes": 10256,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-07-11_09-20-59_pairsmell_propagation_attempt_0/logs/0-run/experiment_results/experiment_146eab0dfd734a648e37269c84f8b558_proc_461/plotting_code.py",
+              "bytes": 2915,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-07-11_09-20-59_pairsmell_propagation_attempt_0/logs/0-run/experiment_results/experiment_1493deb89a3b4e1fa6acb575517708ad_proc_461/experiment_code.py",
+              "bytes": 8790,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-07-11_09-20-59_pairsmell_propagation_attempt_0/logs/0-run/experiment_results/experiment_1493deb89a3b4e1fa6acb575517708ad_proc_461/plotting_code.py",
+              "bytes": 2925,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-07-11_09-20-59_pairsmell_propagation_attempt_0/logs/0-run/experiment_results/experiment_17d80b86586b4180b4d54f83a1b1f25a_proc_829/experiment_code.py",
+              "bytes": 8523,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-07-11_09-20-59_pairsmell_propagation_attempt_0/logs/0-run/experiment_results/experiment_17d80b86586b4180b4d54f83a1b1f25a_proc_829/plotting_code.py",
+              "bytes": 3505,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-07-11_09-20-59_pairsmell_propagation_attempt_0/logs/0-run/experiment_results/experiment_1eacd48a9e8e426baaf0036105bb5f75_proc_460/experiment_code.py",
+              "bytes": 8294,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-07-11_09-20-59_pairsmell_propagation_attempt_0/logs/0-run/experiment_results/experiment_1eacd48a9e8e426baaf0036105bb5f75_proc_460/plotting_code.py",
+              "bytes": 2700,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-07-11_09-20-59_pairsmell_propagation_attempt_0/logs/0-run/experiment_results/experiment_1fcdb963543e4f9980d4dc80d2f94f5b_proc_1036/experiment_code.py",
+              "bytes": 10645,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-07-11_09-20-59_pairsmell_propagation_attempt_0/logs/0-run/experiment_results/experiment_1fcdb963543e4f9980d4dc80d2f94f5b_proc_1036/plotting_code.py",
+              "bytes": 4309,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-07-11_09-20-59_pairsmell_propagation_attempt_0/logs/0-run/experiment_results/experiment_3014242741a44ee7b8c1a0e4878e84aa_proc_463/experiment_code.py",
+              "bytes": 8294,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-07-11_09-20-59_pairsmell_propagation_attempt_0/logs/0-run/experiment_results/experiment_3014242741a44ee7b8c1a0e4878e84aa_proc_463/plotting_code.py",
+              "bytes": 2700,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-07-11_09-20-59_pairsmell_propagation_attempt_0/logs/0-run/experiment_results/experiment_33175f441e00465dbdb1442aba5f5249_proc_295/experiment_code.py",
+              "bytes": 6926,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-07-11_09-20-59_pairsmell_propagation_attempt_0/logs/0-run/experiment_results/experiment_33175f441e00465dbdb1442aba5f5249_proc_295/plotting_code.py",
+              "bytes": 2174,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-07-11_09-20-59_pairsmell_propagation_attempt_0/logs/0-run/experiment_results/experiment_3ae4d9a18f5d40c48548fe25c1632723_proc_1035/experiment_code.py",
+              "bytes": 7068,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-07-11_09-20-59_pairsmell_propagation_attempt_0/logs/0-run/experiment_results/experiment_3ae4d9a18f5d40c48548fe25c1632723_proc_1035/plotting_code.py",
+              "bytes": 3555,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-07-11_09-20-59_pairsmell_propagation_attempt_0/logs/0-run/experiment_results/experiment_3e790b60f22c46a4b4fc465a59b0e6d4_proc_624/experiment_code.py",
+              "bytes": 8294,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-07-11_09-20-59_pairsmell_propagation_attempt_0/logs/0-run/experiment_results/experiment_3e790b60f22c46a4b4fc465a59b0e6d4_proc_624/plotting_code.py",
+              "bytes": 2700,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-07-11_09-20-59_pairsmell_propagation_attempt_0/logs/0-run/experiment_results/experiment_43b797de58094194a2ee90873e483102_proc_1035/experiment_code.py",
+              "bytes": 9347,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-07-11_09-20-59_pairsmell_propagation_attempt_0/logs/0-run/experiment_results/experiment_43b797de58094194a2ee90873e483102_proc_1035/plotting_code.py",
+              "bytes": 2839,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-07-11_09-20-59_pairsmell_propagation_attempt_0/logs/0-run/experiment_results/experiment_486bf2f248db48c195ebc43b6a57cb62_proc_462/experiment_code.py",
+              "bytes": 7479,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-07-11_09-20-59_pairsmell_propagation_attempt_0/logs/0-run/experiment_results/experiment_486bf2f248db48c195ebc43b6a57cb62_proc_462/plotting_code.py",
+              "bytes": 3990,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-07-11_09-20-59_pairsmell_propagation_attempt_0/logs/0-run/experiment_results/experiment_4ce4d00c899a4baa81e1d21d1c6a18a8_proc_830/experiment_code.py",
+              "bytes": 8603,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-07-11_09-20-59_pairsmell_propagation_attempt_0/logs/0-run/experiment_results/experiment_4ce4d00c899a4baa81e1d21d1c6a18a8_proc_830/plotting_code.py",
+              "bytes": 2563,
+              "via": "glob"
+            }
+          ]
+        },
+        "results": {
+          "substantive": true,
+          "normalized_path": "experiments/2026-07-11_09-20-59_pairsmell_propagation_attempt_0/logs/0-run/experiment_results/experiment_a3496bab700349029c4b2330a8748fee_proc_1035/experiment_data.npy",
+          "numeric_leaf_count": 2740,
+          "discovered_files": [
+            {
+              "path": "session/data/metrics.json",
+              "bytes": 392,
+              "via": "candidate"
+            },
+            {
+              "path": "experiments/2026-07-11_09-20-59_pairsmell_propagation_attempt_0/logs/0-run/experiment_results/experiment_046478178b984d96b24244ff421c67cc_proc_827/experiment_data.npy",
+              "bytes": 74840,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-07-11_09-20-59_pairsmell_propagation_attempt_0/logs/0-run/experiment_results/experiment_0d57714655524a83931ca2b76bcc8a06_proc_463/experiment_data.npy",
+              "bytes": 136340,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-07-11_09-20-59_pairsmell_propagation_attempt_0/logs/0-run/experiment_results/experiment_0ddb5df0211a4288bfbe077f10f18e75_proc_829/experiment_data.npy",
+              "bytes": 580110,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-07-11_09-20-59_pairsmell_propagation_attempt_0/logs/0-run/experiment_results/experiment_146eab0dfd734a648e37269c84f8b558_proc_461/experiment_data.npy",
+              "bytes": 54993,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-07-11_09-20-59_pairsmell_propagation_attempt_0/logs/0-run/experiment_results/experiment_1493deb89a3b4e1fa6acb575517708ad_proc_461/experiment_data.npy",
+              "bytes": 78370,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-07-11_09-20-59_pairsmell_propagation_attempt_0/logs/0-run/experiment_results/experiment_17d80b86586b4180b4d54f83a1b1f25a_proc_829/experiment_data.npy",
+              "bytes": 74889,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-07-11_09-20-59_pairsmell_propagation_attempt_0/logs/0-run/experiment_results/experiment_1eacd48a9e8e426baaf0036105bb5f75_proc_460/experiment_data.npy",
+              "bytes": 148600,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-07-11_09-20-59_pairsmell_propagation_attempt_0/logs/0-run/experiment_results/experiment_1fcdb963543e4f9980d4dc80d2f94f5b_proc_1036/experiment_data.npy",
+              "bytes": 322583,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-07-11_09-20-59_pairsmell_propagation_attempt_0/logs/0-run/experiment_results/experiment_3014242741a44ee7b8c1a0e4878e84aa_proc_463/experiment_data.npy",
+              "bytes": 148600,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-07-11_09-20-59_pairsmell_propagation_attempt_0/logs/0-run/experiment_results/experiment_33175f441e00465dbdb1442aba5f5249_proc_295/experiment_data.npy",
+              "bytes": 28357,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-07-11_09-20-59_pairsmell_propagation_attempt_0/logs/0-run/experiment_results/experiment_3ae4d9a18f5d40c48548fe25c1632723_proc_1035/experiment_data.npy",
+              "bytes": 34490,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-07-11_09-20-59_pairsmell_propagation_attempt_0/logs/0-run/experiment_results/experiment_3e790b60f22c46a4b4fc465a59b0e6d4_proc_624/experiment_data.npy",
+              "bytes": 148600,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-07-11_09-20-59_pairsmell_propagation_attempt_0/logs/0-run/experiment_results/experiment_43b797de58094194a2ee90873e483102_proc_1035/experiment_data.npy",
+              "bytes": 278074,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-07-11_09-20-59_pairsmell_propagation_attempt_0/logs/0-run/experiment_results/experiment_486bf2f248db48c195ebc43b6a57cb62_proc_462/experiment_data.npy",
+              "bytes": 151476,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-07-11_09-20-59_pairsmell_propagation_attempt_0/logs/0-run/experiment_results/experiment_4ce4d00c899a4baa81e1d21d1c6a18a8_proc_830/experiment_data.npy",
+              "bytes": 74889,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-07-11_09-20-59_pairsmell_propagation_attempt_0/logs/0-run/experiment_results/experiment_5c30e56fae754e7a863aef1ef20c510a_proc_830/experiment_data.npy",
+              "bytes": 34574,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-07-11_09-20-59_pairsmell_propagation_attempt_0/logs/0-run/experiment_results/experiment_6800bc37f7ba4581be11b862079f7e08_proc_298/experiment_data.npy",
+              "bytes": 28357,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-07-11_09-20-59_pairsmell_propagation_attempt_0/logs/0-run/experiment_results/experiment_6cd83289b46943c8977296e766d36e2a_proc_1036/experiment_data.npy",
+              "bytes": 182076,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-07-11_09-20-59_pairsmell_propagation_attempt_0/logs/0-run/experiment_results/experiment_7e28c502104848b7b1f4d1817fcbd3e6_proc_828/experiment_data.npy",
+              "bytes": 148607,
+              "via": "glob"
+            }
+          ],
+          "metrics_keys_sample": [
+            "original",
+            "ablated"
+          ]
+        },
+        "paper": {
+          "tex": null,
+          "pdf": null,
+          "md": null,
+          "json": null,
+          "status": "missing",
+          "score": 0.0
+        }
+      },
+      "bonus": {
+        "experiment_plan": null,
+        "experiment_log": {
+          "path": "ai_scientist_run.log",
+          "bytes": 1852314,
+          "via": "glob"
+        },
+        "review": null,
+        "readme": null,
+        "narrative": null,
+        "bib": null
+      },
+      "manifest_status": null,
+      "gate_scores": {
+        "idea": 1.0,
+        "code": 1.0,
+        "results": 1.0,
+        "paper": 0.0
+      },
+      "fairness": {
+        "gates": [
+          "idea",
+          "code",
+          "results",
+          "paper"
+        ],
+        "paper_gate_rule": "PDF=1.0; TeX-only/md_only/json_only=0.5; complete requires PDF",
+        "results_gate_rule": "substantive numeric results via framework-aware normalize_results",
+        "audit_ref": "framework_profile.FAIRNESS_AUDIT"
+      },
+      "notes": [
+        "Required: idea, code, substantive results, paper (PDF full; TeX/markdown/JSON draft half).",
+        "Stub/seed metrics (e.g. dataset_candidate/metrics.json) do not satisfy results.",
+        "Framework noise (.deepscientist_npm, skills/templates, runtime) is excluded from code/results/paper.",
+        "Manifest status is informational; disk presence is authoritative."
+      ]
+    },
+    "idea_generation": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/workspace/ai_scientist_2026-07-11_09-18-22",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo",
+      "idea_path": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/workspace/ai_scientist_2026-07-11_09-18-22/session/idea.json",
+      "status": "ok",
+      "dimensions": {
+        "novelty": {
+          "score": 4.0,
+          "justification": "The idea's core claim is that 'PairSmell instances influence each other through the dependency graph' and can be studied via a 'smell contagion model... bridging software engineering and network science.' None of the closest Solution Space entries frame architectural smell occurrence as network propagation; R11 predicts decay, R34 models change propagation, and R62 compares modular structure to co-change. This is a non-obvious cross-domain import of network contagion into architectural smell analysis.",
+          "rubric": "Novel Combo / Cross-domain: spots a non-obvious link across areas and cleverly imports an existing method from another domain to address the current pain point, yielding a 1+1>2 effect.",
+          "category": "Novel Combo",
+          "nearest_solution_space_ids": [
+            "R11",
+            "R14",
+            "R34",
+            "R62"
+          ],
+          "differentiation": "Prior solution-space work forecasts decay from history (R11), locates compound debt and predicts cost trajectories (R14), measures change ripple effects (R34), or detects modularity violations by comparing expected and actual co-change (R62). This idea instead models interdependence among PairSmell instances themselves: whether a smell on one structural edge increases the probability of smells on adjacent edges, with InSep/InCol asymmetry."
+        },
+        "feasibility": {
+          "score": 3.0,
+          "justification": "The plan requires a nontrivial graph/statistical pipeline across 20 projects: 'constructing a smell contagion model on the dependency graphs of 20 open-source projects' and 'controlling for confounding factors like pair similarity and baseline coupling.' The available PairSmell dataset and standard repository/graph tools make this moderate effort, but the causal interpretation demands careful identification, lagged/longitudinal modeling, and confounder operationalization, so it is not low-barrier out-of-the-box work.",
+          "rubric": "Moderate workload (sweet spot): needs nontrivial coding such as scripting existing open-source tools (parsers, CFG extractors) or building a custom graph-processing pipeline; standard research engineering effort."
+        },
+        "clarity": {
+          "score": 3.0,
+          "justification": "What/Why/How are present, e.g., 'measure whether the probability of a pair becoming smelly is elevated when its structural neighbors are already smelly' and investigate 'whether InSep pairs are more contagious than InCol pairs.' However, key execution details are underspecified: the exact contagion model, neighbor definition, statistical identification strategy, operationalization of confounding controls, and concrete evaluation metrics for future maintenance burden are not defined.",
+          "rubric": "Complete frame but missing details: What/Why/How are present, yet key technical execution details or specific comparison plans are underspecified."
+        }
+      },
+      "overall_score": 3.3,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "novelty",
+        "feasibility",
+        "clarity"
+      ],
+      "solution_space": {
+        "status": "ok",
+        "paper_count": 80,
+        "entry_count": 80,
+        "cache_hit": false,
+        "source_file": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/mineru_sections.json",
+        "stats": {
+          "papers": 80,
+          "extracted": 80,
+          "usable_abstracts": 53,
+          "citation_meta_abstracts": 0,
+          "missing_abstracts": 27,
+          "mineru_titles": 74,
+          "related_work_titles": 69,
+          "abstracts_attached": 53,
+          "related_work_extras": 6,
+          "batches": 5
+        },
+        "error": null
+      },
+      "notes": [
+        "Scores the intermediate idea artifact (not the final paper).",
+        "Dimensions: novelty, feasibility, clarity (each 1-5). Excitement removed.",
+        "Novelty is scored against a Solution Space built from mineru REFERENCES titles (+ related_work.json abstracts when matched)."
+      ],
+      "idea_via": "candidate",
+      "idea_relative": "session/idea.json",
+      "summary": "The idea extends PairSmell research by testing whether pairwise modular smells propagate through dependency graphs. It proposes cross-sectional and longitudinal contagion analyses on 20 projects, compares InSep and InCol propagation, and links propagation to future maintenance burden. The network-science angle is a genuinely novel lens, but the plan lacks model specifics and a credible causal-inference design; implementation would be a moderate graph/statistical study.",
+      "strengths": [
+        "Clear testable hypothesis: smells on adjacent structural edges increase the likelihood of a pair becoming smelly.",
+        "Novel import of network contagion ideas into architectural smell research.",
+        "Actionable implication: refactoring high-centrality smells may help prevent modular degradation.",
+        "Leverages an existing PairSmell dataset and standard repository-mining tooling."
+      ],
+      "weaknesses": [
+        "Causal claim ('first causal evidence') is not supported by an explicit identification strategy.",
+        "Contagion model, edge-neighbor definition, and propagation mechanism are underspecified.",
+        "Confounders such as pair similarity and baseline coupling are named but not operationalized.",
+        "No concrete metrics, statistical tests, or comparison baseline plan is provided."
+      ],
+      "llm_meta": {
+        "model": "deepseek-v4-pro-0813",
+        "base_url": "https://api-sg.umodelverse.ai/v1",
+        "usage": {
+          "completion_tokens": 2654,
+          "completion_tokens_details": {
+            "reasoning_tokens": 1913
+          },
+          "prompt_tokens": 5954,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "total_tokens": 8608
+        },
+        "attempt": 0
+      }
+    },
+    "peer_review": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/workspace/ai_scientist_2026-07-11_09-18-22",
+      "review_report": null,
+      "paper_pdf": null,
+      "paper_tex": null,
+      "status": "not_provided",
+      "dimensions": {},
+      "overall_score": null,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "soundness",
+        "significance",
+        "novelty",
+        "presentation",
+        "credibility"
+      ],
+      "notes": [
+        "Stanford Agentic Reviewer (paperreview.ai): manual download to artifacts/peer_review/stanford_apr.md, or pass --auto-paperreview.",
+        "Dimensions: soundness, significance, novelty, presentation, credibility (each 1-5)."
+      ],
+      "paperreview": {
+        "status": "skipped",
+        "reason": "no_pdf"
+      },
+      "optional": true,
+      "hint": "Optional external review (Stanford APR). Upload paper/main.pdf to https://paperreview.ai/ , save review to ~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/workspace/ai_scientist_2026-07-11_09-18-22/artifacts/peer_review/stanford_apr.md"
+    },
+    "alignment": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/workspace/ai_scientist_2026-07-11_09-18-22",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo",
+      "status": "missing_agent_paper_or_metrics",
+      "original": {
+        "status": "ok",
+        "task_dir": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo",
+        "paper_title": "PairSmell: A Novel Perspective Inspecting Software Modular Structure",
+        "task_id": "ICSE-2025-022",
+        "selection": {
+          "num_blocks": 7,
+          "total_chars": 31998,
+          "inferred_roles": {
+            "abstract": 1,
+            "introduction": 1,
+            "experiment": 3,
+            "discussion": 1,
+            "conclusion": 1
+          },
+          "mineru_raw_keys": {
+            "field:abstract": 1,
+            "field:introduction": 1,
+            "field:experiment": 1,
+            "other": 3,
+            "conclusion": 1
+          },
+          "infer_reasons": {
+            "top_level_field": 3,
+            "title": 3,
+            "body_override": 1
+          },
+          "rescued_from_other": 3,
+          "note": "mineru key is unreliable; blocks are selected by title/body/inheritance. rescued_from_other counts sections labeled other but treated as typed roles."
+        },
+        "claims": [
+          {
+            "id": "C1",
+            "statement": "PairSmell introduces a granular, pair-level architectural smell that uses multiple modularization tools to identify inapt modular relations.",
+            "direction": "neutral",
+            "metric_names": [],
+            "evidence_quote": "PairSmell exploits modularization by comparing each pair's apt MR with its actual MR.",
+            "confidence": 0.9
+          },
+          {
+            "id": "C2",
+            "statement": "PairSmell is prevalent in the 20 studied projects, with 260,003 instances identified.",
+            "direction": "neutral",
+            "metric_names": [
+              "total_PairSmells",
+              "InSep_count",
+              "InCol_count"
+            ],
+            "evidence_quote": "260,003 instances over 20 projects: 73,536 InSep, 186,467 InCol.",
+            "confidence": 0.95
+          },
+          {
+            "id": "C3",
+            "statement": "InSep pairs co-change 190% more than properly separated pairs, indicating detrimental modular structure."
+          }
+        ],
+        "metrics": [],
+        "overall_conclusion": null,
+        "comparable_notes": null,
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 1946,
+            "completion_tokens_details": {
+              "reasoning_tokens": 1758
+            },
+            "prompt_tokens": 496,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 2442
+          },
+          "attempt": 1
+        },
+        "cache_hit": true
+      },
+      "agent": {
+        "status": "missing_agent_paper_or_metrics",
+        "run_dir": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/workspace/ai_scientist_2026-07-11_09-18-22"
+      }
+    },
+    "experiment_analysis": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/workspace/ai_scientist_2026-07-11_09-18-22",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo",
+      "status": "ok",
+      "metrics_path": null,
+      "experiment_success": {
+        "status": "failed_or_incomplete",
+        "success": false,
+        "metrics_path": null,
+        "absolute_metrics_path": null,
+        "checks": {
+          "has_results_file": false,
+          "non_stub": false,
+          "numeric_leaf_count": 0,
+          "min_numeric_ok": false
+        },
+        "manifest_hints": {
+          "status": null,
+          "returncode": null,
+          "benchmark_complete": null,
+          "artifacts_metrics_flag": false
+        },
+        "warnings": [],
+        "suspicious_values": [],
+        "note": "success=true requires substantive results (framework-aware path) with >=3 numeric leaves. Supports metrics.json, results.json, experiment_results.txt, etc. Manifest returncode/benchmark_complete are soft warnings only."
+      },
+      "idea_code_consistency": {
+        "status": "ok",
+        "idea_path": "session/idea.json",
+        "code_files": [
+          "experiments/2026-07-11_09-20-59_pairsmell_propagation_attempt_0/logs/0-run/experiment_results/experiment_046478178b984d96b24244ff421c67cc_proc_827/experiment_code.py",
+          "experiments/2026-07-11_09-20-59_pairsmell_propagation_attempt_0/logs/0-run/experiment_results/experiment_046478178b984d96b24244ff421c67cc_proc_827/plotting_code.py",
+          "experiments/2026-07-11_09-20-59_pairsmell_propagation_attempt_0/logs/0-run/experiment_results/experiment_0d57714655524a83931ca2b76bcc8a06_proc_463/experiment_code.py",
+          "experiments/2026-07-11_09-20-59_pairsmell_propagation_attempt_0/logs/0-run/experiment_results/experiment_0d57714655524a83931ca2b76bcc8a06_proc_463/plotting_code.py"
+        ],
+        "score_scale": "1-5",
+        "score": 2.0,
+        "label": "weak",
+        "justification": "The code builds a synthetic dependency graph and fits a logistic regression where the outcome is a future smell label and one predictor is the number of already-smelly neighboring edges. This superficially touches the idea of smell propagation through structural neighbors, but it does not use PairSmell instances, real projects, cross-sectional/longitudinal project data, InSep/InCol asymmetry, or maintenance burden outcomes. The evaluation is a generic AUROC/loss comparison on synthetic data, so most of the stated research idea is missing or replaced.",
+        "matched_elements": [
+          "Edge-level smell outcome in a synthetic dependency graph",
+          "Neighboring smelly edge count as a propagation predictor",
+          "Logistic model for probability of future smell",
+          "Controls for a single random confounder feature"
+        ],
+        "missing_or_divergent_elements": [
+          "20 real open-source project dependency graphs",
+          "Pairwise Modular Smell definitions and identification",
+          "InSep vs InCol directionality and asymmetry analysis",
+          "Cross-sectional and longitudinal protocol",
+          "Pair similarity and baseline coupling controls",
+          "Future maintenance burden prediction",
+          "Causal or network-science analyses of propagation clusters",
+          "Real baselines and metrics tied to architectural smells"
+        ],
+        "rubric": "Weak alignment: only superficial overlap; core hypothesis, method, or evaluation in the idea is missing or replaced.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 801,
+            "completion_tokens_details": {
+              "reasoning_tokens": 521
+            },
+            "prompt_tokens": 4770,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 5571
+          },
+          "attempt": 0
+        }
+      },
+      "setup_coverage": {
+        "status": "ok",
+        "overall_coverage": 0.8333333333333333,
+        "datasets": {
+          "gold_count": 1,
+          "hit_count": 1,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "20-Project PairSmell Dataset"
+          ],
+          "misses": []
+        },
+        "baselines": {
+          "gold_count": 0,
+          "hit_count": 0,
+          "miss_count": 0,
+          "coverage": null,
+          "hits": [],
+          "misses": []
+        },
+        "metrics": {
+          "gold_count": 6,
+          "hit_count": 4,
+          "miss_count": 2,
+          "coverage": 0.6666666666666666,
+          "hits": [
+            "Percentage of affected entities/pairs",
+            "Smell density",
+            "Commit Overlap Rate (COR)",
+            "Code Change Overlap (CCO)"
+          ],
+          "misses": [
+            "Developer Overlap Rate (DOR)",
+            "Relative co-change factor (K_COR, K_CCO, K_DOR)"
+          ]
+        },
+        "agent_protocol": {},
+        "gold_protocol": {},
+        "dataset_dirs": [
+          "dataset_candidate"
+        ],
+        "flags": {
+          "weaker_baseline_suspected": false,
+          "weak_protocol": [],
+          "synthetic_data": "unexpected_synthetic_or_local_only_data",
+          "gold_allows_synthetic": false
+        },
+        "gold_sources": [
+          "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/task.md",
+          "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/metadata.json"
+        ],
+        "note": "Coverage is name/alias matching against task.md Datasets/Baselines/Metrics. weak_protocol flags large reductions in trials/timeout vs Constraints. Synthetic corpora are not penalized when the task itself requires synthesis."
+      },
+      "ablation_significance": {
+        "status": "ok",
+        "idea_path": "session/idea.json",
+        "significance_signals_rule_based": {
+          "signals": [],
+          "artifact_paths": [],
+          "has_any_significance_artifact": false
+        },
+        "evidence_format": null,
+        "study_type": "other",
+        "components": [
+          {
+            "name": "dependency_graph_propagation_model",
+            "role": "module",
+            "ablation_expected": true,
+            "significance_expected": true,
+            "ablation_status": "missing",
+            "ablation_evidence": "No ablation of the propagation model was found; provided code trains a synthetic PyTorch classifier instead.",
+            "significance_status": "missing",
+            "significance_evidence": "No significance test, confidence interval, bootstrap, or p-value was reported for propagation effects."
+          },
+          {
+            "name": "confounding_controls",
+            "role": "analysis_component",
+            "ablation_expected": true,
+            "significance_expected": true,
+            "ablation_status": "missing",
+            "ablation_evidence": "No controlled comparison removing confounding features was found.",
+            "significance_status": "missing",
+            "significance_evidence": "No statistical evidence for confounding adjustment was reported."
+          },
+          {
+            "name": "longitudinal_analysis",
+            "role": "analysis_component",
+            "ablation_expected": false,
+            "significance_expected": true,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "Longitudinal analysis is a primary analysis lens, not an ablation-module.",
+            "significance_status": "missing",
+            "significance_evidence": "No longitudinal results or temporal statistical tests were reported."
+          },
+          {
+            "name": "directionality_asymmetry_analysis",
+            "role": "analysis_component",
+            "ablation_expected": false,
+            "significance_expected": true,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "Directionality/asymmetry is a primary hypothesis test, not a removable module.",
+            "significance_status": "missing",
+            "significance_evidence": "No asymmetry or directionality statistics were reported."
+          },
+          {
+            "name": "maintenance_burden_prediction",
+            "role": "analysis_component",
+            "ablation_expected": false,
+            "significance_expected": true,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "Maintenance burden is a predictive validation outcome, not an ablation.",
+            "significance_status": "missing",
+            "significance_evidence": "No prediction performance or statistical test for maintenance burden was reported."
+          }
+        ],
+        "ablation_coverage_score": 0.0,
+        "overall_ablation_ok": false,
+        "overall_significance_ok": false,
+        "summary": "The provided run does not implement the proposed dependency-graph smell-contagion analyses; it contains synthetic PyTorch training and a normalization ablation unrelated to the key components. Expected ablations and significance tests for the proposed study are missing.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 767,
+            "completion_tokens_details": {
+              "reasoning_tokens": 140
+            },
+            "prompt_tokens": 3833,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 4600
+          },
+          "attempt": 1
+        }
+      },
+      "results_paper_consistency": {
+        "status": "missing_metrics"
+      },
+      "scores": {
+        "experiment_success": false,
+        "idea_code_score": 2.0,
+        "setup_coverage": 0.8333333333333333,
+        "ablation_coverage_score": 0.0,
+        "overall_ablation_ok": false,
+        "overall_significance_ok": false,
+        "results_paper_score": null,
+        "hiding_unfavorable_suspected": null
+      },
+      "notes": [
+        "Axes 1,2,3,4,6 in experiment_analysis (figures excluded).",
+        "setup_coverage matches task.md Datasets/Baselines/Metrics; weak_protocol flags reductions vs Constraints.",
+        "Axis 6: final normalized results vs paper; interim run logs not used as ground truth."
+      ]
+    },
+    "literature_review": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/workspace/ai_scientist_2026-07-11_09-18-22",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo",
+      "status": "not_applicable",
+      "as_of_year": 2026,
+      "agent_ref_count": 0,
+      "sources": [],
+      "collection_audit": {
+        "cited_keys_count": 0,
+        "filter_mode": "none",
+        "bib_total_before_filter": 0,
+        "bib_after_filter": 0,
+        "uncited_bib_skipped": 0
+      },
+      "fabrication": null,
+      "coverage": null,
+      "recency": null,
+      "reason": "no_reference_artifacts",
+      "hint": "No literature artifacts found (bib / thebibliography / shortlist / related_work.txt / arxiv index). Marked not_applicable rather than failure — tool may not emit references in-run."
+    }
+  },
+  "scores": {
+    "completeness": {
+      "complete": false,
+      "overall_score": 0.6,
+      "required_score": 0.75,
+      "bonus_score": 0.03
+    },
+    "peer_review": {
+      "status": "not_provided",
+      "optional": true,
+      "overall_score": null,
+      "score_scale": "1-5",
+      "scoring_method": null
+    },
+    "idea_generation": {
+      "status": "ok",
+      "overall_score": 3.3,
+      "dimensions": {
+        "novelty": 4.0,
+        "feasibility": 3.0,
+        "clarity": 3.0
+      },
+      "novelty_category": "Novel Combo",
+      "solution_space_status": "ok"
+    },
+    "alignment": {
+      "status": "missing_agent_paper_or_metrics",
+      "direction_consistency": null,
+      "overall_alignment_score": null
+    },
+    "literature_review": {
+      "fabrication_rate": null,
+      "coverage_recall": null,
+      "recency_ratio_3y": null,
+      "recency_ratio_5y": null
+    },
+    "experiment_analysis": {
+      "experiment_success": false,
+      "idea_code_score": 2.0,
+      "setup_coverage": 0.8333333333333333,
+      "ablation_coverage_score": 0.0,
+      "overall_ablation_ok": false,
+      "overall_significance_ok": false,
+      "results_paper_score": null,
+      "hiding_unfavorable_suspected": null
+    }
+  },
+  "fair_scores": {
+    "applicable_axes": [
+      "completeness",
+      "idea_generation",
+      "experiment_analysis"
+    ],
+    "skipped_axes": [
+      {
+        "axis": "peer_review",
+        "reason": "optional_external_review"
+      },
+      {
+        "axis": "literature_review",
+        "reason": "not_applicable"
+      }
+    ],
+    "fair_mean_0_1": 0.607,
+    "note": "fair_mean_0_1 averages only applicable axes; optional peer review and framework-inapplicable literature are excluded from the denominator."
+  },
+  "evals_root": "~/ai_scientist_evals",
+  "claims_cache": "~/ai_scientist_evals/ICSE-2025-022_assessment_of_inappropriate_entity_collo/original_claims.json",
+  "solution_space_cache": "~/ai_scientist_evals/ICSE-2025-022_assessment_of_inappropriate_entity_collo/solution_space.json"
+}

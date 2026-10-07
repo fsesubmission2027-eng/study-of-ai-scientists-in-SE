@@ -1,0 +1,1056 @@
+{
+  "run_dir": "~/ai_scientist_inputs/ASE-2025-016_reducing_redundant_monitor_creation_and/workspace/aris_2026-08-10_11-06-10",
+  "task_dir": "~/ai_scientist_inputs/ASE-2025-016_reducing_redundant_monitor_creation_and",
+  "framework": "aris",
+  "fairness_audit": [
+    {
+      "axis": "completeness",
+      "was_unfair": "Required both paper.tex AND paper.pdf; any tool missing one failed equally.",
+      "fix": "Paper gate: PDF=1.0; TeX-only=0.5; ``complete`` requires PDF."
+    },
+    {
+      "axis": "completeness",
+      "was_unfair": "``results`` counted stub/seed JSON (dataset_candidate/metrics.json).",
+      "fix": "``results`` requires substantive numeric results via results_normalize."
+    },
+    {
+      "axis": "experiment_success",
+      "was_unfair": "Only metrics.json; ignored results.json / experiment_results.txt.",
+      "fix": "Framework-ordered result candidates + normalized loaders."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Penalized tools with no bib; airesearcher has no workspace references.",
+      "fix": "literature_applicable=false → status not_applicable; excluded from fair aggregate."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "related_work.json subset as gold made recall hard to interpret.",
+      "fix": "Coverage gold is original paper REFERENCES from mineru; related_work only enriches metadata/fallback."
+    },
+    {
+      "axis": "peer_review",
+      "was_unfair": "Missing Stanford report looked like evaluation failure.",
+      "fix": "status not_provided; optional axis, never counts as tool failure."
+    },
+    {
+      "axis": "paths/find_results",
+      "was_unfair": "Picked downloads/** and sandbox noise (e.g. airesearcher LLVM tree).",
+      "fix": "Exclude downloads/, seeds/, dataset_candidate/, sandbox junk paths."
+    },
+    {
+      "axis": "paths/framework_noise",
+      "was_unfair": "DeepScientist .deepscientist_npm / runtime / skills templates counted as code/paper/results.",
+      "fix": "FRAMEWORK_NOISE_DIRS+markers; quest worktree + eval_output results; paper md drafts; reject template tex."
+    },
+    {
+      "axis": "paths/paper_tex",
+      "was_unfair": "tiny_scientist / ACL runs store paper under latex/*.tex; evaluator only looked at paper/main.tex.",
+      "fix": "latex/**/*.tex with substantive-body heuristic; find_paper_document uses same rules."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Entire custom.bib (300+ anthology entries) verified when paper had zero \\cite commands.",
+      "fix": "collect_agent_references filters bib to in-text cite keys; skips uncited bulk bib (>40 entries)."
+    },
+    {
+      "axis": "paths/ai_scientist_summaries",
+      "was_unfair": "AI Scientist can persist substantive results and paper-like drafts in *_summary.json logs rather than paper/main.tex or results/**/*.json.",
+      "fix": "Treat draft_summary/research_summary as weak paper documents and summary JSONs as result candidates."
+    },
+    {
+      "axis": "framework/ai_scientist_v2",
+      "was_unfair": "Manifest framework ``ai_scientist_v2`` fell through to profile ``unknown``, skipping AI-Scientist idea/result path priorities.",
+      "fix": "Normalize ``ai_scientist_v2`` (and common aliases) to profile key ``ai_scientist``."
+    },
+    {
+      "axis": "idea_generation",
+      "was_unfair": "plan.md/todos.md weak proxies scored same as structured idea.json.",
+      "fix": "Framework idea_priority tried first; missing idea → not_applicable where appropriate."
+    }
+  ],
+  "generated_at": "2026-10-01T11:01:41",
+  "axes": [
+    "alignment",
+    "completeness",
+    "experiment_analysis",
+    "idea_generation",
+    "literature_review",
+    "peer_review"
+  ],
+  "results": {
+    "completeness": {
+      "framework": "aris",
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-016_reducing_redundant_monitor_creation_and/workspace/aris_2026-08-10_11-06-10",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-016_reducing_redundant_monitor_creation_and",
+      "complete": false,
+      "required_score": 0.75,
+      "bonus_score": 0.07,
+      "overall_score": 0.6,
+      "missing": [
+        "results"
+      ],
+      "required": {
+        "idea": {
+          "path": "idea-stage/IDEA_REPORT.md",
+          "bytes": 11541,
+          "via": "candidate"
+        },
+        "code": {
+          "count": 2,
+          "files": [
+            {
+              "path": "project/scripts/evaluate_taft.py",
+              "bytes": 25301,
+              "via": "glob"
+            },
+            {
+              "path": "project/src/TaftDecisionMaker.java",
+              "bytes": 7866,
+              "via": "glob"
+            }
+          ]
+        },
+        "results": {
+          "substantive": false,
+          "normalized_path": null,
+          "numeric_leaf_count": 0,
+          "discovered_files": [],
+          "metrics_keys_sample": []
+        },
+        "paper": {
+          "tex": {
+            "path": "paper/main.tex",
+            "bytes": 20159,
+            "via": "candidate"
+          },
+          "pdf": {
+            "path": "paper/main.pdf",
+            "bytes": 176053,
+            "via": "compiled_promoted"
+          },
+          "md": null,
+          "json": null,
+          "status": "pdf",
+          "score": 1.0
+        }
+      },
+      "bonus": {
+        "experiment_plan": null,
+        "experiment_log": {
+          "path": "aris_run.log",
+          "bytes": 136726,
+          "via": "glob"
+        },
+        "review": null,
+        "readme": {
+          "path": "README_BENCHMARK.md",
+          "bytes": 944,
+          "via": "candidate"
+        },
+        "narrative": {
+          "path": "NARRATIVE_REPORT.md",
+          "bytes": 4321,
+          "via": "candidate"
+        },
+        "bib": null
+      },
+      "manifest_status": {
+        "idea": true,
+        "experiment_plan": false,
+        "experiment_log": false,
+        "metrics": false,
+        "review": false,
+        "narrative": true,
+        "paper_tex": true,
+        "paper_pdf": false
+      },
+      "gate_scores": {
+        "idea": 1.0,
+        "code": 1.0,
+        "results": 0.0,
+        "paper": 1.0
+      },
+      "fairness": {
+        "gates": [
+          "idea",
+          "code",
+          "results",
+          "paper"
+        ],
+        "paper_gate_rule": "PDF=1.0; TeX-only/md_only/json_only=0.5; complete requires PDF",
+        "results_gate_rule": "substantive numeric results via framework-aware normalize_results",
+        "audit_ref": "framework_profile.FAIRNESS_AUDIT"
+      },
+      "notes": [
+        "Required: idea, code, substantive results, paper (PDF full; TeX/markdown/JSON draft half).",
+        "Stub/seed metrics (e.g. dataset_candidate/metrics.json) do not satisfy results.",
+        "Framework noise (.deepscientist_npm, skills/templates, runtime) is excluded from code/results/paper.",
+        "Manifest status is informational; disk presence is authoritative."
+      ]
+    },
+    "idea_generation": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-016_reducing_redundant_monitor_creation_and/workspace/aris_2026-08-10_11-06-10",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-016_reducing_redundant_monitor_creation_and",
+      "idea_path": "~/ai_scientist_inputs/ASE-2025-016_reducing_redundant_monitor_creation_and/workspace/aris_2026-08-10_11-06-10/idea-stage/IDEA_REPORT.md",
+      "status": "ok",
+      "dimensions": {
+        "novelty": {
+          "score": 3.0,
+          "justification": "The idea replaces Valg's RL selection mechanism with a 'deterministic, hash-based redundancy detection system'. Existing solution-space entries such as R11 and R41 already explore sampling/controllable overhead, but no close entry uses cryptographic trace fingerprinting. This is a meaningful extension of selective monitoring rather than a new paradigm.",
+          "rubric": "Incremental: a meaningful extension or optimization of prior baseline work that fixes a concrete prior limitation, but the core paradigm is unchanged.",
+          "category": "Incremental",
+          "nearest_solution_space_ids": [
+            "R11",
+            "R41",
+            "R29",
+            "R30"
+          ],
+          "differentiation": "Unlike R11's random sampling and the RL-based Valg approach, TAFT uses deterministic SHA-256 trace fingerprints plus frequency-count thresholds to skip redundant monitors/events, removing exploration noise and hyperparameter tuning."
+        },
+        "feasibility": {
+          "score": 3.0,
+          "justification": "The proposal claims 'Estimated implementation: 200-400 lines of Java + AspectJ changes' and reuses JavaMOP/TraceMOP infrastructure, but it still requires nontrivial integration into monitor/event signaling paths, concurrent fingerprint counters, and large benchmark runs.",
+          "rubric": "Moderate workload (sweet spot): needs nontrivial coding such as scripting existing open-source tools (parsers, CFG extractors) or building a custom graph-processing pipeline; standard research engineering effort."
+        },
+        "clarity": {
+          "score": 3.0,
+          "justification": "The plan gives a concrete formula ('skip probability = min(1, max(0, (count - K) / (M - K)))') and RQs, baselines, and metrics, but key details such as the exact trace content representation fed to SHA-256 and how fingerprints map to monitor decisions remain underspecified.",
+          "rubric": "Complete frame but missing details: What/Why/How are present, yet key technical execution details or specific comparison plans are underspecified."
+        }
+      },
+      "overall_score": 3.0,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "novelty",
+        "feasibility",
+        "clarity"
+      ],
+      "solution_space": {
+        "status": "ok",
+        "paper_count": 103,
+        "entry_count": 103,
+        "cache_hit": false,
+        "source_file": "~/ai_scientist_inputs/ASE-2025-016_reducing_redundant_monitor_creation_and/mineru_sections.json",
+        "stats": {
+          "papers": 103,
+          "extracted": 103,
+          "usable_abstracts": 48,
+          "citation_meta_abstracts": 0,
+          "missing_abstracts": 55,
+          "mineru_titles": 95,
+          "related_work_titles": 81,
+          "abstracts_attached": 48,
+          "related_work_extras": 8,
+          "batches": 6
+        },
+        "error": null
+      },
+      "notes": [
+        "Scores the intermediate idea artifact (not the final paper).",
+        "Dimensions: novelty, feasibility, clarity (each 1-5). Excitement removed.",
+        "Novelty is scored against a Solution Space built from mineru REFERENCES titles (+ related_work.json abstracts when matched)."
+      ],
+      "idea_via": "candidate",
+      "idea_relative": "idea-stage/IDEA_REPORT.md",
+      "summary": "TAFT proposes deterministic SHA-256 trace fingerprinting and adaptive frequency thresholds to skip redundant RV monitors/events, replacing Valg's stochastic RL. It is a reasonable incremental extension of selective monitoring with lower variance and no tuning, but the core mechanism is a straightforward import of hash-based deduplication and key implementation details are only partially specified.",
+      "strengths": [
+        "Clear motivation from measured RV redundancy",
+        "Deterministic alternative to stochastic RL removes exploration-noise violation misses",
+        "Concrete baselines, metrics, and research questions"
+      ],
+      "weaknesses": [
+        "Exact trace hashing and thresholding mechanism is underspecified",
+        "Novelty is limited to replacing RL with standard hash-frequency deduplication",
+        "No detailed handling for parametric bindings or hash-collision/robustness beyond a probabilistic claim"
+      ],
+      "llm_meta": {
+        "model": "deepseek-v4-pro-0813-sg",
+        "base_url": "https://api-sg.umodelverse.ai/v1",
+        "usage": {
+          "completion_tokens": 2693,
+          "completion_tokens_details": {
+            "reasoning_tokens": 2162
+          },
+          "prompt_tokens": 10353,
+          "prompt_tokens_details": {
+            "cached_tokens": 8192
+          },
+          "total_tokens": 13046
+        },
+        "attempt": 1
+      }
+    },
+    "peer_review": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-016_reducing_redundant_monitor_creation_and/workspace/aris_2026-08-10_11-06-10",
+      "review_report": "~/ai_scientist_inputs/ASE-2025-016_reducing_redundant_monitor_creation_and/workspace/aris_2026-08-10_11-06-10/artifacts/peer_review/stanford_apr.md",
+      "paper_pdf": "~/ai_scientist_inputs/ASE-2025-016_reducing_redundant_monitor_creation_and/workspace/aris_2026-08-10_11-06-10/paper/main.pdf",
+      "paper_tex": "~/ai_scientist_inputs/ASE-2025-016_reducing_redundant_monitor_creation_and/workspace/aris_2026-08-10_11-06-10/paper/main.tex",
+      "status": "ok",
+      "dimensions": {},
+      "overall_score": 4.4,
+      "score_scale": "1-10",
+      "dimension_order": [],
+      "notes": [
+        "Scored from paperreview.ai (Stanford APR) native ratings; benchmark 5-dimension LLM rubric skipped.",
+        "Overall scale: 1-10."
+      ],
+      "paperreview": {
+        "status": "cached",
+        "hint": "Cached APR score found; no re-upload."
+      },
+      "scoring_method": "paperreview_apr",
+      "scoring_source": "paperreview_json",
+      "apr_dimensions": {},
+      "summary": "",
+      "red_flags": []
+    },
+    "alignment": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-016_reducing_redundant_monitor_creation_and/workspace/aris_2026-08-10_11-06-10",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-016_reducing_redundant_monitor_creation_and",
+      "status": "ok",
+      "original": {
+        "paper_title": "Faster Runtime Verification during Testing via Feedback-Guided Selective Monitoring",
+        "selection": {
+          "num_blocks": 8,
+          "total_chars": 31920,
+          "inferred_roles": {
+            "abstract": 1,
+            "introduction": 1,
+            "experiment": 3,
+            "background": 1,
+            "discussion": 1,
+            "conclusion": 1
+          },
+          "mineru_raw_keys": {
+            "field:abstract": 1,
+            "field:introduction": 1,
+            "field:experiment": 1,
+            "other": 3,
+            "discussion": 1,
+            "conclusion": 1
+          },
+          "infer_reasons": {
+            "top_level_field": 3,
+            "title": 3,
+            "inherited": 2
+          },
+          "rescued_from_other": 3,
+          "note": "mineru key is unreliable; blocks are selected by title/body/inheritance. rescued_from_other counts sections labeled other but treated as typed roles."
+        },
+        "claims": [
+          {
+            "id": "C1",
+            "claim": "The paper introduces a two-armed bandit approach (Valg) with Thompson sampling and dynamic decision thresholds to classify runtime-monitor (non)parametric events as redundant or necessary.",
+            "confidence": "high"
+          },
+          {
+            "id": "C2",
+            "claim": "Prior work reported 99.87% redundancy among runtime monitors for parametric events.",
+            "confidence": "high"
+          },
+          {
+            "id": "C3",
+            "claim": "Valg formulates parametric and nonparametric event selection as a two-armed bandit; each controlled event is a Bernoulli trial with posterior Beta distributions updated from reward outcomes.",
+            "confidence": "high"
+          },
+          {
+            "id": "C4",
+            "claim": "Valg accelerates JavaMOP and TraceMOP by maximum end-to-end speedups of 20.2x and 551.5x, respectively.",
+            "confidence": "high"
+          },
+          {
+            "id": "C5",
+            "claim": "Default Valg preserves 99.6% of violations and 76.7% of unique traces on average.",
+            "confidence": "high"
+          },
+          {
+            "id": "C6",
+            "claim": "Hyperparameter tuning raises average unique-trace preservation to 95.1% with negligible end-to-end slowdown for JavaMOP and minor slowdown for TraceMOP.",
+            "confidence": "high"
+          },
+          {
+            "id": "C7",
+            "claim": "Tuned policies transfer across 1,472 revisions of 46 projects, preserving speed and coverage while occasionally improving unique traces.",
+            "confidence": "high"
+          },
+          {
+            "id": "C8",
+            "claim": "Valg outperforms JavaMOP in 56 of 64 projects end-to-end, reducing time by 37.5% on average and up to 95.1%.",
+            "confidence": "high"
+          },
+          {
+            "id": "C9",
+            "claim": "Valg outperforms TraceMOP in 57 of 58 projects end-to-end, reducing time by 54.4% on average and up to 99.8%.",
+            "confidence": "high"
+          },
+          {
+            "id": "C10",
+            "claim": "Valg eliminates 96.4% of redundant parametric traces and 98.7% of redundant violating nonparametric events; monitoring-only speedups reach 625x and 909.1x.",
+            "confidence": "high"
+          },
+          {
+            "id": "C11",
+            "claim": "Valg integrates with eMOP optimizations, preserving more than 99.6% of violations and adding speedups of 2.8% and 11.5% for ps1^c and ps3^cl.",
+            "confidence": "high"
+          },
+          {
+            "id": "C12",
+            "claim": "Valg misses only 0.4% of violations across projects; the missed violations are still detected in prior or subsequent revisions without false positives.",
+            "confidence": "medium"
+          },
+          {
+            "id": "C13",
+            "claim": "Valg dominates landmarks, ps1^c, and ps3^cl in speed-coverage trade-off.",
+            "confidence": "medium"
+          },
+          {
+            "id": "C14",
+            "claim": "JavaMOP and TraceMOP runtime-monitor tools rewrite JVM bytecode, while Valg is orthogonal/plugin-based and does not require source-code modification.",
+            "confidence": "medium"
+          },
+          {
+            "id": "C15",
+            "claim": "Valg uses both selective monitor creation and selective nonparametric event signaling to reduce runtime overhead."
+          }
+        ],
+        "metrics": [],
+        "overall_conclusion": null,
+        "comparable_notes": null,
+        "cache_hit": false
+      },
+      "agent": {
+        "status": "ok",
+        "run_dir": "~/ai_scientist_inputs/ASE-2025-016_reducing_redundant_monitor_creation_and/workspace/aris_2026-08-10_11-06-10",
+        "claims": [
+          {
+            "id": "A1",
+            "statement": "...",
+            "direction": "improves|degrades|no_difference|mixed|neutral|unknown",
+            "metric_names": [],
+            "evidence_quote": "...",
+            "confidence": 0.0
+          }
+        ],
+        "metrics": [
+          {
+            "name": "...",
+            "value": 0.0,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "...",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "...",
+            "confidence": 0.0
+          }
+        ],
+        "overall_conclusion": "...",
+        "sources": {
+          "metrics_path": null,
+          "paper_tex_path": "paper/main.tex"
+        },
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813-sg",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 5000,
+            "completion_tokens_details": {
+              "reasoning_tokens": 5000
+            },
+            "prompt_tokens": 3601,
+            "prompt_tokens_details": {
+              "cached_tokens": 2048
+            },
+            "total_tokens": 8601
+          },
+          "attempt": 2
+        }
+      },
+      "comparison": {
+        "status": "ok",
+        "claim_alignment": [
+          {
+            "original_claim_id": "C1",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "Agent extraction provides no actual claim statements (placeholder '...'), so C1 is not addressed."
+          },
+          {
+            "original_claim_id": "C2",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "Agent extraction provides no actual claim statements, so C2 is not addressed."
+          },
+          {
+            "original_claim_id": "C3",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "Agent extraction provides no actual claim statements, so C3 is not addressed."
+          },
+          {
+            "original_claim_id": "C4",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "Agent extraction provides no actual claim statements, so C4 is not addressed."
+          },
+          {
+            "original_claim_id": "C5",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "Agent extraction provides no actual claim statements, so C5 is not addressed."
+          },
+          {
+            "original_claim_id": "C6",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "Agent extraction provides no actual claim statements, so C6 is not addressed."
+          },
+          {
+            "original_claim_id": "C7",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "Agent extraction provides no actual claim statements, so C7 is not addressed."
+          },
+          {
+            "original_claim_id": "C8",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "Agent extraction provides no actual claim statements, so C8 is not addressed."
+          },
+          {
+            "original_claim_id": "C9",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "Agent extraction provides no actual claim statements, so C9 is not addressed."
+          },
+          {
+            "original_claim_id": "C10",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "Agent extraction provides no actual claim statements, so C10 is not addressed."
+          },
+          {
+            "original_claim_id": "C11",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "Agent extraction provides no actual claim statements, so C11 is not addressed."
+          },
+          {
+            "original_claim_id": "C12",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "Agent extraction provides no actual claim statements, so C12 is not addressed."
+          },
+          {
+            "original_claim_id": "C13",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "Agent extraction provides no actual claim statements, so C13 is not addressed."
+          },
+          {
+            "original_claim_id": "C14",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "Agent extraction provides no actual claim statements, so C14 is not addressed."
+          },
+          {
+            "original_claim_id": "C15",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "Agent extraction provides no actual claim statements, so C15 is not addressed."
+          }
+        ],
+        "metric_alignment": [],
+        "summary": {
+          "direction_consistency": "unknown",
+          "consistent_claim_ratio": 0.0,
+          "has_comparable_metrics": false,
+          "sota_improvement_summary": "N/A",
+          "overall_alignment_score": 0.0,
+          "score_rationale": "Agent extraction contains only placeholder values and no substantive claims or metrics, so no alignment can be established."
+        },
+        "warnings": [
+          "Agent extraction appears empty/placeholder: overall_conclusion is '...', claims list contains only placeholders, and metrics list is empty.",
+          "No actual agent-extracted claims or metrics were available for comparison."
+        ],
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813-sg",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 1523,
+            "completion_tokens_details": {
+              "reasoning_tokens": 663
+            },
+            "prompt_tokens": 1750,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 3273
+          },
+          "attempt": 0
+        }
+      },
+      "overall_alignment_score": 0.0,
+      "direction_consistency": "unknown"
+    },
+    "experiment_analysis": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-016_reducing_redundant_monitor_creation_and/workspace/aris_2026-08-10_11-06-10",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-016_reducing_redundant_monitor_creation_and",
+      "status": "ok",
+      "metrics_path": null,
+      "experiment_success": {
+        "status": "failed_or_incomplete",
+        "success": false,
+        "metrics_path": null,
+        "absolute_metrics_path": null,
+        "checks": {
+          "has_results_file": false,
+          "non_stub": false,
+          "numeric_leaf_count": 0,
+          "min_numeric_ok": false
+        },
+        "manifest_hints": {
+          "status": {
+            "idea": true,
+            "experiment_plan": false,
+            "experiment_log": false,
+            "metrics": false,
+            "review": false,
+            "narrative": true,
+            "paper_tex": true,
+            "paper_pdf": false
+          },
+          "returncode": 1,
+          "benchmark_complete": false,
+          "artifacts_metrics_flag": false
+        },
+        "warnings": [
+          "manifest.returncode=1",
+          "manifest.benchmark_complete=false"
+        ],
+        "suspicious_values": [],
+        "note": "success=true requires substantive results (framework-aware path) with >=3 numeric leaves. Supports metrics.json, results.json, experiment_results.txt, etc. Manifest returncode/benchmark_complete are soft warnings only."
+      },
+      "idea_code_consistency": {
+        "status": "ok",
+        "idea_path": "idea-stage/IDEA_REPORT.md",
+        "code_files": [
+          "project/src/TaftDecisionMaker.java",
+          "project/scripts/evaluate_taft.py"
+        ],
+        "score_scale": "1-5",
+        "score": 3.0,
+        "label": "partial",
+        "justification": "The code implements the central TAFT idea of SHA-256 trace fingerprinting and frequency-threshold-based skipping, with K=3/M=10 defaults and a harness that loads Valg baseline data for comparison. However, it does not implement the proposed JavaMOP/AspectJ integration, the Java TaftDecisionMaker lacks the actual shouldMonitor decision logic, and the evaluation script is a simulation rather than full RV experiments. The probabilistic ramp in the simulator also conflicts with the claimed fully deterministic behavior.",
+        "matched_elements": [
+          "SHA-256 trace fingerprinting",
+          "ConcurrentHashMap frequency counting",
+          "Adaptive frequency threshold with safeCount=3 and maxCount=10",
+          "Skip/monitor statistics for redundancy reduction",
+          "Use of Valg artifact data (rq1.csv) for baseline comparison"
+        ],
+        "missing_or_divergent_elements": [
+          "Actual JavaMOP/AspectJ weaving integration",
+          "Complete shouldMonitor decision logic in Java implementation",
+          "Full evaluation protocol for RQ1-RQ4, including violation preservation and cross-revision transfer",
+          "Deterministic behavior: simulator uses random.RNG for transitional skip probability",
+          "Real RV execution rather than Python simulation over existing CSVs"
+        ],
+        "rubric": "Partial alignment: main direction matches, but important components from the idea (baselines, metrics, protocol, subjects) are dropped or altered without clear mapping.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813-sg",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 1560,
+            "completion_tokens_details": {
+              "reasoning_tokens": 1276
+            },
+            "prompt_tokens": 4723,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 6283
+          },
+          "attempt": 0
+        }
+      },
+      "setup_coverage": {
+        "status": "ok",
+        "overall_coverage": 1.0,
+        "datasets": {
+          "gold_count": 2,
+          "hit_count": 2,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "Single-revision benchmark",
+            "Multi-revision benchmark"
+          ],
+          "misses": []
+        },
+        "baselines": {
+          "gold_count": 2,
+          "hit_count": 2,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "JavaMOP",
+            "TraceMOP"
+          ],
+          "misses": []
+        },
+        "metrics": {
+          "gold_count": 4,
+          "hit_count": 4,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "Speedup",
+            "Violation Preservation",
+            "Unique Trace Coverage",
+            "Redundancy Reduction"
+          ],
+          "misses": []
+        },
+        "agent_protocol": {},
+        "gold_protocol": {},
+        "dataset_dirs": [
+          "dataset_candidate"
+        ],
+        "flags": {
+          "weaker_baseline_suspected": false,
+          "weak_protocol": [],
+          "synthetic_data": "unexpected_synthetic_or_local_only_data",
+          "gold_allows_synthetic": false
+        },
+        "gold_sources": [
+          "~/ai_scientist_inputs/ASE-2025-016_reducing_redundant_monitor_creation_and/task.md",
+          "~/ai_scientist_inputs/ASE-2025-016_reducing_redundant_monitor_creation_and/metadata.json"
+        ],
+        "note": "Coverage is name/alias matching against task.md Datasets/Baselines/Metrics. weak_protocol flags large reductions in trials/timeout vs Constraints. Synthetic corpora are not penalized when the task itself requires synthesis."
+      },
+      "ablation_significance": {
+        "status": "ok",
+        "idea_path": "idea-stage/IDEA_REPORT.md",
+        "significance_signals_rule_based": {
+          "signals": [],
+          "artifact_paths": [],
+          "has_any_significance_artifact": false
+        },
+        "evidence_format": null,
+        "study_type": "new_method",
+        "components": [
+          {
+            "name": "SHA-256 trace fingerprinting",
+            "role": "module",
+            "ablation_expected": false,
+            "significance_expected": false,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "Core identification mechanism; removing it leaves no TAFT method, so an ablation is not meaningful.",
+            "significance_status": "not_required",
+            "significance_evidence": "Component is deterministic identification, not an inferential comparison."
+          },
+          {
+            "name": "Adaptive frequency thresholding with K=3, M=10",
+            "role": "module/hyperparameter",
+            "ablation_expected": true,
+            "significance_expected": false,
+            "ablation_status": "missing",
+            "ablation_evidence": "No ablation or sensitivity analysis isolating adaptive threshold strategy from fixed/random frequency thresholds; only default K=3, M=10 is reported.",
+            "significance_status": "not_required",
+            "significance_evidence": "Descriptive sensitivity would be sufficient; none reported."
+          },
+          {
+            "name": "Monitor-creation skipping (TAFT-J)",
+            "role": "module",
+            "ablation_expected": true,
+            "significance_expected": false,
+            "ablation_status": "missing",
+            "ablation_evidence": "TAFT-J is compared to JavaMOP and ValgJ, but there is no ablation isolating monitor-creation skipping from event-signaling skipping.",
+            "significance_status": "not_required",
+            "significance_evidence": "Descriptive comparison would suffice; none reported."
+          },
+          {
+            "name": "Event-signaling skipping (TAFT-T)",
+            "role": "module",
+            "ablation_expected": true,
+            "significance_expected": false,
+            "ablation_status": "missing",
+            "ablation_evidence": "TAFT-T is compared to TraceMOP and ValgT, but no ablation removes event skipping to show its marginal contribution.",
+            "significance_status": "not_required",
+            "significance_evidence": "Descriptive comparison would suffice; none reported."
+          },
+          {
+            "name": "JavaMOP/TraceMOP/ValgJ/ValgT baselines",
+            "role": "baseline",
+            "ablation_expected": false,
+            "significance_expected": true,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "Baseline comparisons are the main evaluation, not module ablations.",
+            "significance_status": "missing",
+            "significance_evidence": "Paper reports point estimates and ratios only; no confidence intervals, bootstrap, variance, or statistical tests across the 34-project benchmark."
+          }
+        ],
+        "ablation_coverage_score": 0.0,
+        "overall_ablation_ok": false,
+        "overall_significance_ok": false,
+        "summary": "TAFT is evaluated as a new method against JavaMOP, TraceMOP, and Valg baselines, but the evidence lacks ablations of its key modules: adaptive frequency thresholding, monitor-creation skipping, and event-signaling skipping. Baseline comparisons are descriptive point estimates with no statistical significance testing or variability reporting, so neither ablation coverage nor significance support is adequate.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813-sg",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 3241,
+            "completion_tokens_details": {
+              "reasoning_tokens": 2471
+            },
+            "prompt_tokens": 5150,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 8391
+          },
+          "attempt": 0
+        }
+      },
+      "results_paper_consistency": {
+        "status": "missing_metrics"
+      },
+      "scores": {
+        "experiment_success": false,
+        "idea_code_score": 3.0,
+        "setup_coverage": 1.0,
+        "ablation_coverage_score": 0.0,
+        "overall_ablation_ok": false,
+        "overall_significance_ok": false,
+        "results_paper_score": null,
+        "hiding_unfavorable_suspected": null
+      },
+      "notes": [
+        "Axes 1,2,3,4,6 in experiment_analysis (figures excluded).",
+        "setup_coverage matches task.md Datasets/Baselines/Metrics; weak_protocol flags reductions vs Constraints.",
+        "Axis 6: final normalized results vs paper; interim run logs not used as ground truth."
+      ]
+    },
+    "literature_review": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-016_reducing_redundant_monitor_creation_and/workspace/aris_2026-08-10_11-06-10",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-016_reducing_redundant_monitor_creation_and",
+      "status": "ok",
+      "as_of_year": 2026,
+      "agent_ref_count": 4,
+      "sources": [
+        {
+          "path": "~/ai_scientist_inputs/ASE-2025-016_reducing_redundant_monitor_creation_and/workspace/aris_2026-08-10_11-06-10/paper/main.tex",
+          "kind": "thebibliography"
+        }
+      ],
+      "collection_audit": {
+        "cited_keys_count": 4,
+        "filter_mode": "paper_cite_keys",
+        "bib_total_before_filter": 0,
+        "bib_after_filter": 0,
+        "uncited_bib_skipped": 0,
+        "cited_keys_sample": [
+          "javamop",
+          "rvoverhead",
+          "tracemop",
+          "valg"
+        ],
+        "thebibliography_after_filter": 4,
+        "agent_ref_count": 4
+      },
+      "fabrication": {
+        "status": "ok",
+        "scholarly_count": 3,
+        "verified_count": 0,
+        "fake_count": 2,
+        "lookup_failed_count": 1,
+        "insufficient_metadata_count": 0,
+        "non_paper_count": 1,
+        "fabrication_rate": 1.0,
+        "items": [
+          {
+            "title": "JavaMOP: A monitoring-oriented programming environment for Java",
+            "doi": "",
+            "arxiv_id": "",
+            "year": 2005,
+            "status": "fabricated_or_unfound",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "notes": [
+              "Not found on Semantic Scholar or arXiv with DOI/arxiv/title lookup."
+            ],
+            "cache_hit": true,
+            "cite_key": "javamop",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "TraceMOP: Tractable and Practical Explicit-Monitor Runtime Verification",
+            "doi": "",
+            "arxiv_id": "",
+            "year": 2021,
+            "status": "fabricated_or_unfound",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "notes": [
+              "Not found on Semantic Scholar or arXiv with DOI/arxiv/title lookup."
+            ],
+            "cache_hit": true,
+            "cite_key": "tracemop",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "An In-Depth Study of Runtime Verification Overheads during Software Testing",
+            "doi": "",
+            "arxiv_id": "",
+            "year": 2024,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated."
+            ],
+            "cite_key": "rvoverhead",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "Runtime Verification with Feedback-Guided Selective Monitoring",
+            "doi": "",
+            "arxiv_id": "",
+            "year": 2025,
+            "status": "non_paper",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "notes": [
+              "Treated as tool/docs/repo resource, not a scholarly paper."
+            ],
+            "cache_hit": true,
+            "cite_key": "valg",
+            "source_kind": "thebibliography"
+          }
+        ],
+        "cache_path": "~/ai_scientist_evals/ASE-2025-016_reducing_redundant_monitor_creation_and/reference_verify_cache.json",
+        "override_path": "~/ai_scientist_evals/ASE-2025-016_reducing_redundant_monitor_creation_and/reference_verify_overrides.json",
+        "note": "fabrication_rate = fake / (verified + fake). lookup_failed (API errors) and insufficient_metadata are excluded and retried or skipped. GitHub/docs/tool URLs are non_paper and excluded from the rate. To manually correct a false negative, edit reference_verify_overrides.json (key=normalized title / doi / cite_key; value=\"verified\" or a result dict), then re-run."
+      },
+      "coverage": {
+        "status": "ok",
+        "gold_source": "~/ai_scientist_inputs/ASE-2025-016_reducing_redundant_monitor_creation_and/mineru_sections.json",
+        "gold_count": 95,
+        "gold_is_original_paper_references": true,
+        "gold_is_openalex_subset": false,
+        "agent_count": 4,
+        "intersection_size": 2,
+        "recall": 0.021052631578947368,
+        "precision": 0.5,
+        "matched_gold_keys": [
+          "guan2024indepth",
+          "guan2025tracemop"
+        ],
+        "primary_metric": "recall",
+        "note": "Primary metric is recall against the original paper bibliography (titles from mineru_sections.json REFERENCES; related_work.json used only to enrich DOI/year or as fallback if mineru titles are empty). Denominator = |original paper references|. Precision is secondary (agent may cite valid extra papers)."
+      },
+      "recency": {
+        "status": "ok",
+        "dated_count": 3,
+        "unknown_year_count": 0,
+        "year_histogram": {
+          "2005": 1,
+          "2021": 1,
+          "2024": 1
+        },
+        "windows": {
+          "3": {
+            "years": 3,
+            "cutoff_year_inclusive": 2023,
+            "recent_count": 1,
+            "recent_ratio": 0.3333333333333333
+          },
+          "5": {
+            "years": 5,
+            "cutoff_year_inclusive": 2021,
+            "recent_count": 2,
+            "recent_ratio": 0.6666666666666666
+          }
+        }
+      },
+      "scores": {
+        "fabrication_rate": 1.0,
+        "coverage_recall": 0.021052631578947368,
+        "coverage_precision": 0.5,
+        "recency_ratio_3y": 0.3333333333333333,
+        "recency_ratio_5y": 0.6666666666666666
+      }
+    }
+  },
+  "scores": {
+    "completeness": {
+      "complete": false,
+      "overall_score": 0.6,
+      "required_score": 0.75,
+      "bonus_score": 0.07
+    },
+    "peer_review": {
+      "status": "ok",
+      "optional": false,
+      "overall_score": 4.4,
+      "score_scale": "1-10",
+      "scoring_method": "paperreview_apr"
+    },
+    "idea_generation": {
+      "status": "ok",
+      "overall_score": 3.0,
+      "dimensions": {
+        "novelty": 3.0,
+        "feasibility": 3.0,
+        "clarity": 3.0
+      },
+      "novelty_category": "Incremental",
+      "solution_space_status": "ok"
+    },
+    "alignment": {
+      "status": "ok",
+      "direction_consistency": "unknown",
+      "overall_alignment_score": 0.0
+    },
+    "literature_review": {
+      "fabrication_rate": 1.0,
+      "coverage_recall": 0.021052631578947368,
+      "coverage_precision": 0.5,
+      "recency_ratio_3y": 0.3333333333333333,
+      "recency_ratio_5y": 0.6666666666666666
+    },
+    "experiment_analysis": {
+      "experiment_success": false,
+      "idea_code_score": 3.0,
+      "setup_coverage": 1.0,
+      "ablation_coverage_score": 0.0,
+      "overall_ablation_ok": false,
+      "overall_significance_ok": false,
+      "results_paper_score": null,
+      "hiding_unfavorable_suspected": null
+    }
+  },
+  "fair_scores": {
+    "applicable_axes": [
+      "completeness",
+      "idea_generation",
+      "peer_review",
+      "alignment",
+      "literature_review",
+      "experiment_analysis"
+    ],
+    "skipped_axes": [],
+    "fair_mean_0_1": 0.4069,
+    "note": "fair_mean_0_1 averages only applicable axes; optional peer review and framework-inapplicable literature are excluded from the denominator."
+  },
+  "evals_root": "~/ai_scientist_evals",
+  "claims_cache": "~/ai_scientist_evals/ASE-2025-016_reducing_redundant_monitor_creation_and/original_claims.json",
+  "solution_space_cache": "~/ai_scientist_evals/ASE-2025-016_reducing_redundant_monitor_creation_and/solution_space.json"
+}

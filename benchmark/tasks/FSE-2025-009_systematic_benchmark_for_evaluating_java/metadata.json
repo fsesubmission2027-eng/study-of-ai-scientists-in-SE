@@ -1,0 +1,171 @@
+{
+  "id": "FSE-2025-009",
+  "paper_id": "1a79925e66807e4a976cc9f907089a22bf9b65a1",
+  "title": "Gleipner - A Benchmark for Gadget Chain Detection in Java Deserialization Vulnerabilities",
+  "abstract": "While multiple recent publications on detecting Java Deserialization Vulnerabilities highlight an increasing relevance of the topic, until now no proper benchmark has been established to evaluate the individual approaches. Hence, it has become increasingly difficult to show improvements over previous tools and trade-offs that were made. In this work, we synthesize the main challenges in gadget chain detection. More specifically, this unveils the constraints program analysis faces in the context of gadget chain detection. From there, we develop Gleipner: the first synthetic, large-scale and systematic benchmark to validate the effectiveness of algorithms for detecting gadget chains in the Java programming language. We then benchmark seven previous publications in the field using Gleipner. As a result, it shows, that (1) our benchmark provides a transparent, qualitative, and sound measurement for the maturity of gadget chain detecting tools, (2) Gleipner alleviates severe benchmarking flaws which were previously common in the field and (3) state-of-the-art tools still struggle with most challenges in gadget chain detection.",
+  "year": 2025,
+  "citation_count": 1,
+  "venue": "ACM International Conference on the Foundations of Software Engineering (FSE 2025)",
+  "venue_short": "FSE 2025",
+  "authors": [
+    "Bruno Kreyssig",
+    "Alexandre Bartel"
+  ],
+  "pdf_url": "",
+  "paper_url": "https://www.semanticscholar.org/paper/1a79925e66807e4a976cc9f907089a22bf9b65a1",
+  "paper_type": "dataset",
+  "award": "ACM SIGSOFT Distinguished Paper Award",
+  "subfield_label": "Software Security",
+  "introduction": "Insecure Deserialization is one of the OWASP Top Ten most severe vulnerabilities in software [22]. It first gained significant attention with the talk from Frohoff et al. in 2015 [25] and has since then inspired further research into its intricacies [2,30,50], mitigation [26,46,56,59], and detection techniques. The latter can be further divided into detecting insecure deserialization entry points [16,20,29] and finding so-called gadget chains within source code or bytecode [3,9,12,14,15,27,31,35,36,44,52,58]. Indeed, both conditions must be met to result in a deserialization vulnerability. In this work, we focus on the challenge of detecting deserialization gadget chains in Java, as it lately received abundant attention, and so far, no proper benchmark has been established to verify the individual approaches.\n\nThe idea of assessing vulnerability detection tools is not novel in itself. Beginning with the Juliet test suite for Java and C/C++ (2010) [7], large datasets of both synthetic and real-world vulnerable software artifacts were constructed to cover test scenarios for a variety of security-related products. For instance, there are numerous benchmarks for automated program repair (APR) [4,10] and",
+  "experiment": "The results are presented in Table 4. For readability, true positive (TP) cells are shaded red if not all true gadget chains were found. Conversely, false positive (FP) cells are highlighted in red if any false gadget chains were found. This metric is also used to determine the number of satisfied categories (final column), which indicates in how many categories a tool is sound and precise in gadget chain detection. This notion deserves to be emphasized: there is little utility in counting the total findings over all categories because categories are represented by different quantities of gadget chains. Rather, meaning is derived from the number of challenges accurately covered by the individual tools. Also, note that even though the fuzzer for JDD was unavailable (see Section 4.1), one can at least make observations regarding the lack of true positives found in the benchmark. Overall, the results show that gadget chain detection tools are both far from being mature, as well as newer tools being subject to substantial performance degradation. The latter finding is uncovered thanks to the granular setup of test cases in our benchmark. For instance, evaluating the most recent publications Crystallizer [52] and JDD [14] in the context of large search space reveals that both tools unsoundly handle long gadget chains 13 (see column 3, Depth Tests) and deep inheritance structures (column 4). These challenges in gadget chain detection are, however, handled by the earliest tools: Serianalyzer [3] and GadgetInspector [27]. By stating this, we do not intend to finger-point at the authors of new publications. It is evident that trade-offs had to be made to improve the tools in other areas (e.g., reducing false positives). Previously the authors could not transparently evaluate these areas of performance degradation because there was no proper benchmark to work with.\n\nApart from the challenge-based test cases, Gleipner also attempts to re-implement Ysoserial gadget chains. The tools' performance on these is depicted in Table 5. Chains highlighted in gray are those for which Method.invoke() cannot be trivially replaced with Gleipner's SinkGadget.sinkMethod(). For the CommonsCollections, this is due to the unique setup of the notorious Transformer chain. The other three chains execute a specific Method.invoke() instruction, which can only target getter methods, i.e., the method is only partially taintable due to the get prefix. Consequently, for these four gadget chains, we reconfigure the tools to search for chains using Method.invoke() as a sink gadget. Doing so also results in some of the tools' outputs being filled with false positives, which highlights the importance of using a custom sink method for the benchmark. -Result on synthetic chain aligns with publication result on Ysoserial.\n\n-Result on synthetic chain does not align with publication result on Ysoserial.\n\n-Unclear (which gadget chain was found in the underlying dependency).\n\nGadget Chain (1) (2) (3) (4) (5) (6) ( 7) entrypoint\n\nWe compared the gadget chain findings with the results reported in the tools' publications (if available). In Table 5, the ticks (✓) indicate whether the synthetic chain in our benchmark was found by the tool. Then, squares highlighted in green denote if the benchmark results align with the publications, and red if not. In some cases, it is not clear which Ysoserial gadget chain was found by a tool within a dependency (highlighted in yellow). Thus, we rerun SerHybrid (2), Tabby (5), Crystallizer (6), and JDD (7) against the actual dependencies. For Tabby, the sink gadgets are only reached through false positive gadgets in the HashSet class or not at all. Both Crystallizer and SerHybrid are unable to find the CommonsCollections1 gadget chain. We specifically reimplemented this chain to have the additional challenge of using a dynamic proxy as an entry point. I.e., CommonsCollections5 is identical to the former but uses a toString() trampoline instead of the proxy. Indeed, both tools only detect the latter. We first run JDD against the c3p0 dependency in isolation, and then, not having found the Ysoserial gadget chain, notice that this gadget chain only exists in conjunction with gadgets from the mchange-commons 14 library. After combining the two dependencies into a single JAR and rerunning JDD, the gadget chain is detected. Indeed, it seems the authors of JDD made the same mistake and, therefore, did not report the finding in their results section. In a way, this occurrence underlines that Ysoserial is not a benchmark. With these results, we conclude that it is feasible to synthetically replicate real-world gadget chains for the benchmark. One could have expected the tools to perform better on the simplified replicas in Gleipner. If anything 15 , the converse is the case. This implies that if a tool finds the benchmark gadget chain, it would also detect it in the real dependency.",
+  "section_quality": {
+    "has_abstract": true,
+    "has_introduction": true,
+    "has_experiment": true,
+    "intro_chars": 1218,
+    "experiment_chars": 4947
+  },
+  "introduction_source": "grobid_tei",
+  "experiment_source": "grobid_tei",
+  "background_source": "introduction",
+  "experiment_source_used": "experiment_section",
+  "task_title": "Systematic Benchmark for Evaluating Java Deserialization Gadget Chain Detectors",
+  "background": "Insecure deserialization is a top-10 web application vulnerability, and in Java, exploitation often relies on gadget chains—sequences of method invocations that attackers can abuse. Numerous static analysis tools have been proposed to detect these chains, but the evaluation practices are inconsistent: many tools are only tested against a small set of known chains (e.g., from the Ysoserial project) and lack transparent, reproducible comparisons. No standard benchmark systematically covers the diverse code patterns and complexity dimensions that arise in real software, making it difficult to assess the true effectiveness, precision, and recall of these tools. A comprehensive, publicly available benchmark is needed to measure the strengths and weaknesses of gadget chain detectors under controlled conditions.",
+  "research_question": "How can a benchmark be designed to systematically evaluate the precision and recall of Java deserialization gadget chain detection tools across a wide range of code complexities and realistic chain patterns?",
+  "experiment_setup": {
+    "datasets": [
+      {
+        "name": "DeserializationGadgetChainBenchmark",
+        "source": "Constructable by the researcher following the described challenge categories and known real‑world chains (e.g., Ysoserial). The dataset consists of multiple small, self‑contained Java programs, each embedding one or more gadget chains with controlled properties.",
+        "description": "A set of synthetic test cases covering varying chain depths, inheritance hierarchies, dynamic proxies, entry point types, and other code patterns, together with replicas of publicly known real‑world gadget chains (e.g., from Ysoserial). Ground truth is known by construction.",
+        "access": "constructable"
+      }
+    ],
+    "baselines": [
+      {
+        "name": "Serianalyzer",
+        "reference": "Rasthofer et al., 2019 (original publication)"
+      },
+      {
+        "name": "GadgetInspector",
+        "reference": "Baker et al., 2018 (original publication)"
+      },
+      {
+        "name": "SerHybrid",
+        "reference": "2022 (original publication)"
+      },
+      {
+        "name": "Tabby",
+        "reference": "2021 (original publication)"
+      },
+      {
+        "name": "Crystallizer",
+        "reference": "2023 (original publication)"
+      },
+      {
+        "name": "JDD",
+        "reference": "2023 (original publication)"
+      },
+      {
+        "name": "JDeserializer",
+        "reference": "2022 (original publication)"
+      }
+    ],
+    "metrics": [
+      {
+        "name": "True Positive Rate (Recall)",
+        "definition": "For each test case, the number of true gadget chains correctly reported divided by the total number of actual gadget chains in that case."
+      },
+      {
+        "name": "False Positive Count",
+        "definition": "Number of reported chains that are not actual gadget chains (i.e., false alarms)."
+      },
+      {
+        "name": "Category Coverage",
+        "definition": "The number of distinct challenge categories in which a tool achieves perfect precision (zero false positives) and perfect recall (all true chains found)."
+      }
+    ],
+    "rqs": [
+      "RQ1: How does each tool perform (true positives and false positives) across different categories of gadget chain complexity (e.g., varying chain depth, inheritance depth, entry-point types)?",
+      "RQ2: To what extent do the tools' results on the benchmark align with their reported performance on real-world Ysoserial chains?",
+      "RQ3: What precision–recall trade-offs can be observed among the tools when evaluated on a systematic benchmark?"
+    ],
+    "target_subject": "Java deserialization gadget chain detection tools that perform static analysis. Examples of such tools include Serianalyzer, GadgetInspector, SerHybrid, Tabby, Crystallizer, JDD, and JDeserializer.",
+    "constraints": "[NOT SPECIFIED IN PAPER]"
+  },
+  "expected_artifacts": [
+    "idea",
+    "code",
+    "experiment_results",
+    "paper"
+  ],
+  "feasibility_notes": "The benchmark must be implemented as a collection of self‑contained Java projects; this requires strong Java and program analysis knowledge. Computational resources are modest: typical static analysis tools run on standard workstations. The primary difficulty lies in designing test cases that comprehensively cover real‑world patterns while guaranteeing the ground truth is unambiguous.",
+  "difficulty": "medium",
+  "seed_papers": [
+    {
+      "title": "Phase Gadget Synthesis for Shallow Circuits",
+      "year": 2019,
+      "authors": [
+        "Alexander Cowtan",
+        "Silas Dilkes",
+        "Ross Duncan"
+      ],
+      "doi": "10.4204/EPTCS.318.13",
+      "arxiv_id": "1906.01734",
+      "pdf_url": "https://arxiv.org/pdf/1906.01734",
+      "citation_count": 155
+    },
+    {
+      "title": "Asymptotically Faster Multi-Key Homomorphic Encryption from Homomorphic Gadget Decomposition",
+      "year": 2023,
+      "authors": [
+        "Taechan Kim",
+        "Hyesun Kwak",
+        "Dongwon Lee"
+      ],
+      "doi": "10.1145/3576915.3623176",
+      "arxiv_id": null,
+      "pdf_url": "",
+      "citation_count": 41
+    },
+    {
+      "title": "Benchmarking logical three-qubit quantum Fourier transform encoded in the Steane code on a trapped-ion quantum computer",
+      "year": 2024,
+      "authors": [
+        "K. Mayer",
+        "C. Ryan-Anderson",
+        "N. Brown"
+      ],
+      "doi": null,
+      "arxiv_id": "2404.08616",
+      "pdf_url": "",
+      "citation_count": 35
+    },
+    {
+      "title": "Benchmark Graphs for Practical Graph Isomorphism",
+      "year": 2017,
+      "authors": [
+        "Daniel Neuen",
+        "Pascal Schweitzer"
+      ],
+      "doi": "10.4230/LIPIcs.ESA.2017.60",
+      "arxiv_id": "1705.03686",
+      "pdf_url": "",
+      "citation_count": 34
+    },
+    {
+      "title": "Electronic Gadget Rating Model Using Feature Based Summarization",
+      "year": 2021,
+      "authors": [
+        "K. Kanimozhi",
+        "R. Jeyavathana",
+        "T. Vignesh"
+      ],
+      "doi": "10.1109/ICCCI50826.2021.9402468",
+      "arxiv_id": null,
+      "pdf_url": "",
+      "citation_count": 17
+    }
+  ],
+  "paper_title": "Gleipner - A Benchmark for Gadget Chain Detection in Java Deserialization Vulnerabilities"
+}

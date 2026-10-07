@@ -1,0 +1,181 @@
+{
+  "status": "ok",
+  "task_dir": "~/ai_scientist_inputs/ISSTA-2025-007_assessing_the_validity_of_function_level",
+  "paper_title": "Top Score on the Wrong Exam: On Benchmarking in Machine Learning for Vulnerability Detection",
+  "task_id": "ISSTA-2025-007",
+  "selection": {
+    "num_blocks": 6,
+    "total_chars": 31998,
+    "inferred_roles": {
+      "abstract": 1,
+      "introduction": 1,
+      "experiment": 3,
+      "discussion": 1
+    },
+    "mineru_raw_keys": {
+      "field:abstract": 1,
+      "field:introduction": 1,
+      "field:experiment": 1,
+      "other": 3
+    },
+    "infer_reasons": {
+      "top_level_field": 3,
+      "inherited": 1,
+      "body_override": 1,
+      "title": 1
+    },
+    "rescued_from_other": 3,
+    "note": "mineru key is unreliable; blocks are selected by title/body/inheritance. rescued_from_other counts sections labeled other but treated as typed roles."
+  },
+  "claims": [
+    {
+      "id": "C1",
+      "statement": "The prevailing function-level binary classification definition of ML4VD is ill-defined because vulnerability often cannot be decided without calling context.",
+      "direction": "neutral",
+      "metric_names": [
+        "context_dependent_vulnerability_ratio",
+        "context_dependent_security_ratio"
+      ],
+      "evidence_quote": "the vulnerability of a function cannot be decided without further context for more than 90% of functions",
+      "confidence": 0.95
+    },
+    {
+      "id": "C2",
+      "statement": "Popular ML4VD datasets contain noisy labels: only 39%-65% of sampled functions labeled vulnerable actually contain security vulnerabilities.",
+      "direction": "degrades",
+      "metric_names": [
+        "noisy_label_ratio"
+      ],
+      "evidence_quote": "Out of the 100 functions per dataset that were originally labeled as vulnerable, only 39%-65% actually contain security vulnerabilities.",
+      "confidence": 0.95
+    },
+    {
+      "id": "C3",
+      "statement": "High ML4VD benchmark scores can be achieved via spurious correlations without detecting vulnerabilities.",
+      "direction": "degrades",
+      "metric_names": [
+        "accuracy",
+        "success_ratio"
+      ],
+      "evidence_quote": "high scores can be achieved even when only word counts are available",
+      "confidence": 0.9
+    }
+  ],
+  "metrics": [
+    {
+      "name": "context_dependent_vulnerability_ratio",
+      "value": 0.9,
+      "unit": "ratio",
+      "higher_is_better": false,
+      "setting": "manual labeling of 300 vulnerable-labeled functions from BigVul, Devign, DiverseVul",
+      "is_sota_or_best": false,
+      "baseline_name": null,
+      "baseline_value": null,
+      "evidence_quote": "the vulnerability of a function cannot be decided without further context for more than 90% of functions",
+      "confidence": 0.9
+    },
+    {
+      "name": "noisy_label_ratio",
+      "value": 0.39,
+      "unit": "ratio",
+      "higher_is_better": false,
+      "setting": "BigVul sample of 100 vulnerable-labeled functions",
+      "is_sota_or_best": false,
+      "baseline_name": null,
+      "baseline_value": null,
+      "evidence_quote": "only 39%-65% (Devign: 47%, BigVul: 39%, DiverseVul: 65%) actually contain security vulnerabilities",
+      "confidence": 0.95
+    },
+    {
+      "name": "noisy_label_ratio",
+      "value": 0.47,
+      "unit": "ratio",
+      "higher_is_better": false,
+      "setting": "Devign sample of 100 vulnerable-labeled functions",
+      "is_sota_or_best": false,
+      "baseline_name": null,
+      "baseline_value": null,
+      "evidence_quote": "Devign: 47%",
+      "confidence": 0.95
+    },
+    {
+      "name": "noisy_label_ratio",
+      "value": 0.65,
+      "unit": "ratio",
+      "higher_is_better": false,
+      "setting": "DiverseVul sample of 100 vulnerable-labeled functions",
+      "is_sota_or_best": false,
+      "baseline_name": null,
+      "baseline_value": null,
+      "evidence_quote": "DiverseVul: 65%",
+      "confidence": 0.95
+    },
+    {
+      "name": "inter_rater_agreement",
+      "value": 0.82,
+      "unit": "ratio",
+      "higher_is_better": true,
+      "setting": "first labeling step: vulnerable vs secure",
+      "is_sota_or_best": false,
+      "baseline_name": null,
+      "baseline_value": null,
+      "evidence_quote": "the labels of the two researchers agreed for 82% of all functions",
+      "confidence": 0.95
+    },
+    {
+      "name": "cohen_kappa",
+      "value": 0.64,
+      "unit": "ratio",
+      "higher_is_better": true,
+      "setting": "first labeling step: vulnerable vs secure",
+      "is_sota_or_best": false,
+      "baseline_name": null,
+      "baseline_value": null,
+      "evidence_quote": "resulting in a Cohen Kappa value of 0.64",
+      "confidence": 0.95
+    },
+    {
+      "name": "inter_rater_agreement",
+      "value": 0.98,
+      "unit": "ratio",
+      "higher_is_better": true,
+      "setting": "second labeling step: context dependence",
+      "is_sota_or_best": false,
+      "baseline_name": null,
+      "baseline_value": null,
+      "evidence_quote": "the labels of the two researchers agreed for 98% of all functions",
+      "confidence": 0.95
+    },
+    {
+      "name": "cohen_kappa",
+      "value": 0.96,
+      "unit": "ratio",
+      "higher_is_better": true,
+      "setting": "second labeling step: context dependence",
+      "is_sota_or_best": false,
+      "baseline_name": null,
+      "baseline_value": null,
+      "evidence_quote": "resulting in a Cohen Kappa value of 0.96",
+      "confidence": 0.95
+    }
+  ],
+  "overall_conclusion": "The paper argues that function-level binary classification is an ill-defined task for ML4VD because vulnerability labels depend heavily on context and many labels are noisy. Popular datasets can be exploited via spurious correlations, so reported high scores do not demonstrate real vulnerability detection capability.",
+  "comparable_notes": "Fair comparisons should account for dataset noise, use patch-commit/CVE-confirmed labels, and report whether vulnerability is context-dependent versus context-independent. Evaluations should not rely solely on function-level classification accuracy without addressing spurious correlations.",
+  "llm_meta": {
+    "model": "deepseek-v4-pro-0813",
+    "base_url": "https://api-sg.umodelverse.ai/v1",
+    "usage": {
+      "completion_tokens": 2664,
+      "completion_tokens_details": {
+        "reasoning_tokens": 1321
+      },
+      "prompt_tokens": 8314,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "total_tokens": 10978
+    },
+    "attempt": 1
+  },
+  "cache_hit": false
+}

@@ -1,0 +1,1470 @@
+{
+  "run_dir": "~/ai_scientist_inputs/ASE-2025-016_reducing_redundant_monitor_creation_and/workspace/tiny_scientist_2026-08-10_13-11-24",
+  "task_dir": "~/ai_scientist_inputs/ASE-2025-016_reducing_redundant_monitor_creation_and",
+  "framework": "tiny_scientist",
+  "fairness_audit": [
+    {
+      "axis": "completeness",
+      "was_unfair": "Required both paper.tex AND paper.pdf; any tool missing one failed equally.",
+      "fix": "Paper gate: PDF=1.0; TeX-only=0.5; ``complete`` requires PDF."
+    },
+    {
+      "axis": "completeness",
+      "was_unfair": "``results`` counted stub/seed JSON (dataset_candidate/metrics.json).",
+      "fix": "``results`` requires substantive numeric results via results_normalize."
+    },
+    {
+      "axis": "experiment_success",
+      "was_unfair": "Only metrics.json; ignored results.json / experiment_results.txt.",
+      "fix": "Framework-ordered result candidates + normalized loaders."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Penalized tools with no bib; airesearcher has no workspace references.",
+      "fix": "literature_applicable=false → status not_applicable; excluded from fair aggregate."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "related_work.json subset as gold made recall hard to interpret.",
+      "fix": "Coverage gold is original paper REFERENCES from mineru; related_work only enriches metadata/fallback."
+    },
+    {
+      "axis": "peer_review",
+      "was_unfair": "Missing Stanford report looked like evaluation failure.",
+      "fix": "status not_provided; optional axis, never counts as tool failure."
+    },
+    {
+      "axis": "paths/find_results",
+      "was_unfair": "Picked downloads/** and sandbox noise (e.g. airesearcher LLVM tree).",
+      "fix": "Exclude downloads/, seeds/, dataset_candidate/, sandbox junk paths."
+    },
+    {
+      "axis": "paths/framework_noise",
+      "was_unfair": "DeepScientist .deepscientist_npm / runtime / skills templates counted as code/paper/results.",
+      "fix": "FRAMEWORK_NOISE_DIRS+markers; quest worktree + eval_output results; paper md drafts; reject template tex."
+    },
+    {
+      "axis": "paths/paper_tex",
+      "was_unfair": "tiny_scientist / ACL runs store paper under latex/*.tex; evaluator only looked at paper/main.tex.",
+      "fix": "latex/**/*.tex with substantive-body heuristic; find_paper_document uses same rules."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Entire custom.bib (300+ anthology entries) verified when paper had zero \\cite commands.",
+      "fix": "collect_agent_references filters bib to in-text cite keys; skips uncited bulk bib (>40 entries)."
+    },
+    {
+      "axis": "paths/ai_scientist_summaries",
+      "was_unfair": "AI Scientist can persist substantive results and paper-like drafts in *_summary.json logs rather than paper/main.tex or results/**/*.json.",
+      "fix": "Treat draft_summary/research_summary as weak paper documents and summary JSONs as result candidates."
+    },
+    {
+      "axis": "framework/ai_scientist_v2",
+      "was_unfair": "Manifest framework ``ai_scientist_v2`` fell through to profile ``unknown``, skipping AI-Scientist idea/result path priorities.",
+      "fix": "Normalize ``ai_scientist_v2`` (and common aliases) to profile key ``ai_scientist``."
+    },
+    {
+      "axis": "idea_generation",
+      "was_unfair": "plan.md/todos.md weak proxies scored same as structured idea.json.",
+      "fix": "Framework idea_priority tried first; missing idea → not_applicable where appropriate."
+    }
+  ],
+  "generated_at": "2026-10-01T10:37:47",
+  "axes": [
+    "alignment",
+    "completeness",
+    "experiment_analysis",
+    "idea_generation",
+    "literature_review",
+    "peer_review"
+  ],
+  "results": {
+    "completeness": {
+      "framework": "tiny_scientist",
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-016_reducing_redundant_monitor_creation_and/workspace/tiny_scientist_2026-08-10_13-11-24",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-016_reducing_redundant_monitor_creation_and",
+      "complete": false,
+      "required_score": 0.875,
+      "bonus_score": 0.03,
+      "overall_score": 0.7,
+      "missing": [],
+      "required": {
+        "idea": {
+          "path": "artifacts/idea.json",
+          "bytes": 10858,
+          "via": "candidate"
+        },
+        "code": {
+          "count": 3,
+          "files": [
+            {
+              "path": "artifacts/code/experiment.py",
+              "bytes": 3514,
+              "via": "glob"
+            },
+            {
+              "path": "artifacts/code/run_1.py",
+              "bytes": 12160,
+              "via": "glob"
+            },
+            {
+              "path": "artifacts/code/run_3.py",
+              "bytes": 3514,
+              "via": "glob"
+            }
+          ]
+        },
+        "results": {
+          "substantive": true,
+          "normalized_path": "experiment_results.txt",
+          "numeric_leaf_count": 1032,
+          "discovered_files": [
+            {
+              "path": "artifacts/results/run_3/results.json",
+              "bytes": 175,
+              "via": "glob"
+            },
+            {
+              "path": "artifacts/results/experiment_results.txt",
+              "bytes": 36428,
+              "via": "glob"
+            },
+            {
+              "path": "artifacts/results/run_1/final_info.json",
+              "bytes": 34055,
+              "via": "glob"
+            }
+          ],
+          "metrics_keys_sample": [
+            "run_1"
+          ]
+        },
+        "paper": {
+          "tex": {
+            "path": "latex/acl_latex.tex",
+            "bytes": 22429,
+            "via": "candidate"
+          },
+          "pdf": null,
+          "md": null,
+          "json": null,
+          "status": "tex_only",
+          "score": 0.5
+        }
+      },
+      "bonus": {
+        "experiment_plan": null,
+        "experiment_log": {
+          "path": "tiny_scientist_run.log",
+          "bytes": 167715,
+          "via": "glob"
+        },
+        "review": null,
+        "readme": null,
+        "narrative": null,
+        "bib": null
+      },
+      "manifest_status": {
+        "code": true,
+        "paper": false
+      },
+      "gate_scores": {
+        "idea": 1.0,
+        "code": 1.0,
+        "results": 1.0,
+        "paper": 0.5
+      },
+      "fairness": {
+        "gates": [
+          "idea",
+          "code",
+          "results",
+          "paper"
+        ],
+        "paper_gate_rule": "PDF=1.0; TeX-only/md_only/json_only=0.5; complete requires PDF",
+        "results_gate_rule": "substantive numeric results via framework-aware normalize_results",
+        "audit_ref": "framework_profile.FAIRNESS_AUDIT"
+      },
+      "notes": [
+        "Required: idea, code, substantive results, paper (PDF full; TeX/markdown/JSON draft half).",
+        "Stub/seed metrics (e.g. dataset_candidate/metrics.json) do not satisfy results.",
+        "Framework noise (.deepscientist_npm, skills/templates, runtime) is excluded from code/results/paper.",
+        "Manifest status is informational; disk presence is authoritative."
+      ]
+    },
+    "idea_generation": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-016_reducing_redundant_monitor_creation_and/workspace/tiny_scientist_2026-08-10_13-11-24",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-016_reducing_redundant_monitor_creation_and",
+      "idea_path": "~/ai_scientist_inputs/ASE-2025-016_reducing_redundant_monitor_creation_and/workspace/tiny_scientist_2026-08-10_13-11-24/artifacts/idea.json",
+      "status": "ok",
+      "dimensions": {
+        "novelty": {
+          "score": 3.0,
+          "justification": "The core idea is a meaningful optimization of existing JavaMOP-style runtime verification, building directly on the redundancy identified in R30. The memoization scheme is an incremental extension rather than a paradigm shift: it combines standard rolling hash, Bloom filter, and LRU cache but does not overturn the prevailing monitoring approach or introduce a fundamentally new mechanism.",
+          "rubric": "Incremental: a meaningful extension or optimization of prior baseline work that fixes a concrete prior limitation, but the core paradigm is unchanged.",
+          "category": "Incremental",
+          "nearest_solution_space_ids": [
+            "R30",
+            "R29",
+            "R32",
+            "R45"
+          ],
+          "differentiation": "MemoMOP goes beyond R30's empirical finding of >99% redundant monitors/events by proposing an on-the-fly trace-prefix state memoization mechanism. Unlike R29/R32 (faster explicit-trace MOP/TraceMOP) or R45 (garbage collection for parametric monitors), MemoMOP caches non-violating monitor-state fingerprints using rolling polynomial hash, ConcurrentHashMap, Bloom filter, and LRU eviction to drop redundant event delivery while preserving detection."
+        },
+        "feasibility": {
+          "score": 3.0,
+          "justification": "Integrating MemoMOP into JavaMOP requires nontrivial engineering: a per-binding rolling polynomial hash, a global thread-safe ConcurrentHashMap, a Bloom filter with 10^7 bits and 7 hash functions, and an LRU eviction policy. The Valg benchmark and JavaMOP are openly available, so this is standard research engineering effort, not a compute catastrophe or extreme low-level tooling build.",
+          "rubric": "Moderate workload (sweet spot): needs nontrivial coding such as scripting existing open-source tools (parsers, CFG extractors) or building a custom graph-processing pipeline; standard research engineering effort."
+        },
+        "clarity": {
+          "score": 4.0,
+          "justification": "The idea specifies the model ('on-the-fly memoization scheme'), dataset ('Valg benchmark (Guan & Legunsen, OOPSLA 2021)'), and evaluation metrics ('Speedup = T_baseline / T_MemoMOP', 'Violation Preservation', 'Unique Trace Coverage', 'Redundancy Reduction'). Key parameters like hash base/modulus, cache capacity, and Bloom filter size are explicitly given. Some details remain underspecified, especially cache key composition for parametric bindings and how monitor-state serialization/storage is handled across bindings.",
+          "rubric": "Clear and concrete: steps are explicit with a reasonable, specific experiment design (baseline tools, metric definitions); can be turned into a solid proposal."
+        }
+      },
+      "overall_score": 3.4,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "novelty",
+        "feasibility",
+        "clarity"
+      ],
+      "solution_space": {
+        "status": "ok",
+        "paper_count": 103,
+        "entry_count": 103,
+        "cache_hit": true,
+        "source_file": "~/ai_scientist_inputs/ASE-2025-016_reducing_redundant_monitor_creation_and/mineru_sections.json",
+        "stats": {
+          "papers": 103,
+          "extracted": 103,
+          "usable_abstracts": 48,
+          "citation_meta_abstracts": 0,
+          "missing_abstracts": 55,
+          "mineru_titles": 95,
+          "related_work_titles": 81,
+          "abstracts_attached": 48,
+          "related_work_extras": 8,
+          "batches": 6
+        },
+        "error": null
+      },
+      "notes": [
+        "Scores the intermediate idea artifact (not the final paper).",
+        "Dimensions: novelty, feasibility, clarity (each 1-5). Excitement removed.",
+        "Novelty is scored against a Solution Space built from mineru REFERENCES titles (+ related_work.json abstracts when matched)."
+      ],
+      "idea_via": "candidate",
+      "idea_relative": "artifacts/idea.json",
+      "summary": "MemoMOP proposes an on-the-fly memoization layer for JavaMOP that caches non-violating trace-prefix monitor states using rolling hashes, a Bloom filter, and an LRU cache to skip redundant events. It aims to reduce test-time RV overhead while guaranteeing no missed violations. The plan is concrete with a clear benchmark and metrics, but the core contribution is an incremental engineering optimization of known redundancy rather than a conceptual breakthrough.",
+      "strengths": [
+        "Concrete mechanism specified: rolling polynomial hash base 31/mod 2^61-1, ConcurrentHashMap, Bloom filter, LRU eviction.",
+        "Clear evaluation setup using the Valg benchmark and measurable Speedup, Violation Preservation, Unique Trace Coverage, and Redundancy Reduction.",
+        "Correctness rationale: only non-violating prefixes are cached, and cache misses conservatively forward events.",
+        "Directly targets empirically observed redundant overhead in runtime verification for testing."
+      ],
+      "weaknesses": [],
+      "llm_meta": {
+        "model": "deepseek-v4-pro-0813",
+        "base_url": "https://api-sg.umodelverse.ai/v1",
+        "usage": {
+          "completion_tokens": 2108,
+          "completion_tokens_details": {
+            "reasoning_tokens": 1416
+          },
+          "prompt_tokens": 856,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "total_tokens": 2964
+        },
+        "attempt": 0
+      }
+    },
+    "peer_review": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-016_reducing_redundant_monitor_creation_and/workspace/tiny_scientist_2026-08-10_13-11-24",
+      "review_report": null,
+      "paper_pdf": null,
+      "paper_tex": "~/ai_scientist_inputs/ASE-2025-016_reducing_redundant_monitor_creation_and/workspace/tiny_scientist_2026-08-10_13-11-24/latex/acl_latex.tex",
+      "status": "not_provided",
+      "dimensions": {},
+      "overall_score": null,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "soundness",
+        "significance",
+        "novelty",
+        "presentation",
+        "credibility"
+      ],
+      "notes": [
+        "Stanford Agentic Reviewer (paperreview.ai): manual download to artifacts/peer_review/stanford_apr.md, or pass --auto-paperreview.",
+        "Dimensions: soundness, significance, novelty, presentation, credibility (each 1-5)."
+      ],
+      "paperreview": {
+        "status": "skipped",
+        "reason": "no_pdf"
+      },
+      "optional": true,
+      "hint": "Optional external review (Stanford APR). Upload paper/main.pdf to https://paperreview.ai/ , save review to ~/ai_scientist_inputs/ASE-2025-016_reducing_redundant_monitor_creation_and/workspace/tiny_scientist_2026-08-10_13-11-24/artifacts/peer_review/stanford_apr.md"
+    },
+    "alignment": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-016_reducing_redundant_monitor_creation_and/workspace/tiny_scientist_2026-08-10_13-11-24",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-016_reducing_redundant_monitor_creation_and",
+      "status": "ok",
+      "original": {
+        "paper_title": "Faster Runtime Verification during Testing via Feedback-Guided Selective Monitoring",
+        "selection": {
+          "num_blocks": 8,
+          "total_chars": 31920,
+          "inferred_roles": {
+            "abstract": 1,
+            "introduction": 1,
+            "experiment": 3,
+            "background": 1,
+            "discussion": 1,
+            "conclusion": 1
+          },
+          "mineru_raw_keys": {
+            "field:abstract": 1,
+            "field:introduction": 1,
+            "field:experiment": 1,
+            "other": 3,
+            "discussion": 1,
+            "conclusion": 1
+          },
+          "infer_reasons": {
+            "top_level_field": 3,
+            "title": 3,
+            "inherited": 2
+          },
+          "rescued_from_other": 3,
+          "note": "mineru key is unreliable; blocks are selected by title/body/inheritance. rescued_from_other counts sections labeled other but treated as typed roles."
+        },
+        "claims": [
+          {
+            "id": "C1",
+            "claim": "The paper introduces a two-armed bandit approach (Valg) with Thompson sampling and dynamic decision thresholds to classify runtime-monitor (non)parametric events as redundant or necessary.",
+            "confidence": "high"
+          },
+          {
+            "id": "C2",
+            "claim": "Prior work reported 99.87% redundancy among runtime monitors for parametric events.",
+            "confidence": "high"
+          },
+          {
+            "id": "C3",
+            "claim": "Valg formulates parametric and nonparametric event selection as a two-armed bandit; each controlled event is a Bernoulli trial with posterior Beta distributions updated from reward outcomes.",
+            "confidence": "high"
+          },
+          {
+            "id": "C4",
+            "claim": "Valg accelerates JavaMOP and TraceMOP by maximum end-to-end speedups of 20.2x and 551.5x, respectively.",
+            "confidence": "high"
+          },
+          {
+            "id": "C5",
+            "claim": "Default Valg preserves 99.6% of violations and 76.7% of unique traces on average.",
+            "confidence": "high"
+          },
+          {
+            "id": "C6",
+            "claim": "Hyperparameter tuning raises average unique-trace preservation to 95.1% with negligible end-to-end slowdown for JavaMOP and minor slowdown for TraceMOP.",
+            "confidence": "high"
+          },
+          {
+            "id": "C7",
+            "claim": "Tuned policies transfer across 1,472 revisions of 46 projects, preserving speed and coverage while occasionally improving unique traces.",
+            "confidence": "high"
+          },
+          {
+            "id": "C8",
+            "claim": "Valg outperforms JavaMOP in 56 of 64 projects end-to-end, reducing time by 37.5% on average and up to 95.1%.",
+            "confidence": "high"
+          },
+          {
+            "id": "C9",
+            "claim": "Valg outperforms TraceMOP in 57 of 58 projects end-to-end, reducing time by 54.4% on average and up to 99.8%.",
+            "confidence": "high"
+          },
+          {
+            "id": "C10",
+            "claim": "Valg eliminates 96.4% of redundant parametric traces and 98.7% of redundant violating nonparametric events; monitoring-only speedups reach 625x and 909.1x.",
+            "confidence": "high"
+          },
+          {
+            "id": "C11",
+            "claim": "Valg integrates with eMOP optimizations, preserving more than 99.6% of violations and adding speedups of 2.8% and 11.5% for ps1^c and ps3^cl.",
+            "confidence": "high"
+          },
+          {
+            "id": "C12",
+            "claim": "Valg misses only 0.4% of violations across projects; the missed violations are still detected in prior or subsequent revisions without false positives.",
+            "confidence": "medium"
+          },
+          {
+            "id": "C13",
+            "claim": "Valg dominates landmarks, ps1^c, and ps3^cl in speed-coverage trade-off.",
+            "confidence": "medium"
+          },
+          {
+            "id": "C14",
+            "claim": "JavaMOP and TraceMOP runtime-monitor tools rewrite JVM bytecode, while Valg is orthogonal/plugin-based and does not require source-code modification.",
+            "confidence": "medium"
+          },
+          {
+            "id": "C15",
+            "claim": "Valg uses both selective monitor creation and selective nonparametric event signaling to reduce runtime overhead."
+          }
+        ],
+        "metrics": [],
+        "overall_conclusion": null,
+        "comparable_notes": null,
+        "cache_hit": true
+      },
+      "agent": {
+        "status": "ok",
+        "run_dir": "~/ai_scientist_inputs/ASE-2025-016_reducing_redundant_monitor_creation_and/workspace/tiny_scientist_2026-08-10_13-11-24",
+        "claims": [
+          {
+            "id": "A1",
+            "statement": "MemoMOP preserved all specification violations in run_1 (median 100.0, IQR 0.0).",
+            "direction": "no_difference",
+            "metric_names": [
+              "violation_preservation"
+            ],
+            "evidence_quote": "\"violation_preservation\": {\"median\": 100.0, \"iqr\": 0.0, \"values\": [100.0, 100.0, ...]}",
+            "confidence": 0.95
+          },
+          {
+            "id": "A2",
+            "statement": "MemoMOP achieved 100% unique trace coverage in run_1 (median 100.0, IQR 0.0).",
+            "direction": "no_difference",
+            "metric_names": [
+              "unique_trace_coverage"
+            ],
+            "evidence_quote": "\"unique_trace_coverage\": {\"median\": 100.0, \"iqr\": 0.0, \"values\": [100.0, 100.0, ...]}",
+            "confidence": 0.95
+          },
+          {
+            "id": "A3",
+            "statement": "MemoMOP showed a median speedup of 0.15642506301316136 in run_1 (IQR 0.033303159714768354), indicating slower performance than baseline.",
+            "direction": "degrades",
+            "metric_names": [
+              "speedup"
+            ],
+            "evidence_quote": "\"speedup\": {\"median\": 0.15642506301316136, \"iqr\": 0.033303159714768354, ...}",
+            "confidence": 0.9
+          },
+          {
+            "id": "A4",
+            "statement": "MemoMOP achieved 0% redundancy reduction in run_1 (median 0.0, IQR 0.0).",
+            "direction": "no_difference",
+            "metric_names": [
+              "redundancy_reduction"
+            ],
+            "evidence_quote": "\"redundancy_reduction\": {\"median\": 0.0, \"iqr\": 0.0, \"values\": [0.0, 0.0, ...]}",
+            "confidence": 0.95
+          }
+        ],
+        "metrics": [
+          {
+            "name": "speedup",
+            "value": 0.15642506301316136,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "run_1",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "\"speedup\": {\"median\": 0.15642506301316136, \"iqr\": 0.033303159714768354}",
+            "confidence": 0.95
+          },
+          {
+            "name": "violation_preservation",
+            "value": 100.0,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "run_1",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "\"violation_preservation\": {\"median\": 100.0, \"iqr\": 0.0}",
+            "confidence": 0.95
+          },
+          {
+            "name": "unique_trace_coverage",
+            "value": 100.0,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "run_1",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "\"unique_trace_coverage\": {\"median\": 100.0, \"iqr\": 0.0}",
+            "confidence": 0.95
+          },
+          {
+            "name": "redundancy_reduction",
+            "value": 0.0,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "run_1",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "\"redundancy_reduction\": {\"median\": 0.0, \"iqr\": 0.0}",
+            "confidence": 0.95
+          }
+        ],
+        "overall_conclusion": "In run_1, MemoMOP preserved all specification violations and unique trace coverage (100%), but achieved a median speedup of only 0.1564x and 0% redundancy reduction relative to baseline, indicating no performance improvement in this run.",
+        "sources": {
+          "metrics_path": "experiment_results.txt",
+          "paper_tex_path": "latex/acl_latex.tex"
+        },
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 5620,
+            "completion_tokens_details": {
+              "reasoning_tokens": 4568
+            },
+            "prompt_tokens": 4888,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 10508
+          },
+          "attempt": 0
+        }
+      },
+      "comparison": {
+        "status": "ok",
+        "claim_alignment": [
+          {
+            "original_claim_id": "C1",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "The agent does not mention Valg, two-armed bandits, Thompson sampling, or dynamic decision thresholds."
+          },
+          {
+            "original_claim_id": "C2",
+            "agent_claim_id": "A4",
+            "label": "incomparable",
+            "rationale": "Agent reports 0% redundancy reduction for MemoMOP, a different measure from the original prior-work monitor redundancy fraction."
+          },
+          {
+            "original_claim_id": "C3",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "The agent does not describe bandit-based parametric or nonparametric event selection."
+          },
+          {
+            "original_claim_id": "C4",
+            "agent_claim_id": "A3",
+            "label": "incomparable",
+            "rationale": "Agent speedup is for MemoMOP against an unspecified baseline, not Valg speedups over JavaMOP or TraceMOP."
+          },
+          {
+            "original_claim_id": "C5",
+            "agent_claim_id": "A1,A2",
+            "label": "partial",
+            "rationale": "Agent reports 100% violation and unique-trace preservation for MemoMOP, which is directionally aligned with high preservation but does not evaluate Default Valg."
+          },
+          {
+            "original_claim_id": "C6",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "No agent claim addresses hyperparameter tuning or tuned JavaMOP/TraceMOP trace preservation."
+          },
+          {
+            "original_claim_id": "C7",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "No agent claim addresses transfer across project revisions."
+          },
+          {
+            "original_claim_id": "C8",
+            "agent_claim_id": "A3",
+            "label": "incomparable",
+            "rationale": "Agent reports a MemoMOP speedup against an unspecified baseline, not Valg performance across 64 JavaMOP projects."
+          },
+          {
+            "original_claim_id": "C9",
+            "agent_claim_id": "A3",
+            "label": "incomparable",
+            "rationale": "Agent reports MemoMOP speedup, not Valg performance across 58 TraceMOP projects."
+          },
+          {
+            "original_claim_id": "C10",
+            "agent_claim_id": "A4",
+            "label": "incomparable",
+            "rationale": "Agent's 0% redundancy reduction and 0.1564x speedup are for MemoMOP and lack the original's parametric/nonparametric event definitions."
+          },
+          {
+            "original_claim_id": "C11",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "No agent claim addresses eMOP integration or ps1^c/ps3^cl speedups."
+          },
+          {
+            "original_claim_id": "C12",
+            "agent_claim_id": "A1",
+            "label": "partial",
+            "rationale": "Agent reports 100% violation preservation, directionally aligned with low missed violations, but for MemoMOP rather than the original Valg protocol."
+          },
+          {
+            "original_claim_id": "C13",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "No agent claim compares against landmarks, ps1^c, or ps3^cl in speed-coverage trade-off."
+          },
+          {
+            "original_claim_id": "C14",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "No agent claim discusses bytecode rewriting, plugin-based architecture, or source-code modification."
+          },
+          {
+            "original_claim_id": "C15",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "No agent claim addresses selective monitor creation or selective nonparametric event signaling."
+          }
+        ],
+        "metric_alignment": [
+          {
+            "original_metric": "speedup",
+            "agent_metric": "speedup",
+            "comparable": false,
+            "original_value": null,
+            "agent_value": 0.15642506301316136,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Agent speedup is for MemoMOP against an unspecified baseline, while original speedups are for Valg against JavaMOP/TraceMOP."
+          },
+          {
+            "original_metric": "violation_preservation",
+            "agent_metric": "violation_preservation",
+            "comparable": false,
+            "original_value": null,
+            "agent_value": 100.0,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Agent reports MemoMOP violation preservation, not Default/Tuned Valg preservation on the original benchmark protocol."
+          },
+          {
+            "original_metric": "unique_trace_coverage",
+            "agent_metric": "unique_trace_coverage",
+            "comparable": false,
+            "original_value": null,
+            "agent_value": 100.0,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Agent reports MemoMOP unique-trace coverage, not Valg default/tuned unique-trace preservation."
+          },
+          {
+            "original_metric": "redundancy_reduction",
+            "agent_metric": "redundancy_reduction",
+            "comparable": false,
+            "original_value": null,
+            "agent_value": 0.0,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Agent's redundancy reduction lacks the original's parametric/nonparametric event definitions and baseline context."
+          }
+        ],
+        "summary": {
+          "direction_consistency": "same_direction_incomparable",
+          "consistent_claim_ratio": 0.0,
+          "has_comparable_metrics": false,
+          "sota_improvement_summary": "N/A",
+          "overall_alignment_score": 0.4,
+          "score_rationale": "The agent works on the same high-level runtime-verification overhead problem and reports preservation outcomes aligned with the original goals, but it does not evaluate Valg or provide comparable speedup/redundancy benchmarks."
+        },
+        "warnings": [
+          "Agent run evaluates MemoMOP, not the original Valg/JavaMOP/TraceMOP systems; direct metric comparison would be misleading.",
+          "No comparable baseline or protocol is provided for speedup/redundancy metrics; median speedup <1 and 0% redundancy reduction cannot be treated as refuting the original speedup claims.",
+          "Most original claims are unaddressed or incomparable; only preservation-related outcomes are partially aligned."
+        ],
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 7942,
+            "completion_tokens_details": {
+              "reasoning_tokens": 6324
+            },
+            "prompt_tokens": 2844,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 10786
+          },
+          "attempt": 0
+        }
+      },
+      "overall_alignment_score": 0.4,
+      "direction_consistency": "same_direction_incomparable"
+    },
+    "experiment_analysis": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-016_reducing_redundant_monitor_creation_and/workspace/tiny_scientist_2026-08-10_13-11-24",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-016_reducing_redundant_monitor_creation_and",
+      "status": "ok",
+      "metrics_path": "experiment_results.txt",
+      "experiment_success": {
+        "status": "ok",
+        "success": true,
+        "metrics_path": "experiment_results.txt",
+        "absolute_metrics_path": "~/ai_scientist_inputs/ASE-2025-016_reducing_redundant_monitor_creation_and/workspace/tiny_scientist_2026-08-10_13-11-24/experiment_results.txt",
+        "checks": {
+          "has_results_file": true,
+          "non_stub": true,
+          "numeric_leaf_count": 1032,
+          "min_numeric_ok": true
+        },
+        "manifest_hints": {
+          "status": {
+            "code": true,
+            "paper": false
+          },
+          "returncode": null,
+          "benchmark_complete": null,
+          "artifacts_metrics_flag": false
+        },
+        "warnings": [],
+        "suspicious_values": [],
+        "note": "success=true requires substantive results (framework-aware path) with >=3 numeric leaves. Supports metrics.json, results.json, experiment_results.txt, etc. Manifest returncode/benchmark_complete are soft warnings only."
+      },
+      "idea_code_consistency": {
+        "status": "ok",
+        "idea_path": "artifacts/idea.json",
+        "code_files": [
+          "artifacts/code/experiment.py"
+        ],
+        "score_scale": "1-5",
+        "score": 1.0,
+        "label": "severe_mismatch",
+        "justification": "The provided code performs a scikit-learn digits classification experiment with logistic regression and SVM, with no runtime verification, JavaMOP, memoization, hash/fingerprint, cache, Bloom filter, or Valg benchmark elements. It implements a completely different problem and method than the MemoMOP idea.",
+        "matched_elements": [
+          "Command-line experiment runner that saves results.json to an output directory"
+        ],
+        "missing_or_divergent_elements": [
+          "JavaMOP monitoring framework integration",
+          "Rolling polynomial hash fingerprinting of trace prefixes",
+          "ConcurrentHashMap cache of non-violating monitor states",
+          "Bloom filter negative checks",
+          "LRU eviction policy",
+          "Violation terminal state and event dropping",
+          "Valg benchmark dataset with Maven projects and JavaMOP specifications",
+          "Speedup, violation preservation, trace coverage, and redundancy reduction metrics"
+        ],
+        "rubric": "Severe mismatch: code implements a different problem/method than the idea, or is unrelated boilerplate.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 282,
+            "completion_tokens_details": {
+              "reasoning_tokens": 67
+            },
+            "prompt_tokens": 2030,
+            "prompt_tokens_details": {
+              "cached_tokens": 256
+            },
+            "total_tokens": 2312
+          },
+          "attempt": 0
+        }
+      },
+      "setup_coverage": {
+        "status": "ok",
+        "overall_coverage": 0.8333333333333334,
+        "datasets": {
+          "gold_count": 2,
+          "hit_count": 2,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "Single-revision benchmark",
+            "Multi-revision benchmark"
+          ],
+          "misses": []
+        },
+        "baselines": {
+          "gold_count": 2,
+          "hit_count": 1,
+          "miss_count": 1,
+          "coverage": 0.5,
+          "hits": [
+            "JavaMOP"
+          ],
+          "misses": [
+            "TraceMOP"
+          ]
+        },
+        "metrics": {
+          "gold_count": 4,
+          "hit_count": 4,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "Speedup",
+            "Violation Preservation",
+            "Unique Trace Coverage",
+            "Redundancy Reduction"
+          ],
+          "misses": []
+        },
+        "agent_protocol": {},
+        "gold_protocol": {},
+        "dataset_dirs": [
+          "dataset_candidate"
+        ],
+        "flags": {
+          "weaker_baseline_suspected": true,
+          "weak_protocol": [],
+          "synthetic_data": "unexpected_synthetic_or_local_only_data",
+          "gold_allows_synthetic": false
+        },
+        "gold_sources": [
+          "~/ai_scientist_inputs/ASE-2025-016_reducing_redundant_monitor_creation_and/task.md",
+          "~/ai_scientist_inputs/ASE-2025-016_reducing_redundant_monitor_creation_and/metadata.json"
+        ],
+        "note": "Coverage is name/alias matching against task.md Datasets/Baselines/Metrics. weak_protocol flags large reductions in trials/timeout vs Constraints. Synthetic corpora are not penalized when the task itself requires synthesis."
+      },
+      "ablation_significance": {
+        "status": "ok",
+        "idea_path": "artifacts/idea.json",
+        "significance_signals_rule_based": {
+          "signals": [
+            "paper_contains:significant"
+          ],
+          "artifact_paths": [],
+          "has_any_significance_artifact": true
+        },
+        "evidence_format": "raw_json_truncated",
+        "study_type": null,
+        "components": [],
+        "ablation_coverage_score": null,
+        "overall_ablation_ok": null,
+        "overall_significance_ok": null,
+        "summary": "",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 3500,
+            "completion_tokens_details": {
+              "reasoning_tokens": 3500
+            },
+            "prompt_tokens": 5619,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 9119
+          },
+          "attempt": 0
+        }
+      },
+      "results_paper_consistency": {
+        "status": "ok",
+        "paper_tex": "latex/acl_latex.tex",
+        "paper_kind": "paper_tex",
+        "results_format": "raw_json_truncated",
+        "digest_hint": {
+          "unfavorable_count": 0,
+          "trial_fail_count": 0,
+          "trial_success_count": 0,
+          "metadata": {}
+        },
+        "score_scale": "1-5",
+        "method": "Direct LLM comparison: agent's FINAL results artifact (metrics.json summary) vs paper Results/Discussion/Conclusion. Interim failed runs are NOT evidence unless still present in the final metrics file.",
+        "score": 1.0,
+        "consistency_label": "severe",
+        "hiding_unfavorable_suspected": true,
+        "hiding_confidence": 0.98,
+        "justification": "Final experimental results show MemoMOP is substantially slower than the baseline, with median speedup 0.156 and zero redundancy reduction, while the paper claims average overhead reduction of 91.8% and high cache hit rates. Violation preservation is supported at 100%, but the core efficiency claim is contradicted by the final metrics.",
+        "supported_claims": [
+          "MemoMOP preserves all specification violations: violation_preservation median is 100%, with baseline_violations and memomop_violations equal in every project."
+        ],
+        "unsupported_or_overstated_claims": [
+          "MemoMOP reduces monitoring overhead by 91.8% on average.",
+          "Cache hit rates average 93.2% and reach up to 98.2%.",
+          "MemoMOP dramatically reduces monitoring overhead and is practical for CI pipelines."
+        ],
+        "numeric_mismatches": [
+          {
+            "paper": "Average overhead reduction of 91.8%, with per-specification reductions from 71.4% to 97.1%; e.g., HasNext Orig. Time 245s vs MemoMOP Time 7s.",
+            "results": "Median speedup is 0.156; per-project baseline_time is about 0.14-0.22s and memomop_time is about 0.9-1.26s, so MemoMOP is approximately 5-9x slower. Redundancy reduction is 0.0 and memomop_dropped_events is 0 for every run.",
+            "note": "The final metrics indicate slowdown rather than overhead reduction, and zero skipped/dropped events, directly contradicting the paper's table and headline claims."
+          }
+        ],
+        "unfavorable_in_final_results": [
+          "Median speedup is 0.156, meaning MemoMOP is about 6.4x slower than baseline.",
+          "All per-project speedup values are below 1, so MemoMOP never outperforms the baseline.",
+          "Redundancy reduction is 0.0 for every run; baseline_redundant_events and memomop_dropped_events are both 0.",
+          "MemoMOP_time exceeds baseline_time for every project, so no overhead reduction is realized."
+        ],
+        "unfavorable_acknowledged_in_paper": [],
+        "unfavorable_missing_from_paper": [],
+        "rubric": "Severe inconsistency or concealment: paper claims contradict metrics, invent numbers, or omit clear failures/negative findings that dominate the results.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 1829,
+            "completion_tokens_details": {
+              "reasoning_tokens": 1189
+            },
+            "prompt_tokens": 13712,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 15541
+          },
+          "attempt": 1
+        }
+      },
+      "scores": {
+        "experiment_success": true,
+        "idea_code_score": 1.0,
+        "setup_coverage": 0.8333333333333334,
+        "ablation_coverage_score": null,
+        "overall_ablation_ok": null,
+        "overall_significance_ok": null,
+        "results_paper_score": 1.0,
+        "hiding_unfavorable_suspected": true
+      },
+      "notes": [
+        "Axes 1,2,3,4,6 in experiment_analysis (figures excluded).",
+        "setup_coverage matches task.md Datasets/Baselines/Metrics; weak_protocol flags reductions vs Constraints.",
+        "Axis 6: final normalized results vs paper; interim run logs not used as ground truth."
+      ]
+    },
+    "literature_review": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-016_reducing_redundant_monitor_creation_and/workspace/tiny_scientist_2026-08-10_13-11-24",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-016_reducing_redundant_monitor_creation_and",
+      "status": "ok",
+      "as_of_year": 2026,
+      "agent_ref_count": 22,
+      "sources": [
+        {
+          "path": "~/ai_scientist_inputs/ASE-2025-016_reducing_redundant_monitor_creation_and/workspace/tiny_scientist_2026-08-10_13-11-24/latex/custom.bib",
+          "kind": "bib"
+        }
+      ],
+      "collection_audit": {
+        "cited_keys_count": 21,
+        "filter_mode": "paper_cite_keys",
+        "bib_total_before_filter": 168,
+        "bib_after_filter": 22,
+        "uncited_bib_skipped": 0,
+        "cited_keys_sample": [
+          "a2002",
+          "a2013",
+          "a2020",
+          "acknowledgment2023",
+          "automated2024",
+          "bloom2016",
+          "contractbased2017",
+          "directed2021",
+          "get2022",
+          "how2019",
+          "intensional2015",
+          "largescale2018",
+          "meteorological2005",
+          "mop2007",
+          "operando2024",
+          "parametric2017",
+          "predictive2017",
+          "rewritingbased2005",
+          "sciinc2019",
+          "valgNone",
+          "verified2025"
+        ],
+        "thebibliography_after_filter": 0,
+        "agent_ref_count": 22
+      },
+      "fabrication": {
+        "status": "ok",
+        "scholarly_count": 22,
+        "verified_count": 14,
+        "fake_count": 0,
+        "lookup_failed_count": 8,
+        "non_paper_count": 0,
+        "fabrication_rate": 0.0,
+        "items": [
+          {
+            "title": "Directed Model Checking for Fast Abstract Reachability Analysis",
+            "doi": "10.1109/access.2021.3130569",
+            "arxiv_id": "",
+            "year": 2021,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Directed Model Checking for Fast Abstract Reachability Analysis",
+            "resolved_year": 2021,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "directed2021",
+            "source_kind": "bib"
+          },
+          {
+            "title": "Contract-based resource verification for higher-order functions with memoization",
+            "doi": "10.1145/3009837.3009874",
+            "arxiv_id": "",
+            "year": 2017,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Contract-based resource verification for higher-order functions with memoization",
+            "resolved_year": 2017,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "contractbased2017",
+            "source_kind": "bib"
+          },
+          {
+            "title": "Automated Verification of Parametric Channel-Based Process Communication",
+            "doi": "",
+            "arxiv_id": "",
+            "year": 2024,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated.",
+              "Saw 1 conclusive miss(es) mixed with 1 API error(s)."
+            ],
+            "cite_key": "automated2024",
+            "source_kind": "bib"
+          },
+          {
+            "title": "Rewriting-Based Techniques for Runtime Verification",
+            "doi": "10.1007/s10515-005-6205-y",
+            "arxiv_id": "",
+            "year": 2005,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Rewriting-Based Techniques for Runtime Verification",
+            "resolved_year": 2005,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "rewritingbased2005",
+            "source_kind": "bib"
+          },
+          {
+            "title": "SciInc: A Container Runtime for Incremental Recomputation",
+            "doi": "",
+            "arxiv_id": "",
+            "year": 2019,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated.",
+              "Saw 1 conclusive miss(es) mixed with 1 API error(s)."
+            ],
+            "cite_key": "sciinc2019",
+            "source_kind": "bib"
+          },
+          {
+            "title": "Verified and Optimized Implementation of Orthologic Proof Search",
+            "doi": "",
+            "arxiv_id": "",
+            "year": 2025,
+            "status": "verified",
+            "matched_via": "arxiv_title",
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "verified2025",
+            "source_kind": "bib"
+          },
+          {
+            "title": "A Rewriting-Based Approach to Trace Analysis",
+            "doi": "",
+            "arxiv_id": "",
+            "year": 2002,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "A Rewriting-Based Approach to Trace Analysis",
+            "resolved_year": 2002,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "a2002",
+            "source_kind": "bib"
+          },
+          {
+            "title": "A Study of Runtime Adaptive Prefetching for STTRAM L1 Caches",
+            "doi": "",
+            "arxiv_id": "",
+            "year": 2020,
+            "status": "verified",
+            "matched_via": "arxiv_title",
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "a2020",
+            "source_kind": "bib"
+          },
+          {
+            "title": "A Bayesian Parametric Statistical Anomaly Detection Method for Finding Trends and Patterns in Criminal Behavior",
+            "doi": "10.1109/eisic.2013.19",
+            "arxiv_id": "",
+            "year": 2013,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "A Bayesian Parametric Statistical Anomaly Detection Method for Finding Trends and Patterns in Criminal Behavior",
+            "resolved_year": 2013,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "a2013",
+            "source_kind": "bib"
+          },
+          {
+            "title": "A Comprehensive Evaluation of Rhythm Monitoring Strategies in Screening for Atrial Fibrillation: Insights from Patients at Risk Long-Term Monitored with Implantable Loop Recorder.",
+            "doi": "10.1161/circulationaha.119.044407",
+            "arxiv_id": "",
+            "year": 2020,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "A Comprehensive Evaluation of Rhythm Monitoring Strategies in Screening for Atrial Fibrillation: Insights from Patients at Risk Long-Term Monitored with Implantable Loop Recorder.",
+            "resolved_year": 2020,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "a2020",
+            "source_kind": "bib"
+          },
+          {
+            "title": "Parametric Net Influx Rate Images of 68Ga-DOTATOC and 68Ga-DOTATATE: Quantitative Accuracy and Improved Image Contrast",
+            "doi": "10.2967/jnumed.116.180380",
+            "arxiv_id": "",
+            "year": 2017,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Parametric Net Influx Rate Images of 68Ga-DOTATOC and 68Ga-DOTATATE: Quantitative Accuracy and Improved Image Contrast",
+            "resolved_year": 2017,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "parametric2017",
+            "source_kind": "bib"
+          },
+          {
+            "title": "Get a New Perspective on EEG: Convolutional Neural Network Encoders for Parametric t-SNE",
+            "doi": "10.3390/brainsci13030453",
+            "arxiv_id": "",
+            "year": 2022,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Get a New Perspective on EEG: Convolutional Neural Network Encoders for Parametric t-SNE",
+            "resolved_year": 2022,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "get2022",
+            "source_kind": "bib"
+          },
+          {
+            "title": "Predictive value of [18F]-fluoride PET for monitoring bone remodeling in patients with orthopedic conditions treated with a Taylor spatial frame",
+            "doi": "",
+            "arxiv_id": "",
+            "year": 2017,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated.",
+              "Saw 1 conclusive miss(es) mixed with 1 API error(s)."
+            ],
+            "cite_key": "predictive2017",
+            "source_kind": "bib"
+          },
+          {
+            "title": "Intensional Effect Polymorphism",
+            "doi": "",
+            "arxiv_id": "",
+            "year": 2015,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated.",
+              "Saw 1 conclusive miss(es) mixed with 1 API error(s)."
+            ],
+            "cite_key": "intensional2015",
+            "source_kind": "bib"
+          },
+          {
+            "title": "Acknowledgment to the Reviewers of JPM in 2022",
+            "doi": "10.3390/jpm13020164",
+            "arxiv_id": "",
+            "year": 2023,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Acknowledgment to the Reviewers of JPM in 2022",
+            "resolved_year": 2023,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "acknowledgment2023",
+            "source_kind": "bib"
+          },
+          {
+            "title": "How effective are existing Java API specifications for finding bugs during runtime verification?",
+            "doi": "",
+            "arxiv_id": "",
+            "year": 2019,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated.",
+              "Saw 1 conclusive miss(es) mixed with 1 API error(s)."
+            ],
+            "cite_key": "how2019",
+            "source_kind": "bib"
+          },
+          {
+            "title": "Large-Scale Evaluation of the Efficiency of Runtime-Verification Tools in the Wild",
+            "doi": "10.1109/apsec.2018.00091",
+            "arxiv_id": "",
+            "year": 2018,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Large-Scale Evaluation of the Efficiency of Runtime-Verification Tools in the Wild",
+            "resolved_year": 2018,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "largescale2018",
+            "source_kind": "bib"
+          },
+          {
+            "title": "Valg: A Fast Reinforcement Learning Based Runtime Verification Tool for Java",
+            "doi": "",
+            "arxiv_id": "",
+            "year": null,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Valg: A Fast Reinforcement Learning Based Runtime Verification Tool for Java",
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "valgNone",
+            "source_kind": "bib"
+          },
+          {
+            "title": "Mop: an efficient and generic runtime verification framework",
+            "doi": "",
+            "arxiv_id": "",
+            "year": 2007,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated.",
+              "Saw 1 conclusive miss(es) mixed with 1 API error(s)."
+            ],
+            "cite_key": "mop2007",
+            "source_kind": "bib"
+          },
+          {
+            "title": "Bloom Filter Tree for Fast Search and Synchronization of Tree-Structured Data",
+            "doi": "",
+            "arxiv_id": "",
+            "year": 2016,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated.",
+              "Saw 1 conclusive miss(es) mixed with 1 API error(s)."
+            ],
+            "cite_key": "bloom2016",
+            "source_kind": "bib"
+          },
+          {
+            "title": "Meteorological normalisation and non-parametric smoothing for quality assessment and trend analysis of tropospheric ozone data",
+            "doi": "",
+            "arxiv_id": "",
+            "year": 2005,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated.",
+              "Saw 1 conclusive miss(es) mixed with 1 API error(s)."
+            ],
+            "cite_key": "meteorological2005",
+            "source_kind": "bib"
+          },
+          {
+            "title": "Operando Neutron Imaging for Improved Understanding of Gas Distributions in an Alkaline Electrolyzer",
+            "doi": "10.1149/ma2024-02453105mtgabs",
+            "arxiv_id": "",
+            "year": 2024,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Operando Neutron Imaging for Improved Understanding of Gas Distributions in an Alkaline Electrolyzer",
+            "resolved_year": 2024,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "operando2024",
+            "source_kind": "bib"
+          }
+        ],
+        "cache_path": "~/ai_scientist_evals/ASE-2025-016_reducing_redundant_monitor_creation_and/reference_verify_cache.json",
+        "override_path": "~/ai_scientist_evals/ASE-2025-016_reducing_redundant_monitor_creation_and/reference_verify_overrides.json",
+        "note": "fabrication_rate = fake / (verified + fake); lookup_failed (API errors) excluded. GitHub/docs/tool URLs are non_paper and excluded from the rate. To manually correct a false negative, edit reference_verify_overrides.json (key=normalized title / doi / cite_key; value=\"verified\" or a result dict), then re-run."
+      },
+      "coverage": {
+        "status": "ok",
+        "gold_source": "~/ai_scientist_inputs/ASE-2025-016_reducing_redundant_monitor_creation_and/mineru_sections.json",
+        "gold_count": 95,
+        "gold_is_original_paper_references": true,
+        "gold_is_openalex_subset": false,
+        "agent_count": 22,
+        "intersection_size": 2,
+        "recall": 0.021052631578947368,
+        "precision": 0.09090909090909091,
+        "matched_gold_keys": [
+          "legunsen2019effective",
+          "mineru_ref_102"
+        ],
+        "primary_metric": "recall",
+        "note": "Primary metric is recall against the original paper bibliography (titles from mineru_sections.json REFERENCES; related_work.json used only to enrich DOI/year or as fallback if mineru titles are empty). Denominator = |original paper references|. Precision is secondary (agent may cite valid extra papers)."
+      },
+      "recency": {
+        "status": "ok",
+        "dated_count": 21,
+        "unknown_year_count": 1,
+        "year_histogram": {
+          "2002": 1,
+          "2005": 2,
+          "2007": 1,
+          "2013": 1,
+          "2015": 1,
+          "2016": 1,
+          "2017": 3,
+          "2018": 1,
+          "2019": 2,
+          "2020": 2,
+          "2021": 1,
+          "2022": 1,
+          "2023": 1,
+          "2024": 2,
+          "2025": 1
+        },
+        "windows": {
+          "3": {
+            "years": 3,
+            "cutoff_year_inclusive": 2023,
+            "recent_count": 4,
+            "recent_ratio": 0.19047619047619047
+          },
+          "5": {
+            "years": 5,
+            "cutoff_year_inclusive": 2021,
+            "recent_count": 6,
+            "recent_ratio": 0.2857142857142857
+          }
+        }
+      },
+      "scores": {
+        "fabrication_rate": 0.0,
+        "coverage_recall": 0.021052631578947368,
+        "coverage_precision": 0.09090909090909091,
+        "recency_ratio_3y": 0.19047619047619047,
+        "recency_ratio_5y": 0.2857142857142857
+      }
+    }
+  },
+  "scores": {
+    "completeness": {
+      "complete": false,
+      "overall_score": 0.7,
+      "required_score": 0.875,
+      "bonus_score": 0.03
+    },
+    "peer_review": {
+      "status": "not_provided",
+      "optional": true,
+      "overall_score": null,
+      "score_scale": "1-5",
+      "scoring_method": null
+    },
+    "idea_generation": {
+      "status": "ok",
+      "overall_score": 3.4,
+      "dimensions": {
+        "novelty": 3.0,
+        "feasibility": 3.0,
+        "clarity": 4.0
+      },
+      "novelty_category": "Incremental",
+      "solution_space_status": "ok"
+    },
+    "alignment": {
+      "status": "ok",
+      "direction_consistency": "same_direction_incomparable",
+      "overall_alignment_score": 0.4
+    },
+    "literature_review": {
+      "fabrication_rate": 0.0,
+      "coverage_recall": 0.021052631578947368,
+      "coverage_precision": 0.09090909090909091,
+      "recency_ratio_3y": 0.19047619047619047,
+      "recency_ratio_5y": 0.2857142857142857
+    },
+    "experiment_analysis": {
+      "experiment_success": true,
+      "idea_code_score": 1.0,
+      "setup_coverage": 0.8333333333333334,
+      "ablation_coverage_score": null,
+      "overall_ablation_ok": null,
+      "overall_significance_ok": null,
+      "results_paper_score": 1.0,
+      "hiding_unfavorable_suspected": true
+    }
+  },
+  "fair_scores": {
+    "applicable_axes": [
+      "completeness",
+      "idea_generation",
+      "alignment",
+      "literature_review",
+      "experiment_analysis"
+    ],
+    "skipped_axes": [
+      {
+        "axis": "peer_review",
+        "reason": "optional_external_review"
+      }
+    ],
+    "fair_mean_0_1": 0.5834,
+    "note": "fair_mean_0_1 averages only applicable axes; optional peer review and framework-inapplicable literature are excluded from the denominator."
+  },
+  "evals_root": "~/ai_scientist_evals",
+  "claims_cache": "~/ai_scientist_evals/ASE-2025-016_reducing_redundant_monitor_creation_and/original_claims.json",
+  "solution_space_cache": "~/ai_scientist_evals/ASE-2025-016_reducing_redundant_monitor_creation_and/solution_space.json"
+}

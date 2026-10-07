@@ -1,0 +1,35 @@
+{
+  "forbid_synthetic_pilot": true,
+  "agent_data_note": "Use the complete real MaxSAT Evaluation 2024 weighted exact instances (571) at `dataset_candidate/maxsat2024/`. The mount is read-only; copy WCNF files to `project/` before writing outputs.",
+  "required_metrics": [
+    "proof_logging_overhead_ir",
+    "proof_size",
+    "verification_time",
+    "verification_overhead_vo",
+    "proof_size_ratio"
+  ],
+  "benchmark_rules": [
+    "Use the complete real provided MSE 2024 weighted exact instances (571) under `dataset_candidate/maxsat2024/`; do not invent synthetic WCNF formulas when the corpus is readable.",
+    "Read `dataset_candidate/dataset_paths.json` before experiments and use `$MAXSAT2024_HOME` in scripts.",
+    "The shared package is read-only. Copy instances into `project/` before writing logs, proofs, or intermediate files.",
+    "g++, cmake, xz, Python analysis venv, and EvalMaxSAT_bin are prepared automatically (`/opt/ase-2025-017-*`).",
+    "EvalMaxSAT upstream does **not** include this paper's native proof logger; implement logging/verification yourself or wrap the solver. SCIP is not preinstalled.",
+    "Evaluate proof-logging overhead (IR), proof size, verification time, verification overhead (VO), and proof-size ratio vs a documented baseline.",
+    "Do not claim full paper reproduction unless the protocol and resources match."
+  ],
+  "non_goals": [
+    "Requiring GPU / CUDA for a valid experiment",
+    "Re-downloading the 4.4 GiB MSE archive from inside the container as a required step",
+    "Installing SCIP as a hard dependency for a scoped valid experiment",
+    "Fabricating 571 WCNF instances or proof-size tables without documenting synthetic construction"
+  ],
+  "dataset_env": {
+    "MAXSAT2024_HOME": "dataset_candidate/maxsat2024"
+  },
+  "exclude_from_agent": [
+    "container_setup.sh",
+    "README.md",
+    "benchmark_config.json",
+    "requirements.txt"
+  ]
+}

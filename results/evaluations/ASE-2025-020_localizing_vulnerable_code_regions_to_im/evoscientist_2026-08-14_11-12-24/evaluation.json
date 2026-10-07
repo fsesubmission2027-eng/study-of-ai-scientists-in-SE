@@ -1,0 +1,1785 @@
+{
+  "run_dir": "~/ai_scientist_inputs/ASE-2025-020_localizing_vulnerable_code_regions_to_im/workspace/evoscientist_2026-08-14_11-12-24",
+  "task_dir": "~/ai_scientist_inputs/ASE-2025-020_localizing_vulnerable_code_regions_to_im",
+  "framework": "evoscientist",
+  "fairness_audit": [
+    {
+      "axis": "completeness",
+      "was_unfair": "Required both paper.tex AND paper.pdf; any tool missing one failed equally.",
+      "fix": "Paper gate: PDF=1.0; TeX-only=0.5; ``complete`` requires PDF."
+    },
+    {
+      "axis": "completeness",
+      "was_unfair": "``results`` counted stub/seed JSON (dataset_candidate/metrics.json).",
+      "fix": "``results`` requires substantive numeric results via results_normalize."
+    },
+    {
+      "axis": "experiment_success",
+      "was_unfair": "Only metrics.json; ignored results.json / experiment_results.txt.",
+      "fix": "Framework-ordered result candidates + normalized loaders."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Penalized tools with no bib; airesearcher has no workspace references.",
+      "fix": "literature_applicable=false → status not_applicable; excluded from fair aggregate."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "related_work.json subset as gold made recall hard to interpret.",
+      "fix": "Coverage gold is original paper REFERENCES from mineru; related_work only enriches metadata/fallback."
+    },
+    {
+      "axis": "peer_review",
+      "was_unfair": "Missing Stanford report looked like evaluation failure.",
+      "fix": "status not_provided; optional axis, never counts as tool failure."
+    },
+    {
+      "axis": "paths/find_results",
+      "was_unfair": "Picked downloads/** and sandbox noise (e.g. airesearcher LLVM tree).",
+      "fix": "Exclude downloads/, seeds/, dataset_candidate/, sandbox junk paths."
+    },
+    {
+      "axis": "paths/framework_noise",
+      "was_unfair": "DeepScientist .deepscientist_npm / runtime / skills templates counted as code/paper/results.",
+      "fix": "FRAMEWORK_NOISE_DIRS+markers; quest worktree + eval_output results; paper md drafts; reject template tex."
+    },
+    {
+      "axis": "paths/paper_tex",
+      "was_unfair": "tiny_scientist / ACL runs store paper under latex/*.tex; evaluator only looked at paper/main.tex.",
+      "fix": "latex/**/*.tex with substantive-body heuristic; find_paper_document uses same rules."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Entire custom.bib (300+ anthology entries) verified when paper had zero \\cite commands.",
+      "fix": "collect_agent_references filters bib to in-text cite keys; skips uncited bulk bib (>40 entries)."
+    },
+    {
+      "axis": "paths/ai_scientist_summaries",
+      "was_unfair": "AI Scientist can persist substantive results and paper-like drafts in *_summary.json logs rather than paper/main.tex or results/**/*.json.",
+      "fix": "Treat draft_summary/research_summary as weak paper documents and summary JSONs as result candidates."
+    },
+    {
+      "axis": "idea_generation",
+      "was_unfair": "plan.md/todos.md weak proxies scored same as structured idea.json.",
+      "fix": "Framework idea_priority tried first; missing idea → not_applicable where appropriate."
+    }
+  ],
+  "generated_at": "2026-08-24T12:11:02",
+  "axes": [
+    "alignment",
+    "completeness",
+    "experiment_analysis",
+    "idea_generation",
+    "literature_review",
+    "peer_review"
+  ],
+  "results": {
+    "completeness": {
+      "framework": "evoscientist",
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-020_localizing_vulnerable_code_regions_to_im/workspace/evoscientist_2026-08-14_11-12-24",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-020_localizing_vulnerable_code_regions_to_im",
+      "complete": true,
+      "required_score": 1.0,
+      "bonus_score": 0.09,
+      "overall_score": 0.8453,
+      "missing": [],
+      "required": {
+        "idea": {
+          "path": "plan.md",
+          "bytes": 3508,
+          "via": "candidate"
+        },
+        "code": {
+          "count": 13,
+          "files": [
+            {
+              "path": "project/evaluate.py",
+              "bytes": 15314,
+              "via": "glob"
+            },
+            {
+              "path": "project/featurize.py",
+              "bytes": 7122,
+              "via": "glob"
+            },
+            {
+              "path": "project/generate_metrics.py",
+              "bytes": 10001,
+              "via": "glob"
+            },
+            {
+              "path": "project/models.py",
+              "bytes": 6504,
+              "via": "glob"
+            },
+            {
+              "path": "project/preprocess.py",
+              "bytes": 14113,
+              "via": "glob"
+            },
+            {
+              "path": "project/src/download_unixcoder.py",
+              "bytes": 695,
+              "via": "glob"
+            },
+            {
+              "path": "project/src/evaluate.py",
+              "bytes": 15314,
+              "via": "glob"
+            },
+            {
+              "path": "project/src/featurize.py",
+              "bytes": 7122,
+              "via": "glob"
+            },
+            {
+              "path": "project/src/models.py",
+              "bytes": 6504,
+              "via": "glob"
+            },
+            {
+              "path": "project/src/preprocess.py",
+              "bytes": 14113,
+              "via": "glob"
+            },
+            {
+              "path": "project/src/run_pipeline.sh",
+              "bytes": 2151,
+              "via": "glob"
+            },
+            {
+              "path": "project/src/train.py",
+              "bytes": 18901,
+              "via": "glob"
+            },
+            {
+              "path": "project/train.py",
+              "bytes": 18901,
+              "via": "glob"
+            }
+          ]
+        },
+        "results": {
+          "substantive": true,
+          "normalized_path": "results/metrics.json",
+          "numeric_leaf_count": 303,
+          "discovered_files": [
+            {
+              "path": "experiment_results/metrics.json",
+              "bytes": 12290,
+              "via": "candidate"
+            },
+            {
+              "path": "results/metrics.json",
+              "bytes": 12290,
+              "via": "candidate"
+            },
+            {
+              "path": "results/metrics_schema_report.json",
+              "bytes": 840,
+              "via": "glob"
+            }
+          ],
+          "metrics_keys_sample": [
+            "accuracy",
+            "weighted_f1",
+            "top_n_accuracy",
+            "line_level_f1",
+            "pairwise_accuracy",
+            "metrics",
+            "required_metrics",
+            "precision",
+            "recall",
+            "f1_score",
+            "top1_accuracy",
+            "top3_accuracy",
+            "top5_accuracy",
+            "top_n_accuracy_breakdown",
+            "pairwise_correct",
+            "num_functions_evaluated",
+            "token_limit",
+            "plm_name",
+            "random_seed",
+            "method",
+            "method_description",
+            "primary_variant_seed_123456",
+            "variants",
+            "literature_baselines"
+          ]
+        },
+        "paper": {
+          "tex": {
+            "path": "paper/main.tex",
+            "bytes": 18103,
+            "via": "candidate"
+          },
+          "pdf": {
+            "path": "paper/main.pdf",
+            "bytes": 188375,
+            "via": "candidate"
+          },
+          "md": {
+            "path": "paper/paper.md",
+            "bytes": 20240,
+            "via": "candidate"
+          },
+          "json": null,
+          "status": "pdf",
+          "score": 1.0
+        }
+      },
+      "bonus": {
+        "experiment_plan": {
+          "path": "plan.md",
+          "bytes": 3508,
+          "via": "candidate"
+        },
+        "experiment_log": {
+          "path": "evoscientist_run.log",
+          "bytes": 95582,
+          "via": "glob"
+        },
+        "review": null,
+        "readme": {
+          "path": "README.md",
+          "bytes": 4314,
+          "via": "candidate"
+        },
+        "narrative": null,
+        "bib": null
+      },
+      "manifest_status": {
+        "research_request": true,
+        "plan": true,
+        "metrics": true,
+        "paper_tex": true,
+        "paper_pdf": true,
+        "readme": true
+      },
+      "gate_scores": {
+        "idea": 1.0,
+        "code": 1.0,
+        "results": 1.0,
+        "paper": 1.0
+      },
+      "fairness": {
+        "gates": [
+          "idea",
+          "code",
+          "results",
+          "paper"
+        ],
+        "paper_gate_rule": "PDF=1.0; TeX-only/md_only/json_only=0.5; complete requires PDF",
+        "results_gate_rule": "substantive numeric results via framework-aware normalize_results",
+        "audit_ref": "framework_profile.FAIRNESS_AUDIT"
+      },
+      "notes": [
+        "Required: idea, code, substantive results, paper (PDF full; TeX/markdown/JSON draft half).",
+        "Stub/seed metrics (e.g. dataset_candidate/metrics.json) do not satisfy results.",
+        "Framework noise (.deepscientist_npm, skills/templates, runtime) is excluded from code/results/paper.",
+        "Manifest status is informational; disk presence is authoritative."
+      ]
+    },
+    "idea_generation": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-020_localizing_vulnerable_code_regions_to_im/workspace/evoscientist_2026-08-14_11-12-24",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-020_localizing_vulnerable_code_regions_to_im",
+      "idea_path": "~/ai_scientist_inputs/ASE-2025-020_localizing_vulnerable_code_regions_to_im/workspace/evoscientist_2026-08-14_11-12-24/plan.md",
+      "status": "ok",
+      "dimensions": {
+        "novelty": {
+          "score": 3.0,
+          "justification": "The core method is 'a single trainable line-attention pooling head over a frozen UniXcoder encoder' with a 'label-free entropy regularizer λ·H(α)' and 'no line/statement/diff annotation anywhere.' This is a meaningful extension of PLM vulnerability detection that removes line-level supervision, but the underlying paradigm—function-level PLM classification with attention pooling—is unchanged.",
+          "rubric": "Incremental: a meaningful extension or optimization of prior baseline work that fixes a concrete prior limitation, but the core paradigm is unchanged.",
+          "category": "Incremental",
+          "nearest_solution_space_ids": [
+            "R31",
+            "R12",
+            "R39",
+            "R40",
+            "R50"
+          ],
+          "differentiation": "Unlike R12/R39/R40, which target line-level fault localization and often rely on test or line signals, LineGATE targets vulnerability detection and uses only function-level labels plus an entropy regularizer. Unlike R31, it explicitly avoids line-level semantic supervision."
+        },
+        "feasibility": {
+          "score": 4.0,
+          "justification": "The plan uses 'CPU-only (torch 2.4.0+cpu, 32-core EPYC 9534, 62 GB RAM) → frozen encoder; heads trained,' with precomputed 'feat_*.pkl' embeddings. Training only small heads over frozen features is low-barrier; line-GT derivation is nontrivial but already staged.",
+          "rubric": "Low barrier / easy to implement: core logic can be quickly built on existing Python libraries or common ML frameworks; only small changes to a standard evaluation flow (e.g. prompt strategy tweaks or swapping metrics)."
+        },
+        "clarity": {
+          "score": 4.0,
+          "justification": "The plan specifies '4 variants × 3 datasets × 3 seeds,' exact metrics ('accuracy, weighted_f1, top_n_accuracy, line_level_f1, pairwise_accuracy'), and a comparison table. However, it lacks architecture dimensions, λ/τ settings, and pseudocode; still concrete enough to implement.",
+          "rubric": "Clear and concrete: steps are explicit with a reasonable, specific experiment design (baseline tools, metric definitions); can be turned into a solid proposal."
+        }
+      },
+      "overall_score": 3.2,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "novelty",
+        "feasibility",
+        "clarity"
+      ],
+      "solution_space": {
+        "status": "ok",
+        "paper_count": 50,
+        "entry_count": 50,
+        "cache_hit": true,
+        "source_file": "~/ai_scientist_inputs/ASE-2025-020_localizing_vulnerable_code_regions_to_im/mineru_sections.json",
+        "stats": {
+          "papers": 50,
+          "extracted": 50,
+          "usable_abstracts": 27,
+          "citation_meta_abstracts": 3,
+          "missing_abstracts": 20,
+          "mineru_titles": 48,
+          "related_work_titles": 35,
+          "abstracts_attached": 30,
+          "related_work_extras": 2,
+          "batches": 3
+        },
+        "error": null
+      },
+      "notes": [
+        "Scores the intermediate idea artifact (not the final paper).",
+        "Dimensions: novelty, feasibility, clarity (each 1-5). Excitement removed.",
+        "Novelty is scored against a Solution Space built from mineru REFERENCES titles (+ related_work.json abstracts when matched)."
+      ],
+      "idea_via": "candidate",
+      "idea_relative": "plan.md",
+      "summary": "LineGATE proposes annotation-free line-attention pooling over a frozen UniXcoder encoder for vulnerability detection, using only function-level loss plus an entropy regularizer. The plan is clear and feasible, with concrete datasets, variants, metrics, and CPU-only training. Novelty is incremental: it removes line-level supervision but does not change the core PLM classification paradigm. The reported PrimeVul pair-wise accuracy is very poor, and technical details such as λ/τ tuning are missing.",
+      "strengths": [
+        "Clear comparison design isolating attention source: Uniform, LineGATE, Diff-scorer, GT-gating.",
+        "Directly addresses the annotation-free research question by using only function-level labels.",
+        "Concrete datasets, splits, metrics, and reproducibility details such as seed 123456 and CPU-only frozen encoder."
+      ],
+      "weaknesses": [
+        "Limited novelty: standard attention pooling with entropy regularization over frozen PLM embeddings.",
+        "Headline PrimeVul pair-wise accuracy 0.0049 indicates the method fails on paired detection.",
+        "Missing technical details such as λ/τ tuning, line embedding construction, and diff-scorer training specifics."
+      ],
+      "llm_meta": {
+        "model": "deepseek-v4-pro-0813",
+        "base_url": "https://api-sg.umodelverse.ai/v1",
+        "usage": {
+          "completion_tokens": 3426,
+          "completion_tokens_details": {
+            "reasoning_tokens": 2781
+          },
+          "prompt_tokens": 6372,
+          "prompt_tokens_details": {
+            "cached_tokens": 4096
+          },
+          "total_tokens": 9798
+        },
+        "attempt": 0
+      }
+    },
+    "peer_review": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-020_localizing_vulnerable_code_regions_to_im/workspace/evoscientist_2026-08-14_11-12-24",
+      "review_report": "~/ai_scientist_inputs/ASE-2025-020_localizing_vulnerable_code_regions_to_im/workspace/evoscientist_2026-08-14_11-12-24/artifacts/peer_review/stanford_apr.md",
+      "paper_pdf": "~/ai_scientist_inputs/ASE-2025-020_localizing_vulnerable_code_regions_to_im/workspace/evoscientist_2026-08-14_11-12-24/paper/main.pdf",
+      "paper_tex": "~/ai_scientist_inputs/ASE-2025-020_localizing_vulnerable_code_regions_to_im/workspace/evoscientist_2026-08-14_11-12-24/paper/main.tex",
+      "status": "ok",
+      "dimensions": {},
+      "overall_score": 5.8,
+      "score_scale": "1-10",
+      "dimension_order": [],
+      "notes": [
+        "Scored from paperreview.ai (Stanford APR) native ratings; benchmark 5-dimension LLM rubric skipped.",
+        "Overall scale: 1-10."
+      ],
+      "paperreview": {
+        "status": "cached",
+        "hint": "Cached APR score found; no re-upload."
+      },
+      "scoring_method": "paperreview_apr",
+      "scoring_source": "paperreview_json",
+      "apr_dimensions": {},
+      "summary": "",
+      "red_flags": []
+    },
+    "alignment": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-020_localizing_vulnerable_code_regions_to_im/workspace/evoscientist_2026-08-14_11-12-24",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-020_localizing_vulnerable_code_regions_to_im",
+      "status": "ok",
+      "original": {
+        "paper_title": "LOSVER: Line-Level Modifiability Signal-Guided Vulnerability Detection and Classification",
+        "selection": {
+          "num_blocks": 6,
+          "total_chars": 31998,
+          "inferred_roles": {
+            "abstract": 1,
+            "introduction": 1,
+            "experiment": 3,
+            "conclusion": 1
+          },
+          "mineru_raw_keys": {
+            "field:abstract": 1,
+            "field:introduction": 1,
+            "field:experiment": 1,
+            "other": 2,
+            "conclusion": 1
+          },
+          "infer_reasons": {
+            "top_level_field": 3,
+            "body_override": 2,
+            "title": 1
+          },
+          "rescued_from_other": 2,
+          "note": "mineru key is unreliable; blocks are selected by title/body/inheritance. rescued_from_other counts sections labeled other but treated as typed roles."
+        },
+        "claims": [
+          {
+            "id": "C1",
+            "statement": "LOSVER consistently improves vulnerability detection accuracy over base PLMs on Devign, with absolute accuracy improvements of 2-4 percentage points across CodeBERT, CodeT5+, and UniXcoder.",
+            "direction": "improves",
+            "metric_names": [
+              "accuracy"
+            ],
+            "evidence_quote": "Across all PLMs, LOSVER provided consistent performance gains, achieving absolute accuracy improvements of 2–4 percentage points over the base models.",
+            "confidence": 0.95
+          },
+          {
+            "id": "C2",
+            "statement": "Applying LOSVER to UniXcoder with a 512-token limit on Devign increases accuracy from 65.94% to 69.94% and F1-score from 0.5234 to 0.6337.",
+            "direction": "improves",
+            "metric_names": [
+              "accuracy",
+              "f1_score"
+            ],
+            "evidence_quote": "integrating LOSVER with UniXcoder increased the accuracy from 65.94% to 69.94%, and the F1-score from 0.5234 to 0.6337.",
+            "confidence": 0.98
+          },
+          {
+            "id": "C3",
+            "statement": "LOSVER improves multi-class CWE ID classification on Big-Vul across PLM backbones; the best LOSVER (UniXcoder, 512-token) reaches weighted F1 73.17%, outperforming base UniXcoder (71.10%) and AIBugHunter (69.16%).",
+            "direction": "improves",
+            "metric_names": [
+              "weighted_f1"
+            ],
+            "evidence_quote": "The best result was achieved by LOSVER (UniXcoder, 512-token), which achieved a weighted F1-score of 73.17%, outperforming the base UniXcoder (71.10%) and AIBugHunter (69.16%).",
+            "confidence": 0.97
+          },
+          {
+            "id": "C4",
+            "statement": "On PrimeVul paired vulnerability detection, LOSVER improves pair-wise correct prediction from 0.1011 to 0.1401 with predicted modifiable lines; using ground-truth modified lines raises it to 0.3316.",
+            "direction": "improves",
+            "metric_names": [
+              "pair-wise_correct_prediction"
+            ],
+            "evidence_quote": "LOSVER improved the pair-wise correct prediction (P-C) from 0.1011 to 0.1401... replacing them with the ground-truth modified lines increased the score dramatically to 0.3316",
+            "confidence": 0.95
+          },
+          {
+            "id": "C5",
+            "statement": "Detection accuracy increases monotonically as modifiable-line localization accuracy improves; the oracle (100% corrected) condition reaches 75.37% accuracy on Devign, compared with 69.94% for the LOSVER baseline.",
+            "direction": "improves",
+            "metric_names": [
+              "accuracy"
+            ],
+            "evidence_quote": "detection accuracy improved steadily with localization quality... the 100% correction (oracle) condition reached 75.37% accuracy—an absolute improvement of 5.43 percentage points over the 69.94% LOSVER baseline",
+            "confidence": 0.97
+          },
+          {
+            "id": "C6",
+            "statement": "The Modifiable Line Localizer substantially outperforms LLMAO on line-level localization top-k accuracy on filtered Devign (top-1 55.1% vs 28.1%, top-3 70.5% vs 39.0%, top-5 78.4% vs 60.3%).",
+            "direction": "improves",
+            "metric_names": [
+              "top1_accuracy",
+              "top3_accuracy",
+              "top5_accuracy"
+            ],
+            "evidence_quote": "the localizer achieved top-1, top-3, and top-5 accuracies of 55.1%, 70.5%, and 78.4%, respectively... substantially outperform LLMAO",
+            "confidence": 0.93
+          },
+          {
+            "id": "C7",
+            "statement": "Zero-shot GPT-4o benefits from LOSVER-style predicted modifiable line markers: F1-score increases from 0.3007 to 0.3711, while accuracy remains around 54%.",
+            "direction": "mixed",
+            "metric_names": [
+              "f1_score",
+              "accuracy"
+            ],
+            "evidence_quote": "Adding special tokens <!> before predicted modifiable lines increased the F1-score from 0.3007 to 0.3711, while accuracy remained around 54%.",
+            "confidence": 0.9
+          },
+          {
+            "id": "C8",
+            "statement": "LOSVER outperforms prior state-of-the-art methods CSLS and AIBugHunter on detection and classification tasks under the paper's evaluation settings.",
+            "direction": "improves",
+            "metric_names": [
+              "accuracy",
+              "weighted_f1"
+            ],
+            "evidence_quote": "LOSVER also outperforms prior state-of-the-art methods such as CSLS [36] and AIBugHunter [43] on both tasks.",
+            "confidence": 0.9
+          }
+        ],
+        "metrics": [
+          {
+            "name": "accuracy",
+            "value": 65.94,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "Devign vulnerability detection, UniXcoder 512-token",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "UniXcoder ... 65.94",
+            "confidence": 0.98
+          },
+          {
+            "name": "accuracy",
+            "value": 69.94,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "Devign vulnerability detection, LOSVER (UniXcoder, 512-token)",
+            "is_sota_or_best": false,
+            "baseline_name": "UniXcoder",
+            "baseline_value": 65.94,
+            "evidence_quote": "integrating LOSVER with UniXcoder increased the accuracy from 65.94% to 69.94%",
+            "confidence": 0.98
+          },
+          {
+            "name": "f1_score",
+            "value": 0.6337,
+            "unit": "ratio",
+            "higher_is_better": true,
+            "setting": "Devign vulnerability detection, LOSVER (UniXcoder, 512-token)",
+            "is_sota_or_best": false,
+            "baseline_name": "UniXcoder",
+            "baseline_value": 0.5234,
+            "evidence_quote": "F1-score from 0.5234 to 0.6337",
+            "confidence": 0.98
+          },
+          {
+            "name": "accuracy",
+            "value": 70.56,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "Devign vulnerability detection, UniXcoder 1,024-token limit trained/evaluated on 512-token filtered dataset",
+            "is_sota_or_best": true,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "It achieved the best performance among all settings, with an accuracy of 70.56%",
+            "confidence": 0.95
+          },
+          {
+            "name": "precision",
+            "value": 0.7087,
+            "unit": "ratio",
+            "higher_is_better": true,
+            "setting": "Devign vulnerability detection, UniXcoder 1,024-token limit trained/evaluated on 512-token filtered dataset",
+            "is_sota_or_best": true,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "precision of 0.7087",
+            "confidence": 0.95
+          },
+          {
+            "name": "recall",
+            "value": 0.5569,
+            "unit": "ratio",
+            "higher_is_better": true,
+            "setting": "Devign vulnerability detection, UniXcoder 1,024-token limit trained/evaluated on 512-token filtered dataset",
+            "is_sota_or_best": true,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "recall of 0.5569",
+            "confidence": 0.95
+          },
+          {
+            "name": "f1_score",
+            "value": 0.6237,
+            "unit": "ratio",
+            "higher_is_better": true,
+            "setting": "Devign vulnerability detection, UniXcoder 1,024-token limit trained/evaluated on 512-token filtered dataset",
+            "is_sota_or_best": true,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "F1-score of 0.6237",
+            "confidence": 0.95
+          },
+          {
+            "name": "accuracy",
+            "value": 64.51,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "Devign vulnerability detection, CodeBERT 512-token",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "CodeBERT ... 64.51",
+            "confidence": 0.9
+          },
+          {
+            "name": "accuracy",
+            "value": 66.67,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "Devign vulnerability detection, LOSVER (CodeBERT, 512-token)",
+            "is_sota_or_best": false,
+            "baseline_name": "CodeBERT",
+            "baseline_value": 64.51,
+            "evidence_quote": "LOSVER (CodeBERT) ... 66.67",
+            "confidence": 0.9
+          },
+          {
+            "name": "accuracy",
+            "value": 65.46,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "Devign vulnerability detection, CodeT5+ 512-token",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "CodeT5+ ... 65.46",
+            "confidence": 0.9
+          },
+          {
+            "name": "accuracy",
+            "value": 69.29,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "Devign vulnerability detection, LOSVER (CodeT5+, 512-token)",
+            "is_sota_or_best": false,
+            "baseline_name": "CodeT5+",
+            "baseline_value": 65.46,
+            "evidence_quote": "LOSVER (CodeT5+) ... 69.29",
+            "confidence": 0.9
+          }
+        ],
+        "overall_conclusion": null,
+        "comparable_notes": null,
+        "cache_hit": true
+      },
+      "agent": {
+        "status": "ok",
+        "run_dir": "~/ai_scientist_inputs/ASE-2025-020_localizing_vulnerable_code_regions_to_im/workspace/evoscientist_2026-08-14_11-12-24",
+        "claims": [
+          {
+            "id": "A1",
+            "statement": "LineGATE is an annotation-free line-attention pooling head over a frozen UniXcoder encoder that uses only function-level vulnerability labels and a label-free entropy regularizer.",
+            "direction": "neutral",
+            "metric_names": [],
+            "evidence_quote": "No line, statement, or diff annotation is used anywhere in LineGATE.",
+            "confidence": 0.95
+          },
+          {
+            "id": "A2",
+            "statement": "Annotation-free attention learns a line-importance ranking that beats the no-skill baseline on Devign and Big-Vul.",
+            "direction": "improves",
+            "metric_names": [
+              "linegate_devign_localization_top1_mean",
+              "linegate_devign_localization_top3_mean",
+              "linegate_devign_localization_top5_mean",
+              "linegate_devign_line_f1_mean",
+              "linegate_bigvul_localization_top1_mean",
+              "linegate_bigvul_localization_top3_mean",
+              "linegate_bigvul_localization_top5_mean",
+              "linegate_bigvul_line_f1_mean"
+            ],
+            "evidence_quote": "annotation-free attention learns a line-importance ranking that beats the no-skill baseline on Devign and Big-Vul",
+            "confidence": 0.9
+          },
+          {
+            "id": "A3",
+            "statement": "In the frozen-encoder regime, LineGATE does not yet translate into a detection-accuracy gain over uniform pooling.",
+            "direction": "no_difference",
+            "metric_names": [
+              "linegate_devign_accuracy_mean",
+              "uniform_devign_accuracy_mean",
+              "linegate_bigvul_accuracy_mean",
+              "uniform_bigvul_accuracy_mean"
+            ],
+            "evidence_quote": "in the frozen-encoder regime this does not yet translate into a detection-accuracy gain",
+            "confidence": 0.85
+          },
+          {
+            "id": "A4",
+            "statement": "Diff-supervised soft attention outperforms hard oracle gating on Devign accuracy, indicating soft context-preserving attention is a better focus mechanism than hard concentration.",
+            "direction": "improves",
+            "metric_names": [
+              "diffscore_devign_accuracy_mean",
+              "gtscore_devign_accuracy_mean"
+            ],
+            "evidence_quote": "the diff-supervised soft attention (0.6451 Devign accuracy) in fact outperforms hard oracle gating (0.6375)",
+            "confidence": 0.95
+          },
+          {
+            "id": "A5",
+            "statement": "LOSVER demonstrated that re-weighting a detector toward modified lines raises Devign accuracy from 65.94% to 69.94%, with an oracle ceiling of 75.37% when ground-truth modified lines are supplied.",
+            "direction": "improves",
+            "metric_names": [
+              "losver_devign_accuracy_before",
+              "losver_devign_accuracy_after",
+              "losver_devign_oracle_ceiling"
+            ],
+            "evidence_quote": "LOSVER (ASE 2025) demonstrated that re-weighting a detector toward modified lines raises Devign accuracy from 65.94% to 69.94%, with an oracle ceiling of 75.37% when ground-truth modified lines are supplied.",
+            "confidence": 0.9
+          },
+          {
+            "id": "A6",
+            "statement": "LineGATE uses a scorer MLP and learnable temperature to produce line attention, and composes the function representation as an attention-weighted sum of line embeddings.",
+            "direction": "neutral",
+            "metric_names": [],
+            "evidence_quote": "A scorer MLP ... assigns each line a real-valued importance. With a learnable temperature ... z = sum alpha_l h_l.",
+            "confidence": 0.95
+          }
+        ],
+        "metrics": [
+          {
+            "name": "devign_accuracy",
+            "value": 0.62963,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "LineGATE primary variant seed 123456, Devign test",
+            "is_sota_or_best": false,
+            "baseline_name": "Uniform",
+            "baseline_value": 0.632428,
+            "evidence_quote": "accuracy: 0.62963",
+            "confidence": 0.95
+          },
+          {
+            "name": "bigvul_weighted_f1",
+            "value": 0.704174,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "LineGATE primary variant seed 123456, Big-Vul test",
+            "is_sota_or_best": false,
+            "baseline_name": "Uniform",
+            "baseline_value": 0.684299,
+            "evidence_quote": "weighted_f1: 0.704174",
+            "confidence": 0.95
+          },
+          {
+            "name": "devign_localization_top1",
+            "value": 0.180741,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "LineGATE primary variant seed 123456, Devign localization",
+            "is_sota_or_best": false,
+            "baseline_name": "no-skill baseline",
+            "baseline_value": 0.151111,
+            "evidence_quote": "top_n_accuracy: 0.180741",
+            "confidence": 0.95
+          },
+          {
+            "name": "devign_localization_top3",
+            "value": 0.343704,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "LineGATE primary variant seed 123456, Devign localization",
+            "is_sota_or_best": false,
+            "baseline_name": "no-skill baseline",
+            "baseline_value": 0.278025,
+            "evidence_quote": "top3_accuracy: 0.343704",
+            "confidence": 0.95
+          },
+          {
+            "name": "devign_localization_top5",
+            "value": 0.475556,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "LineGATE primary variant seed 123456, Devign localization",
+            "is_sota_or_best": false,
+            "baseline_name": "no-skill baseline",
+            "baseline_value": 0.406914,
+            "evidence_quote": "top5_accuracy: 0.475556",
+            "confidence": 0.95
+          },
+          {
+            "name": "devign_line_level_f1",
+            "value": 0.462917,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "LineGATE primary variant seed 123456, Devign line-level localization",
+            "is_sota_or_best": false,
+            "baseline_name": "no-skill baseline",
+            "baseline_value": 0.455611,
+            "evidence_quote": "line_level_f1: 0.462917",
+            "confidence": 0.95
+          },
+          {
+            "name": "primevul_pairwise_accuracy",
+            "value": 0.004902,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "LineGATE primary variant seed 123456, PrimeVul pairwise",
+            "is_sota_or_best": false,
+            "baseline_name": "Uniform",
+            "baseline_value": 0.078431,
+            "evidence_quote": "pairwise_accuracy: 0.004902",
+            "confidence": 0.9
+          },
+          {
+            "name": "linegate_devign_accuracy_mean",
+            "value": 0.628971,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "LineGATE variant, Devign test",
+            "is_sota_or_best": false,
+            "baseline_name": "Uniform",
+            "baseline_value": 0.632428,
+            "evidence_quote": "accuracy_mean: 0.628971",
+            "confidence": 0.95
+          },
+          {
+            "name": "uniform_devign_accuracy_mean",
+            "value": 0.632428,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "Uniform variant, Devign test",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "accuracy_mean: 0.632428",
+            "confidence": 0.95
+          },
+          {
+            "name": "diffscore_devign_accuracy_mean",
+            "value": 0.645103,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "Diff-scorer variant, Devign test",
+            "is_sota_or_best": true,
+            "baseline_name": "GT-gating",
+            "baseline_value": 0.637531,
+            "evidence_quote": "accuracy_mean: 0.645103",
+            "confidence": 0.95
+          },
+          {
+            "name": "gtscore_devign_accuracy_mean",
+            "value": 0.637531,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "GT-gating oracle variant, Devign test",
+            "is_sota_or_best": false,
+            "baseline_name": "Diff-scorer",
+            "baseline_value": 0.645103,
+            "evidence_quote": "accuracy_mean: 0.637531",
+            "confidence": 0.95
+          },
+          {
+            "name": "linegate_bigvul_accuracy_mean",
+            "value": 0.682449,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "LineGATE variant, Big-Vul test",
+            "is_sota_or_best": false,
+            "baseline_name": "Uniform",
+            "baseline_value": 0.689622,
+            "evidence_quote": "accuracy_mean: 0.682449",
+            "confidence": 0.95
+          },
+          {
+            "name": "uniform_bigvul_accuracy_mean",
+            "value": 0.689622,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "Uniform variant, Big-Vul test",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "accuracy_mean: 0.689622",
+            "confidence": 0.95
+          },
+          {
+            "name": "diffscore_bigvul_accuracy_mean",
+            "value": 0.680536,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "Diff-scorer variant, Big-Vul test",
+            "is_sota_or_best": false,
+            "baseline_name": "Uniform",
+            "baseline_value": 0.689622,
+            "evidence_quote": "accuracy_mean: 0.680536",
+            "confidence": 0.95
+          },
+          {
+            "name": "gtscore_bigvul_accuracy_mean",
+            "value": 0.703491,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "GT-gating oracle variant, Big-Vul test",
+            "is_sota_or_best": true,
+            "baseline_name": "Uniform",
+            "baseline_value": 0.689622,
+            "evidence_quote": "accuracy_mean: 0.703491",
+            "confidence": 0.95
+          },
+          {
+            "name": "linegate_devign_localization_top1_mean",
+            "value": 0.195556,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "LineGATE variant, Devign localization",
+            "is_sota_or_best": false,
+            "baseline_name": "no-skill baseline",
+            "baseline_value": 0.151111,
+            "evidence_quote": "top1_acc: 0.195556",
+            "confidence": 0.95
+          },
+          {
+            "name": "linegate_devign_localization_top3_mean",
+            "value": 0.364774,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "LineGATE variant, Devign localization",
+            "is_sota_or_best": false,
+            "baseline_name": "no-skill baseline",
+            "baseline_value": 0.278025,
+            "evidence_quote": "top3_acc: 0.364774",
+            "confidence": 0.95
+          },
+          {
+            "name": "linegate_devign_localization_top5_mean",
+            "value": 0.488724,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "LineGATE variant, Devign localization",
+            "is_sota_or_best": false,
+            "baseline_name": "no-skill baseline",
+            "baseline_value": 0.406914,
+            "evidence_quote": "top5_acc: 0.488724",
+            "confidence": 0.95
+          },
+          {
+            "name": "linegate_devign_line_f1_mean",
+            "value": 0.473989,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "LineGATE variant, Devign line-level localization",
+            "is_sota_or_best": false,
+            "baseline_name": "no-skill baseline",
+            "baseline_value": 0.455611,
+            "evidence_quote": "line_f1: 0.473989",
+            "confidence": 0.95
+          },
+          {
+            "name": "linegate_bigvul_localization_top1_mean",
+            "value": 0.202961,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "LineGATE variant, Big-Vul localization",
+            "is_sota_or_best": false,
+            "baseline_name": "no-skill baseline",
+            "baseline_value": 0.0,
+            "evidence_quote": "top1_acc: 0.202961",
+            "confidence": 0.95
+          },
+          {
+            "name": "linegate_bigvul_localization_top3_mean",
+            "value": 0.359121,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "LineGATE variant, Big-Vul localization",
+            "is_sota_or_best": false,
+            "baseline_name": "no-skill baseline",
+            "baseline_value": 0.308023,
+            "evidence_quote": "top3_acc: 0.359121",
+            "confidence": 0.95
+          },
+          {
+            "name": "linegate_bigvul_localization_top5_mean",
+            "value": 0.48233,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "LineGATE variant, Big-Vul localization",
+            "is_sota_or_best": false,
+            "baseline_name": "no-skill baseline",
+            "baseline_value": 0.446991,
+            "evidence_quote": "top5_acc: 0.48233",
+            "confidence": 0.95
+          },
+          {
+            "name": "linegate_bigvul_line_f1_mean",
+            "value": 0.516496,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "LineGATE variant, Big-Vul line-level localization",
+            "is_sota_or_best": false,
+            "baseline_name": "no-skill baseline",
+            "baseline_value": 0.47113,
+            "evidence_quote": "line_f1: 0.516496",
+            "confidence": 0.95
+          },
+          {
+            "name": "diffscore_devign_localization_top1_mean",
+            "value": 0.420741,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "Diff-scorer variant, Devign localization",
+            "is_sota_or_best": false,
+            "baseline_name": "LineGATE",
+            "baseline_value": 0.195556,
+            "evidence_quote": "top1_acc: 0.420741",
+            "confidence": 0.95
+          },
+          {
+            "name": "diffscore_bigvul_localization_top1_mean",
+            "value": 0.684814,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "Diff-scorer variant, Big-Vul localization",
+            "is_sota_or_best": false,
+            "baseline_name": "LineGATE",
+            "baseline_value": 0.202961,
+            "evidence_quote": "top1_acc: 0.684814",
+            "confidence": 0.95
+          },
+          {
+            "name": "gtscore_devign_localization_top1_mean",
+            "value": 1.0,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "GT-gating oracle variant, Devign localization",
+            "is_sota_or_best": true,
+            "baseline_name": "Diff-scorer",
+            "baseline_value": 0.420741,
+            "evidence_quote": "top1_acc: 1.0",
+            "confidence": 0.95
+          },
+          {
+            "name": "gtscore_bigvul_localization_top1_mean",
+            "value": 1.0,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "GT-gating oracle variant, Big-Vul localization",
+            "is_sota_or_best": true,
+            "baseline_name": "Diff-scorer",
+            "baseline_value": 0.684814,
+            "evidence_quote": "top1_acc: 1.0",
+            "confidence": 0.95
+          },
+          {
+            "name": "losver_devign_accuracy_before",
+            "value": 65.94,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "LOSVER reported Devign accuracy before re-weighting",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "LOSVER (ASE 2025) demonstrated that re-weighting a detector toward modified lines raises Devign accuracy from 65.94% to 69.94%",
+            "confidence": 0.9
+          },
+          {
+            "name": "losver_devign_accuracy_after",
+            "value": 69.94,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "LOSVER reported Devign accuracy after re-weighting",
+            "is_sota_or_best": false,
+            "baseline_name": "LOSVER before",
+            "baseline_value": 65.94,
+            "evidence_quote": "raises Devign accuracy from 65.94% to 69.94%",
+            "confidence": 0.9
+          },
+          {
+            "name": "losver_devign_oracle_ceiling",
+            "value": 75.37,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "LOSVER reported Devign oracle ceiling with ground-truth modified lines",
+            "is_sota_or_best": true,
+            "baseline_name": "LOSVER after",
+            "baseline_value": 69.94,
+            "evidence_quote": "oracle ceiling of 75.37% when ground-truth modified lines are supplied",
+            "confidence": 0.9
+          }
+        ],
+        "overall_conclusion": "LineGATE is an annotation-free line-attention pooling head over a frozen UniXcoder encoder. It learns line-importance rankings that beat the no-skill localization baseline on Devign and Big-Vul, but in the frozen-encoder setting it does not improve detection accuracy over uniform pooling. Diff-supervised soft attention achieves the best Devign detection accuracy among the compared variants (0.6451), outperforming hard oracle gating (0.6375).",
+        "sources": {
+          "metrics_path": "results/metrics.json",
+          "paper_tex_path": "paper/main.tex"
+        },
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 16411,
+            "completion_tokens_details": {
+              "reasoning_tokens": 11858
+            },
+            "prompt_tokens": 4977,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 21388
+          },
+          "attempt": 0
+        }
+      },
+      "comparison": {
+        "status": "ok",
+        "claim_alignment": [
+          {
+            "original_claim_id": "C1",
+            "agent_claim_id": "A5",
+            "label": "partial",
+            "rationale": "Agent A5 restates the LOSVER Devign accuracy improvement for UniXcoder (65.94% to 69.94%), which is same-direction, but it does not address the claimed 2-4 percentage point gains across CodeBERT, CodeT5+, and UniXcoder."
+          },
+          {
+            "original_claim_id": "C2",
+            "agent_claim_id": "A5",
+            "label": "partial",
+            "rationale": "Agent A5 restates the Devign accuracy improvement from 65.94% to 69.94% but omits the F1-score improvement from 0.5234 to 0.6337."
+          },
+          {
+            "original_claim_id": "C3",
+            "agent_claim_id": null,
+            "label": "incomparable",
+            "rationale": "Agent reports Big-Vul weighted F1 for LineGATE, not LOSVER, and does not compare against base UniXcoder or AIBugHunter under the original protocol."
+          },
+          {
+            "original_claim_id": "C4",
+            "agent_claim_id": null,
+            "label": "incomparable",
+            "rationale": "Agent reports a LineGATE PrimeVul pairwise_accuracy metric, not the LOSVER pair-wise correct prediction metric, and uses a different method/protocol."
+          },
+          {
+            "original_claim_id": "C5",
+            "agent_claim_id": "A5",
+            "label": "partial",
+            "rationale": "Agent A5 restates the LOSVER oracle ceiling of 75.37% accuracy, but does not address the monotonic relationship between localization quality and detection accuracy."
+          },
+          {
+            "original_claim_id": "C6",
+            "agent_claim_id": "A2",
+            "label": "incomparable",
+            "rationale": "Agent A2 reports LineGATE localization improvement over a no-skill baseline, not the LOSVER Modifiable Line Localizer versus LLMAO on filtered Devign."
+          },
+          {
+            "original_claim_id": "C7",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "Agent does not address zero-shot GPT-4o or LOSVER-style predicted modifiable line markers."
+          },
+          {
+            "original_claim_id": "C8",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "Agent does not compare against CSLS or AIBugHunter and does not evaluate LOSVER against prior state-of-the-art methods."
+          }
+        ],
+        "metric_alignment": [
+          {
+            "original_metric": "accuracy",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 65.94,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Agent did not run the original base UniXcoder 512-token protocol; its uniform-pooling frozen-encoder accuracy is a different protocol."
+          },
+          {
+            "original_metric": "accuracy",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 69.94,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Agent only cites this LOSVER value in A5; it did not independently run LOSVER."
+          },
+          {
+            "original_metric": "f1_score",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 0.6337,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Agent reports no Devign detection F1-score for LOSVER."
+          },
+          {
+            "original_metric": "accuracy",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 70.56,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Agent's best Devign accuracy is for a LineGATE diff-scorer variant, not the original UniXcoder 1,024-token LOSVER setting."
+          },
+          {
+            "original_metric": "precision",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 0.7087,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Agent does not report a comparable precision metric for this setting."
+          },
+          {
+            "original_metric": "recall",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 0.5569,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Agent does not report a comparable recall metric for this setting."
+          },
+          {
+            "original_metric": "f1_score",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 0.6237,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Agent does not report a comparable detection F1-score for this setting."
+          },
+          {
+            "original_metric": "accuracy",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 64.51,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Agent does not run CodeBERT."
+          },
+          {
+            "original_metric": "accuracy",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 66.67,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Agent does not run LOSVER with CodeBERT."
+          },
+          {
+            "original_metric": "accuracy",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 65.46,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Agent does not run CodeT5+."
+          },
+          {
+            "original_metric": "accuracy",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 69.29,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Agent does not run LOSVER with CodeT5+."
+          }
+        ],
+        "summary": {
+          "direction_consistency": "mixed",
+          "consistent_claim_ratio": 0.0,
+          "has_comparable_metrics": false,
+          "sota_improvement_summary": "N/A",
+          "overall_alignment_score": 0.45,
+          "score_rationale": "Agent works on the same problem family and partially restates LOSVER improvements, but uses a different frozen-encoder LineGATE protocol with no comparable metrics; no comparable conflicts."
+        },
+        "warnings": [
+          "Agent metrics are from a frozen-encoder LineGATE protocol, not LOSVER; direct metric comparison is invalid.",
+          "Agent's PrimeVul pairwise_accuracy is not the same as LOSVER pair-wise correct prediction and is not comparable.",
+          "Agent metric list appears truncated in the provided input; some Big-Vul localization entries may be missing.",
+          "No comparable metrics were available, so no deltas were computed."
+        ],
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 9644,
+            "completion_tokens_details": {
+              "reasoning_tokens": 7754
+            },
+            "prompt_tokens": 6826,
+            "prompt_tokens_details": {
+              "cached_tokens": 2048
+            },
+            "total_tokens": 16470
+          },
+          "attempt": 0
+        }
+      },
+      "overall_alignment_score": 0.45,
+      "direction_consistency": "mixed"
+    },
+    "experiment_analysis": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-020_localizing_vulnerable_code_regions_to_im/workspace/evoscientist_2026-08-14_11-12-24",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-020_localizing_vulnerable_code_regions_to_im",
+      "status": "ok",
+      "metrics_path": "results/metrics.json",
+      "experiment_success": {
+        "status": "ok",
+        "success": true,
+        "metrics_path": "results/metrics.json",
+        "absolute_metrics_path": "~/ai_scientist_inputs/ASE-2025-020_localizing_vulnerable_code_regions_to_im/workspace/evoscientist_2026-08-14_11-12-24/results/metrics.json",
+        "checks": {
+          "has_results_file": true,
+          "non_stub": true,
+          "numeric_leaf_count": 303,
+          "min_numeric_ok": true
+        },
+        "manifest_hints": {
+          "status": {
+            "research_request": true,
+            "plan": true,
+            "metrics": true,
+            "paper_tex": true,
+            "paper_pdf": true,
+            "readme": true
+          },
+          "returncode": 0,
+          "benchmark_complete": true,
+          "artifacts_metrics_flag": false
+        },
+        "warnings": [],
+        "suspicious_values": [],
+        "note": "success=true requires substantive results (framework-aware path) with >=3 numeric leaves. Supports metrics.json, results.json, experiment_results.txt, etc. Manifest returncode/benchmark_complete are soft warnings only."
+      },
+      "idea_code_consistency": {
+        "status": "ok",
+        "idea_path": "plan.md",
+        "code_files": [
+          "project/evaluate.py",
+          "project/featurize.py",
+          "project/generate_metrics.py",
+          "project/models.py"
+        ],
+        "score_scale": "1-5",
+        "score": 4.0,
+        "label": "strong",
+        "justification": "The code implements the core LineGATE method and evaluation pipeline: frozen UniXcoder line embeddings are generated in featurize.py, models.py defines the LineGATE head with scorer MLP, learnable temperature, softmax line attention, and classifier, plus the required Uniform/Diff-scorer/GT-gating variants. evaluate.py computes the stated classification and localization metrics, including PrimeVul pairwise accuracy and line-level F1, and generate_metrics.py exposes the required task metrics. However, the provided snippets do not include train.py, so the end-to-end training loop and the label-free entropy regularizer λ·H(α) are not directly visible; models.py describes the regularizer as optional, which is a potential divergence from the idea's stated loss.",
+        "matched_elements": [
+          "Frozen UniXcoder line-level mean-pooled embeddings with 512-token window",
+          "LineGATE head: ScorerMLP + learnable tau + softmax attention + classifier",
+          "Comparison variants: uniform, linegate, diffscore, gtscore",
+          "Evaluation metrics: accuracy, weighted F1, top-1/3/5 localization, line F1, PrimeVul pairwise accuracy",
+          "Seed-123456 primary metrics and required metrics.json generation"
+        ],
+        "missing_or_divergent_elements": [
+          "Training loop and entropy regularizer not directly visible in provided snippets (train.py referenced but not included)",
+          "Entropy regularizer described as optional in models.py, whereas the idea states it as part of the training objective"
+        ],
+        "rubric": "Strong alignment: code largely implements the idea's method and evaluation; only minor omissions or declared simplifications.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 6118,
+            "completion_tokens_details": {
+              "reasoning_tokens": 5767
+            },
+            "prompt_tokens": 5468,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 11586
+          },
+          "attempt": 0
+        }
+      },
+      "setup_coverage": {
+        "status": "ok",
+        "overall_coverage": 0.8222222222222223,
+        "datasets": {
+          "gold_count": 3,
+          "hit_count": 2,
+          "miss_count": 1,
+          "coverage": 0.6666666666666666,
+          "hits": [
+            "Devign",
+            "PrimeVul"
+          ],
+          "misses": [
+            "Big-Vul"
+          ]
+        },
+        "baselines": {
+          "gold_count": 5,
+          "hit_count": 4,
+          "miss_count": 1,
+          "coverage": 0.8,
+          "hits": [
+            "UniXcoder (base-9, fine-tuned)",
+            "CodeT5+ (encoder-only 220M)",
+            "Roberta-based PLM (e.g., CodeBERT)",
+            "CSLS"
+          ],
+          "misses": [
+            "AIBugHunter"
+          ]
+        },
+        "metrics": {
+          "gold_count": 5,
+          "hit_count": 5,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "Accuracy (binary detection)",
+            "Weighted F1-score (classification)",
+            "Top-N Accuracy (line localization)",
+            "Line-level F1-score",
+            "Pair-wise accuracy"
+          ],
+          "misses": []
+        },
+        "agent_protocol": {},
+        "gold_protocol": {},
+        "dataset_dirs": [
+          "dataset_candidate"
+        ],
+        "flags": {
+          "weaker_baseline_suspected": true,
+          "weak_protocol": [],
+          "synthetic_data": "unexpected_synthetic_or_local_only_data",
+          "gold_allows_synthetic": false
+        },
+        "gold_sources": [
+          "~/ai_scientist_inputs/ASE-2025-020_localizing_vulnerable_code_regions_to_im/task.md",
+          "~/ai_scientist_inputs/ASE-2025-020_localizing_vulnerable_code_regions_to_im/metadata.json"
+        ],
+        "note": "Coverage is name/alias matching against task.md Datasets/Baselines/Metrics. weak_protocol flags large reductions in trials/timeout vs Constraints. Synthetic corpora are not penalized when the task itself requires synthesis."
+      },
+      "ablation_significance": {
+        "status": "ok",
+        "idea_path": "plan.md",
+        "significance_signals_rule_based": {
+          "signals": [],
+          "artifact_paths": [],
+          "has_any_significance_artifact": false
+        },
+        "evidence_format": "summary+raw_json_truncated",
+        "study_type": "new_method",
+        "components": [
+          {
+            "name": "Frozen UniXcoder encoder",
+            "role": "module",
+            "ablation_expected": false,
+            "significance_expected": false,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "Shared frozen backbone across all variants; not a removable method component in this comparison.",
+            "significance_status": "not_required",
+            "significance_evidence": ""
+          },
+          {
+            "name": "Line grouping and mean pooling",
+            "role": "module",
+            "ablation_expected": false,
+            "significance_expected": false,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "Common line-pooling step for all attention variants; no token-level alternative tested, but not a separate contribution to ablate.",
+            "significance_status": "not_required",
+            "significance_evidence": ""
+          },
+          {
+            "name": "Scorer MLP + softmax line attention",
+            "role": "module",
+            "ablation_expected": true,
+            "significance_expected": false,
+            "ablation_status": "present",
+            "ablation_evidence": "Uniform mean-pooling baseline removes the learned scorer/attention and is compared in metrics.json with mean/std over 3 seeds.",
+            "significance_status": "not_required",
+            "significance_evidence": ""
+          },
+          {
+            "name": "Learnable temperature tau",
+            "role": "hyperparameter",
+            "ablation_expected": false,
+            "significance_expected": false,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "No fixed-temperature ablation reported; treated as a minor hyperparameter rather than a core removable module.",
+            "significance_status": "not_required",
+            "significance_evidence": ""
+          },
+          {
+            "name": "Entropy regularizer lambda*H(alpha)",
+            "role": "loss",
+            "ablation_expected": true,
+            "significance_expected": false,
+            "ablation_status": "partial",
+            "ablation_evidence": "Paper method states lambda was swept over {0, 1e-4, 1e-3, 1e-2} and selected on validation, but no per-lambda results are included in the provided metrics.json.",
+            "significance_status": "not_required",
+            "significance_evidence": ""
+          },
+          {
+            "name": "Classifier head",
+            "role": "module",
+            "ablation_expected": false,
+            "significance_expected": false,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "Shared classifier architecture across variants; not a separate contribution.",
+            "significance_status": "not_required",
+            "significance_evidence": ""
+          },
+          {
+            "name": "Uniform baseline",
+            "role": "baseline",
+            "ablation_expected": false,
+            "significance_expected": false,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "Included as detector-without-localizer comparison.",
+            "significance_status": "not_required",
+            "significance_evidence": ""
+          },
+          {
+            "name": "Diff-scorer baseline",
+            "role": "baseline",
+            "ablation_expected": false,
+            "significance_expected": false,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "Supervised LOSVER-like attention baseline requiring diff line labels.",
+            "significance_status": "not_required",
+            "significance_evidence": ""
+          },
+          {
+            "name": "GT-gating oracle baseline",
+            "role": "baseline",
+            "ablation_expected": false,
+            "significance_expected": false,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "Oracle hard attention on ground-truth modified lines.",
+            "significance_status": "not_required",
+            "significance_evidence": ""
+          },
+          {
+            "name": "Four-way variant comparison",
+            "role": "baseline comparison",
+            "ablation_expected": false,
+            "significance_expected": true,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "Comparison across Uniform, LineGATE, Diff-scorer, and GT-gating is the main evaluation.",
+            "significance_status": "missing",
+            "significance_evidence": "Only mean and std over 3 seeds are reported; no p-values, confidence intervals, bootstrap, or statistical tests are provided."
+          },
+          {
+            "name": "Datasets (Devign, Big-Vul, PrimeVul)",
+            "role": "dataset split",
+            "ablation_expected": false,
+            "significance_expected": false,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "Real datasets used for evaluation.",
+            "significance_status": "not_required",
+            "significance_evidence": ""
+          },
+          {
+            "name": "Seeds (123456, 42, 7)",
+            "role": "hyperparameter",
+            "ablation_expected": false,
+            "significance_expected": false,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "Three seeds used to report mean/std.",
+            "significance_status": "not_required",
+            "significance_evidence": ""
+          }
+        ],
+        "ablation_coverage_score": 0.75,
+        "overall_ablation_ok": true,
+        "overall_significance_ok": false,
+        "summary": "The run includes the key attention-source ablation (Uniform vs LineGATE) and supervised/oracle comparisons, and the entropy regularizer has a lambda sweep including 0, though per-lambda results are not shown. Formal significance testing is missing: only mean/std over three seeds are reported without p-values, confidence intervals, or statistical tests.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 8483,
+            "completion_tokens_details": {
+              "reasoning_tokens": 7155
+            },
+            "prompt_tokens": 6739,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 15222
+          },
+          "attempt": 0
+        }
+      },
+      "results_paper_consistency": {
+        "status": "ok",
+        "paper_tex": "paper/main.tex",
+        "paper_kind": "paper_tex",
+        "results_format": "raw_json",
+        "digest_hint": {
+          "unfavorable_count": 0,
+          "trial_fail_count": 0,
+          "trial_success_count": 0,
+          "metadata": {}
+        },
+        "score_scale": "1-5",
+        "method": "Direct LLM comparison: agent's FINAL results artifact (metrics.json summary) vs paper Results/Discussion/Conclusion. Interim failed runs are NOT evidence unless still present in the final metrics file.",
+        "score": 5.0,
+        "consistency_label": "high",
+        "hiding_unfavorable_suspected": false,
+        "hiding_confidence": 0.95,
+        "justification": "The paper's reported means and standard deviations match the final results JSON's variant means for Uniform, LineGATE, Diff-scorer, and GT-gating on Devign, Big-Vul, and PrimeVul. Localization top-1/3/5 and line F1 values also match after rounding. The paper explicitly reports and discusses the main negative findings: LineGATE does not beat Uniform on detection, PrimeVul pairwise accuracy is near zero, and PrimeVul annotation-free localization falls below the no-skill baseline. Minor secondary metrics such as PrimeVul recall/F1 are not highlighted, but the poor PrimeVul performance is already disclosed via pairwise accuracy and localization.",
+        "supported_claims": [
+          "LineGATE detection does not beat Uniform on Devign/Big-Vul/PrimeVul in the frozen-encoder regime.",
+          "Diff-scorer improves Devign accuracy over Uniform by about 1.3pp.",
+          "GT-gating gives small detection gains over Uniform (+0.5pp Devign, +1.3pp Big-Vul wF1).",
+          "LineGATE localization beats no-skill on Devign and Big-Vul but is below no-skill on PrimeVul top-1.",
+          "Diff-scorer soft attention outperforms hard GT-gating on Devign accuracy.",
+          "PrimeVul pairwise accuracy is very low for LineGATE (0.0065) and reported."
+        ],
+        "unsupported_or_overstated_claims": [],
+        "numeric_mismatches": [],
+        "unfavorable_in_final_results": [
+          "LineGATE PrimeVul pairwise accuracy is near zero (mean 0.006536; seed 123456 0.004902).",
+          "LineGATE PrimeVul localization top-1/3/5 (0.068/0.163/0.272) is below the no-skill baseline (0.127/0.201/0.279).",
+          "LineGATE detection accuracy/wF1 is below Uniform on all three datasets (Devign 0.6290 vs 0.6324; Big-Vul wF1 0.6753 vs 0.6843; PrimeVul 0.4984 vs 0.5090).",
+          "LineGATE PrimeVul recall and F1 are very low (mean recall 0.0605, F1 0.1061)."
+        ],
+        "unfavorable_acknowledged_in_paper": [
+          "LineGATE does not beat Uniform on detection accuracy.",
+          "PrimeVul pairwise accuracy for LineGATE is reported as 0.0065.",
+          "PrimeVul annotation-free localization is below no-skill (top-1 0.068 vs 0.127).",
+          "Big-Vul no-skill top-1 is 0.000, and LineGATE top-1 remains low at 0.203."
+        ],
+        "unfavorable_missing_from_paper": [],
+        "rubric": "Highly consistent and transparent: numbers and conclusions match metrics; failures and limitations are fairly reported.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 10953,
+            "completion_tokens_details": {
+              "reasoning_tokens": 10240
+            },
+            "prompt_tokens": 7314,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 18267
+          },
+          "attempt": 0
+        }
+      },
+      "scores": {
+        "experiment_success": true,
+        "idea_code_score": 4.0,
+        "setup_coverage": 0.8222222222222223,
+        "ablation_coverage_score": 0.75,
+        "overall_ablation_ok": true,
+        "overall_significance_ok": false,
+        "results_paper_score": 5.0,
+        "hiding_unfavorable_suspected": false
+      },
+      "notes": [
+        "Axes 1,2,3,4,6 in experiment_analysis (figures excluded).",
+        "setup_coverage matches task.md Datasets/Baselines/Metrics; weak_protocol flags reductions vs Constraints.",
+        "Axis 6: final normalized results vs paper; interim run logs not used as ground truth."
+      ]
+    },
+    "literature_review": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-020_localizing_vulnerable_code_regions_to_im/workspace/evoscientist_2026-08-14_11-12-24",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-020_localizing_vulnerable_code_regions_to_im",
+      "status": "not_applicable",
+      "as_of_year": 2026,
+      "agent_ref_count": 0,
+      "sources": [
+        {
+          "path": "~/ai_scientist_inputs/ASE-2025-020_localizing_vulnerable_code_regions_to_im/workspace/evoscientist_2026-08-14_11-12-24/idea/literature_synthesis.md",
+          "kind": "literature_synthesis"
+        },
+        {
+          "path": "~/ai_scientist_inputs/ASE-2025-020_localizing_vulnerable_code_regions_to_im/workspace/evoscientist_2026-08-14_11-12-24/project/literature_synthesis.md",
+          "kind": "literature_synthesis"
+        }
+      ],
+      "collection_audit": {
+        "cited_keys_count": 0,
+        "filter_mode": "uncited_bulk_bib_skipped",
+        "bib_total_before_filter": 0,
+        "bib_after_filter": 0,
+        "uncited_bib_skipped": 0,
+        "agent_ref_count": 0
+      },
+      "fabrication": null,
+      "coverage": null,
+      "recency": null,
+      "reason": "uncited_bulk_bib_skipped",
+      "hint": "Found a large .bib file but no \\cite keys in the paper TeX; bulk anthology/template bibliographies are not scored. Use literature_survey / related_work artifacts or cite papers in the manuscript."
+    }
+  },
+  "scores": {
+    "completeness": {
+      "complete": true,
+      "overall_score": 0.8453,
+      "required_score": 1.0,
+      "bonus_score": 0.09
+    },
+    "peer_review": {
+      "status": "ok",
+      "optional": false,
+      "overall_score": 5.8,
+      "score_scale": "1-10",
+      "scoring_method": "paperreview_apr"
+    },
+    "idea_generation": {
+      "status": "ok",
+      "overall_score": 3.2,
+      "dimensions": {
+        "novelty": 3.0,
+        "feasibility": 4.0,
+        "clarity": 4.0
+      },
+      "novelty_category": "Incremental",
+      "solution_space_status": "ok"
+    },
+    "alignment": {
+      "status": "ok",
+      "direction_consistency": "mixed",
+      "overall_alignment_score": 0.45
+    },
+    "literature_review": {
+      "fabrication_rate": null,
+      "coverage_recall": null,
+      "recency_ratio_3y": null,
+      "recency_ratio_5y": null
+    },
+    "experiment_analysis": {
+      "experiment_success": true,
+      "idea_code_score": 4.0,
+      "setup_coverage": 0.8222222222222223,
+      "ablation_coverage_score": 0.75,
+      "overall_ablation_ok": true,
+      "overall_significance_ok": false,
+      "results_paper_score": 5.0,
+      "hiding_unfavorable_suspected": false
+    }
+  },
+  "fair_scores": {
+    "applicable_axes": [
+      "completeness",
+      "idea_generation",
+      "peer_review",
+      "alignment",
+      "experiment_analysis"
+    ],
+    "skipped_axes": [
+      {
+        "axis": "literature_review",
+        "reason": "not_applicable"
+      }
+    ],
+    "fair_mean_0_1": 0.7151,
+    "note": "fair_mean_0_1 averages only applicable axes; optional peer review and framework-inapplicable literature are excluded from the denominator."
+  },
+  "evals_root": "~/ai_scientist_evals",
+  "claims_cache": "~/ai_scientist_evals/ASE-2025-020_localizing_vulnerable_code_regions_to_im/original_claims.json",
+  "solution_space_cache": "~/ai_scientist_evals/ASE-2025-020_localizing_vulnerable_code_regions_to_im/solution_space.json"
+}

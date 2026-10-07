@@ -1,0 +1,31 @@
+{
+  "forbid_synthetic_pilot": true,
+  "agent_data_note": "Use the full QSF paper artifact at `dataset_candidate/qsf/`. Benchmark instances live under `data/benchmarks/smtlib_qf_fp/` (266 QF_FP instances) and `data/benchmarks/program_qf_fp/` (3493 real-world program instances). Do not substitute toy or synthetic SMT-LIB formulas.",
+  "required_metrics": [
+    "solved_instances",
+    "execution_time",
+    "winning_rate"
+  ],
+  "benchmark_rules": [
+    "Read `dataset_candidate/dataset_paths.json` and use `$QSF_HOME` / the documented benchmark roots before experiments.",
+    "Evaluate on the provided full benchmarks (266 smtlib_qf_fp + 3493 program_qf_fp). Scope down runtime (subset sampling, shorter timeouts) only when necessary — document any subset explicitly.",
+    "The shared QSF mount is read-only. Write solver outputs, logs, and metrics under `project/` or `results/`.",
+    "Implement a search-based floating-point constraint solver (multi-objective guidance encouraged). Baseline solvers (Z3, Bitwuzla, goSAT, etc.) are optional — choose and install comparison methods yourself if needed.",
+    "Report solved_instances, execution_time, and winning_rate (or pairwise speed comparisons) against at least one comparison point when feasible.",
+    "Do not claim full paper reproduction unless the experiment protocol and resources match."
+  ],
+  "non_goals": [
+    "Pre-installing all nine paper baseline solvers as a benchmark requirement",
+    "Rebuilding the GSL/KLEE benchmark from scratch when the artifact instances are already provided",
+    "Using fabricated floating-point constraints instead of the mounted QSF benchmarks"
+  ],
+  "dataset_env": {
+    "QSF_HOME": "dataset_candidate/qsf"
+  },
+  "exclude_from_agent": [
+    "container_setup.sh",
+    "README.md",
+    "benchmark_config.json",
+    "requirements.txt"
+  ]
+}

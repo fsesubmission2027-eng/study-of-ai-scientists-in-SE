@@ -1,0 +1,1511 @@
+{
+  "generated_at": "2026-08-23T11:15:21",
+  "run_dir": "~/ai_scientist_inputs/ASE-2025-008_characterizing_llm_based_software_engine/workspace/researchclaw_2026-07-30_12-00-31",
+  "task_dir": "~/ai_scientist_inputs/ASE-2025-008_characterizing_llm_based_software_engine",
+  "framework": "researchclaw",
+  "fairness_audit": [
+    {
+      "axis": "completeness",
+      "was_unfair": "Required both paper.tex AND paper.pdf; any tool missing one failed equally.",
+      "fix": "Paper gate: PDF=1.0; TeX-only=0.5; ``complete`` requires PDF."
+    },
+    {
+      "axis": "completeness",
+      "was_unfair": "``results`` counted stub/seed JSON (dataset_candidate/metrics.json).",
+      "fix": "``results`` requires substantive numeric results via results_normalize."
+    },
+    {
+      "axis": "experiment_success",
+      "was_unfair": "Only metrics.json; ignored results.json / experiment_results.txt.",
+      "fix": "Framework-ordered result candidates + normalized loaders."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Penalized tools with no bib; airesearcher has no workspace references.",
+      "fix": "literature_applicable=false → status not_applicable; excluded from fair aggregate."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "related_work.json subset as gold made recall hard to interpret.",
+      "fix": "Coverage gold is original paper REFERENCES from mineru; related_work only enriches metadata/fallback."
+    },
+    {
+      "axis": "peer_review",
+      "was_unfair": "Missing Stanford report looked like evaluation failure.",
+      "fix": "status not_provided; optional axis, never counts as tool failure."
+    },
+    {
+      "axis": "paths/find_results",
+      "was_unfair": "Picked downloads/** and sandbox noise (e.g. airesearcher LLVM tree).",
+      "fix": "Exclude downloads/, seeds/, dataset_candidate/, sandbox junk paths."
+    },
+    {
+      "axis": "paths/framework_noise",
+      "was_unfair": "DeepScientist .deepscientist_npm / runtime / skills templates counted as code/paper/results.",
+      "fix": "FRAMEWORK_NOISE_DIRS+markers; quest worktree + eval_output results; paper md drafts; reject template tex."
+    },
+    {
+      "axis": "paths/paper_tex",
+      "was_unfair": "tiny_scientist / ACL runs store paper under latex/*.tex; evaluator only looked at paper/main.tex.",
+      "fix": "latex/**/*.tex with substantive-body heuristic; find_paper_document uses same rules."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Entire custom.bib (300+ anthology entries) verified when paper had zero \\cite commands.",
+      "fix": "collect_agent_references filters bib to in-text cite keys; skips uncited bulk bib (>40 entries)."
+    },
+    {
+      "axis": "paths/ai_scientist_summaries",
+      "was_unfair": "AI Scientist can persist substantive results and paper-like drafts in *_summary.json logs rather than paper/main.tex or results/**/*.json.",
+      "fix": "Treat draft_summary/research_summary as weak paper documents and summary JSONs as result candidates."
+    },
+    {
+      "axis": "idea_generation",
+      "was_unfair": "plan.md/todos.md weak proxies scored same as structured idea.json.",
+      "fix": "Framework idea_priority tried first; missing idea → not_applicable where appropriate."
+    }
+  ],
+  "axes": [
+    "alignment",
+    "completeness",
+    "experiment_analysis",
+    "idea_generation",
+    "literature_review",
+    "peer_review"
+  ],
+  "results": {
+    "completeness": {
+      "framework": "researchclaw",
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-008_characterizing_llm_based_software_engine/workspace/researchclaw_2026-07-30_12-00-31",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-008_characterizing_llm_based_software_engine",
+      "complete": false,
+      "required_score": 0.5,
+      "bonus_score": 0.09,
+      "overall_score": 0.4,
+      "missing": [
+        "results",
+        "paper"
+      ],
+      "required": {
+        "idea": {
+          "path": "artifacts/idea.json",
+          "bytes": 18716,
+          "via": "candidate"
+        },
+        "code": {
+          "count": 15,
+          "files": [
+            {
+              "path": "artifacts/code/config.py",
+              "bytes": 2355,
+              "via": "glob"
+            },
+            {
+              "path": "artifacts/code/data.py",
+              "bytes": 7431,
+              "via": "glob"
+            },
+            {
+              "path": "artifacts/code/experiment_config.py",
+              "bytes": 2355,
+              "via": "glob"
+            },
+            {
+              "path": "artifacts/code/main.py",
+              "bytes": 20347,
+              "via": "glob"
+            },
+            {
+              "path": "artifacts/code/models.py",
+              "bytes": 14099,
+              "via": "glob"
+            },
+            {
+              "path": "stage-10/agent_runs/attempt_001/data.py",
+              "bytes": 6917,
+              "via": "glob"
+            },
+            {
+              "path": "stage-10/agent_runs/attempt_001/main.py",
+              "bytes": 2165,
+              "via": "glob"
+            },
+            {
+              "path": "stage-10/agent_sandbox/_docker_project_1/data.py",
+              "bytes": 6917,
+              "via": "glob"
+            },
+            {
+              "path": "stage-10/agent_sandbox/_docker_project_1/experiment_harness.py",
+              "bytes": 4239,
+              "via": "glob"
+            },
+            {
+              "path": "stage-10/agent_sandbox/_docker_project_1/main.py",
+              "bytes": 2165,
+              "via": "glob"
+            },
+            {
+              "path": "stage-10/experiment/config.py",
+              "bytes": 2355,
+              "via": "glob"
+            },
+            {
+              "path": "stage-10/experiment/data.py",
+              "bytes": 7431,
+              "via": "glob"
+            },
+            {
+              "path": "stage-10/experiment/experiment_config.py",
+              "bytes": 2355,
+              "via": "glob"
+            },
+            {
+              "path": "stage-10/experiment/main.py",
+              "bytes": 20347,
+              "via": "glob"
+            },
+            {
+              "path": "stage-10/experiment/models.py",
+              "bytes": 14099,
+              "via": "glob"
+            }
+          ]
+        },
+        "results": {
+          "substantive": false,
+          "normalized_path": null,
+          "numeric_leaf_count": 0,
+          "discovered_files": [],
+          "metrics_keys_sample": []
+        },
+        "paper": {
+          "tex": null,
+          "pdf": null,
+          "md": null,
+          "json": null,
+          "status": "missing",
+          "score": 0.0
+        }
+      },
+      "bonus": {
+        "experiment_plan": {
+          "path": "stage-09/exp_plan.yaml",
+          "bytes": 2513,
+          "via": "candidate"
+        },
+        "experiment_log": {
+          "path": "researchclaw_run.log",
+          "bytes": 6365,
+          "via": "glob"
+        },
+        "review": null,
+        "readme": null,
+        "narrative": null,
+        "bib": {
+          "path": "stage-04/references.bib",
+          "bytes": 9604,
+          "via": "glob"
+        }
+      },
+      "manifest_status": {
+        "pipeline": false,
+        "idea": true,
+        "code": true,
+        "results": false,
+        "paper": false
+      },
+      "gate_scores": {
+        "idea": 1.0,
+        "code": 1.0,
+        "results": 0.0,
+        "paper": 0.0
+      },
+      "fairness": {
+        "gates": [
+          "idea",
+          "code",
+          "results",
+          "paper"
+        ],
+        "paper_gate_rule": "PDF=1.0; TeX-only/md_only/json_only=0.5; complete requires PDF",
+        "results_gate_rule": "substantive numeric results via framework-aware normalize_results",
+        "audit_ref": "framework_profile.FAIRNESS_AUDIT"
+      },
+      "notes": [
+        "Required: idea, code, substantive results, paper (PDF full; TeX/markdown/JSON draft half).",
+        "Stub/seed metrics (e.g. dataset_candidate/metrics.json) do not satisfy results.",
+        "Framework noise (.deepscientist_npm, skills/templates, runtime) is excluded from code/results/paper.",
+        "Manifest status is informational; disk presence is authoritative."
+      ]
+    },
+    "idea_generation": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-008_characterizing_llm_based_software_engine/workspace/researchclaw_2026-07-30_12-00-31",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-008_characterizing_llm_based_software_engine",
+      "idea_path": "~/ai_scientist_inputs/ASE-2025-008_characterizing_llm_based_software_engine/workspace/researchclaw_2026-07-30_12-00-31/artifacts/idea.json",
+      "status": "ok",
+      "dimensions": {
+        "novelty": {
+          "score": 3.0,
+          "justification": "The core method of mining LLM-based software-engineering agent trajectories is already present in prior agent-evaluation work, especially 'Evaluating agent-based program repair at google' (R35) and agent surveys/reviews (R48, R49). The artifact extends this with difficulty control and attention dynamics, but remains an empirical profiling extension rather than a fundamentally new mechanism.",
+          "rubric": "Incremental: a meaningful extension or optimization of prior baseline work that fixes a concrete prior limitation, but the core paradigm is unchanged.",
+          "category": "Incremental",
+          "nearest_solution_space_ids": [
+            "R35",
+            "R48",
+            "R49",
+            "R53"
+          ],
+          "differentiation": "Existing LLM-agent evaluations such as R35 largely report aggregate success/token metrics. This artifact adds difficulty-controlled within-bin comparisons of early diagnostic action proportion and proposes attention-entropy rhythm as a candidate causal marker, but it does not change the underlying trajectory-analysis paradigm."
+        },
+        "feasibility": {
+          "score": 3.0,
+          "justification": "The proposal relies on existing trajectory datasets ('80–100 Defects4J bugs', 'trajectory logs') and standard statistical methods such as logistic regression and Mann-Whitney tests. However, the attention-entropy hypothesis may require model internals that are unavailable for many closed LLM agents, and the full data-processing/annotation pipeline is not described in the provided fragment.",
+          "rubric": "Moderate workload (sweet spot): needs nontrivial coding such as scripting existing open-source tools (parsers, CFG extractors) or building a custom graph-processing pipeline; standard research engineering effort."
+        },
+        "clarity": {
+          "score": 3.0,
+          "justification": "Final Hypothesis 1 is concrete, with numerical predictions ('median proportion of diagnostic actions in the first 5 turns ≥ 0.6', 'Cohen’s f² ≥ 0.15') and an explicit failure condition. But the artifact is truncated during Hypothesis 2, and the overall evaluation design across all RQs and annotation details remain underspecified.",
+          "rubric": "Complete frame but missing details: What/Why/How are present, yet key technical execution details or specific comparison plans are underspecified."
+        }
+      },
+      "overall_score": 3.0,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "novelty",
+        "feasibility",
+        "clarity"
+      ],
+      "solution_space": {
+        "status": "ok",
+        "paper_count": 57,
+        "entry_count": 57,
+        "cache_hit": true,
+        "source_file": "~/ai_scientist_inputs/ASE-2025-008_characterizing_llm_based_software_engine/mineru_sections.json",
+        "stats": {
+          "papers": 57,
+          "extracted": 57,
+          "usable_abstracts": 23,
+          "citation_meta_abstracts": 1,
+          "missing_abstracts": 33,
+          "mineru_titles": 56,
+          "related_work_titles": 28,
+          "abstracts_attached": 24,
+          "related_work_extras": 1,
+          "batches": 4
+        },
+        "error": null
+      },
+      "notes": [
+        "Scores the intermediate idea artifact (not the final paper).",
+        "Dimensions: novelty, feasibility, clarity (each 1-5). Excitement removed.",
+        "Novelty is scored against a Solution Space built from mineru REFERENCES titles (+ related_work.json abstracts when matched)."
+      ],
+      "idea_via": "candidate",
+      "idea_relative": "artifacts/idea.json",
+      "summary": "The proposal characterizes LLM-based software-engineering agent trajectories, focusing on difficulty-controlled diagnostic action patterns and temporal attention rhythms. Hypothesis 1 is clear and testable, but the truncated artifact leaves the full plan incomplete. Relative to existing agent-evaluation work, the contribution is incremental with moderate feasibility and clarity.",
+      "strengths": [
+        "Provides explicit quantitative thresholds for the first hypothesis.",
+        "Includes clear failure conditions and preserves unresolved disagreement.",
+        "Uses readily available trajectory logs and standard analysis techniques."
+      ],
+      "weaknesses": [
+        "Artifact is truncated during Hypothesis 2, leaving the method incomplete.",
+        "Attention-entropy analysis may require unavailable internal model access.",
+        "Novelty is limited relative to existing LLM-agent evaluation studies."
+      ],
+      "llm_meta": {
+        "model": "deepseek-v4-pro-0813-sg",
+        "base_url": "https://api-sg.umodelverse.ai/v1",
+        "usage": {
+          "completion_tokens": 2622,
+          "completion_tokens_details": {
+            "reasoning_tokens": 2065
+          },
+          "prompt_tokens": 6604,
+          "prompt_tokens_details": {
+            "cached_tokens": 5120
+          },
+          "total_tokens": 9226
+        },
+        "attempt": 1
+      }
+    },
+    "peer_review": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-008_characterizing_llm_based_software_engine/workspace/researchclaw_2026-07-30_12-00-31",
+      "review_report": null,
+      "paper_pdf": null,
+      "paper_tex": null,
+      "status": "not_provided",
+      "dimensions": {},
+      "overall_score": null,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "soundness",
+        "significance",
+        "novelty",
+        "presentation",
+        "credibility"
+      ],
+      "notes": [
+        "Stanford Agentic Reviewer (paperreview.ai): manual download to artifacts/peer_review/stanford_apr.md, or pass --auto-paperreview.",
+        "Dimensions: soundness, significance, novelty, presentation, credibility (each 1-5)."
+      ],
+      "paperreview": {
+        "status": "skipped",
+        "reason": "no_pdf"
+      },
+      "optional": true,
+      "hint": "Optional external review (Stanford APR). Upload paper/main.pdf to https://paperreview.ai/ , save review to ~/ai_scientist_inputs/ASE-2025-008_characterizing_llm_based_software_engine/workspace/researchclaw_2026-07-30_12-00-31/artifacts/peer_review/stanford_apr.md"
+    },
+    "alignment": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-008_characterizing_llm_based_software_engine/workspace/researchclaw_2026-07-30_12-00-31",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-008_characterizing_llm_based_software_engine",
+      "status": "missing_agent_paper_or_metrics",
+      "original": {
+        "status": "ok",
+        "task_dir": "~/ai_scientist_inputs/ASE-2025-008_characterizing_llm_based_software_engine",
+        "paper_title": "Understanding Software Engineering Agents: A Study of Thought-Action-Result Trajectories",
+        "task_id": "ASE-2025-008",
+        "selection": {
+          "num_blocks": 7,
+          "total_chars": 31998,
+          "inferred_roles": {
+            "abstract": 1,
+            "introduction": 1,
+            "experiment": 4,
+            "conclusion": 1
+          },
+          "mineru_raw_keys": {
+            "field:abstract": 1,
+            "field:introduction": 1,
+            "field:experiment": 1,
+            "other": 3,
+            "conclusion": 1
+          },
+          "infer_reasons": {
+            "top_level_field": 3,
+            "body_override": 1,
+            "inherited": 1,
+            "title": 2
+          },
+          "rescued_from_other": 3,
+          "note": "mineru key is unreliable; blocks are selected by title/body/inheritance. rescued_from_other counts sections labeled other but treated as typed roles."
+        },
+        "claims": [
+          {
+            "id": "C1",
+            "statement": "AutoCodeRover completes repair workflows in fewer steps than RepairAgent and OpenHands.",
+            "direction": "neutral",
+            "metric_names": [
+              "mean_trajectory_length_repairagent",
+              "mean_trajectory_length_openhands",
+              "mean_trajectory_length_autocoderover"
+            ],
+            "evidence_quote": "RepairAgent has a mean trajectory length of 34 iterations while OpenHands averages 29 iterations and AutoCodeRover completes workflows in fewer steps at 6 on average.",
+            "confidence": 0.95
+          },
+          {
+            "id": "C2",
+            "statement": "Unsuccessful RepairAgent trajectories are longer than successful ones.",
+            "direction": "neutral",
+            "metric_names": [
+              "mean_trajectory_length_repairagent_successful",
+              "mean_trajectory_length_repairagent_failed"
+            ],
+            "evidence_quote": "For RepairAgent, unsuccessful cases have longer trajectories (mean 40) than successful ones (mean 22).",
+            "confidence": 0.95
+          },
+          {
+            "id": "C3",
+            "statement": "OpenHands is considerably more token-intensive than AutoCodeRover and RepairAgent.",
+            "direction": "neutral",
+            "metric_names": [
+              "token_consumption_mean_openhands",
+              "token_consumption_mean_autocoderover",
+              "token_consumption_mean_repairagent",
+              "token_consumption_ratio_openhands_to_autocoderover"
+            ],
+            "evidence_quote": "OpenHands averages about 1.2M tokens (median 900K), about 52 times more than AutoCodeRover, whose mean is 23K and median is 14K. RepairAgent consumes a moderate mean of 220K tokens, median 180K.",
+            "confidence": 0.95
+          },
+          {
+            "id": "C4",
+            "statement": "The most frequent actions in the studied trajectories are Generate Fix, Run tests, Search, and Explore.",
+            "direction": "neutral",
+            "metric_names": [
+              "action_frequency_generate_fix",
+              "action_frequency_run_tests",
+              "action_frequency_search",
+              "action_frequency_explore"
+            ],
+            "evidence_quote": "Across all action categories, the most frequent actions are Generate Fix (23%), Run tests (19%), Search (15%), and Explore (14%).",
+            "confidence": 0.9
+          },
+          {
+            "id": "C5",
+            "statement": "Successful trajectories tend to balance exploration, explanation, fix generation, and testing, while unsuccessful trajectories contain repetitive, non-adaptive cycles.",
+            "direction": "improves",
+            "metric_names": [
+              "action_frequency_generate_fix",
+              "action_frequency_run_tests",
+              "action_frequency_search",
+              "action_frequency_explore"
+            ],
+            "evidence_quote": "Successful trajectories demonstrated a balance of generating fix, searching for relevant code, exploring files, explaining code, reasoning, dividing bug localization and fix generation, and testing.",
+            "confidence": 0.85
+          },
+          {
+            "id": "C6",
+            "statement": "RepairAgent and OpenHands exhibit more balanced or test-driven action sequences, while AutoCodeRover follows a structured search-locate-fix workflow and omits Reproduce and Test actions.",
+            "direction": "neutral",
+            "metric_names": [
+              "action_frequency_generate_fix",
+              "action_frequency_run_tests",
+              "action_frequency_search",
+              "action_frequency_explore"
+            ],
+            "evidence_quote": "RepairAgent maintains a balanced distribution. OpenHands is test-driven, while AutoCodeRover uses a structured search-locate-fix action sequence and omits Reproduce/Test steps.",
+            "confidence": 0.9
+          },
+          {
+            "id": "C7",
+            "statement": "Thought-action misalignment is rare but more common in failing trajectories, especially for AutoCodeRover.",
+            "direction": "degrades",
+            "metric_names": [
+              "thought_action_misalignment_rate_repairagent_overall",
+              "thought_action_misalignment_rate_openhands_successful",
+              "thought_action_misalignment_rate_openhands_failed",
+              "thought_action_misalignment_rate_autocoderover_successful",
+              "thought_action_misalignment_rate_autocoderover_failed"
+            ],
+            "evidence_quote": "OpenHands shows 0.5% misalignment in successful and 1.4% in failing trajectories, while AutoCodeRover shows 0% in success and 4.8% in failing trajectories. RepairAgent shows overall 1.5% misalignment.",
+            "confidence": 0.85
+          },
+          {
+            "id": "C8",
+            "statement": "The study analyzes 120 trajectories and 2,822 LLM interactions across RepairAgent, AutoCodeRover, and OpenHands.",
+            "direction": "neutral",
+            "metric_names": [
+              "dataset_trajectory_count",
+              "dataset_llm_interactions"
+            ],
+            "evidence_quote": "Dataset: 120 trajectories, 2,822 LLM interactions, three agents RepairAgent, AutoCodeRover, and OpenHands.",
+            "confidence": 0.98
+          }
+        ],
+        "metrics": [
+          {
+            "name": "mean_trajectory_length_repairagent",
+            "value": 34,
+            "unit": "iterations",
+            "higher_is_better": false,
+            "confidence": 0.95
+          },
+          {
+            "name": "mean_trajectory_length_openhands",
+            "value": 29,
+            "unit": "iterations",
+            "higher_is_better": false,
+            "confidence": 0.95
+          },
+          {
+            "name": "mean_trajectory_length_autocoderover",
+            "value": 6,
+            "unit": "iterations",
+            "higher_is_better": false,
+            "confidence": 0.95
+          },
+          {
+            "name": "mean_trajectory_length_repairagent_successful",
+            "value": 22,
+            "unit": "iterations",
+            "higher_is_better": false,
+            "confidence": 0.9
+          },
+          {
+            "name": "mean_trajectory_length_repairagent_failed",
+            "value": 40,
+            "unit": "iterations",
+            "higher_is_better": false,
+            "confidence": 0.9
+          },
+          {
+            "name": "token_consumption_mean_autocoderover",
+            "value": 23000,
+            "unit": "tokens",
+            "higher_is_better": false,
+            "confidence": 0.95
+          },
+          {
+            "name": "token_consumption_median_autocoderover",
+            "value": 14000,
+            "unit": "tokens",
+            "higher_is_better": false,
+            "confidence": 0.95
+          },
+          {
+            "name": "token_consumption_mean_openhands",
+            "value": 1200000,
+            "unit": "tokens",
+            "higher_is_better": false,
+            "confidence": 0.95
+          },
+          {
+            "name": "token_consumption_median_openhands",
+            "value": 900000,
+            "unit": "tokens",
+            "higher_is_better": false,
+            "confidence": 0.95
+          },
+          {
+            "name": "token_consumption_mean_repairagent",
+            "value": 220000,
+            "unit": "tokens",
+            "higher_is_better": false,
+            "confidence": 0.95
+          },
+          {
+            "name": "token_consumption_median_repairagent",
+            "value": 180000,
+            "unit": "tokens",
+            "higher_is_better": false,
+            "confidence": 0.95
+          },
+          {
+            "name": "token_consumption_ratio_openhands_to_autocoderover",
+            "value": 52,
+            "unit": "x",
+            "higher_is_better": false,
+            "confidence": 0.85
+          },
+          {
+            "name": "action_frequency_generate_fix",
+            "value": 23,
+            "unit": "%",
+            "higher_is_better": false,
+            "confidence": 0.9
+          },
+          {
+            "name": "action_frequency_run_tests",
+            "value": 19,
+            "unit": "%",
+            "higher_is_better": false,
+            "confidence": 0.9
+          },
+          {
+            "name": "action_frequency_search",
+            "value": 15,
+            "unit": "%",
+            "higher_is_better": false,
+            "confidence": 0.9
+          },
+          {
+            "name": "action_frequency_explore",
+            "value": 14,
+            "unit": "%",
+            "higher_is_better": false,
+            "confidence": 0.9
+          },
+          {
+            "name": "thought_action_misalignment_rate_repairagent_overall",
+            "value": 1.5,
+            "unit": "%",
+            "higher_is_better": false,
+            "confidence": 0.85
+          },
+          {
+            "name": "thought_action_misalignment_rate_openhands_successful",
+            "value": 0.5,
+            "unit": "%",
+            "higher_is_better": false,
+            "confidence": 0.85
+          },
+          {
+            "name": "thought_action_misalignment_rate_openhands_failed",
+            "value": 1.4,
+            "unit": "%",
+            "higher_is_better": false,
+            "confidence": 0.85
+          },
+          {
+            "name": "thought_action_misalignment_rate_autocoderover_successful",
+            "value": 0,
+            "unit": "%",
+            "higher_is_better": false,
+            "confidence": 0.85
+          },
+          {
+            "name": "thought_action_misalignment_rate_autocoderover_failed",
+            "value": 4.8,
+            "unit": "%",
+            "higher_is_better": false,
+            "confidence": 0.85
+          },
+          {
+            "name": "dataset_trajectory_count",
+            "value": 120,
+            "unit": "trajectories",
+            "higher_is_better": false,
+            "confidence": 0.98
+          },
+          {
+            "name": "dataset_llm_interactions",
+            "value": 2822,
+            "unit": "interactions",
+            "higher_is_better": false,
+            "confidence": 0.98
+          }
+        ],
+        "overall_conclusion": "...",
+        "comparable_notes": "...",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813-sg",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 2500,
+            "completion_tokens_details": {
+              "reasoning_tokens": 2500
+            },
+            "prompt_tokens": 2647,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 5147
+          },
+          "attempt": 2
+        },
+        "cache_hit": true
+      },
+      "agent": {
+        "status": "missing_agent_paper_or_metrics",
+        "run_dir": "~/ai_scientist_inputs/ASE-2025-008_characterizing_llm_based_software_engine/workspace/researchclaw_2026-07-30_12-00-31"
+      }
+    },
+    "experiment_analysis": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-008_characterizing_llm_based_software_engine/workspace/researchclaw_2026-07-30_12-00-31",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-008_characterizing_llm_based_software_engine",
+      "status": "ok",
+      "metrics_path": null,
+      "experiment_success": {
+        "status": "failed_or_incomplete",
+        "success": false,
+        "metrics_path": null,
+        "absolute_metrics_path": null,
+        "checks": {
+          "has_results_file": false,
+          "non_stub": false,
+          "numeric_leaf_count": 0,
+          "min_numeric_ok": false
+        },
+        "manifest_hints": {
+          "status": {
+            "pipeline": false,
+            "idea": true,
+            "code": true,
+            "results": false,
+            "paper": false
+          },
+          "returncode": 1,
+          "benchmark_complete": null,
+          "artifacts_metrics_flag": false
+        },
+        "warnings": [
+          "manifest.returncode=1"
+        ],
+        "suspicious_values": [],
+        "note": "success=true requires substantive results (framework-aware path) with >=3 numeric leaves. Supports metrics.json, results.json, experiment_results.txt, etc. Manifest returncode/benchmark_complete are soft warnings only."
+      },
+      "idea_code_consistency": {
+        "status": "ok",
+        "idea_path": "artifacts/idea.json",
+        "code_files": [
+          "stage-10/experiment/main.py"
+        ],
+        "score_scale": "1-5",
+        "score": 2.0,
+        "label": "weak",
+        "justification": "The experiment code superficially borrows the idea's concepts—early diagnostic action ratio, difficulty binning, success/failure comparison, and a thought-coherence rhythm—but it replaces the stated empirical method with synthetic data generation that bakes in the expected relationships. The IDEA calls for analysis of 80–100 Defects4J bugs with real LLM repair trajectories, patch/test outcomes, difficulty controls, logistic regression, and attention-entropy metrics. The code instead simulates trajectories and thought embeddings from controlled probabilities, so the core hypothesis is not actually tested on the intended data or protocol.",
+        "matched_elements": [
+          "Early diagnostic action proportion by success/failure",
+          "Difficulty as a controlling factor",
+          "Thought coherence/diffuse-to-concentrated rhythm concept",
+          "Comparison of successful vs failed trajectories"
+        ],
+        "missing_or_divergent_elements": [
+          "Real Defects4J benchmark and 80–100 bug corpus",
+          "Actual LLM repair trajectories and tool-call logs",
+          "Ground-truth patch/test success outcomes",
+          "Logistic regression with likelihood-ratio test and effect size",
+          "Attention entropy from real model internals or intervention protocol",
+          "Evaluation metrics and baselines from the stated hypotheses"
+        ],
+        "rubric": "Weak alignment: only superficial overlap; core hypothesis, method, or evaluation in the idea is missing or replaced.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813-sg",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 1288,
+            "completion_tokens_details": {
+              "reasoning_tokens": 1005
+            },
+            "prompt_tokens": 1997,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 3285
+          },
+          "attempt": 0
+        }
+      },
+      "setup_coverage": {
+        "status": "ok",
+        "overall_coverage": 0.9,
+        "datasets": {
+          "gold_count": 1,
+          "hit_count": 1,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "Agent Trajectory Dataset"
+          ],
+          "misses": []
+        },
+        "baselines": {
+          "gold_count": 0,
+          "hit_count": 0,
+          "miss_count": 0,
+          "coverage": null,
+          "hits": [],
+          "misses": []
+        },
+        "metrics": {
+          "gold_count": 5,
+          "hit_count": 4,
+          "miss_count": 1,
+          "coverage": 0.8,
+          "hits": [
+            "Token consumption (input and output)",
+            "Action category distribution",
+            "Frequent action sequences",
+            "Thought-action-result coherence"
+          ],
+          "misses": [
+            "Iteration count"
+          ]
+        },
+        "agent_protocol": {},
+        "gold_protocol": {},
+        "dataset_dirs": [
+          "dataset_candidate"
+        ],
+        "flags": {
+          "weaker_baseline_suspected": false,
+          "weak_protocol": [],
+          "synthetic_data": "unexpected_synthetic_or_local_only_data",
+          "gold_allows_synthetic": false
+        },
+        "gold_sources": [
+          "~/ai_scientist_inputs/ASE-2025-008_characterizing_llm_based_software_engine/task.md",
+          "~/ai_scientist_inputs/ASE-2025-008_characterizing_llm_based_software_engine/metadata.json"
+        ],
+        "note": "Coverage is name/alias matching against task.md Datasets/Baselines/Metrics. weak_protocol flags large reductions in trials/timeout vs Constraints. Synthetic corpora are not penalized when the task itself requires synthesis."
+      },
+      "ablation_significance": {
+        "status": "ok",
+        "idea_path": "artifacts/idea.json",
+        "significance_signals_rule_based": {
+          "signals": [],
+          "artifact_paths": [],
+          "has_any_significance_artifact": false
+        },
+        "evidence_format": null,
+        "study_type": "pilot",
+        "components": [
+          {
+            "name": "difficulty_binning_control",
+            "role": "confound control / stratification",
+            "ablation_expected": false,
+            "significance_expected": true,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "Control variable, not a removable method module; no ablation is appropriate.",
+            "significance_status": "missing",
+            "significance_evidence": "No p-values, CIs, or likelihood-ratio tests are present in the experiment code or empty metrics.json."
+          },
+          {
+            "name": "early_diagnostic_action_proportion",
+            "role": "behavioral signature/measure",
+            "ablation_expected": false,
+            "significance_expected": true,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "Predictor metric in synthetic trajectory analysis; removal is not an ablation.",
+            "significance_status": "missing",
+            "significance_evidence": "No statistical comparison reported for success vs failure within difficulty bins."
+          },
+          {
+            "name": "thought_coherence_rhythm_analyzer",
+            "role": "attention/coherence signature/measure",
+            "ablation_expected": false,
+            "significance_expected": true,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "Analysis measure, not a removable module.",
+            "significance_status": "missing",
+            "significance_evidence": "No association test or effect size is reported."
+          },
+          {
+            "name": "synthetic_trajectory_generator"
+          }
+        ],
+        "ablation_coverage_score": null,
+        "overall_ablation_ok": null,
+        "overall_significance_ok": null,
+        "summary": "",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813-sg",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 1422,
+            "completion_tokens_details": {
+              "reasoning_tokens": 1053
+            },
+            "prompt_tokens": 509,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 1931
+          },
+          "attempt": 1
+        }
+      },
+      "results_paper_consistency": {
+        "status": "missing_metrics"
+      },
+      "scores": {
+        "experiment_success": false,
+        "idea_code_score": 2.0,
+        "setup_coverage": 0.9,
+        "ablation_coverage_score": null,
+        "overall_ablation_ok": null,
+        "overall_significance_ok": null,
+        "results_paper_score": null,
+        "hiding_unfavorable_suspected": null
+      },
+      "notes": [
+        "Axes 1,2,3,4,6 in experiment_analysis (figures excluded).",
+        "setup_coverage matches task.md Datasets/Baselines/Metrics; weak_protocol flags reductions vs Constraints.",
+        "Axis 6: final normalized results vs paper; interim run logs not used as ground truth."
+      ]
+    },
+    "literature_review": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-008_characterizing_llm_based_software_engine/workspace/researchclaw_2026-07-30_12-00-31",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-008_characterizing_llm_based_software_engine",
+      "status": "ok",
+      "as_of_year": 2026,
+      "agent_ref_count": 30,
+      "sources": [
+        {
+          "path": "~/ai_scientist_inputs/ASE-2025-008_characterizing_llm_based_software_engine/workspace/researchclaw_2026-07-30_12-00-31/stage-05/shortlist.jsonl",
+          "kind": "shortlist"
+        },
+        {
+          "path": "~/ai_scientist_inputs/ASE-2025-008_characterizing_llm_based_software_engine/workspace/researchclaw_2026-07-30_12-00-31/stage-04/references.bib",
+          "kind": "bib"
+        }
+      ],
+      "collection_audit": {
+        "cited_keys_count": 0,
+        "filter_mode": "non_bib_sources",
+        "bib_total_before_filter": 30,
+        "bib_after_filter": 0,
+        "uncited_bib_skipped": 30,
+        "agent_ref_count": 30
+      },
+      "fabrication": {
+        "status": "ok",
+        "scholarly_count": 29,
+        "verified_count": 27,
+        "fake_count": 0,
+        "lookup_failed_count": 2,
+        "non_paper_count": 1,
+        "fabrication_rate": 0.0,
+        "items": [
+          {
+            "title": "A survey of methods for explaining black box models",
+            "doi": "10.1145/3236009",
+            "arxiv_id": "",
+            "year": 2019,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "A Survey of Methods for Explaining Black Box Models",
+            "resolved_year": 2018,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "guidotti2019survey",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Defects4J: a database of existing faults to enable controlled testing studies for Java programs",
+            "doi": "10.1145/2610384.2628055",
+            "arxiv_id": "",
+            "year": 2014,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated.",
+              "Saw 1 conclusive miss(es) mixed with 2 API error(s)."
+            ],
+            "cite_key": "just2014defectsj",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Explainability for Large Language Models: A Survey",
+            "doi": "10.1145/3639372",
+            "arxiv_id": "",
+            "year": 2024,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Explainability for Large Language Models: A Survey",
+            "resolved_year": 2023,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "zhao2024explainability",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Grounded Copilot: How Programmers Interact with Code-Generating Models",
+            "doi": "10.1145/3586030",
+            "arxiv_id": "",
+            "year": 2023,
+            "status": "non_paper",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "Treated as tool/docs/repo resource, not a scholarly paper."
+            ],
+            "cite_key": "barke2023grounded",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Vulnerability detection with fine-grained interpretations",
+            "doi": "10.1145/3468264.3468597",
+            "arxiv_id": "",
+            "year": 2021,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Vulnerability detection with fine-grained interpretations",
+            "resolved_year": 2021,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "li2021vulnerability",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "CodaMosa: Escaping Coverage Plateaus in Test Generation with Pre-trained Large Language Models",
+            "doi": "10.1109/icse48619.2023.00085",
+            "arxiv_id": "",
+            "year": 2023,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "CodaMosa: Escaping Coverage Plateaus in Test Generation with Pre-trained Large Language Models",
+            "resolved_year": 2023,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "lemieux2023codamosa",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Productivity assessment of neural code completion",
+            "doi": "10.1145/3520312.3534864",
+            "arxiv_id": "2205.06537",
+            "year": 2022,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Productivity assessment of neural code completion",
+            "resolved_year": 2022,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "ziegler2022productivity",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Impact of Code Language Models on Automated Program Repair",
+            "doi": "10.1109/icse48619.2023.00125",
+            "arxiv_id": "",
+            "year": 2023,
+            "status": "verified",
+            "matched_via": "arxiv_title",
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "jiang2023impact",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Fuzz4All: Universal Fuzzing with Large Language Models",
+            "doi": "10.1145/3597503.3639121",
+            "arxiv_id": "",
+            "year": 2024,
+            "status": "verified",
+            "matched_via": "arxiv_title",
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "xia2024fuzzall",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Automated Program Repair via Conversation: Fixing 162 out of 337 Bugs for $0.42 Each using ChatGPT",
+            "doi": "10.1145/3650212.3680323",
+            "arxiv_id": "",
+            "year": 2024,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Automated Program Repair via Conversation: Fixing 162 out of 337 Bugs for $0.42 Each using ChatGPT",
+            "resolved_year": 2023,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "xia2024automated",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "AutoCodeRover: Autonomous Program Improvement",
+            "doi": "10.1145/3650212.3680384",
+            "arxiv_id": "2404.05427",
+            "year": 2024,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "AutoCodeRover: Autonomous Program Improvement",
+            "resolved_year": 2024,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "zhang2024autocoderover",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Evaluating and Improving ChatGPT for Unit Test Generation",
+            "doi": "10.1145/3660783",
+            "arxiv_id": "",
+            "year": 2024,
+            "status": "verified",
+            "matched_via": "arxiv_title",
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "yuan2024evaluating",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Code-Aware Prompting: A Study of Coverage-Guided Test Generation in Regression Setting using LLM",
+            "doi": "10.1145/3643769",
+            "arxiv_id": "",
+            "year": 2024,
+            "status": "verified",
+            "matched_via": "arxiv_title",
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "ryan2024codeaware",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "RepairAgent: An Autonomous, LLM-Based Agent for Program Repair",
+            "doi": "10.1109/icse55347.2025.00157",
+            "arxiv_id": "2403.17134",
+            "year": 2025,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "RepairAgent: An Autonomous, LLM-Based Agent for Program Repair",
+            "resolved_year": 2024,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "bouzenia2025repairagent",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Exploring LLM-Based Agents for Root Cause Analysis",
+            "doi": "10.1145/3663529.3663841",
+            "arxiv_id": "",
+            "year": 2024,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Exploring LLM-Based Agents for Root Cause Analysis",
+            "resolved_year": 2024,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "roy2024exploring",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Interactive Debugging and Steering of Multi-Agent AI Systems",
+            "doi": "10.1145/3706598.3713581",
+            "arxiv_id": "",
+            "year": 2025,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Interactive Debugging and Steering of Multi-Agent AI Systems",
+            "resolved_year": 2025,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "epperson2025interactive",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "AgentLens: Visual Analysis for Agent Behaviors in LLM-Based Autonomous Systems",
+            "doi": "10.1109/tvcg.2024.3394053",
+            "arxiv_id": "",
+            "year": 2024,
+            "status": "verified",
+            "matched_via": "arxiv_title",
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "lu2024agentlens",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "You Name It, I Run It: An LLM Agent to Execute Tests of Arbitrary Projects",
+            "doi": "10.1145/3728922",
+            "arxiv_id": "",
+            "year": 2025,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "You Name It, I Run It: An LLM Agent to Execute Tests of Arbitrary Projects",
+            "resolved_year": 2024,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "bouzenia2025name",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Agents in software engineering: survey, landscape, and vision",
+            "doi": "10.1007/s10515-025-00544-2",
+            "arxiv_id": "",
+            "year": 2025,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Agents in software engineering: survey, landscape, and vision",
+            "resolved_year": 2024,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "wang2025agents",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Trial and Error: Exploration-Based Trajectory Optimization of LLM Agents",
+            "doi": "10.18653/v1/2024.acl-long.409",
+            "arxiv_id": "2403.02502",
+            "year": 2024,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Trial and Error: Exploration-Based Trajectory Optimization for LLM Agents",
+            "resolved_year": 2024,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "song2024trial",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "SpecRover: Code Intent Extraction via LLMs",
+            "doi": "10.1109/icse55347.2025.00080",
+            "arxiv_id": "",
+            "year": 2025,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "SpecRover: Code Intent Extraction via LLMs",
+            "resolved_year": 2024,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "ruan2025specrover",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "ChatAssert: LLM-Based Test Oracle Generation With External Tools Assistance",
+            "doi": "10.1109/tse.2024.3519159",
+            "arxiv_id": "",
+            "year": 2024,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "ChatAssert: LLM-Based Test Oracle Generation With External Tools Assistance",
+            "resolved_year": 2025,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "hayet2024chatassert",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Optima: Optimizing Effectiveness and Efficiency for LLM-Based Multi-Agent System",
+            "doi": "10.18653/v1/2025.findings-acl.601",
+            "arxiv_id": "",
+            "year": 2025,
+            "status": "verified",
+            "matched_via": "arxiv_title",
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "chen2025optima",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Counterfactual explanations for models of code",
+            "doi": "10.1145/3510457.3513081",
+            "arxiv_id": "",
+            "year": 2022,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Counterfactual Explanations for Models of Code",
+            "resolved_year": 2021,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "cito2022counterfactual",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Explaining mispredictions of machine learning models using rule induction",
+            "doi": "10.1145/3468264.3468614",
+            "arxiv_id": "",
+            "year": 2021,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated.",
+              "Saw 1 conclusive miss(es) mixed with 2 API error(s)."
+            ],
+            "cite_key": "cito2021explaining",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "TOGLL: Correct and Strong Test Oracle Generation with LLMS",
+            "doi": "10.1109/icse55347.2025.00098",
+            "arxiv_id": "",
+            "year": 2025,
+            "status": "verified",
+            "matched_via": "arxiv_title",
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "hossain2025togll",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Evaluating Agent-Based Program Repair at Google",
+            "doi": "10.1109/icse-seip66354.2025.00038",
+            "arxiv_id": "",
+            "year": 2025,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Evaluating Agent-Based Program Repair at Google",
+            "resolved_year": 2025,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "rondon2025evaluating",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "AgentBoard: An Analytical Evaluation Board of Multi-turn LLM Agents",
+            "doi": "10.52202/079017-2365",
+            "arxiv_id": "",
+            "year": 2024,
+            "status": "verified",
+            "matched_via": "arxiv_title",
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "he2024agentboard",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "AgentBank: Towards Generalized LLM Agents via Fine-Tuning on 50000+ Interaction Trajectories",
+            "doi": "10.18653/v1/2024.findings-emnlp.116",
+            "arxiv_id": "",
+            "year": 2024,
+            "status": "verified",
+            "matched_via": "arxiv_title",
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "song2024agentbank",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Debug Smarter, Not Harder: AI Agents for Error Resolution in Computational Notebooks",
+            "doi": "10.18653/v1/2024.emnlp-demo.38",
+            "arxiv_id": "",
+            "year": 2024,
+            "status": "verified",
+            "matched_via": "arxiv_title",
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "grotov2024debug",
+            "source_kind": "shortlist"
+          }
+        ],
+        "cache_path": "~/ai_scientist_evals/ASE-2025-008_characterizing_llm_based_software_engine/reference_verify_cache.json",
+        "override_path": "~/ai_scientist_evals/ASE-2025-008_characterizing_llm_based_software_engine/reference_verify_overrides.json",
+        "note": "fabrication_rate = fake / (verified + fake); lookup_failed (API errors) excluded. GitHub/docs/tool URLs are non_paper and excluded from the rate. To manually correct a false negative, edit reference_verify_overrides.json (key=normalized title / doi / cite_key; value=\"verified\" or a result dict), then re-run."
+      },
+      "coverage": {
+        "status": "ok",
+        "gold_source": "~/ai_scientist_inputs/ASE-2025-008_characterizing_llm_based_software_engine/mineru_sections.json",
+        "gold_count": 56,
+        "gold_is_original_paper_references": true,
+        "gold_is_openalex_subset": false,
+        "agent_count": 30,
+        "intersection_size": 27,
+        "recall": 0.48214285714285715,
+        "precision": 0.9,
+        "matched_gold_keys": [
+          "barke2023grounded",
+          "bouzenia2025name",
+          "bouzenia2025repairagent",
+          "cito2021explaining",
+          "cito2022counterfactual",
+          "epperson2025interactive",
+          "grotov2024debug",
+          "guidotti2019survey",
+          "hayet2024chatassert",
+          "he2024agentboard",
+          "jiang2023impact",
+          "just2014defectsj",
+          "lemieux2023codamosa",
+          "lu2024agentlens",
+          "rondon2025evaluating",
+          "roy2024exploring",
+          "ruan2025specrover",
+          "ryan2024codeaware",
+          "song2024agentbank",
+          "song2024trial",
+          "wang2025agents",
+          "xia2024automated",
+          "xia2024fuzzall",
+          "yuan2024evaluating",
+          "zhang2024autocoderover",
+          "zhao2024explainability",
+          "ziegler2022productivity"
+        ],
+        "primary_metric": "recall",
+        "note": "Primary metric is recall against the original paper bibliography (titles from mineru_sections.json REFERENCES; related_work.json used only to enrich DOI/year or as fallback if mineru titles are empty). Denominator = |original paper references|. Precision is secondary (agent may cite valid extra papers)."
+      },
+      "recency": {
+        "status": "ok",
+        "dated_count": 29,
+        "unknown_year_count": 0,
+        "year_histogram": {
+          "2014": 1,
+          "2018": 1,
+          "2021": 3,
+          "2022": 1,
+          "2023": 4,
+          "2024": 14,
+          "2025": 5
+        },
+        "windows": {
+          "3": {
+            "years": 3,
+            "cutoff_year_inclusive": 2023,
+            "recent_count": 23,
+            "recent_ratio": 0.7931034482758621
+          },
+          "5": {
+            "years": 5,
+            "cutoff_year_inclusive": 2021,
+            "recent_count": 27,
+            "recent_ratio": 0.9310344827586207
+          }
+        }
+      },
+      "scores": {
+        "fabrication_rate": 0.0,
+        "coverage_recall": 0.48214285714285715,
+        "coverage_precision": 0.9,
+        "recency_ratio_3y": 0.7931034482758621,
+        "recency_ratio_5y": 0.9310344827586207
+      }
+    }
+  },
+  "scores": {
+    "completeness": {
+      "complete": false,
+      "overall_score": 0.4,
+      "required_score": 0.5,
+      "bonus_score": 0.09
+    },
+    "peer_review": {
+      "status": "not_provided",
+      "optional": true,
+      "overall_score": null,
+      "score_scale": "1-5",
+      "scoring_method": null
+    },
+    "idea_generation": {
+      "status": "ok",
+      "overall_score": 3.0,
+      "dimensions": {
+        "novelty": 3.0,
+        "feasibility": 3.0,
+        "clarity": 3.0
+      },
+      "novelty_category": "Incremental",
+      "solution_space_status": "ok"
+    },
+    "alignment": {
+      "status": "missing_agent_paper_or_metrics",
+      "direction_consistency": null,
+      "overall_alignment_score": null
+    },
+    "literature_review": {
+      "fabrication_rate": 0.0,
+      "coverage_recall": 0.48214285714285715,
+      "coverage_precision": 0.9,
+      "recency_ratio_3y": 0.7931034482758621,
+      "recency_ratio_5y": 0.9310344827586207
+    },
+    "experiment_analysis": {
+      "experiment_success": false,
+      "idea_code_score": 2.0,
+      "setup_coverage": 0.9,
+      "ablation_coverage_score": null,
+      "overall_ablation_ok": null,
+      "overall_significance_ok": null,
+      "results_paper_score": null,
+      "hiding_unfavorable_suspected": null
+    }
+  },
+  "fair_scores": {
+    "applicable_axes": [
+      "completeness",
+      "idea_generation",
+      "literature_review",
+      "experiment_analysis"
+    ],
+    "skipped_axes": [
+      {
+        "axis": "peer_review",
+        "reason": "optional_external_review"
+      }
+    ],
+    "fair_mean_0_1": 0.5729,
+    "note": "fair_mean_0_1 averages only applicable axes; optional peer review and framework-inapplicable literature are excluded from the denominator."
+  },
+  "evals_root": "~/ai_scientist_evals",
+  "claims_cache": "~/ai_scientist_evals/ASE-2025-008_characterizing_llm_based_software_engine/original_claims.json",
+  "solution_space_cache": "~/ai_scientist_evals/ASE-2025-008_characterizing_llm_based_software_engine/solution_space.json"
+}

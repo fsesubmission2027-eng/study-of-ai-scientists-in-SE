@@ -1,0 +1,190 @@
+{
+  "id": "FSE-2025-002",
+  "paper_id": "3715778",
+  "title": "Less is More: On the Importance of Data Quality for Unit Test Generation",
+  "abstract": "Unit testing is crucial for software development and maintenance. Effective unit testing ensures and improves software quality, but writing unit tests is time-consuming and labor-intensive. Recent studies have proposed deep learning (DL) techniques or large language models (LLMs) to automate unit test generation. These models are usually trained or fine-tuned on large-scale datasets. Despite growing awareness of the importance of data quality, there has been limited research on the quality of datasets used for test generation. To bridge this gap, we systematically examine the impact of noise on the performance of learning-based test generation models. We first apply the open card sorting method to analyze the most popular and largest test generation dataset, Methods2Test, to categorize eight distinct types of noise. Further, we conduct detailed interviews with 17 domain experts to validate and assess the importance, reasonableness, and correctness of the noise taxonomy. Then, we propose CleanTest, an automated noise-cleaning framework designed to improve the quality of test generation datasets. CleanTest comprises three filters: a rule-based syntax filter, a rule-based relevance filter, and a model-based coverage filter. To evaluate its effectiveness, we apply CleanTest on two widely-used test generation datasets, i.e., Methods2Test and Atlas. Our findings indicate that 43.52% and 29.65% of datasets contain noise, highlighting its prevalence. Finally, we conduct comparative experiments using four LLMs (i.e., CodeBERT, AthenaTest, StarCoder, and CodeLlama7B) to assess the impact of noise on test generation performance. The results show that filtering noise positively influences the test generation ability of the models. Fine-tuning the four LLMs with the filtered Methods2Test dataset, on average, improves its performance by 67% in branch coverage, using the Defects4J benchmark. For the Atlas dataset, the four LLMs improve branch coverage by 39%. Additionally, filtering noise improves bug detection performance, resulting in a 21.42% increase in bugs detected by the generated tests.",
+  "year": 2025,
+  "citation_count": null,
+  "venue": "ACM International Conference on the Foundations of Software Engineering (FSE 2025)",
+  "venue_short": "FSE 2025",
+  "authors": [
+    "Junwei Zhang",
+    "Xing Hu",
+    "Shan Gao",
+    "Xin Xia",
+    "David Lo",
+    "Shanping Li"
+  ],
+  "pdf_url": "",
+  "paper_url": "https://dl.acm.org/doi/10.1145/3715778",
+  "paper_type": "study",
+  "award": "ACM SIGSOFT Distinguished Paper Award",
+  "subfield_label": "Automated Testing & Test Generation",
+  "introduction": "Unit testing is essential in software development to enhance the reliability and robustness of software applications [48]. However, manually writing high-quality test code is time-consuming and labor-intensive [5,28,33]. Various approaches are proposed to generate unit tests automatically, such as Randoop [42] and EvoSuite [19], to improve developers' productivity in writing tests.\n\nRecently, the exploration of deep learning (DL) techniques, particularly large language models (LLMs) for generating unit tests, has demonstrated promising performance [1,53,61]. These methods are referred to as learning-based test generation approaches. They take the focal method (i.e., methods under test) as input to generate the unit tests. For instance, Alagarsamy et al. [1] pretrained an LLM with focal methods and assertion statements, then fine-tuned it for test generation. Tufano et al. [62] proposed a similar method, pre-training LLMs with English and code corpora, followed by fine-tuning on test generation datasets. Despite the growing interest in learning-based test generation, little attention has been paid to the quality of datasets used to train these models. Noise in these datasets (e.g., irrelevant and erroneous) degrades the performance of test generation models. For example, noise may consist of code snippets with syntax errors or low-coverage test cases that fail to adequately test the focal methods. Such noise can result in faulty or inefficient test case generation, reducing the models' effectiveness. Previous work has shown that improving dataset quality can optimize DL models for various software tasks [55,58]. For example, Sun et al. [58] proposed a data-cleaning framework for neural code search to improve the quality of code search datasets. Shi et al. [55] developed a taxonomy of data preprocessing noise for code summarization and built a rule-based cleaning tool to detect noise. However, few studies have investigated the quality of test generation datasets. Unlike other software tasks, unit test generation requires models to generate executable test cases that interact with focal methods. The noise patterns in test generation datasets differ from those in code search or summarization tasks because unit test generation must guarantee syntactic correctness, logical consistency, and code coverage. These requirements present unique challenges that have not been fully addressed in previous research. Therefore, it is crucial to conduct a deeper investigation into the quality of test generation datasets.\n\nvalidate the noise taxonomy in terms of reasonableness, correctness, and completeness. Based on this noise taxonomy, we propose a noise-cleaning framework, CleanTest. It systematically filters noise from the dataset using three key components: a rule-based syntactic filter, a rule-based relevance filter, and a model-based coverage filter. The rule-based syntactic filter applies a set of systematically designed heuristic rules to eliminate data with anomalous syntactic features, such as unnecessary annotations, empty exception-handling statements, and empty functions. The rule-based relevance filter selects data strongly correlated with the focal method and test cases. In addition to matching the function name called in the test code with the focal method's name [61], the number and type of parameters must also match. The model-based coverage filter refines the dataset by retaining data with higher branch coverage. The coverage filter relies on a pre-trained language model (PLM), fine-tuned with focal methods and test cases containing code coverage information from previous work [61]. We use the coverage filter to predict the code coverage of each instance and select those with higher branch coverage. We apply CleanTest to detect noise data and analyze the noise distribution in the Methods2Test and Atlas datasets. We observe that 43.52% of the Methods2Test dataset and 29.65% of the Atlas dataset consist of noise, highlighting its widespread presence. In Methods2Test, the unnecessary annotations noise constitutes the largest noise type of 41.64%, while the non-English literal noise accounts for the smallest of 0.16%. In Atlas, the syntax errors noise makes up the largest noise category at 28.74%. Other noise types, such as \"ambiguous data type\" (0.0051%), \"unnecessary annotations\" (0.0051%), \"missing implementation\" (0.0298%), \"non-English literal\" (0.0365%), and \"No Relevance\" (0%), have lower proportions.\n\nTo evaluate our noise-cleaning framework, we use the Defects4J benchmark [21] to compare the performance of four LLMs (i.e., CodeBERT [18], AthenaTest [61], StarCoder [38], and CodeL-lama7B [51]) fine-tuned with datasets before and after filtering. Experimental results show that filtering noise data positively influences the test generation ability of models. In particular, the average performance of four LLMs in Methods2Test and Atlas datasets improves by 109.74% and 9.12% in CodeBLEU, 8.69% and 18.89% in syntactic correctness rate, 283.75% and 19.37% in compilation passing rate, 18.50% and 22.31% in line coverage, and 67.46% and 39.25% in branch coverage. Moreover, since less training data is used after filtering, we save at least 25% and 10% of training time with the same computational resources. We further evaluate the impact of noise data on the bug detection performance of the test generation model. The experimental results show that filtering noise improves the performance of bug detection, increasing the number of detected bugs by 21.42%. We also perform an ablation study to verify the effectiveness of each filter component and manually review the quality of the generated test cases. In summary, our main contributions are as follows:\n\n• To the best of our knowledge, we are the first to systematically study the patterns and impact of noise in test generation datasets. • We propose an automated noise-cleaning framework, named CleanTest, to detect and filter noise data in test generation datasets. • We compare the performance of four LLMs fine-tuned on the original and filtered datasets using the Defects4J benchmark. The results demonstrate that filtering out noise yields significant performance improvements. • For researchers and practitioners interested in our work, we release CleanTest and the filtered dataset for further research [44].\n\nThe remainder of this paper is organized as follows. Section 2 introduces the taxonomy of noise data in test generation datasets, categorizes eight distinct types of noise, and validates these categories through expert interviews. Section 3 presents our proposed noise-cleaning framework, CleanTest, which applies rule-based and model-based filters to remove noise data. Section 4 evaluates the impact of noise on the performance of four LLMs and demonstrates that filtering noise improves test generation effectiveness across multiple metrics. Section 5 analyzes the performance of CleanTest in bug detection and addresses threats to validity. Section 6 reviews related work on test generation and dataset quality. Finally, Section 7 summarizes the contributions of this work and proposes future research directions.",
+  "experiment": "In this section, we first present the research questions. Then, we describe our experimental setup, including the used datasets, the evaluated LLMs, evaluation metrics, and implementation details. Finally, we present the experiment results in this study.\n\nWe aim to answer the following research questions: RQ1: What is the distribution of noise data in the Methods2Test and Atlas datasets? RQ2: How effective is our noise-cleaning framework for unit test generation? RQ3: What is the impact of each filter component on test generation? 4.2 Experimental Setup 4.2.1 Datasets. Our experiment involves two datasets: the training dataset and the validation dataset. The training dataset is used to fine-tune LLMs for test generation. The validation dataset, Defects4J [34], evaluates the performance of the fine-tuned LLMs. The statistics for both datasets are presented in Table 4. Training Dataset. As introduced in Section 2, we use the popular test generation datasets, Methods2Test [61] and Atlas [65], to fine-tune LLMs-based test generation models. For each of them, we shuffle these datasets and partition them into two parts, 80% for fine-tuning the LLMs and 20% for hyperparameter tuning. Since the projects in the validation dataset (i.e., Defects4J) are also public repositories on GitHub, it is challenging to determine if a project in Defects4J is not in the Methods2Test and Atlas datasets. This presents a major threat to the effectiveness evaluation [6,59]. We mitigate this threat by removing focal methods in Methods2Test and Atlas datasets that share the same function names as those in the validation dataset.\n\nValidation Dataset. We utilize Defects4J [21,34] to evaluate how well a test generation model performs in a real-world scenario [21,34]. The Defects4J dataset contains 835 bugs from 17 Java open-source software systems. Following previous work [61], we extract pairs of focal methods and test cases. Finally, we collect 757 focal methods and 1,440 test cases. Three projects (i.e., JacksonCore [10], JacksonXml [13], and JxPath [35]) are excluded because the test case name differs from the focal method name after the \"Test\" word. The Defects4J benchmark is also processed using the CleanTest, ensuring the validation dataset undergoes the same noise-cleaning procedures for a more accurate evaluation of the four LLMs.\n\nModel. This study aims to explore the impact of data quality on the performance of learning-based test generation models. Since LLMs are pre-trained with extensive code and natural language data, they have significant advantages in understanding and generating code. For our experiments, we select four LLMs (CodeBERT [18], AthenaTest [61], StarCoder [38], and CodeLlama7B [51]) commonly used in recent research [61,74].\n\n• CodeBERT [18]: CodeBERT is the most popular and widely-used code-specific LLMs. It pretrains the transformer architecture with natural and programming languages. We use CodeBERT and a transformer-based decoder to generate tests. • AthenaTest [61]: AthenaTest is a state-of-the-art model specifically designed for automated unit test generation. It is trained on the Methods2Test dataset [61], allowing it to learn complex relationships between focal methods and their corresponding unit tests. AthenaTest is fine-tuned using developer-written tests. Following previous work [76], we use CodeT5 [64] to replicate AthenaTest. CodeT5 is an encoder-decoder transformer model pre-trained on 5.2 million code functions and 8.3 million natural language sentences. • StarCoder [38]: StarCoder is a state-of-the-art code LLM with 15.5B parameters, pre-trained on data from GitHub. We fine-tune it to generate test cases. • CodeLlama7B [51]: CodeLlama7B is a more recent SOTA model based on the Llama2 architecture, specifically fine-tuned for code-related tasks. It is frequently used in recent studies focusing on code generation due to its large-scale pretraining and strong performance on various benchmarks.\n\nWe adopt five widely used metrics in our experiments to evaluate the performance of four LLMs.\n\n• CodeBLEU [50]: This metric compares the generated code with human-written code by considering both structural and semantic information, including the token match calculated by the BLEU [45], the syntax match calculated by AST structure similarities, and the data flow match calculated by data flow similarities. We set a weight of 0.25 for each aspect. • Syntactic Correctness Rate: This metric verifies the syntactic correctness of the generated tests according to Java rules, using the tree-sitter parser [46,69]. • Compilation Passing Rate: This metric represents the percentage of generated tests that execute without runtime errors, using JUnit as the test executor. • Line Coverage: This metric quantifies the number of code lines executed by the test [27,31].\n\nWe average the line coverage of all tests to obtain the final metric. • Branch Coverage: This metric measures the proportion of branches in the focal method executed by the test [9,31,41]. We calculate the average rate of multiple tests as the final metric.\n\nOur experimental environment is equipped with four NVIDIA GeForce RTX A800 GPUs and 128 Intel(R) Xeon(R) CPUs, running on Ubuntu OS. When fine-tuning the four test generation models with the training dataset, we follow the implementations provided in their original papers and adopt the recommended hyper-parameter settings. Besides, we follow prior work [61] and adopt the same prompt as the input format to fine-tune LLMs. The prompt includes the focal method and test case with hint words \"The focal method:\" and \"The test case:\" to guide LLMs in generating test cases. The cosine learning rate is 1e-5. The batch size is eight. The maximum input sequence length is 1,024 tokens. If the number of input tokens exceeds the maximum number for the LLM, such as CodeBERT and AthenaTest, we truncate the input to meet the constraints. For StarCoder and CodeLlama7B, we adopt the Lora framework [29] to fine-tune LLMs, where lora_r is 8, lora_alpha is 16, and lora_dropout is 0.05. The type of task is set to \"CAUSAL_LM\". We set the seed for the random number generator to reduce the randomness in fine-tuning LLMs and make the generated results more stable and reliable. These settings are consistently applied to ensure a fair comparison between models fine-tuned with the original and filtered datasets. During the LLM inference phase, we use the greedy algorithm [36] to generate test cases, with a maximum output length of 512.\n\nIn this RQ, we apply the noise data cleaning framework to detect noise and further analyze the quality of Methods2Test and Atlas datasets. Table 5 illustrates the distribution of each noise type in these datasets. We represent the percentage of noise identified by CleanTest. Since one focal method and test case pair may involve multiple types of noise, our tool repeatedly counts pairs with multiple noise types when calculating the frequency for each type. Since we count each type only once for the total frequency, the sum of individual type percentages exceeds the total noise percentage.\n\nOverall, Methods2Test has the highest proportion of noise data (43.53%), followed by Atlas with 29.65%. We can observe that both datasets often contain multiple categories of noise. Methods2Test contains the most diverse noise categories. In Atlas, all noise categories are present except for the \"no relevance\" noise. The Methods2Test dataset contains various types of noise affecting data quality, categorized into three main groups: syntactic noise, no relevance noise, and low coverage noise. The total noise observed across the entire dataset is significant, accounting for 43.53% of the total data, highlighting its substantial impact on data quality. Among the syntactic noise types, \"Ambiguous Data Type\" represents a relatively small portion, approximately 3.08%. \"Unnecessary Annotations\" is the most prevalent, making up 41.64% of the dataset, indicating a widespread issue with redundant data specifications. Other noise types account for smaller but noteworthy proportions, such as \"Empty Exception Handling Statements\" (0.68%), \"Missing Implementation\" (0.34%), and \"Syntax Errors\" (1.11%), highlighting varied challenges posed by these noise types. \"Non-English Literal\" noise accounts for 0.16%, the most minor proportion of the Methods2Test dataset, but it is still present. Furthermore, \"No Relevance\" and \"Low Coverage\" noises account for 12.70% and 3.95%, respectively. In Atlas, the percentages of \"Ambiguous Data Type\" (0.0051%), \"Unnecessary Annotations\" (0.0051%), \"Missing Implementation\" (0.03%), \"Non-English Literal\" (0.04%), and \"No Relevance\" (0%) noises are notably low. This low prevalence is due to the rigorous data preprocessing method. In particular, the \"No Relevance\" noise is 0%. Compared to the other noise types, \"Syntax-Errors\" noise accounts for a significant portion (28.74%). This figure is surprisingly high, especially since Atlas is sourced from high-quality GitHub repositories, many of which are well-maintained. A closer look suggests that this high percentage of noise could be due to the dataset's preprocessing. Partial or incomplete code fragments are included in the dataset.\n\nWe investigate the impact of noise data test generation performance by fine-tuning four LLMs on two versions (original and filtered) of the Methods2Test and Atlas datasets. The \"original\" refers to the initial training dataset, while the \"filtered\" is the version cleaned by our noise-cleaning framework. It is important to note that the results presented here are based on Defects4J data, which is not included in the Methods2Test or Atlas datasets.\n\nTable 6 shows the performance of four LLMs, with the best results highlighted in bold. Overall, filtering noise data from the Methods2Test and Atlas datasets positively impacts test generation performance across the four LLMs. Fine-tuning the four LLMs with the filtered datasets results in improvements in CodeBLEU (by 30.91%, 6.94%, 197.45%, and 2.41%), syntactic correctness rate (by 5.55%, 10.68%, 29.99%, and 8.95%), compilation passing rate (by 311.35%, 281.89%, 2.28%, and 10.71%), line coverage (by 36.51%, 4.26%, 16.29%, and 24.57%), and branch coverage (by 163.41%, 18.86%, 4.53%, and 26.63%), respectively. The fine-tuning time is saved by 21.65%, 19.99%, 19.68%, and 9.57%. Besides, we also observe the following findings: (1) The impact of noises on the Methods2Test dataset is greater than the Atlas dataset. Fine-tuning the four LLMs with the filtered Methods2Test dataset results in average improvements of 109.74% in CodeBLEU, 8.69% in syntactic correctness rate, 283.75% in compilation passing rate, 18.50% in line coverage, and 67.46% in branch coverage. The fine-tuning time is reduced by 25.45% on average. For the Atlas dataset, the five metrics improve by 9.12%, 18.89%, 19.37%, 22.31%, and 39.25%, on average. The fine-tuning time is saved by 10.00%.\n\n(2) The relative performance improvements of the four LLMs vary. For the five metrics, StarCoder achieves the highest improvements in CodeBLEU (197.45%) and syntactic correctness rate (29.99%). CodeBERT shows the greatest gains in compilation passing rate (311.35%), line coverage (36.51%), and branch coverage (163.41%). These differences in performance are likely due to variations in the LLMs' pre-training methods, architectures, and training data, leading to different levels of improvement after fine-tuning on the same dataset.\n\n(3) When using the filtered Methods2Test dataset, the syntactic correctness rate of CodeBERT decreases by 1.26%. The compilation passing rate of StarCoder also worsens by 10.61%. This may be because the filtered dataset includes only high-quality examples, which can present more challenging coding scenarios. As a result, achieving syntactic correctness and successful compilation becomes more difficult, as these tasks require precise code syntax and dependency handling. However, high-quality datasets also enable models to better grasp complex code logic and patterns, improving broader coverage and semantic understanding. To qualitatively illustrate the impact of noise on test generation models, we present a case generated by CodeLlama7B fine-tuned on both the original and filtered Methods2Test datasets. As shown in Fig. 10, the test case generated by CodeLlama7B fine-tuned on the filtered dataset (short for CodeLlama7B-filtered) tends to be broader and more accurate than the test case generated by CodeLlama7B fine-tuned on the original dataset (short for CodeLlama7B-origin).\n\nThe focal method \"between()\" is a time processing function that calculates the time difference between two points. The test case generated by CodeLlama7B-origin verifies whether the method correctly throws an \"IllegalArgumentException\" when given a null input. In contrast, the test cases generated by CodeLlama7B-filtered not only handle an extreme case (the time difference from 2004 to 1970) but also test the method's ability to handle different time units, such as milliseconds and minutes. Further, the filtered test case includes multiple assertion statements, verifying the correctness of the time calculation in different scenarios, such as using different time units or modifying the end time (e.g., adding one minute). This case also tests cases where the start and end times are identical, an essential check for verifying the accuracy of the time calculation logic. By eliminating irrelevant or incorrect data during the filtering process, the model is able to generate more comprehensive and accurate test cases, leading to broader and more detailed coverage in the CodeLlama7B-filtered results. Besides, it also verifies the correctness of the function under normal and boundary conditions, demonstrating the reliability and robustness of the code in multiple scenarios by using different time units. Therefore, CodeLlama7B-filtered's test cases are superior to CodeLlama7B-origin's due to their comprehensiveness and testing depth.\n\nIn CleanTest, we design three filters to improve the quality of the Methods2Test and Atlas datasets. We evaluate the effectiveness of each filter component through ablation experiments, disabling one of the three filter components in turn. After fine-tuning with the derived filtered Methods2Test dataset, we observe the model performance and compare it with previous results. If the performance declines compared to when all three filters are enabled, we can infer a positive impact of the disabled component on the framework's effectiveness. Table 7 presents the performance of CodeLlama7B fine-tuned on different filtered Methods2Test datasets. We observe that removing any filter results in lower performance scores. Specifically, when the model-based coverage filter is removed, CodeBLEU, syntactic correctness rate, line coverage, and branch coverage decrease by 2.99%, 2.74%, 0.26%, and 4.18%, respectively. However, the compilation passing rate increases by 9.82%. The reason is that without the coverage filter, the model tends to generate simpler or less comprehensive code, which is easier to compile but lacks the necessary complexity for thorough testing. As a result, while more code passes compilation, it does not perform as well in terms of correctness and coverage. After removing the relevance filter, the performance of CodeLlama7B drops by 2.55% in CodeBLEU, 25.08% in compilation passing rate, 18.85% in line coverage, and 14.26% in branch coverage. Besides, the observed decrease in CodeBLEU and compilation passing rate for the \"Only Syntactic Filter\" variant, despite the slight improvement in other metrics, could be attributed to the following reasons: (1) While the syntactic filter ensures that the generated code adheres to proper syntax, it does not necessarily guarantee that the code is semantically correct or relevant to the intended task. Without additional relevance filtering, LLMs might produce syntactically correct code that fails to compile correctly or is not meaningful, leading to a lower compilation passing rate. (2) The focus on syntactic accuracy could have reduced the diversity or flexibility of the generated code, limiting its ability to meet broader criteria evaluated by CodeBLEU or pass compilation checks, which often require not just correct syntax but also correct logic and compatibility with the programming environment.",
+  "section_quality": {
+    "has_abstract": true,
+    "has_introduction": true,
+    "has_experiment": true,
+    "intro_chars": 7183,
+    "experiment_chars": 16450
+  },
+  "introduction_source": "grobid_tei",
+  "experiment_source": "grobid_tei",
+  "background_source": "introduction",
+  "experiment_source_used": "experiment_section",
+  "task_title": "Assessing Noise in Unit Test Generation Training Data and Its Impact on LLM Performance",
+  "background": "Unit testing is critical for software reliability, but manually writing high-quality tests is labor-intensive. Traditional automated test generation tools like Randoop and EvoSuite produce tests based on code analysis. Recent learning-based approaches leverage LLMs fine-tuned on large datasets of focal methods and test cases to generate unit tests. However, the quality of these training datasets has been largely ignored, despite known issues with noise in other software engineering tasks. Noise in test generation data—such as syntax errors, irrelevant test cases, or low-coverage examples—can impair model performance, yet no systematic study has characterized the prevalence and impact of such noise. Given the unique requirements of generating executable tests with high coverage, understanding and mitigating noise in this domain is essential.",
+  "research_question": "What types of noise exist in large-scale unit test generation datasets, and to what extent does removing such noise improve the quality of tests generated by LLMs?",
+  "experiment_setup": {
+    "datasets": [
+      {
+        "name": "Methods2Test",
+        "source": "GitHub: microsoft/methods2test",
+        "description": "A large dataset of Java focal methods and their corresponding developer-written JUnit test cases, commonly used for training test generation models.",
+        "access": "open"
+      },
+      {
+        "name": "Atlas",
+        "source": "contact authors of Atlas dataset [65]",
+        "description": "Another large-scale dataset of Java methods and test cases, used alongside Methods2Test for training LLMs.",
+        "access": "restricted (available upon request)"
+      },
+      {
+        "name": "Defects4J",
+        "source": "GitHub: rjust/defects4j",
+        "description": "A benchmark of 835 real bugs from 17 Java projects, used to evaluate test generation quality. 757 focal methods and 1,440 test cases are extracted after removing projects where test naming conventions differ.",
+        "access": "open"
+      }
+    ],
+    "baselines": [
+      {
+        "name": "Randoop",
+        "reference": "Pacheco et al., \"Randoop: feedback-directed random testing for Java\", OOPSLA 2007"
+      },
+      {
+        "name": "EvoSuite",
+        "reference": "Fraser and Arcuri, \"EvoSuite: automatic test suite generation for object-oriented software\", ESEC/FSE 2011"
+      },
+      {
+        "name": "CodeBERT",
+        "reference": "Feng et al., \"CodeBERT: A Pre-Trained Model for Programming and Natural Languages\", EMNLP 2020"
+      },
+      {
+        "name": "AthenaTest (replicated with CodeT5)",
+        "reference": "Tufano et al., \"Unit Test Case Generation with Transformers and Focal Context\", arXiv 2020 (AthenaTest)"
+      },
+      {
+        "name": "StarCoder",
+        "reference": "Li et al., \"StarCoder: may the source be with you!\", TMLR 2023"
+      },
+      {
+        "name": "CodeLlama7B",
+        "reference": "Roziere et al., \"Code Llama: Open Foundation Models for Code\", arXiv 2023"
+      }
+    ],
+    "metrics": [
+      {
+        "name": "CodeBLEU",
+        "definition": "Combines n-gram match (BLEU), syntactic AST similarity, and data-flow similarity to compare generated code with reference code; weight 0.25 for each component."
+      },
+      {
+        "name": "Syntactic Correctness Rate",
+        "definition": "Percentage of generated test cases that parse correctly according to Java syntax using a tree-sitter parser."
+      },
+      {
+        "name": "Compilation Passing Rate",
+        "definition": "Percentage of generated test cases that compile and execute without runtime errors when run with JUnit."
+      },
+      {
+        "name": "Line Coverage",
+        "definition": "Average percentage of lines of the focal method executed by the generated test suite."
+      },
+      {
+        "name": "Branch Coverage",
+        "definition": "Average percentage of branches in the focal method exercised by the generated test suite."
+      }
+    ],
+    "rqs": [
+      "RQ1: What is the prevalence and distribution of noise types in the Methods2Test and Atlas datasets?",
+      "RQ2: How does removing noise from training data affect the performance (CodeBLEU, compilation rate, line coverage, branch coverage) of LLM-based test generators?",
+      "RQ3: How do different categories of noise contribute to degradation in test generation quality?"
+    ],
+    "target_subject": "Java projects with JUnit test suites taken from open-source repositories. Specifically, the focal methods and test cases in the Methods2Test and Atlas training corpora, and the Defects4J benchmark (17 Java projects, e.g., JFreeChart, Google Gson).",
+    "constraints": "Training and hyperparameter splits use 80/20 random partitions. To avoid data leakage, any focal method whose name matches a method in the Defects4J validation set is removed from training. Maximum input sequence length for LLMs is 1024 tokens; longer inputs are truncated. Training follows the original hyperparameters of each LLM (e.g., learning rate 1e-5, batch size 8, LoRA settings for large models). Inference uses greedy decoding. All experiments run on four NVIDIA A800 GPUs."
+  },
+  "expected_artifacts": [
+    "idea",
+    "code",
+    "experiment_results",
+    "paper"
+  ],
+  "feasibility_notes": "The training datasets are publicly available (Methods2Test) or accessible on request (Atlas). Fine-tuning large LLMs like StarCoder and CodeLlama7B requires substantial GPU memory; smaller models such as CodeBERT can be fine-tuned with fewer resources. Constructing a noise taxonomy may require manual inspection and expert validation, but once defined, automated filtering can be implemented. The overall task is computationally intensive but feasible with appropriate hardware.",
+  "difficulty": "hard",
+  "seed_papers": [
+    {
+      "title": "IMPALA: Scalable Distributed Deep-RL with Importance Weighted Actor-Learner Architectures",
+      "year": 2018,
+      "authors": [
+        "L. Espeholt",
+        "Hubert Soyer",
+        "R. Munos"
+      ],
+      "doi": null,
+      "arxiv_id": "1802.01561",
+      "pdf_url": "",
+      "citation_count": 1855
+    },
+    {
+      "title": "The Growing Importance of Social Skills in the Labor Market",
+      "year": 2017,
+      "authors": [
+        "David J. Deming"
+      ],
+      "doi": "10.1093/QJE/QJX022",
+      "arxiv_id": null,
+      "pdf_url": "https://academic.oup.com/qje/article-pdf/132/4/1593/30637898/qjx022.pdf",
+      "citation_count": 1544
+    },
+    {
+      "title": "LIMA: Less Is More for Alignment",
+      "year": 2023,
+      "authors": [
+        "Chunting Zhou",
+        "Pengfei Liu",
+        "Puxin Xu"
+      ],
+      "doi": "10.52202/075280-2400",
+      "arxiv_id": "2305.11206",
+      "pdf_url": "",
+      "citation_count": 1315
+    },
+    {
+      "title": "Before the beginning: nutrition and lifestyle in the preconception period and its importance for future health",
+      "year": 2018,
+      "authors": [
+        "J. Stephenson",
+        "N. Heslehurst",
+        "J. Hall"
+      ],
+      "doi": "10.1016/S0140-6736(18)30311-8",
+      "arxiv_id": null,
+      "pdf_url": "https://europepmc.org/articles/pmc6075697?pdf=render",
+      "citation_count": 941
+    },
+    {
+      "title": "The importance of nutrition in pregnancy and lactation: lifelong consequences",
+      "year": 2021,
+      "authors": [
+        "N. Marshall",
+        "B. Abrams",
+        "L. Barbour"
+      ],
+      "doi": "10.1016/j.ajog.2021.12.035",
+      "arxiv_id": null,
+      "pdf_url": "https://shura.shu.ac.uk/29584/22/Soltani-ImportanceOfNutritionInPregnancyAndLactation%28VoR%29.pdf",
+      "citation_count": 561
+    }
+  ],
+  "paper_title": "Less is More: On the Importance of Data Quality for Unit Test Generation"
+}

@@ -1,0 +1,1375 @@
+{
+  "run_dir": "~/ai_scientist_inputs/ISSTA-2025-008_automated_test_scenario_generation_for_m/workspace/deepscientist_2026-09-24_07-17-07",
+  "task_dir": "~/ai_scientist_inputs/ISSTA-2025-008_automated_test_scenario_generation_for_m",
+  "framework": "deepscientist",
+  "fairness_audit": [
+    {
+      "axis": "completeness",
+      "was_unfair": "Required both paper.tex AND paper.pdf; any tool missing one failed equally.",
+      "fix": "Paper gate: PDF=1.0; TeX-only=0.5; ``complete`` requires PDF."
+    },
+    {
+      "axis": "completeness",
+      "was_unfair": "``results`` counted stub/seed JSON (dataset_candidate/metrics.json).",
+      "fix": "``results`` requires substantive numeric results via results_normalize."
+    },
+    {
+      "axis": "experiment_success",
+      "was_unfair": "Only metrics.json; ignored results.json / experiment_results.txt.",
+      "fix": "Framework-ordered result candidates + normalized loaders."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Penalized tools with no bib; airesearcher has no workspace references.",
+      "fix": "literature_applicable=false → status not_applicable; excluded from fair aggregate."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "related_work.json subset as gold made recall hard to interpret.",
+      "fix": "Coverage gold is original paper REFERENCES from mineru; related_work only enriches metadata/fallback."
+    },
+    {
+      "axis": "peer_review",
+      "was_unfair": "Missing Stanford report looked like evaluation failure.",
+      "fix": "status not_provided; optional axis, never counts as tool failure."
+    },
+    {
+      "axis": "paths/find_results",
+      "was_unfair": "Picked downloads/** and sandbox noise (e.g. airesearcher LLVM tree).",
+      "fix": "Exclude downloads/, seeds/, dataset_candidate/, sandbox junk paths."
+    },
+    {
+      "axis": "paths/framework_noise",
+      "was_unfair": "DeepScientist .deepscientist_npm / runtime / skills templates counted as code/paper/results.",
+      "fix": "FRAMEWORK_NOISE_DIRS+markers; quest worktree + eval_output results; paper md drafts; reject template tex."
+    },
+    {
+      "axis": "paths/paper_tex",
+      "was_unfair": "tiny_scientist / ACL runs store paper under latex/*.tex; evaluator only looked at paper/main.tex.",
+      "fix": "latex/**/*.tex with substantive-body heuristic; find_paper_document uses same rules."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Entire custom.bib (300+ anthology entries) verified when paper had zero \\cite commands.",
+      "fix": "collect_agent_references filters bib to in-text cite keys; skips uncited bulk bib (>40 entries)."
+    },
+    {
+      "axis": "paths/ai_scientist_summaries",
+      "was_unfair": "AI Scientist can persist substantive results and paper-like drafts in *_summary.json logs rather than paper/main.tex or results/**/*.json.",
+      "fix": "Treat draft_summary/research_summary as weak paper documents and summary JSONs as result candidates."
+    },
+    {
+      "axis": "framework/ai_scientist_v2",
+      "was_unfair": "Manifest framework ``ai_scientist_v2`` fell through to profile ``unknown``, skipping AI-Scientist idea/result path priorities.",
+      "fix": "Normalize ``ai_scientist_v2`` (and common aliases) to profile key ``ai_scientist``."
+    },
+    {
+      "axis": "idea_generation",
+      "was_unfair": "plan.md/todos.md weak proxies scored same as structured idea.json.",
+      "fix": "Framework idea_priority tried first; missing idea → not_applicable where appropriate."
+    }
+  ],
+  "generated_at": "2026-10-01T15:03:51",
+  "axes": [
+    "alignment",
+    "completeness",
+    "experiment_analysis",
+    "idea_generation",
+    "literature_review",
+    "peer_review"
+  ],
+  "results": {
+    "completeness": {
+      "framework": "deepscientist",
+      "run_dir": "~/ai_scientist_inputs/ISSTA-2025-008_automated_test_scenario_generation_for_m/workspace/deepscientist_2026-09-24_07-17-07",
+      "task_dir": "~/ai_scientist_inputs/ISSTA-2025-008_automated_test_scenario_generation_for_m",
+      "complete": true,
+      "required_score": 1.0,
+      "bonus_score": 0.04,
+      "overall_score": 0.8368,
+      "missing": [],
+      "required": {
+        "idea": {
+          "path": "DeepScientist/quests/001/artifacts/ideas/selected_idea.md",
+          "bytes": 3223,
+          "via": "glob"
+        },
+        "code": {
+          "count": 6,
+          "files": [
+            {
+              "path": "DeepScientist/quests/001/experiments/main/colregs_core.py",
+              "bytes": 13490,
+              "via": "glob"
+            },
+            {
+              "path": "DeepScientist/quests/001/experiments/main/evaluate.py",
+              "bytes": 6491,
+              "via": "glob"
+            },
+            {
+              "path": "DeepScientist/quests/001/experiments/main/plot_results.py",
+              "bytes": 2466,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/main/colregs_core.py",
+              "bytes": 13490,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/main/evaluate.py",
+              "bytes": 6491,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/main/plot_results.py",
+              "bytes": 2466,
+              "via": "glob"
+            }
+          ]
+        },
+        "results": {
+          "substantive": true,
+          "normalized_path": "DeepScientist/quests/001/experiments/main/results.json",
+          "numeric_leaf_count": 170,
+          "discovered_files": [
+            {
+              "path": "DeepScientist/quests/001/experiments/main/results.json",
+              "bytes": 5248,
+              "via": "glob"
+            },
+            {
+              "path": "DeepScientist/quests/001/.ds/worktrees/idea-idea-4f003b1f/artifacts/reports/report-0bb2236d.json",
+              "bytes": 2779,
+              "via": "glob"
+            },
+            {
+              "path": "DeepScientist/quests/001/.ds/worktrees/idea-idea-4f003b1f/artifacts/reports/report-3bdf54a9.json",
+              "bytes": 2614,
+              "via": "glob"
+            },
+            {
+              "path": "DeepScientist/quests/001/.ds/worktrees/idea-idea-4f003b1f/artifacts/reports/report-7e690184.json",
+              "bytes": 4325,
+              "via": "glob"
+            },
+            {
+              "path": "DeepScientist/quests/001/.ds/worktrees/idea-idea-4f003b1f/artifacts/reports/report-e3f58743.json",
+              "bytes": 2651,
+              "via": "glob"
+            },
+            {
+              "path": "DeepScientist/quests/001/.ds/worktrees/paper-paper-idea-001-idea-4f003b1f/artifacts/reports/report-7fd37c3c.json",
+              "bytes": 4788,
+              "via": "glob"
+            },
+            {
+              "path": "DeepScientist/quests/001/.ds/worktrees/paper-paper-idea-001-idea-4f003b1f/artifacts/reports/report-f182c20e.json",
+              "bytes": 2891,
+              "via": "glob"
+            },
+            {
+              "path": "DeepScientist/quests/001/.ds/worktrees/paper-paper-idea-001-idea-4f003b1f/artifacts/reports/report-fa45ea54.json",
+              "bytes": 5679,
+              "via": "glob"
+            },
+            {
+              "path": "artifacts/reports/report-7387e1a0.json",
+              "bytes": 2794,
+              "via": "glob"
+            }
+          ],
+          "metrics_keys_sample": [
+            "generator",
+            "SBO",
+            "scenic_distribution",
+            "common_ocean_benchmark"
+          ]
+        },
+        "paper": {
+          "tex": null,
+          "pdf": {
+            "path": "paper/main.pdf",
+            "bytes": 49268,
+            "via": "candidate"
+          },
+          "md": {
+            "path": "paper/main.md",
+            "bytes": 15867,
+            "via": "candidate"
+          },
+          "json": null,
+          "status": "pdf",
+          "score": 1.0
+        }
+      },
+      "bonus": {
+        "experiment_plan": null,
+        "experiment_log": null,
+        "review": {
+          "path": "artifacts/peer_review/stanford_apr.md",
+          "bytes": 13570,
+          "via": "glob"
+        },
+        "readme": null,
+        "narrative": null,
+        "bib": null
+      },
+      "manifest_status": {
+        "launched": true
+      },
+      "gate_scores": {
+        "idea": 1.0,
+        "code": 1.0,
+        "results": 1.0,
+        "paper": 1.0
+      },
+      "fairness": {
+        "gates": [
+          "idea",
+          "code",
+          "results",
+          "paper"
+        ],
+        "paper_gate_rule": "PDF=1.0; TeX-only/md_only/json_only=0.5; complete requires PDF",
+        "results_gate_rule": "substantive numeric results via framework-aware normalize_results",
+        "audit_ref": "framework_profile.FAIRNESS_AUDIT"
+      },
+      "notes": [
+        "Required: idea, code, substantive results, paper (PDF full; TeX/markdown/JSON draft half).",
+        "Stub/seed metrics (e.g. dataset_candidate/metrics.json) do not satisfy results.",
+        "Framework noise (.deepscientist_npm, skills/templates, runtime) is excluded from code/results/paper.",
+        "Manifest status is informational; disk presence is authoritative."
+      ]
+    },
+    "idea_generation": {
+      "run_dir": "~/ai_scientist_inputs/ISSTA-2025-008_automated_test_scenario_generation_for_m/workspace/deepscientist_2026-09-24_07-17-07",
+      "task_dir": "~/ai_scientist_inputs/ISSTA-2025-008_automated_test_scenario_generation_for_m",
+      "idea_path": "~/ai_scientist_inputs/ISSTA-2025-008_automated_test_scenario_generation_for_m/workspace/deepscientist_2026-09-24_07-17-07/DeepScientist/quests/001/artifacts/ideas/selected_idea.md",
+      "status": "ok",
+      "dimensions": {
+        "novelty": {
+          "score": 4.0,
+          "justification": "The idea claims to be \"the first ... constructive multi-vessel maritime test-scenario generator; prior work is control-oriented or search/sampling-based.\" It proposes obtaining relevance and completeness \"by construction\" from \"closed-form feasible regions of the pairwise encounter constraints,\" which is a non-obvious alternative to the search/sampling approaches represented by R10, R38, and R3.",
+          "rubric": "Novel Combo / Cross-domain: spots a non-obvious link across areas and cleverly imports an existing method from another domain to address the current pain point, yielding a 1+1>2 effect.",
+          "category": "Novel Combo",
+          "nearest_solution_space_ids": [
+            "R10",
+            "R38",
+            "R47",
+            "R3"
+          ],
+          "differentiation": "Unlike R10 and R38, which generate maritime scenarios via search/sampling, this idea instantiates COLREGS functional equivalence classes constructively from closed-form pairwise feasible regions. It appears to import consistent graph-model generation ideas such as R47 into maritime scenario testing, rather than optimizing or rejecting samples like R3."
+        },
+        "feasibility": {
+          "score": 3.0,
+          "justification": "The plan reuses \"the three shipped baselines\" and \"the five metrics from the reference paper,\" and the author states \"Constructive feasibility is evidenced by the artifact's own dReal PoC.\" However, implementing closed-form sector generation, TS–TS de-collision, and class instantiation still requires nontrivial geometric/constraint reasoning and may not scale as claimed without validation.",
+          "rubric": "Moderate workload (sweet spot): needs nontrivial coding such as scripting existing open-source tools (parsers, CFG extractors) or building a custom graph-processing pipeline; standard research engineering effort."
+        },
+        "clarity": {
+          "score": 4.0,
+          "justification": "The artifact gives a concrete evaluation plan with RQ1–RQ3, baseline names, metric names, vessel counts, and a falsification experiment: \"2–4 vessel pilot: construct all classes, run the shipped checker.\" Technical detail is partially deferred via \"See pre_idea_drafts/constructive_generator.md,\" and the mechanism sketch remains high-level, but the proposal is specific enough to implement.",
+          "rubric": "Clear and concrete: steps are explicit with a reasonable, specific experiment design (baseline tools, metric definitions); can be turned into a solid proposal."
+        }
+      },
+      "overall_score": 3.7,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "novelty",
+        "feasibility",
+        "clarity"
+      ],
+      "solution_space": {
+        "status": "ok",
+        "paper_count": 127,
+        "entry_count": 127,
+        "cache_hit": false,
+        "source_file": "~/ai_scientist_inputs/ISSTA-2025-008_automated_test_scenario_generation_for_m/mineru_sections.json",
+        "stats": {
+          "papers": 127,
+          "extracted": 127,
+          "usable_abstracts": 56,
+          "citation_meta_abstracts": 0,
+          "missing_abstracts": 71,
+          "mineru_titles": 81,
+          "related_work_titles": 75,
+          "abstracts_attached": 56,
+          "related_work_extras": 46,
+          "batches": 8
+        },
+        "error": null
+      },
+      "notes": [
+        "Scores the intermediate idea artifact (not the final paper).",
+        "Dimensions: novelty, feasibility, clarity (each 1-5). Excitement removed.",
+        "Novelty is scored against a Solution Space built from mineru REFERENCES titles (+ related_work.json abstracts when matched)."
+      ],
+      "idea_via": "glob",
+      "idea_relative": "DeepScientist/quests/001/artifacts/ideas/selected_idea.md",
+      "summary": "The idea proposes a constructive coverage-guided generator that instantiates COLREGS functional equivalence classes directly from closed-form pairwise encounter constraints, aiming for 100% coverage, high relevance, and near-constant per-class generation up to six vessels. It reuses existing baselines, metrics, and rule checker for a fair comparison. Novelty is strong relative to search/sampling maritime generators, but feasibility is moderate due to geometric constraint solving and unproven scalability. Clarity is good, with concrete experiments and fallback plans, though algorithmic internals are only sketched.",
+      "strengths": [
+        "Directly targets the stated weakness of diversity/completeness/speed in search/sampling approaches.",
+        "Reuses shipped baselines, metrics, and rule checker, enabling fair drop-in evaluation.",
+        "Includes concrete falsification and fallback plans."
+      ],
+      "weaknesses": [
+        "Technical details of closed-form sector construction and TS–TS de-collision are deferred to an external draft.",
+        "Feasibility relies on the dReal PoC and unproven near-constant scaling claims.",
+        "Limited discussion of edge cases or limitations beyond the anti-win condition."
+      ],
+      "llm_meta": {
+        "model": "deepseek-v4-pro-0813",
+        "base_url": "https://api-sg.umodelverse.ai/v1",
+        "usage": {
+          "completion_tokens": 2789,
+          "completion_tokens_details": {
+            "reasoning_tokens": 2112
+          },
+          "prompt_tokens": 7097,
+          "prompt_tokens_details": {
+            "cached_tokens": 2048
+          },
+          "total_tokens": 9886
+        },
+        "attempt": 0
+      }
+    },
+    "peer_review": {
+      "run_dir": "~/ai_scientist_inputs/ISSTA-2025-008_automated_test_scenario_generation_for_m/workspace/deepscientist_2026-09-24_07-17-07",
+      "review_report": "~/ai_scientist_inputs/ISSTA-2025-008_automated_test_scenario_generation_for_m/workspace/deepscientist_2026-09-24_07-17-07/artifacts/peer_review/stanford_apr.md",
+      "paper_pdf": "~/ai_scientist_inputs/ISSTA-2025-008_automated_test_scenario_generation_for_m/workspace/deepscientist_2026-09-24_07-17-07/paper/main.pdf",
+      "paper_tex": null,
+      "status": "ok",
+      "dimensions": {},
+      "overall_score": 6.7,
+      "score_scale": "1-10",
+      "dimension_order": [],
+      "notes": [
+        "Scored from paperreview.ai (Stanford APR) native ratings; benchmark 5-dimension LLM rubric skipped.",
+        "Overall scale: 1-10."
+      ],
+      "paperreview": {
+        "status": "cached",
+        "hint": "Cached APR score found; no re-upload."
+      },
+      "scoring_method": "paperreview_apr",
+      "scoring_source": "paperreview_json",
+      "apr_dimensions": {
+        "Claims_Support": 1.0,
+        "Experimental_Soundness": 0.0,
+        "Writing_Clarity": 1.0,
+        "Prior_Work_Context": 0.0,
+        "Question_Importance": 1.0,
+        "Originality": 1.0,
+        "Value_to_Community": 1.0
+      },
+      "summary": "",
+      "red_flags": []
+    },
+    "alignment": {
+      "run_dir": "~/ai_scientist_inputs/ISSTA-2025-008_automated_test_scenario_generation_for_m/workspace/deepscientist_2026-09-24_07-17-07",
+      "task_dir": "~/ai_scientist_inputs/ISSTA-2025-008_automated_test_scenario_generation_for_m",
+      "status": "ok",
+      "original": {
+        "paper_title": "Assessing Scene Generation Techniques for Testing COLREGS-Compliance of Autonomous Surface Vehicles",
+        "selection": {
+          "num_blocks": 6,
+          "total_chars": 31998,
+          "inferred_roles": {
+            "abstract": 1,
+            "experiment": 3,
+            "discussion": 1,
+            "conclusion": 1
+          },
+          "mineru_raw_keys": {
+            "field:abstract": 1,
+            "field:experiment": 1,
+            "other": 3,
+            "conclusion": 1
+          },
+          "infer_reasons": {
+            "top_level_field": 2,
+            "body": 2,
+            "title": 2
+          },
+          "rescued_from_other": 3,
+          "note": "mineru key is unreliable; blocks are selected by title/body/inheritance. rescued_from_other counts sections labeled other but treated as typed roles."
+        },
+        "claims": [
+          {
+            "id": "C1",
+            "statement": "Test scenarios derived from real-world AIS/CommonOcean data are insufficient for testing multi-ship COLREGS-compliance encounters.",
+            "direction": "degrades",
+            "metric_names": [
+              "relevant_consistent_ratio",
+              "ambiguous_consistent_ratio"
+            ],
+            "evidence_quote": "test scenarios derived from historic maritime traffic are insufficient for testing multi-ship encounters",
+            "confidence": 0.97
+          },
+          {
+            "id": "C2",
+            "statement": "Existing synthetic test scenario generation techniques provide sufficient scalability and speed, and search-based generation is sufficient for practical open-sea encounters with 3-6 vessels.",
+            "direction": "improves",
+            "metric_names": [
+              "scalability",
+              "speed"
+            ],
+            "evidence_quote": "search-based scenario generation provided sufficient scalability and speed for deriving test scenarios for open sea encounters with increasing number of vessels for problems of practical size (3–6 vessels)",
+            "confidence": 0.95
+          },
+          {
+            "id": "C3",
+            "statement": "Adapted automotive scenario generation techniques are limited in diversity and completeness as the number of vessels increases.",
+            "direction": "degrades",
+            "metric_names": [
+              "diversity",
+              "completeness"
+            ],
+            "evidence_quote": "both SB and RS failed to cover many equivalence classes, particularly for larger problems with more vessels",
+            "confidence": 0.96
+          },
+          {
+            "id": "C4",
+            "statement": "Rejection sampling was not effective for generating maritime test scenarios, likely due to higher degrees of freedom in vessel placement.",
+            "direction": "degrades",
+            "metric_names": [
+              "scalability",
+              "speed"
+            ],
+            "evidence_quote": "while rejection sampling was proven highly beneficial in the automotive domain, it was not effective in generating maritime test scenarios",
+            "confidence": 0.94
+          },
+          {
+            "id": "C5",
+            "statement": "Synthetic test generation techniques can repeatedly derive functionally inconsistent COLREGS scenarios, indicating possible COLREGS assumption gaps in edge cases.",
+            "direction": "mixed",
+            "metric_names": [
+              "consistent_scenario_ratio"
+            ],
+            "evidence_quote": "synthetic test generation techniques repeatedly derived scenarios where the functional scenario model was inconsistent",
+            "confidence": 0.9
+          }
+        ],
+        "metrics": [
+          {
+            "name": "relevant_consistent_ratio_CO_K2",
+            "value": 30.8,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "CommonOcean (CO) real-world AIS benchmark, K=2 vessels",
+            "is_sota_or_best": false,
+            "evidence_quote": "The real-world CO dataset has low relevance ratio (30.8%) for K = 2",
+            "confidence": 0.97
+          },
+          {
+            "name": "ambiguous_consistent_ratio_CO_K_gt_2",
+            "value": 0.0,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "CommonOcean (CO) real-world AIS benchmark, K>2 vessels",
+            "is_sota_or_best": false,
+            "evidence_quote": "0% relevance and ambiguous ratio for K > 2",
+            "confidence": 0.9
+          },
+          {
+            "name": "two_vessel_encounter_ratio",
+            "value": 97.7,
+            "unit": "%",
+            "higher_is_better": false,
+            "setting": "CommonOcean benchmark overall encounter composition",
+            "is_sota_or_best": false,
+            "evidence_quote": "This benchmark predominantly (97.7%) features two-vessel encounters",
+            "confidence": 0.95
+          },
+          {
+            "name": "relevant_consistent_ratio_SB_K2",
+            "value": 94.4,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "Search-based (SB) synthetic scene generation, K=2 vessels",
+            "is_sota_or_best": false,
+            "baseline_name": "RS",
+            "baseline_value": 94.6,
+            "evidence_quote": "T∩C (%) 94.4% 94.6% 30.8%",
+            "confidence": 0.8
+          },
+          {
+            "name": "relevant_consistent_ratio_RS_K2",
+            "value": 94.6,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "Rejection sampling (RS) synthetic scene generation, K=2 vessels",
+            "is_sota_or_best": true,
+            "baseline_name": "SB",
+            "baseline_value": 94.4,
+            "evidence_quote": "T∩C (%) 94.4% 94.6% 30.8%",
+            "confidence": 0.8
+          }
+        ],
+        "overall_conclusion": "Automotive scenario generation techniques can be adapted to maritime COLREGS testing, and search-based generation provides adequate speed and scalability, but both SB and RS have limited diversity and completeness for multi-vessel encounters. Real-world AIS-derived CommonOcean scenarios are largely insufficient for testing multi-ship COLREGS compliance due to low relevance and rare multi-vessel encounters.",
+        "comparable_notes": "Experiments compare search-based (SB), rejection-sampling (RS), and CommonOcean AIS data. Measurements used 1000 runs per approach/problem size with a 10-minute timeout on Ubuntu 24.04, Intel Haswell, 32GB RAM, Python 3.12, reset seeds, garbage collection, and two warm-up runs. Scenes were abstracted with l2f into functional equivalence classes; relevance is measured by T∩C and ambiguity by A∩C, with ambiguity defined only for multi-vessel (K>2) scenarios.",
+        "cache_hit": true
+      },
+      "agent": {
+        "status": "ok",
+        "run_dir": "~/ai_scientist_inputs/ISSTA-2025-008_automated_test_scenario_generation_for_m/workspace/deepscientist_2026-09-24_07-17-07",
+        "claims": [
+          {
+            "id": "A1",
+            "statement": "The constructive coverage-guided generator achieves 100% equivalence-class coverage and 100% relevance for all vessel counts 2-6.",
+            "direction": "improves",
+            "metric_names": [
+              "Constructive generator coverage (n=6)",
+              "Constructive generator relevance (n=6)"
+            ],
+            "evidence_quote": "the constructive generator achieves 100% equivalence-class coverage, 100% relevance ... for all vessel counts 2-6",
+            "confidence": 0.95
+          },
+          {
+            "id": "A2",
+            "statement": "The constructive generator produces a perfectly uniform class distribution, with KL divergence approximately 0 for all vessel counts 2-6.",
+            "direction": "improves",
+            "metric_names": [
+              "Constructive generator KL divergence (n=6)"
+            ],
+            "evidence_quote": "a perfectly uniform class distribution (KL ≈ 0) for all vessel counts 2-6",
+            "confidence": 0.9
+          },
+          {
+            "id": "A3",
+            "statement": "The constructive generator costs about 2 ms per scenario and is roughly 10,000x faster than search-based generation.",
+            "direction": "improves",
+            "metric_names": [
+              "Constructive generator average time per scenario (n=6)",
+              "SBO average time per scenario (n=6)"
+            ],
+            "evidence_quote": "at a mean cost of about 2 ms per scenario ... roughly 10,000× faster than search-based generation",
+            "confidence": 0.9
+          },
+          {
+            "id": "A4",
+            "statement": "Rejection sampling relevance collapses beyond four vessels, falling to 4.8% at n=4 and 0% at n=5-6.",
+            "direction": "degrades",
+            "metric_names": [
+              "Scenic/rejection sampling relevance (n=4)",
+              "Scenic/rejection sampling relevance (n=5)"
+            ],
+            "evidence_quote": "immune to the relevance collapse that makes rejection sampling fail beyond four vessels",
+            "confidence": 0.95
+          },
+          {
+            "id": "A5",
+            "statement": "Search-based optimization coverage declines with vessel count, from 100% at n=2 to 57.1% at n=6.",
+            "direction": "degrades",
+            "metric_names": [
+              "SBO coverage (n=6)"
+            ],
+            "evidence_quote": "Existing generators adapt automotive techniques — search-based optimization and rejection sampling — and trade these properties against one another as the number of vessels grows",
+            "confidence": 0.9
+          },
+          {
+            "id": "A6",
+            "statement": "CommonOcean AIS scenarios are predominantly two-vessel and fail to cover the enumerated multi-vessel equivalence classes, with 0% coverage at n=2.",
+            "direction": "degrades",
+            "metric_names": [
+              "CommonOcean AIS coverage (n=2)"
+            ],
+            "evidence_quote": "Real AIS data (CommonOcean) offers realistic but predominantly two-vessel encounters",
+            "confidence": 0.85
+          },
+          {
+            "id": "A7",
+            "statement": "The completeness target of multi-vessel COLREGS encounters has exactly C(n+3,4) functional equivalence classes, giving 5, 15, 35, 70, and 126 classes for 2-6 vessels.",
+            "direction": "neutral",
+            "metric_names": [],
+            "evidence_quote": "the *functional equivalence classes* of multi-vessel encounters form a multiset of pairwise COLREGS relations, giving exactly C(n+3,4) classes (5, 15, 35, 70, 126 for 2–6 vessels)",
+            "confidence": 0.95
+          },
+          {
+            "id": "A8",
+            "statement": "The number of ambiguous equivalence classes is 0, 6, 21, 50, and 99 for 2-6 vessels.",
+            "direction": "neutral",
+            "metric_names": [],
+            "evidence_quote": "The number of ambiguous classes is 0, 6, 21, 50, 99 for 2–6 vessels.",
+            "confidence": 0.95
+          }
+        ],
+        "metrics": [
+          {
+            "name": "Constructive generator coverage (n=6)",
+            "value": 1.0,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "Constructive generator, 6 vessels",
+            "is_sota_or_best": true,
+            "baseline_name": "SBO coverage (n=6)",
+            "baseline_value": 0.5714285714285714,
+            "evidence_quote": "the constructive generator achieves 100% equivalence-class coverage, 100% relevance ... for all vessel counts 2-6",
+            "confidence": 0.95
+          },
+          {
+            "name": "Constructive generator relevance (n=6)",
+            "value": 1.0,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "Constructive generator, 6 vessels",
+            "is_sota_or_best": true,
+            "baseline_name": "Scenic/rejection sampling relevance (n=6)",
+            "baseline_value": 0.0,
+            "evidence_quote": "the constructive generator achieves 100% equivalence-class coverage, 100% relevance ... for all vessel counts 2-6",
+            "confidence": 0.95
+          },
+          {
+            "name": "Constructive generator KL divergence (n=6)",
+            "value": 0.0,
+            "unit": null,
+            "higher_is_better": false,
+            "setting": "Constructive generator, 6 vessels",
+            "is_sota_or_best": true,
+            "baseline_name": "SBO KL divergence (n=6)",
+            "baseline_value": 1.140752692513792,
+            "evidence_quote": "a perfectly uniform class distribution (KL ≈ 0) for all vessel counts 2-6",
+            "confidence": 0.9
+          },
+          {
+            "name": "Constructive generator average time per scenario (n=6)",
+            "value": 0.0021436908498308474,
+            "unit": "s",
+            "higher_is_better": false,
+            "setting": "Constructive generator, 6 vessels",
+            "is_sota_or_best": true,
+            "baseline_name": "SBO average time per scenario (n=6)",
+            "baseline_value": 23.062213308,
+            "evidence_quote": "at a mean cost of about 2 ms per scenario",
+            "confidence": 0.95
+          },
+          {
+            "name": "SBO coverage (n=6)",
+            "value": 0.5714285714285714,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "Search-based optimization, 6 vessels",
+            "is_sota_or_best": false,
+            "baseline_name": "Constructive generator coverage (n=6)",
+            "baseline_value": 1.0,
+            "evidence_quote": "Existing generators adapt automotive techniques — search-based optimization and rejection sampling — and trade these properties against one another as the number of vessels grows",
+            "confidence": 0.9
+          },
+          {
+            "name": "SBO average time per scenario (n=6)",
+            "value": 23.062213308,
+            "unit": "s",
+            "higher_is_better": false,
+            "setting": "Search-based optimization, 6 vessels",
+            "is_sota_or_best": false,
+            "baseline_name": "Constructive generator average time per scenario (n=6)",
+            "baseline_value": 0.0021436908498308474,
+            "evidence_quote": "roughly 10,000× faster than search-based generation",
+            "confidence": 0.9
+          },
+          {
+            "name": "Scenic/rejection sampling relevance (n=4)",
+            "value": 0.048,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "Rejection sampling (Scenic), 4 vessels",
+            "is_sota_or_best": false,
+            "baseline_name": "Constructive generator relevance (n=4)",
+            "baseline_value": 1.0,
+            "evidence_quote": "immune to the relevance collapse that makes rejection sampling fail beyond four vessels",
+            "confidence": 0.95
+          },
+          {
+            "name": "Scenic/rejection sampling relevance (n=5)",
+            "value": 0.0,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "Rejection sampling (Scenic), 5 vessels",
+            "is_sota_or_best": false,
+            "baseline_name": "Constructive generator relevance (n=5)",
+            "baseline_value": 1.0,
+            "evidence_quote": "immune to the relevance collapse that makes rejection sampling fail beyond four vessels",
+            "confidence": 0.95
+          },
+          {
+            "name": "CommonOcean AIS coverage (n=2)",
+            "value": 0.0,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "CommonOcean AIS benchmark, 2 vessels",
+            "is_sota_or_best": false,
+            "baseline_name": "Constructive generator coverage (n=2)",
+            "baseline_value": 1.0,
+            "evidence_quote": "Real AIS data (CommonOcean) offers realistic but predominantly two-vessel encounters",
+            "confidence": 0.85
+          }
+        ],
+        "overall_conclusion": "The constructive coverage-guided generator achieves full equivalence-class coverage, full relevance, uniform class distribution, and millisecond generation for 2-6 vessels, substantially outperforming search-based optimization, rejection sampling, and AIS baselines.",
+        "sources": {
+          "metrics_path": "DeepScientist/quests/001/experiments/main/results.json",
+          "paper_tex_path": "paper/main.md"
+        },
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 8272,
+            "completion_tokens_details": {
+              "reasoning_tokens": 6053
+            },
+            "prompt_tokens": 4390,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 12662
+          },
+          "attempt": 0
+        }
+      },
+      "comparison": {
+        "status": "ok",
+        "claim_alignment": [
+          {
+            "original_claim_id": "C1",
+            "agent_claim_id": "A6",
+            "label": "consistent",
+            "rationale": "Agent claim A6 also reports that CommonOcean/AIS data are predominantly two-vessel and fail to cover multi-vessel COLREGS equivalence classes, supporting the original insufficiency claim."
+          },
+          {
+            "original_claim_id": "C2",
+            "agent_claim_id": "A3",
+            "label": "partial",
+            "rationale": "Agent reports search-based timing and relative speed versus a constructive generator but does not confirm that search-based generation is sufficient for practical 3-6 vessel open-sea encounters."
+          },
+          {
+            "original_claim_id": "C3",
+            "agent_claim_id": "A5",
+            "label": "consistent",
+            "rationale": "Agent claim A5 shows search-based coverage declines with vessel count, and A4 shows rejection sampling relevance collapse, matching the original diversity/completeness limitation claim."
+          },
+          {
+            "original_claim_id": "C4",
+            "agent_claim_id": "A4",
+            "label": "consistent",
+            "rationale": "Agent claim A4 directly confirms rejection sampling ineffectiveness via relevance collapse beyond four vessels, though the higher-degrees-of-freedom explanation is not addressed."
+          },
+          {
+            "original_claim_id": "C5",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "Agent does not address repeated derivation of functionally inconsistent COLREGS scenarios or possible COLREGS assumption gaps."
+          }
+        ],
+        "metric_alignment": [
+          {
+            "original_metric": "relevant_consistent_ratio_CO_K2",
+            "agent_metric": "CommonOcean AIS coverage (n=2)",
+            "comparable": false,
+            "original_value": 30.8,
+            "agent_value": 0.0,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Coverage is not the same metric as relevant_consistent_ratio, so the 30.8% relevance ratio and 0% coverage cannot be directly compared."
+          },
+          {
+            "original_metric": "ambiguous_consistent_ratio_CO_K_gt_2",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 0.0,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Agent does not report an ambiguous consistent ratio for CommonOcean K>2; rejection sampling relevance collapse is a different metric and setting."
+          },
+          {
+            "original_metric": "two_vessel_encounter_ratio",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 97.7,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Agent notes that CommonOcean is predominantly two-vessel but does not report a comparable encounter-composition percentage."
+          },
+          {
+            "original_metric": "relevant_consistent_ratio_SB_K2",
+            "agent_metric": "SBO coverage (n=6)",
+            "comparable": false,
+            "original_value": 94.4,
+            "agent_value": 0.5714285714285714,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Original reports search-based relevance at K=2, while agent reports search-based coverage at n=6; metric definition and vessel count differ."
+          },
+          {
+            "original_metric": "relevant_consistent_ratio_RS_K2",
+            "agent_metric": "Scenic/rejection sampling relevance (n=4)",
+            "comparable": false,
+            "original_value": 94.6,
+            "agent_value": 0.048,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Original RS metric is at K=2, while agent reports RS relevance at n=4; protocol and scale differ."
+          }
+        ],
+        "summary": {
+          "direction_consistency": "mixed",
+          "consistent_claim_ratio": 0.6,
+          "has_comparable_metrics": false,
+          "sota_improvement_summary": "N/A (no directly comparable metrics; agent reports a constructive generator outperforming SBO/RS/AIS baselines under different protocols).",
+          "overall_alignment_score": 0.62,
+          "score_rationale": "C1, C3, and C4 align in direction on AIS and synthetic-generator limitations, C2 is only partially addressed, C5 is missing, and no metrics are directly comparable."
+        },
+        "warnings": [
+          "Metric comparability is limited: agent uses coverage, KL divergence, and n=4-6 relevance, while original uses relevant/ambiguous consistent ratios at K=2 and encounter composition.",
+          "Agent's CommonOcean AIS coverage of 0% at n=2 is not directly comparable to original CommonOcean relevant_consistent_ratio of 30.8% at K=2.",
+          "Original claim C5 on functionally inconsistent COLREGS scenarios and possible assumption gaps is not addressed by the agent."
+        ],
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 10814,
+            "completion_tokens_details": {
+              "reasoning_tokens": 9577
+            },
+            "prompt_tokens": 4474,
+            "prompt_tokens_details": {
+              "cached_tokens": 2048
+            },
+            "total_tokens": 15288
+          },
+          "attempt": 0
+        }
+      },
+      "overall_alignment_score": 0.62,
+      "direction_consistency": "mixed"
+    },
+    "experiment_analysis": {
+      "run_dir": "~/ai_scientist_inputs/ISSTA-2025-008_automated_test_scenario_generation_for_m/workspace/deepscientist_2026-09-24_07-17-07",
+      "task_dir": "~/ai_scientist_inputs/ISSTA-2025-008_automated_test_scenario_generation_for_m",
+      "status": "ok",
+      "metrics_path": "DeepScientist/quests/001/experiments/main/results.json",
+      "experiment_success": {
+        "status": "ok",
+        "success": true,
+        "metrics_path": "DeepScientist/quests/001/experiments/main/results.json",
+        "absolute_metrics_path": "~/ai_scientist_inputs/ISSTA-2025-008_automated_test_scenario_generation_for_m/workspace/deepscientist_2026-09-24_07-17-07/DeepScientist/quests/001/experiments/main/results.json",
+        "checks": {
+          "has_results_file": true,
+          "non_stub": true,
+          "numeric_leaf_count": 170,
+          "min_numeric_ok": true
+        },
+        "manifest_hints": {
+          "status": {
+            "launched": true
+          },
+          "returncode": 0,
+          "benchmark_complete": null,
+          "artifacts_metrics_flag": false
+        },
+        "warnings": [],
+        "suspicious_values": [],
+        "note": "success=true requires substantive results (framework-aware path) with >=3 numeric leaves. Supports metrics.json, results.json, experiment_results.txt, etc. Manifest returncode/benchmark_complete are soft warnings only."
+      },
+      "idea_code_consistency": {
+        "status": "ok",
+        "idea_path": "DeepScientist/quests/001/artifacts/ideas/selected_idea.md",
+        "code_files": [
+          "DeepScientist/quests/001/experiments/main/colregs_core.py",
+          "DeepScientist/quests/001/experiments/main/evaluate.py",
+          "DeepScientist/quests/001/experiments/main/plot_results.py",
+          "experiments/main/colregs_core.py"
+        ],
+        "score_scale": "1-5",
+        "score": 4.0,
+        "label": "strong",
+        "justification": "The code implements the core constructive generator idea: it enumerates COLREGS functional equivalence classes, constructs one scene per class, and computes the target metrics (relevance ratio, ambiguous relevance ratio, equivalence-class coverage, KL divergence, and generation time) for 2-6 vessels. It also loads SB/RS/CO baseline results from the shipped gen_data and plots generator vs SB/RS. The main divergence is the use of a self-contained numpy/scipy reimplementation of the COLREGS model/checker rather than directly invoking the shipped checker and full metric harness, and the plotted comparisons omit the common-ocean baseline, which is a minor omission but not a replacement of the method.",
+        "matched_elements": [
+          "Constructive generation from enumerated equivalence classes",
+          "Relevance ratio and ambiguity ratio computed",
+          "Equivalence-class coverage computed",
+          "KL divergence from uniform computed",
+          "Per-class average generation time measured",
+          "2-6 vessels loop and comparison to SB/RS baseline data"
+        ],
+        "missing_or_divergent_elements": [
+          "Uses self-contained numpy/scipy COLREGS model/checker instead of the shipped artifact checker",
+          "Plotting comparison omits common-ocean baseline",
+          "Full five-metric comparison for all three baselines not shown/plotted; baseline loading may be partial"
+        ],
+        "rubric": "Strong alignment: code largely implements the idea's method and evaluation; only minor omissions or declared simplifications.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 1302,
+            "completion_tokens_details": {
+              "reasoning_tokens": 1031
+            },
+            "prompt_tokens": 7220,
+            "prompt_tokens_details": {
+              "cached_tokens": 4096
+            },
+            "total_tokens": 8522
+          },
+          "attempt": 2
+        }
+      },
+      "setup_coverage": {
+        "status": "ok",
+        "overall_coverage": 1.0,
+        "datasets": {
+          "gold_count": 2,
+          "hit_count": 2,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "CommonOcean benchmark",
+            "COLREGS functional equivalence classes"
+          ],
+          "misses": []
+        },
+        "baselines": {
+          "gold_count": 3,
+          "hit_count": 3,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "Search-based maritime scenario generation",
+            "Rejection-sampling maritime scenario generation",
+            "CommonOcean real-world AIS scenarios"
+          ],
+          "misses": []
+        },
+        "metrics": {
+          "gold_count": 5,
+          "hit_count": 5,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "Relevance ratio (T ∩ C)",
+            "Ambiguous relevance ratio (A ∩ C)",
+            "Equivalence class coverage",
+            "Distribution divergence",
+            "Average generation time"
+          ],
+          "misses": []
+        },
+        "agent_protocol": {},
+        "gold_protocol": {},
+        "dataset_dirs": [
+          "dataset_candidate"
+        ],
+        "flags": {
+          "weaker_baseline_suspected": false,
+          "weak_protocol": [],
+          "synthetic_data": "synthetic_allowed_by_task",
+          "gold_allows_synthetic": true
+        },
+        "gold_sources": [
+          "~/ai_scientist_inputs/ISSTA-2025-008_automated_test_scenario_generation_for_m/task.md",
+          "~/ai_scientist_inputs/ISSTA-2025-008_automated_test_scenario_generation_for_m/metadata.json"
+        ],
+        "note": "Coverage is name/alias matching against task.md Datasets/Baselines/Metrics. weak_protocol flags large reductions in trials/timeout vs Constraints. Synthetic corpora are not penalized when the task itself requires synthesis."
+      },
+      "ablation_significance": {
+        "status": "ok",
+        "idea_path": "DeepScientist/quests/001/artifacts/ideas/selected_idea.md",
+        "significance_signals_rule_based": {
+          "signals": [],
+          "artifact_paths": [],
+          "has_any_significance_artifact": false
+        },
+        "evidence_format": "raw_json",
+        "study_type": null,
+        "components": [],
+        "ablation_coverage_score": null,
+        "overall_ablation_ok": null,
+        "overall_significance_ok": null,
+        "summary": "",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 1840,
+            "completion_tokens_details": {
+              "reasoning_tokens": 1838
+            },
+            "prompt_tokens": 2715,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 4555
+          },
+          "attempt": 0
+        }
+      },
+      "results_paper_consistency": {
+        "status": "ok",
+        "paper_tex": "paper/main.md",
+        "paper_kind": "paper_md",
+        "results_format": "raw_json",
+        "digest_hint": {
+          "unfavorable_count": 0,
+          "trial_fail_count": 0,
+          "trial_success_count": 0,
+          "metadata": {}
+        },
+        "score_scale": "1-5",
+        "method": "Direct LLM comparison: agent's FINAL results artifact (metrics.json summary) vs paper Results/Discussion/Conclusion. Interim failed runs are NOT evidence unless still present in the final metrics file.",
+        "score": 4.0,
+        "consistency_label": "mostly",
+        "hiding_unfavorable_suspected": false,
+        "hiding_confidence": 0.88,
+        "justification": "The paper's core generator claims (100% coverage, 100% relevance, exact class counts, near-zero KL) are supported by the final results. Minor numeric overstatements remain: 126 six-vessel classes take approximately 0.270 s, not the claimed 0.5 s, and the '10,000x faster' comparison mainly holds at n=6 rather than uniformly. Negative baseline results are largely acknowledged or not claimed, so unfavorable hiding is not suspected.",
+        "supported_claims": [],
+        "unsupported_or_overstated_claims": [],
+        "numeric_mismatches": [],
+        "unfavorable_in_final_results": [],
+        "unfavorable_acknowledged_in_paper": [],
+        "unfavorable_missing_from_paper": [],
+        "rubric": "Mostly consistent: reported conclusions track the metrics; negative/failed settings are acknowledged with only minor gaps.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 955,
+            "completion_tokens_details": {
+              "reasoning_tokens": 821
+            },
+            "prompt_tokens": 3263,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 4218
+          },
+          "attempt": 0
+        }
+      },
+      "scores": {
+        "experiment_success": true,
+        "idea_code_score": 4.0,
+        "setup_coverage": 1.0,
+        "ablation_coverage_score": null,
+        "overall_ablation_ok": null,
+        "overall_significance_ok": null,
+        "results_paper_score": 4.0,
+        "hiding_unfavorable_suspected": false
+      },
+      "notes": [
+        "Axes 1,2,3,4,6 in experiment_analysis (figures excluded).",
+        "setup_coverage matches task.md Datasets/Baselines/Metrics; weak_protocol flags reductions vs Constraints.",
+        "Axis 6: final normalized results vs paper; interim run logs not used as ground truth."
+      ]
+    },
+    "literature_review": {
+      "run_dir": "~/ai_scientist_inputs/ISSTA-2025-008_automated_test_scenario_generation_for_m/workspace/deepscientist_2026-09-24_07-17-07",
+      "task_dir": "~/ai_scientist_inputs/ISSTA-2025-008_automated_test_scenario_generation_for_m",
+      "status": "ok",
+      "as_of_year": 2026,
+      "agent_ref_count": 10,
+      "sources": [
+        {
+          "path": "~/ai_scientist_inputs/ISSTA-2025-008_automated_test_scenario_generation_for_m/workspace/deepscientist_2026-09-24_07-17-07/DeepScientist/quests/001/.ds/worktrees/paper-paper-idea-001-idea-4f003b1f/artifacts/ideas/literature_survey.md",
+          "kind": "literature_survey"
+        },
+        {
+          "path": "~/ai_scientist_inputs/ISSTA-2025-008_automated_test_scenario_generation_for_m/workspace/deepscientist_2026-09-24_07-17-07/DeepScientist/quests/001/artifacts/ideas/literature_survey.md",
+          "kind": "literature_survey"
+        }
+      ],
+      "collection_audit": {
+        "cited_keys_count": 0,
+        "filter_mode": "non_bib_sources",
+        "bib_total_before_filter": 0,
+        "bib_after_filter": 0,
+        "uncited_bib_skipped": 0,
+        "agent_ref_count": 10
+      },
+      "fabrication": {
+        "status": "ok",
+        "scholarly_count": 10,
+        "verified_count": 8,
+        "fake_count": 0,
+        "lookup_failed_count": 2,
+        "insufficient_metadata_count": 0,
+        "non_paper_count": 0,
+        "fabrication_rate": 0.0,
+        "items": [
+          {
+            "title": "Assessing Scene Generation Techniques for Testing COLREGS-Compliance of Autonomous Surface Vehicles",
+            "doi": "10.1145/3728919",
+            "arxiv_id": "",
+            "year": 2025,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Assessing Scene Generation Techniques for Testing COLREGS-Compliance of Autonomous Surface Vehicles",
+            "resolved_year": 2025,
+            "notes": [],
+            "cache_hit": true,
+            "cite_key": "",
+            "source_kind": "literature_survey"
+          },
+          {
+            "title": "CommonOcean: Composable Benchmarks for Motion Planning on Oceans",
+            "doi": "10.1109/itsc55140.2022.9921925",
+            "arxiv_id": "",
+            "year": 2022,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "CommonOcean: Composable Benchmarks for Motion Planning on Oceans",
+            "resolved_year": 2022,
+            "notes": [],
+            "cache_hit": true,
+            "cite_key": "",
+            "source_kind": "literature_survey"
+          },
+          {
+            "title": "Scenic: a language for scenario specification and scene generation",
+            "doi": "10.1145/3314221.3314633",
+            "arxiv_id": "",
+            "year": 2019,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Scenic: a language for scenario specification and scene generation",
+            "resolved_year": 2018,
+            "notes": [],
+            "cache_hit": true,
+            "cite_key": "",
+            "source_kind": "literature_survey"
+          },
+          {
+            "title": "\"COLREG-Compliant Collision Avoidance for Unmanned Surface Vehicle using Deep Reinforcement Learning\"",
+            "doi": "10.1109/access.2020.3022600",
+            "arxiv_id": "2006.09540",
+            "year": 2020,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "COLREG-Compliant Collision Avoidance for Unmanned Surface Vehicle Using Deep Reinforcement Learning",
+            "resolved_year": 2020,
+            "notes": [],
+            "cache_hit": true,
+            "cite_key": "",
+            "source_kind": "literature_survey"
+          },
+          {
+            "title": "\"Risk-based implementation of COLREGs for autonomous surface vehicles using deep reinforcement learning\"",
+            "doi": "10.1016/j.neunet.2022.04.008",
+            "arxiv_id": "2112.00115",
+            "year": 2021,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Risk-based implementation of COLREGs for autonomous surface vehicles using deep reinforcement learning",
+            "resolved_year": 2021,
+            "notes": [],
+            "cache_hit": true,
+            "cite_key": "",
+            "source_kind": "literature_survey"
+          },
+          {
+            "title": "\"Hybrid Collision Avoidance for ASVs Compliant with COLREGs Rules 8 and 13–17\"",
+            "doi": "",
+            "arxiv_id": "",
+            "year": 2019,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated.",
+              "Saw 1 conclusive miss(es) mixed with 1 API error(s)."
+            ],
+            "cite_key": "",
+            "source_kind": "literature_survey"
+          },
+          {
+            "title": "\"VORRT-COLREGs: A Hybrid Velocity Obstacles and RRT Based COLREGs-Compliant Path Planner for Autonomous Surface Vessels\"",
+            "doi": "10.23919/oceans44145.2021.9706020",
+            "arxiv_id": "2109.00862",
+            "year": null,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "VORRT-COLREGs: A Hybrid Velocity Obstacles and RRT Based COLREGs-Compliant Path Planner for Autonomous Surface Vessels",
+            "resolved_year": 2021,
+            "notes": [],
+            "cache_hit": true,
+            "cite_key": "",
+            "source_kind": "literature_survey"
+          },
+          {
+            "title": "Stochastic COLREGs Evaluation for Safe Navigation under Uncertainty",
+            "doi": "",
+            "arxiv_id": "",
+            "year": null,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated."
+            ],
+            "cite_key": "",
+            "source_kind": "literature_survey"
+          },
+          {
+            "title": "\"A COLREGs-Compliant Conflict Resolution Strategy for Autonomous Surface Vehicles\"",
+            "doi": "10.48550/arxiv.2312.08549",
+            "arxiv_id": "2312.08549",
+            "year": null,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "A COLREGs-Compliant Conflict Resolution Strategy for Autonomous Surface Vehicles",
+            "resolved_year": 2023,
+            "notes": [],
+            "cache_hit": true,
+            "cite_key": "",
+            "source_kind": "literature_survey"
+          },
+          {
+            "title": "Towards A COLREGs Compliant Autonomous Surface Vessel in a Constrained Channel",
+            "doi": "",
+            "arxiv_id": "",
+            "year": 2018,
+            "status": "verified",
+            "matched_via": "arxiv_title",
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "",
+            "source_kind": "literature_survey"
+          }
+        ],
+        "cache_path": "~/ai_scientist_evals/ISSTA-2025-008_automated_test_scenario_generation_for_m/reference_verify_cache.json",
+        "override_path": "~/ai_scientist_evals/ISSTA-2025-008_automated_test_scenario_generation_for_m/reference_verify_overrides.json",
+        "note": "fabrication_rate = fake / (verified + fake). lookup_failed (API errors) and insufficient_metadata are excluded and retried or skipped. GitHub/docs/tool URLs are non_paper and excluded from the rate. To manually correct a false negative, edit reference_verify_overrides.json (key=normalized title / doi / cite_key; value=\"verified\" or a result dict), then re-run."
+      },
+      "coverage": {
+        "status": "ok",
+        "gold_source": "~/ai_scientist_inputs/ISSTA-2025-008_automated_test_scenario_generation_for_m/mineru_sections.json",
+        "gold_count": 81,
+        "gold_is_original_paper_references": true,
+        "gold_is_openalex_subset": false,
+        "agent_count": 10,
+        "intersection_size": 1,
+        "recall": 0.012345679012345678,
+        "precision": 0.1,
+        "matched_gold_keys": [
+          "krasowski2022commonocean"
+        ],
+        "primary_metric": "recall",
+        "note": "Primary metric is recall against the original paper bibliography (titles from mineru_sections.json REFERENCES; related_work.json used only to enrich DOI/year or as fallback if mineru titles are empty). Denominator = |original paper references|. Precision is secondary (agent may cite valid extra papers)."
+      },
+      "recency": {
+        "status": "ok",
+        "dated_count": 9,
+        "unknown_year_count": 1,
+        "year_histogram": {
+          "2018": 2,
+          "2019": 1,
+          "2020": 1,
+          "2021": 2,
+          "2022": 1,
+          "2023": 1,
+          "2025": 1
+        },
+        "windows": {
+          "3": {
+            "years": 3,
+            "cutoff_year_inclusive": 2023,
+            "recent_count": 2,
+            "recent_ratio": 0.2222222222222222
+          },
+          "5": {
+            "years": 5,
+            "cutoff_year_inclusive": 2021,
+            "recent_count": 5,
+            "recent_ratio": 0.5555555555555556
+          }
+        }
+      },
+      "scores": {
+        "fabrication_rate": 0.0,
+        "coverage_recall": 0.012345679012345678,
+        "coverage_precision": 0.1,
+        "recency_ratio_3y": 0.2222222222222222,
+        "recency_ratio_5y": 0.5555555555555556
+      }
+    }
+  },
+  "scores": {
+    "completeness": {
+      "complete": true,
+      "overall_score": 0.8368,
+      "required_score": 1.0,
+      "bonus_score": 0.04
+    },
+    "peer_review": {
+      "status": "ok",
+      "optional": false,
+      "overall_score": 6.7,
+      "score_scale": "1-10",
+      "scoring_method": "paperreview_apr"
+    },
+    "idea_generation": {
+      "status": "ok",
+      "overall_score": 3.7,
+      "dimensions": {
+        "novelty": 4.0,
+        "feasibility": 3.0,
+        "clarity": 4.0
+      },
+      "novelty_category": "Novel Combo",
+      "solution_space_status": "ok"
+    },
+    "alignment": {
+      "status": "ok",
+      "direction_consistency": "mixed",
+      "overall_alignment_score": 0.62
+    },
+    "literature_review": {
+      "fabrication_rate": 0.0,
+      "coverage_recall": 0.012345679012345678,
+      "coverage_precision": 0.1,
+      "recency_ratio_3y": 0.2222222222222222,
+      "recency_ratio_5y": 0.5555555555555556
+    },
+    "experiment_analysis": {
+      "experiment_success": true,
+      "idea_code_score": 4.0,
+      "setup_coverage": 1.0,
+      "ablation_coverage_score": null,
+      "overall_ablation_ok": null,
+      "overall_significance_ok": null,
+      "results_paper_score": 4.0,
+      "hiding_unfavorable_suspected": false
+    }
+  },
+  "fair_scores": {
+    "applicable_axes": [
+      "completeness",
+      "idea_generation",
+      "peer_review",
+      "alignment",
+      "literature_review",
+      "experiment_analysis"
+    ],
+    "skipped_axes": [],
+    "fair_mean_0_1": 0.7236,
+    "note": "fair_mean_0_1 averages only applicable axes; optional peer review and framework-inapplicable literature are excluded from the denominator."
+  },
+  "evals_root": "~/ai_scientist_evals",
+  "claims_cache": "~/ai_scientist_evals/ISSTA-2025-008_automated_test_scenario_generation_for_m/original_claims.json",
+  "solution_space_cache": "~/ai_scientist_evals/ISSTA-2025-008_automated_test_scenario_generation_for_m/solution_space.json"
+}

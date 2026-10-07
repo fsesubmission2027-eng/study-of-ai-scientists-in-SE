@@ -1,0 +1,1096 @@
+{
+  "generated_at": "2026-09-28T02:18:36",
+  "run_dir": "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement/workspace/researchclaw_2026-09-13_07-24-49",
+  "task_dir": "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement",
+  "framework": "researchclaw",
+  "fairness_audit": [
+    {
+      "axis": "completeness",
+      "was_unfair": "Required both paper.tex AND paper.pdf; any tool missing one failed equally.",
+      "fix": "Paper gate: PDF=1.0; TeX-only=0.5; ``complete`` requires PDF."
+    },
+    {
+      "axis": "completeness",
+      "was_unfair": "``results`` counted stub/seed JSON (dataset_candidate/metrics.json).",
+      "fix": "``results`` requires substantive numeric results via results_normalize."
+    },
+    {
+      "axis": "experiment_success",
+      "was_unfair": "Only metrics.json; ignored results.json / experiment_results.txt.",
+      "fix": "Framework-ordered result candidates + normalized loaders."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Penalized tools with no bib; airesearcher has no workspace references.",
+      "fix": "literature_applicable=false → status not_applicable; excluded from fair aggregate."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "related_work.json subset as gold made recall hard to interpret.",
+      "fix": "Coverage gold is original paper REFERENCES from mineru; related_work only enriches metadata/fallback."
+    },
+    {
+      "axis": "peer_review",
+      "was_unfair": "Missing Stanford report looked like evaluation failure.",
+      "fix": "status not_provided; optional axis, never counts as tool failure."
+    },
+    {
+      "axis": "paths/find_results",
+      "was_unfair": "Picked downloads/** and sandbox noise (e.g. airesearcher LLVM tree).",
+      "fix": "Exclude downloads/, seeds/, dataset_candidate/, sandbox junk paths."
+    },
+    {
+      "axis": "paths/framework_noise",
+      "was_unfair": "DeepScientist .deepscientist_npm / runtime / skills templates counted as code/paper/results.",
+      "fix": "FRAMEWORK_NOISE_DIRS+markers; quest worktree + eval_output results; paper md drafts; reject template tex."
+    },
+    {
+      "axis": "paths/paper_tex",
+      "was_unfair": "tiny_scientist / ACL runs store paper under latex/*.tex; evaluator only looked at paper/main.tex.",
+      "fix": "latex/**/*.tex with substantive-body heuristic; find_paper_document uses same rules."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Entire custom.bib (300+ anthology entries) verified when paper had zero \\cite commands.",
+      "fix": "collect_agent_references filters bib to in-text cite keys; skips uncited bulk bib (>40 entries)."
+    },
+    {
+      "axis": "paths/ai_scientist_summaries",
+      "was_unfair": "AI Scientist can persist substantive results and paper-like drafts in *_summary.json logs rather than paper/main.tex or results/**/*.json.",
+      "fix": "Treat draft_summary/research_summary as weak paper documents and summary JSONs as result candidates."
+    },
+    {
+      "axis": "framework/ai_scientist_v2",
+      "was_unfair": "Manifest framework ``ai_scientist_v2`` fell through to profile ``unknown``, skipping AI-Scientist idea/result path priorities.",
+      "fix": "Normalize ``ai_scientist_v2`` (and common aliases) to profile key ``ai_scientist``."
+    },
+    {
+      "axis": "idea_generation",
+      "was_unfair": "plan.md/todos.md weak proxies scored same as structured idea.json.",
+      "fix": "Framework idea_priority tried first; missing idea → not_applicable where appropriate."
+    }
+  ],
+  "axes": [
+    "alignment",
+    "completeness",
+    "experiment_analysis",
+    "idea_generation",
+    "literature_review",
+    "peer_review"
+  ],
+  "results": {
+    "completeness": {
+      "framework": "researchclaw",
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement/workspace/researchclaw_2026-09-13_07-24-49",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement",
+      "complete": false,
+      "required_score": 0.5,
+      "bonus_score": 0.09,
+      "overall_score": 0.4,
+      "missing": [
+        "results",
+        "paper"
+      ],
+      "required": {
+        "idea": {
+          "path": "artifacts/idea.json",
+          "bytes": 4410,
+          "via": "candidate"
+        },
+        "code": {
+          "count": 8,
+          "files": [
+            {
+              "path": "artifacts/code/experiment.py",
+              "bytes": 1890,
+              "via": "glob"
+            },
+            {
+              "path": "artifacts/code/main.py",
+              "bytes": 1068,
+              "via": "glob"
+            },
+            {
+              "path": "artifacts/code/metrics.py",
+              "bytes": 1517,
+              "via": "glob"
+            },
+            {
+              "path": "artifacts/code/models.py",
+              "bytes": 6592,
+              "via": "glob"
+            },
+            {
+              "path": "stage-10/experiment/experiment.py",
+              "bytes": 1890,
+              "via": "glob"
+            },
+            {
+              "path": "stage-10/experiment/main.py",
+              "bytes": 1068,
+              "via": "glob"
+            },
+            {
+              "path": "stage-10/experiment/metrics.py",
+              "bytes": 1517,
+              "via": "glob"
+            },
+            {
+              "path": "stage-10/experiment/models.py",
+              "bytes": 6592,
+              "via": "glob"
+            }
+          ]
+        },
+        "results": {
+          "substantive": false,
+          "normalized_path": null,
+          "numeric_leaf_count": 0,
+          "discovered_files": [],
+          "metrics_keys_sample": []
+        },
+        "paper": {
+          "tex": null,
+          "pdf": null,
+          "md": null,
+          "json": null,
+          "status": "missing",
+          "score": 0.0
+        }
+      },
+      "bonus": {
+        "experiment_plan": {
+          "path": "stage-09/exp_plan.yaml",
+          "bytes": 2957,
+          "via": "candidate"
+        },
+        "experiment_log": {
+          "path": "researchclaw_run.log",
+          "bytes": 7783,
+          "via": "glob"
+        },
+        "review": null,
+        "readme": null,
+        "narrative": null,
+        "bib": {
+          "path": "stage-04/references.bib",
+          "bytes": 8682,
+          "via": "glob"
+        }
+      },
+      "manifest_status": {
+        "pipeline": false,
+        "idea": true,
+        "code": true,
+        "results": false,
+        "paper": false
+      },
+      "gate_scores": {
+        "idea": 1.0,
+        "code": 1.0,
+        "results": 0.0,
+        "paper": 0.0
+      },
+      "fairness": {
+        "gates": [
+          "idea",
+          "code",
+          "results",
+          "paper"
+        ],
+        "paper_gate_rule": "PDF=1.0; TeX-only/md_only/json_only=0.5; complete requires PDF",
+        "results_gate_rule": "substantive numeric results via framework-aware normalize_results",
+        "audit_ref": "framework_profile.FAIRNESS_AUDIT"
+      },
+      "notes": [
+        "Required: idea, code, substantive results, paper (PDF full; TeX/markdown/JSON draft half).",
+        "Stub/seed metrics (e.g. dataset_candidate/metrics.json) do not satisfy results.",
+        "Framework noise (.deepscientist_npm, skills/templates, runtime) is excluded from code/results/paper.",
+        "Manifest status is informational; disk presence is authoritative."
+      ]
+    },
+    "idea_generation": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement/workspace/researchclaw_2026-09-13_07-24-49",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement",
+      "idea_path": "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement/workspace/researchclaw_2026-09-13_07-24-49/artifacts/idea.json",
+      "status": "ok",
+      "dimensions": {
+        "novelty": {
+          "score": 1.0,
+          "justification": "The idea text contains no research idea: it states 'The three perspective sections are currently empty' and 'Please paste the actual hypotheses under...' No method, model, or comparison exists, so it cannot be judged as novel relative to any Solution Space entry.",
+          "rubric": "Existing: the idea's core method is already clearly present or solved in the Solution Space; only tiny parameter / test-case changes.",
+          "category": "Existing",
+          "nearest_solution_space_ids": [],
+          "differentiation": "No core method is proposed; the artifact only notes that hypothesis sections are empty and asks for them to be supplied, so there is nothing to differentiate from the Solution Space."
+        },
+        "feasibility": {
+          "score": 1.0,
+          "justification": "No technical approach, implementation plan, or evaluation pipeline is provided. The artifact is a placeholder requesting missing hypotheses, so there is nothing executable to implement or assess.",
+          "rubric": "Theoretically infeasible / compute catastrophe: NP-hard-scale computation, must dynamically reproduce extremely complex system-level vulnerability environments, or depends on unavailable closed-source model internal weights; not doable by a single person."
+        },
+        "clarity": {
+          "score": 1.0,
+          "justification": "The artifact is not a complete idea; it says 'there are no hypotheses to synthesize' and requests pasted sections, leaving problem, method, and experiments undefined.",
+          "rubric": "Vague concept: full of empty buzzwords; problem undefined; method only gives a high-level direction with little substance."
+        }
+      },
+      "overall_score": 1.0,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "novelty",
+        "feasibility",
+        "clarity"
+      ],
+      "solution_space": {
+        "status": "ok",
+        "paper_count": 27,
+        "entry_count": 27,
+        "cache_hit": true,
+        "source_file": "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement/mineru_sections.json",
+        "stats": {
+          "papers": 27,
+          "extracted": 27,
+          "usable_abstracts": 12,
+          "citation_meta_abstracts": 0,
+          "missing_abstracts": 15,
+          "mineru_titles": 26,
+          "related_work_titles": 19,
+          "abstracts_attached": 12,
+          "related_work_extras": 1,
+          "batches": 2
+        },
+        "error": null
+      },
+      "notes": [
+        "Scores the intermediate idea artifact (not the final paper).",
+        "Dimensions: novelty, feasibility, clarity (each 1-5). Excitement removed.",
+        "Novelty is scored against a Solution Space built from mineru REFERENCES titles (+ related_work.json abstracts when matched)."
+      ],
+      "idea_via": "candidate",
+      "idea_relative": "artifacts/idea.json",
+      "summary": "This artifact is an empty placeholder rather than a scored research idea. It states that the Innovator, Pragmatist, and Contrarian hypothesis sections are empty and requests that they be pasted. It proposes no method, baseline comparison, evaluation, or novelty claim, so all rubric dimensions remain at the minimum.",
+      "strengths": [
+        "Clearly identifies that required hypothesis sections are missing."
+      ],
+      "weaknesses": [
+        "No research question or hypothesis is formulated.",
+        "No technical method is proposed.",
+        "No experiment design, baselines, or metrics are described.",
+        "Cannot be assessed for novelty or implementation feasibility."
+      ],
+      "llm_meta": {
+        "model": "deepseek-v4-pro-0813",
+        "base_url": "https://api-sg.umodelverse.ai/v1",
+        "usage": {
+          "completion_tokens": 1381,
+          "completion_tokens_details": {
+            "reasoning_tokens": 989
+          },
+          "prompt_tokens": 4092,
+          "prompt_tokens_details": {
+            "cached_tokens": 2048
+          },
+          "total_tokens": 5473
+        },
+        "attempt": 0
+      }
+    },
+    "peer_review": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement/workspace/researchclaw_2026-09-13_07-24-49",
+      "review_report": null,
+      "paper_pdf": null,
+      "paper_tex": null,
+      "status": "not_provided",
+      "dimensions": {},
+      "overall_score": null,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "soundness",
+        "significance",
+        "novelty",
+        "presentation",
+        "credibility"
+      ],
+      "notes": [
+        "Stanford Agentic Reviewer (paperreview.ai): manual download to artifacts/peer_review/stanford_apr.md, or pass --auto-paperreview.",
+        "Dimensions: soundness, significance, novelty, presentation, credibility (each 1-5)."
+      ],
+      "paperreview": {
+        "status": "skipped",
+        "reason": "no_pdf"
+      },
+      "optional": true,
+      "hint": "Optional external review (Stanford APR). Upload paper/main.pdf to https://paperreview.ai/ , save review to ~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement/workspace/researchclaw_2026-09-13_07-24-49/artifacts/peer_review/stanford_apr.md"
+    },
+    "alignment": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement/workspace/researchclaw_2026-09-13_07-24-49",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement",
+      "status": "missing_agent_paper_or_metrics",
+      "original": {
+        "status": "ok",
+        "task_dir": "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement",
+        "paper_title": "A Test Oracle for Reinforcement Learning Software based on Lyapunov Stability Control Theory",
+        "task_id": "ICSE-2025-019",
+        "selection": {
+          "num_blocks": 7,
+          "total_chars": 31998,
+          "inferred_roles": {
+            "abstract": 1,
+            "introduction": 1,
+            "experiment": 4,
+            "conclusion": 1
+          },
+          "mineru_raw_keys": {
+            "field:abstract": 1,
+            "field:introduction": 1,
+            "field:experiment": 1,
+            "other": 3,
+            "conclusion": 1
+          },
+          "infer_reasons": {
+            "top_level_field": 3,
+            "inherited": 2,
+            "body_override": 1,
+            "title": 1
+          },
+          "rescued_from_other": 3,
+          "note": "mineru key is unreliable; blocks are selected by title/body/inheritance. rescued_from_other counts sections labeled other but treated as typed roles."
+        },
+        "claims": [],
+        "metrics": [],
+        "overall_conclusion": null,
+        "comparable_notes": null,
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 3500,
+            "completion_tokens_details": {
+              "reasoning_tokens": 3500
+            },
+            "prompt_tokens": 10123,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 13623
+          },
+          "attempt": 0
+        },
+        "cache_hit": true
+      },
+      "agent": {
+        "status": "missing_agent_paper_or_metrics",
+        "run_dir": "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement/workspace/researchclaw_2026-09-13_07-24-49"
+      }
+    },
+    "experiment_analysis": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement/workspace/researchclaw_2026-09-13_07-24-49",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement",
+      "status": "ok",
+      "metrics_path": null,
+      "experiment_success": {
+        "status": "failed_or_incomplete",
+        "success": false,
+        "metrics_path": null,
+        "absolute_metrics_path": null,
+        "checks": {
+          "has_results_file": false,
+          "non_stub": false,
+          "numeric_leaf_count": 0,
+          "min_numeric_ok": false
+        },
+        "manifest_hints": {
+          "status": {
+            "pipeline": false,
+            "idea": true,
+            "code": true,
+            "results": false,
+            "paper": false
+          },
+          "returncode": 1,
+          "benchmark_complete": null,
+          "artifacts_metrics_flag": false
+        },
+        "warnings": [
+          "manifest.returncode=1"
+        ],
+        "suspicious_values": [],
+        "note": "success=true requires substantive results (framework-aware path) with >=3 numeric leaves. Supports metrics.json, results.json, experiment_results.txt, etc. Manifest returncode/benchmark_complete are soft warnings only."
+      },
+      "idea_code_consistency": {
+        "status": "ok",
+        "idea_path": "artifacts/idea.json",
+        "code_files": [
+          "artifacts/code/experiment.py",
+          "stage-10/experiment/main.py"
+        ],
+        "score_scale": "1-5",
+        "score": 1.0,
+        "label": "severe_mismatch",
+        "justification": "The research idea contains no actual hypotheses, methods, or evaluation plan; it is only a placeholder requesting hypothesis text. The experiment code implements a synthetic XOR binary classification benchmark with multiple models and ablations, which is unrelated because there is no stated research question to implement or test.",
+        "matched_elements": [],
+        "missing_or_divergent_elements": [
+          "Hypotheses or research question",
+          "Innovator/Pragmatist/Contrarian perspectives",
+          "Measurable predictions and failure conditions",
+          "Any mapping from idea components to code implementation"
+        ],
+        "rubric": "Severe mismatch: code implements a different problem/method than the idea, or is unrelated boilerplate.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 302,
+            "completion_tokens_details": {
+              "reasoning_tokens": 158
+            },
+            "prompt_tokens": 1421,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 1723
+          },
+          "attempt": 0
+        }
+      },
+      "setup_coverage": {
+        "status": "ok",
+        "overall_coverage": 0.4583333333333333,
+        "datasets": {
+          "gold_count": 2,
+          "hit_count": 1,
+          "miss_count": 1,
+          "coverage": 0.5,
+          "hits": [
+            "RL Software Bug Benchmark (LPEA AE artifact)"
+          ],
+          "misses": [
+            "RL Software Bug Benchmark"
+          ]
+        },
+        "baselines": {
+          "gold_count": 1,
+          "hit_count": 0,
+          "miss_count": 1,
+          "coverage": 0.0,
+          "hits": [],
+          "misses": [
+            "Human Oracle (STARLA-expanded)"
+          ]
+        },
+        "metrics": {
+          "gold_count": 8,
+          "hit_count": 7,
+          "miss_count": 1,
+          "coverage": 0.875,
+          "hits": [
+            "False Positive Count (FP)",
+            "True Negative Count (TN)",
+            "Accuracy",
+            "Precision",
+            "Recall",
+            "F1 Score",
+            "ROC AUC"
+          ],
+          "misses": [
+            "False Negative Count (FN)"
+          ]
+        },
+        "agent_protocol": {},
+        "gold_protocol": {},
+        "dataset_dirs": [
+          "dataset_candidate"
+        ],
+        "flags": {
+          "weaker_baseline_suspected": true,
+          "weak_protocol": [],
+          "synthetic_data": "unexpected_synthetic_or_local_only_data",
+          "gold_allows_synthetic": false
+        },
+        "gold_sources": [
+          "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement/task.md",
+          "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement/metadata.json"
+        ],
+        "note": "Coverage is name/alias matching against task.md Datasets/Baselines/Metrics. weak_protocol flags large reductions in trials/timeout vs Constraints. Synthetic corpora are not penalized when the task itself requires synthesis."
+      },
+      "ablation_significance": {
+        "status": "ok",
+        "idea_path": "artifacts/idea.json",
+        "significance_signals_rule_based": {
+          "signals": [],
+          "artifact_paths": [],
+          "has_any_significance_artifact": false
+        },
+        "evidence_format": null,
+        "study_type": "new_method",
+        "components": [
+          {
+            "name": "quadratic_feature_expansion",
+            "role": "module",
+            "ablation_expected": true,
+            "significance_expected": false,
+            "ablation_status": "present",
+            "ablation_evidence": "Code includes ablation_no_quadratic mapped to LinearLogisticL2Ablation, removing the quadratic feature expansion while retaining L2 and standardization.",
+            "significance_status": "not_required",
+            "significance_evidence": "Single deterministic synthetic dataset run; no repeated trials, bootstrap, CI, or statistical test in code."
+          },
+          {
+            "name": "l2_regularization",
+            "role": "module",
+            "ablation_expected": true,
+            "significance_expected": false,
+            "ablation_status": "present",
+            "ablation_evidence": "Code includes ablation_no"
+          }
+        ],
+        "ablation_coverage_score": null,
+        "overall_ablation_ok": null,
+        "overall_significance_ok": null,
+        "summary": "",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 929,
+            "completion_tokens_details": {
+              "reasoning_tokens": 721
+            },
+            "prompt_tokens": 2764,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 3693
+          },
+          "attempt": 0
+        }
+      },
+      "results_paper_consistency": {
+        "status": "missing_metrics"
+      },
+      "scores": {
+        "experiment_success": false,
+        "idea_code_score": 1.0,
+        "setup_coverage": 0.4583333333333333,
+        "ablation_coverage_score": null,
+        "overall_ablation_ok": null,
+        "overall_significance_ok": null,
+        "results_paper_score": null,
+        "hiding_unfavorable_suspected": null
+      },
+      "notes": [
+        "Axes 1,2,3,4,6 in experiment_analysis (figures excluded).",
+        "setup_coverage matches task.md Datasets/Baselines/Metrics; weak_protocol flags reductions vs Constraints.",
+        "Axis 6: final normalized results vs paper; interim run logs not used as ground truth."
+      ]
+    },
+    "literature_review": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement/workspace/researchclaw_2026-09-13_07-24-49",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement",
+      "status": "ok",
+      "as_of_year": 2026,
+      "agent_ref_count": 23,
+      "sources": [
+        {
+          "path": "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement/workspace/researchclaw_2026-09-13_07-24-49/stage-05/shortlist.jsonl",
+          "kind": "shortlist"
+        },
+        {
+          "path": "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement/workspace/researchclaw_2026-09-13_07-24-49/stage-04/references.bib",
+          "kind": "bib"
+        }
+      ],
+      "collection_audit": {
+        "cited_keys_count": 0,
+        "filter_mode": "non_bib_sources",
+        "bib_total_before_filter": 23,
+        "bib_after_filter": 0,
+        "uncited_bib_skipped": 23,
+        "agent_ref_count": 23
+      },
+      "fabrication": {
+        "status": "ok",
+        "scholarly_count": 23,
+        "verified_count": 21,
+        "fake_count": 0,
+        "lookup_failed_count": 2,
+        "non_paper_count": 0,
+        "fabrication_rate": 0.0,
+        "items": [
+          {
+            "title": "SciPy 1.0: fundamental algorithms for scientific computing in Python",
+            "doi": "10.1038/s41592-019-0686-2",
+            "arxiv_id": "",
+            "year": 2020,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "SciPy 1.0: fundamental algorithms for scientific computing in Python",
+            "resolved_year": 2019,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "virtanen2020scipy",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Linear Matrix Inequalities in System and Control Theory",
+            "doi": "10.1137/1.9781611970777",
+            "arxiv_id": "",
+            "year": 1994,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated."
+            ],
+            "cite_key": "boyd1994linear",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Mastering the game of Go without human knowledge",
+            "doi": "10.1038/nature24270",
+            "arxiv_id": "",
+            "year": 2017,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Mastering the game of Go without human knowledge",
+            "resolved_year": 2017,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "silver2017mastering",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Q-learning",
+            "doi": "10.1007/bf00992698",
+            "arxiv_id": "",
+            "year": 1992,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Q-learning",
+            "resolved_year": 1992,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "watkins1992qlearning",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Receiver Operating Characteristic Curve in Diagnostic Test Assessment",
+            "doi": "10.1097/jto.0b013e3181ec173d",
+            "arxiv_id": "",
+            "year": 2010,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Receiver operating characteristic curve in diagnostic test assessment.",
+            "resolved_year": 2010,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "mandrekar2010receiver",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Reinforcement learning in robotics: A survey",
+            "doi": "10.1177/0278364913495721",
+            "arxiv_id": "",
+            "year": 2013,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Reinforcement learning in robotics: A survey",
+            "resolved_year": 2013,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "kober2013reinforcement",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "The Oracle Problem in Software Testing: A Survey",
+            "doi": "10.1109/tse.2014.2372785",
+            "arxiv_id": "",
+            "year": 2014,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "The Oracle Problem in Software Testing: A Survey",
+            "resolved_year": 2015,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "barr2014oracle",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "QuickCheck",
+            "doi": "10.1145/351240.351266",
+            "arxiv_id": "",
+            "year": 2000,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "QuickCheck: a lightweight tool for random testing of Haskell programs",
+            "resolved_year": 2000,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "claessen2000quickcheck",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Metamorphic Testing",
+            "doi": "10.1145/3143561",
+            "arxiv_id": "",
+            "year": 2018,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Metamorphic Testing",
+            "resolved_year": 2018,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "chen2018metamorphic",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Testing and validating machine learning classifiers by metamorphic testing",
+            "doi": "10.1016/j.jss.2010.11.920",
+            "arxiv_id": "",
+            "year": 2010,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Testing and Validating Machine Learning Classifiers by Metamorphic Testing",
+            "resolved_year": 2011,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "xie2010testing",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Swinging up and stabilization of a real inverted pendulum",
+            "doi": "10.1109/tie.2006.870667",
+            "arxiv_id": "",
+            "year": 2006,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Swinging up and stabilization of a real inverted pendulum",
+            "resolved_year": 2006,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "muskinja2006swinging",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "DeepMutation++: A Mutation Testing Framework for Deep Learning Systems",
+            "doi": "10.1109/ase.2019.00126",
+            "arxiv_id": "",
+            "year": 2019,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "DeepMutation++: A Mutation Testing Framework for Deep Learning Systems",
+            "resolved_year": 2019,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "hu2019deepmutation",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Lyapunov Stability Theory",
+            "doi": "10.1007/978-1-4757-3108-8_5",
+            "arxiv_id": "",
+            "year": 1999,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Lyapunov Stability Theory",
+            "resolved_year": 1999,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "sastry1999lyapunov",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "METTLE: A METamorphic Testing Approach to Assessing and Validating Unsupervised Machine Learning Systems",
+            "doi": "10.1109/tr.2020.2972266",
+            "arxiv_id": "",
+            "year": 2020,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "METTLE: A METamorphic Testing Approach to Assessing and Validating Unsupervised Machine Learning Systems",
+            "resolved_year": 2018,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "xie2020mettle",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "A Search-Based Testing Approach for Deep Reinforcement Learning Agents",
+            "doi": "10.1109/tse.2023.3269804",
+            "arxiv_id": "2206.07813",
+            "year": 2023,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "A Search-Based Testing Approach for Deep Reinforcement Learning Agents",
+            "resolved_year": 2022,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "zolfagharian2023searchbased",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "MDPFuzz: testing models solving Markov decision processes",
+            "doi": "10.1145/3533767.3534388",
+            "arxiv_id": "",
+            "year": 2022,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "MDPFuzz: testing models solving Markov decision processes",
+            "resolved_year": 2021,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "pang2022mdpfuzz",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "MuNN: Mutation Analysis of Neural Networks",
+            "doi": "10.1109/qrs-c.2018.00032",
+            "arxiv_id": "",
+            "year": 2018,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "MuNN: Mutation Analysis of Neural Networks",
+            "resolved_year": 2018,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "shen2018munn",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Model-Based Test Oracle Generation for Automated Unit Testing of Agent Systems",
+            "doi": "10.1109/tse.2013.10",
+            "arxiv_id": "",
+            "year": 2013,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated."
+            ],
+            "cite_key": "padgham2013modelbased",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Faults in deep reinforcement learning programs: a taxonomy and a detection approach",
+            "doi": "10.1007/s10515-021-00313-x",
+            "arxiv_id": "",
+            "year": 2021,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Faults in deep reinforcement learning programs: a taxonomy and a detection approach",
+            "resolved_year": 2021,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "nikanjam2021faults",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Search-Based Testing of Reinforcement Learning",
+            "doi": "10.24963/ijcai.2022/72",
+            "arxiv_id": "2205.04887",
+            "year": 2022,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Search-Based Testing of Reinforcement Learning",
+            "resolved_year": 2022,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "tappler2022searchbased",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "What Are We Really Testing in Mutation Testing for Machine Learning? A Critical Reflection",
+            "doi": "10.1109/icse-nier52604.2021.00022",
+            "arxiv_id": "",
+            "year": 2021,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "What Are We Really Testing in Mutation Testing for Machine Learning? A Critical Reflection",
+            "resolved_year": 2021,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "panichella2021what",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Coverage-guided fuzzing for deep reinforcement learning systems",
+            "doi": "10.1016/j.jss.2024.111963",
+            "arxiv_id": "",
+            "year": 2024,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Coverage-guided fuzzing for deep reinforcement learning systems",
+            "resolved_year": 2024,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "wan2024coverageguided",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Formal Specification and Testing for Reinforcement Learning",
+            "doi": "10.1145/3607835",
+            "arxiv_id": "",
+            "year": 2023,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Formal Specification and Testing for Reinforcement Learning",
+            "resolved_year": 2023,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "varshosaz2023formal",
+            "source_kind": "shortlist"
+          }
+        ],
+        "cache_path": "~/ai_scientist_evals/ICSE-2025-019_automated_test_oracles_for_reinforcement/reference_verify_cache.json",
+        "override_path": "~/ai_scientist_evals/ICSE-2025-019_automated_test_oracles_for_reinforcement/reference_verify_overrides.json",
+        "note": "fabrication_rate = fake / (verified + fake); lookup_failed (API errors) excluded. GitHub/docs/tool URLs are non_paper and excluded from the rate. To manually correct a false negative, edit reference_verify_overrides.json (key=normalized title / doi / cite_key; value=\"verified\" or a result dict), then re-run."
+      },
+      "coverage": {
+        "status": "ok",
+        "gold_source": "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement/mineru_sections.json",
+        "gold_count": 26,
+        "gold_is_original_paper_references": true,
+        "gold_is_openalex_subset": false,
+        "agent_count": 23,
+        "intersection_size": 18,
+        "recall": 0.6923076923076923,
+        "precision": 0.782608695652174,
+        "matched_gold_keys": [
+          "barr2014oracle",
+          "chen2018metamorphic",
+          "claessen2000quickcheck",
+          "hu2019deepmutation",
+          "kober2013reinforcement",
+          "mandrekar2010receiver",
+          "muskinja2006swinging",
+          "nikanjam2021faults",
+          "padgham2013modelbased",
+          "panichella2021what",
+          "sastry1999lyapunov",
+          "silver2017mastering",
+          "tappler2022searchbased",
+          "varshosaz2023formal",
+          "wan2024coverageguided",
+          "watkins1992qlearning",
+          "xie2010testing",
+          "zolfagharian2023searchbased"
+        ],
+        "primary_metric": "recall",
+        "note": "Primary metric is recall against the original paper bibliography (titles from mineru_sections.json REFERENCES; related_work.json used only to enrich DOI/year or as fallback if mineru titles are empty). Denominator = |original paper references|. Precision is secondary (agent may cite valid extra papers)."
+      },
+      "recency": {
+        "status": "ok",
+        "dated_count": 23,
+        "unknown_year_count": 0,
+        "year_histogram": {
+          "1992": 1,
+          "1994": 1,
+          "1999": 1,
+          "2000": 1,
+          "2006": 1,
+          "2010": 1,
+          "2011": 1,
+          "2013": 2,
+          "2015": 1,
+          "2017": 1,
+          "2018": 3,
+          "2019": 2,
+          "2021": 3,
+          "2022": 2,
+          "2023": 1,
+          "2024": 1
+        },
+        "windows": {
+          "3": {
+            "years": 3,
+            "cutoff_year_inclusive": 2023,
+            "recent_count": 2,
+            "recent_ratio": 0.08695652173913043
+          },
+          "5": {
+            "years": 5,
+            "cutoff_year_inclusive": 2021,
+            "recent_count": 7,
+            "recent_ratio": 0.30434782608695654
+          }
+        }
+      },
+      "scores": {
+        "fabrication_rate": 0.0,
+        "coverage_recall": 0.6923076923076923,
+        "coverage_precision": 0.782608695652174,
+        "recency_ratio_3y": 0.08695652173913043,
+        "recency_ratio_5y": 0.30434782608695654
+      }
+    }
+  },
+  "scores": {
+    "completeness": {
+      "complete": false,
+      "overall_score": 0.4,
+      "required_score": 0.5,
+      "bonus_score": 0.09
+    },
+    "peer_review": {
+      "status": "not_provided",
+      "optional": true,
+      "overall_score": null,
+      "score_scale": "1-5",
+      "scoring_method": null
+    },
+    "idea_generation": {
+      "status": "ok",
+      "overall_score": 1.0,
+      "dimensions": {
+        "novelty": 1.0,
+        "feasibility": 1.0,
+        "clarity": 1.0
+      },
+      "novelty_category": "Existing",
+      "solution_space_status": "ok"
+    },
+    "alignment": {
+      "status": "missing_agent_paper_or_metrics",
+      "direction_consistency": null,
+      "overall_alignment_score": null
+    },
+    "literature_review": {
+      "fabrication_rate": 0.0,
+      "coverage_recall": 0.6923076923076923,
+      "coverage_precision": 0.782608695652174,
+      "recency_ratio_3y": 0.08695652173913043,
+      "recency_ratio_5y": 0.30434782608695654
+    },
+    "experiment_analysis": {
+      "experiment_success": false,
+      "idea_code_score": 1.0,
+      "setup_coverage": 0.4583333333333333,
+      "ablation_coverage_score": null,
+      "overall_ablation_ok": null,
+      "overall_significance_ok": null,
+      "results_paper_score": null,
+      "hiding_unfavorable_suspected": null
+    }
+  },
+  "fair_scores": {
+    "applicable_axes": [
+      "completeness",
+      "idea_generation",
+      "literature_review",
+      "experiment_analysis"
+    ],
+    "skipped_axes": [
+      {
+        "axis": "peer_review",
+        "reason": "optional_external_review"
+      }
+    ],
+    "fair_mean_0_1": 0.3781,
+    "note": "fair_mean_0_1 averages only applicable axes; optional peer review and framework-inapplicable literature are excluded from the denominator."
+  },
+  "evals_root": "~/ai_scientist_evals",
+  "claims_cache": "~/ai_scientist_evals/ICSE-2025-019_automated_test_oracles_for_reinforcement/original_claims.json",
+  "solution_space_cache": "~/ai_scientist_evals/ICSE-2025-019_automated_test_oracles_for_reinforcement/solution_space.json"
+}

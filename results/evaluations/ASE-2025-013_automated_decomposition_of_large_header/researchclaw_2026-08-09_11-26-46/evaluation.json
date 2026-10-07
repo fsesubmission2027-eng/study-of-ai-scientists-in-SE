@@ -1,0 +1,1403 @@
+{
+  "generated_at": "2026-08-23T15:54:21",
+  "run_dir": "~/ai_scientist_inputs/ASE-2025-013_automated_decomposition_of_large_header/workspace/researchclaw_2026-08-09_11-26-46",
+  "task_dir": "~/ai_scientist_inputs/ASE-2025-013_automated_decomposition_of_large_header",
+  "framework": "researchclaw",
+  "fairness_audit": [
+    {
+      "axis": "completeness",
+      "was_unfair": "Required both paper.tex AND paper.pdf; any tool missing one failed equally.",
+      "fix": "Paper gate: PDF=1.0; TeX-only=0.5; ``complete`` requires PDF."
+    },
+    {
+      "axis": "completeness",
+      "was_unfair": "``results`` counted stub/seed JSON (dataset_candidate/metrics.json).",
+      "fix": "``results`` requires substantive numeric results via results_normalize."
+    },
+    {
+      "axis": "experiment_success",
+      "was_unfair": "Only metrics.json; ignored results.json / experiment_results.txt.",
+      "fix": "Framework-ordered result candidates + normalized loaders."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Penalized tools with no bib; airesearcher has no workspace references.",
+      "fix": "literature_applicable=false → status not_applicable; excluded from fair aggregate."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "related_work.json subset as gold made recall hard to interpret.",
+      "fix": "Coverage gold is original paper REFERENCES from mineru; related_work only enriches metadata/fallback."
+    },
+    {
+      "axis": "peer_review",
+      "was_unfair": "Missing Stanford report looked like evaluation failure.",
+      "fix": "status not_provided; optional axis, never counts as tool failure."
+    },
+    {
+      "axis": "paths/find_results",
+      "was_unfair": "Picked downloads/** and sandbox noise (e.g. airesearcher LLVM tree).",
+      "fix": "Exclude downloads/, seeds/, dataset_candidate/, sandbox junk paths."
+    },
+    {
+      "axis": "paths/framework_noise",
+      "was_unfair": "DeepScientist .deepscientist_npm / runtime / skills templates counted as code/paper/results.",
+      "fix": "FRAMEWORK_NOISE_DIRS+markers; quest worktree + eval_output results; paper md drafts; reject template tex."
+    },
+    {
+      "axis": "paths/paper_tex",
+      "was_unfair": "tiny_scientist / ACL runs store paper under latex/*.tex; evaluator only looked at paper/main.tex.",
+      "fix": "latex/**/*.tex with substantive-body heuristic; find_paper_document uses same rules."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Entire custom.bib (300+ anthology entries) verified when paper had zero \\cite commands.",
+      "fix": "collect_agent_references filters bib to in-text cite keys; skips uncited bulk bib (>40 entries)."
+    },
+    {
+      "axis": "paths/ai_scientist_summaries",
+      "was_unfair": "AI Scientist can persist substantive results and paper-like drafts in *_summary.json logs rather than paper/main.tex or results/**/*.json.",
+      "fix": "Treat draft_summary/research_summary as weak paper documents and summary JSONs as result candidates."
+    },
+    {
+      "axis": "idea_generation",
+      "was_unfair": "plan.md/todos.md weak proxies scored same as structured idea.json.",
+      "fix": "Framework idea_priority tried first; missing idea → not_applicable where appropriate."
+    }
+  ],
+  "axes": [
+    "alignment",
+    "completeness",
+    "experiment_analysis",
+    "idea_generation",
+    "literature_review",
+    "peer_review"
+  ],
+  "results": {
+    "completeness": {
+      "framework": "researchclaw",
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-013_automated_decomposition_of_large_header/workspace/researchclaw_2026-08-09_11-26-46",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-013_automated_decomposition_of_large_header",
+      "complete": false,
+      "required_score": 0.5,
+      "bonus_score": 0.09,
+      "overall_score": 0.4,
+      "missing": [
+        "results",
+        "paper"
+      ],
+      "required": {
+        "idea": {
+          "path": "stage-08/hypotheses.md",
+          "bytes": 6887,
+          "via": "candidate"
+        },
+        "code": {
+          "count": 7,
+          "files": [
+            {
+              "path": "stage-10/agent_runs/attempt_001/main.py",
+              "bytes": 1327,
+              "via": "glob"
+            },
+            {
+              "path": "stage-10/agent_sandbox/_docker_project_1/experiment_harness.py",
+              "bytes": 4239,
+              "via": "glob"
+            },
+            {
+              "path": "stage-10/agent_sandbox/_docker_project_1/main.py",
+              "bytes": 1327,
+              "via": "glob"
+            },
+            {
+              "path": "stage-10/experiment/data.py",
+              "bytes": 885,
+              "via": "glob"
+            },
+            {
+              "path": "stage-10/experiment/experiment_config.py",
+              "bytes": 553,
+              "via": "glob"
+            },
+            {
+              "path": "stage-10/experiment/main.py",
+              "bytes": 1128,
+              "via": "glob"
+            },
+            {
+              "path": "stage-10/experiment/methods.py",
+              "bytes": 2344,
+              "via": "glob"
+            }
+          ]
+        },
+        "results": {
+          "substantive": false,
+          "normalized_path": null,
+          "numeric_leaf_count": 0,
+          "discovered_files": [],
+          "metrics_keys_sample": []
+        },
+        "paper": {
+          "tex": null,
+          "pdf": null,
+          "md": null,
+          "json": null,
+          "status": "missing",
+          "score": 0.0
+        }
+      },
+      "bonus": {
+        "experiment_plan": {
+          "path": "stage-09/exp_plan.yaml",
+          "bytes": 2928,
+          "via": "candidate"
+        },
+        "experiment_log": {
+          "path": "researchclaw_run.log",
+          "bytes": 8966,
+          "via": "glob"
+        },
+        "review": null,
+        "readme": null,
+        "narrative": null,
+        "bib": {
+          "path": "stage-04/references.bib",
+          "bytes": 8981,
+          "via": "glob"
+        }
+      },
+      "manifest_status": null,
+      "gate_scores": {
+        "idea": 1.0,
+        "code": 1.0,
+        "results": 0.0,
+        "paper": 0.0
+      },
+      "fairness": {
+        "gates": [
+          "idea",
+          "code",
+          "results",
+          "paper"
+        ],
+        "paper_gate_rule": "PDF=1.0; TeX-only/md_only/json_only=0.5; complete requires PDF",
+        "results_gate_rule": "substantive numeric results via framework-aware normalize_results",
+        "audit_ref": "framework_profile.FAIRNESS_AUDIT"
+      },
+      "notes": [
+        "Required: idea, code, substantive results, paper (PDF full; TeX/markdown/JSON draft half).",
+        "Stub/seed metrics (e.g. dataset_candidate/metrics.json) do not satisfy results.",
+        "Framework noise (.deepscientist_npm, skills/templates, runtime) is excluded from code/results/paper.",
+        "Manifest status is informational; disk presence is authoritative."
+      ]
+    },
+    "idea_generation": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-013_automated_decomposition_of_large_header/workspace/researchclaw_2026-08-09_11-26-46",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-013_automated_decomposition_of_large_header",
+      "idea_path": "~/ai_scientist_inputs/ASE-2025-013_automated_decomposition_of_large_header/workspace/researchclaw_2026-08-09_11-26-46/stage-08/hypotheses.md",
+      "status": "ok",
+      "dimensions": {
+        "novelty": {
+          "score": 4.0,
+          "justification": "",
+          "rubric": "Novel Combo / Cross-domain: spots a non-obvious link across areas and cleverly imports an existing method from another domain to address the current pain point, yielding a 1+1>2 effect.",
+          "category": "Novel Combo / Cross-domain",
+          "nearest_solution_space_ids": [],
+          "differentiation": ""
+        },
+        "feasibility": {
+          "score": 3.0,
+          "justification": "",
+          "rubric": "Moderate workload (sweet spot): needs nontrivial coding such as scripting existing open-source tools (parsers, CFG extractors) or building a custom graph-processing pipeline; standard research engineering effort."
+        },
+        "clarity": {
+          "score": 3.0,
+          "justification": "",
+          "rubric": "Complete frame but missing details: What/Why/How are present, yet key technical execution details or specific comparison plans are underspecified."
+        }
+      },
+      "overall_score": 3.3333333333333335,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "novelty",
+        "feasibility",
+        "clarity"
+      ],
+      "solution_space": {
+        "status": "ok",
+        "paper_count": 46,
+        "entry_count": 46,
+        "cache_hit": true,
+        "source_file": "~/ai_scientist_inputs/ASE-2025-013_automated_decomposition_of_large_header/mineru_sections.json",
+        "stats": {
+          "papers": 46,
+          "extracted": 46,
+          "usable_abstracts": 25,
+          "citation_meta_abstracts": 0,
+          "missing_abstracts": 21,
+          "mineru_titles": 41,
+          "related_work_titles": 30,
+          "abstracts_attached": 25,
+          "related_work_extras": 5,
+          "batches": 3
+        },
+        "error": null
+      },
+      "notes": [
+        "Scores the intermediate idea artifact (not the final paper).",
+        "Dimensions: novelty, feasibility, clarity (each 1-5). Excitement removed.",
+        "Novelty is scored against a Solution Space built from mineru REFERENCES titles (+ related_work.json abstracts when matched)."
+      ],
+      "idea_via": "candidate",
+      "idea_relative": "stage-08/hypotheses.md",
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "llm_meta": {
+        "model": "deepseek-v4-pro-0813-sg",
+        "base_url": "https://api-sg.umodelverse.ai/v1",
+        "usage": {
+          "completion_tokens": 506,
+          "completion_tokens_details": {
+            "reasoning_tokens": 119
+          },
+          "prompt_tokens": 2758,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "total_tokens": 3264
+        },
+        "attempt": 0
+      }
+    },
+    "peer_review": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-013_automated_decomposition_of_large_header/workspace/researchclaw_2026-08-09_11-26-46",
+      "review_report": null,
+      "paper_pdf": null,
+      "paper_tex": null,
+      "status": "not_provided",
+      "dimensions": {},
+      "overall_score": null,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "soundness",
+        "significance",
+        "novelty",
+        "presentation",
+        "credibility"
+      ],
+      "notes": [
+        "Stanford Agentic Reviewer (paperreview.ai): manual download to artifacts/peer_review/stanford_apr.md, or pass --auto-paperreview.",
+        "Dimensions: soundness, significance, novelty, presentation, credibility (each 1-5)."
+      ],
+      "paperreview": {
+        "status": "skipped",
+        "reason": "no_pdf"
+      },
+      "optional": true,
+      "hint": "Optional external review (Stanford APR). Upload paper/main.pdf to https://paperreview.ai/ , save review to ~/ai_scientist_inputs/ASE-2025-013_automated_decomposition_of_large_header/workspace/researchclaw_2026-08-09_11-26-46/artifacts/peer_review/stanford_apr.md"
+    },
+    "alignment": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-013_automated_decomposition_of_large_header/workspace/researchclaw_2026-08-09_11-26-46",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-013_automated_decomposition_of_large_header",
+      "status": "missing_agent_paper_or_metrics",
+      "original": {
+        "status": "ok",
+        "task_dir": "~/ai_scientist_inputs/ASE-2025-013_automated_decomposition_of_large_header",
+        "paper_title": "Enhancing LLMs with Staged Grouping and Dehallucination for Header File Decomposition",
+        "task_id": "ASE-2025-013",
+        "selection": {
+          "num_blocks": 8,
+          "total_chars": 31998,
+          "inferred_roles": {
+            "abstract": 1,
+            "introduction": 1,
+            "experiment": 4,
+            "discussion": 1,
+            "conclusion": 1
+          },
+          "mineru_raw_keys": {
+            "field:abstract": 1,
+            "field:introduction": 1,
+            "field:experiment": 1,
+            "other": 3,
+            "discussion": 1,
+            "conclusion": 1
+          },
+          "infer_reasons": {
+            "top_level_field": 3,
+            "body_override": 2,
+            "title": 3
+          },
+          "rescued_from_other": 3,
+          "note": "mineru key is unreliable; blocks are selected by title/body/inheritance. rescued_from_other counts sections labeled other but treated as typed roles."
+        },
+        "claims": [
+          {
+            "id": "C1",
+            "statement": "HFDecomposer outperforms the traditional state-of-the-art header file decomposition approach by 11%.",
+            "direction": "improves",
+            "metric_names": [
+              "accuracy",
+              "ACC"
+            ],
+            "evidence_quote": "outperforms the traditional stateof-the-art approach by 11%",
+            "confidence": 0.95
+          },
+          {
+            "id": "C2",
+            "statement": "HFDecomposer mitigates LLM hallucinations in header file decomposition.",
+            "direction": "improves",
+            "metric_names": [
+              "incomplete cases",
+              "missing entities"
+            ],
+            "evidence_quote": "The number of incomplete cases dropped dramatically from 122 to below 20 for GPT-4o.",
+            "confidence": 0.9
+          },
+          {
+            "id": "C3",
+            "statement": "HFDecomposer reduces cyclic dependency issues compared to LLM baselines.",
+            "direction": "improves",
+            "metric_names": [
+              "cyclic cases",
+              "cyclic dependency"
+            ],
+            "evidence_quote": "Our approach significantly enhances LLMs' ability to generate decompositions with fewer cyclic dependencies.",
+            "confidence": 0.9
+          },
+          {
+            "id": "C4",
+            "statement": "The two-stage grouping framework handles lengthy header files effectively.",
+            "direction": "improves",
+            "metric_names": [
+              "completion rate",
+              "grouping accuracy"
+            ],
+            "evidence_quote": "both models successfully processed all header files in the dataset, achieving 100% completion rate",
+            "confidence": 0.9
+          },
+          {
+            "id": "C5",
+            "statement": "HFDecomposer outperforms baseline methods in decomposition accuracy.",
+            "direction": "improves",
+            "metric_names": [
+              "ACC",
+              "F1",
+              "MoJoFM",
+              "ARI",
+              "NMI"
+            ],
+            "evidence_quote": "HFDecomposer significantly outperforms state-of-the-art methods",
+            "confidence": 0.8
+          }
+        ],
+        "metrics": [
+          {
+            "name": "ACC",
+            "value": 70.1,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "Wang et al. baseline, all header files",
+            "is_sota_or_best": false,
+            "baseline_name": "Wang et al.",
+            "baseline_value": null,
+            "evidence_quote": "Wang et al. ... ACC 70.1",
+            "confidence": 0.9
+          },
+          {
+            "name": "F1",
+            "value": 65.2,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "Wang et al. baseline, all header files",
+            "is_sota_or_best": false,
+            "baseline_name": "Wang et al.",
+            "baseline_value": null,
+            "evidence_quote": "Wang et al. ... F1 65.2",
+            "confidence": 0.9
+          },
+          {
+            "name": "MoJoFM",
+            "value": 78.0,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "Wang et al. baseline, all header files",
+            "is_sota_or_best": false,
+            "baseline_name": "Wang et al.",
+            "baseline_value": null,
+            "evidence_quote": "Wang et al. ... MoJoFM 78.0",
+            "confidence": 0.9
+          },
+          {
+            "name": "ARI",
+            "value": 21.9,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "Wang et al. baseline, all header files",
+            "is_sota_or_best": false,
+            "baseline_name": "Wang et al.",
+            "baseline_value": null,
+            "evidence_quote": "Wang et al. ... ARI 21.9",
+            "confidence": 0.9
+          },
+          {
+            "name": "NMI",
+            "value": 25.8,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "Wang et al. baseline, all header files",
+            "is_sota_or_best": false,
+            "baseline_name": "Wang et al.",
+            "baseline_value": null,
+            "evidence_quote": "Wang et al. ... NMI 25.8",
+            "confidence": 0.9
+          },
+          {
+            "name": "ACC",
+            "value": 75.4,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "GPT-4o baseline, all header files",
+            "is_sota_or_best": false,
+            "baseline_name": "GPT-4o",
+            "baseline_value": null,
+            "evidence_quote": "GPT-4o ... ACC 75.4",
+            "confidence": 0.9
+          },
+          {
+            "name": "F1",
+            "value": 68.3,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "GPT-4o baseline, all header files",
+            "is_sota_or_best": false,
+            "baseline_name": "GPT-4o",
+            "baseline_value": null,
+            "evidence_quote": "GPT-4o ... F1 68.3",
+            "confidence": 0.9
+          },
+          {
+            "name": "MoJoFM",
+            "value": 80.2,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "GPT-4o baseline, all header files",
+            "is_sota_or_best": false,
+            "baseline_name": "GPT-4o",
+            "baseline_value": null,
+            "evidence_quote": "GPT-4o ... MoJoFM 80.2",
+            "confidence": 0.9
+          }
+        ],
+        "overall_conclusion": null,
+        "comparable_notes": null,
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813-sg",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 2295,
+            "completion_tokens_details": {
+              "reasoning_tokens": 966
+            },
+            "prompt_tokens": 3400,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 5695
+          },
+          "attempt": 2
+        },
+        "cache_hit": true
+      },
+      "agent": {
+        "status": "missing_agent_paper_or_metrics",
+        "run_dir": "~/ai_scientist_inputs/ASE-2025-013_automated_decomposition_of_large_header/workspace/researchclaw_2026-08-09_11-26-46"
+      }
+    },
+    "experiment_analysis": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-013_automated_decomposition_of_large_header/workspace/researchclaw_2026-08-09_11-26-46",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-013_automated_decomposition_of_large_header",
+      "status": "ok",
+      "metrics_path": null,
+      "experiment_success": {
+        "status": "failed_or_incomplete",
+        "success": false,
+        "metrics_path": null,
+        "absolute_metrics_path": null,
+        "checks": {
+          "has_results_file": false,
+          "non_stub": false,
+          "numeric_leaf_count": 0,
+          "min_numeric_ok": false
+        },
+        "manifest_hints": {
+          "status": null,
+          "returncode": null,
+          "benchmark_complete": null,
+          "artifacts_metrics_flag": false
+        },
+        "warnings": [],
+        "suspicious_values": [],
+        "note": "success=true requires substantive results (framework-aware path) with >=3 numeric leaves. Supports metrics.json, results.json, experiment_results.txt, etc. Manifest returncode/benchmark_complete are soft warnings only."
+      },
+      "idea_code_consistency": {
+        "status": "ok",
+        "idea_path": "stage-08/hypotheses.md",
+        "code_files": [
+          "stage-10/experiment/main.py"
+        ],
+        "score_scale": "1-5",
+        "score": 2.0,
+        "label": "weak",
+        "justification": "The code implements only Tarjan's strongly connected components algorithm. This is a plausible low-level utility for the cycle-preserving partitioning idea in Hypothesis 2 (contracting SCCs before clustering), but it does not implement any of the proposed experiment methodology, evaluation protocol, baselines, metrics, or the other hypotheses. There is no MAP-Elites archive, Louvain clustering, external organizational signal re-ranking, developer-in-the-loop loop, NMI scoring, compilability check, or benchmark loading.",
+        "matched_elements": [
+          "Tarjan SCC detection could support cycle detection and SCC contraction in Hypothesis 2"
+        ],
+        "missing_or_divergent_elements": [
+          "MAP-Elites archive and behavioral dimensions",
+          "External organizational/ownership/co-change signal re-ranking",
+          "Fused structural-semantic Louvain clustering",
+          "HFDecomposer benchmark and human annotations",
+          "NMI and developer preference evaluation metrics",
+          "Compilability and cycle-breaking baselines",
+          "Developer-in-the-loop semi-supervised feedback experiment",
+          "Any experiment entrypoint or evaluation protocol"
+        ],
+        "rubric": "Weak alignment: only superficial overlap; core hypothesis, method, or evaluation in the idea is missing or replaced.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813-sg",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 848,
+            "completion_tokens_details": {
+              "reasoning_tokens": 594
+            },
+            "prompt_tokens": 2122,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 2970
+          },
+          "attempt": 0
+        }
+      },
+      "setup_coverage": {
+        "status": "ok",
+        "overall_coverage": 0.5777777777777778,
+        "datasets": {
+          "gold_count": 1,
+          "hit_count": 1,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "Real-world Header File Decomposition Dataset"
+          ],
+          "misses": []
+        },
+        "baselines": {
+          "gold_count": 3,
+          "hit_count": 1,
+          "miss_count": 2,
+          "coverage": 0.3333333333333333,
+          "hits": [
+            "Wang et al.'s clustering-based approach"
+          ],
+          "misses": [
+            "GPT-4o",
+            "DeepSeek-V3"
+          ]
+        },
+        "metrics": {
+          "gold_count": 5,
+          "hit_count": 2,
+          "miss_count": 3,
+          "coverage": 0.4,
+          "hits": [
+            "F1-score",
+            "Adjusted Rand Index (ARI)"
+          ],
+          "misses": [
+            "Accuracy (ACC)",
+            "MoJoFM",
+            "Normalized Mutual Information (NMI)"
+          ]
+        },
+        "agent_protocol": {},
+        "gold_protocol": {},
+        "dataset_dirs": [
+          "dataset_candidate"
+        ],
+        "flags": {
+          "weaker_baseline_suspected": true,
+          "weak_protocol": [],
+          "synthetic_data": "synthetic_allowed_by_task",
+          "gold_allows_synthetic": true
+        },
+        "gold_sources": [
+          "~/ai_scientist_inputs/ASE-2025-013_automated_decomposition_of_large_header/task.md",
+          "~/ai_scientist_inputs/ASE-2025-013_automated_decomposition_of_large_header/metadata.json"
+        ],
+        "note": "Coverage is name/alias matching against task.md Datasets/Baselines/Metrics. weak_protocol flags large reductions in trials/timeout vs Constraints. Synthetic corpora are not penalized when the task itself requires synthesis."
+      },
+      "ablation_significance": {
+        "status": "ok",
+        "idea_path": "stage-08/hypotheses.md",
+        "significance_signals_rule_based": {
+          "signals": [],
+          "artifact_paths": [],
+          "has_any_significance_artifact": false
+        },
+        "evidence_format": null,
+        "study_type": "new_method",
+        "components": [
+          {
+            "name": "MAP-Elites archive with Q/LSA dimensions",
+            "role": "core method module",
+            "ablation_expected": false,
+            "significance_expected": false,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "",
+            "significance_status": "not_required",
+            "significance_evidence": ""
+          },
+          {
+            "name": "External organizational re-ranking",
+            "role": "method module",
+            "ablation_expected": true,
+            "significance_expected": true,
+            "ablation_status": "missing",
+            "ablation_evidence": "No experiment code or results present for external organizational re-ranking.",
+            "significance_status": "missing",
+            "significance_evidence": "No statistical tests or CIs reported."
+          },
+          {
+            "name": "Internal semantic selection baseline",
+            "role": "baseline",
+            "ablation_expected": false,
+            "significance_expected": false,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "",
+            "significance_status": "not_required",
+            "significance_evidence": ""
+          },
+          {
+            "name": "Pure structural Louvain baseline",
+            "role": "baseline",
+            "ablation_expected": false,
+            "significance_expected": false,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "",
+            "significance_status": "not_required",
+            "significance_evidence": ""
+          },
+          {
+            "name": "SCC contraction cycle-preserving partitioning",
+            "role": "method module",
+            "ablation_expected": true,
+            "significance_expected": true,
+            "ablation_status": "missing",
+            "ablation_evidence": "No evidence of cycle-preserving partitioning results.",
+            "significance_status": "missing",
+            "significance_evidence": "No paired Wilcoxon or effect sizes reported."
+          },
+          {
+            "name": "Fused structural-semantic Louvain",
+            "role": "method module",
+            "ablation_expected": true,
+            "significance_expected": true,
+            "ablation_status": "missing",
+            "ablation_evidence": "No ablation comparing fused vs single-modality Louvain.",
+            "significance_status": "missing",
+            "significance_evidence": "No significance tests."
+          },
+          {
+            "name": "Cycle-breaking baseline",
+            "role": "baseline",
+            "ablation_expected": false,
+            "significance_expected": false,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "",
+            "significance_status": "not_required",
+            "significance_evidence": ""
+          },
+          {
+            "name": "Developer-in-the-loop hard constraints",
+            "role": "method module",
+            "ablation_expected": true,
+            "significance_expected": true,
+            "ablation_status": "missing",
+            "ablation_evidence": "No results for iterative feedback rounds.",
+            "significance_status": "missing",
+            "significance_evidence": "No significance tests or CIs."
+          },
+          {
+            "name": "Initial fully-automatic baseline",
+            "role": "baseline",
+            "ablation_expected": false,
+            "significance_expected": false,
+            "ablation_status": "not_applicable",
+            "ablable": "",
+            "significance_status": "not_required",
+            "significance_evidence": ""
+          }
+        ],
+        "ablation_coverage_score": 0.0,
+        "overall_ablation_ok": false,
+        "overall_significance_ok": false,
+        "summary": "The proposal is a new method with three hypotheses involving map-elites, externally re-ranked selection, cycle-preserving partitioning, and interactive developer-in-the-loop constraints. However, no experiment evidence, code results, significance tests, or ablations are provided in the submitted artifacts, so all expected controlled comparisons and statistical validations are missing.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813-sg",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 2832,
+            "completion_tokens_details": {
+              "reasoning_tokens": 1931
+            },
+            "prompt_tokens": 3827,
+            "prompt_tokens_details": {
+              "cached_tokens": 2048
+            },
+            "total_tokens": 6659
+          },
+          "attempt": 1
+        }
+      },
+      "results_paper_consistency": {
+        "status": "missing_metrics"
+      },
+      "scores": {
+        "experiment_success": false,
+        "idea_code_score": 2.0,
+        "setup_coverage": 0.5777777777777778,
+        "ablation_coverage_score": 0.0,
+        "overall_ablation_ok": false,
+        "overall_significance_ok": false,
+        "results_paper_score": null,
+        "hiding_unfavorable_suspected": null
+      },
+      "notes": [
+        "Axes 1,2,3,4,6 in experiment_analysis (figures excluded).",
+        "setup_coverage matches task.md Datasets/Baselines/Metrics; weak_protocol flags reductions vs Constraints.",
+        "Axis 6: final normalized results vs paper; interim run logs not used as ground truth."
+      ]
+    },
+    "literature_review": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-013_automated_decomposition_of_large_header/workspace/researchclaw_2026-08-09_11-26-46",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-013_automated_decomposition_of_large_header",
+      "status": "ok",
+      "as_of_year": 2026,
+      "agent_ref_count": 30,
+      "sources": [
+        {
+          "path": "~/ai_scientist_inputs/ASE-2025-013_automated_decomposition_of_large_header/workspace/researchclaw_2026-08-09_11-26-46/stage-05/shortlist.jsonl",
+          "kind": "shortlist"
+        },
+        {
+          "path": "~/ai_scientist_inputs/ASE-2025-013_automated_decomposition_of_large_header/workspace/researchclaw_2026-08-09_11-26-46/stage-04/references.bib",
+          "kind": "bib"
+        }
+      ],
+      "collection_audit": {
+        "cited_keys_count": 0,
+        "filter_mode": "non_bib_sources",
+        "bib_total_before_filter": 30,
+        "bib_after_filter": 0,
+        "uncited_bib_skipped": 30,
+        "agent_ref_count": 30
+      },
+      "fabrication": {
+        "status": "ok",
+        "scholarly_count": 30,
+        "verified_count": 27,
+        "fake_count": 0,
+        "lookup_failed_count": 3,
+        "non_paper_count": 0,
+        "fabrication_rate": 0.0,
+        "items": [
+          {
+            "title": "Fast unfolding of communities in large networks",
+            "doi": "10.1088/1742-5468/2008/10/p10008",
+            "arxiv_id": "0803.0476",
+            "year": 2008,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Fast unfolding of communities in large networks",
+            "resolved_year": 2008,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "blondel2008fast",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Indexing by latent semantic analysis",
+            "doi": "10.1002/(sici)1097-4571(199009)41:6",
+            "arxiv_id": "",
+            "year": 1990,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Indexing by Latent Semantic Analysis",
+            "resolved_year": 1990,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "deerwester1990indexing",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "The 4+1 View Model of architecture",
+            "doi": "10.1109/52.469759",
+            "arxiv_id": "",
+            "year": 1995,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "The 4+1 View Model of Architecture",
+            "resolved_year": 1995,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "kruchten1995view",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Principal component analysis for clustering gene expression data",
+            "doi": "10.1093/bioinformatics/17.9.763",
+            "arxiv_id": "",
+            "year": 2001,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Principal component analysis for clustering gene expression data",
+            "resolved_year": 2001,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "yeung2001principal",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "A survey of software refactoring",
+            "doi": "10.1109/tse.2004.1265817",
+            "arxiv_id": "",
+            "year": 2004,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated."
+            ],
+            "cite_key": "mens2004survey",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Are all code smells harmful? A study of God Classes and Brain Classes in the evolution of three open source systems",
+            "doi": "10.1109/icsm.2010.5609564",
+            "arxiv_id": "",
+            "year": 2010,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Are all code smells harmful? A study of God Classes and Brain Classes in the evolution of three open source systems",
+            "resolved_year": 2010,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "olbrich2010code",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Matching Theory",
+            "doi": "10.1090/chel/367",
+            "arxiv_id": "",
+            "year": 2009,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "MATCHING THEORY",
+            "resolved_year": 2019,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "lovasz2009matching",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "RefactoringMiner 2.0",
+            "doi": "10.1109/tse.2020.3007722",
+            "arxiv_id": "",
+            "year": 2020,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "RefactoringMiner 2.0",
+            "resolved_year": 2020,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "tsantalis2020refactoringminer",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "On the Definition of Microservice Bad Smells",
+            "doi": "10.1109/ms.2018.2141031",
+            "arxiv_id": "",
+            "year": 2018,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "On the Definition of Microservice Bad Smells",
+            "resolved_year": 2018,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "taibi2018definition",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "An effectiveness measure for software clustering algorithms",
+            "doi": "10.1109/wpc.2004.1311061",
+            "arxiv_id": "",
+            "year": 2004,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "An effectiveness measure for software clustering algorithms",
+            "resolved_year": 2004,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "wen2004effectiveness",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Identifying Extract Class refactoring opportunities using structural and semantic cohesion measures",
+            "doi": "10.1016/j.jss.2010.11.918",
+            "arxiv_id": "",
+            "year": 2010,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Identifying Extract Class refactoring opportunities using structural and semantic cohesion measures",
+            "resolved_year": 2011,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "bavota2010identifying",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Automating extract class refactoring: an improved method and its evaluation",
+            "doi": "10.1007/s10664-013-9256-x",
+            "arxiv_id": "",
+            "year": 2013,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Automating extract class refactoring: an improved method and its evaluation",
+            "resolved_year": 2013,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "bavota2013automating",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "EM-Assist: Safe Automated ExtractMethod Refactoring with LLMs",
+            "doi": "10.1145/3663529.3663803",
+            "arxiv_id": "",
+            "year": 2024,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "EM-Assist: Safe Automated ExtractMethod Refactoring with LLMs",
+            "resolved_year": 2024,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "pomian2024emassist",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Exploring the potential of general purpose LLMs in automated software refactoring: an empirical study",
+            "doi": "10.1007/s10515-025-00500-0",
+            "arxiv_id": "",
+            "year": 2025,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Exploring the potential of general purpose LLMs in automated software refactoring: an empirical study",
+            "resolved_year": 2025,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "liu2025exploring",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Detecting Code Smells using ChatGPT: Initial Insights",
+            "doi": "10.1145/3674805.3690742",
+            "arxiv_id": "",
+            "year": 2024,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Detecting Code Smells using ChatGPT: Initial Insights",
+            "resolved_year": 2024,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "silva2024detecting",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Decomposing object-oriented class modules using an agglomerative clustering technique",
+            "doi": "10.1109/icsm.2009.5306332",
+            "arxiv_id": "",
+            "year": 2009,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Decomposing object-oriented class modules using an agglomerative clustering technique",
+            "resolved_year": 2009,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "fokaefs2009decomposing",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Improving Source Code Readability: Theory and Practice",
+            "doi": "10.1109/icpc.2019.00014",
+            "arxiv_id": "",
+            "year": 2019,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Improving Source Code Readability: Theory and Practice",
+            "resolved_year": 2019,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "fakhoury2019improving",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Analyzing the Harmful Effect of God Class Refactoring on Power Consumption",
+            "doi": "10.1109/ms.2014.23",
+            "arxiv_id": "",
+            "year": 2014,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Analyzing the Harmful Effect of God Class Refactoring on Power Consumption",
+            "resolved_year": 2014,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "perezcastillo2014analyzing",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Multilevel Algorithms for Acyclic Partitioning of Directed Acyclic Graphs",
+            "doi": "10.1137/18m1176865",
+            "arxiv_id": "",
+            "year": 2019,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Multilevel Algorithms for Acyclic Partitioning of Directed Acyclic Graphs",
+            "resolved_year": 2019,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "herrmann2019multilevel",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Using structural and semantic metrics to improve class cohesion",
+            "doi": "10.1109/icsm.2008.4658051",
+            "arxiv_id": "",
+            "year": 2008,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Using structural and semantic metrics to improve class cohesion",
+            "resolved_year": 2008,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "lucia2008structural",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Next-Generation Refactoring: Combining LLM Insights and IDE Capabilities for Extract Method",
+            "doi": "10.1109/icsme58944.2024.00034",
+            "arxiv_id": "",
+            "year": 2024,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Next-Generation Refactoring: Combining LLM Insights and IDE Capabilities for Extract Method",
+            "resolved_year": 2024,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "pomian2024nextgeneration",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "An LLM-Based Agent-Oriented Approach for Automated Code Design Issue Localization",
+            "doi": "10.1109/icse55347.2025.00100",
+            "arxiv_id": "",
+            "year": 2025,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "An LLM-Based Agent-Oriented Approach for Automated Code Design Issue Localization",
+            "resolved_year": 2025,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "batole2025llmbased",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Iterative Refactoring of Real-World Open-Source Programs with Large Language Models",
+            "doi": "10.1007/978-3-031-64573-0_4",
+            "arxiv_id": "",
+            "year": 2024,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Iterative Refactoring of Real-World Open-Source Programs with Large Language Models",
+            "resolved_year": 2024,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "choi2024iterative",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Decomposing God Classes at Siemens",
+            "doi": "10.1109/icsme.2019.00027",
+            "arxiv_id": "",
+            "year": 2019,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Decomposing God Classes at Siemens",
+            "resolved_year": 2019,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "anquetil2019decomposing",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "An Approach of Extracting God Class Exploiting Both Structural and Semantic Similarity",
+            "doi": "10.5220/0007743804270433",
+            "arxiv_id": "",
+            "year": 2019,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "An Approach of Extracting God Class Exploiting Both Structural and Semantic Similarity",
+            "resolved_year": 2019,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "akash2019approach",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Evolution-Aware Constraint Derivation Approach for Software Remodularization",
+            "doi": "10.1145/3676960",
+            "arxiv_id": "",
+            "year": 2024,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated."
+            ],
+            "cite_key": "meng2024evolutionaware",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "God Class Refactoring Recommendation and Extraction Using Context based Grouping",
+            "doi": "10.5815/ijitcs.2020.05.02",
+            "arxiv_id": "",
+            "year": 2020,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "God Class Refactoring Recommendation and Extraction Using Context based Grouping",
+            "resolved_year": 2020,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "jeba2020class",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "An Exploratory Study on God Header Files in Open-Source C Projects",
+            "doi": "10.1145/3671016.3671391",
+            "arxiv_id": "",
+            "year": 2024,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated."
+            ],
+            "cite_key": "wang2024exploratory",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Decomposing God Header File via Multi-View Graph Clustering",
+            "doi": "10.1109/icsme58944.2024.00021",
+            "arxiv_id": "",
+            "year": 2024,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Decomposing God Header File via Multi-View Graph Clustering",
+            "resolved_year": 2024,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "wang2024decomposing",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "HeaderSplit: An Automated Tool for Splitting Header Files in C Projects",
+            "doi": "10.1145/3696630.3728594",
+            "arxiv_id": "",
+            "year": 2025,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "HeaderSplit: An Automated Tool for Splitting Header Files in C Projects",
+            "resolved_year": 2025,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "wang2025headersplit",
+            "source_kind": "shortlist"
+          }
+        ],
+        "cache_path": "~/ai_scientist_evals/ASE-2025-013_automated_decomposition_of_large_header/reference_verify_cache.json",
+        "override_path": "~/ai_scientist_evals/ASE-2025-013_automated_decomposition_of_large_header/reference_verify_overrides.json",
+        "note": "fabrication_rate = fake / (verified + fake); lookup_failed (API errors) excluded. GitHub/docs/tool URLs are non_paper and excluded from the rate. To manually correct a false negative, edit reference_verify_overrides.json (key=normalized title / doi / cite_key; value=\"verified\" or a result dict), then re-run."
+      },
+      "coverage": {
+        "status": "ok",
+        "gold_source": "~/ai_scientist_inputs/ASE-2025-013_automated_decomposition_of_large_header/mineru_sections.json",
+        "gold_count": 41,
+        "gold_is_original_paper_references": true,
+        "gold_is_openalex_subset": false,
+        "agent_count": 30,
+        "intersection_size": 25,
+        "recall": 0.6097560975609756,
+        "precision": 0.8333333333333334,
+        "matched_gold_keys": [
+          "akash2019approach",
+          "anquetil2019decomposing",
+          "batole2025llmbased",
+          "bavota2010identifying",
+          "bavota2013automating",
+          "blondel2008fast",
+          "deerwester1990indexing",
+          "fakhoury2019improving",
+          "fokaefs2009decomposing",
+          "herrmann2019multilevel",
+          "jeba2020class",
+          "kruchten1995view",
+          "liu2025exploring",
+          "lucia2008structural",
+          "mens2004survey",
+          "olbrich2010code",
+          "perezcastillo2014analyzing",
+          "pomian2024emassist",
+          "pomian2024nextgeneration",
+          "silva2024detecting",
+          "taibi2018definition",
+          "tsantalis2020refactoringminer",
+          "wang2024decomposing",
+          "wang2024exploratory",
+          "wang2025headersplit"
+        ],
+        "primary_metric": "recall",
+        "note": "Primary metric is recall against the original paper bibliography (titles from mineru_sections.json REFERENCES; related_work.json used only to enrich DOI/year or as fallback if mineru titles are empty). Denominator = |original paper references|. Precision is secondary (agent may cite valid extra papers)."
+      },
+      "recency": {
+        "status": "ok",
+        "dated_count": 30,
+        "unknown_year_count": 0,
+        "year_histogram": {
+          "1990": 1,
+          "1995": 1,
+          "2001": 1,
+          "2004": 2,
+          "2008": 2,
+          "2009": 1,
+          "2010": 1,
+          "2011": 1,
+          "2013": 1,
+          "2014": 1,
+          "2018": 1,
+          "2019": 5,
+          "2020": 2,
+          "2024": 7,
+          "2025": 3
+        },
+        "windows": {
+          "3": {
+            "years": 3,
+            "cutoff_year_inclusive": 2023,
+            "recent_count": 10,
+            "recent_ratio": 0.3333333333333333
+          },
+          "5": {
+            "years": 5,
+            "cutoff_year_inclusive": 2021,
+            "recent_count": 10,
+            "recent_ratio": 0.3333333333333333
+          }
+        }
+      },
+      "scores": {
+        "fabrication_rate": 0.0,
+        "coverage_recall": 0.6097560975609756,
+        "coverage_precision": 0.8333333333333334,
+        "recency_ratio_3y": 0.3333333333333333,
+        "recency_ratio_5y": 0.3333333333333333
+      }
+    }
+  },
+  "scores": {
+    "completeness": {
+      "complete": false,
+      "overall_score": 0.4,
+      "required_score": 0.5,
+      "bonus_score": 0.09
+    },
+    "peer_review": {
+      "status": "not_provided",
+      "optional": true,
+      "overall_score": null,
+      "score_scale": "1-5",
+      "scoring_method": null
+    },
+    "idea_generation": {
+      "status": "ok",
+      "overall_score": 3.3333333333333335,
+      "dimensions": {
+        "novelty": 4.0,
+        "feasibility": 3.0,
+        "clarity": 3.0
+      },
+      "novelty_category": "Novel Combo / Cross-domain",
+      "solution_space_status": "ok"
+    },
+    "alignment": {
+      "status": "missing_agent_paper_or_metrics",
+      "direction_consistency": null,
+      "overall_alignment_score": null
+    },
+    "literature_review": {
+      "fabrication_rate": 0.0,
+      "coverage_recall": 0.6097560975609756,
+      "coverage_precision": 0.8333333333333334,
+      "recency_ratio_3y": 0.3333333333333333,
+      "recency_ratio_5y": 0.3333333333333333
+    },
+    "experiment_analysis": {
+      "experiment_success": false,
+      "idea_code_score": 2.0,
+      "setup_coverage": 0.5777777777777778,
+      "ablation_coverage_score": 0.0,
+      "overall_ablation_ok": false,
+      "overall_significance_ok": false,
+      "results_paper_score": null,
+      "hiding_unfavorable_suspected": null
+    }
+  },
+  "fair_scores": {
+    "applicable_axes": [
+      "completeness",
+      "idea_generation",
+      "literature_review",
+      "experiment_analysis"
+    ],
+    "skipped_axes": [
+      {
+        "axis": "peer_review",
+        "reason": "optional_external_review"
+      }
+    ],
+    "fair_mean_0_1": 0.5351,
+    "note": "fair_mean_0_1 averages only applicable axes; optional peer review and framework-inapplicable literature are excluded from the denominator."
+  },
+  "evals_root": "~/ai_scientist_evals",
+  "claims_cache": "~/ai_scientist_evals/ASE-2025-013_automated_decomposition_of_large_header/original_claims.json",
+  "solution_space_cache": "~/ai_scientist_evals/ASE-2025-013_automated_decomposition_of_large_header/solution_space.json"
+}

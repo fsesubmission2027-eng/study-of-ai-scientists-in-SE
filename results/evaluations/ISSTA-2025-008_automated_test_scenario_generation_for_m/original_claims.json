@@ -1,0 +1,160 @@
+{
+  "status": "ok",
+  "task_dir": "~/ai_scientist_inputs/ISSTA-2025-008_automated_test_scenario_generation_for_m",
+  "paper_title": "Assessing Scene Generation Techniques for Testing COLREGS-Compliance of Autonomous Surface Vehicles",
+  "task_id": "ISSTA-2025-008",
+  "selection": {
+    "num_blocks": 6,
+    "total_chars": 31998,
+    "inferred_roles": {
+      "abstract": 1,
+      "experiment": 3,
+      "discussion": 1,
+      "conclusion": 1
+    },
+    "mineru_raw_keys": {
+      "field:abstract": 1,
+      "field:experiment": 1,
+      "other": 3,
+      "conclusion": 1
+    },
+    "infer_reasons": {
+      "top_level_field": 2,
+      "body": 2,
+      "title": 2
+    },
+    "rescued_from_other": 3,
+    "note": "mineru key is unreliable; blocks are selected by title/body/inheritance. rescued_from_other counts sections labeled other but treated as typed roles."
+  },
+  "claims": [
+    {
+      "id": "C1",
+      "statement": "Test scenarios derived from real-world AIS/CommonOcean data are insufficient for testing multi-ship COLREGS-compliance encounters.",
+      "direction": "degrades",
+      "metric_names": [
+        "relevant_consistent_ratio",
+        "ambiguous_consistent_ratio"
+      ],
+      "evidence_quote": "test scenarios derived from historic maritime traffic are insufficient for testing multi-ship encounters",
+      "confidence": 0.97
+    },
+    {
+      "id": "C2",
+      "statement": "Existing synthetic test scenario generation techniques provide sufficient scalability and speed, and search-based generation is sufficient for practical open-sea encounters with 3-6 vessels.",
+      "direction": "improves",
+      "metric_names": [
+        "scalability",
+        "speed"
+      ],
+      "evidence_quote": "search-based scenario generation provided sufficient scalability and speed for deriving test scenarios for open sea encounters with increasing number of vessels for problems of practical size (3–6 vessels)",
+      "confidence": 0.95
+    },
+    {
+      "id": "C3",
+      "statement": "Adapted automotive scenario generation techniques are limited in diversity and completeness as the number of vessels increases.",
+      "direction": "degrades",
+      "metric_names": [
+        "diversity",
+        "completeness"
+      ],
+      "evidence_quote": "both SB and RS failed to cover many equivalence classes, particularly for larger problems with more vessels",
+      "confidence": 0.96
+    },
+    {
+      "id": "C4",
+      "statement": "Rejection sampling was not effective for generating maritime test scenarios, likely due to higher degrees of freedom in vessel placement.",
+      "direction": "degrades",
+      "metric_names": [
+        "scalability",
+        "speed"
+      ],
+      "evidence_quote": "while rejection sampling was proven highly beneficial in the automotive domain, it was not effective in generating maritime test scenarios",
+      "confidence": 0.94
+    },
+    {
+      "id": "C5",
+      "statement": "Synthetic test generation techniques can repeatedly derive functionally inconsistent COLREGS scenarios, indicating possible COLREGS assumption gaps in edge cases.",
+      "direction": "mixed",
+      "metric_names": [
+        "consistent_scenario_ratio"
+      ],
+      "evidence_quote": "synthetic test generation techniques repeatedly derived scenarios where the functional scenario model was inconsistent",
+      "confidence": 0.9
+    }
+  ],
+  "metrics": [
+    {
+      "name": "relevant_consistent_ratio_CO_K2",
+      "value": 30.8,
+      "unit": "%",
+      "higher_is_better": true,
+      "setting": "CommonOcean (CO) real-world AIS benchmark, K=2 vessels",
+      "is_sota_or_best": false,
+      "evidence_quote": "The real-world CO dataset has low relevance ratio (30.8%) for K = 2",
+      "confidence": 0.97
+    },
+    {
+      "name": "ambiguous_consistent_ratio_CO_K_gt_2",
+      "value": 0.0,
+      "unit": "%",
+      "higher_is_better": true,
+      "setting": "CommonOcean (CO) real-world AIS benchmark, K>2 vessels",
+      "is_sota_or_best": false,
+      "evidence_quote": "0% relevance and ambiguous ratio for K > 2",
+      "confidence": 0.9
+    },
+    {
+      "name": "two_vessel_encounter_ratio",
+      "value": 97.7,
+      "unit": "%",
+      "higher_is_better": false,
+      "setting": "CommonOcean benchmark overall encounter composition",
+      "is_sota_or_best": false,
+      "evidence_quote": "This benchmark predominantly (97.7%) features two-vessel encounters",
+      "confidence": 0.95
+    },
+    {
+      "name": "relevant_consistent_ratio_SB_K2",
+      "value": 94.4,
+      "unit": "%",
+      "higher_is_better": true,
+      "setting": "Search-based (SB) synthetic scene generation, K=2 vessels",
+      "is_sota_or_best": false,
+      "baseline_name": "RS",
+      "baseline_value": 94.6,
+      "evidence_quote": "T∩C (%) 94.4% 94.6% 30.8%",
+      "confidence": 0.8
+    },
+    {
+      "name": "relevant_consistent_ratio_RS_K2",
+      "value": 94.6,
+      "unit": "%",
+      "higher_is_better": true,
+      "setting": "Rejection sampling (RS) synthetic scene generation, K=2 vessels",
+      "is_sota_or_best": true,
+      "baseline_name": "SB",
+      "baseline_value": 94.4,
+      "evidence_quote": "T∩C (%) 94.4% 94.6% 30.8%",
+      "confidence": 0.8
+    }
+  ],
+  "overall_conclusion": "Automotive scenario generation techniques can be adapted to maritime COLREGS testing, and search-based generation provides adequate speed and scalability, but both SB and RS have limited diversity and completeness for multi-vessel encounters. Real-world AIS-derived CommonOcean scenarios are largely insufficient for testing multi-ship COLREGS compliance due to low relevance and rare multi-vessel encounters.",
+  "comparable_notes": "Experiments compare search-based (SB), rejection-sampling (RS), and CommonOcean AIS data. Measurements used 1000 runs per approach/problem size with a 10-minute timeout on Ubuntu 24.04, Intel Haswell, 32GB RAM, Python 3.12, reset seeds, garbage collection, and two warm-up runs. Scenes were abstracted with l2f into functional equivalence classes; relevance is measured by T∩C and ambiguity by A∩C, with ambiguity defined only for multi-vessel (K>2) scenarios.",
+  "llm_meta": {
+    "model": "deepseek-v4-pro-0813",
+    "base_url": "https://api-sg.umodelverse.ai/v1",
+    "usage": {
+      "completion_tokens": 7078,
+      "completion_tokens_details": {
+        "reasoning_tokens": 5786
+      },
+      "prompt_tokens": 14501,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "total_tokens": 21579
+    },
+    "attempt": 0
+  },
+  "cache_hit": false
+}

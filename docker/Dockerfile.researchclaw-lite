@@ -1,0 +1,39 @@
+# Lightweight ResearchClaw experiment sandbox for ai_scientist_benchmark.
+#
+# Skips the upstream image's slow steps:
+#   - CUDA base (~GB download)
+#   - PyTorch / transformers stack
+#   - Pre-caching CIFAR/MNIST/SVHN datasets at build time (the usual bottleneck)
+#
+# Compatible with ARC docker sandbox (same rc-entrypoint three-phase model).
+# Extra deps can still be installed at runtime from experiment/requirements.txt.
+#
+# Build:
+#   docker build -f Dockerfile.researchclaw-lite -t researchclaw/benchmark:latest .
+
+FROM ubuntu:22.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+ENV PYTHONUNBUFFERED=1
+ENV PIP_NO_CACHE_DIR=1
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        python3 python3-pip python3-venv \
+        gcc g++ gfortran libopenblas-dev \
+        git curl ca-certificates \
+        iptables iproute2 \
+    && python3 -m pip install --upgrade pip setuptools wheel \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# CPU scientific stack — enough for ASE-style tabular ML benchmark tasks.
+RUN python3 -m pip install --no-cache-dir \
+        numpy scipy scikit-learn pandas matplotlib seaborn statsmodels \
+        PyYAML tqdm networkx requests pytest
+
+WORKDIR /workspace
+
+COPY rc-entrypoint.sh /usr/local/bin/rc-entrypoint.sh
+RUN chmod +x /usr/local/bin/rc-entrypoint.sh
+
+ENTRYPOINT ["/usr/local/bin/rc-entrypoint.sh"]
+CMD ["main.py"]

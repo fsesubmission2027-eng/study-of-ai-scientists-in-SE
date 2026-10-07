@@ -1,0 +1,1142 @@
+{
+  "run_dir": "~/ai_scientist_inputs/ISSTA-2025-001_fuzz_testing_for_robotic_simulation_plat/workspace/aris_2026-09-16_13-22-24",
+  "task_dir": "~/ai_scientist_inputs/ISSTA-2025-001_fuzz_testing_for_robotic_simulation_plat",
+  "framework": "aris",
+  "fairness_audit": [
+    {
+      "axis": "completeness",
+      "was_unfair": "Required both paper.tex AND paper.pdf; any tool missing one failed equally.",
+      "fix": "Paper gate: PDF=1.0; TeX-only=0.5; ``complete`` requires PDF."
+    },
+    {
+      "axis": "completeness",
+      "was_unfair": "``results`` counted stub/seed JSON (dataset_candidate/metrics.json).",
+      "fix": "``results`` requires substantive numeric results via results_normalize."
+    },
+    {
+      "axis": "experiment_success",
+      "was_unfair": "Only metrics.json; ignored results.json / experiment_results.txt.",
+      "fix": "Framework-ordered result candidates + normalized loaders."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Penalized tools with no bib; airesearcher has no workspace references.",
+      "fix": "literature_applicable=false → status not_applicable; excluded from fair aggregate."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "related_work.json subset as gold made recall hard to interpret.",
+      "fix": "Coverage gold is original paper REFERENCES from mineru; related_work only enriches metadata/fallback."
+    },
+    {
+      "axis": "peer_review",
+      "was_unfair": "Missing Stanford report looked like evaluation failure.",
+      "fix": "status not_provided; optional axis, never counts as tool failure."
+    },
+    {
+      "axis": "paths/find_results",
+      "was_unfair": "Picked downloads/** and sandbox noise (e.g. airesearcher LLVM tree).",
+      "fix": "Exclude downloads/, seeds/, dataset_candidate/, sandbox junk paths."
+    },
+    {
+      "axis": "paths/framework_noise",
+      "was_unfair": "DeepScientist .deepscientist_npm / runtime / skills templates counted as code/paper/results.",
+      "fix": "FRAMEWORK_NOISE_DIRS+markers; quest worktree + eval_output results; paper md drafts; reject template tex."
+    },
+    {
+      "axis": "paths/paper_tex",
+      "was_unfair": "tiny_scientist / ACL runs store paper under latex/*.tex; evaluator only looked at paper/main.tex.",
+      "fix": "latex/**/*.tex with substantive-body heuristic; find_paper_document uses same rules."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Entire custom.bib (300+ anthology entries) verified when paper had zero \\cite commands.",
+      "fix": "collect_agent_references filters bib to in-text cite keys; skips uncited bulk bib (>40 entries)."
+    },
+    {
+      "axis": "paths/ai_scientist_summaries",
+      "was_unfair": "AI Scientist can persist substantive results and paper-like drafts in *_summary.json logs rather than paper/main.tex or results/**/*.json.",
+      "fix": "Treat draft_summary/research_summary as weak paper documents and summary JSONs as result candidates."
+    },
+    {
+      "axis": "framework/ai_scientist_v2",
+      "was_unfair": "Manifest framework ``ai_scientist_v2`` fell through to profile ``unknown``, skipping AI-Scientist idea/result path priorities.",
+      "fix": "Normalize ``ai_scientist_v2`` (and common aliases) to profile key ``ai_scientist``."
+    },
+    {
+      "axis": "idea_generation",
+      "was_unfair": "plan.md/todos.md weak proxies scored same as structured idea.json.",
+      "fix": "Framework idea_priority tried first; missing idea → not_applicable where appropriate."
+    }
+  ],
+  "generated_at": "2026-10-01T13:25:28",
+  "axes": [
+    "alignment",
+    "completeness",
+    "experiment_analysis",
+    "idea_generation",
+    "literature_review",
+    "peer_review"
+  ],
+  "results": {
+    "completeness": {
+      "framework": "aris",
+      "run_dir": "~/ai_scientist_inputs/ISSTA-2025-001_fuzz_testing_for_robotic_simulation_plat/workspace/aris_2026-09-16_13-22-24",
+      "task_dir": "~/ai_scientist_inputs/ISSTA-2025-001_fuzz_testing_for_robotic_simulation_plat",
+      "complete": true,
+      "required_score": 1.0,
+      "bonus_score": 0.17,
+      "overall_score": 0.8589,
+      "missing": [],
+      "required": {
+        "idea": {
+          "path": "idea-stage/IDEA_REPORT.md",
+          "bytes": 10520,
+          "via": "candidate"
+        },
+        "code": {
+          "count": 4,
+          "files": [
+            {
+              "path": "project/experiment_runner.py",
+              "bytes": 19944,
+              "via": "glob"
+            },
+            {
+              "path": "project/make_figures.py",
+              "bytes": 5278,
+              "via": "glob"
+            },
+            {
+              "path": "src/statetrace/statetrace.py",
+              "bytes": 17278,
+              "via": "glob"
+            },
+            {
+              "path": "src/statetrace/test_parser.py",
+              "bytes": 5196,
+              "via": "glob"
+            }
+          ]
+        },
+        "results": {
+          "substantive": true,
+          "normalized_path": "results/metrics.json",
+          "numeric_leaf_count": 123,
+          "discovered_files": [
+            {
+              "path": "results/metrics.json",
+              "bytes": 5013,
+              "via": "candidate"
+            }
+          ],
+          "metrics_keys_sample": [
+            "generated_by",
+            "experiment_command",
+            "method",
+            "dataset",
+            "validity",
+            "state_coverage",
+            "unique_crash_dirs",
+            "issue_ground_truth",
+            "novelty_discrimination",
+            "coverage",
+            "number_of_unique_bugs_detected",
+            "code_coverage"
+          ]
+        },
+        "paper": {
+          "tex": {
+            "path": "paper/main.tex",
+            "bytes": 14064,
+            "via": "candidate"
+          },
+          "pdf": {
+            "path": "paper/main.pdf",
+            "bytes": 237944,
+            "via": "candidate"
+          },
+          "md": null,
+          "json": null,
+          "status": "pdf",
+          "score": 1.0
+        }
+      },
+      "bonus": {
+        "experiment_plan": {
+          "path": "refine-logs/EXPERIMENT_PLAN.md",
+          "bytes": 1691,
+          "via": "candidate"
+        },
+        "experiment_log": {
+          "path": "aris_run.log",
+          "bytes": 473352,
+          "via": "glob"
+        },
+        "review": {
+          "path": "review-stage/AUTO_REVIEW.md",
+          "bytes": 1908,
+          "via": "candidate"
+        },
+        "readme": {
+          "path": "README_BENCHMARK.md",
+          "bytes": 956,
+          "via": "candidate"
+        },
+        "narrative": {
+          "path": "NARRATIVE_REPORT.md",
+          "bytes": 6420,
+          "via": "candidate"
+        },
+        "bib": {
+          "path": "paper/references.bib",
+          "bytes": 1404,
+          "via": "candidate"
+        }
+      },
+      "manifest_status": {
+        "idea": true,
+        "experiment_plan": true,
+        "experiment_log": false,
+        "metrics": true,
+        "review": true,
+        "narrative": true,
+        "paper_tex": true,
+        "paper_pdf": true
+      },
+      "gate_scores": {
+        "idea": 1.0,
+        "code": 1.0,
+        "results": 1.0,
+        "paper": 1.0
+      },
+      "fairness": {
+        "gates": [
+          "idea",
+          "code",
+          "results",
+          "paper"
+        ],
+        "paper_gate_rule": "PDF=1.0; TeX-only/md_only/json_only=0.5; complete requires PDF",
+        "results_gate_rule": "substantive numeric results via framework-aware normalize_results",
+        "audit_ref": "framework_profile.FAIRNESS_AUDIT"
+      },
+      "notes": [
+        "Required: idea, code, substantive results, paper (PDF full; TeX/markdown/JSON draft half).",
+        "Stub/seed metrics (e.g. dataset_candidate/metrics.json) do not satisfy results.",
+        "Framework noise (.deepscientist_npm, skills/templates, runtime) is excluded from code/results/paper.",
+        "Manifest status is informational; disk presence is authoritative."
+      ]
+    },
+    "idea_generation": {
+      "run_dir": "~/ai_scientist_inputs/ISSTA-2025-001_fuzz_testing_for_robotic_simulation_plat/workspace/aris_2026-09-16_13-22-24",
+      "task_dir": "~/ai_scientist_inputs/ISSTA-2025-001_fuzz_testing_for_robotic_simulation_plat",
+      "idea_path": "~/ai_scientist_inputs/ISSTA-2025-001_fuzz_testing_for_robotic_simulation_plat/workspace/aris_2026-09-16_13-22-24/idea-stage/IDEA_REPORT.md",
+      "status": "ok",
+      "dimensions": {
+        "novelty": {
+          "score": 3.0,
+          "justification": "The core method is an extension of state-aware fuzzing ideas. The artifact proposes 'an offline state-space exploration profiler' and an 'intrinsic state-novelty reward' that 'reconstructs the semantic state lattice of a fuzzing campaign directly from the logged command stream.' This is a meaningful extension of state inference/coverage metrics, but it remains within the existing stateful-fuzzing paradigm rather than overturning it.",
+          "rubric": "Incremental: a meaningful extension or optimization of prior baseline work that fixes a concrete prior limitation, but the core paradigm is unchanged.",
+          "category": "Incremental",
+          "nearest_solution_space_ids": [
+            "R42",
+            "R9",
+            "R11",
+            "R54"
+          ],
+          "differentiation": "StateTrace is not a new online fuzzer; it reconstructs a semantic state lattice offline from logged command streams and adds a count-based state-novelty reward/metrics. This differs from R42/R9, which infer or model protocol state online for network servers, and from R11/R54, which guide robotic/RL fuzzing via messages or coverage without an offline state-space profiler."
+        },
+        "feasibility": {
+          "score": 3.0,
+          "justification": "The plan is moderately implementable: it avoids a full simulator rerun by 'Operates offline — no Gazebo process' and uses data already 'mounted' in the container. However, building a de-serializer that reconstructs each turn's semantic state with plugin multisets, active services/topics, and applicability checks is nontrivial custom engineering beyond simple library calls.",
+          "rubric": "Moderate workload (sweet spot): needs nontrivial coding such as scripting existing open-source tools (parsers, CFG extractors) or building a custom graph-processing pipeline; standard research engineering effort."
+        },
+        "clarity": {
+          "score": 4.0,
+          "justification": "The idea defines two concrete metrics ('Strict-input validity' and 'State-space coverage'), gives a reward formula 'r_nov(s) = 1/sqrt(N(s))', and describes offline validation on real campaigns by measuring 'correlation/rank-separation between reward and unique-bug yield.' Some technical details, such as exact canonicalization rules and statistical comparison procedures, remain underspecified, but the plan is concrete enough for a proposal.",
+          "rubric": "Clear and concrete: steps are explicit with a reasonable, specific experiment design (baseline tools, metric definitions); can be turned into a solid proposal."
+        }
+      },
+      "overall_score": 3.3,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "novelty",
+        "feasibility",
+        "clarity"
+      ],
+      "solution_space": {
+        "status": "ok",
+        "paper_count": 72,
+        "entry_count": 72,
+        "cache_hit": true,
+        "source_file": "~/ai_scientist_inputs/ISSTA-2025-001_fuzz_testing_for_robotic_simulation_plat/mineru_sections.json",
+        "stats": {
+          "papers": 72,
+          "extracted": 72,
+          "usable_abstracts": 21,
+          "citation_meta_abstracts": 0,
+          "missing_abstracts": 51,
+          "mineru_titles": 62,
+          "related_work_titles": 28,
+          "abstracts_attached": 21,
+          "related_work_extras": 10,
+          "batches": 4
+        },
+        "error": null
+      },
+      "notes": [
+        "Scores the intermediate idea artifact (not the final paper).",
+        "Dimensions: novelty, feasibility, clarity (each 1-5). Excitement removed.",
+        "Novelty is scored against a Solution Space built from mineru REFERENCES titles (+ related_work.json abstracts when matched)."
+      ],
+      "idea_via": "candidate",
+      "idea_relative": "idea-stage/IDEA_REPORT.md",
+      "summary": "StateTrace proposes an offline state-space profiler and state-novelty reward to re-analyze logged Gazebo fuzzing campaigns. It reconstructs semantic states from command streams and defines validity and state-coverage metrics. Relative to state-aware fuzzing in the solution space, this is an incremental tooling/metrics contribution: useful, clearly specified, and feasible without rerunning Gazebo, but not a new fuzzing paradigm or deeply non-obvious mechanism. Moderate engineering is required for robust semantic log parsing and reward re-labeling.",
+      "strengths": [
+        "Clearly targets the task's two pillars: strict-input validity and state-space coverage.",
+        "Uses existing logged data, avoiding infeasible simulator reruns.",
+        "Provides concrete metric definitions and an explicit reward formula.",
+        "Directly maps contributions to RQ1-RQ3 with an offline validation plan."
+      ],
+      "weaknesses": [
+        "Primarily a re-analysis/metrics extension rather than a new fuzzer or algorithm.",
+        "State-novelty reward analysis is correlational and may not establish causal bug-finding improvement.",
+        "Semantic state canonicalization across plugin/model/service combinations is nontrivial and underspecified.",
+        "Depends strongly on the quality and coverage of the existing GzFuzz logs."
+      ],
+      "llm_meta": {
+        "model": "deepseek-v4-pro-0813",
+        "base_url": "https://api-sg.umodelverse.ai/v1",
+        "usage": {
+          "completion_tokens": 2644,
+          "completion_tokens_details": {
+            "reasoning_tokens": 1908
+          },
+          "prompt_tokens": 8445,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "total_tokens": 11089
+        },
+        "attempt": 0
+      }
+    },
+    "peer_review": {
+      "run_dir": "~/ai_scientist_inputs/ISSTA-2025-001_fuzz_testing_for_robotic_simulation_plat/workspace/aris_2026-09-16_13-22-24",
+      "review_report": "~/ai_scientist_inputs/ISSTA-2025-001_fuzz_testing_for_robotic_simulation_plat/workspace/aris_2026-09-16_13-22-24/artifacts/peer_review/stanford_apr.md",
+      "paper_pdf": "~/ai_scientist_inputs/ISSTA-2025-001_fuzz_testing_for_robotic_simulation_plat/workspace/aris_2026-09-16_13-22-24/paper/main.pdf",
+      "paper_tex": "~/ai_scientist_inputs/ISSTA-2025-001_fuzz_testing_for_robotic_simulation_plat/workspace/aris_2026-09-16_13-22-24/paper/main.tex",
+      "status": "ok",
+      "dimensions": {},
+      "overall_score": 3.9,
+      "score_scale": "1-10",
+      "dimension_order": [],
+      "notes": [
+        "Scored from paperreview.ai (Stanford APR) native ratings; benchmark 5-dimension LLM rubric skipped.",
+        "Overall scale: 1-10."
+      ],
+      "paperreview": {
+        "status": "cached",
+        "hint": "Cached APR score found; no re-upload."
+      },
+      "scoring_method": "paperreview_apr",
+      "scoring_source": "paperreview_json",
+      "apr_dimensions": {},
+      "summary": "",
+      "red_flags": []
+    },
+    "alignment": {
+      "run_dir": "~/ai_scientist_inputs/ISSTA-2025-001_fuzz_testing_for_robotic_simulation_plat/workspace/aris_2026-09-16_13-22-24",
+      "task_dir": "~/ai_scientist_inputs/ISSTA-2025-001_fuzz_testing_for_robotic_simulation_plat",
+      "status": "ok",
+      "original": {
+        "paper_title": "Reinforcement Learning-based Fuzz Testing for the Gazebo Robotic Simulator",
+        "selection": {
+          "num_blocks": 7,
+          "total_chars": 31998,
+          "inferred_roles": {
+            "abstract": 1,
+            "introduction": 1,
+            "experiment": 4,
+            "conclusion": 1
+          },
+          "mineru_raw_keys": {
+            "field:abstract": 1,
+            "field:introduction": 1,
+            "field:experiment": 1,
+            "other": 3,
+            "conclusion": 1
+          },
+          "infer_reasons": {
+            "top_level_field": 3,
+            "body": 1,
+            "title": 3
+          },
+          "rescued_from_other": 3,
+          "note": "mineru key is unreliable; blocks are selected by title/body/inheritance. rescued_from_other counts sections labeled other but treated as typed roles."
+        },
+        "claims": [
+          {
+            "id": "C1",
+            "statement": "GzFuzz is the first fuzz testing framework designed for Gazebo.",
+            "direction": "neutral",
+            "metric_names": [],
+            "evidence_quote": ""
+          }
+        ],
+        "metrics": [],
+        "overall_conclusion": null,
+        "comparable_notes": null,
+        "cache_hit": true
+      },
+      "agent": {
+        "status": "ok",
+        "run_dir": "~/ai_scientist_inputs/ISSTA-2025-001_fuzz_testing_for_robotic_simulation_plat/workspace/aris_2026-09-16_13-22-24",
+        "claims": [
+          {
+            "id": "A1",
+            "statement": "GzFuzz achieves higher strict-input validity than AFL++ (91.2% versus 71.0%).",
+            "direction": "improves",
+            "metric_names": [
+              "GzFuzz strict-input validity",
+              "AFL++ strict-input validity"
+            ],
+            "evidence_quote": "GzFuzz achieves 91.2% strict-input validity and 19,097 distinct states versus AFL++'s 71.0% and 505.",
+            "confidence": 0.98
+          },
+          {
+            "id": "A2",
+            "statement": "GzFuzz reaches 19,097 distinct states, far more than AFL++'s 505 distinct states.",
+            "direction": "improves",
+            "metric_names": [
+              "GzFuzz distinct states",
+              "AFL++ distinct states"
+            ],
+            "evidence_quote": "GzFuzz achieves 91.2% strict-input validity and 19,097 distinct states versus AFL++'s 71.0% and 505.",
+            "confidence": 0.98
+          },
+          {
+            "id": "A3",
+            "statement": "GzFuzz's grammar generator drives input validity while its RL drives bug yield.",
+            "direction": "mixed",
+            "metric_names": [
+              "GzFuzz strict-input validity",
+              "number_of_unique_bugs_detected"
+            ],
+            "evidence_quote": "its grammar generator drives validity while its RL drives bug yield.",
+            "confidence": 0.75
+          },
+          {
+            "id": "A4",
+            "statement": "Bug-revealing states are dramatically lower-novelty than non-crash terminal states (AUROC approximately 0.05, p < 10^-26).",
+            "direction": "degrades",
+            "metric_names": [
+              "GzFuzz bug novelty AUROC",
+              "GzFuzz Mann-Whitney p"
+            ],
+            "evidence_quote": "bug-revealing states are dramatically lower-novelty than non-crash terminal states (area-under-ROC approximately 0.05, p < 10^-26).",
+            "confidence": 0.95
+          },
+          {
+            "id": "A5",
+            "statement": "StateTrace's confound-controlled analysis reframes GzFuzz's diversity reward as a coverage-maintenance heuristic rather than a novelty heuristic.",
+            "direction": "mixed",
+            "metric_names": [
+              "GzFuzz bug novelty AUROC"
+            ],
+            "evidence_quote": "reframing GzFuzz's diversity reward as a coverage-maintenance heuristic rather than a novelty heuristic.",
+            "confidence": 0.85
+          },
+          {
+            "id": "A6",
+            "statement": "Roughly 9% of GzFuzz's model commands contain a Python bytes-repr leak that produces syntactically invalid SDF.",
+            "direction": "degrades",
+            "metric_names": [
+              "GzFuzz strict-input validity"
+            ],
+            "evidence_quote": "roughly 9% of GzFuzz's model commands embed a Python bytes-repr leak that is syntactically invalid SDF.",
+            "confidence": 0.8
+          },
+          {
+            "id": "A7",
+            "statement": "StateTrace reconstructs a campaign's semantic state lattice offline from the logged command stream without requiring a live simulator, protobuf bindings, or simulator instrumentation.",
+            "direction": "neutral",
+            "metric_names": [],
+            "evidence_quote": "an offline state-space profiler that reconstructs the semantic state lattice of a finished fuzzing campaign directly from the logged protobuf-text command stream, requiring no live simulator.",
+            "confidence": 0.99
+          },
+          {
+            "id": "A8",
+            "statement": "GzFuzz reaches approximately 3.6x the line coverage of AFL++.",
+            "direction": "improves",
+            "metric_names": [
+              "GzFuzz final line coverage",
+              "AFL++ final line coverage"
+            ],
+            "evidence_quote": "It finds 25 Gazebo bugs and reaches approximately 3.6x the line coverage of AFL++.",
+            "confidence": 0.9
+          }
+        ],
+        "metrics": [
+          {
+            "name": "GzFuzz strict-input validity",
+            "value": 91.16544218585199,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "GzFuzz 12h x 5 campaign re-analysis",
+            "is_sota_or_best": false,
+            "baseline_name": "AFL++",
+            "baseline_value": 71.03103103103103,
+            "evidence_quote": "GzFuzz achieves 91.2% strict-input validity and 19,097 distinct states versus AFL++'s 71.0% and 505.",
+            "confidence": 0.98
+          },
+          {
+            "name": "AFL++ strict-input validity",
+            "value": 71.03103103103103,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "AFL++ baseline re-analysis",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "GzFuzz achieves 91.2% strict-input validity and 19,097 distinct states versus AFL++'s 71.0% and 505.",
+            "confidence": 0.97
+          },
+          {
+            "name": "SC strict-input validity",
+            "value": 100.0,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "SC ablation re-analysis",
+            "is_sota_or_best": true,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "metrics.json validity: SC commands=29368, valid=29368, rate=1.0",
+            "confidence": 0.97
+          },
+          {
+            "name": "DC strict-input validity",
+            "value": 64.82896047824643,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "DC ablation re-analysis",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "metrics.json validity: DC commands=27099, valid=17568, rate=0.6482896047824643",
+            "confidence": 0.97
+          },
+          {
+            "name": "NL strict-input validity",
+            "value": 99.76083807727288,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "NL ablation re-analysis",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "metrics.json validity: NL commands=29687, valid=29616, rate=0.9976083807727288",
+            "confidence": 0.97
+          },
+          {
+            "name": "Fuzzotron strict-input validity",
+            "value": 0.0,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "Fuzzotron baseline re-analysis",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "metrics.json validity: Fuzzotron files=1296, valid=0, rate=0.0",
+            "confidence": 0.97
+          },
+          {
+            "name": "GzFuzz distinct states",
+            "value": 19097,
+            "unit": "states",
+            "higher_is_better": true,
+            "setting": "State-space coverage re-analysis",
+            "is_sota_or_best": false,
+            "baseline_name": "AFL++",
+            "baseline_value": 505,
+            "evidence_quote": "GzFuzz achieves 91.2% strict-input validity and 19,097 distinct states versus AFL++'s 71.0% and 505.",
+            "confidence": 0.98
+          },
+          {
+            "name": "AFL++ distinct states",
+            "value": 505,
+            "unit": "states",
+            "higher_is_better": true,
+            "setting": "State-space coverage re-analysis",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "GzFuzz achieves 91.2% strict-input validity and 19,097 distinct states versus AFL++'s 71.0% and 505.",
+            "confidence": 0.97
+          },
+          {
+            "name": "GzFuzz final line coverage",
+            "value": 93791,
+            "unit": "lines",
+            "higher_is_better": true,
+            "setting": "Coverage re-analysis",
+            "is_sota_or_best": true,
+            "baseline_name": "AFL++",
+            "baseline_value": 26147,
+            "evidence_quote": "metrics.json coverage: GzFuzz final_lines=93791",
+            "confidence": 0.97
+          },
+          {
+            "name": "AFL++ final line coverage",
+            "value": 26147,
+            "unit": "lines",
+            "higher_is_better": true,
+            "setting": "Coverage re-analysis",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "metrics.json coverage: AFL++ final_lines=26147",
+            "confidence": 0.97
+          },
+          {
+            "name": "Fuzzotron final line coverage",
+            "value": 19185,
+            "unit": "lines",
+            "higher_is_better": true,
+            "setting": "Coverage re-analysis",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "metrics.json coverage: Fuzzotron final_lines=19185",
+            "confidence": 0.97
+          }
+        ],
+        "overall_conclusion": "StateTrace re-analysis shows GzFuzz has high strict-input validity (91.2%) and far greater state coverage than AFL++ (19,097 vs 505 distinct states), while its diversity reward is not associated with bug novelty; bug-revealing states are lower-novelty than non-crash terminal states.",
+        "sources": {
+          "metrics_path": "results/metrics.json",
+          "paper_tex_path": "paper/main.tex"
+        },
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 6242,
+            "completion_tokens_details": {
+              "reasoning_tokens": 3876
+            },
+            "prompt_tokens": 6133,
+            "prompt_tokens_details": {
+              "cached_tokens": 4096
+            },
+            "total_tokens": 12375
+          },
+          "attempt": 1
+        }
+      },
+      "comparison": {
+        "status": "ok",
+        "claim_alignment": [
+          {
+            "original_claim_id": "C1",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "The agent reports GzFuzz re-analysis results but does not make or evaluate the claim that GzFuzz is the first fuzz testing framework designed for Gazebo."
+          }
+        ],
+        "metric_alignment": [],
+        "summary": {
+          "direction_consistency": "same_direction_incomparable",
+          "consistent_claim_ratio": 0.0,
+          "has_comparable_metrics": false,
+          "sota_improvement_summary": "N/A: original paper had no metrics, so agent-reported GzFuzz improvements over AFL++ cannot be compared to original claims.",
+          "overall_alignment_score": 0.4,
+          "score_rationale": "The original first-Gazebo-fuzzer claim is not directly addressed, but the agent clearly works on the same GzFuzz/Gazebo fuzzing problem and reports favorable GzFuzz coverage and validity results."
+        },
+        "warnings": [
+          "Original extraction contains no metrics; agent metrics cannot be directly compared."
+        ],
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 1635,
+            "completion_tokens_details": {
+              "reasoning_tokens": 1371
+            },
+            "prompt_tokens": 3380,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 5015
+          },
+          "attempt": 0
+        }
+      },
+      "overall_alignment_score": 0.4,
+      "direction_consistency": "same_direction_incomparable"
+    },
+    "experiment_analysis": {
+      "run_dir": "~/ai_scientist_inputs/ISSTA-2025-001_fuzz_testing_for_robotic_simulation_plat/workspace/aris_2026-09-16_13-22-24",
+      "task_dir": "~/ai_scientist_inputs/ISSTA-2025-001_fuzz_testing_for_robotic_simulation_plat",
+      "status": "ok",
+      "metrics_path": "results/metrics.json",
+      "experiment_success": {
+        "status": "ok",
+        "success": true,
+        "metrics_path": "results/metrics.json",
+        "absolute_metrics_path": "~/ai_scientist_inputs/ISSTA-2025-001_fuzz_testing_for_robotic_simulation_plat/workspace/aris_2026-09-16_13-22-24/results/metrics.json",
+        "checks": {
+          "has_results_file": true,
+          "non_stub": true,
+          "numeric_leaf_count": 123,
+          "min_numeric_ok": true
+        },
+        "manifest_hints": {
+          "status": {
+            "idea": true,
+            "experiment_plan": true,
+            "experiment_log": false,
+            "metrics": true,
+            "review": true,
+            "narrative": true,
+            "paper_tex": true,
+            "paper_pdf": true
+          },
+          "returncode": 1,
+          "benchmark_complete": false,
+          "artifacts_metrics_flag": false
+        },
+        "warnings": [
+          "manifest.returncode=1",
+          "manifest.benchmark_complete=false"
+        ],
+        "suspicious_values": [],
+        "note": "success=true requires substantive results (framework-aware path) with >=3 numeric leaves. Supports metrics.json, results.json, experiment_results.txt, etc. Manifest returncode/benchmark_complete are soft warnings only."
+      },
+      "idea_code_consistency": {
+        "status": "ok",
+        "idea_path": "idea-stage/IDEA_REPORT.md",
+        "code_files": [
+          "project/experiment_runner.py"
+        ],
+        "score_scale": "1-5",
+        "score": 1.0,
+        "label": "severe_mismatch",
+        "justification": "The experiment code is an incomplete scaffolding file. It declares the StateTrace offline re-analysis goals (E1-E5) and contains path/helper definitions, but parse_reward_runs is a stub returning empty data, extract_rc_to_tmp is truncated, and there is no implementation of state reconstruction, canonical state hashing, strict-input validity, state-space coverage, novelty reward, component attribution, plateau detection, or metrics.json writing. The core method and evaluation protocol from the idea are absent, leaving only boilerplate and unused imports.",
+        "matched_elements": [
+          "References the intended GzFuzz dataset directory and result path",
+          "Plans to import src/statetrace as st",
+          "Outlines desired metrics E1-E5 matching the StateTrace proposal",
+          "Defines helpers for locating GzFuzz-family run directories and unique crash dirs"
+        ],
+        "missing_or_divergent_elements": [
+          "StateTrace state-lattice reconstruction and canonical state representation",
+          "Strict-input validity computation",
+          "State-space coverage and novelty reward computation",
+          "Offline reward re-labeling and bug-yield correlation analysis",
+          "Ablation comparison for SC/RC/DC/NL",
+          "Coverage plateau detection",
+          "Actual writing of results/metrics.json",
+          "Complete extraction logic and executable experiment entrypoint"
+        ],
+        "rubric": "Severe mismatch: code implements a different problem/method than the idea, or is unrelated boilerplate.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 691,
+            "completion_tokens_details": {
+              "reasoning_tokens": 380
+            },
+            "prompt_tokens": 4039,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 4730
+          },
+          "attempt": 0
+        }
+      },
+      "setup_coverage": {
+        "status": "ok",
+        "overall_coverage": 1.0,
+        "datasets": {
+          "gold_count": 2,
+          "hit_count": 2,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "SDF World Files from Target Simulator",
+            "Gazebo Simulator (Release Versions)"
+          ],
+          "misses": []
+        },
+        "baselines": {
+          "gold_count": 2,
+          "hit_count": 2,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "AFL++",
+            "Fuzzotron"
+          ],
+          "misses": []
+        },
+        "metrics": {
+          "gold_count": 2,
+          "hit_count": 2,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "Number of unique bugs detected",
+            "Code coverage"
+          ],
+          "misses": []
+        },
+        "agent_protocol": {},
+        "gold_protocol": {
+          "timeout_hours": 12
+        },
+        "dataset_dirs": [
+          "dataset_candidate"
+        ],
+        "flags": {
+          "weaker_baseline_suspected": false,
+          "weak_protocol": [],
+          "synthetic_data": "synthetic_allowed_by_task",
+          "gold_allows_synthetic": true
+        },
+        "gold_sources": [
+          "~/ai_scientist_inputs/ISSTA-2025-001_fuzz_testing_for_robotic_simulation_plat/task.md",
+          "~/ai_scientist_inputs/ISSTA-2025-001_fuzz_testing_for_robotic_simulation_plat/metadata.json"
+        ],
+        "note": "Coverage is name/alias matching against task.md Datasets/Baselines/Metrics. weak_protocol flags large reductions in trials/timeout vs Constraints. Synthetic corpora are not penalized when the task itself requires synthesis."
+      },
+      "ablation_significance": {
+        "status": "ok",
+        "idea_path": "idea-stage/IDEA_REPORT.md",
+        "significance_signals_rule_based": {
+          "signals": [
+            "paper_contains:p<"
+          ],
+          "artifact_paths": [],
+          "has_any_significance_artifact": true
+        },
+        "evidence_format": "raw_json",
+        "study_type": null,
+        "components": [],
+        "ablation_coverage_score": null,
+        "overall_ablation_ok": null,
+        "overall_significance_ok": null,
+        "summary": "",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 2500,
+            "completion_tokens_details": {
+              "reasoning_tokens": 2500
+            },
+            "prompt_tokens": 2764,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 5264
+          },
+          "attempt": 0
+        }
+      },
+      "results_paper_consistency": {
+        "status": "ok",
+        "paper_tex": "paper/main.tex",
+        "paper_kind": "paper_tex",
+        "results_format": "raw_json",
+        "digest_hint": {
+          "unfavorable_count": 0,
+          "trial_fail_count": 0,
+          "trial_success_count": 0,
+          "metadata": {}
+        },
+        "score_scale": "1-5",
+        "method": "Direct LLM comparison: agent's FINAL results artifact (metrics.json summary) vs paper Results/Discussion/Conclusion. Interim failed runs are NOT evidence unless still present in the final metrics file.",
+        "score": 4.0,
+        "consistency_label": null,
+        "hiding_unfavorable_suspected": false,
+        "hiding_confidence": null,
+        "justification": "",
+        "supported_claims": [],
+        "unsupported_or_overstated_claims": [],
+        "numeric_mismatches": [
+          "Paper says NL reaches fewest bugs (9), but final results show DC has fewer bugs (8).",
+          "Paper's reported AFL++ crashes 2 is not supported by final results."
+        ],
+        "unfavorable_in_final_results": [],
+        "unfavorable_acknowledged_in_paper": [],
+        "unfavorable_missing_from_paper": [],
+        "rubric": "Mostly consistent: reported conclusions track the metrics; negative/failed settings are acknowledged with only minor gaps.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 1305,
+            "completion_tokens_details": {
+              "reasoning_tokens": 1163
+            },
+            "prompt_tokens": 2764,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 4069
+          },
+          "attempt": 0
+        }
+      },
+      "scores": {
+        "experiment_success": true,
+        "idea_code_score": 1.0,
+        "setup_coverage": 1.0,
+        "ablation_coverage_score": null,
+        "overall_ablation_ok": null,
+        "overall_significance_ok": null,
+        "results_paper_score": 4.0,
+        "hiding_unfavorable_suspected": false
+      },
+      "notes": [
+        "Axes 1,2,3,4,6 in experiment_analysis (figures excluded).",
+        "setup_coverage matches task.md Datasets/Baselines/Metrics; weak_protocol flags reductions vs Constraints.",
+        "Axis 6: final normalized results vs paper; interim run logs not used as ground truth."
+      ]
+    },
+    "literature_review": {
+      "run_dir": "~/ai_scientist_inputs/ISSTA-2025-001_fuzz_testing_for_robotic_simulation_plat/workspace/aris_2026-09-16_13-22-24",
+      "task_dir": "~/ai_scientist_inputs/ISSTA-2025-001_fuzz_testing_for_robotic_simulation_plat",
+      "status": "ok",
+      "as_of_year": 2026,
+      "agent_ref_count": 5,
+      "sources": [
+        {
+          "path": "~/ai_scientist_inputs/ISSTA-2025-001_fuzz_testing_for_robotic_simulation_plat/workspace/aris_2026-09-16_13-22-24/paper/references.bib",
+          "kind": "bib"
+        },
+        {
+          "path": "~/ai_scientist_inputs/ISSTA-2025-001_fuzz_testing_for_robotic_simulation_plat/workspace/aris_2026-09-16_13-22-24/paper/main.tex",
+          "kind": "thebibliography"
+        }
+      ],
+      "collection_audit": {
+        "cited_keys_count": 3,
+        "filter_mode": "paper_cite_keys",
+        "bib_total_before_filter": 4,
+        "bib_after_filter": 3,
+        "uncited_bib_skipped": 0,
+        "cited_keys_sample": [
+          "aflnet",
+          "gzfuzz",
+          "nautilus"
+        ],
+        "thebibliography_after_filter": 3,
+        "agent_ref_count": 5
+      },
+      "fabrication": {
+        "status": "ok",
+        "scholarly_count": 5,
+        "verified_count": 3,
+        "fake_count": 1,
+        "lookup_failed_count": 1,
+        "insufficient_metadata_count": 0,
+        "non_paper_count": 0,
+        "fabrication_rate": 0.25,
+        "items": [
+          {
+            "title": "Reinforcement Learning-Based Fuzz Testing for the Gazebo Robotic Simulator",
+            "doi": "10.1145/3728942",
+            "arxiv_id": "",
+            "year": 2025,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Reinforcement Learning-Based Fuzz Testing for the Gazebo Robotic Simulator",
+            "resolved_year": 2025,
+            "notes": [],
+            "cache_hit": true,
+            "cite_key": "gzfuzz",
+            "source_kind": "bib"
+          },
+          {
+            "title": "NAUTILUS: Fishing for Deep Bugs with Grammars",
+            "doi": "10.14722/ndss.2019.23412",
+            "arxiv_id": "",
+            "year": 2019,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "NAUTILUS: Fishing for Deep Bugs with Grammars",
+            "resolved_year": 2019,
+            "notes": [],
+            "cache_hit": true,
+            "cite_key": "nautilus",
+            "source_kind": "bib"
+          },
+          {
+            "title": "{AFLNet}: A Greybox Fuzzer for Network Protocols",
+            "doi": "10.1109/icst46399.2020.00062",
+            "arxiv_id": "",
+            "year": 2020,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "AFLNET: A Greybox Fuzzer for Network Protocols",
+            "resolved_year": 2020,
+            "notes": [],
+            "cache_hit": true,
+            "cite_key": "aflnet",
+            "source_kind": "bib"
+          },
+          {
+            "title": "Cornelius Aschermann, Tommaso Frassetto, Thorsten Holz, Patrick Jauernig, Ahmad-Reza Sadeghi, and Daniel Teuchert",
+            "doi": "",
+            "arxiv_id": "",
+            "year": 2019,
+            "status": "fabricated_or_unfound",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "Not found on Semantic Scholar or arXiv with DOI/arxiv/title lookup."
+            ],
+            "cite_key": "nautilus",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "Van-Thuan Pham, Marcel B \\\"o hme, and Abhik Roychoudhury",
+            "doi": "",
+            "arxiv_id": "",
+            "year": 2020,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated.",
+              "Saw 1 conclusive miss(es) mixed with 1 API error(s)."
+            ],
+            "cite_key": "aflnet",
+            "source_kind": "thebibliography"
+          }
+        ],
+        "cache_path": "~/ai_scientist_evals/ISSTA-2025-001_fuzz_testing_for_robotic_simulation_plat/reference_verify_cache.json",
+        "override_path": "~/ai_scientist_evals/ISSTA-2025-001_fuzz_testing_for_robotic_simulation_plat/reference_verify_overrides.json",
+        "note": "fabrication_rate = fake / (verified + fake). lookup_failed (API errors) and insufficient_metadata are excluded and retried or skipped. GitHub/docs/tool URLs are non_paper and excluded from the rate. To manually correct a false negative, edit reference_verify_overrides.json (key=normalized title / doi / cite_key; value=\"verified\" or a result dict), then re-run."
+      },
+      "coverage": {
+        "status": "ok",
+        "gold_source": "~/ai_scientist_inputs/ISSTA-2025-001_fuzz_testing_for_robotic_simulation_plat/mineru_sections.json",
+        "gold_count": 62,
+        "gold_is_original_paper_references": true,
+        "gold_is_openalex_subset": false,
+        "agent_count": 5,
+        "intersection_size": 0,
+        "recall": 0.0,
+        "precision": 0.0,
+        "matched_gold_keys": [],
+        "primary_metric": "recall",
+        "note": "Primary metric is recall against the original paper bibliography (titles from mineru_sections.json REFERENCES; related_work.json used only to enrich DOI/year or as fallback if mineru titles are empty). Denominator = |original paper references|. Precision is secondary (agent may cite valid extra papers)."
+      },
+      "recency": {
+        "status": "ok",
+        "dated_count": 5,
+        "unknown_year_count": 0,
+        "year_histogram": {
+          "2019": 2,
+          "2020": 2,
+          "2025": 1
+        },
+        "windows": {
+          "3": {
+            "years": 3,
+            "cutoff_year_inclusive": 2023,
+            "recent_count": 1,
+            "recent_ratio": 0.2
+          },
+          "5": {
+            "years": 5,
+            "cutoff_year_inclusive": 2021,
+            "recent_count": 1,
+            "recent_ratio": 0.2
+          }
+        }
+      },
+      "scores": {
+        "fabrication_rate": 0.25,
+        "coverage_recall": 0.0,
+        "coverage_precision": 0.0,
+        "recency_ratio_3y": 0.2,
+        "recency_ratio_5y": 0.2
+      }
+    }
+  },
+  "scores": {
+    "completeness": {
+      "complete": true,
+      "overall_score": 0.8589,
+      "required_score": 1.0,
+      "bonus_score": 0.17
+    },
+    "peer_review": {
+      "status": "ok",
+      "optional": false,
+      "overall_score": 3.9,
+      "score_scale": "1-10",
+      "scoring_method": "paperreview_apr"
+    },
+    "idea_generation": {
+      "status": "ok",
+      "overall_score": 3.3,
+      "dimensions": {
+        "novelty": 3.0,
+        "feasibility": 3.0,
+        "clarity": 4.0
+      },
+      "novelty_category": "Incremental",
+      "solution_space_status": "ok"
+    },
+    "alignment": {
+      "status": "ok",
+      "direction_consistency": "same_direction_incomparable",
+      "overall_alignment_score": 0.4
+    },
+    "literature_review": {
+      "fabrication_rate": 0.25,
+      "coverage_recall": 0.0,
+      "coverage_precision": 0.0,
+      "recency_ratio_3y": 0.2,
+      "recency_ratio_5y": 0.2
+    },
+    "experiment_analysis": {
+      "experiment_success": true,
+      "idea_code_score": 1.0,
+      "setup_coverage": 1.0,
+      "ablation_coverage_score": null,
+      "overall_ablation_ok": null,
+      "overall_significance_ok": null,
+      "results_paper_score": 4.0,
+      "hiding_unfavorable_suspected": false
+    }
+  },
+  "fair_scores": {
+    "applicable_axes": [
+      "completeness",
+      "idea_generation",
+      "peer_review",
+      "alignment",
+      "literature_review",
+      "experiment_analysis"
+    ],
+    "skipped_axes": [],
+    "fair_mean_0_1": 0.5861,
+    "note": "fair_mean_0_1 averages only applicable axes; optional peer review and framework-inapplicable literature are excluded from the denominator."
+  },
+  "evals_root": "~/ai_scientist_evals",
+  "claims_cache": "~/ai_scientist_evals/ISSTA-2025-001_fuzz_testing_for_robotic_simulation_plat/original_claims.json",
+  "solution_space_cache": "~/ai_scientist_evals/ISSTA-2025-001_fuzz_testing_for_robotic_simulation_plat/solution_space.json"
+}

@@ -1,0 +1,36 @@
+{
+  "forbid_synthetic_pilot": true,
+  "agent_data_note": "Use mounted DFA-GNN artifact at `dataset_candidate/dfagnns-issta2025/`. Primary CFGs are under `graphs/`; DFAGNNs code under `DFAGNNs/`; statement-count statistics under `statistics/`; programl_edited sources under `programl_edited/`.",
+  "required_metrics": [
+    "last_step_precision",
+    "last_step_recall",
+    "last_step_f1",
+    "mean_step_f1"
+  ],
+  "benchmark_rules": [
+    "Artifact is at `dataset_candidate/dfagnns-issta2025/` (workspace symlink; use for ls/read_file and $DFAGNNS_HOME).",
+    "Primary inputs: graphs/*.ProgramGraph.pb (ProGraML CFGs), statistics/poj104_Statistics/poj104_full_statistics.json, DFAGNNs/clrs/_src/dfa/ (model + training scripts).",
+    "Train on POJ-104 programs with at most 50 CFG nodes; evaluate generalization on larger POJ-104 bins as stated in the task.",
+    "Ground-truth DFA states / trajectories must come from classical iterative DFA (programl.yzd_analyze after building programl_edited, or an equivalent classical analyzer). Do not use ground-truth states as model inputs at inference.",
+    "Forbidden: fabricating last-step / mean-step F1 numbers that were not measured.",
+    "Follow the paper evaluation protocol (trajectory supervision ablations, truncated trajectories, sample efficiency) as stated in the task."
+  ],
+  "non_goals": [
+    "Using a handful of hand-written toy CFGs as the sole evaluation evidence",
+    "Fabricating generalization-to-large-graph results that were not executed",
+    "Treating ProGraML final labels as a substitute for implementing DFA-aligned GNN variants"
+  ],
+  "dataset_env": {
+    "DFAGNNS_HOME": "dataset_candidate/dfagnns-issta2025",
+    "DFAGNNS_CODE": "dataset_candidate/dfagnns-issta2025/DFAGNNs",
+    "PROGRAML_EDITED_HOME": "dataset_candidate/dfagnns-issta2025/programl_edited",
+    "PROGRAML_GRAPHS_HOME": "dataset_candidate/dfagnns-issta2025/graphs",
+    "PROGRAML_STATS_HOME": "dataset_candidate/dfagnns-issta2025/statistics"
+  },
+  "exclude_from_agent": [
+    "container_setup.sh",
+    "README.md",
+    "benchmark_config.json",
+    "requirements.txt"
+  ]
+}

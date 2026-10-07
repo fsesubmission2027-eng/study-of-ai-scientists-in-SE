@@ -1,0 +1,1728 @@
+{
+  "generated_at": "2026-08-24T12:42:29",
+  "run_dir": "~/ai_scientist_inputs/FSE-2025-006_automated_detection_of_unconfirmed_stati/workspace/airesearcher_2026-08-22_07-56-39",
+  "task_dir": "~/ai_scientist_inputs/FSE-2025-006_automated_detection_of_unconfirmed_stati",
+  "framework": "airesearcher",
+  "fairness_audit": [
+    {
+      "axis": "completeness",
+      "was_unfair": "Required both paper.tex AND paper.pdf; any tool missing one failed equally.",
+      "fix": "Paper gate: PDF=1.0; TeX-only=0.5; ``complete`` requires PDF."
+    },
+    {
+      "axis": "completeness",
+      "was_unfair": "``results`` counted stub/seed JSON (dataset_candidate/metrics.json).",
+      "fix": "``results`` requires substantive numeric results via results_normalize."
+    },
+    {
+      "axis": "experiment_success",
+      "was_unfair": "Only metrics.json; ignored results.json / experiment_results.txt.",
+      "fix": "Framework-ordered result candidates + normalized loaders."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Penalized tools with no bib; airesearcher has no workspace references.",
+      "fix": "literature_applicable=false → status not_applicable; excluded from fair aggregate."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "related_work.json subset as gold made recall hard to interpret.",
+      "fix": "Coverage gold is original paper REFERENCES from mineru; related_work only enriches metadata/fallback."
+    },
+    {
+      "axis": "peer_review",
+      "was_unfair": "Missing Stanford report looked like evaluation failure.",
+      "fix": "status not_provided; optional axis, never counts as tool failure."
+    },
+    {
+      "axis": "paths/find_results",
+      "was_unfair": "Picked downloads/** and sandbox noise (e.g. airesearcher LLVM tree).",
+      "fix": "Exclude downloads/, seeds/, dataset_candidate/, sandbox junk paths."
+    },
+    {
+      "axis": "paths/framework_noise",
+      "was_unfair": "DeepScientist .deepscientist_npm / runtime / skills templates counted as code/paper/results.",
+      "fix": "FRAMEWORK_NOISE_DIRS+markers; quest worktree + eval_output results; paper md drafts; reject template tex."
+    },
+    {
+      "axis": "paths/paper_tex",
+      "was_unfair": "tiny_scientist / ACL runs store paper under latex/*.tex; evaluator only looked at paper/main.tex.",
+      "fix": "latex/**/*.tex with substantive-body heuristic; find_paper_document uses same rules."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Entire custom.bib (300+ anthology entries) verified when paper had zero \\cite commands.",
+      "fix": "collect_agent_references filters bib to in-text cite keys; skips uncited bulk bib (>40 entries)."
+    },
+    {
+      "axis": "paths/ai_scientist_summaries",
+      "was_unfair": "AI Scientist can persist substantive results and paper-like drafts in *_summary.json logs rather than paper/main.tex or results/**/*.json.",
+      "fix": "Treat draft_summary/research_summary as weak paper documents and summary JSONs as result candidates."
+    },
+    {
+      "axis": "idea_generation",
+      "was_unfair": "plan.md/todos.md weak proxies scored same as structured idea.json.",
+      "fix": "Framework idea_priority tried first; missing idea → not_applicable where appropriate."
+    }
+  ],
+  "axes": [
+    "alignment",
+    "completeness",
+    "experiment_analysis",
+    "idea_generation",
+    "literature_review",
+    "peer_review"
+  ],
+  "results": {
+    "completeness": {
+      "framework": "airesearcher",
+      "run_dir": "~/ai_scientist_inputs/FSE-2025-006_automated_detection_of_unconfirmed_stati/workspace/airesearcher_2026-08-22_07-56-39",
+      "task_dir": "~/ai_scientist_inputs/FSE-2025-006_automated_detection_of_unconfirmed_stati",
+      "complete": false,
+      "required_score": 0.75,
+      "bonus_score": 0.05,
+      "overall_score": 0.6,
+      "missing": [
+        "idea"
+      ],
+      "required": {
+        "idea": null,
+        "code": {
+          "count": 56,
+          "files": [
+            {
+              "path": ".airesearcher-benchmark/metaprompt.py",
+              "bytes": 13910,
+              "via": "glob"
+            },
+            {
+              "path": "project/data_processing/__init__.py",
+              "bytes": 471,
+              "via": "glob"
+            },
+            {
+              "path": "project/data_processing/dataset_resolver.py",
+              "bytes": 7462,
+              "via": "glob"
+            },
+            {
+              "path": "project/data_processing/kaggle_corpus.py",
+              "bytes": 4821,
+              "via": "glob"
+            },
+            {
+              "path": "project/data_processing/notebook_exec.py",
+              "bytes": 5491,
+              "via": "glob"
+            },
+            {
+              "path": "project/data_processing/rebuild_corpus.py",
+              "bytes": 2535,
+              "via": "glob"
+            },
+            {
+              "path": "project/model/__init__.py",
+              "bytes": 540,
+              "via": "glob"
+            },
+            {
+              "path": "project/model/assumptions.py",
+              "bytes": 20580,
+              "via": "glob"
+            },
+            {
+              "path": "project/model/checker.py",
+              "bytes": 11058,
+              "via": "glob"
+            },
+            {
+              "path": "project/model/device.py",
+              "bytes": 1127,
+              "via": "glob"
+            },
+            {
+              "path": "project/model/statistical_model.py",
+              "bytes": 3276,
+              "via": "glob"
+            },
+            {
+              "path": "project/run_calibration_study.py",
+              "bytes": 5482,
+              "via": "glob"
+            },
+            {
+              "path": "project/run_overhead_scaling.py",
+              "bytes": 3362,
+              "via": "glob"
+            },
+            {
+              "path": "project/run_per_assumption_breakdown.py",
+              "bytes": 3399,
+              "via": "glob"
+            },
+            {
+              "path": "project/run_sensitivity.py",
+              "bytes": 4653,
+              "via": "glob"
+            },
+            {
+              "path": "project/run_training_testing.py",
+              "bytes": 12745,
+              "via": "glob"
+            },
+            {
+              "path": "project/testing/__init__.py",
+              "bytes": 256,
+              "via": "glob"
+            },
+            {
+              "path": "project/testing/metrics.py",
+              "bytes": 5051,
+              "via": "glob"
+            },
+            {
+              "path": "project/tests/test_assumption_checker.py",
+              "bytes": 3489,
+              "via": "glob"
+            },
+            {
+              "path": "project/training/train.py",
+              "bytes": 3247,
+              "via": "glob"
+            },
+            {
+              "path": "project/visualize.py",
+              "bytes": 4746,
+              "via": "glob"
+            },
+            {
+              "path": "project/write_summary.py",
+              "bytes": 5646,
+              "via": "glob"
+            },
+            {
+              "path": "reference_codebases/pingouin/src/pingouin/__init__.py",
+              "bytes": 590,
+              "via": "glob"
+            },
+            {
+              "path": "reference_codebases/pingouin/src/pingouin/bayesian.py",
+              "bytes": 16979,
+              "via": "glob"
+            },
+            {
+              "path": "reference_codebases/pingouin/src/pingouin/circular.py",
+              "bytes": 24548,
+              "via": "glob"
+            },
+            {
+              "path": "reference_codebases/pingouin/src/pingouin/config.py",
+              "bytes": 493,
+              "via": "glob"
+            },
+            {
+              "path": "reference_codebases/pingouin/src/pingouin/contingency.py",
+              "bytes": 15747,
+              "via": "glob"
+            },
+            {
+              "path": "reference_codebases/pingouin/src/pingouin/correlation.py",
+              "bytes": 52517,
+              "via": "glob"
+            },
+            {
+              "path": "reference_codebases/pingouin/src/pingouin/datasets/__init__.py",
+              "bytes": 3133,
+              "via": "glob"
+            },
+            {
+              "path": "reference_codebases/pingouin/src/pingouin/distribution.py",
+              "bytes": 37760,
+              "via": "glob"
+            }
+          ]
+        },
+        "results": {
+          "substantive": true,
+          "normalized_path": "results/metrics.json",
+          "numeric_leaf_count": 77,
+          "discovered_files": [
+            {
+              "path": "results/metrics.json",
+              "bytes": 3633,
+              "via": "candidate"
+            },
+            {
+              "path": "results/calibration.json",
+              "bytes": 747,
+              "via": "glob"
+            },
+            {
+              "path": "results/notebooks/complete-guide-to-statistical-testing-a-to-z.json",
+              "bytes": 418,
+              "via": "glob"
+            },
+            {
+              "path": "results/notebooks/guide-to-statistical-hypothesis-tests-in-python.json",
+              "bytes": 418,
+              "via": "glob"
+            },
+            {
+              "path": "results/notebooks/nisab-of-zakat-visualization-and-analysis.json",
+              "bytes": 386,
+              "via": "glob"
+            },
+            {
+              "path": "results/notebooks/paired-samples-t-test.json",
+              "bytes": 378,
+              "via": "glob"
+            },
+            {
+              "path": "results/notebooks/parkinsons-disease-analysis.json",
+              "bytes": 387,
+              "via": "glob"
+            },
+            {
+              "path": "results/notebooks/t3-ttest-1samp.json",
+              "bytes": 354,
+              "via": "glob"
+            },
+            {
+              "path": "results/notebooks/t3-ttest-ind.json",
+              "bytes": 350,
+              "via": "glob"
+            },
+            {
+              "path": "results/overhead_scaling.json",
+              "bytes": 5233,
+              "via": "glob"
+            },
+            {
+              "path": "results/per_assumption.json",
+              "bytes": 492,
+              "via": "glob"
+            },
+            {
+              "path": "results/sensitivity.json",
+              "bytes": 2106,
+              "via": "glob"
+            }
+          ],
+          "metrics_keys_sample": [
+            "annotation_count",
+            "unconfirmed_assumption_warnings",
+            "potential_misuse_call_sites",
+            "significant_misuse_calls",
+            "unconfirmed_assumption_warning_rate",
+            "potential_misuse_call_site_rate",
+            "significant_misuse_rate",
+            "runtime_overhead_factor",
+            "notebooks_checked",
+            "notebooks_executed",
+            "notebooks_with_unconfirmed_assumptions",
+            "total_call_sites",
+            "total_calls",
+            "device",
+            "gpu_info",
+            "training_history",
+            "per_function",
+            "runtime_overhead_by_function"
+          ]
+        },
+        "paper": {
+          "tex": null,
+          "pdf": {
+            "path": "paper/main.pdf",
+            "bytes": 48144,
+            "via": "compiled_from_md"
+          },
+          "md": {
+            "path": "paper/paper.md",
+            "bytes": 11551,
+            "via": "candidate"
+          },
+          "json": null,
+          "status": "pdf",
+          "score": 1.0
+        }
+      },
+      "bonus": {
+        "experiment_plan": null,
+        "experiment_log": {
+          "path": "airesearcher_run.log",
+          "bytes": 2431608,
+          "via": "glob"
+        },
+        "review": null,
+        "readme": {
+          "path": "README_BENCHMARK.md",
+          "bytes": 885,
+          "via": "candidate"
+        },
+        "narrative": null,
+        "bib": null
+      },
+      "manifest_status": {
+        "pipeline": true,
+        "research_brief": true,
+        "instance": true,
+        "source_papers": true,
+        "metrics": true,
+        "project": true,
+        "paper": true
+      },
+      "gate_scores": {
+        "idea": 0.0,
+        "code": 1.0,
+        "results": 1.0,
+        "paper": 1.0
+      },
+      "fairness": {
+        "gates": [
+          "idea",
+          "code",
+          "results",
+          "paper"
+        ],
+        "paper_gate_rule": "PDF=1.0; TeX-only/md_only/json_only=0.5; complete requires PDF",
+        "results_gate_rule": "substantive numeric results via framework-aware normalize_results",
+        "audit_ref": "framework_profile.FAIRNESS_AUDIT"
+      },
+      "notes": [
+        "Required: idea, code, substantive results, paper (PDF full; TeX/markdown/JSON draft half).",
+        "Stub/seed metrics (e.g. dataset_candidate/metrics.json) do not satisfy results.",
+        "Framework noise (.deepscientist_npm, skills/templates, runtime) is excluded from code/results/paper.",
+        "Manifest status is informational; disk presence is authoritative."
+      ]
+    },
+    "idea_generation": {
+      "run_dir": "~/ai_scientist_inputs/FSE-2025-006_automated_detection_of_unconfirmed_stati/workspace/airesearcher_2026-08-22_07-56-39",
+      "task_dir": "~/ai_scientist_inputs/FSE-2025-006_automated_detection_of_unconfirmed_stati",
+      "idea_path": null,
+      "status": "missing_idea",
+      "dimensions": {},
+      "overall_score": null,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "novelty",
+        "feasibility",
+        "clarity"
+      ],
+      "solution_space": null,
+      "notes": [
+        "Scores the intermediate idea artifact (not the final paper).",
+        "Dimensions: novelty, feasibility, clarity (each 1-5). Excitement removed.",
+        "Novelty is scored against a Solution Space built from mineru REFERENCES titles (+ related_work.json abstracts when matched)."
+      ],
+      "hint": "No idea artifact found under candidates like artifacts/idea.json, idea-stage/IDEA_REPORT.md, session/idea.json, tiny_idea.json, selected_idea.md."
+    },
+    "peer_review": {
+      "run_dir": "~/ai_scientist_inputs/FSE-2025-006_automated_detection_of_unconfirmed_stati/workspace/airesearcher_2026-08-22_07-56-39",
+      "review_report": "~/ai_scientist_inputs/FSE-2025-006_automated_detection_of_unconfirmed_stati/workspace/airesearcher_2026-08-22_07-56-39/artifacts/peer_review/stanford_apr.md",
+      "paper_pdf": "~/ai_scientist_inputs/FSE-2025-006_automated_detection_of_unconfirmed_stati/workspace/airesearcher_2026-08-22_07-56-39/paper/main.pdf",
+      "paper_tex": null,
+      "status": "ok",
+      "dimensions": {},
+      "overall_score": 5.8,
+      "score_scale": "1-10",
+      "dimension_order": [],
+      "notes": [
+        "Scored from paperreview.ai (Stanford APR) native ratings; benchmark 5-dimension LLM rubric skipped.",
+        "Overall scale: 1-10."
+      ],
+      "paperreview": {
+        "status": "fetched",
+        "token_file": "~/ai_scientist_inputs/FSE-2025-006_automated_detection_of_unconfirmed_stati/workspace/airesearcher_2026-08-22_07-56-39/artifacts/peer_review/paperreview.token.txt",
+        "json": "~/ai_scientist_inputs/FSE-2025-006_automated_detection_of_unconfirmed_stati/workspace/airesearcher_2026-08-22_07-56-39/artifacts/peer_review/stanford_apr.json",
+        "markdown": "~/ai_scientist_inputs/FSE-2025-006_automated_detection_of_unconfirmed_stati/workspace/airesearcher_2026-08-22_07-56-39/artifacts/peer_review/stanford_apr.md",
+        "apr_scores": {
+          "scale": "1-10",
+          "overall": 5.8,
+          "dimensions": {}
+        },
+        "pdf_rebuild": null
+      },
+      "scoring_method": "paperreview_apr",
+      "scoring_source": "paperreview_json",
+      "apr_dimensions": {},
+      "summary": "",
+      "red_flags": []
+    },
+    "alignment": {
+      "run_dir": "~/ai_scientist_inputs/FSE-2025-006_automated_detection_of_unconfirmed_stati/workspace/airesearcher_2026-08-22_07-56-39",
+      "task_dir": "~/ai_scientist_inputs/FSE-2025-006_automated_detection_of_unconfirmed_stati",
+      "status": "ok",
+      "original": {
+        "paper_title": "Expressing and Checking Statistical Assumptions",
+        "selection": {
+          "num_blocks": 7,
+          "total_chars": 31998,
+          "inferred_roles": {
+            "abstract": 1,
+            "introduction": 1,
+            "experiment": 4,
+            "conclusion": 1
+          },
+          "mineru_raw_keys": {
+            "field:abstract": 1,
+            "field:introduction": 1,
+            "field:experiment": 1,
+            "other": 3,
+            "conclusion": 1
+          },
+          "infer_reasons": {
+            "top_level_field": 3,
+            "body": 1,
+            "body_override": 2,
+            "title": 1
+          },
+          "rescued_from_other": 3,
+          "note": "mineru key is unreliable; blocks are selected by title/body/inheritance. rescued_from_other counts sections labeled other but treated as typed roles."
+        },
+        "claims": [
+          {
+            "id": "C1",
+            "statement": "The proposed annotation language and tools (prob-check-py and prob-check-r) allow library developers to express statistical assumptions and automatically check them by generating hypothesis tests.",
+            "direction": "improves",
+            "metric_names": [],
+            "evidence_quote": "we introduce a simple annotation language to allow popular statistical assumption to be expressed and have an automated check generated",
+            "confidence": 0.95
+          },
+          {
+            "id": "C2",
+            "statement": "Unconfirmed statistical assumptions are widespread in popular Kaggle notebooks: 84.38% of surveyed notebooks and 53.36% of calls to annotated functions had statistically significant evidence against at least one assumption.",
+            "direction": "neutral",
+            "metric_names": [
+              "notebooks_with_unconfirmed_assumptions_percent",
+              "calls_with_unconfirmed_assumptions_percent"
+            ],
+            "evidence_quote": "statistically significant evidence against assumptions in 84.38% of surveyed notebooks, and in 53.36% of calls to annotated functions",
+            "confidence": 0.98
+          },
+          {
+            "id": "C3",
+            "statement": "In 11.51% of hypothesis-test calls (16.47% of call sites) with unconfirmed assumptions, using a more appropriate test would have changed the conclusion.",
+            "direction": "mixed",
+            "metric_names": [
+              "significant_misuse_calls_percent",
+              "significant_misuse_call_sites_percent"
+            ],
+            "evidence_quote": "at 16.47% of call sites (11.51% of calls) where an assumption was unconfirmed, the more appropriate test would have resulted in a diferent conclusion being drawn",
+            "confidence": 0.95
+          },
+          {
+            "id": "C4",
+            "statement": "The annotation burden for library developers is low: 12 annotations were needed in Python and 14 in R for common hypothesis testing and linear regression functions.",
+            "direction": "improves",
+            "metric_names": [
+              "python_annotations_count",
+              "r_annotations_count"
+            ],
+            "evidence_quote": "in total we introduced 12 annotations in Python, and 14 in R",
+            "confidence": 0.95
+          },
+          {
+            "id": "C5",
+            "statement": "Analysts rarely check assumptions manually: only 11 of 128 Kaggle notebooks check or mention all assumptions related to the statistical methods they use.",
+            "direction": "degrades",
+            "metric_names": [
+              "notebooks_manually_checking_all_assumptions_count"
+            ],
+            "evidence_quote": "only 11 check or mention all of the assumptions related to the statistical methods they use",
+            "confidence": 0.95
+          },
+          {
+            "id": "C6",
+            "statement": "The automated checks identify many potential misuses: 267 call sites and 586 calls had at least one unconfirmed assumption.",
+            "direction": "neutral",
+            "metric_names": [
+              "call_sites_with_unconfirmed_assumptions_count",
+              "calls_with_unconfirmed_assumptions_count"
+            ],
+            "evidence_quote": "In total, 267 call sites and 586 calls had at least one unconfirmed assumption, and so are classified as potential misuses",
+            "confidence": 0.95
+          }
+        ],
+        "metrics": [
+          {
+            "name": "notebooks_with_unconfirmed_assumptions_percent",
+            "value": 84.38,
+            "unit": "%",
+            "higher_is_better": false,
+            "setting": "128 Kaggle notebooks using annotated statistical functions",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "statistically significant evidence against assumptions in 84.38% of surveyed notebooks",
+            "confidence": 0.98
+          },
+          {
+            "name": "calls_with_unconfirmed_assumptions_percent",
+            "value": 53.36,
+            "unit": "%",
+            "higher_is_better": false,
+            "setting": "1,102 calls to annotated functions in 128 Kaggle notebooks",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "and in 53.36% of calls to annotated functions",
+            "confidence": 0.98
+          },
+          {
+            "name": "call_sites_with_unconfirmed_assumptions_percent",
+            "value": 74.44,
+            "unit": "%",
+            "higher_is_better": false,
+            "setting": "360 unique call sites to annotated functions",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "evidence of unconfirmed assumptions in 74.44% of call sites (53.36% of calls)",
+            "confidence": 0.85
+          },
+          {
+            "name": "notebooks_with_misuses_count",
+            "value": 108,
+            "unit": null,
+            "higher_is_better": false,
+            "setting": "128 Kaggle notebooks using annotated statistical functions",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "We found misuses of statistical methods in 108 notebooks",
+            "confidence": 0.95
+          },
+          {
+            "name": "calls_with_unconfirmed_assumptions_count",
+            "value": 586,
+            "unit": null,
+            "higher_is_better": false,
+            "setting": "1,102 calls to annotated functions",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "586 had strong evidence against at least one statistical assumption being met",
+            "confidence": 0.95
+          },
+          {
+            "name": "call_sites_with_unconfirmed_assumptions_count",
+            "value": 267,
+            "unit": null,
+            "higher_is_better": false,
+            "setting": "360 unique call sites to annotated functions",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "strong evidence against assumptions was found in 267 of 360 unique call sites",
+            "confidence": 0.95
+          },
+          {
+            "name": "total_annotated_calls",
+            "value": 1102,
+            "unit": null,
+            "higher_is_better": false,
+            "setting": "128 Kaggle notebooks using annotated functions",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "Of 1,102 calls to annotated functions",
+            "confidence": 0.95
+          },
+          {
+            "name": "total_unique_call_sites",
+            "value": 360,
+            "unit": null,
+            "higher_is_better": false,
+            "setting": "128 Kaggle notebooks using annotated functions",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "strong evidence against assumptions was found in 267 of 360 unique call sites",
+            "confidence": 0.95
+          },
+          {
+            "name": "significant_misuse_calls_percent",
+            "value": 11.51,
+            "unit": "%",
+            "higher_is_better": false,
+            "setting": "calls to hypothesis testing methods with unconfirmed assumptions",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "in 11.51% of calls to hypothesis testing methods",
+            "confidence": 0.95
+          },
+          {
+            "name": "significant_misuse_call_sites_percent",
+            "value": 16.47,
+            "unit": "%",
+            "higher_is_better": false,
+            "setting": "call sites to hypothesis testing functions with unconfirmed assumptions",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "at 16.47% of call sites (11.51% of calls) where an assumption was unconfirmed",
+            "confidence": 0.95
+          },
+          {
+            "name": "significant_misuse_calls_count",
+            "value": 35,
+            "unit": null,
+            "higher_is_better": false,
+            "setting": "hypothesis testing calls with unconfirmed assumptions",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "representing 35 calls",
+            "confidence": 0.95
+          },
+          {
+            "name": "significant_misuse_call_sites_count",
+            "value": 28,
+            "unit": null,
+            "higher_is_better": false,
+            "setting": "hypothesis testing call sites with unconfirmed assumptions",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "28 call sites calling hypothesis testing functions (representing 35 calls)",
+            "confidence": 0.95
+          },
+          {
+            "name": "notebooks_manually_checking_all_assumptions_count",
+            "value": 11,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "128 Kaggle notebooks",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "only 11 check or mention all of the assumptions related to the statistical methods they use",
+            "confidence": 0.95
+          },
+          {
+            "name": "python_annotations_count",
+            "value": 12,
+            "unit": null,
+            "higher_is_better": false,
+            "setting": "annotated Python statistical functions",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "in total we introduced 12 annotations in Python",
+            "confidence": 0.95
+          },
+          {
+            "name": "r_annotations_count",
+            "value": 14,
+            "unit": null,
+            "higher_is_better": false,
+            "setting": "annotated R statistical functions",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "and 14 in R",
+            "confidence": 0.95
+          }
+        ],
+        "overall_conclusion": "The paper introduces an annotation language and tools, prob-check-py and prob-check-r, that automatically check statistical assumptions by generating hypothesis tests. An evaluation on 128 Kaggle notebooks found unconfirmed assumptions in 84.38% of notebooks and 53.36% of calls, and 11.51% of hypothesis-test calls would have reached different conclusions with more appropriate tests. The annotation burden was low: 12 annotations in Python and 14 in R.",
+        "comparable_notes": "Fair comparison should consider the corpus selection protocol: 128 Kaggle notebooks were chosen by references to annotated functions, manually validated for actual calls, public data, runtime <=10 minutes, and error-free execution, targeting 15 notebooks per function. Assumptions were encoded from documentation and statistical literature. Checks used a significance level of 0.95 in annotations, except some regression residual checks at 0.05. Significant misuse was determined by comparing p-values from original and appropriate non-parametric/alternative tests against analyst-chosen significance levels, commonly 0.05 or 0.01; independence-related cases were not re-tested because they require domain knowledge.",
+        "cache_hit": true
+      },
+      "agent": {
+        "status": "ok",
+        "run_dir": "~/ai_scientist_inputs/FSE-2025-006_automated_detection_of_unconfirmed_stati/workspace/airesearcher_2026-08-22_07-56-39",
+        "claims": [
+          {
+            "id": "A1",
+            "statement": "The annotation catalog requires 11 annotations to encode assumptions for five scipy.stats functions.",
+            "direction": "neutral",
+            "metric_names": [
+              "annotation_count"
+            ],
+            "evidence_quote": "Total annotation count = 11.",
+            "confidence": 0.95
+          },
+          {
+            "id": "A2",
+            "statement": "86.8% of executed statistical calls exhibit at least one unconfirmed assumption.",
+            "direction": "neutral",
+            "metric_names": [
+              "unconfirmed_assumption_warning_rate"
+            ],
+            "evidence_quote": "86.8% of executed calls exhibit at least one unconfirmed assumption",
+            "confidence": 0.95
+          },
+          {
+            "id": "A3",
+            "statement": "86.0% of static call sites are potential misuse (at least one unconfirmed assumption).",
+            "direction": "neutral",
+            "metric_names": [
+              "potential_misuse_call_site_rate"
+            ],
+            "evidence_quote": "86.0% of static call sites are \"potential misuse.\"",
+            "confidence": 0.95
+          },
+          {
+            "id": "A4",
+            "statement": "The checker finds 3 significant-misuse calls where the statistical conclusion would change.",
+            "direction": "neutral",
+            "metric_names": [
+              "significant_misuse_calls"
+            ],
+            "evidence_quote": "The checker finds 3 significant-misuse calls (conclusions that would change)",
+            "confidence": 0.95
+          },
+          {
+            "id": "A5",
+            "statement": "The significant-misuse rate among warning-emitting calls is 0.80%.",
+            "direction": "neutral",
+            "metric_names": [
+              "significant_misuse_rate"
+            ],
+            "evidence_quote": "Significant-misuse rate (among warning calls) | 0.80%",
+            "confidence": 0.9
+          },
+          {
+            "id": "A6",
+            "statement": "The checker imposes a mean runtime overhead factor of approximately 2.88×.",
+            "direction": "degrades",
+            "metric_names": [
+              "runtime_overhead_factor"
+            ],
+            "evidence_quote": "\"runtime_overhead_factor\": 2.8839911603276738",
+            "confidence": 0.9
+          },
+          {
+            "id": "A7",
+            "statement": "The checker's runtime overhead is below the ~10× interactive-usability bound.",
+            "direction": "neutral",
+            "metric_names": [
+              "runtime_overhead_factor"
+            ],
+            "evidence_quote": "This is well below the ~10× interactive-usability bound",
+            "confidence": 0.8
+          },
+          {
+            "id": "A8",
+            "statement": "linregress has the highest per-function runtime overhead factor (4.39×).",
+            "direction": "degrades",
+            "metric_names": [
+              "linregress_runtime_overhead_factor"
+            ],
+            "evidence_quote": "\"linregress\": {\"runtime_overhead_factor\": 4.387197218785945}",
+            "confidence": 0.9
+          },
+          {
+            "id": "A9",
+            "statement": "ttest_1samp has the lowest per-function runtime overhead factor (1.94×).",
+            "direction": "degrades",
+            "metric_names": [
+              "ttest_1samp_runtime_overhead_factor"
+            ],
+            "evidence_quote": "\"ttest_1samp\": {\"runtime_overhead_factor\": 1.9401309422274813}",
+            "confidence": 0.9
+          },
+          {
+            "id": "A10",
+            "statement": "7 of 29 notebooks execute end-to-end.",
+            "direction": "neutral",
+            "metric_names": [
+              "notebooks_executed",
+              "notebooks_checked"
+            ],
+            "evidence_quote": "7 of 29 notebooks execute end-to-end",
+            "confidence": 0.95
+          },
+          {
+            "id": "A11",
+            "statement": "3 of 7 executed notebooks have at least one unconfirmed assumption.",
+            "direction": "neutral",
+            "metric_names": [
+              "notebooks_with_unconfirmed_assumptions"
+            ],
+            "evidence_quote": "Notebooks with ≥1 unconfirmed assumption | 3 / 7 executed",
+            "confidence": 0.95
+          },
+          {
+            "id": "A12",
+            "statement": "The checker is deterministic, so the point estimate of the prevalence rate is identical across epochs.",
+            "direction": "neutral",
+            "metric_names": [
+              "loss_mean"
+            ],
+            "evidence_quote": "Because the checker is deterministic, the point estimate of the prevalence rate is identical across epochs",
+            "confidence": 0.9
+          },
+          {
+            "id": "A13",
+            "statement": "Bootstrap estimation yields loss_mean 0.868, loss_std 0.016, and 95% CI [0.833, 0.903].",
+            "direction": "neutral",
+            "metric_names": [
+              "loss_mean",
+              "loss_std",
+              "loss_ci95_lower",
+              "loss_ci95_upper"
+            ],
+            "evidence_quote": "reporting loss_mean = 0.868, loss_std ≈ 0.016 and a 95% CI [0.833, 0.903]",
+            "confidence": 0.9
+          },
+          {
+            "id": "A14",
+            "statement": "The checker does not alter the original function output.",
+            "direction": "no_difference",
+            "metric_names": [],
+            "evidence_quote": "without altering the function's output",
+            "confidence": 0.95
+          },
+          {
+            "id": "A15",
+            "statement": "For ttest_ind, the alternative is selected conditionally: Welch's test when only homoscedasticity fails, otherwise Mann-Whitney U, matching scipy equal_var=False to machine precision.",
+            "direction": "improves",
+            "metric_names": [],
+            "evidence_quote": "Welch's equal_var=False when only homoscedasticity failed (verified to match scipy.stats.ttest_ind(..., equal_var=False) to machine precision), else Mann-Whitney U",
+            "confidence": 0.9
+          },
+          {
+            "id": "A16",
+            "statement": "The unconfirmed-assumption warnings are dominated by linregress (88/88 call sites).",
+            "direction": "neutral",
+            "metric_names": [
+              "potential_misuse_call_sites"
+            ],
+            "evidence_quote": "This is dominated by linregress (88/88 call sites triggered residual-normality/homoscedasticity warnings)",
+            "confidence": 0.9
+          },
+          {
+            "id": "A17",
+            "statement": "The 3 significant-misuse calls consist of 2 ttest_1samp calls and 1 f_oneway call.",
+            "direction": "neutral",
+            "metric_names": [
+              "significant_misuse_calls"
+            ],
+            "evidence_quote": "Specifically 2 ttest_1samp calls and 1 f_oneway call qualify.",
+            "confidence": 0.95
+          },
+          {
+            "id": "A18",
+            "statement": "The checker wraps scipy.stats functions in a signature-preserving, return-preserving wrapper.",
+            "direction": "neutral",
+            "metric_names": [],
+            "evidence_quote": "signature-preserving, return-preserving wrapper",
+            "confidence": 0.95
+          },
+          {
+            "id": "A19",
+            "statement": "The checker emits UnconfirmedAssumptionWarning at configurable α (default 0.05).",
+            "direction": "neutral",
+            "metric_names": [],
+            "evidence_quote": "emits a UnconfirmedAssumptionWarning whenever a check rejects at the configured α (default 0.05)",
+            "confidence": 0.95
+          },
+          {
+            "id": "A20",
+            "statement": "The checker records all outcomes in a thread-safe report.",
+            "direction": "neutral",
+            "metric_names": [],
+            "evidence_quote": "All outcomes are recorded in a thread-safe report.",
+            "confidence": 0.95
+          }
+        ],
+        "metrics": [
+          {
+            "name": "annotation_count",
+            "value": 11,
+            "unit": "annotations",
+            "higher_is_better": false,
+            "setting": "RQ1",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "Total annotation count = 11.",
+            "confidence": 0.95
+          },
+          {
+            "name": "unconfirmed_assumption_warnings",
+            "value": 641,
+            "unit": "warnings",
+            "higher_is_better": false,
+            "setting": "RQ2",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "Unconfirmed-assumption warnings | 641",
+            "confidence": 0.95
+          },
+          {
+            "name": "unconfirmed_assumption_warning_rate",
+            "value": 0.8677494199535963,
+            "unit": "fraction",
+            "higher_is_better": false,
+            "setting": "RQ2",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "Unconfirmed-assumption warning rate (calls) | 86.8%",
+            "confidence": 0.95
+          },
+          {
+            "name": "potential_misuse_call_sites",
+            "value": 92,
+            "unit": "call sites",
+            "higher_is_better": false,
+            "setting": "RQ2",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "Potential-misuse call sites (≥1 unconfirmed assumption) | 92 (86.0%)",
+            "confidence": 0.95
+          },
+          {
+            "name": "potential_misuse_call_site_rate",
+            "value": 0.8598130841121495,
+            "unit": "fraction",
+            "higher_is_better": false,
+            "setting": "RQ2",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "Potential-misuse call sites (≥1 unconfirmed assumption) | 92 (86.0%)",
+            "confidence": 0.95
+          },
+          {
+            "name": "significant_misuse_calls",
+            "value": 3,
+            "unit": "calls",
+            "higher_is_better": false,
+            "setting": "RQ3",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "Significant-misuse calls (RQ3) | 3",
+            "confidence": 0.95
+          },
+          {
+            "name": "significant_misuse_rate",
+            "value": 0.008021390374331552,
+            "unit": "fraction",
+            "higher_is_better": false,
+            "setting": "RQ3",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "Significant-misuse rate (among warning calls) | 0.80%",
+            "confidence": 0.9
+          },
+          {
+            "name": "runtime_overhead_factor",
+            "value": 2.8839911603276738,
+            "unit": "x",
+            "higher_is_better": false,
+            "setting": "runtime",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "\"runtime_overhead_factor\": 2.8839911603276738",
+            "confidence": 0.9
+          },
+          {
+            "name": "notebooks_checked",
+            "value": 29,
+            "unit": "notebooks",
+            "higher_is_better": true,
+            "setting": "corpus",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "real corpus of 29 public Kaggle notebooks",
+            "confidence": 0.95
+          },
+          {
+            "name": "notebooks_executed",
+            "value": 7,
+            "unit": "notebooks",
+            "higher_is_better": true,
+            "setting": "execution",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "7 of 29 notebooks execute end-to-end",
+            "confidence": 0.95
+          },
+          {
+            "name": "notebooks_with_unconfirmed_assumptions",
+            "value": 3,
+            "unit": "notebooks",
+            "higher_is_better": false,
+            "setting": "RQ2",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "Notebooks with ≥1 unconfirmed assumption | 3 / 7 executed",
+            "confidence": 0.95
+          },
+          {
+            "name": "total_call_sites",
+            "value": 107,
+            "unit": "call sites",
+            "higher_is_better": false,
+            "setting": "corpus",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "Total static call sites | 107",
+            "confidence": 0.95
+          },
+          {
+            "name": "total_calls",
+            "value": 431,
+            "unit": "calls",
+            "higher_is_better": false,
+            "setting": "execution",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "\"total_calls\": 431",
+            "confidence": 0.9
+          },
+          {
+            "name": "loss_mean",
+            "value": 0.8680162412993039,
+            "unit": null,
+            "higher_is_better": false,
+            "setting": "bootstrap",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "loss_mean = 0.868",
+            "confidence": 0.9
+          },
+          {
+            "name": "loss_std",
+            "value": 0.01736140417039144,
+            "unit": null,
+            "higher_is_better": false,
+            "setting": "bootstrap",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "loss_std ≈ 0.016",
+            "confidence": 0.9
+          },
+          {
+            "name": "loss_ci95_lower",
+            "value": 0.8352668213457076,
+            "unit": null,
+            "higher_is_better": false,
+            "setting": "bootstrap",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "95% CI [0.833, 0.903]",
+            "confidence": 0.85
+          },
+          {
+            "name": "loss_ci95_upper",
+            "value": 0.9025522041763341,
+            "unit": null,
+            "higher_is_better": false,
+            "setting": "bootstrap",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "95% CI [0.833, 0.903]",
+            "confidence": 0.85
+          },
+          {
+            "name": "f_oneway_runtime_overhead_factor",
+            "value": 2.8163001640507925,
+            "unit": "x",
+            "higher_is_better": false,
+            "setting": "per_function",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "\"f_oneway\": {\"runtime_overhead_factor\": 2.8163001640507925}",
+            "confidence": 0.9
+          },
+          {
+            "name": "linregress_runtime_overhead_factor",
+            "value": 4.387197218785945,
+            "unit": "x",
+            "higher_is_better": false,
+            "setting": "per_function",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "\"linregress\": {\"runtime_overhead_factor\": 4.387197218785945}",
+            "confidence": 0.9
+          },
+          {
+            "name": "ttest_1samp_runtime_overhead_factor",
+            "value": 1.9401309422274813,
+            "unit": "x",
+            "higher_is_better": false,
+            "setting": "per_function",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "\"ttest_1samp\": {\"runtime_overhead_factor\": 1.9401309422274813}",
+            "confidence": 0.9
+          },
+          {
+            "name": "ttest_ind_runtime_overhead_factor",
+            "value": 2.7272489726140283,
+            "unit": "x",
+            "higher_is_better": false,
+            "setting": "per_function",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "\"ttest_ind\": {\"runtime_overhead_factor\": 2.7272489726140283}",
+            "confidence": 0.9
+          },
+          {
+            "name": "ttest_rel_runtime_overhead_factor",
+            "value": 2.549078503960122,
+            "unit": "x",
+            "higher_is_better": false,
+            "setting": "per_function",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "\"ttest_rel\": {\"runtime_overhead_factor\": 2.549078503960122}",
+            "confidence": 0.9
+          }
+        ],
+        "overall_conclusion": "The paper presents an annotation-driven assumption checker for scipy.stats and evaluates it on 29 Kaggle notebooks. It requires 11 annotations, finds unconfirmed assumptions in 86.8% of executed calls and 86.0% of static call sites, identifies 3 significant-misuse calls (0.80% of warning calls), and imposes a mean runtime overhead factor of 2.88× (metrics JSON; paper reports ~2.72×), which is considered acceptable for interactive use.",
+        "sources": {
+          "metrics_path": "results/metrics.json",
+          "paper_tex_path": "paper/paper.md"
+        },
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 17613,
+            "completion_tokens_details": {
+              "reasoning_tokens": 13266
+            },
+            "prompt_tokens": 3800,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 21413
+          },
+          "attempt": 0
+        }
+      },
+      "comparison": {
+        "status": "ok",
+        "claim_alignment": [
+          {
+            "original_claim_id": "C1",
+            "agent_claim_id": "A1",
+            "label": "consistent",
+            "rationale": "Agent implements an annotation-driven assumption checker for scipy.stats, matching the original direction of expressing assumptions and automatically checking them. Scope is reduced to Python/scipy.stats and does not include R."
+          },
+          {
+            "original_claim_id": "C2",
+            "agent_claim_id": "A2",
+            "label": "incomparable",
+            "rationale": "Agent reports 86.8% of executed calls and 86.0% of static call sites on a reduced corpus of 29 notebooks/7 executed, while the original reports 84.38% of 128 notebooks and 53.36% of 1,102 calls. Different corpus and protocol make the prevalence percentages incomparable."
+          },
+          {
+            "original_claim_id": "C3",
+            "agent_claim_id": "A4",
+            "label": "incomparable",
+            "rationale": "Agent reports 3 significant-misuse calls and a 0.80% rate among warning calls, whereas the original reports 11.51% of hypothesis-test calls and 16.47% of call sites with unconfirmed assumptions. Denominators and corpus differ."
+          },
+          {
+            "original_claim_id": "C4",
+            "agent_claim_id": "A1",
+            "label": "partial",
+            "rationale": "Agent reports 11 annotations for five scipy.stats functions, supporting low annotation burden for Python, but it does not cover R and uses a different function set."
+          },
+          {
+            "original_claim_id": "C5",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "Agent does not evaluate whether analysts manually check or mention statistical assumptions."
+          },
+          {
+            "original_claim_id": "C6",
+            "agent_claim_id": "A3",
+            "label": "incomparable",
+            "rationale": "Agent reports 92 potential-misuse call sites and 641 warnings on a reduced corpus, not directly comparable to the original 267 call sites and 586 calls from 128 notebooks."
+          }
+        ],
+        "metric_alignment": [
+          {
+            "original_metric": "notebooks_with_unconfirmed_assumptions_percent",
+            "agent_metric": "notebooks_with_unconfirmed_assumptions",
+            "comparable": false,
+            "original_value": 84.38,
+            "agent_value": 3,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Original is a percentage over 128 notebooks; agent reports 3 of 7 executed notebooks. Different corpus and unit."
+          },
+          {
+            "original_metric": "calls_with_unconfirmed_assumptions_percent",
+            "agent_metric": "unconfirmed_assumption_warning_rate",
+            "comparable": false,
+            "original_value": 53.36,
+            "agent_value": 0.8677494199535963,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Original is 53.36% of 1,102 calls in 128 notebooks; agent is 86.8% of executed calls in a reduced corpus. Different protocol."
+          },
+          {
+            "original_metric": "call_sites_with_unconfirmed_assumptions_percent",
+            "agent_metric": "potential_misuse_call_site_rate",
+            "comparable": false,
+            "original_value": 74.44,
+            "agent_value": 0.8598130841121495,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Original is 74.44% of 360 call sites; agent is 86.0% of 107 static call sites. Different corpus and protocol."
+          },
+          {
+            "original_metric": "notebooks_with_misuses_count",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 108,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Agent does not report a comparable notebook-level misuse count over the original 128-notebook corpus."
+          },
+          {
+            "original_metric": "calls_with_unconfirmed_assumptions_count",
+            "agent_metric": "unconfirmed_assumption_warnings",
+            "comparable": false,
+            "original_value": 586,
+            "agent_value": 641,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Original count is from 1,102 calls in 128 notebooks; agent count is from a reduced executed-corpus protocol."
+          },
+          {
+            "original_metric": "call_sites_with_unconfirmed_assumptions_count",
+            "agent_metric": "potential_misuse_call_sites",
+            "comparable": false,
+            "original_value": 267,
+            "agent_value": 92,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Original count is from 360 call sites; agent count is from 107 static call sites in a reduced corpus."
+          },
+          {
+            "original_metric": "total_annotated_calls",
+            "agent_metric": "total_calls",
+            "comparable": false,
+            "original_value": 1102,
+            "agent_value": 431,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Different corpus sizes and selection protocols."
+          },
+          {
+            "original_metric": "total_unique_call_sites",
+            "agent_metric": "total_call_sites",
+            "comparable": false,
+            "original_value": 360,
+            "agent_value": 107,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Different corpus sizes and selection protocols."
+          },
+          {
+            "original_metric": "significant_misuse_calls_percent",
+            "agent_metric": "significant_misuse_rate",
+            "comparable": false,
+            "original_value": 11.51,
+            "agent_value": 0.008021390374331552,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Original denominator is hypothesis-test calls with unconfirmed assumptions; agent denominator is warning-emitting calls. Different denominator and corpus."
+          },
+          {
+            "original_metric": "significant_misuse_call_sites_percent",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 16.47,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Agent does not report a comparable call-site-level significant-misuse percentage."
+          },
+          {
+            "original_metric": "significant_misuse_calls_count",
+            "agent_metric": "significant_misuse_calls",
+            "comparable": false,
+            "original_value": 35,
+            "agent_value": 3,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Different corpus and protocol; counts are not directly comparable."
+          },
+          {
+            "original_metric": "significant_misuse_call_sites_count",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 28,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Agent does not report a comparable call-site-level significant-misuse count."
+          },
+          {
+            "original_metric": "notebooks_manually_checking_all_assumptions_count",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 11,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Agent does not evaluate manual assumption checking."
+          },
+          {
+            "original_metric": "python_annotations_count",
+            "agent_metric": "annotation_count",
+            "comparable": false,
+            "original_value": 12,
+            "agent_value": 11,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Agent reports 11 annotations for five scipy.stats functions, a reduced Python-only protocol; original reports 12 Python annotations for a different function set."
+          },
+          {
+            "original_metric": "r_annotations_count",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 14,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Agent does not implement or evaluate R annotations."
+          }
+        ],
+        "summary": {
+          "direction_consistency": "mixed",
+          "consistent_claim_ratio": 0.16666666666666666,
+          "has_comparable_metrics": false,
+          "sota_improvement_summary": "N/A",
+          "overall_alignment_score": 0.45,
+          "score_rationale": "Agent works on the same research problem and direction, with C1 consistent and C4 partially supported, but most empirical prevalence/misuse metrics are incomparable due to a reduced corpus/protocol and C5 is missing. No comparable claims conflict, so score is mid-low rather than near zero."
+        },
+        "warnings": [
+          "Agent evaluation uses a reduced corpus (29 notebooks, 7 executed) and only scipy.stats, so empirical prevalence and misuse metrics are not directly comparable to the original 128-notebook Python+R study.",
+          "Agent significant-misuse rate denominator differs from the original: warning-emitting calls vs hypothesis-test calls with unconfirmed assumptions.",
+          "Agent does not evaluate manual assumption checking (original C5).",
+          "Agent annotation count covers only five scipy.stats functions and does not include R annotations."
+        ],
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 8941,
+            "completion_tokens_details": {
+              "reasoning_tokens": 6510
+            },
+            "prompt_tokens": 6828,
+            "prompt_tokens_details": {
+              "cached_tokens": 2048
+            },
+            "total_tokens": 15769
+          },
+          "attempt": 0
+        }
+      },
+      "overall_alignment_score": 0.45,
+      "direction_consistency": "mixed"
+    },
+    "experiment_analysis": {
+      "run_dir": "~/ai_scientist_inputs/FSE-2025-006_automated_detection_of_unconfirmed_stati/workspace/airesearcher_2026-08-22_07-56-39",
+      "task_dir": "~/ai_scientist_inputs/FSE-2025-006_automated_detection_of_unconfirmed_stati",
+      "status": "ok",
+      "metrics_path": "results/metrics.json",
+      "experiment_success": {
+        "status": "ok",
+        "success": true,
+        "metrics_path": "results/metrics.json",
+        "absolute_metrics_path": "~/ai_scientist_inputs/FSE-2025-006_automated_detection_of_unconfirmed_stati/workspace/airesearcher_2026-08-22_07-56-39/results/metrics.json",
+        "checks": {
+          "has_results_file": true,
+          "non_stub": true,
+          "numeric_leaf_count": 77,
+          "min_numeric_ok": true
+        },
+        "manifest_hints": {
+          "status": {
+            "pipeline": true,
+            "research_brief": true,
+            "instance": true,
+            "source_papers": true,
+            "metrics": true,
+            "project": true,
+            "paper": true
+          },
+          "returncode": 0,
+          "benchmark_complete": null,
+          "artifacts_metrics_flag": true
+        },
+        "warnings": [],
+        "suspicious_values": [],
+        "note": "success=true requires substantive results (framework-aware path) with >=3 numeric leaves. Supports metrics.json, results.json, experiment_results.txt, etc. Manifest returncode/benchmark_complete are soft warnings only."
+      },
+      "idea_code_consistency": {
+        "status": "missing_idea"
+      },
+      "setup_coverage": {
+        "status": "ok",
+        "overall_coverage": 1.0,
+        "datasets": {
+          "gold_count": 1,
+          "hit_count": 1,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "Kaggle Notebook Corpus (statistical functions)"
+          ],
+          "misses": []
+        },
+        "baselines": {
+          "gold_count": 0,
+          "hit_count": 0,
+          "miss_count": 0,
+          "coverage": null,
+          "hits": [],
+          "misses": []
+        },
+        "metrics": {
+          "gold_count": 5,
+          "hit_count": 5,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "Annotation count",
+            "Unconfirmed assumption warnings",
+            "Potential misuse call sites",
+            "Significant misuse calls",
+            "Runtime overhead factor"
+          ],
+          "misses": []
+        },
+        "agent_protocol": {},
+        "gold_protocol": {},
+        "dataset_dirs": [
+          "dataset_candidate"
+        ],
+        "flags": {
+          "weaker_baseline_suspected": false,
+          "weak_protocol": [],
+          "synthetic_data": "synthetic_allowed_by_task",
+          "gold_allows_synthetic": true
+        },
+        "gold_sources": [
+          "~/ai_scientist_inputs/FSE-2025-006_automated_detection_of_unconfirmed_stati/task.md",
+          "~/ai_scientist_inputs/FSE-2025-006_automated_detection_of_unconfirmed_stati/metadata.json"
+        ],
+        "note": "Coverage is name/alias matching against task.md Datasets/Baselines/Metrics. weak_protocol flags large reductions in trials/timeout vs Constraints. Synthetic corpora are not penalized when the task itself requires synthesis."
+      },
+      "ablation_significance": {
+        "status": "missing_idea"
+      },
+      "results_paper_consistency": {
+        "status": "ok",
+        "paper_tex": "paper/paper.md",
+        "paper_kind": "paper_md",
+        "results_format": "raw_json",
+        "digest_hint": {
+          "unfavorable_count": 0,
+          "trial_fail_count": 0,
+          "trial_success_count": 0,
+          "metadata": {}
+        },
+        "score_scale": "1-5",
+        "method": "Direct LLM comparison: agent's FINAL results artifact (metrics.json summary) vs paper Results/Discussion/Conclusion. Interim failed runs are NOT evidence unless still present in the final metrics file.",
+        "score": 2.0,
+        "consistency_label": "poor",
+        "hiding_unfavorable_suspected": true,
+        "hiding_confidence": 0.75,
+        "justification": "The headline finding of 3 significant-misuse calls and the annotation count of 11 are supported, but several key quantitative claims disagree with the final results. The paper reports 538 unconfirmed-assumption warnings while the final results report 641, and the paper reports ~2.72x mean runtime overhead while the final results show ~2.88x. More importantly, the final results show only 7 of 29 notebooks were executed, but the paper does not disclose this reduced execution coverage, which undermines the corpus-wide prevalence claims.",
+        "supported_claims": [
+          "Annotation count is 11, matching the paper's total annotation count.",
+          "The checker finds 3 significant-misuse calls, matching the paper's headline RQ3 result.",
+          "The corpus contains 29 checked notebooks, matching the paper's stated corpus size.",
+          "Runtime overhead is in the low single-digit range, broadly consistent with the paper's claim that overhead is acceptable for interactive instrumentation."
+        ],
+        "unsupported_or_overstated_claims": [
+          "The paper reports 538 unconfirmed-assumption warnings, but the final results report 641.",
+          "The paper reports ~2.72x mean runtime overhead, but the final results show ~2.88x.",
+          "The paper implies prevalence results over a 29-notebook corpus, but only 7 notebooks were executed.",
+          "The paper does not mention 92 potential-misuse call sites, which is 86% of all call sites."
+        ],
+        "numeric_mismatches": [
+          {
+            "paper": "538 unconfirmed-assumption warnings",
+            "results": "641 unconfirmed_assumption_warnings",
+            "note": "Final results top-level count is 641; training history n_unconfirmed is 374, so neither matches the paper's 538."
+          },
+          {
+            "paper": "~2.72x mean runtime overhead",
+            "results": "2.8839911603276738 runtime_overhead_factor",
+            "note": "Final overall mean runtime overhead factor is ~2.88x, not ~2.72x."
+          },
+          {
+            "paper": "29 public Kaggle notebooks",
+            "results": "notebooks_checked=29, notebooks_executed=7",
+            "note": "The paper reports a 29-notebook corpus but final results show only 7 notebooks were executed."
+          },
+          {
+            "paper": "3 significant-misuse calls among 538 warnings",
+            "results": "3 significant_misuse_calls among 641 warnings",
+            "note": "The significant-misuse count matches, but the warning denominator differs."
+          }
+        ],
+        "unfavorable_in_final_results": [
+          "Only 7 of 29 notebooks were executed.",
+          "Runtime overhead factor is ~2.88x, higher than the paper's ~2.72x.",
+          "641 unconfirmed-assumption warnings, higher than the paper's 538.",
+          "92 of 107 call sites are potential misuse call sites (86%)."
+        ],
+        "unfavorable_acknowledged_in_paper": [
+          "The paper acknowledges 3 significant-misuse calls where conclusions would change.",
+          "The paper acknowledges runtime overhead is non-zero and describes it as acceptable."
+        ],
+        "unfavorable_missing_from_paper": [],
+        "rubric": "Poor consistency: several key numbers/claims disagree with metrics, or major unfavorable outcomes are missing from the narrative.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 5726,
+            "completion_tokens_details": {
+              "reasoning_tokens": 4883
+            },
+            "prompt_tokens": 5564,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 11290
+          },
+          "attempt": 0
+        }
+      },
+      "scores": {
+        "experiment_success": true,
+        "idea_code_score": null,
+        "setup_coverage": 1.0,
+        "ablation_coverage_score": null,
+        "overall_ablation_ok": null,
+        "overall_significance_ok": null,
+        "results_paper_score": 2.0,
+        "hiding_unfavorable_suspected": true
+      },
+      "notes": [
+        "Axes 1,2,3,4,6 in experiment_analysis (figures excluded).",
+        "setup_coverage matches task.md Datasets/Baselines/Metrics; weak_protocol flags reductions vs Constraints.",
+        "Axis 6: final normalized results vs paper; interim run logs not used as ground truth."
+      ]
+    },
+    "literature_review": {
+      "run_dir": "~/ai_scientist_inputs/FSE-2025-006_automated_detection_of_unconfirmed_stati/workspace/airesearcher_2026-08-22_07-56-39",
+      "task_dir": "~/ai_scientist_inputs/FSE-2025-006_automated_detection_of_unconfirmed_stati",
+      "status": "not_applicable",
+      "framework": "airesearcher",
+      "reason": "Framework does not produce workspace reference artifacts for fair comparison.",
+      "scores": null
+    }
+  },
+  "scores": {
+    "completeness": {
+      "complete": false,
+      "overall_score": 0.6,
+      "required_score": 0.75,
+      "bonus_score": 0.05
+    },
+    "peer_review": {
+      "status": "ok",
+      "optional": false,
+      "overall_score": 5.8,
+      "score_scale": "1-10",
+      "scoring_method": "paperreview_apr"
+    },
+    "idea_generation": {
+      "status": "missing_idea",
+      "overall_score": null,
+      "dimensions": {
+        "novelty": null,
+        "feasibility": null,
+        "clarity": null
+      },
+      "novelty_category": null,
+      "solution_space_status": null
+    },
+    "alignment": {
+      "status": "ok",
+      "direction_consistency": "mixed",
+      "overall_alignment_score": 0.45
+    },
+    "literature_review": {
+      "fabrication_rate": null,
+      "coverage_recall": null,
+      "recency_ratio_3y": null,
+      "recency_ratio_5y": null
+    },
+    "experiment_analysis": {
+      "experiment_success": true,
+      "idea_code_score": null,
+      "setup_coverage": 1.0,
+      "ablation_coverage_score": null,
+      "overall_ablation_ok": null,
+      "overall_significance_ok": null,
+      "results_paper_score": 2.0,
+      "hiding_unfavorable_suspected": true
+    }
+  },
+  "fair_scores": {
+    "applicable_axes": [
+      "completeness",
+      "peer_review",
+      "alignment",
+      "experiment_analysis"
+    ],
+    "skipped_axes": [
+      {
+        "axis": "idea_generation",
+        "reason": "missing_idea"
+      },
+      {
+        "axis": "literature_review",
+        "reason": "not_applicable"
+      }
+    ],
+    "fair_mean_0_1": 0.645,
+    "note": "fair_mean_0_1 averages only applicable axes; optional peer review and framework-inapplicable literature are excluded from the denominator."
+  },
+  "evals_root": "~/ai_scientist_evals",
+  "claims_cache": "~/ai_scientist_evals/FSE-2025-006_automated_detection_of_unconfirmed_stati/original_claims.json",
+  "solution_space_cache": "~/ai_scientist_evals/FSE-2025-006_automated_detection_of_unconfirmed_stati/solution_space.json"
+}

@@ -1,0 +1,224 @@
+{
+  "status": "ok",
+  "task_dir": "~/ai_scientist_inputs/FSE-2025-010_quantifying_the_security_and_maintenance",
+  "paper_title": "Pinning Is Futile: You Need More Than Local Dependency Versioning to Defend Against Supply Chain Attacks",
+  "task_id": "FSE-2025-010",
+  "selection": {
+    "num_blocks": 11,
+    "total_chars": 31998,
+    "inferred_roles": {
+      "abstract": 1,
+      "introduction": 1,
+      "experiment": 5,
+      "method": 1,
+      "discussion": 2,
+      "conclusion": 1
+    },
+    "mineru_raw_keys": {
+      "field:abstract": 1,
+      "field:introduction": 1,
+      "other": 8,
+      "conclusion": 1
+    },
+    "infer_reasons": {
+      "top_level_field": 2,
+      "title": 8,
+      "body": 1
+    },
+    "rescued_from_other": 8,
+    "note": "mineru key is unreliable; blocks are selected by title/body/inheritance. rescued_from_other counts sections labeled other but treated as typed roles."
+  },
+  "claims": [
+    {
+      "id": "C1",
+      "statement": "Pinning all direct dependencies significantly increases maintenance and security costs, including higher exposure to vulnerabilities, more outdated dependencies, and more dependency conflicts.",
+      "direction": "degrades",
+      "metric_names": [
+        "n_vuln",
+        "n_outdated_deps",
+        "n_bloated"
+      ],
+      "evidence_quote": "pinning all direct dependencies significant influence on three measures of cost—higher exposure vulnerabilities (n_vuln), number outdated dependencies (n_outdated_deps), higher exposure dependency conflicts (n_bloated).",
+      "confidence": 0.9
+    },
+    {
+      "id": "C2",
+      "statement": "Pinning direct dependencies has diminishing benefits for floating dependencies and automatic updates; the effect on floating dependencies flips negative for dependency graphs with more than about 498 dependencies.",
+      "direction": "mixed",
+      "metric_names": [
+        "floating_dependencies",
+        "n_auto_update"
+      ],
+      "evidence_quote": "effect on two benefits dim, for number automatic updates regression model fits poorly R^2<0.1; for number floating dependencies benefit smaller with larger graph negative for very large; flips to negative for dependency graphs with more than 498 dependencies.",
+      "confidence": 0.95
+    },
+    {
+      "id": "C3",
+      "statement": "The interaction between pinning and dependency graph size strengthens adverse cost outcomes, with the strongest interaction observed for exposure to vulnerabilities.",
+      "direction": "degrades",
+      "metric_names": [
+        "n_vuln",
+        "n_outdated_deps",
+        "n_bloated"
+      ],
+      "evidence_quote": "Interaction term all three costs increase with graph size; vulnerabilities strongest interaction.",
+      "confidence": 0.85
+    },
+    {
+      "id": "C4",
+      "statement": "Best local pinning reduces ecosystem-wide risk against top 1000 popular packages by 12.21% when defending 20 packages and 30.09% when defending 100 packages.",
+      "direction": "improves",
+      "metric_names": [
+        "ecosystem_risk_reduction"
+      ],
+      "evidence_quote": "Best local pinning reduce ecosystem-wide risk against top 1000 popular packages by 12.21% with defending only 20 packages and 30.09% when defending 100.",
+      "confidence": 0.95
+    },
+    {
+      "id": "C5",
+      "statement": "Best transitive pinning reduces ecosystem-wide risk against top 1000 popular packages by 51.34% when defending 20 packages and 75.81% when defending 100 packages.",
+      "direction": "improves",
+      "metric_names": [
+        "ecosystem_risk_reduction"
+      ],
+      "evidence_quote": "Best transitive pinning reduce by 51.34% when defending only 20 packages and 75.81% when defending 100.",
+      "confidence": 0.95
+    },
+    {
+      "id": "C6",
+      "statement": "For both local and transitive pinning interventions, selecting packages by betweenness weighted by downloads is the most effective strategy, and transitive pinning is usually two to three times more effective than local pinning.",
+      "direction": "improves",
+      "metric_names": [
+        "ecosystem_risk_reduction"
+      ],
+      "evidence_quote": "For both mechanisms, selecting packages with betweenness weighted by downloads is most effective, transitive pinning usually two to three times more effective than local pinning.",
+      "confidence": 0.9
+    },
+    {
+      "id": "C7",
+      "statement": "Only 44.21% of GitHub repositories in the dataset commit package-lock.json, limiting the practical reach of faithful full-graph pinning via lockfiles.",
+      "direction": "neutral",
+      "metric_names": [
+        "lockfile_adoption"
+      ],
+      "evidence_quote": "lock file: 44.21% of GitHub repositories in dataset did this (committed package-lock.json).",
+      "confidence": 0.9
+    },
+    {
+      "id": "C8",
+      "statement": "Full regression models were preferable to null models for all five outcome variables, with Wald tests significant at p<0.001; however, the automatic-update model fit weakly with R^2<0.1.",
+      "direction": "mixed",
+      "metric_names": [
+        "model_preference_p",
+        "n_auto_update_R2"
+      ],
+      "evidence_quote": "Wald tests full model preferable for all five outcome variables p<0.001; n_auto_update model R^2<0.1.",
+      "confidence": 0.85
+    }
+  ],
+  "metrics": [
+    {
+      "name": "unprotected_downloads_affected",
+      "value": 1.93,
+      "unit": "%",
+      "higher_is_better": false,
+      "setting": "Expected percentage of npm downloads affected on average upon attack without intervention, top 1000 most impactful packages",
+      "is_sota_or_best": false,
+      "baseline_name": null,
+      "baseline_value": null,
+      "evidence_quote": "without intervention 1.93% of npm downloads affected on average upon attack",
+      "confidence": 0.95
+    },
+    {
+      "name": "local_pinning_risk_reduction_20_packages",
+      "value": 12.21,
+      "unit": "%",
+      "higher_is_better": true,
+      "setting": "Best local pinning strategy defending 20 packages against top 1000 popular package attacks",
+      "is_sota_or_best": true,
+      "baseline_name": "no intervention",
+      "baseline_value": 0.0,
+      "evidence_quote": "Best local pinning reduce ecosystem-wide risk against top 1000 popular packages by 12.21% with defending only 20 packages",
+      "confidence": 0.95
+    },
+    {
+      "name": "local_pinning_risk_reduction_100_packages",
+      "value": 30.09,
+      "unit": "%",
+      "higher_is_better": true,
+      "setting": "Best local pinning strategy defending 100 packages against top 1000 popular package attacks",
+      "is_sota_or_best": true,
+      "baseline_name": "no intervention",
+      "baseline_value": 0.0,
+      "evidence_quote": "Best local pinning reduce ecosystem-wide risk against top 1000 popular packages by 30.09% when defending 100.",
+      "confidence": 0.95
+    },
+    {
+      "name": "transitive_pinning_risk_reduction_20_packages",
+      "value": 51.34,
+      "unit": "%",
+      "higher_is_better": true,
+      "setting": "Best transitive pinning strategy defending 20 packages against top 1000 popular package attacks",
+      "is_sota_or_best": true,
+      "baseline_name": "no intervention",
+      "baseline_value": 0.0,
+      "evidence_quote": "Best transitive pinning reduce by 51.34% when defending only 20 packages",
+      "confidence": 0.95
+    },
+    {
+      "name": "transitive_pinning_risk_reduction_100_packages",
+      "value": 75.81,
+      "unit": "%",
+      "higher_is_better": true,
+      "setting": "Best transitive pinning strategy defending 100 packages against top 1000 popular package attacks",
+      "is_sota_or_best": true,
+      "baseline_name": "no intervention",
+      "baseline_value": 0.0,
+      "evidence_quote": "Best transitive pinning reduce by 75.81% when defending 100.",
+      "confidence": 0.95
+    },
+    {
+      "name": "lockfile_adoption_github_repositories",
+      "value": 44.21,
+      "unit": "%",
+      "higher_is_better": true,
+      "setting": "Percentage of GitHub repositories committing package-lock.json",
+      "is_sota_or_best": false,
+      "baseline_name": null,
+      "baseline_value": null,
+      "evidence_quote": "lock file: 44.21% of GitHub repositories in dataset did this (committed package-lock.json).",
+      "confidence": 0.9
+    },
+    {
+      "name": "dependency_graph_pinning_benefit_threshold",
+      "value": 498,
+      "unit": "dependencies",
+      "higher_is_better": false,
+      "setting": "Dependency graph size above which pinning effect on floating dependencies becomes negative",
+      "is_sota_or_best": false,
+      "baseline_name": null,
+      "baseline_value": null,
+      "evidence_quote": "flips to negative for dependency graphs with more than 498 dependencies.",
+      "confidence": 0.95
+    }
+  ],
+  "overall_conclusion": "Pinning all direct dependencies does not provide a clear net benefit: it significantly increases exposure to vulnerabilities, outdated dependencies, and bloated dependency graphs, while offering only modest or inconsistent benefits for floating dependencies and automatic updates. Ecosystem-wide risk reductions are substantial mainly for targeted transitive pinning, which reduced risk against top popular packages by 51.34% when defending 20 packages and 75.81% when defending 100 packages, roughly two to three times better than local pinning. Betweenness weighted by downloads is the most effective package selection strategy.",
+  "comparable_notes": "Metrics compare no-intervention baseline against best local and best transitive pinning strategies for top 1000 popular packages; higher percentages indicate stronger ecosystem risk reduction. Local pinning risk reductions are 12.21% and 30.09% for 20 and 100 defended packages, while transitive pinning achieves 51.34% and 75.81% for the same counts. Lockfile adoption is reported as 44.21% of GitHub repositories. Model fit for automatic updates was poor (R^2<0.1), so automatic-update estimates should be interpreted cautiously.",
+  "llm_meta": {
+    "model": "deepseek-v4-pro-0813",
+    "base_url": "https://api-sg.umodelverse.ai/v1",
+    "usage": {
+      "completion_tokens": 2412,
+      "completion_tokens_details": {
+        "reasoning_tokens": 230
+      },
+      "prompt_tokens": 2762,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "total_tokens": 5174
+    },
+    "attempt": 0
+  },
+  "cache_hit": false
+}

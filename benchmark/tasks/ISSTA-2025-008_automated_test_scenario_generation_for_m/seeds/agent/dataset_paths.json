@@ -1,0 +1,76 @@
+{
+  "layout": "asvtestscenegeneration_colregs",
+  "layout_note": "ISSTA 2025 ASVTestSceneGeneration artifact: bundled CommonOcean AIS XML scenarios, COLREGS functional equivalence-class models, and SB (pymoo NSGA-II) / RS (Scenic) scene-generation code.",
+  "workspace_symlink": "dataset_candidate/asvtestscenegeneration-issta2025",
+  "paper_title": "Assessing Scene Generation Techniques for Testing COLREGS-Compliance of Autonomous Surface Vehicles",
+  "paper_venue": "ISSTA 2025",
+  "paper_doi": "https://doi.org/10.1145/3728919",
+  "replication_github": "https://github.com/PELAB-LiU/ASVTestSceneGeneration",
+  "commonocean_site": "https://commonocean.cps.cit.tum.de/",
+  "commonocean_paper": "Krasowski & Althoff, CommonOcean: Composable Benchmarks for Motion Planning on Oceans, ITSC 2022",
+  "read_only": true,
+  "copy_note": "Shared mount is read-only. Copy scripts or working copies under project/ before writes. Write metrics under project/ or results/.",
+  "paths": {
+    "artifact_root": "dataset_candidate/asvtestscenegeneration-issta2025",
+    "commonocean": "dataset_candidate/asvtestscenegeneration-issta2025/assets/common_ocean_scenarios",
+    "commonocean_florida": "dataset_candidate/asvtestscenegeneration-issta2025/assets/common_ocean_scenarios/Florida",
+    "commonocean_middle_east_coast": "dataset_candidate/asvtestscenegeneration-issta2025/assets/common_ocean_scenarios/MiddleEastCoast",
+    "commonocean_upper_west_coast": "dataset_candidate/asvtestscenegeneration-issta2025/assets/common_ocean_scenarios/UpperWestCoast",
+    "commonocean_handcrafted_two_vessel": "dataset_candidate/asvtestscenegeneration-issta2025/assets/common_ocean_scenarios/HandcraftedTwoVesselEncounters_01_24",
+    "functional_models": "dataset_candidate/asvtestscenegeneration-issta2025/assets/functional_models",
+    "functional_models_all": "dataset_candidate/asvtestscenegeneration-issta2025/assets/functional_models/all",
+    "functional_models_ambiguous": "dataset_candidate/asvtestscenegeneration-issta2025/assets/functional_models/ambiguous",
+    "scenic_assets": "dataset_candidate/asvtestscenegeneration-issta2025/assets/scenic",
+    "gen_data": "dataset_candidate/asvtestscenegeneration-issta2025/assets/gen_data",
+    "src": "dataset_candidate/asvtestscenegeneration-issta2025/src",
+    "evaluation_main": "dataset_candidate/asvtestscenegeneration-issta2025/src/scripts/evaluation_main.py",
+    "scenic_script": "dataset_candidate/asvtestscenegeneration-issta2025/src/scripts/scenic_script.py",
+    "commonocean_parser": "dataset_candidate/asvtestscenegeneration-issta2025/src/scripts/common_ocean_scenario_parser.py",
+    "refinery_problem": "dataset_candidate/asvtestscenegeneration-issta2025/refinery_functional_models/COLREGS4_v6.PROBLEM",
+    "meta": "dataset_candidate/asvtestscenegeneration-issta2025/DOWNLOAD_META.txt"
+  },
+  "size_notes": {
+    "artifact_total_on_disk": "407512134 bytes (~389 MiB content + .git; du -sh ≈ 460 MiB)",
+    "commonocean_xml_total": "3934 XML files; 284368136 bytes (~271.2 MiB) under assets/common_ocean_scenarios/",
+    "commonocean_florida": "545 XML files; ≈ 30 MiB",
+    "commonocean_middle_east_coast": "667 XML files; ≈ 39 MiB",
+    "commonocean_upper_west_coast": "722 XML files; ≈ 50 MiB",
+    "commonocean_handcrafted_two_vessel": "2000 XML files; ≈ 165 MiB",
+    "gen_data": "70586101 bytes (~67.3 MiB) paper evaluation batches",
+    "functional_models": "874937 bytes (~0.83 MiB) equivalence-class models for K=2..6"
+  },
+  "dataset_env": {
+    "ASVTESTSCENEGENERATION_HOME": "dataset_candidate/asvtestscenegeneration-issta2025",
+    "COMMONOCEAN_HOME": "dataset_candidate/asvtestscenegeneration-issta2025/assets/common_ocean_scenarios",
+    "FUNCTIONAL_MODELS_HOME": "dataset_candidate/asvtestscenegeneration-issta2025/assets/functional_models",
+    "ASV_SRC": "dataset_candidate/asvtestscenegeneration-issta2025/src"
+  },
+  "python_environment": {
+    "python": "/opt/issta-2025-008-venv/bin/python",
+    "activation": "source /opt/issta-2025-008-venv/bin/activate",
+    "note": "pymoo (SB/NSGA-II) + Scenic (RS) + Shapely/SciPy COLREGS geometry stack; PYTHONPATH should include artifact src/."
+  },
+  "toolchain": {
+    "sb_entry": "src/scripts/evaluation_main.py",
+    "rs_entry": "src/scripts/scenic_script.py",
+    "commonocean_parser": "src/scripts/common_ocean_scenario_parser.py",
+    "primary_baselines_in_artifact": "Search-based (pymoo NSGA-II) and Scenic rejection sampling; CommonOcean AIS XML as real-world baseline"
+  },
+  "paper_protocol": {
+    "datasets": [
+      "CommonOcean",
+      "COLREGS functional equivalence classes"
+    ],
+    "problem_sizes": [2, 3, 4, 5, 6],
+    "runs_per_batch": 1000,
+    "timeout_minutes": 10,
+    "primary_metrics": [
+      "relevance_ratio_T_and_C",
+      "ambiguous_relevance_ratio_A_and_C",
+      "equivalence_class_coverage",
+      "distribution_divergence_kl",
+      "average_generation_time",
+      "success_rate"
+    ]
+  }
+}

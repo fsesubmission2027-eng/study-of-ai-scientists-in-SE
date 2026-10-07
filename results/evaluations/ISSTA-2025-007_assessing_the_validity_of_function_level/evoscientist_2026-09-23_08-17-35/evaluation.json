@@ -1,0 +1,1679 @@
+{
+  "run_dir": "~/ai_scientist_inputs/ISSTA-2025-007_assessing_the_validity_of_function_level/workspace/evoscientist_2026-09-23_08-17-35",
+  "task_dir": "~/ai_scientist_inputs/ISSTA-2025-007_assessing_the_validity_of_function_level",
+  "framework": "evoscientist",
+  "fairness_audit": [
+    {
+      "axis": "completeness",
+      "was_unfair": "Required both paper.tex AND paper.pdf; any tool missing one failed equally.",
+      "fix": "Paper gate: PDF=1.0; TeX-only=0.5; ``complete`` requires PDF."
+    },
+    {
+      "axis": "completeness",
+      "was_unfair": "``results`` counted stub/seed JSON (dataset_candidate/metrics.json).",
+      "fix": "``results`` requires substantive numeric results via results_normalize."
+    },
+    {
+      "axis": "experiment_success",
+      "was_unfair": "Only metrics.json; ignored results.json / experiment_results.txt.",
+      "fix": "Framework-ordered result candidates + normalized loaders."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Penalized tools with no bib; airesearcher has no workspace references.",
+      "fix": "literature_applicable=false → status not_applicable; excluded from fair aggregate."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "related_work.json subset as gold made recall hard to interpret.",
+      "fix": "Coverage gold is original paper REFERENCES from mineru; related_work only enriches metadata/fallback."
+    },
+    {
+      "axis": "peer_review",
+      "was_unfair": "Missing Stanford report looked like evaluation failure.",
+      "fix": "status not_provided; optional axis, never counts as tool failure."
+    },
+    {
+      "axis": "paths/find_results",
+      "was_unfair": "Picked downloads/** and sandbox noise (e.g. airesearcher LLVM tree).",
+      "fix": "Exclude downloads/, seeds/, dataset_candidate/, sandbox junk paths."
+    },
+    {
+      "axis": "paths/framework_noise",
+      "was_unfair": "DeepScientist .deepscientist_npm / runtime / skills templates counted as code/paper/results.",
+      "fix": "FRAMEWORK_NOISE_DIRS+markers; quest worktree + eval_output results; paper md drafts; reject template tex."
+    },
+    {
+      "axis": "paths/paper_tex",
+      "was_unfair": "tiny_scientist / ACL runs store paper under latex/*.tex; evaluator only looked at paper/main.tex.",
+      "fix": "latex/**/*.tex with substantive-body heuristic; find_paper_document uses same rules."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Entire custom.bib (300+ anthology entries) verified when paper had zero \\cite commands.",
+      "fix": "collect_agent_references filters bib to in-text cite keys; skips uncited bulk bib (>40 entries)."
+    },
+    {
+      "axis": "paths/ai_scientist_summaries",
+      "was_unfair": "AI Scientist can persist substantive results and paper-like drafts in *_summary.json logs rather than paper/main.tex or results/**/*.json.",
+      "fix": "Treat draft_summary/research_summary as weak paper documents and summary JSONs as result candidates."
+    },
+    {
+      "axis": "framework/ai_scientist_v2",
+      "was_unfair": "Manifest framework ``ai_scientist_v2`` fell through to profile ``unknown``, skipping AI-Scientist idea/result path priorities.",
+      "fix": "Normalize ``ai_scientist_v2`` (and common aliases) to profile key ``ai_scientist``."
+    },
+    {
+      "axis": "idea_generation",
+      "was_unfair": "plan.md/todos.md weak proxies scored same as structured idea.json.",
+      "fix": "Framework idea_priority tried first; missing idea → not_applicable where appropriate."
+    }
+  ],
+  "generated_at": "2026-10-01T12:23:02",
+  "axes": [
+    "alignment",
+    "completeness",
+    "experiment_analysis",
+    "idea_generation",
+    "literature_review",
+    "peer_review"
+  ],
+  "results": {
+    "completeness": {
+      "framework": "evoscientist",
+      "run_dir": "~/ai_scientist_inputs/ISSTA-2025-007_assessing_the_validity_of_function_level/workspace/evoscientist_2026-09-23_08-17-35",
+      "task_dir": "~/ai_scientist_inputs/ISSTA-2025-007_assessing_the_validity_of_function_level",
+      "complete": true,
+      "required_score": 1.0,
+      "bonus_score": 0.13,
+      "overall_score": 0.8521,
+      "missing": [],
+      "required": {
+        "idea": {
+          "path": "todos.md",
+          "bytes": 2508,
+          "via": "candidate"
+        },
+        "code": {
+          "count": 4,
+          "files": [
+            {
+              "path": "project/aggregate_metrics.py",
+              "bytes": 4984,
+              "via": "glob"
+            },
+            {
+              "path": "project/literature_analysis.py",
+              "bytes": 5076,
+              "via": "glob"
+            },
+            {
+              "path": "project/rq1_analysis.py",
+              "bytes": 8059,
+              "via": "glob"
+            },
+            {
+              "path": "project/rq2_wordcount.py",
+              "bytes": 7559,
+              "via": "glob"
+            }
+          ]
+        },
+        "results": {
+          "substantive": true,
+          "normalized_path": "results/metrics.json",
+          "numeric_leaf_count": 51,
+          "discovered_files": [
+            {
+              "path": "results/metrics.json",
+              "bytes": 2998,
+              "via": "candidate"
+            },
+            {
+              "path": "results/rq1_summary.json",
+              "bytes": 2500,
+              "via": "glob"
+            },
+            {
+              "path": "results/rq2_bigvul.json",
+              "bytes": 978,
+              "via": "glob"
+            },
+            {
+              "path": "results/rq2_devign.json",
+              "bytes": 977,
+              "via": "glob"
+            },
+            {
+              "path": "results/rq2_diversevul.json",
+              "bytes": 985,
+              "via": "glob"
+            },
+            {
+              "path": "results/rq3_literature.json",
+              "bytes": 1340,
+              "via": "glob"
+            }
+          ],
+          "metrics_keys_sample": [
+            "task",
+            "primary_classifier",
+            "aggregation",
+            "metrics",
+            "by_dataset",
+            "supplementary"
+          ]
+        },
+        "paper": {
+          "tex": null,
+          "pdf": {
+            "path": "paper/main.pdf",
+            "bytes": 57264,
+            "via": "candidate"
+          },
+          "md": {
+            "path": "paper/paper.md",
+            "bytes": 19880,
+            "via": "candidate"
+          },
+          "json": null,
+          "status": "pdf",
+          "score": 1.0
+        }
+      },
+      "bonus": {
+        "experiment_plan": {
+          "path": "todos.md",
+          "bytes": 2508,
+          "via": "candidate"
+        },
+        "experiment_log": {
+          "path": "evoscientist_run.log",
+          "bytes": 73740,
+          "via": "glob"
+        },
+        "review": {
+          "path": "artifacts/peer_review/stanford_apr.md",
+          "bytes": 12171,
+          "via": "glob"
+        },
+        "readme": {
+          "path": "README_BENCHMARK.md",
+          "bytes": 2868,
+          "via": "candidate"
+        },
+        "narrative": null,
+        "bib": null
+      },
+      "manifest_status": {
+        "research_request": true,
+        "plan": true,
+        "metrics": true,
+        "paper_tex": false,
+        "paper_pdf": false,
+        "readme": false
+      },
+      "gate_scores": {
+        "idea": 1.0,
+        "code": 1.0,
+        "results": 1.0,
+        "paper": 1.0
+      },
+      "fairness": {
+        "gates": [
+          "idea",
+          "code",
+          "results",
+          "paper"
+        ],
+        "paper_gate_rule": "PDF=1.0; TeX-only/md_only/json_only=0.5; complete requires PDF",
+        "results_gate_rule": "substantive numeric results via framework-aware normalize_results",
+        "audit_ref": "framework_profile.FAIRNESS_AUDIT"
+      },
+      "notes": [
+        "Required: idea, code, substantive results, paper (PDF full; TeX/markdown/JSON draft half).",
+        "Stub/seed metrics (e.g. dataset_candidate/metrics.json) do not satisfy results.",
+        "Framework noise (.deepscientist_npm, skills/templates, runtime) is excluded from code/results/paper.",
+        "Manifest status is informational; disk presence is authoritative."
+      ]
+    },
+    "idea_generation": {
+      "run_dir": "~/ai_scientist_inputs/ISSTA-2025-007_assessing_the_validity_of_function_level/workspace/evoscientist_2026-09-23_08-17-35",
+      "task_dir": "~/ai_scientist_inputs/ISSTA-2025-007_assessing_the_validity_of_function_level",
+      "idea_path": "~/ai_scientist_inputs/ISSTA-2025-007_assessing_the_validity_of_function_level/workspace/evoscientist_2026-09-23_08-17-35/todos.md",
+      "status": "ok",
+      "dimensions": {
+        "novelty": {
+          "score": 1.0,
+          "justification": "The idea text says 'Reproduction + re-analysis of ... Top Score on the Wrong Exam' and reports 'only 39% ... valid' / '100% context-dependent'; this core benchmark-validity critique is already present in Solution Space entries such as R19 (function-level detector limitations), R16 (limits of ML vulnerability detection), R17 (data quality), and R22 (spurious feature correlations).",
+          "rubric": "Existing: the idea's core method is already clearly present or solved in the Solution Space; only tiny parameter / test-case changes.",
+          "category": "Existing",
+          "nearest_solution_space_ids": [
+            "R19",
+            "R16",
+            "R17",
+            "R22"
+          ],
+          "differentiation": "The plan is an explicit reproduction and re-analysis rather than a new method. Relative to R19/R16/R17/R22, it repeats dataset-validity audits of function-level ML4VD using BigVul/Devign/DiverseVul, a word-count classifier, and literature granularity counts."
+        },
+        "feasibility": {
+          "score": 5.0,
+          "justification": "The plan lists completed stages and ready commands: 'source /opt/issta-2025-007-venv/bin/activate; python project/rq1_analysis.py ...'. It uses open public datasets (BigVul, Devign, DiverseVul) and off-the-shelf XGBoost/word-count features, so this is essentially out-of-the-box execution rather than new development.",
+          "rubric": "Extremely simple / near zero development: change a few parameters in existing code, or call an off-the-shelf library/API to validate; essentially out of the box."
+        },
+        "clarity": {
+          "score": 4.0,
+          "justification": "The plan is concrete: stages, success signals ('reproduce 39/47/65% valid labels; 100% context-dependent'), metric keys, and reproducibility commands are specified. It lacks an explicit limitations or threat-to-validity discussion, so it falls short of rubric 5's mitigation/defense requirement.",
+          "rubric": "Clear and concrete: steps are explicit with a reasonable, specific experiment design (baseline tools, metric definitions); can be turned into a solid proposal."
+        }
+      },
+      "overall_score": 2.0,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "novelty",
+        "feasibility",
+        "clarity"
+      ],
+      "solution_space": {
+        "status": "ok",
+        "paper_count": 36,
+        "entry_count": 36,
+        "cache_hit": true,
+        "source_file": "~/ai_scientist_inputs/ISSTA-2025-007_assessing_the_validity_of_function_level/mineru_sections.json",
+        "stats": {
+          "papers": 36,
+          "extracted": 36,
+          "usable_abstracts": 22,
+          "citation_meta_abstracts": 0,
+          "missing_abstracts": 14,
+          "mineru_titles": 34,
+          "related_work_titles": 26,
+          "abstracts_attached": 22,
+          "related_work_extras": 2,
+          "batches": 2
+        },
+        "error": null
+      },
+      "notes": [
+        "Scores the intermediate idea artifact (not the final paper).",
+        "Dimensions: novelty, feasibility, clarity (each 1-5). Excitement removed.",
+        "Novelty is scored against a Solution Space built from mineru REFERENCES titles (+ related_work.json abstracts when matched)."
+      ],
+      "idea_via": "candidate",
+      "idea_relative": "todos.md",
+      "summary": "This artifact is a reproduction and re-analysis of an existing ISSTA 2025 benchmark-validity study over BigVul, Devign, and DiverseVul.",
+      "strengths": [],
+      "weaknesses": [],
+      "llm_meta": {
+        "model": "deepseek-v4-pro-0813",
+        "base_url": "https://api-sg.umodelverse.ai/v1",
+        "usage": {
+          "completion_tokens": 1390,
+          "completion_tokens_details": {
+            "reasoning_tokens": 939
+          },
+          "prompt_tokens": 712,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "total_tokens": 2102
+        },
+        "attempt": 0
+      }
+    },
+    "peer_review": {
+      "run_dir": "~/ai_scientist_inputs/ISSTA-2025-007_assessing_the_validity_of_function_level/workspace/evoscientist_2026-09-23_08-17-35",
+      "review_report": "~/ai_scientist_inputs/ISSTA-2025-007_assessing_the_validity_of_function_level/workspace/evoscientist_2026-09-23_08-17-35/artifacts/peer_review/stanford_apr.md",
+      "paper_pdf": "~/ai_scientist_inputs/ISSTA-2025-007_assessing_the_validity_of_function_level/workspace/evoscientist_2026-09-23_08-17-35/paper/main.pdf",
+      "paper_tex": null,
+      "status": "ok",
+      "dimensions": {},
+      "overall_score": 5.7,
+      "score_scale": "1-10",
+      "dimension_order": [],
+      "notes": [
+        "Scored from paperreview.ai (Stanford APR) native ratings; benchmark 5-dimension LLM rubric skipped.",
+        "Overall scale: 1-10."
+      ],
+      "paperreview": {
+        "status": "cached",
+        "hint": "Cached APR score found; no re-upload."
+      },
+      "scoring_method": "paperreview_apr",
+      "scoring_source": "paperreview_json",
+      "apr_dimensions": {},
+      "summary": "",
+      "red_flags": []
+    },
+    "alignment": {
+      "run_dir": "~/ai_scientist_inputs/ISSTA-2025-007_assessing_the_validity_of_function_level/workspace/evoscientist_2026-09-23_08-17-35",
+      "task_dir": "~/ai_scientist_inputs/ISSTA-2025-007_assessing_the_validity_of_function_level",
+      "status": "ok",
+      "original": {
+        "paper_title": "Top Score on the Wrong Exam: On Benchmarking in Machine Learning for Vulnerability Detection",
+        "selection": {
+          "num_blocks": 6,
+          "total_chars": 31998,
+          "inferred_roles": {
+            "abstract": 1,
+            "introduction": 1,
+            "experiment": 3,
+            "discussion": 1
+          },
+          "mineru_raw_keys": {
+            "field:abstract": 1,
+            "field:introduction": 1,
+            "field:experiment": 1,
+            "other": 3
+          },
+          "infer_reasons": {
+            "top_level_field": 3,
+            "inherited": 1,
+            "body_override": 1,
+            "title": 1
+          },
+          "rescued_from_other": 3,
+          "note": "mineru key is unreliable; blocks are selected by title/body/inheritance. rescued_from_other counts sections labeled other but treated as typed roles."
+        },
+        "claims": [
+          {
+            "id": "C1",
+            "statement": "The prevailing function-level binary classification definition of ML4VD is ill-defined because vulnerability often cannot be decided without calling context.",
+            "direction": "neutral",
+            "metric_names": [
+              "context_dependent_vulnerability_ratio",
+              "context_dependent_security_ratio"
+            ],
+            "evidence_quote": "the vulnerability of a function cannot be decided without further context for more than 90% of functions",
+            "confidence": 0.95
+          },
+          {
+            "id": "C2",
+            "statement": "Popular ML4VD datasets contain noisy labels: only 39%-65% of sampled functions labeled vulnerable actually contain security vulnerabilities.",
+            "direction": "degrades",
+            "metric_names": [
+              "noisy_label_ratio"
+            ],
+            "evidence_quote": "Out of the 100 functions per dataset that were originally labeled as vulnerable, only 39%-65% actually contain security vulnerabilities.",
+            "confidence": 0.95
+          },
+          {
+            "id": "C3",
+            "statement": "High ML4VD benchmark scores can be achieved via spurious correlations without detecting vulnerabilities.",
+            "direction": "degrades",
+            "metric_names": [
+              "accuracy",
+              "success_ratio"
+            ],
+            "evidence_quote": "high scores can be achieved even when only word counts are available",
+            "confidence": 0.9
+          }
+        ],
+        "metrics": [
+          {
+            "name": "context_dependent_vulnerability_ratio",
+            "value": 0.9,
+            "unit": "ratio",
+            "higher_is_better": false,
+            "setting": "manual labeling of 300 vulnerable-labeled functions from BigVul, Devign, DiverseVul",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "the vulnerability of a function cannot be decided without further context for more than 90% of functions",
+            "confidence": 0.9
+          },
+          {
+            "name": "noisy_label_ratio",
+            "value": 0.39,
+            "unit": "ratio",
+            "higher_is_better": false,
+            "setting": "BigVul sample of 100 vulnerable-labeled functions",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "only 39%-65% (Devign: 47%, BigVul: 39%, DiverseVul: 65%) actually contain security vulnerabilities",
+            "confidence": 0.95
+          },
+          {
+            "name": "noisy_label_ratio",
+            "value": 0.47,
+            "unit": "ratio",
+            "higher_is_better": false,
+            "setting": "Devign sample of 100 vulnerable-labeled functions",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "Devign: 47%",
+            "confidence": 0.95
+          },
+          {
+            "name": "noisy_label_ratio",
+            "value": 0.65,
+            "unit": "ratio",
+            "higher_is_better": false,
+            "setting": "DiverseVul sample of 100 vulnerable-labeled functions",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "DiverseVul: 65%",
+            "confidence": 0.95
+          },
+          {
+            "name": "inter_rater_agreement",
+            "value": 0.82,
+            "unit": "ratio",
+            "higher_is_better": true,
+            "setting": "first labeling step: vulnerable vs secure",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "the labels of the two researchers agreed for 82% of all functions",
+            "confidence": 0.95
+          },
+          {
+            "name": "cohen_kappa",
+            "value": 0.64,
+            "unit": "ratio",
+            "higher_is_better": true,
+            "setting": "first labeling step: vulnerable vs secure",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "resulting in a Cohen Kappa value of 0.64",
+            "confidence": 0.95
+          },
+          {
+            "name": "inter_rater_agreement",
+            "value": 0.98,
+            "unit": "ratio",
+            "higher_is_better": true,
+            "setting": "second labeling step: context dependence",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "the labels of the two researchers agreed for 98% of all functions",
+            "confidence": 0.95
+          },
+          {
+            "name": "cohen_kappa",
+            "value": 0.96,
+            "unit": "ratio",
+            "higher_is_better": true,
+            "setting": "second labeling step: context dependence",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "resulting in a Cohen Kappa value of 0.96",
+            "confidence": 0.95
+          }
+        ],
+        "overall_conclusion": "The paper argues that function-level binary classification is an ill-defined task for ML4VD because vulnerability labels depend heavily on context and many labels are noisy. Popular datasets can be exploited via spurious correlations, so reported high scores do not demonstrate real vulnerability detection capability.",
+        "comparable_notes": "Fair comparisons should account for dataset noise, use patch-commit/CVE-confirmed labels, and report whether vulnerability is context-dependent versus context-independent. Evaluations should not rely solely on function-level classification accuracy without addressing spurious correlations.",
+        "cache_hit": true
+      },
+      "agent": {
+        "status": "ok",
+        "run_dir": "~/ai_scientist_inputs/ISSTA-2025-007_assessing_the_validity_of_function_level/workspace/evoscientist_2026-09-23_08-17-35",
+        "claims": [
+          {
+            "id": "A1",
+            "statement": "Across BigVul, Devign, and DiverseVul, 100% of actually-vulnerable functions are context-dependent: the vulnerability cannot be decided from the function body alone.",
+            "direction": "degrades",
+            "metric_names": [
+              "context_dependency_rate"
+            ],
+            "evidence_quote": "100% of the actually-vulnerable functions are context-dependent — the vulnerability cannot be decided from the function body alone.",
+            "confidence": 0.98
+          },
+          {
+            "id": "A2",
+            "statement": "Only 39% of sampled BigVul, 47% of sampled Devign, and 65% of sampled DiverseVul 'vulnerable' functions actually contain a security vulnerability, indicating substantial label noise.",
+            "direction": "degrades",
+            "metric_names": [
+              "valid_vulnerable_label_rate_bigvul",
+              "valid_vulnerable_label_rate_devign",
+              "valid_vulnerable_label_rate_diversevul"
+            ],
+            "evidence_quote": "only 39% (BigVul), 47% (Devign), and 65% (DiverseVul) of sampled \"vulnerable\" functions actually contain a security vulnerability",
+            "confidence": 0.95
+          },
+          {
+            "id": "A3",
+            "statement": "A structure-agnostic XGBoost classifier using only token word counts achieves BigVul F1 of 0.8887, Devign accuracy of 0.6146, and DiverseVul F1 of 0.1201; these approach or match complex ML4VD models on BigVul and Devign but remain far below complex models on DiverseVul.",
+            "direction": "mixed",
+            "metric_names": [
+              "bigvul_f1_score",
+              "devign_accuracy",
+              "diversevul_f1_score"
+            ],
+            "evidence_quote": "a structure-agnostic classifier that uses only token word counts attains Devign accuracy/F1 of ~62% (XGBoost) and BigVul F1 of ~86%, approaching — and in some cases matching — the published performance of complex graph/sequence-based ML4VD models",
+            "confidence": 0.9
+          },
+          {
+            "id": "A4",
+            "statement": "Agreement between original dataset labels and ground-truth manual labels is low: Cohen's kappa = 0.2278 for BigVul, 0.3075 for Devign, and 0.4615 for DiverseVul.",
+            "direction": "degrades",
+            "metric_names": [
+              "bigvul_cohens_kappa_original_vs_manual",
+              "devign_cohens_kappa_original_vs_manual",
+              "diversevul_cohens_kappa_original_vs_manual"
+            ],
+            "evidence_quote": "per-dataset cohens_kappa_original_vs_manual measures agreement between dataset labels and ground-truth manual labels",
+            "confidence": 0.95
+          },
+          {
+            "id": "A5",
+            "statement": "87.7% of 81 surveyed ML4VD papers operate at function granularity.",
+            "direction": "neutral",
+            "metric_names": [
+              "pct_function_level"
+            ],
+            "evidence_quote": "a survey of 81 ML4VD papers shows 88% operate at function granularity",
+            "confidence": 0.9
+          }
+        ],
+        "metrics": [
+          {
+            "name": "overall_accuracy",
+            "value": 0.8472,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "Macro-average of per-dataset XGBoost held-out accuracy over BigVul, Devign, and DiverseVul",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "macro-average of per-dataset XGBoost held-out metrics over BigVul, Devign, DiverseVul",
+            "confidence": 0.95
+          },
+          {
+            "name": "overall_precision",
+            "value": 0.6207,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "Macro-average of per-dataset XGBoost held-out precision over BigVul, Devign, and DiverseVul",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "precision: 0.6207",
+            "confidence": 0.95
+          },
+          {
+            "name": "overall_recall",
+            "value": 0.4841,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "Macro-average of per-dataset XGBoost held-out recall over BigVul, Devign, and DiverseVul",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "recall: 0.4841",
+            "confidence": 0.95
+          },
+          {
+            "name": "overall_f1_score",
+            "value": 0.5211,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "Macro-average of per-dataset XGBoost held-out F1 score over BigVul, Devign, and DiverseVul",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "f1_score: 0.5211",
+            "confidence": 0.95
+          },
+          {
+            "name": "overall_auc_roc",
+            "value": 0.8082,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "Macro-average of per-dataset XGBoost held-out AUC-ROC over BigVul, Devign, and DiverseVul",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "auc_roc: 0.8082",
+            "confidence": 0.95
+          },
+          {
+            "name": "context_dependency_rate",
+            "value": 1.0,
+            "unit": null,
+            "higher_is_better": false,
+            "setting": "Fraction of actually-vulnerable functions whose vulnerability cannot be determined without external calling context; 151/151 across BigVul, Devign, and DiverseVul",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "context_dependency_rate_definition: fraction of actually-vulnerable functions whose vulnerability cannot be determined without external calling context (== 1.0 for every dataset: 151/151 context-dependent)",
+            "confidence": 0.98
+          },
+          {
+            "name": "cohens_kappa_inter_annotator",
+            "value": 0.64,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "Inter-annotator agreement for vulnerable-vs-secure labels reported by Risse et al. (ISSTA 2025)",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "0.64 is the inter-annotator agreement (vulnerable vs secure) reported by Risse et al. (ISSTA 2025)",
+            "confidence": 0.95
+          },
+          {
+            "name": "valid_vulnerable_label_rate_bigvul",
+            "value": 39.0,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "Percentage of sampled BigVul 'vulnerable' functions that actually contain a security vulnerability",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "only 39% (BigVul) of sampled \"vulnerable\" functions actually contain a security vulnerability",
+            "confidence": 0.95
+          },
+          {
+            "name": "valid_vulnerable_label_rate_devign",
+            "value": 47.0,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "Percentage of sampled Devign 'vulnerable' functions that actually contain a security vulnerability",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "47% (Devign) of sampled \"vulnerable\" functions actually contain a security vulnerability",
+            "confidence": 0.95
+          },
+          {
+            "name": "valid_vulnerable_label_rate_diversevul",
+            "value": 65.0,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "Percentage of sampled DiverseVul 'vulnerable' functions that actually contain a security vulnerability",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "65% (DiverseVul) of sampled \"vulnerable\" functions actually contain a security vulnerability",
+            "confidence": 0.95
+          },
+          {
+            "name": "bigvul_accuracy",
+            "value": 0.9875,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "XGBoost word-count classifier held-out accuracy on BigVul",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "bigvul metrics: accuracy: 0.9875",
+            "confidence": 0.95
+          },
+          {
+            "name": "bigvul_precision",
+            "value": 0.9344,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "XGBoost word-count classifier held-out precision on BigVul",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "bigvul metrics: precision: 0.9344",
+            "confidence": 0.95
+          },
+          {
+            "name": "bigvul_recall",
+            "value": 0.8473,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "XGBoost word-count classifier held-out recall on BigVul",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "bigvul metrics: recall: 0.8473",
+            "confidence": 0.95
+          },
+          {
+            "name": "bigvul_f1_score",
+            "value": 0.8887,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "XGBoost word-count classifier held-out F1 score on BigVul",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "bigvul metrics: f1_score: 0.8887",
+            "confidence": 0.95
+          },
+          {
+            "name": "bigvul_f1_weighted",
+            "value": 0.9872,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "XGBoost word-count classifier weighted F1 score on BigVul",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "bigvul metrics: f1_weighted: 0.9872",
+            "confidence": 0.95
+          },
+          {
+            "name": "bigvul_auc_roc",
+            "value": 0.9857,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "XGBoost word-count classifier held-out AUC-ROC on BigVul",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "bigvul metrics: auc_roc: 0.9857",
+            "confidence": 0.95
+          },
+          {
+            "name": "bigvul_context_dependency_rate",
+            "value": 1.0,
+            "unit": null,
+            "higher_is_better": false,
+            "setting": "Context dependency rate for actually-vulnerable functions in BigVul",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "bigvul context_dependency_rate: 1.0",
+            "confidence": 0.98
+          },
+          {
+            "name": "bigvul_cohens_kappa_original_vs_manual",
+            "value": 0.2278,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "Cohen's kappa between original dataset labels and ground-truth manual labels for BigVul",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "bigvul cohens_kappa_original_vs_manual: 0.2278",
+            "confidence": 0.95
+          },
+          {
+            "name": "devign_accuracy",
+            "value": 0.6146,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "XGBoost word-count classifier held-out accuracy on Devign",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "devign metrics: accuracy: 0.6146",
+            "confidence": 0.95
+          },
+          {
+            "name": "devign_precision",
+            "value": 0.5786,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "XGBoost word-count classifier held-out precision on Devign",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "devign metrics: precision: 0.5786",
+            "confidence": 0.95
+          },
+          {
+            "name": "devign_recall",
+            "value": 0.5325,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "XGBoost word-count classifier held-out recall on Devign",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "devign metrics: recall: 0.5325",
+            "confidence": 0.95
+          },
+          {
+            "name": "devign_f1_score",
+            "value": 0.5546,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "XGBoost word-count classifier held-out F1 score on Devign",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "devign metrics: f1_score: 0.5546",
+            "confidence": 0.95
+          },
+          {
+            "name": "devign_f1_weighted",
+            "value": 0.6127,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "XGBoost word-count classifier weighted F1 score on Devign",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "devign metrics: f1_weighted: 0.6127",
+            "confidence": 0.95
+          },
+          {
+            "name": "devign_auc_roc",
+            "value": 0.6608,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "XGBoost word-count classifier held-out AUC-ROC on Devign",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "devign metrics: auc_roc: 0.6608",
+            "confidence": 0.95
+          },
+          {
+            "name": "devign_context_dependency_rate",
+            "value": 1.0,
+            "unit": null,
+            "higher_is_better": false,
+            "setting": "Context dependency rate for actually-vulnerable functions in Devign",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "devign context_dependency_rate: 1.0",
+            "confidence": 0.98
+          },
+          {
+            "name": "devign_cohens_kappa_original_vs_manual",
+            "value": 0.3075,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "Cohen's kappa between original dataset labels and ground-truth manual labels for Devign",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "devign cohens_kappa_original_vs_manual: 0.3075",
+            "confidence": 0.95
+          },
+          {
+            "name": "diversevul_accuracy",
+            "value": 0.9395,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "XGBoost word-count classifier held-out accuracy on DiverseVul",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "diversevul metrics: accuracy: 0.9395",
+            "confidence": 0.95
+          },
+          {
+            "name": "diversevul_precision",
+            "value": 0.3492,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "XGBoost word-count classifier held-out precision on DiverseVul",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "diversevul metrics: precision: 0.3492",
+            "confidence": 0.95
+          },
+          {
+            "name": "diversevul_recall",
+            "value": 0.0725,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "XGBoost word-count classifier held-out recall on DiverseVul",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "diversevul metrics: recall: 0.0725",
+            "confidence": 0.95
+          },
+          {
+            "name": "diversevul_f1_score",
+            "value": 0.1201,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "XGBoost word-count classifier held-out F1 score on DiverseVul",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "diversevul metrics: f1_score: 0.1201",
+            "confidence": 0.95
+          },
+          {
+            "name": "diversevul_f1_weighted",
+            "value": 0.9204,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "XGBoost word-count classifier weighted F1 score on DiverseVul",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "diversevul metrics: f1_weighted: 0.9204",
+            "confidence": 0.95
+          },
+          {
+            "name": "diversevul_auc_roc",
+            "value": 0.7782,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "XGBoost word-count classifier held-out AUC-ROC on DiverseVul",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "diversevul metrics: auc_roc: 0.7782",
+            "confidence": 0.95
+          },
+          {
+            "name": "diversevul_context_dependency_rate",
+            "value": 1.0,
+            "unit": null,
+            "higher_is_better": false,
+            "setting": "Context dependency rate for actually-vulnerable functions in DiverseVul",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "diversevul context_dependency_rate: 1.0",
+            "confidence": 0.98
+          },
+          {
+            "name": "diversevul_cohens_kappa_original_vs_manual",
+            "value": 0.4615,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "Cohen's kappa between original dataset labels and ground-truth manual labels for DiverseVul",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "diversevul cohens_kappa_original_vs_manual: 0.4615",
+            "confidence": 0.95
+          },
+          {
+            "name": "pct_function_level",
+            "value": 87.7,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "Percentage of 81 surveyed ML4VD papers that operate at function granularity",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "pct_function_level: 87.7",
+            "confidence": 0.9
+          }
+        ],
+        "overall_conclusion": "The study confirms that function-level ML4VD benchmarks suffer from invalid labels, universal context-dependence of actual vulnerabilities, low label agreement, and the ability of structure-agnostic token-count classifiers to match or approach complex models on BigVul and Devign, indicating spurious lexical correlations and serious threats to validity.",
+        "sources": {
+          "metrics_path": "results/metrics.json",
+          "paper_tex_path": "paper/paper.md"
+        },
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 6941,
+            "completion_tokens_details": {
+              "reasoning_tokens": 1759
+            },
+            "prompt_tokens": 5189,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 12130
+          },
+          "attempt": 1
+        }
+      },
+      "comparison": {
+        "status": "ok",
+        "claim_alignment": [
+          {
+            "original_claim_id": "C1",
+            "agent_claim_id": "A1",
+            "label": "consistent",
+            "rationale": "Both claims state that vulnerability cannot be determined from the function body alone; the agent reports an even higher context-dependence rate (100% of actually-vulnerable functions) than the original >90% of functions."
+          },
+          {
+            "original_claim_id": "C2",
+            "agent_claim_id": "A2",
+            "label": "consistent",
+            "rationale": "The agent reports the same dataset-specific valid-vulnerable-label rates of 39%, 47%, and 65% for BigVul, Devign, and DiverseVul, directly supporting noisy labels."
+          },
+          {
+            "original_claim_id": "C3",
+            "agent_claim_id": "A3",
+            "label": "partial",
+            "rationale": "The agent's word-count classifier approaches or matches complex models on BigVul and Devign, supporting spurious-correlation concerns, but remains far below complex models on DiverseVul."
+          }
+        ],
+        "metric_alignment": [
+          {
+            "original_metric": "context_dependent_vulnerability_ratio",
+            "agent_metric": "context_dependency_rate",
+            "comparable": false,
+            "original_value": 0.9,
+            "agent_value": 1.0,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Different denominators: the original is based on a manually labeled sample of vulnerable-labeled functions, while the agent reports context dependence among actually-vulnerable functions only."
+          },
+          {
+            "original_metric": "noisy_label_ratio",
+            "agent_metric": "valid_vulnerable_label_rate_bigvul",
+            "comparable": true,
+            "original_value": 0.39,
+            "agent_value": 0.39,
+            "delta_abs": 0.0,
+            "delta_rel": 0.0,
+            "direction_vs_original_sota": "equal",
+            "rationale": "Agent's BigVul valid-vulnerable-label rate of 39% is numerically equivalent to the original BigVul noisy-label finding of 39%."
+          },
+          {
+            "original_metric": "noisy_label_ratio",
+            "agent_metric": "valid_vulnerable_label_rate_devign",
+            "comparable": true,
+            "original_value": 0.47,
+            "agent_value": 0.47,
+            "delta_abs": 0.0,
+            "delta_rel": 0.0,
+            "direction_vs_original_sota": "equal",
+            "rationale": "Agent's Devign valid-vulnerable-label rate of 47% matches the original Devign finding of 47%."
+          },
+          {
+            "original_metric": "noisy_label_ratio",
+            "agent_metric": "valid_vulnerable_label_rate_diversevul",
+            "comparable": true,
+            "original_value": 0.65,
+            "agent_value": 0.65,
+            "delta_abs": 0.0,
+            "delta_rel": 0.0,
+            "direction_vs_original_sota": "equal",
+            "rationale": "Agent's DiverseVul valid-vulnerable-label rate of 65% matches the original DiverseVul finding of 65%."
+          },
+          {
+            "original_metric": "inter_rater_agreement",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 0.82,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "The agent does not report percent inter-rater agreement for the first labeling step."
+          },
+          {
+            "original_metric": "cohen_kappa",
+            "agent_metric": "cohens_kappa_inter_annotator",
+            "comparable": true,
+            "original_value": 0.64,
+            "agent_value": 0.64,
+            "delta_abs": 0.0,
+            "delta_rel": 0.0,
+            "direction_vs_original_sota": "equal",
+            "rationale": "Agent reports Cohen's kappa = 0.64 for vulnerable-vs-secure inter-annotator agreement, matching the original first labeling step."
+          },
+          {
+            "original_metric": "inter_rater_agreement",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 0.98,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "The agent does not report percent inter-rater agreement for the second labeling step."
+          },
+          {
+            "original_metric": "cohen_kappa",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 0.96,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "The agent does not report Cohen's kappa for the second labeling step on context dependence."
+          }
+        ],
+        "summary": {
+          "direction_consistency": "consistent",
+          "consistent_claim_ratio": 0.667,
+          "has_comparable_metrics": true,
+          "sota_improvement_summary": "No direct SOTA improvement is established; the agent's word-count XGBoost classifier supports spurious-correlation concerns on BigVul and Devign but not DiverseVul.",
+          "overall_alignment_score": 0.8,
+          "score_rationale": "Core claims about context dependence and noisy labels are directly confirmed, while the spurious-correlation claim is only partially confirmed because the simple classifier did not approach complex models on DiverseVul."
+        },
+        "warnings": [
+          "Context-dependency metrics use different denominators and should not be treated as a direct numerical comparison.",
+          "The agent's word-count classifier results are not shown to use the same train/test splits as the original complex-model results.",
+          "Some original inter-rater agreement metrics (82%, 98%, and kappa=0.96) are not reported by the agent."
+        ],
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 10037,
+            "completion_tokens_details": {
+              "reasoning_tokens": 8597
+            },
+            "prompt_tokens": 5709,
+            "prompt_tokens_details": {
+              "cached_tokens": 2048
+            },
+            "total_tokens": 15746
+          },
+          "attempt": 0
+        }
+      },
+      "overall_alignment_score": 0.8,
+      "direction_consistency": "consistent"
+    },
+    "experiment_analysis": {
+      "run_dir": "~/ai_scientist_inputs/ISSTA-2025-007_assessing_the_validity_of_function_level/workspace/evoscientist_2026-09-23_08-17-35",
+      "task_dir": "~/ai_scientist_inputs/ISSTA-2025-007_assessing_the_validity_of_function_level",
+      "status": "ok",
+      "metrics_path": "results/metrics.json",
+      "experiment_success": {
+        "status": "ok",
+        "success": true,
+        "metrics_path": "results/metrics.json",
+        "absolute_metrics_path": "~/ai_scientist_inputs/ISSTA-2025-007_assessing_the_validity_of_function_level/workspace/evoscientist_2026-09-23_08-17-35/results/metrics.json",
+        "checks": {
+          "has_results_file": true,
+          "non_stub": true,
+          "numeric_leaf_count": 51,
+          "min_numeric_ok": true
+        },
+        "manifest_hints": {
+          "status": {
+            "research_request": true,
+            "plan": true,
+            "metrics": true,
+            "paper_tex": false,
+            "paper_pdf": false,
+            "readme": false
+          },
+          "returncode": 2,
+          "benchmark_complete": false,
+          "artifacts_metrics_flag": false
+        },
+        "warnings": [
+          "manifest.returncode=2",
+          "manifest.benchmark_complete=false"
+        ],
+        "suspicious_values": [],
+        "note": "success=true requires substantive results (framework-aware path) with >=3 numeric leaves. Supports metrics.json, results.json, experiment_results.txt, etc. Manifest returncode/benchmark_complete are soft warnings only."
+      },
+      "idea_code_consistency": {
+        "status": "ok",
+        "idea_path": "todos.md",
+        "code_files": [
+          "project/aggregate_metrics.py",
+          "project/literature_analysis.py",
+          "project/rq1_analysis.py",
+          "project/rq2_wordcount.py"
+        ],
+        "score_scale": "1-5",
+        "score": 4.0,
+        "label": "Strong alignment",
+        "justification": "The code entrypoints map directly to the planned stages: rq1_analysis.py for context-dependency and invalid-label analysis, rq2_wordcount.py for the word-count classifier comparison across BigVul/Devign/DiverseVul, literature_analysis.py for RQ3, and aggregate_metrics.py for consolidated metrics. The protocol largely realizes the proposed validity assessment, including labeled samples, classifier metrics, and literature-derived proportions.",
+        "matched_elements": [
+          "RQ1 context-dependency and invalid-label analysis with labeled samples",
+          "Word-count classifier evaluation on BigVul, Devign, and DiverseVul",
+          "Full metric suite computation for word-count models",
+          "RQ3 literature analysis including function-level proportions and dataset usage",
+          "Aggregated metrics entrypoint consolidating required outputs"
+        ],
+        "missing_or_divergent_elements": [
+          "Complex-model baselines are not directly trained/evaluated in the visible code; comparison appears to rely on published values rather than code-based baseline execution.",
+          "Interannotator kappa appears to be hardcoded from the paper rather than computed from data, though by-dataset kappa is computed."
+        ],
+        "rubric": "Strong alignment: code largely implements the idea's method and evaluation; only minor omissions or declared simplifications.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 849,
+            "completion_tokens_details": {
+              "reasoning_tokens": 580
+            },
+            "prompt_tokens": 2263,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 3112
+          },
+          "attempt": 0
+        }
+      },
+      "setup_coverage": {
+        "status": "ok",
+        "overall_coverage": 0.9523809523809524,
+        "datasets": {
+          "gold_count": 3,
+          "hit_count": 3,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "BigVul",
+            "Devign",
+            "DiverseVul"
+          ],
+          "misses": []
+        },
+        "baselines": {
+          "gold_count": 4,
+          "hit_count": 4,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "Gradient boosting on word counts",
+            "Devign model",
+            "ReVeal model",
+            "BigVul model"
+          ],
+          "misses": []
+        },
+        "metrics": {
+          "gold_count": 7,
+          "hit_count": 6,
+          "miss_count": 1,
+          "coverage": 0.8571428571428571,
+          "hits": [
+            "Accuracy",
+            "Precision",
+            "Recall",
+            "F1-score",
+            "Context-dependency rate",
+            "Cohen's Kappa"
+          ],
+          "misses": [
+            "AUC-ROC"
+          ]
+        },
+        "agent_protocol": {},
+        "gold_protocol": {},
+        "dataset_dirs": [
+          "dataset_candidate"
+        ],
+        "flags": {
+          "weaker_baseline_suspected": false,
+          "weak_protocol": [],
+          "synthetic_data": "unexpected_synthetic_or_local_only_data",
+          "gold_allows_synthetic": false
+        },
+        "gold_sources": [
+          "~/ai_scientist_inputs/ISSTA-2025-007_assessing_the_validity_of_function_level/task.md",
+          "~/ai_scientist_inputs/ISSTA-2025-007_assessing_the_validity_of_function_level/metadata.json"
+        ],
+        "note": "Coverage is name/alias matching against task.md Datasets/Baselines/Metrics. weak_protocol flags large reductions in trials/timeout vs Constraints. Synthetic corpora are not penalized when the task itself requires synthesis."
+      },
+      "ablation_significance": {
+        "status": "ok",
+        "idea_path": "todos.md",
+        "significance_signals_rule_based": {
+          "signals": [],
+          "artifact_paths": [],
+          "has_any_significance_artifact": false
+        },
+        "evidence_format": "raw_json",
+        "study_type": "reproduction",
+        "components": [
+          {
+            "name": "Public datasets and labeled samples (BigVul, Devign, DiverseVul)",
+            "role": "data source / reproduction target",
+            "ablation_expected": false,
+            "significance_expected": false,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "Datasets are fixed subjects for reproduction; removing one would change scope, not serve as an ablation.",
+            "significance_status": "not_required",
+            "significance_evidence": "Descriptive reproduction over complete public artifact; no sampling-based inference required."
+          },
+          {
+            "name": "Manual validity labeling and context-dependency annotation",
+            "role": "instrumentation / measurement protocol",
+            "ablation_expected": false,
+            "significance_expected": false,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "This is the measurement instrument, not a removable method component; no ablation design applies.",
+            "significance_status": "not_required",
+            "significance_evidence": "Reports rates and Cohen's kappa as descriptive agreement; no hypothesis test required for reproduction."
+          },
+          {
+            "name": "Word-count XGBoost classifier",
+            "role": "baseline/probe (structure-agnostic)",
+            "ablation_expected": false,
+            "significance_expected": false,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "In an empirical comparison/reproduction, the word-count model is one comparison condition; module ablation of its features is not required.",
+            "significance_status": "not_required",
+            "significance_evidence": "Single-run evaluation on fixed splits; comparison is descriptive and against published numbers, not repeated trials."
+          },
+          {
+            "name": "Complex model baselines (VulBERTa, SNOPY, DeepDFA, CodeT5, NatGen)",
+            "role": "baseline comparison from literature",
+            "ablation_expected": false,
+            "significance_expected": false,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "Baselines are comparison points, not components of a new method; ablation is not applicable.",
+            "significance_status": "not_required",
+            "significance_evidence": "Published metrics are cited without new repeated experiments; no formal significance test expected."
+          },
+          {
+            "name": "Literature survey analysis (81 ML4VD papers)",
+            "role": "descriptive analysis",
+            "ablation_expected": false,
+            "significance_expected": false,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "This is a literature characterization; there are no method modules to remove.",
+            "significance_status": "not_required",
+            "significance_evidence": "Counts and percentages are descriptive; no inferential test required."
+          },
+          {
+            "name": "Aggregate metric computation",
+            "role": "instrumentation",
+            "ablation_expected": false,
+            "significance_expected": false,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "Aggregation script produces final metrics; not a scientific component requiring ablation.",
+            "significance_status": "not_required",
+            "significance_evidence": "Aggregation only; no statistical inference."
+          }
+        ],
+        "ablation_coverage_score": 1.0,
+        "overall_ablation_ok": true,
+        "overall_significance_ok": true,
+        "summary": "This is a reproduction and re-analysis of a published empirical study, not a new method or tool comparison. No removable method components require ablation; significance tests are not required for the descriptive reproduction metrics.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 3172,
+            "completion_tokens_details": {
+              "reasoning_tokens": 2343
+            },
+            "prompt_tokens": 6345,
+            "prompt_tokens_details": {
+              "cached_tokens": 4096
+            },
+            "total_tokens": 9517
+          },
+          "attempt": 2
+        }
+      },
+      "results_paper_consistency": {
+        "status": "ok",
+        "paper_tex": "paper/paper.md",
+        "paper_kind": "paper_md",
+        "results_format": "raw_json",
+        "digest_hint": {
+          "unfavorable_count": 0,
+          "trial_fail_count": 0,
+          "trial_success_count": 0,
+          "metadata": {}
+        },
+        "score_scale": "1-5",
+        "method": "Direct LLM comparison: agent's FINAL results artifact (metrics.json summary) vs paper Results/Discussion/Conclusion. Interim failed runs are NOT evidence unless still present in the final metrics file.",
+        "score": 2.0,
+        "consistency_label": "poor",
+        "hiding_unfavorable_suspected": true,
+        "hiding_confidence": 0.7,
+        "justification": "The paper's main claims about context dependence and lexical correlations are partially supported, but key numeric values are misstated. It says Devign word-count F1 is ~62%, while final results report 0.5546; it says BigVul F1 ~86%, while final is 0.8887. It also claims the simple word-count classifier 'approaches and in some cases matches' complex models, but for F1, DiverseVul word-count is 0.1201 vs CodeT5 0.451, and Devign word-count F1 is 0.5546 vs SNOPY 0.6786. DiverseVul's poor classifier result is not acknowledged in the narrative.",
+        "supported_claims": [
+          "Context_dependency_rate is 1.0 across all datasets, matching the claim that 100% of actually vulnerable functions are context-dependent.",
+          "Devign word-count accuracy is around 62% (0.6146), matching the paper's accuracy claim.",
+          "BigVul word-count F1 is broadly high (0.8887), consistent with the paper's claim of ~86% though imprecise.",
+          "Survey reports 87.7% function-level papers, matching the paper's 88% claim."
+        ],
+        "unsupported_or_overstated_claims": [
+          "Paper says Devign word-count XGBoost achieves 'accuracy/F1 of ~62%'; actual F1 is 0.5546.",
+          "Paper says BigVul F1 ~86% whereas final result is 0.8887.",
+          "Paper says word-count classifier 'approaches and in some cases matches' complex model performance, but DiverseVul F1 is very weak at 0.1201 and does not approach CodeT5's 0.451."
+        ],
+        "numeric_mismatches": [
+          {
+            "paper": "Devign word-count accuracy/F1 of ~62%",
+            "results": "Devign XGBoost accuracy 0.6146, F1 0.5546",
+            "note": "Accuracy matches ~62%, but F1 is lower than the paper claims."
+          },
+          {
+            "paper": "BigVul word-count F1 of ~86%",
+            "results": "BigVul XGBoost F1 0.8887",
+            "note": "The final value is actually higher, around 89%, not 86%."
+          },
+          {
+            "paper": "Invalid vulnerable label rates 39%, 47%, 65% for BigVul, Devign, DiverseVul",
+            "results": "Not present in final experimental results JSON; final results only include context_dependency_rate and Cohen's kappa values",
+            "note": "These rates cannot be verified from the provided final results."
+          }
+        ],
+        "unfavorable_in_final_results": [
+          "DiverseVul word-count classifier has low F1 0.1201 and recall 0.0725.",
+          "DiverseVul word-count classifier substantially underperforms complex models CodeT5 F1 0.451 and natgen F1 0.4715.",
+          "Cohen's kappa between dataset labels and manual labels is low: BigVul 0.2278, Devign 0.3075, DiverseVul 0.4615."
+        ],
+        "unfavorable_acknowledged_in_paper": [
+          "Low dataset-label agreement is acknowledged through discussion of invalid labels and label validity threats."
+        ],
+        "unfavorable_missing_from_paper": [],
+        "rubric": "Poor consistency: several key numbers/claims disagree with metrics, or major unfavorable outcomes are missing from the narrative.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 2527,
+            "completion_tokens_details": {
+              "reasoning_tokens": 1662
+            },
+            "prompt_tokens": 6431,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 8958
+          },
+          "attempt": 1
+        }
+      },
+      "scores": {
+        "experiment_success": true,
+        "idea_code_score": 4.0,
+        "setup_coverage": 0.9523809523809524,
+        "ablation_coverage_score": 1.0,
+        "overall_ablation_ok": true,
+        "overall_significance_ok": true,
+        "results_paper_score": 2.0,
+        "hiding_unfavorable_suspected": true
+      },
+      "notes": [
+        "Axes 1,2,3,4,6 in experiment_analysis (figures excluded).",
+        "setup_coverage matches task.md Datasets/Baselines/Metrics; weak_protocol flags reductions vs Constraints.",
+        "Axis 6: final normalized results vs paper; interim run logs not used as ground truth."
+      ]
+    },
+    "literature_review": {
+      "run_dir": "~/ai_scientist_inputs/ISSTA-2025-007_assessing_the_validity_of_function_level/workspace/evoscientist_2026-09-23_08-17-35",
+      "task_dir": "~/ai_scientist_inputs/ISSTA-2025-007_assessing_the_validity_of_function_level",
+      "status": "ok",
+      "as_of_year": 2026,
+      "agent_ref_count": 3,
+      "sources": [
+        {
+          "path": "~/ai_scientist_inputs/ISSTA-2025-007_assessing_the_validity_of_function_level/workspace/evoscientist_2026-09-23_08-17-35/project/literature_synthesis.md",
+          "kind": "literature_synthesis"
+        }
+      ],
+      "collection_audit": {
+        "cited_keys_count": 0,
+        "filter_mode": "non_bib_sources",
+        "bib_total_before_filter": 0,
+        "bib_after_filter": 0,
+        "uncited_bib_skipped": 0,
+        "agent_ref_count": 3
+      },
+      "fabrication": {
+        "status": "ok",
+        "scholarly_count": 3,
+        "verified_count": 0,
+        "fake_count": 0,
+        "lookup_failed_count": 3,
+        "insufficient_metadata_count": 0,
+        "non_paper_count": 0,
+        "fabrication_rate": null,
+        "items": [
+          {
+            "title": "https://arxiv.org/abs/2408.12986 ;",
+            "doi": "",
+            "arxiv_id": "",
+            "year": null,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated."
+            ],
+            "cite_key": "",
+            "source_kind": "literature_synthesis"
+          },
+          {
+            "title": "https://arxiv.org/abs/2304.00409 (DiverseVul) ;",
+            "doi": "",
+            "arxiv_id": "1909.03496",
+            "year": null,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated."
+            ],
+            "cite_key": "",
+            "source_kind": "literature_synthesis"
+          },
+          {
+            "title": "https://arxiv.org/abs/2205.12424 (VulBERTa) ;",
+            "doi": "",
+            "arxiv_id": "2009.07235",
+            "year": null,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated.",
+              "Saw 1 conclusive miss(es) mixed with 3 API error(s)."
+            ],
+            "cite_key": "",
+            "source_kind": "literature_synthesis"
+          }
+        ],
+        "cache_path": "~/ai_scientist_evals/ISSTA-2025-007_assessing_the_validity_of_function_level/reference_verify_cache.json",
+        "override_path": "~/ai_scientist_evals/ISSTA-2025-007_assessing_the_validity_of_function_level/reference_verify_overrides.json",
+        "note": "fabrication_rate = fake / (verified + fake). lookup_failed (API errors) and insufficient_metadata are excluded and retried or skipped. GitHub/docs/tool URLs are non_paper and excluded from the rate. To manually correct a false negative, edit reference_verify_overrides.json (key=normalized title / doi / cite_key; value=\"verified\" or a result dict), then re-run."
+      },
+      "coverage": {
+        "status": "ok",
+        "gold_source": "~/ai_scientist_inputs/ISSTA-2025-007_assessing_the_validity_of_function_level/mineru_sections.json",
+        "gold_count": 34,
+        "gold_is_original_paper_references": true,
+        "gold_is_openalex_subset": false,
+        "agent_count": 3,
+        "intersection_size": 1,
+        "recall": 0.029411764705882353,
+        "precision": 0.3333333333333333,
+        "matched_gold_keys": [
+          "chen2023diversevul"
+        ],
+        "primary_metric": "recall",
+        "note": "Primary metric is recall against the original paper bibliography (titles from mineru_sections.json REFERENCES; related_work.json used only to enrich DOI/year or as fallback if mineru titles are empty). Denominator = |original paper references|. Precision is secondary (agent may cite valid extra papers)."
+      },
+      "recency": {
+        "status": "ok",
+        "dated_count": 0,
+        "unknown_year_count": 3,
+        "year_histogram": {},
+        "windows": {
+          "3": {
+            "years": 3,
+            "cutoff_year_inclusive": 2023,
+            "recent_count": 0,
+            "recent_ratio": null
+          },
+          "5": {
+            "years": 5,
+            "cutoff_year_inclusive": 2021,
+            "recent_count": 0,
+            "recent_ratio": null
+          }
+        }
+      },
+      "scores": {
+        "fabrication_rate": null,
+        "coverage_recall": 0.029411764705882353,
+        "coverage_precision": 0.3333333333333333,
+        "recency_ratio_3y": null,
+        "recency_ratio_5y": null
+      }
+    }
+  },
+  "scores": {
+    "completeness": {
+      "complete": true,
+      "overall_score": 0.8521,
+      "required_score": 1.0,
+      "bonus_score": 0.13
+    },
+    "peer_review": {
+      "status": "ok",
+      "optional": false,
+      "overall_score": 5.7,
+      "score_scale": "1-10",
+      "scoring_method": "paperreview_apr"
+    },
+    "idea_generation": {
+      "status": "ok",
+      "overall_score": 2.0,
+      "dimensions": {
+        "novelty": 1.0,
+        "feasibility": 5.0,
+        "clarity": 4.0
+      },
+      "novelty_category": "Existing",
+      "solution_space_status": "ok"
+    },
+    "alignment": {
+      "status": "ok",
+      "direction_consistency": "consistent",
+      "overall_alignment_score": 0.8
+    },
+    "literature_review": {
+      "fabrication_rate": null,
+      "coverage_recall": 0.029411764705882353,
+      "coverage_precision": 0.3333333333333333,
+      "recency_ratio_3y": null,
+      "recency_ratio_5y": null
+    },
+    "experiment_analysis": {
+      "experiment_success": true,
+      "idea_code_score": 4.0,
+      "setup_coverage": 0.9523809523809524,
+      "ablation_coverage_score": 1.0,
+      "overall_ablation_ok": true,
+      "overall_significance_ok": true,
+      "results_paper_score": 2.0,
+      "hiding_unfavorable_suspected": true
+    }
+  },
+  "fair_scores": {
+    "applicable_axes": [
+      "completeness",
+      "idea_generation",
+      "peer_review",
+      "alignment",
+      "literature_review",
+      "experiment_analysis"
+    ],
+    "skipped_axes": [],
+    "fair_mean_0_1": 0.5979,
+    "note": "fair_mean_0_1 averages only applicable axes; optional peer review and framework-inapplicable literature are excluded from the denominator."
+  },
+  "evals_root": "~/ai_scientist_evals",
+  "claims_cache": "~/ai_scientist_evals/ISSTA-2025-007_assessing_the_validity_of_function_level/original_claims.json",
+  "solution_space_cache": "~/ai_scientist_evals/ISSTA-2025-007_assessing_the_validity_of_function_level/solution_space.json"
+}

@@ -1,0 +1,80 @@
+{
+  "layout": "icse2025_class_observability_evosuite_sf110",
+  "layout_note": "ICSE 2025 Distinguished Paper: Increasing the Effectiveness of Automatically Generated Tests by Improving Class Observability. Pre-mounted SF110 corpus + EvoSuite 1.2.0 JAR. Agent implements / ports observability extensions (injected getters + recursive assertions) and runs DynaMOSA comparisons.",
+  "workspace_symlink": "dataset_candidate/sf110-evosuite",
+  "paper_title": "Increasing the Effectiveness of Automatically Generated Tests by Improving Class Observability",
+  "paper_venue": "ICSE 2025",
+  "figshare_replication": "https://figshare.com/s/46bfa8872f668fafdf66",
+  "sf110_page": "https://www.evosuite.org/experimental-data/sf110/",
+  "sf110_files_index": "https://www.evosuite.org/files/",
+  "read_only": true,
+  "copy_note": "Shared SF110 / EvoSuite mount is read-only. Copy subject classes and generated suites under project/ before bytecode transforms. Write metrics under project/ or results/.",
+  "data_roots": {
+    "artifact_root": "dataset_candidate/sf110-evosuite",
+    "sf110_binaries": "dataset_candidate/sf110-evosuite/SF110-20130704",
+    "sf110_sources": "dataset_candidate/sf110-evosuite/SF110-20130704-src",
+    "archives": "dataset_candidate/sf110-evosuite/archives",
+    "evosuite_jar": "dataset_candidate/sf110-evosuite/tools/evosuite-1.2.0.jar",
+    "evosuite_runtime_jar": "dataset_candidate/sf110-evosuite/tools/evosuite-standalone-runtime-1.2.0.jar",
+    "meta": "dataset_candidate/sf110-evosuite/.artifact_meta.txt",
+    "data_readme": "dataset_candidate/sf110-evosuite/docs/README_DATA.txt"
+  },
+  "instance_counts": {
+    "compressed_bin_zip": "~943 MB (988010008 bytes)",
+    "compressed_src_zip": "~1014 MB (1062890473 bytes)",
+    "evosuite_main_jar": "~19 MB (evosuite-1.2.0.jar)",
+    "evosuite_runtime_jar": "~7 MB",
+    "host_download_total_compressed": "~2.0 GB (bin + src + jars)",
+    "extracted_disk_extra": "roughly +1–2 GB beyond compressed archives (keep archives if space allows)",
+    "sf110_projects": 110,
+    "sf110_classes_total_approx": ">23000",
+    "paper_subject_classes": 100,
+    "paper_filter": "cyclomatic complexity > 3 (subset reused from prior EvoSuite studies)",
+    "paper_mutants_total": 26177,
+    "paper_suites_total": 12000,
+    "paper_wall_time": "~6 days on 20-core M1 / 64GB RAM",
+    "note": "100-class list is NOT in the public SF110 zip; reconstruct (CC>3) or obtain figshare replication package."
+  },
+  "dataset_env": {
+    "SF110_EVOSUITE_HOME": "dataset_candidate/sf110-evosuite",
+    "SF110_HOME": "dataset_candidate/sf110-evosuite/SF110-20130704",
+    "SF110_SRC_HOME": "dataset_candidate/sf110-evosuite/SF110-20130704-src",
+    "EVOSUITE_JAR": "dataset_candidate/sf110-evosuite/tools/evosuite-1.2.0.jar"
+  },
+  "python_environment": {
+    "python": "/opt/icse-2025-005-venv/bin/python",
+    "activation": "source /opt/icse-2025-005-venv/bin/activate",
+    "note": "OpenJDK 17 + Maven/Ant for building subject projects; EvoSuite JAR for generation and mutation analysis."
+  },
+  "toolchain": {
+    "java": "openjdk-17-jdk",
+    "build": "maven, ant",
+    "evosuite": "tools/evosuite-1.2.0.jar (also clone/build EvoSuite from source if extending assertion generation)"
+  },
+  "paper_protocol": {
+    "algorithm": "DynaMOSA",
+    "search_budget_sec": 180,
+    "assertion_timeout_sec": 600,
+    "seeds_per_config": 30,
+    "configs": [
+      "baseline",
+      "injected_getters",
+      "recursive_assertions",
+      "combined"
+    ],
+    "recursive_assertion_depth": 3,
+    "primary_metrics": [
+      "mutation_score",
+      "statement_coverage",
+      "branch_coverage",
+      "suite_coverage",
+      "vargha_delaney_a12"
+    ],
+    "stats": "one-tailed Wilcoxon, alpha=0.05; Vargha-Delaney A12"
+  },
+  "not_provided": {
+    "100_class_list_file": "Reconstruct CC>3 filter or fetch figshare package https://figshare.com/s/46bfa8872f668fafdf66",
+    "observability_extension_source": "Paper extensions are research code; agent must implement injected-getter transform and recursive inspector assertions without changing coverage goals / mutant set.",
+    "pregenerated_12k_suites": "Full experiment results may be on figshare; not mirrored on host by default."
+  }
+}

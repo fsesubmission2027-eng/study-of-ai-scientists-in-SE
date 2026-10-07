@@ -1,0 +1,1436 @@
+{
+  "run_dir": "~/ai_scientist_inputs/ASE-2025-013_automated_decomposition_of_large_header/workspace/deepscientist_2026-08-09_14-34-46",
+  "task_dir": "~/ai_scientist_inputs/ASE-2025-013_automated_decomposition_of_large_header",
+  "framework": "deepscientist",
+  "fairness_audit": [
+    {
+      "axis": "completeness",
+      "was_unfair": "Required both paper.tex AND paper.pdf; any tool missing one failed equally.",
+      "fix": "Paper gate: PDF=1.0; TeX-only=0.5; ``complete`` requires PDF."
+    },
+    {
+      "axis": "completeness",
+      "was_unfair": "``results`` counted stub/seed JSON (dataset_candidate/metrics.json).",
+      "fix": "``results`` requires substantive numeric results via results_normalize."
+    },
+    {
+      "axis": "experiment_success",
+      "was_unfair": "Only metrics.json; ignored results.json / experiment_results.txt.",
+      "fix": "Framework-ordered result candidates + normalized loaders."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Penalized tools with no bib; airesearcher has no workspace references.",
+      "fix": "literature_applicable=false → status not_applicable; excluded from fair aggregate."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "related_work.json subset as gold made recall hard to interpret.",
+      "fix": "Coverage gold is original paper REFERENCES from mineru; related_work only enriches metadata/fallback."
+    },
+    {
+      "axis": "peer_review",
+      "was_unfair": "Missing Stanford report looked like evaluation failure.",
+      "fix": "status not_provided; optional axis, never counts as tool failure."
+    },
+    {
+      "axis": "paths/find_results",
+      "was_unfair": "Picked downloads/** and sandbox noise (e.g. airesearcher LLVM tree).",
+      "fix": "Exclude downloads/, seeds/, dataset_candidate/, sandbox junk paths."
+    },
+    {
+      "axis": "paths/framework_noise",
+      "was_unfair": "DeepScientist .deepscientist_npm / runtime / skills templates counted as code/paper/results.",
+      "fix": "FRAMEWORK_NOISE_DIRS+markers; quest worktree + eval_output results; paper md drafts; reject template tex."
+    },
+    {
+      "axis": "paths/paper_tex",
+      "was_unfair": "tiny_scientist / ACL runs store paper under latex/*.tex; evaluator only looked at paper/main.tex.",
+      "fix": "latex/**/*.tex with substantive-body heuristic; find_paper_document uses same rules."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Entire custom.bib (300+ anthology entries) verified when paper had zero \\cite commands.",
+      "fix": "collect_agent_references filters bib to in-text cite keys; skips uncited bulk bib (>40 entries)."
+    },
+    {
+      "axis": "paths/ai_scientist_summaries",
+      "was_unfair": "AI Scientist can persist substantive results and paper-like drafts in *_summary.json logs rather than paper/main.tex or results/**/*.json.",
+      "fix": "Treat draft_summary/research_summary as weak paper documents and summary JSONs as result candidates."
+    },
+    {
+      "axis": "framework/ai_scientist_v2",
+      "was_unfair": "Manifest framework ``ai_scientist_v2`` fell through to profile ``unknown``, skipping AI-Scientist idea/result path priorities.",
+      "fix": "Normalize ``ai_scientist_v2`` (and common aliases) to profile key ``ai_scientist``."
+    },
+    {
+      "axis": "idea_generation",
+      "was_unfair": "plan.md/todos.md weak proxies scored same as structured idea.json.",
+      "fix": "Framework idea_priority tried first; missing idea → not_applicable where appropriate."
+    }
+  ],
+  "generated_at": "2026-10-01T14:28:00",
+  "axes": [
+    "alignment",
+    "completeness",
+    "experiment_analysis",
+    "idea_generation",
+    "literature_review",
+    "peer_review"
+  ],
+  "results": {
+    "completeness": {
+      "framework": "deepscientist",
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-013_automated_decomposition_of_large_header/workspace/deepscientist_2026-08-09_14-34-46",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-013_automated_decomposition_of_large_header",
+      "complete": true,
+      "required_score": 1.0,
+      "bonus_score": 0.0,
+      "overall_score": 0.83,
+      "missing": [],
+      "required": {
+        "idea": {
+          "path": "artifacts/idea/selected_idea.md",
+          "bytes": 6043,
+          "via": "candidate"
+        },
+        "code": {
+          "count": 8,
+          "files": [
+            {
+              "path": "DeepScientist/quests/001/.ds/worktrees/idea-idea-83f02b90/project/dahd/decomposer_dahd.py",
+              "bytes": 7761,
+              "via": "glob"
+            },
+            {
+              "path": "DeepScientist/quests/001/.ds/worktrees/idea-idea-83f02b90/project/dahd/dependency_graph.py",
+              "bytes": 3223,
+              "via": "glob"
+            },
+            {
+              "path": "DeepScientist/quests/001/.ds/worktrees/idea-idea-83f02b90/project/dahd/entity_extractor.py",
+              "bytes": 4638,
+              "via": "glob"
+            },
+            {
+              "path": "DeepScientist/quests/001/.ds/worktrees/idea-idea-83f02b90/project/dahd/entity_registry.py",
+              "bytes": 2186,
+              "via": "glob"
+            },
+            {
+              "path": "DeepScientist/quests/001/.ds/worktrees/idea-idea-83f02b90/project/dahd/evaluation.py",
+              "bytes": 6940,
+              "via": "glob"
+            },
+            {
+              "path": "DeepScientist/quests/001/.ds/worktrees/idea-idea-83f02b90/project/dahd/run_experiment.py",
+              "bytes": 9012,
+              "via": "glob"
+            },
+            {
+              "path": "DeepScientist/quests/001/.ds/worktrees/idea-idea-83f02b90/project/dahd/topological_layer.py",
+              "bytes": 2522,
+              "via": "glob"
+            },
+            {
+              "path": "DeepScientist/quests/001/.ds/worktrees/idea-idea-83f02b90/project/data/dataset/openssl_7436/fuzz/helper.py",
+              "bytes": 1366,
+              "via": "glob"
+            }
+          ]
+        },
+        "results": {
+          "substantive": true,
+          "normalized_path": "DeepScientist/quests/001/.ds/worktrees/idea-idea-83f02b90/artifacts/reports/report-5263b0ee.json",
+          "numeric_leaf_count": 29,
+          "discovered_files": [
+            {
+              "path": "DeepScientist/quests/001/.ds/worktrees/idea-idea-83f02b90/artifacts/reports/report-5263b0ee.json",
+              "bytes": 6180,
+              "via": "glob"
+            },
+            {
+              "path": "DeepScientist/quests/001/.ds/worktrees/idea-idea-83f02b90/artifacts/reports/report-920b9f5a.json",
+              "bytes": 2708,
+              "via": "glob"
+            },
+            {
+              "path": "DeepScientist/quests/001/.ds/worktrees/idea-idea-83f02b90/artifacts/reports/report-b757fd52.json",
+              "bytes": 2603,
+              "via": "glob"
+            },
+            {
+              "path": "DeepScientist/quests/001/.ds/worktrees/paper-run-c81f1700/artifacts/reports/report-2b8ea7a5.json",
+              "bytes": 4794,
+              "via": "glob"
+            },
+            {
+              "path": "DeepScientist/quests/001/.ds/worktrees/paper-run-c81f1700/artifacts/reports/report-31d208fb.json",
+              "bytes": 4984,
+              "via": "glob"
+            },
+            {
+              "path": "DeepScientist/quests/001/.ds/worktrees/paper-run-c81f1700/artifacts/reports/report-52d57c03.json",
+              "bytes": 4510,
+              "via": "glob"
+            },
+            {
+              "path": "DeepScientist/quests/001/.ds/worktrees/paper-run-c81f1700/artifacts/reports/report-69c887c7.json",
+              "bytes": 4296,
+              "via": "glob"
+            },
+            {
+              "path": "DeepScientist/quests/001/.ds/worktrees/paper-run-c81f1700/artifacts/reports/report-fd715c4f.json",
+              "bytes": 2795,
+              "via": "glob"
+            }
+          ],
+          "metrics_keys_sample": [
+            "kind",
+            "schema_version",
+            "artifact_id",
+            "id",
+            "quest_id",
+            "created_at",
+            "updated_at",
+            "source",
+            "status",
+            "branch",
+            "head_commit",
+            "workspace_root",
+            "workspace_rel_path",
+            "report_type",
+            "title",
+            "run_id",
+            "idea_id",
+            "baseline_gate",
+            "hypothesis",
+            "setup",
+            "execution",
+            "results",
+            "conclusion",
+            "verdict",
+            "dataset_scope",
+            "metrics_summary",
+            "metric_rows",
+            "by_size",
+            "notes",
+            "evidence_paths",
+            "next_recommended_skill",
+            "next_recommended_action",
+            "anchor",
+            "semantic_key",
+            "guidance_vm"
+          ]
+        },
+        "paper": {
+          "tex": null,
+          "pdf": {
+            "path": "paper/main.pdf",
+            "bytes": 48464,
+            "via": "candidate"
+          },
+          "md": {
+            "path": "paper/paper_draft.md",
+            "bytes": 17889,
+            "via": "glob"
+          },
+          "json": null,
+          "status": "pdf",
+          "score": 1.0
+        }
+      },
+      "bonus": {
+        "experiment_plan": null,
+        "experiment_log": null,
+        "review": null,
+        "readme": null,
+        "narrative": null,
+        "bib": null
+      },
+      "manifest_status": {
+        "launched": true
+      },
+      "gate_scores": {
+        "idea": 1.0,
+        "code": 1.0,
+        "results": 1.0,
+        "paper": 1.0
+      },
+      "fairness": {
+        "gates": [
+          "idea",
+          "code",
+          "results",
+          "paper"
+        ],
+        "paper_gate_rule": "PDF=1.0; TeX-only/md_only/json_only=0.5; complete requires PDF",
+        "results_gate_rule": "substantive numeric results via framework-aware normalize_results",
+        "audit_ref": "framework_profile.FAIRNESS_AUDIT"
+      },
+      "notes": [
+        "Required: idea, code, substantive results, paper (PDF full; TeX/markdown/JSON draft half).",
+        "Stub/seed metrics (e.g. dataset_candidate/metrics.json) do not satisfy results.",
+        "Framework noise (.deepscientist_npm, skills/templates, runtime) is excluded from code/results/paper.",
+        "Manifest status is informational; disk presence is authoritative."
+      ]
+    },
+    "idea_generation": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-013_automated_decomposition_of_large_header/workspace/deepscientist_2026-08-09_14-34-46",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-013_automated_decomposition_of_large_header",
+      "idea_path": "~/ai_scientist_inputs/ASE-2025-013_automated_decomposition_of_large_header/workspace/deepscientist_2026-08-09_14-34-46/artifacts/idea/selected_idea.md",
+      "status": "ok",
+      "dimensions": {
+        "novelty": {
+          "score": 3.0,
+          "justification": "",
+          "rubric": "Incremental: a meaningful extension or optimization of prior baseline work that fixes a concrete prior limitation, but the core paradigm is unchanged.",
+          "category": "Incremental",
+          "nearest_solution_space_ids": [
+            "R10",
+            "R3",
+            "R18"
+          ],
+          "differentiation": "Versus R10/HFDecomposer, DAHD replaces flat Louvain+LLM with proactive topological layering and adds an entity registry, claiming cycles become 'structurally impossible'"
+        },
+        "feasibility": {
+          "score": null,
+          "justification": "",
+          "rubric": null
+        },
+        "clarity": {
+          "score": null,
+          "justification": "",
+          "rubric": null
+        }
+      },
+      "overall_score": 3.0,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "novelty",
+        "feasibility",
+        "clarity"
+      ],
+      "solution_space": {
+        "status": "ok",
+        "paper_count": 46,
+        "entry_count": 46,
+        "cache_hit": true,
+        "source_file": "~/ai_scientist_inputs/ASE-2025-013_automated_decomposition_of_large_header/mineru_sections.json",
+        "stats": {
+          "papers": 46,
+          "extracted": 46,
+          "usable_abstracts": 25,
+          "citation_meta_abstracts": 0,
+          "missing_abstracts": 21,
+          "mineru_titles": 41,
+          "related_work_titles": 30,
+          "abstracts_attached": 25,
+          "related_work_extras": 5,
+          "batches": 3
+        },
+        "error": null
+      },
+      "notes": [
+        "Scores the intermediate idea artifact (not the final paper).",
+        "Dimensions: novelty, feasibility, clarity (each 1-5). Excitement removed.",
+        "Novelty is scored against a Solution Space built from mineru REFERENCES titles (+ related_work.json abstracts when matched)."
+      ],
+      "idea_via": "candidate",
+      "idea_relative": "artifacts/idea/selected_idea.md",
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "llm_meta": {
+        "model": "deepseek-v4-pro-0813-sg",
+        "base_url": "https://api-sg.umodelverse.ai/v1",
+        "usage": {
+          "completion_tokens": 560,
+          "completion_tokens_details": {
+            "reasoning_tokens": 465
+          },
+          "prompt_tokens": 236,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "total_tokens": 796
+        },
+        "attempt": 0
+      }
+    },
+    "peer_review": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-013_automated_decomposition_of_large_header/workspace/deepscientist_2026-08-09_14-34-46",
+      "review_report": "~/ai_scientist_inputs/ASE-2025-013_automated_decomposition_of_large_header/workspace/deepscientist_2026-08-09_14-34-46/artifacts/peer_review/stanford_apr.md",
+      "paper_pdf": "~/ai_scientist_inputs/ASE-2025-013_automated_decomposition_of_large_header/workspace/deepscientist_2026-08-09_14-34-46/paper/main.pdf",
+      "paper_tex": null,
+      "status": "ok",
+      "dimensions": {},
+      "overall_score": 4.1,
+      "score_scale": "1-10",
+      "dimension_order": [],
+      "notes": [
+        "Scored from paperreview.ai (Stanford APR) native ratings; benchmark 5-dimension LLM rubric skipped.",
+        "Overall scale: 1-10."
+      ],
+      "paperreview": {
+        "status": "cached",
+        "hint": "Cached APR score found; no re-upload."
+      },
+      "scoring_method": "paperreview_apr",
+      "scoring_source": "paperreview_json",
+      "apr_dimensions": {
+        "Claims_Support": -1.0,
+        "Experimental_Soundness": -1.0,
+        "Writing_Clarity": 0.0,
+        "Prior_Work_Context": 0.0,
+        "Question_Importance": 1.0,
+        "Originality": 0.0,
+        "Value_to_Community": -1.0
+      },
+      "summary": "",
+      "red_flags": []
+    },
+    "alignment": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-013_automated_decomposition_of_large_header/workspace/deepscientist_2026-08-09_14-34-46",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-013_automated_decomposition_of_large_header",
+      "status": "ok",
+      "original": {
+        "paper_title": "Enhancing LLMs with Staged Grouping and Dehallucination for Header File Decomposition",
+        "selection": {
+          "num_blocks": 8,
+          "total_chars": 31998,
+          "inferred_roles": {
+            "abstract": 1,
+            "introduction": 1,
+            "experiment": 4,
+            "discussion": 1,
+            "conclusion": 1
+          },
+          "mineru_raw_keys": {
+            "field:abstract": 1,
+            "field:introduction": 1,
+            "field:experiment": 1,
+            "other": 3,
+            "discussion": 1,
+            "conclusion": 1
+          },
+          "infer_reasons": {
+            "top_level_field": 3,
+            "body_override": 2,
+            "title": 3
+          },
+          "rescued_from_other": 3,
+          "note": "mineru key is unreliable; blocks are selected by title/body/inheritance. rescued_from_other counts sections labeled other but treated as typed roles."
+        },
+        "claims": [
+          {
+            "id": "C1",
+            "statement": "HFDecomposer outperforms the traditional state-of-the-art header file decomposition approach by 11%.",
+            "direction": "improves",
+            "metric_names": [
+              "accuracy",
+              "ACC"
+            ],
+            "evidence_quote": "outperforms the traditional stateof-the-art approach by 11%",
+            "confidence": 0.95
+          },
+          {
+            "id": "C2",
+            "statement": "HFDecomposer mitigates LLM hallucinations in header file decomposition.",
+            "direction": "improves",
+            "metric_names": [
+              "incomplete cases",
+              "missing entities"
+            ],
+            "evidence_quote": "The number of incomplete cases dropped dramatically from 122 to below 20 for GPT-4o.",
+            "confidence": 0.9
+          },
+          {
+            "id": "C3",
+            "statement": "HFDecomposer reduces cyclic dependency issues compared to LLM baselines.",
+            "direction": "improves",
+            "metric_names": [
+              "cyclic cases",
+              "cyclic dependency"
+            ],
+            "evidence_quote": "Our approach significantly enhances LLMs' ability to generate decompositions with fewer cyclic dependencies.",
+            "confidence": 0.9
+          },
+          {
+            "id": "C4",
+            "statement": "The two-stage grouping framework handles lengthy header files effectively.",
+            "direction": "improves",
+            "metric_names": [
+              "completion rate",
+              "grouping accuracy"
+            ],
+            "evidence_quote": "both models successfully processed all header files in the dataset, achieving 100% completion rate",
+            "confidence": 0.9
+          },
+          {
+            "id": "C5",
+            "statement": "HFDecomposer outperforms baseline methods in decomposition accuracy.",
+            "direction": "improves",
+            "metric_names": [
+              "ACC",
+              "F1",
+              "MoJoFM",
+              "ARI",
+              "NMI"
+            ],
+            "evidence_quote": "HFDecomposer significantly outperforms state-of-the-art methods",
+            "confidence": 0.8
+          }
+        ],
+        "metrics": [
+          {
+            "name": "ACC",
+            "value": 70.1,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "Wang et al. baseline, all header files",
+            "is_sota_or_best": false,
+            "baseline_name": "Wang et al.",
+            "baseline_value": null,
+            "evidence_quote": "Wang et al. ... ACC 70.1",
+            "confidence": 0.9
+          },
+          {
+            "name": "F1",
+            "value": 65.2,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "Wang et al. baseline, all header files",
+            "is_sota_or_best": false,
+            "baseline_name": "Wang et al.",
+            "baseline_value": null,
+            "evidence_quote": "Wang et al. ... F1 65.2",
+            "confidence": 0.9
+          },
+          {
+            "name": "MoJoFM",
+            "value": 78.0,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "Wang et al. baseline, all header files",
+            "is_sota_or_best": false,
+            "baseline_name": "Wang et al.",
+            "baseline_value": null,
+            "evidence_quote": "Wang et al. ... MoJoFM 78.0",
+            "confidence": 0.9
+          },
+          {
+            "name": "ARI",
+            "value": 21.9,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "Wang et al. baseline, all header files",
+            "is_sota_or_best": false,
+            "baseline_name": "Wang et al.",
+            "baseline_value": null,
+            "evidence_quote": "Wang et al. ... ARI 21.9",
+            "confidence": 0.9
+          },
+          {
+            "name": "NMI",
+            "value": 25.8,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "Wang et al. baseline, all header files",
+            "is_sota_or_best": false,
+            "baseline_name": "Wang et al.",
+            "baseline_value": null,
+            "evidence_quote": "Wang et al. ... NMI 25.8",
+            "confidence": 0.9
+          },
+          {
+            "name": "ACC",
+            "value": 75.4,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "GPT-4o baseline, all header files",
+            "is_sota_or_best": false,
+            "baseline_name": "GPT-4o",
+            "baseline_value": null,
+            "evidence_quote": "GPT-4o ... ACC 75.4",
+            "confidence": 0.9
+          },
+          {
+            "name": "F1",
+            "value": 68.3,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "GPT-4o baseline, all header files",
+            "is_sota_or_best": false,
+            "baseline_name": "GPT-4o",
+            "baseline_value": null,
+            "evidence_quote": "GPT-4o ... F1 68.3",
+            "confidence": 0.9
+          },
+          {
+            "name": "MoJoFM",
+            "value": 80.2,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "GPT-4o baseline, all header files",
+            "is_sota_or_best": false,
+            "baseline_name": "GPT-4o",
+            "baseline_value": null,
+            "evidence_quote": "GPT-4o ... MoJoFM 80.2",
+            "confidence": 0.9
+          }
+        ],
+        "overall_conclusion": null,
+        "comparable_notes": null,
+        "cache_hit": true
+      },
+      "agent": {
+        "status": "ok",
+        "run_dir": "~/ai_scientist_inputs/ASE-2025-013_automated_decomposition_of_large_header/workspace/deepscientist_2026-08-09_14-34-46",
+        "claims": [
+          {
+            "id": "A1",
+            "statement": "DAHD achieves zero cyclic dependencies across all 50 evaluated instances.",
+            "direction": "improves",
+            "metric_names": [
+              "cycle_count"
+            ],
+            "evidence_quote": "DAHD achieves MoJoFM=82.18% (std=22.70) with ZERO cyclic dependencies across all 50 instances.",
+            "confidence": 0.95
+          },
+          {
+            "id": "A2",
+            "statement": "DAHD achieves a MoJoFM score of 82.18% on the 50-instance pilot evaluation.",
+            "direction": "improves",
+            "metric_names": [
+              "mojofm"
+            ],
+            "evidence_quote": "DAHD achieves MoJoFM=82.18% (std=22.70) with ZERO cyclic dependencies across all 50 instances.",
+            "confidence": 0.95
+          },
+          {
+            "id": "A3",
+            "statement": "Small headers with fewer than 20 entities achieve MoJoFM of 80.31%.",
+            "direction": "improves",
+            "metric_names": [
+              "small_mojofm"
+            ],
+            "evidence_quote": "Small headers (<20 entities, n=28): MoJoFM=80.31%.",
+            "confidence": 0.9
+          },
+          {
+            "id": "A4",
+            "statement": "Medium headers with 20-100 entities achieve MoJoFM of 84.56%.",
+            "direction": "improves",
+            "metric_names": [
+              "medium_mojofm"
+            ],
+            "evidence_quote": "Medium headers (20-100 entities, n=22): MoJoFM=84.56%.",
+            "confidence": 0.9
+          },
+          {
+            "id": "A5",
+            "statement": "Entity coverage is 41.9%, limited by the regex-based entity extractor.",
+            "direction": "degrades",
+            "metric_names": [
+              "entity_coverage"
+            ],
+            "evidence_quote": "Entity coverage=41.9% (limited by regex extractor).",
+            "confidence": 0.9
+          },
+          {
+            "id": "A6",
+            "statement": "Topological layering structurally prevents circular dependencies during decomposition.",
+            "direction": "improves",
+            "metric_names": [
+              "cycle_count"
+            ],
+            "evidence_quote": "The zero-cycle result (RQ3) strongly validates DAHD's primary innovation: structural cycle prevention through topological layering.",
+            "confidence": 0.9
+          },
+          {
+            "id": "A7",
+            "statement": "The pilot did not use LLM refinement; LLM integration is expected to further improve semantic cohesion.",
+            "direction": "neutral",
+            "metric_names": [],
+            "evidence_quote": "No LLM refinement was used yet; LLM integration expected to further improve semantic cohesion.",
+            "confidence": 0.85
+          },
+          {
+            "id": "A8",
+            "statement": "No baseline comparison against HFDecomposer, GPT-4o, or DeepSeek-V3 has been performed yet.",
+            "direction": "unknown",
+            "metric_names": [],
+            "evidence_quote": "No baseline comparison yet (HFDecomposer/GPT-4o/DeepSeek-V3)",
+            "confidence": 0.9
+          },
+          {
+            "id": "A9",
+            "statement": "Clustering metrics are F1=0.234, Precision=0.564, Recall=0.197, ACC=0.445, ARI=0.031, and NMI=0.272.",
+            "direction": "mixed",
+            "metric_names": [
+              "f1_score",
+              "precision",
+              "recall",
+              "accuracy",
+              "ari",
+              "nmi"
+            ],
+            "evidence_quote": "F1=0.234, Precision=0.564, Recall=0.197, ACC=0.445, ARI=0.031, NMI=0.272.",
+            "confidence": 0.9
+          },
+          {
+            "id": "A10",
+            "statement": "An entity registry tracks every code element to guarantee coverage.",
+            "direction": "improves",
+            "metric_names": [
+              "entity_coverage"
+            ],
+            "evidence_quote": "An entity registry tracks every code element to guarantee coverage.",
+            "confidence": 0.8
+          }
+        ],
+        "metrics": [
+          {
+            "name": "mojofm",
+            "value": 82.18,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "50 instances from HFDecomposer Real-world Header File Decomposition Dataset",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "DAHD achieves MoJoFM=82.18% (std=22.70) with ZERO cyclic dependencies across all 50 instances.",
+            "confidence": 0.95
+          },
+          {
+            "name": "mojofm_std",
+            "value": 22.7,
+            "unit": "%",
+            "higher_is_better": false,
+            "setting": "50 instances from HFDecomposer Real-world Header File Decomposition Dataset",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "DAHD achieves MoJoFM=82.18% (std=22.70) with ZERO cyclic dependencies across all 50 instances.",
+            "confidence": 0.9
+          },
+          {
+            "name": "f1_score",
+            "value": 0.2336,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "50 instances from HFDecomposer Real-world Header File Decomposition Dataset",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "F1=0.234, Precision=0.564, Recall=0.197, ACC=0.445, ARI=0.031, NMI=0.272.",
+            "confidence": 0.9
+          },
+          {
+            "name": "precision",
+            "value": 0.5639,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "50 instances from HFDecomposer Real-world Header File Decomposition Dataset",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "F1=0.234, Precision=0.564, Recall=0.197, ACC=0.445, ARI=0.031, NMI=0.272.",
+            "confidence": 0.9
+          },
+          {
+            "name": "recall",
+            "value": 0.1975,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "50 instances from HFDecomposer Real-world Header File Decomposition Dataset",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "F1=0.234, Precision=0.564, Recall=0.197, ACC=0.445, ARI=0.031, NMI=0.272.",
+            "confidence": 0.9
+          },
+          {
+            "name": "accuracy",
+            "value": 0.4448,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "50 instances from HFDecomposer Real-world Header File Decomposition Dataset",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "F1=0.234, Precision=0.564, Recall=0.197, ACC=0.445, ARI=0.031, NMI=0.272.",
+            "confidence": 0.9
+          },
+          {
+            "name": "ari",
+            "value": 0.0311,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "50 instances from HFDecomposer Real-world Header File Decomposition Dataset",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "F1=0.234, Precision=0.564, Recall=0.197, ACC=0.445, ARI=0.031, NMI=0.272.",
+            "confidence": 0.9
+          },
+          {
+            "name": "nmi",
+            "value": 0.2723,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "50 instances from HFDecomposer Real-world Header File Decomposition Dataset",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "F1=0.234, Precision=0.564, Recall=0.197, ACC=0.445, ARI=0.031, NMI=0.272.",
+            "confidence": 0.9
+          },
+          {
+            "name": "entity_coverage",
+            "value": 0.419,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "50 instances from HFDecomposer Real-world Header File Decomposition Dataset",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "Entity coverage=41.9% (limited by regex extractor).",
+            "confidence": 0.9
+          },
+          {
+            "name": "cycle_count",
+            "value": 0,
+            "unit": "cycles",
+            "higher_is_better": false,
+            "setting": "50 instances from HFDecomposer Real-world Header File Decomposition Dataset",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "DAHD achieves MoJoFM=82.18% (std=22.70) with ZERO cyclic dependencies across all 50 instances.",
+            "confidence": 0.95
+          },
+          {
+            "name": "small_mojofm",
+            "value": 80.31,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "Small headers (<20 entities, n=28)",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "Small headers (<20 entities, n=28): MoJoFM=80.31%.",
+            "confidence": 0.9
+          },
+          {
+            "name": "medium_mojofm",
+            "value": 84.56,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "Medium headers (20-100 entities, n=22)",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "Medium headers (20-100 entities, n=22): MoJoFM=84.56%.",
+            "confidence": 0.9
+          },
+          {
+            "name": "small_entity_coverage",
+            "value": 0.397,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "Small headers (<20 entities, n=28)",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "\"small\": {\"count\": 28, \"mojofm\": 80.31, \"coverage\": 0.397, \"cycle_rate\": 0}",
+            "confidence": 0.85
+          },
+          {
+            "name": "medium_entity_coverage",
+            "value": 0.446,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "Medium headers (20-100 entities, n=22)",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "\"medium\": {\"count\": 22, \"mojofm\": 84.56, \"coverage\": 0.446, \"cycle_rate\": 0}",
+            "confidence": 0.85
+          },
+          {
+            "name": "small_cycle_rate",
+            "value": 0,
+            "unit": "rate",
+            "higher_is_better": false,
+            "setting": "Small headers (<20 entities, n=28)",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "\"small\": {\"count\": 28, \"mojofm\": 80.31, \"coverage\": 0.397, \"cycle_rate\": 0}",
+            "confidence": 0.85
+          },
+          {
+            "name": "medium_cycle_rate",
+            "value": 0,
+            "unit": "rate",
+            "higher_is_better": false,
+            "setting": "Medium headers (20-100 entities, n=22)",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "\"medium\": {\"count\": 22, \"mojofm\": 84.56, \"coverage\": 0.446, \"cycle_rate\": 0}",
+            "confidence": 0.85
+          }
+        ],
+        "overall_conclusion": "DAHD pilot on 50 HFDecomposer instances achieves zero cyclic dependencies and MoJoFM 82.18%, with entity coverage limited to 41.9% by regex extraction; no LLM refinement or baseline comparison has been performed yet.",
+        "sources": {
+          "metrics_path": "DeepScientist/quests/001/.ds/worktrees/idea-idea-83f02b90/artifacts/reports/report-5263b0ee.json",
+          "paper_tex_path": "paper/paper_draft.md"
+        },
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 6069,
+            "completion_tokens_details": {
+              "reasoning_tokens": 2935
+            },
+            "prompt_tokens": 3973,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 10042
+          },
+          "attempt": 0
+        }
+      },
+      "comparison": {
+        "status": "ok",
+        "claim_alignment": [
+          {
+            "original_claim_id": "C1",
+            "agent_claim_id": "A8",
+            "label": "missing",
+            "rationale": "Agent explicitly states no baseline comparison yet (A8); it does not evaluate HFDecomposer against the traditional SOTA or report the 11% improvement."
+          },
+          {
+            "original_claim_id": "C2",
+            "agent_claim_id": "A7",
+            "label": "missing",
+            "rationale": "Agent does not measure LLM hallucination, incomplete cases, or missing entities for HFDecomposer; A7 says no LLM refinement was used yet, and A5 reports limited regex entity coverage rather than hallucination mitigation."
+          },
+          {
+            "original_claim_id": "C3",
+            "agent_claim_id": "A1",
+            "label": "partial",
+            "rationale": "Agent reports zero cyclic dependencies via topological layering (A1/A6), which is the same direction as reducing cyclic dependency issues, but it evaluates DAHD rather than HFDecomposer and does not compare against LLM baselines."
+          },
+          {
+            "original_claim_id": "C4",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "Agent evaluates small and medium headers (A3/A4) but does not address the two-stage grouping framework or lengthy header file completion rate."
+          },
+          {
+            "original_claim_id": "C5",
+            "agent_claim_id": "A8",
+            "label": "missing",
+            "rationale": "Agent reports clustering metrics (A9) but explicitly has no baseline comparison (A8), so it does not support or refute the claim that HFDecomposer outperforms baselines in decomposition accuracy."
+          }
+        ],
+        "metric_alignment": [
+          {
+            "original_metric": "ACC",
+            "agent_metric": "accuracy",
+            "comparable": false,
+            "original_value": 70.1,
+            "agent_value": 0.4448,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Original is Wang et al. baseline ACC on all header files; agent is DAHD accuracy on a 50-instance subset with no baseline comparison. Units also differ (% vs fraction)."
+          },
+          {
+            "original_metric": "F1",
+            "agent_metric": "f1_score",
+            "comparable": false,
+            "original_value": 65.2,
+            "agent_value": 0.2336,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Original is Wang et al. baseline F1 on all header files; agent is DAHD F1 on a 50-instance subset with no baseline comparison. Units differ (% vs fraction)."
+          },
+          {
+            "original_metric": "MoJoFM",
+            "agent_metric": "mojofm",
+            "comparable": false,
+            "original_value": 78.0,
+            "agent_value": 82.18,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Same metric and unit, but original is Wang et al. baseline on all header files while agent is DAHD on a 50-instance subset; no baseline comparison, so no SOTA delta is computed."
+          },
+          {
+            "original_metric": "ARI",
+            "agent_metric": "ari",
+            "comparable": false,
+            "original_value": 21.9,
+            "agent_value": 0.0311,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Original is Wang et al. baseline ARI on all header files; agent is DAHD ARI on a 50-instance subset. Units differ (% vs fraction)."
+          },
+          {
+            "original_metric": "NMI",
+            "agent_metric": "nmi",
+            "comparable": false,
+            "original_value": 25.8,
+            "agent_value": 0.2723,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Original is Wang et al. baseline NMI on all header files; agent is DAHD NMI on a 50-instance subset. Units differ (% vs fraction)."
+          },
+          {
+            "original_metric": "ACC",
+            "agent_metric": "accuracy",
+            "comparable": false,
+            "original_value": 75.4,
+            "agent_value": 0.4448,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Original is GPT-4o baseline ACC on all header files; agent is DAHD accuracy on a 50-instance subset with no baseline comparison. Units differ (% vs fraction)."
+          },
+          {
+            "original_metric": "F1",
+            "agent_metric": "f1_score",
+            "comparable": false,
+            "original_value": 68.3,
+            "agent_value": 0.2336,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Original is GPT-4o baseline F1 on all header files; agent is DAHD F1 on a 50-instance subset with no baseline comparison. Units differ (% vs fraction)."
+          },
+          {
+            "original_metric": "MoJoFM",
+            "agent_metric": "mojofm",
+            "comparable": false,
+            "original_value": 80.2,
+            "agent_value": 82.18,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Same metric and unit, but original is GPT-4o baseline on all header files while agent is DAHD on a 50-instance subset; no baseline comparison, so no SOTA delta is computed."
+          }
+        ],
+        "summary": {
+          "direction_consistency": "mixed",
+          "consistent_claim_ratio": 0.0,
+          "has_comparable_metrics": false,
+          "sota_improvement_summary": "N/A",
+          "overall_alignment_score": 0.4,
+          "score_rationale": "Agent works on the same header file decomposition problem and reports same-direction cycle reduction (zero cycles) and MoJoFM, but it does not compare against baselines and does not address hallucination or two-stage grouping; all metrics are incomparable due to the reduced 50-instance protocol."
+        },
+        "warnings": [
+          "Agent used a reduced 50-instance pilot protocol, so metric values are not directly comparable to original all-header-file baselines.",
+          "No baseline comparison against HFDecomposer, GPT-4o, or DeepSeek-V3 was performed by the agent.",
+          "Several agent metrics are reported as fractions while original metrics are percentages; values were not converted or compared.",
+          "Agent evaluates DAHD, not HFDecomposer, so original HFDecomposer-specific claims are largely unaddressed."
+        ],
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 8436,
+            "completion_tokens_details": {
+              "reasoning_tokens": 6771
+            },
+            "prompt_tokens": 5441,
+            "prompt_tokens_details": {
+              "cached_tokens": 2048
+            },
+            "total_tokens": 13877
+          },
+          "attempt": 0
+        }
+      },
+      "overall_alignment_score": 0.4,
+      "direction_consistency": "mixed"
+    },
+    "experiment_analysis": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-013_automated_decomposition_of_large_header/workspace/deepscientist_2026-08-09_14-34-46",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-013_automated_decomposition_of_large_header",
+      "status": "ok",
+      "metrics_path": "DeepScientist/quests/001/.ds/worktrees/idea-idea-83f02b90/artifacts/reports/report-5263b0ee.json",
+      "experiment_success": {
+        "status": "ok",
+        "success": true,
+        "metrics_path": "DeepScientist/quests/001/.ds/worktrees/idea-idea-83f02b90/artifacts/reports/report-5263b0ee.json",
+        "absolute_metrics_path": "~/ai_scientist_inputs/ASE-2025-013_automated_decomposition_of_large_header/workspace/deepscientist_2026-08-09_14-34-46/DeepScientist/quests/001/.ds/worktrees/idea-idea-83f02b90/artifacts/reports/report-5263b0ee.json",
+        "checks": {
+          "has_results_file": true,
+          "non_stub": true,
+          "numeric_leaf_count": 29,
+          "min_numeric_ok": true
+        },
+        "manifest_hints": {
+          "status": {
+            "launched": true
+          },
+          "returncode": 0,
+          "benchmark_complete": null,
+          "artifacts_metrics_flag": false
+        },
+        "warnings": [],
+        "suspicious_values": [],
+        "note": "success=true requires substantive results (framework-aware path) with >=3 numeric leaves. Supports metrics.json, results.json, experiment_results.txt, etc. Manifest returncode/benchmark_complete are soft warnings only."
+      },
+      "idea_code_consistency": {
+        "status": "ok",
+        "idea_path": "artifacts/idea/selected_idea.md",
+        "code_files": [
+          "DeepScientist/quests/001/.ds/worktrees/idea-idea-83f02b90/project/dahd/decomposer_dahd.py",
+          "DeepScientist/quests/001/.ds/worktrees/idea-idea-83f02b90/project/dahd/dependency_graph.py",
+          "DeepScientist/quests/001/.ds/worktrees/idea-idea-83f02b90/project/dahd/entity_extractor.py",
+          "DeepScientist/quests/001/.ds/worktrees/idea-idea-83f02b90/project/dahd/entity_registry.py"
+        ],
+        "score_scale": "1-5",
+        "score": 3.0,
+        "label": "partial",
+        "justification": "The code implements the core DAHD decomposition pipeline: entity extraction, dependency graph construction, centrality computation, topological layering, an entity registry, and sub-header generation. However, several key components from the idea are missing or not integrated: the planned pilot evaluation against HFDecomposer with MoJoFM, F1, ARI, NMI, coverage, and cycle-rate metrics is absent; core-periphery separation is computed but never used; entity coverage verification is implemented but not called or surfaced; LLM semantic refinement is only an optional flag with no shown implementation; and topological layer internals and include-order generation are not fully shown. Thus the main direction matches, but important idea elements are dropped or unverified.",
+        "matched_elements": [
+          "Entity extraction for macros, structs, unions, enums, typedefs, functions, extern variables",
+          "Weighted dependency graph construction from entity content",
+          "Centrality computation and core-periphery classification function",
+          "Topological layering imported and used in the pipeline",
+          "EntityRegistry with register_all, assign_layer, verify_coverage, and assignment"
+        ],
+        "missing_or_divergent_elements": [],
+        "rubric": "Partial alignment: main direction matches, but important components from the idea (baselines, metrics, protocol, subjects) are dropped or altered without clear mapping.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813-sg",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 1164,
+            "completion_tokens_details": {
+              "reasoning_tokens": 909
+            },
+            "prompt_tokens": 397,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 1561
+          },
+          "attempt": 0
+        }
+      },
+      "setup_coverage": {
+        "status": "ok",
+        "overall_coverage": 0.8888888888888888,
+        "datasets": {
+          "gold_count": 1,
+          "hit_count": 1,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "Real-world Header File Decomposition Dataset"
+          ],
+          "misses": []
+        },
+        "baselines": {
+          "gold_count": 3,
+          "hit_count": 2,
+          "miss_count": 1,
+          "coverage": 0.6666666666666666,
+          "hits": [
+            "Wang et al.'s clustering-based approach",
+            "DeepSeek-V3"
+          ],
+          "misses": [
+            "GPT-4o"
+          ]
+        },
+        "metrics": {
+          "gold_count": 5,
+          "hit_count": 5,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "Accuracy (ACC)",
+            "F1-score",
+            "MoJoFM",
+            "Adjusted Rand Index (ARI)",
+            "Normalized Mutual Information (NMI)"
+          ],
+          "misses": []
+        },
+        "agent_protocol": {},
+        "gold_protocol": {},
+        "dataset_dirs": [
+          "dataset_candidate"
+        ],
+        "flags": {
+          "weaker_baseline_suspected": true,
+          "weak_protocol": [],
+          "synthetic_data": "synthetic_allowed_by_task",
+          "gold_allows_synthetic": true
+        },
+        "gold_sources": [
+          "~/ai_scientist_inputs/ASE-2025-013_automated_decomposition_of_large_header/task.md",
+          "~/ai_scientist_inputs/ASE-2025-013_automated_decomposition_of_large_header/metadata.json"
+        ],
+        "note": "Coverage is name/alias matching against task.md Datasets/Baselines/Metrics. weak_protocol flags large reductions in trials/timeout vs Constraints. Synthetic corpora are not penalized when the task itself requires synthesis."
+      },
+      "ablation_significance": {
+        "status": "ok",
+        "idea_path": "artifacts/idea/selected_idea.md",
+        "significance_signals_rule_based": {
+          "signals": [],
+          "artifact_paths": [],
+          "has_any_significance_artifact": false
+        },
+        "evidence_format": "raw_json",
+        "study_type": "pilot",
+        "components": [
+          {
+            "name": "Enhanced dependency graph construction",
+            "role": "module",
+            "ablation_expected": true,
+            "significance_expected": false,
+            "ablation_status": "missing",
+            "ablation_evidence": "No controlled comparison removes or replaces the enhanced dependency graph; only the full DAHD pipeline is evaluated on 50 instances.",
+            "significance_status": "not_required",
+            "significance_evidence": "Pilot evaluation; formal statistical significance is not standard."
+          },
+          {
+            "name": "Core-periphery analysis",
+            "role": "module",
+            "ablation_expected": true,
+            "significance_expected": false,
+            "ablation_status": "missing",
+            "ablation_evidence": "No ablation removes core-periphery analysis while keeping other pipeline stages fixed.",
+            "significance_status": "not_required",
+            "significance_evidence": "Pilot evaluation; formal statistical significance is not standard."
+          },
+          {
+            "name": "Topological layering",
+            "role": "module",
+            "ablation_expected": true,
+            "significance_expected": false,
+            "ablation_status": "missing",
+            "ablation_evidence": "No controlled comparison isolates topological layering; reported zero cycles/edges do not constitute an ablation.",
+            "significance_status": "not_required",
+            "significance_evidence": "Pilot evaluation; formal statistical significance is not standard."
+          },
+          {
+            "name": "LLM semantic refinement",
+            "role": "module",
+            "ablation_expected": true,
+            "significance_expected": false,
+            "ablation_status": "missing",
+            "ablation_evidence": "LLM refinement was not used in the pilot, and there is no controlled comparison with and without LLM semantic refinement.",
+            "significance_status": "not_required",
+            "significance_evidence": "Pilot evaluation; formal statistical significance is not standard."
+          },
+          {
+            "name": "Entity registry",
+            "role": "module",
+            "ablation_expected": true,
+            "significance_expected": false,
+            "ablation_status": "missing",
+            "ablation_evidence": "No ablation removes or replaces the entity registry to assess its contribution.",
+            "significance_status": "not_required",
+            "significance_evidence": "Pilot evaluation; formal statistical significance is not standard."
+          },
+          {
+            "name": "HFDecomposer baseline comparison",
+            "role": "baseline",
+            "ablation_expected": true,
+            "significance_expected": false,
+            "ablation_status": "missing",
+            "ablation_evidence": "No baseline comparison against HFDecomposer was run; baseline gate was waived.",
+            "significance_status": "not_required",
+            "significance_evidence": "Pilot evaluation; formal statistical significance is not standard."
+          }
+        ],
+        "ablation_coverage_score": 0.0,
+        "overall_ablation_ok": false,
+        "overall_significance_ok": true,
+        "summary": "This is a pilot evaluation of the DAHD method. No component ablations or baseline comparison against HFDecomposer were performed, and the LLM semantic refinement module was not included in the run, so ablation coverage is inadequate. Statistical significance testing is not required for this small pilot, so significance expectations are met.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813-sg",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 2500,
+            "completion_tokens_details": {
+              "reasoning_tokens": 2500
+            },
+            "prompt_tokens": 2699,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 5199
+          },
+          "attempt": 1
+        }
+      },
+      "results_paper_consistency": {
+        "status": "ok",
+        "paper_tex": "paper/paper_draft.md",
+        "paper_kind": "paper_md",
+        "results_format": "raw_json",
+        "digest_hint": {
+          "unfavorable_count": 0,
+          "trial_fail_count": 0,
+          "trial_success_count": 0,
+          "metadata": {}
+        },
+        "score_scale": "1-5",
+        "method": "Direct LLM comparison: agent's FINAL results artifact (metrics.json summary) vs paper Results/Discussion/Conclusion. Interim failed runs are NOT evidence unless still present in the final metrics file.",
+        "score": null,
+        "consistency_label": null,
+        "hiding_unfavorable_suspected": false,
+        "hiding_confidence": null,
+        "justification": "",
+        "supported_claims": [],
+        "unsupported_or_overstated_claims": [],
+        "numeric_mismatches": [],
+        "unfavorable_in_final_results": [],
+        "unfavorable_acknowledged_in_paper": [],
+        "unfavorable_missing_from_paper": [],
+        "rubric": null,
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813-sg",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 3000,
+            "completion_tokens_details": {
+              "reasoning_tokens": 3000
+            },
+            "prompt_tokens": 5130,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 8130
+          },
+          "attempt": 0
+        }
+      },
+      "scores": {
+        "experiment_success": true,
+        "idea_code_score": 3.0,
+        "setup_coverage": 0.8888888888888888,
+        "ablation_coverage_score": 0.0,
+        "overall_ablation_ok": false,
+        "overall_significance_ok": true,
+        "results_paper_score": null,
+        "hiding_unfavorable_suspected": false
+      },
+      "notes": [
+        "Axes 1,2,3,4,6 in experiment_analysis (figures excluded).",
+        "setup_coverage matches task.md Datasets/Baselines/Metrics; weak_protocol flags reductions vs Constraints.",
+        "Axis 6: final normalized results vs paper; interim run logs not used as ground truth."
+      ]
+    },
+    "literature_review": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-013_automated_decomposition_of_large_header/workspace/deepscientist_2026-08-09_14-34-46",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-013_automated_decomposition_of_large_header",
+      "status": "not_applicable",
+      "as_of_year": 2026,
+      "agent_ref_count": 0,
+      "sources": [
+        {
+          "path": "~/ai_scientist_inputs/ASE-2025-013_automated_decomposition_of_large_header/workspace/deepscientist_2026-08-09_14-34-46/artifacts/idea/literature_survey.md",
+          "kind": "literature_survey"
+        }
+      ],
+      "collection_audit": {
+        "cited_keys_count": 0,
+        "filter_mode": "uncited_bulk_bib_skipped",
+        "bib_total_before_filter": 0,
+        "bib_after_filter": 0,
+        "uncited_bib_skipped": 0,
+        "agent_ref_count": 0
+      },
+      "fabrication": null,
+      "coverage": null,
+      "recency": null,
+      "reason": "uncited_bulk_bib_skipped",
+      "hint": "Found a large .bib file but no \\cite keys in the paper TeX; bulk anthology/template bibliographies are not scored. Use literature_survey / related_work artifacts or cite papers in the manuscript."
+    }
+  },
+  "scores": {
+    "completeness": {
+      "complete": true,
+      "overall_score": 0.83,
+      "required_score": 1.0,
+      "bonus_score": 0.0
+    },
+    "peer_review": {
+      "status": "ok",
+      "optional": false,
+      "overall_score": 4.1,
+      "score_scale": "1-10",
+      "scoring_method": "paperreview_apr"
+    },
+    "idea_generation": {
+      "status": "ok",
+      "overall_score": 3.0,
+      "dimensions": {
+        "novelty": 3.0,
+        "feasibility": null,
+        "clarity": null
+      },
+      "novelty_category": "Incremental",
+      "solution_space_status": "ok"
+    },
+    "alignment": {
+      "status": "ok",
+      "direction_consistency": "mixed",
+      "overall_alignment_score": 0.4
+    },
+    "literature_review": {
+      "fabrication_rate": null,
+      "coverage_recall": null,
+      "recency_ratio_3y": null,
+      "recency_ratio_5y": null
+    },
+    "experiment_analysis": {
+      "experiment_success": true,
+      "idea_code_score": 3.0,
+      "setup_coverage": 0.8888888888888888,
+      "ablation_coverage_score": 0.0,
+      "overall_ablation_ok": false,
+      "overall_significance_ok": true,
+      "results_paper_score": null,
+      "hiding_unfavorable_suspected": false
+    }
+  },
+  "fair_scores": {
+    "applicable_axes": [
+      "completeness",
+      "idea_generation",
+      "peer_review",
+      "alignment",
+      "experiment_analysis"
+    ],
+    "skipped_axes": [
+      {
+        "axis": "literature_review",
+        "reason": "not_applicable"
+      }
+    ],
+    "fair_mean_0_1": 0.6479,
+    "note": "fair_mean_0_1 averages only applicable axes; optional peer review and framework-inapplicable literature are excluded from the denominator."
+  },
+  "evals_root": "~/ai_scientist_evals",
+  "claims_cache": "~/ai_scientist_evals/ASE-2025-013_automated_decomposition_of_large_header/original_claims.json",
+  "solution_space_cache": "~/ai_scientist_evals/ASE-2025-013_automated_decomposition_of_large_header/solution_space.json"
+}

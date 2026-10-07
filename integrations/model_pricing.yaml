@@ -1,0 +1,123 @@
+# USD per 1M tokens for benchmark cost accounting (flat fallback).
+# When a model entry includes ``peak`` / ``off_peak`` with ``cache_per_mtok``,
+# cost uses umodelverse-style tiered CNY rates (see models.json) plus
+# ``cached_tokens`` from usage_ledger ``raw_usage.prompt_tokens_details``.
+#
+# Lookup order: exact model id → strip "modelverse/" → strip provider prefix
+# (e.g. openai/foo → foo) → default.
+
+default:
+  input_per_mtok: 0.0
+  output_per_mtok: 0.0
+  # When true, cost_usd is still computed from default rates (often 0).
+  # Prefer adding an explicit model entry below for accurate spend.
+
+# Shared umodelverse tiered pricing for deepseek-v4-pro-0813 (CNY / M tokens).
+# Source: ~/models.json id=deepseek-v4-pro-0813 (Aug 2026).
+x-deepseek-v4-pro-0813-tiered: &deepseek_v4_pro_0813_tiered
+  currency: CNY
+  cny_usd_rate: 7.2
+  peak_hours_beijing:
+    - ["09:00", "12:00"]
+    - ["14:00", "18:00"]
+  peak:
+    input_per_mtok: 9.0
+    cache_per_mtok: 0.3
+    output_per_mtok: 27.0
+  off_peak:
+    input_per_mtok: 4.5
+    cache_per_mtok: 0.15
+    output_per_mtok: 13.5
+  # Flat USD fallback when ledger rows lack cached_tokens (legacy logs).
+  input_per_mtok: 0.48
+  output_per_mtok: 0.97
+
+models:
+  # DeepSeek (umodelverse / OpenAI-compatible ids)
+  deepseek-v4-pro-0813:
+    <<: *deepseek_v4_pro_0813_tiered
+  openai/deepseek-v4-pro-0813:
+    <<: *deepseek_v4_pro_0813_tiered
+  modelverse/deepseek-v4-pro-0813:
+    <<: *deepseek_v4_pro_0813_tiered
+  deepseek-v4-pro-0813-sg:
+    <<: *deepseek_v4_pro_0813_tiered
+  openai/deepseek-v4-pro-0813-sg:
+    <<: *deepseek_v4_pro_0813_tiered
+  modelverse/deepseek-v4-pro-0813-sg:
+    <<: *deepseek_v4_pro_0813_tiered
+  # legacy ids (kept for old run ledgers)
+  deepseek-v4-pro:
+    input_per_mtok: 0.44
+    output_per_mtok: 0.89
+  openai/deepseek-v4-pro:
+    input_per_mtok: 0.44
+    output_per_mtok: 0.89
+  modelverse/deepseek-v4-pro:
+    input_per_mtok: 0.44
+    output_per_mtok: 0.89
+  deepseek-v4-flash:
+    input_per_mtok: 0.14
+    output_per_mtok: 0.28
+  deepseek-v4-flash-0731:
+    input_per_mtok: 0.14
+    output_per_mtok: 0.28
+  deepseek-v4-flash-0731-sg:
+    input_per_mtok: 0.14
+    output_per_mtok: 0.28
+  deepseek-v4-flash-sg:
+    input_per_mtok: 0.14
+    output_per_mtok: 0.28
+  openai/deepseek-v4-flash:
+    input_per_mtok: 0.14
+    output_per_mtok: 0.28
+  openai/deepseek-v4-flash-0731:
+    input_per_mtok: 0.14
+    output_per_mtok: 0.28
+
+  # GPT family
+  gpt-5:
+    input_per_mtok: 1.25
+    output_per_mtok: 10.00
+  openai/gpt-5:
+    input_per_mtok: 1.25
+    output_per_mtok: 10.00
+  gpt-5-mini:
+    input_per_mtok: 0.25
+    output_per_mtok: 2.00
+  openai/gpt-5-mini:
+    input_per_mtok: 0.25
+    output_per_mtok: 2.00
+  gpt-4o-mini:
+    input_per_mtok: 0.15
+    output_per_mtok: 0.60
+
+  # DeepSeek-V3.2-Exp (AI-Scientist feedback path)
+  deepseek-ai/DeepSeek-V3.2-Exp:
+    input_per_mtok: 0.27
+    output_per_mtok: 1.10
+  DeepSeek-V3.2-Exp:
+    input_per_mtok: 0.27
+    output_per_mtok: 1.10
+
+  # claude
+  claude-sonnet-4-6:
+    input_per_mtok: 3
+    output_per_mtok: 15
+  claude-opus-4-6:
+    input_per_mtok: 5
+    output_per_mtok: 25
+  claude-haiku-4-5-20251001:
+    input_per_mtok: 1
+    output_per_mtok: 5
+
+  # gemini
+  gemini-3.5-flash:
+    input_per_mtok: 1.5
+    output_per_mtok: 9
+  gemini-3.1-flash-lite-preview:
+    input_per_mtok: 0.25
+    output_per_mtok: 1.5
+  gemini-3.1-pro-preview:
+    input_per_mtok: 2
+    output_per_mtok: 12

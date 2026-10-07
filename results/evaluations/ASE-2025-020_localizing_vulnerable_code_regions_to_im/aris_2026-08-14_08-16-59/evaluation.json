@@ -1,0 +1,1991 @@
+{
+  "run_dir": "~/ai_scientist_inputs/ASE-2025-020_localizing_vulnerable_code_regions_to_im/workspace/aris_2026-08-14_08-16-59",
+  "task_dir": "~/ai_scientist_inputs/ASE-2025-020_localizing_vulnerable_code_regions_to_im",
+  "framework": "aris",
+  "fairness_audit": [
+    {
+      "axis": "completeness",
+      "was_unfair": "Required both paper.tex AND paper.pdf; any tool missing one failed equally.",
+      "fix": "Paper gate: PDF=1.0; TeX-only=0.5; ``complete`` requires PDF."
+    },
+    {
+      "axis": "completeness",
+      "was_unfair": "``results`` counted stub/seed JSON (dataset_candidate/metrics.json).",
+      "fix": "``results`` requires substantive numeric results via results_normalize."
+    },
+    {
+      "axis": "experiment_success",
+      "was_unfair": "Only metrics.json; ignored results.json / experiment_results.txt.",
+      "fix": "Framework-ordered result candidates + normalized loaders."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Penalized tools with no bib; airesearcher has no workspace references.",
+      "fix": "literature_applicable=false → status not_applicable; excluded from fair aggregate."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "related_work.json subset as gold made recall hard to interpret.",
+      "fix": "Coverage gold is original paper REFERENCES from mineru; related_work only enriches metadata/fallback."
+    },
+    {
+      "axis": "peer_review",
+      "was_unfair": "Missing Stanford report looked like evaluation failure.",
+      "fix": "status not_provided; optional axis, never counts as tool failure."
+    },
+    {
+      "axis": "paths/find_results",
+      "was_unfair": "Picked downloads/** and sandbox noise (e.g. airesearcher LLVM tree).",
+      "fix": "Exclude downloads/, seeds/, dataset_candidate/, sandbox junk paths."
+    },
+    {
+      "axis": "paths/framework_noise",
+      "was_unfair": "DeepScientist .deepscientist_npm / runtime / skills templates counted as code/paper/results.",
+      "fix": "FRAMEWORK_NOISE_DIRS+markers; quest worktree + eval_output results; paper md drafts; reject template tex."
+    },
+    {
+      "axis": "paths/paper_tex",
+      "was_unfair": "tiny_scientist / ACL runs store paper under latex/*.tex; evaluator only looked at paper/main.tex.",
+      "fix": "latex/**/*.tex with substantive-body heuristic; find_paper_document uses same rules."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Entire custom.bib (300+ anthology entries) verified when paper had zero \\cite commands.",
+      "fix": "collect_agent_references filters bib to in-text cite keys; skips uncited bulk bib (>40 entries)."
+    },
+    {
+      "axis": "paths/ai_scientist_summaries",
+      "was_unfair": "AI Scientist can persist substantive results and paper-like drafts in *_summary.json logs rather than paper/main.tex or results/**/*.json.",
+      "fix": "Treat draft_summary/research_summary as weak paper documents and summary JSONs as result candidates."
+    },
+    {
+      "axis": "framework/ai_scientist_v2",
+      "was_unfair": "Manifest framework ``ai_scientist_v2`` fell through to profile ``unknown``, skipping AI-Scientist idea/result path priorities.",
+      "fix": "Normalize ``ai_scientist_v2`` (and common aliases) to profile key ``ai_scientist``."
+    },
+    {
+      "axis": "idea_generation",
+      "was_unfair": "plan.md/todos.md weak proxies scored same as structured idea.json.",
+      "fix": "Framework idea_priority tried first; missing idea → not_applicable where appropriate."
+    }
+  ],
+  "generated_at": "2026-10-01T11:03:26",
+  "axes": [
+    "alignment",
+    "completeness",
+    "experiment_analysis",
+    "idea_generation",
+    "literature_review",
+    "peer_review"
+  ],
+  "results": {
+    "completeness": {
+      "framework": "aris",
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-020_localizing_vulnerable_code_regions_to_im/workspace/aris_2026-08-14_08-16-59",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-020_localizing_vulnerable_code_regions_to_im",
+      "complete": true,
+      "required_score": 1.0,
+      "bonus_score": 0.15,
+      "overall_score": 0.8555,
+      "missing": [],
+      "required": {
+        "idea": {
+          "path": "idea-stage/IDEA_REPORT.md",
+          "bytes": 5820,
+          "via": "candidate"
+        },
+        "code": {
+          "count": 6,
+          "files": [
+            {
+              "path": "project/common.py",
+              "bytes": 2691,
+              "via": "glob"
+            },
+            {
+              "path": "project/experiment_runner.py",
+              "bytes": 23234,
+              "via": "glob"
+            },
+            {
+              "path": "project/model.py",
+              "bytes": 14228,
+              "via": "glob"
+            },
+            {
+              "path": "project/multiseed_validate.py",
+              "bytes": 11252,
+              "via": "glob"
+            },
+            {
+              "path": "project/pilot_salience.py",
+              "bytes": 5599,
+              "via": "glob"
+            },
+            {
+              "path": "project/prepare_data.py",
+              "bytes": 10236,
+              "via": "glob"
+            }
+          ]
+        },
+        "results": {
+          "substantive": true,
+          "normalized_path": "results/metrics.json",
+          "numeric_leaf_count": 47,
+          "discovered_files": [
+            {
+              "path": "results/metrics.json",
+              "bytes": 2263,
+              "via": "candidate"
+            },
+            {
+              "path": "results/multiseed_stats.json",
+              "bytes": 1084,
+              "via": "glob"
+            }
+          ],
+          "metrics_keys_sample": [
+            "generated_by",
+            "experiment_command",
+            "seed",
+            "hardware",
+            "token_limit",
+            "encoder",
+            "scope_note",
+            "localizer",
+            "accuracy",
+            "accuracy_t_losver",
+            "accuracy_oracle",
+            "weighted_f1",
+            "weighted_f1_t_losver",
+            "weighted_f1_oracle",
+            "pairwise_accuracy",
+            "pairwise_accuracy_t_losver",
+            "pairwise_accuracy_oracle",
+            "top_n_accuracy",
+            "line_level_f1",
+            "per_variant",
+            "wallclock_s"
+          ]
+        },
+        "paper": {
+          "tex": {
+            "path": "paper/main.tex",
+            "bytes": 14212,
+            "via": "candidate"
+          },
+          "pdf": {
+            "path": "paper/main.pdf",
+            "bytes": 172685,
+            "via": "candidate"
+          },
+          "md": {
+            "path": "paper/PAPER_IMPROVEMENT_LOG.md",
+            "bytes": 1323,
+            "via": "glob"
+          },
+          "json": null,
+          "status": "pdf",
+          "score": 1.0
+        }
+      },
+      "bonus": {
+        "experiment_plan": {
+          "path": "refine-logs/EXPERIMENT_PLAN.md",
+          "bytes": 2377,
+          "via": "candidate"
+        },
+        "experiment_log": {
+          "path": "aris_run.log",
+          "bytes": 329375,
+          "via": "glob"
+        },
+        "review": {
+          "path": "review-stage/AUTO_REVIEW.md",
+          "bytes": 2739,
+          "via": "candidate"
+        },
+        "readme": {
+          "path": "README_BENCHMARK.md",
+          "bytes": 948,
+          "via": "candidate"
+        },
+        "narrative": {
+          "path": "NARRATIVE_REPORT.md",
+          "bytes": 4905,
+          "via": "candidate"
+        },
+        "bib": null
+      },
+      "manifest_status": {
+        "idea": true,
+        "experiment_plan": true,
+        "experiment_log": false,
+        "metrics": true,
+        "review": true,
+        "narrative": true,
+        "paper_tex": true,
+        "paper_pdf": true
+      },
+      "gate_scores": {
+        "idea": 1.0,
+        "code": 1.0,
+        "results": 1.0,
+        "paper": 1.0
+      },
+      "fairness": {
+        "gates": [
+          "idea",
+          "code",
+          "results",
+          "paper"
+        ],
+        "paper_gate_rule": "PDF=1.0; TeX-only/md_only/json_only=0.5; complete requires PDF",
+        "results_gate_rule": "substantive numeric results via framework-aware normalize_results",
+        "audit_ref": "framework_profile.FAIRNESS_AUDIT"
+      },
+      "notes": [
+        "Required: idea, code, substantive results, paper (PDF full; TeX/markdown/JSON draft half).",
+        "Stub/seed metrics (e.g. dataset_candidate/metrics.json) do not satisfy results.",
+        "Framework noise (.deepscientist_npm, skills/templates, runtime) is excluded from code/results/paper.",
+        "Manifest status is informational; disk presence is authoritative."
+      ]
+    },
+    "idea_generation": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-020_localizing_vulnerable_code_regions_to_im/workspace/aris_2026-08-14_08-16-59",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-020_localizing_vulnerable_code_regions_to_im",
+      "idea_path": "~/ai_scientist_inputs/ASE-2025-020_localizing_vulnerable_code_regions_to_im/workspace/aris_2026-08-14_08-16-59/idea-stage/IDEA_REPORT.md",
+      "status": "ok",
+      "dimensions": {
+        "novelty": {
+          "score": 3.0,
+          "justification": "The core method is a meaningful extension of existing line-level localizer + weighted detector work: the idea explicitly states 'LOSVER trains its localizer per dataset with that dataset's line labels' and proposes 'cross-dataset transferable line-level region guidance' as the new capability. This fixes a concrete prior limitation but does not change the core paradigm.",
+          "rubric": "Incremental: a meaningful extension or optimization of prior baseline work that fixes a concrete prior limitation, but the core paradigm is unchanged.",
+          "category": "Incremental",
+          "nearest_solution_space_ids": [
+            "R31",
+            "R12",
+            "R13",
+            "R39",
+            "R43",
+            "R14"
+          ],
+          "differentiation": "Unlike R31/LOSVER, which trains its localizer per dataset with that dataset's line labels, T-LOSVER transfers a Big-Vul diff-line localizer to Devign/PrimeVul with no target line annotations. Unlike R12/R39 fault localization, it uses transferred line scores to re-weight token representations for vulnerability detection/classification."
+        },
+        "feasibility": {
+          "score": 4.0,
+          "justification": "The plan is explicitly scoped for low resource use: 'CPU-only (32 cores, 62 GB). Frozen/light encoder, 128-token cap, head-only training, reduced subsets. Est. total ≈ 4–6 h.' It reuses existing LOSVER components ('Reuse the LOSVER run_line.py architecture'), so the engineering burden is moderate-to-low.",
+          "rubric": "Low barrier / easy to implement: core logic can be quickly built on existing Python libraries or common ML frameworks; only small changes to a standard evaluation flow (e.g. prompt strategy tweaks or swapping metrics)."
+        },
+        "clarity": {
+          "score": 5.0,
+          "justification": "The idea is highly concrete: it specifies 'Method (3 components)', 'Metrics (per benchmark)', 'Claims (what experiments must show)', and 'Risks'. It includes explicit variants (Base, T-LOSVER, Oracle ceiling, Random-line control) and an honest negative-pilot motivation, making the plan detailed and testable.",
+          "rubric": "Extremely clear and rigorous: system-architecture or pseudocode-level clarity; elaborates the plan in detail and also discusses limitations or defenses/mitigations."
+        }
+      },
+      "overall_score": 3.5,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "novelty",
+        "feasibility",
+        "clarity"
+      ],
+      "solution_space": {
+        "status": "ok",
+        "paper_count": 50,
+        "entry_count": 50,
+        "cache_hit": true,
+        "source_file": "~/ai_scientist_inputs/ASE-2025-020_localizing_vulnerable_code_regions_to_im/mineru_sections.json",
+        "stats": {
+          "papers": 50,
+          "extracted": 50,
+          "usable_abstracts": 27,
+          "citation_meta_abstracts": 3,
+          "missing_abstracts": 20,
+          "mineru_titles": 48,
+          "related_work_titles": 35,
+          "abstracts_attached": 30,
+          "related_work_extras": 2,
+          "batches": 3
+        },
+        "error": null
+      },
+      "notes": [
+        "Scores the intermediate idea artifact (not the final paper).",
+        "Dimensions: novelty, feasibility, clarity (each 1-5). Excitement removed.",
+        "Novelty is scored against a Solution Space built from mineru REFERENCES titles (+ related_work.json abstracts when matched)."
+      ],
+      "idea_via": "candidate",
+      "idea_relative": "idea-stage/IDEA_REPORT.md",
+      "summary": "T-LOSVER proposes transferring a line-level vulnerability localizer trained on Big-Vul diff lines to target datasets without line annotations, then using its scores to re-weight token representations for function-level detection. It is a practical incremental extension over per-dataset line-localizer work, with strong clarity and a realistic CPU-only scope. Main limitations are modest novelty and possible cross-dataset domain gap.",
+      "strengths": [
+        "Honest negative pilot motivates the pivot away from annotation-free salience.",
+        "Clear transfer protocol with Oracle ceiling and Random-line controls.",
+        "Explicit CPU budget, reduced subsets, and scope-down improve feasibility."
+      ],
+      "weaknesses": [
+        "Incremental over existing line-level localizer and weighted detector approaches.",
+        "CPU-only reduced subsets may limit absolute accuracy and generalization.",
+        "Cross-dataset domain gap may weaken the localizer, leaving only a characterization finding."
+      ],
+      "llm_meta": {
+        "model": "deepseek-v4-pro-0813",
+        "base_url": "https://api-sg.umodelverse.ai/v1",
+        "usage": {
+          "completion_tokens": 2403,
+          "completion_tokens_details": {
+            "reasoning_tokens": 1796
+          },
+          "prompt_tokens": 6866,
+          "prompt_tokens_details": {
+            "cached_tokens": 4096
+          },
+          "total_tokens": 9269
+        },
+        "attempt": 0
+      }
+    },
+    "peer_review": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-020_localizing_vulnerable_code_regions_to_im/workspace/aris_2026-08-14_08-16-59",
+      "review_report": "~/ai_scientist_inputs/ASE-2025-020_localizing_vulnerable_code_regions_to_im/workspace/aris_2026-08-14_08-16-59/artifacts/peer_review/stanford_apr.md",
+      "paper_pdf": "~/ai_scientist_inputs/ASE-2025-020_localizing_vulnerable_code_regions_to_im/workspace/aris_2026-08-14_08-16-59/paper/main.pdf",
+      "paper_tex": "~/ai_scientist_inputs/ASE-2025-020_localizing_vulnerable_code_regions_to_im/workspace/aris_2026-08-14_08-16-59/paper/main.tex",
+      "status": "ok",
+      "dimensions": {},
+      "overall_score": 5.8,
+      "score_scale": "1-10",
+      "dimension_order": [],
+      "notes": [
+        "Scored from paperreview.ai (Stanford APR) native ratings; benchmark 5-dimension LLM rubric skipped.",
+        "Overall scale: 1-10."
+      ],
+      "paperreview": {
+        "status": "fetched",
+        "token_file": "~/ai_scientist_inputs/ASE-2025-020_localizing_vulnerable_code_regions_to_im/workspace/aris_2026-08-14_08-16-59/artifacts/peer_review/paperreview.token.txt",
+        "json": "~/ai_scientist_inputs/ASE-2025-020_localizing_vulnerable_code_regions_to_im/workspace/aris_2026-08-14_08-16-59/artifacts/peer_review/stanford_apr.json",
+        "markdown": "~/ai_scientist_inputs/ASE-2025-020_localizing_vulnerable_code_regions_to_im/workspace/aris_2026-08-14_08-16-59/artifacts/peer_review/stanford_apr.md",
+        "apr_scores": {
+          "scale": "1-10",
+          "overall": 5.8,
+          "dimensions": {
+            "Claims_Support": 0.0,
+            "Experimental_Soundness": 0.0,
+            "Writing_Clarity": 1.0,
+            "Prior_Work_Context": 0.0,
+            "Question_Importance": 1.0,
+            "Originality": 0.0,
+            "Value_to_Community": 0.0
+          }
+        },
+        "pdf_rebuild": null
+      },
+      "scoring_method": "paperreview_apr",
+      "scoring_source": "paperreview_json",
+      "apr_dimensions": {
+        "Claims_Support": 0.0,
+        "Experimental_Soundness": 0.0,
+        "Writing_Clarity": 1.0,
+        "Prior_Work_Context": 0.0,
+        "Question_Importance": 1.0,
+        "Originality": 0.0,
+        "Value_to_Community": 0.0
+      },
+      "summary": "",
+      "red_flags": []
+    },
+    "alignment": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-020_localizing_vulnerable_code_regions_to_im/workspace/aris_2026-08-14_08-16-59",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-020_localizing_vulnerable_code_regions_to_im",
+      "status": "ok",
+      "original": {
+        "paper_title": "LOSVER: Line-Level Modifiability Signal-Guided Vulnerability Detection and Classification",
+        "selection": {
+          "num_blocks": 6,
+          "total_chars": 31998,
+          "inferred_roles": {
+            "abstract": 1,
+            "introduction": 1,
+            "experiment": 3,
+            "conclusion": 1
+          },
+          "mineru_raw_keys": {
+            "field:abstract": 1,
+            "field:introduction": 1,
+            "field:experiment": 1,
+            "other": 2,
+            "conclusion": 1
+          },
+          "infer_reasons": {
+            "top_level_field": 3,
+            "body_override": 2,
+            "title": 1
+          },
+          "rescued_from_other": 2,
+          "note": "mineru key is unreliable; blocks are selected by title/body/inheritance. rescued_from_other counts sections labeled other but treated as typed roles."
+        },
+        "claims": [
+          {
+            "id": "C1",
+            "statement": "LOSVER consistently improves vulnerability detection accuracy over base PLMs on Devign, with absolute accuracy improvements of 2-4 percentage points across CodeBERT, CodeT5+, and UniXcoder.",
+            "direction": "improves",
+            "metric_names": [
+              "accuracy"
+            ],
+            "evidence_quote": "Across all PLMs, LOSVER provided consistent performance gains, achieving absolute accuracy improvements of 2–4 percentage points over the base models.",
+            "confidence": 0.95
+          },
+          {
+            "id": "C2",
+            "statement": "Applying LOSVER to UniXcoder with a 512-token limit on Devign increases accuracy from 65.94% to 69.94% and F1-score from 0.5234 to 0.6337.",
+            "direction": "improves",
+            "metric_names": [
+              "accuracy",
+              "f1_score"
+            ],
+            "evidence_quote": "integrating LOSVER with UniXcoder increased the accuracy from 65.94% to 69.94%, and the F1-score from 0.5234 to 0.6337.",
+            "confidence": 0.98
+          },
+          {
+            "id": "C3",
+            "statement": "LOSVER improves multi-class CWE ID classification on Big-Vul across PLM backbones; the best LOSVER (UniXcoder, 512-token) reaches weighted F1 73.17%, outperforming base UniXcoder (71.10%) and AIBugHunter (69.16%).",
+            "direction": "improves",
+            "metric_names": [
+              "weighted_f1"
+            ],
+            "evidence_quote": "The best result was achieved by LOSVER (UniXcoder, 512-token), which achieved a weighted F1-score of 73.17%, outperforming the base UniXcoder (71.10%) and AIBugHunter (69.16%).",
+            "confidence": 0.97
+          },
+          {
+            "id": "C4",
+            "statement": "On PrimeVul paired vulnerability detection, LOSVER improves pair-wise correct prediction from 0.1011 to 0.1401 with predicted modifiable lines; using ground-truth modified lines raises it to 0.3316.",
+            "direction": "improves",
+            "metric_names": [
+              "pair-wise_correct_prediction"
+            ],
+            "evidence_quote": "LOSVER improved the pair-wise correct prediction (P-C) from 0.1011 to 0.1401... replacing them with the ground-truth modified lines increased the score dramatically to 0.3316",
+            "confidence": 0.95
+          },
+          {
+            "id": "C5",
+            "statement": "Detection accuracy increases monotonically as modifiable-line localization accuracy improves; the oracle (100% corrected) condition reaches 75.37% accuracy on Devign, compared with 69.94% for the LOSVER baseline.",
+            "direction": "improves",
+            "metric_names": [
+              "accuracy"
+            ],
+            "evidence_quote": "detection accuracy improved steadily with localization quality... the 100% correction (oracle) condition reached 75.37% accuracy—an absolute improvement of 5.43 percentage points over the 69.94% LOSVER baseline",
+            "confidence": 0.97
+          },
+          {
+            "id": "C6",
+            "statement": "The Modifiable Line Localizer substantially outperforms LLMAO on line-level localization top-k accuracy on filtered Devign (top-1 55.1% vs 28.1%, top-3 70.5% vs 39.0%, top-5 78.4% vs 60.3%).",
+            "direction": "improves",
+            "metric_names": [
+              "top1_accuracy",
+              "top3_accuracy",
+              "top5_accuracy"
+            ],
+            "evidence_quote": "the localizer achieved top-1, top-3, and top-5 accuracies of 55.1%, 70.5%, and 78.4%, respectively... substantially outperform LLMAO",
+            "confidence": 0.93
+          },
+          {
+            "id": "C7",
+            "statement": "Zero-shot GPT-4o benefits from LOSVER-style predicted modifiable line markers: F1-score increases from 0.3007 to 0.3711, while accuracy remains around 54%.",
+            "direction": "mixed",
+            "metric_names": [
+              "f1_score",
+              "accuracy"
+            ],
+            "evidence_quote": "Adding special tokens <!> before predicted modifiable lines increased the F1-score from 0.3007 to 0.3711, while accuracy remained around 54%.",
+            "confidence": 0.9
+          },
+          {
+            "id": "C8",
+            "statement": "LOSVER outperforms prior state-of-the-art methods CSLS and AIBugHunter on detection and classification tasks under the paper's evaluation settings.",
+            "direction": "improves",
+            "metric_names": [
+              "accuracy",
+              "weighted_f1"
+            ],
+            "evidence_quote": "LOSVER also outperforms prior state-of-the-art methods such as CSLS [36] and AIBugHunter [43] on both tasks.",
+            "confidence": 0.9
+          }
+        ],
+        "metrics": [
+          {
+            "name": "accuracy",
+            "value": 65.94,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "Devign vulnerability detection, UniXcoder 512-token",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "UniXcoder ... 65.94",
+            "confidence": 0.98
+          },
+          {
+            "name": "accuracy",
+            "value": 69.94,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "Devign vulnerability detection, LOSVER (UniXcoder, 512-token)",
+            "is_sota_or_best": false,
+            "baseline_name": "UniXcoder",
+            "baseline_value": 65.94,
+            "evidence_quote": "integrating LOSVER with UniXcoder increased the accuracy from 65.94% to 69.94%",
+            "confidence": 0.98
+          },
+          {
+            "name": "f1_score",
+            "value": 0.6337,
+            "unit": "ratio",
+            "higher_is_better": true,
+            "setting": "Devign vulnerability detection, LOSVER (UniXcoder, 512-token)",
+            "is_sota_or_best": false,
+            "baseline_name": "UniXcoder",
+            "baseline_value": 0.5234,
+            "evidence_quote": "F1-score from 0.5234 to 0.6337",
+            "confidence": 0.98
+          },
+          {
+            "name": "accuracy",
+            "value": 70.56,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "Devign vulnerability detection, UniXcoder 1,024-token limit trained/evaluated on 512-token filtered dataset",
+            "is_sota_or_best": true,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "It achieved the best performance among all settings, with an accuracy of 70.56%",
+            "confidence": 0.95
+          },
+          {
+            "name": "precision",
+            "value": 0.7087,
+            "unit": "ratio",
+            "higher_is_better": true,
+            "setting": "Devign vulnerability detection, UniXcoder 1,024-token limit trained/evaluated on 512-token filtered dataset",
+            "is_sota_or_best": true,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "precision of 0.7087",
+            "confidence": 0.95
+          },
+          {
+            "name": "recall",
+            "value": 0.5569,
+            "unit": "ratio",
+            "higher_is_better": true,
+            "setting": "Devign vulnerability detection, UniXcoder 1,024-token limit trained/evaluated on 512-token filtered dataset",
+            "is_sota_or_best": true,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "recall of 0.5569",
+            "confidence": 0.95
+          },
+          {
+            "name": "f1_score",
+            "value": 0.6237,
+            "unit": "ratio",
+            "higher_is_better": true,
+            "setting": "Devign vulnerability detection, UniXcoder 1,024-token limit trained/evaluated on 512-token filtered dataset",
+            "is_sota_or_best": true,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "F1-score of 0.6237",
+            "confidence": 0.95
+          },
+          {
+            "name": "accuracy",
+            "value": 64.51,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "Devign vulnerability detection, CodeBERT 512-token",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "CodeBERT ... 64.51",
+            "confidence": 0.9
+          },
+          {
+            "name": "accuracy",
+            "value": 66.67,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "Devign vulnerability detection, LOSVER (CodeBERT, 512-token)",
+            "is_sota_or_best": false,
+            "baseline_name": "CodeBERT",
+            "baseline_value": 64.51,
+            "evidence_quote": "LOSVER (CodeBERT) ... 66.67",
+            "confidence": 0.9
+          },
+          {
+            "name": "accuracy",
+            "value": 65.46,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "Devign vulnerability detection, CodeT5+ 512-token",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "CodeT5+ ... 65.46",
+            "confidence": 0.9
+          },
+          {
+            "name": "accuracy",
+            "value": 69.29,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "Devign vulnerability detection, LOSVER (CodeT5+, 512-token)",
+            "is_sota_or_best": false,
+            "baseline_name": "CodeT5+",
+            "baseline_value": 65.46,
+            "evidence_quote": "LOSVER (CodeT5+) ... 69.29",
+            "confidence": 0.9
+          }
+        ],
+        "overall_conclusion": null,
+        "comparable_notes": null,
+        "cache_hit": true
+      },
+      "agent": {
+        "status": "ok",
+        "run_dir": "~/ai_scientist_inputs/ASE-2025-020_localizing_vulnerable_code_regions_to_im/workspace/aris_2026-08-14_08-16-59",
+        "claims": [
+          {
+            "id": "A1",
+            "statement": "A learned modifiability localizer transfers cross-project and achieves top-5 line accuracy approximately 60% on the localizer validation set.",
+            "direction": "improves",
+            "metric_names": [
+              "localizer_valid_top5"
+            ],
+            "evidence_quote": "a learned modifiability localizer does transfer cross-project (top-5 line accuracy ≈60%)",
+            "confidence": 0.9
+          },
+          {
+            "id": "A2",
+            "statement": "Annotation-free representation-sensitivity salience has near-zero correlation with real vulnerable lines.",
+            "direction": "no_difference",
+            "metric_names": [],
+            "evidence_quote": "annotation-free salience has near-zero correlation with real vulnerable lines",
+            "confidence": 0.8
+          },
+          {
+            "id": "A3",
+            "statement": "Neither the transferred localizer prior nor the true diff-line oracle improves downstream function-level detection or classification beyond seed noise.",
+            "direction": "no_difference",
+            "metric_names": [
+              "devign_accuracy_base",
+              "devign_accuracy_t_losver",
+              "bigvul_weighted_f1_base",
+              "bigvul_weighted_f1_t_losver",
+              "bigvul_weighted_f1_oracle"
+            ],
+            "evidence_quote": "neither the transferred prior nor the true diff-line oracle improves downstream function-level detection or classification beyond seed noise",
+            "confidence": 0.9
+          },
+          {
+            "id": "A4",
+            "statement": "Diff-derived modifiability lines are not the right inductive bias for function-level vulnerability detection with a frozen PLM.",
+            "direction": "neutral",
+            "metric_names": [],
+            "evidence_quote": "diff-derived modifiability lines are not the right inductive bias for function-level vulnerability detection with a frozen PLM",
+            "confidence": 0.85
+          },
+          {
+            "id": "A5",
+            "statement": "A naïve single-seed evaluation would have reported a win, but multi-seed statistical validation exposes this as an illusion.",
+            "direction": "mixed",
+            "metric_names": [
+              "bigvul_weighted_f1_base",
+              "bigvul_weighted_f1_t_losver",
+              "bigvul_weighted_f1_random_mean",
+              "bigvul_weighted_f1_random_std"
+            ],
+            "evidence_quote": "exposes a single-seed illusion that a naïve evaluation would have reported as a win",
+            "confidence": 0.7
+          },
+          {
+            "id": "A6",
+            "statement": "LOSVER reports consistent improvements of +4 percentage points in detection accuracy and +2 points in classification weighted F1.",
+            "direction": "improves",
+            "metric_names": [],
+            "evidence_quote": "LOSVER reports consistent improvements, e.g. +4 percentage points in detection accuracy and +2 points in classification weighted F1",
+            "confidence": 0.7
+          }
+        ],
+        "metrics": [
+          {
+            "name": "localizer_valid_top1",
+            "value": 0.28517110266159695,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "Localizer validation top-1 line accuracy on Big-Vul source split (frozen CodeBERT, head-only training)",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "valid_topk.top1: 0.28517110266159695",
+            "confidence": 0.95
+          },
+          {
+            "name": "localizer_valid_top3",
+            "value": 0.5171102661596958,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "Localizer validation top-3 line accuracy on Big-Vul source split (frozen CodeBERT, head-only training)",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "valid_topk.top3: 0.5171102661596958",
+            "confidence": 0.95
+          },
+          {
+            "name": "localizer_valid_top5",
+            "value": 0.6045627376425855,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "Localizer validation top-5 line accuracy on Big-Vul source split (frozen CodeBERT, head-only training)",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "valid_topk.top5: 0.6045627376425855",
+            "confidence": 0.95
+          },
+          {
+            "name": "localizer_valid_f1",
+            "value": 0.3548076815305147,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "Localizer validation F1 on Big-Vul source split",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "valid_f1: 0.3548076815305147",
+            "confidence": 0.95
+          },
+          {
+            "name": "localizer_valid_precision",
+            "value": 0.265675536981536,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "Localizer validation precision on Big-Vul source split",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "valid_prec: 0.265675536981536",
+            "confidence": 0.95
+          },
+          {
+            "name": "localizer_valid_recall",
+            "value": 0.9491881059371554,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "Localizer validation recall on Big-Vul source split",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "valid_rec: 0.9491881059371554",
+            "confidence": 0.95
+          },
+          {
+            "name": "devign_accuracy_base",
+            "value": 0.5419999957084656,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "Devign function-level detection accuracy, Base variant",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "accuracy: 0.5419999957084656 (matches Devign base accuracy)",
+            "confidence": 0.95
+          },
+          {
+            "name": "devign_accuracy_t_losver",
+            "value": 0.5299999713897705,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "Devign function-level detection accuracy, T-LOSVER variant",
+            "is_sota_or_best": false,
+            "baseline_name": "Base",
+            "baseline_value": 0.5419999957084656,
+            "evidence_quote": "accuracy_t_losver: 0.5299999713897705 (matches Devign T-LOSVER accuracy)",
+            "confidence": 0.95
+          },
+          {
+            "name": "devign_accuracy_random_mean",
+            "value": 0.5353333353996277,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "Devign function-level detection accuracy, random-prior mean over 3 draws",
+            "is_sota_or_best": false,
+            "baseline_name": "Base",
+            "baseline_value": 0.5419999957084656,
+            "evidence_quote": "per_variant.devign.random_mean: 0.5353333353996277",
+            "confidence": 0.9
+          },
+          {
+            "name": "devign_accuracy_random_std",
+            "value": 0.010624903679717653,
+            "unit": null,
+            "higher_is_better": false,
+            "setting": "Devign function-level detection accuracy, random-prior standard deviation over 3 draws",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "per_variant.devign.random_std: 0.010624903679717653",
+            "confidence": 0.9
+          },
+          {
+            "name": "bigvul_weighted_f1_base",
+            "value": 0.054300869273999255,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "Big-Vul CWE classification weighted F1, Base variant",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "weighted_f1: 0.054300869273999255 (matches Big-Vul base weighted F1)",
+            "confidence": 0.95
+          },
+          {
+            "name": "bigvul_weighted_f1_t_losver",
+            "value": 0.09679269412056185,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "Big-Vul CWE classification weighted F1, T-LOSVER variant",
+            "is_sota_or_best": false,
+            "baseline_name": "Base",
+            "baseline_value": 0.054300869273999255,
+            "evidence_quote": "weighted_f1_t_losver: 0.09679269412056185 (matches Big-Vul T-LOSVER weighted F1)",
+            "confidence": 0.95
+          },
+          {
+            "name": "bigvul_weighted_f1_oracle",
+            "value": 0.0584187983609373,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "Big-Vul CWE classification weighted F1, Oracle variant",
+            "is_sota_or_best": false,
+            "baseline_name": "Base",
+            "baseline_value": 0.054300869273999255,
+            "evidence_quote": "weighted_f1_oracle: 0.0584187983609373 (matches Big-Vul Oracle weighted F1)",
+            "confidence": 0.95
+          },
+          {
+            "name": "bigvul_weighted_f1_random_mean",
+            "value": 0.07033016023037096,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "Big-Vul CWE classification weighted F1, random-prior mean over 3 draws",
+            "is_sota_or_best": false,
+            "baseline_name": "Base",
+            "baseline_value": 0.054300869273999255,
+            "evidence_quote": "per_variant.bigvul.random_mean: 0.07033016023037096",
+            "confidence": 0.9
+          },
+          {
+            "name": "bigvul_weighted_f1_random_std",
+            "value": 0.023684327299213628,
+            "unit": null,
+            "higher_is_better": false,
+            "setting": "Big-Vul CWE classification weighted F1, random-prior standard deviation over 3 draws",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "per_variant.bigvul.random_std: 0.023684327299213628",
+            "confidence": 0.9
+          },
+          {
+            "name": "primevul_accuracy_base",
+            "value": 0.0,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "PrimeVul paired function-level accuracy, Base variant",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "per_variant.primevul.base: 0.0",
+            "confidence": 0.95
+          },
+          {
+            "name": "primevul_accuracy_t_losver",
+            "value": 0.0,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "PrimeVul paired function-level accuracy, T-LOSVER variant",
+            "is_sota_or_best": false,
+            "baseline_name": "Base",
+            "baseline_value": 0.0,
+            "evidence_quote": "per_variant.primevul.t_losver: 0.0",
+            "confidence": 0.95
+          },
+          {
+            "name": "primevul_accuracy_oracle",
+            "value": 0.0,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "PrimeVul paired function-level accuracy, Oracle variant",
+            "is_sota_or_best": false,
+            "baseline_name": "Base",
+            "baseline_value": 0.0,
+            "evidence_quote": "per_variant.primevul.oracle: 0.0",
+            "confidence": 0.95
+          },
+          {
+            "name": "primevul_accuracy_random_mean",
+            "value": 0.0,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "PrimeVul paired function-level accuracy, random-prior mean",
+            "is_sota_or_best": false,
+            "baseline_name": "Base",
+            "baseline_value": 0.0,
+            "evidence_quote": "per_variant.primevul.random_mean: 0.0",
+            "confidence": 0.9
+          },
+          {
+            "name": "primevul_accuracy_random_std",
+            "value": 0.0,
+            "unit": null,
+            "higher_is_better": false,
+            "setting": "PrimeVul paired function-level accuracy, random-prior standard deviation",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "per_variant.primevul.random_std: 0.0",
+            "confidence": 0.9
+          },
+          {
+            "name": "primevul_per_function_base",
+            "value": 0.5,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "PrimeVul per-function accuracy, Base variant",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "per_variant.primevul.base_per_function: 0.5",
+            "confidence": 0.9
+          },
+          {
+            "name": "primevul_per_function_t_losver",
+            "value": 0.5,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "PrimeVul per-function accuracy, T-LOSVER variant",
+            "is_sota_or_best": false,
+            "baseline_name": "Base",
+            "baseline_value": 0.5,
+            "evidence_quote": "per_variant.primevul.t_losver_per_function: 0.5",
+            "confidence": 0.9
+          },
+          {
+            "name": "primevul_per_function_oracle",
+            "value": 0.5,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "PrimeVul per-function accuracy, Oracle variant",
+            "is_sota_or_best": false,
+            "baseline_name": "Base",
+            "baseline_value": 0.5,
+            "evidence_quote": "per_variant.primevul.oracle_per_function: 0.5",
+            "confidence": 0.9
+          },
+          {
+            "name": "primevul_per_function_random_mean",
+            "value": 0.5,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "PrimeVul per-function accuracy, random-prior mean",
+            "is_sota_or_best": false,
+            "baseline_name": "Base",
+            "baseline_value": 0.5,
+            "evidence_quote": "per_variant.primevul.random_per_function_mean: 0.5",
+            "confidence": 0.9
+          },
+          {
+            "name": "bigvul_heldout_top1",
+            "value": 0.2791666666666667,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "Big-Vul heldout line localization top-1 accuracy",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "per_variant.line_localization.bigvul_heldout.topk.top1: 0.2791666666666667",
+            "confidence": 0.95
+          },
+          {
+            "name": "bigvul_heldout_top3",
+            "value": 0.5541666666666667,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "Big-Vul heldout line localization top-3 accuracy",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "per_variant.line_localization.bigvul_heldout.topk.top3: 0.5541666666666667",
+            "confidence": 0.95
+          },
+          {
+            "name": "bigvul_heldout_top5",
+            "value": 0.7,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "Big-Vul heldout line localization top-5 accuracy",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "per_variant.line_localization.bigvul_heldout.topk.top5: 0.7",
+            "confidence": 0.95
+          },
+          {
+            "name": "bigvul_heldout_f1",
+            "value": 0.3817313505056267,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "Big-Vul heldout line localization F1",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "per_variant.line_localization.bigvul_heldout.f1: 0.3817313505056267",
+            "confidence": 0.95
+          },
+          {
+            "name": "primevul_test_top1",
+            "value": 0.18292682926829268,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "PrimeVul test line localization top-1 accuracy",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "per_variant.line_localization.primevul_test.topk.top1: 0.18292682926829268",
+            "confidence": 0.95
+          },
+          {
+            "name": "primevul_test_top3",
+            "value": 0.3780487804878049,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "PrimeVul test line localization top-3 accuracy",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "per_variant.line_localization.primevul_test.topk.top3: 0.3780487804878049",
+            "confidence": 0.95
+          },
+          {
+            "name": "primevul_test_top5",
+            "value": 0.47560975609756095,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "PrimeVul test line localization top-5 accuracy",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "per_variant.line_localization.primevul_test.topk.top5: 0.47560975609756095",
+            "confidence": 0.95
+          },
+          {
+            "name": "primevul_test_f1",
+            "value": 0.2712272798227729,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "PrimeVul test line localization F1",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "per_variant.line_localization.primevul_test.f1: 0.2712272798227729",
+            "confidence": 0.95
+          },
+          {
+            "name": "wallclock_s",
+            "value": 386.8,
+            "unit": "s",
+            "higher_is_better": false,
+            "setting": "Total experiment wall-clock time",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "wallclock_s: 386.8",
+            "confidence": 0.95
+          }
+        ],
+        "overall_conclusion": "In this controlled study with a frozen CodeBERT-base encoder and reduced subsets, a transferred modifiability localizer achieves cross-project top-5 line accuracy around 60%, but neither transferred nor oracle line guidance improves downstream function-level vulnerability detection or classification beyond seed noise; annotation-free salience has near-zero correlation with real vulnerable lines.",
+        "sources": {
+          "metrics_path": "results/metrics.json",
+          "paper_tex_path": "paper/main.tex"
+        },
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 15740,
+            "completion_tokens_details": {
+              "reasoning_tokens": 10781
+            },
+            "prompt_tokens": 3193,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 18933
+          },
+          "attempt": 0
+        }
+      },
+      "comparison": {
+        "status": "ok",
+        "claim_alignment": [
+          {
+            "original_claim_id": "C1",
+            "agent_claim_id": "A3",
+            "label": "incomparable",
+            "rationale": "Agent tested a reduced transferred-localizer variant with a frozen CodeBERT encoder and reduced subsets, not full LOSVER across CodeBERT/CodeT5+/UniXcoder. Its no-improvement result is not directly comparable to the original full-protocol claim."
+          },
+          {
+            "original_claim_id": "C2",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "Agent did not evaluate UniXcoder 512-token Devign accuracy or F1; it only reports a frozen CodeBERT reduced-subset Devign run."
+          },
+          {
+            "original_claim_id": "C3",
+            "agent_claim_id": "A3",
+            "label": "incomparable",
+            "rationale": "Agent evaluated Big-Vul weighted F1 but with a frozen CodeBERT reduced protocol and very different scale (base 0.054 vs original 0.711), so the classification setting is not comparable."
+          },
+          {
+            "original_claim_id": "C4",
+            "agent_claim_id": "A3",
+            "label": "incomparable",
+            "rationale": "Agent reports PrimeVul accuracy values of 0.0 rather than pair-wise correct prediction, and uses a different reduced protocol; not comparable."
+          },
+          {
+            "original_claim_id": "C5",
+            "agent_claim_id": "A3",
+            "label": "incomparable",
+            "rationale": "Agent tested oracle guidance under a reduced protocol and did not report the original Devign oracle accuracy comparison; the conceptual direction differs but protocols are not comparable."
+          },
+          {
+            "original_claim_id": "C6",
+            "agent_claim_id": "A1",
+            "label": "incomparable",
+            "rationale": "Agent localizer top-5 accuracy is about 60% on a Big-Vul source split with frozen CodeBERT, not filtered Devign against LLMAO; protocol and dataset differ."
+          },
+          {
+            "original_claim_id": "C7",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "Agent did not address zero-shot GPT-4o or LOSVER-style predicted modifiable line markers."
+          },
+          {
+            "original_claim_id": "C8",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "Agent did not compare against CSLS or AIBugHunter."
+          }
+        ],
+        "metric_alignment": [
+          {
+            "original_metric": "accuracy",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 65.94,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Original is UniXcoder 512-token Devign base accuracy; agent used frozen CodeBERT reduced subset."
+          },
+          {
+            "original_metric": "accuracy",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 69.94,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Original is LOSVER UniXcoder 512-token Devign accuracy; agent did not evaluate this setting."
+          },
+          {
+            "original_metric": "f1_score",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 0.6337,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Agent did not report Devign F1 for UniXcoder LOSVER."
+          },
+          {
+            "original_metric": "accuracy",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 70.56,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Agent did not evaluate UniXcoder 1,024-token on 512-token filtered Devign."
+          },
+          {
+            "original_metric": "precision",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 0.7087,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Agent did not report this precision setting."
+          },
+          {
+            "original_metric": "recall",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 0.5569,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Agent did not report this recall setting."
+          },
+          {
+            "original_metric": "f1_score",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 0.6237,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Agent did not report this F1 setting."
+          },
+          {
+            "original_metric": "accuracy",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 64.51,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Original is CodeBERT 512-token Devign base accuracy; agent used a frozen CodeBERT reduced subset with different accuracy scale."
+          },
+          {
+            "original_metric": "accuracy",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 66.67,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Original is LOSVER CodeBERT 512-token Devign accuracy; agent did not evaluate full LOSVER CodeBERT."
+          },
+          {
+            "original_metric": "accuracy",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 65.46,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Agent did not evaluate CodeT5+ base."
+          },
+          {
+            "original_metric": "accuracy",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 69.29,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Agent did not evaluate LOSVER CodeT5+."
+          }
+        ],
+        "summary": {
+          "direction_consistency": "same_direction_incomparable",
+          "consistent_claim_ratio": 0.0,
+          "has_comparable_metrics": false,
+          "sota_improvement_summary": "N/A",
+          "overall_alignment_score": 0.35,
+          "score_rationale": "Agent works on the same research problem of modifiability-line-guided vulnerability detection/classification, but uses a reduced protocol with frozen CodeBERT and reduced subsets, so original claims and metrics are incomparable rather than directly confirmed or refuted."
+        },
+        "warnings": [
+          "Agent used a reduced protocol: frozen CodeBERT-base encoder, head-only training, reduced subsets; not full LOSVER across CodeBERT/CodeT5+/UniXcoder.",
+          "Agent Big-Vul weighted F1 values are on a very different scale from the original paper, suggesting different label sets or evaluation protocol.",
+          "Agent PrimeVul metrics are all zero and use accuracy, not the original pair-wise correct prediction metric.",
+          "No comparable metrics were available, so deltas were not computed."
+        ],
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 8656,
+            "completion_tokens_details": {
+              "reasoning_tokens": 6748
+            },
+            "prompt_tokens": 6768,
+            "prompt_tokens_details": {
+              "cached_tokens": 2048
+            },
+            "total_tokens": 15424
+          },
+          "attempt": 0
+        }
+      },
+      "overall_alignment_score": 0.35,
+      "direction_consistency": "same_direction_incomparable"
+    },
+    "experiment_analysis": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-020_localizing_vulnerable_code_regions_to_im/workspace/aris_2026-08-14_08-16-59",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-020_localizing_vulnerable_code_regions_to_im",
+      "status": "ok",
+      "metrics_path": "results/metrics.json",
+      "experiment_success": {
+        "status": "ok",
+        "success": true,
+        "metrics_path": "results/metrics.json",
+        "absolute_metrics_path": "~/ai_scientist_inputs/ASE-2025-020_localizing_vulnerable_code_regions_to_im/workspace/aris_2026-08-14_08-16-59/results/metrics.json",
+        "checks": {
+          "has_results_file": true,
+          "non_stub": true,
+          "numeric_leaf_count": 47,
+          "min_numeric_ok": true
+        },
+        "manifest_hints": {
+          "status": {
+            "idea": true,
+            "experiment_plan": true,
+            "experiment_log": false,
+            "metrics": true,
+            "review": true,
+            "narrative": true,
+            "paper_tex": true,
+            "paper_pdf": true
+          },
+          "returncode": 1,
+          "benchmark_complete": false,
+          "artifacts_metrics_flag": false
+        },
+        "warnings": [
+          "manifest.returncode=1",
+          "manifest.benchmark_complete=false"
+        ],
+        "suspicious_values": [],
+        "note": "success=true requires substantive results (framework-aware path) with >=3 numeric leaves. Supports metrics.json, results.json, experiment_results.txt, etc. Manifest returncode/benchmark_complete are soft warnings only."
+      },
+      "idea_code_consistency": {
+        "status": "ok",
+        "idea_path": "idea-stage/IDEA_REPORT.md",
+        "code_files": [
+          "project/experiment_runner.py"
+        ],
+        "score_scale": "1-5",
+        "score": 4.0,
+        "label": "strong",
+        "justification": "The experiment runner's phases closely follow T-LOSVER: precompute frozen CodeBERT hidden states, train a line localizer head on Big-Vul diffs, transfer per-line priors, and train/evaluate Base/T-LOSVER/Oracle/Random detector heads. The visible code implements the localizer on cached H and the overall protocol. However, the localizer architecture shown is a mean-pooled line + global context linear head rather than the stated per-line attention classifier with focal loss, and the provided snippet does not show the negative-pilot ablation, weight sensitivity, or repeated random-line control.",
+        "matched_elements": [
+          "Frozen CodeBERT hidden-state caching",
+          "Line localizer head trained on Big-Vul source diffs",
+          "Transfer of per-line modifiability priors to target functions",
+          "Detector heads for Base / T-LOSVER / Oracle / Random",
+          "CPU-only, reduced-scope design"
+        ],
+        "missing_or_divergent_elements": [
+          "Localizer architecture differs from stated per-line attention classifier with focal loss (visible code uses mean-pool + linear head)",
+          "Negative-pilot salience ablation not visible in provided code",
+          "Weight sensitivity (lambda) and repeated random-line control not shown"
+        ],
+        "rubric": "Strong alignment: code largely implements the idea's method and evaluation; only minor omissions or declared simplifications.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 2715,
+            "completion_tokens_details": {
+              "reasoning_tokens": 2426
+            },
+            "prompt_tokens": 2885,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 5600
+          },
+          "attempt": 0
+        }
+      },
+      "setup_coverage": {
+        "status": "ok",
+        "overall_coverage": 0.8222222222222223,
+        "datasets": {
+          "gold_count": 3,
+          "hit_count": 2,
+          "miss_count": 1,
+          "coverage": 0.6666666666666666,
+          "hits": [
+            "Devign",
+            "PrimeVul"
+          ],
+          "misses": [
+            "Big-Vul"
+          ]
+        },
+        "baselines": {
+          "gold_count": 5,
+          "hit_count": 4,
+          "miss_count": 1,
+          "coverage": 0.8,
+          "hits": [
+            "UniXcoder (base-9, fine-tuned)",
+            "CodeT5+ (encoder-only 220M)",
+            "Roberta-based PLM (e.g., CodeBERT)",
+            "CSLS"
+          ],
+          "misses": [
+            "AIBugHunter"
+          ]
+        },
+        "metrics": {
+          "gold_count": 5,
+          "hit_count": 5,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "Accuracy (binary detection)",
+            "Weighted F1-score (classification)",
+            "Top-N Accuracy (line localization)",
+            "Line-level F1-score",
+            "Pair-wise accuracy"
+          ],
+          "misses": []
+        },
+        "agent_protocol": {},
+        "gold_protocol": {},
+        "dataset_dirs": [
+          "dataset_candidate"
+        ],
+        "flags": {
+          "weaker_baseline_suspected": true,
+          "weak_protocol": [],
+          "synthetic_data": "unexpected_synthetic_or_local_only_data",
+          "gold_allows_synthetic": false
+        },
+        "gold_sources": [
+          "~/ai_scientist_inputs/ASE-2025-020_localizing_vulnerable_code_regions_to_im/task.md",
+          "~/ai_scientist_inputs/ASE-2025-020_localizing_vulnerable_code_regions_to_im/metadata.json"
+        ],
+        "note": "Coverage is name/alias matching against task.md Datasets/Baselines/Metrics. weak_protocol flags large reductions in trials/timeout vs Constraints. Synthetic corpora are not penalized when the task itself requires synthesis."
+      },
+      "ablation_significance": {
+        "status": "ok",
+        "idea_path": "idea-stage/IDEA_REPORT.md",
+        "significance_signals_rule_based": {
+          "signals": [],
+          "artifact_paths": [],
+          "has_any_significance_artifact": false
+        },
+        "evidence_format": "raw_json",
+        "study_type": "new_method",
+        "components": [
+          {
+            "name": "Source localizer (Big-Vul diff line training)",
+            "role": "module",
+            "ablation_expected": true,
+            "significance_expected": true,
+            "ablation_status": "present",
+            "ablation_evidence": "Random-line control (3 draws, mean ± std) in per_variant for Devign, Big-Vul, and PrimeVul tests the learned source localizer against a random line prior.",
+            "significance_status": "missing",
+            "significance_evidence": "No p-values, confidence intervals, or bootstrap tests reported; only random_std over 3 draws."
+          },
+          {
+            "name": "Transfer of region guidance (frozen localizer applied cross-dataset)",
+            "role": "module",
+            "ablation_expected": true,
+            "significance_expected": true,
+            "ablation_status": "present",
+            "ablation_evidence": "Oracle ceiling uses true target diff lines as prior, providing a controlled comparison for transferred vs target-specific line guidance (Big-Vul and PrimeVul).",
+            "significance_status": "missing",
+            "significance_evidence": "No statistical test comparing T-LOSVER to Oracle."
+          },
+          {
+            "name": "Target detector with transferred prior (token re-weighting)",
+            "role": "module",
+            "ablation_expected": true,
+            "significance_expected": true,
+            "ablation_status": "present",
+            "ablation_evidence": "Base variant (no weighting, λ=0) is included for Devign, Big-Vul, and PrimeVul.",
+            "significance_status": "missing",
+            "significance_evidence": "No statistical test comparing T-LOSVER to Base."
+          },
+          {
+            "name": "λ / weight sensitivity",
+            "role": "hyperparameter",
+            "ablation_expected": true,
+            "significance_expected": false,
+            "ablation_status": "missing",
+            "ablation_evidence": "Idea states 'Report λ / weight sensitivity' but metrics.json contains no λ sweep or sensitivity results.",
+            "significance_status": "not_required",
+            "significance_evidence": "Sensitivity analysis, not inferential."
+          },
+          {
+            "name": "Annotation-free salience pilot (masking/grad×input/LOLO)",
+            "role": "pilot/ablation",
+            "ablation_expected": true,
+            "significance_expected": false,
+            "ablation_status": "missing",
+            "ablation_evidence": "Idea says negative pilot is reported as motivating ablation; paper method excerpt describes it, but metrics.json has no pilot salience results (Spearman correlations not included).",
+            "significance_status": "not_required",
+            "significance_evidence": "Pilot descriptive; no formal test expected."
+          },
+          {
+            "name": "Base (no weighting)",
+            "role": "baseline",
+            "ablation_expected": false,
+            "significance_expected": true,
+            "ablation_status": "not_applicable",
+            "significance_status": "missing",
+            "significance_evidence": "No statistical comparison to T-LOSVER."
+          },
+          {
+            "name": "Oracle ceiling",
+            "role": "baseline",
+            "ablation_expected": false,
+            "significance_expected": true,
+            "ablation_status": "not_applicable",
+            "significance_status": "missing",
+            "significance_evidence": "No statistical comparison to T-LOSVER."
+          },
+          {
+            "name": "Random-line control",
+            "role": "control",
+            "ablation_expected": false,
+            "significance_expected": true,
+            "ablation_status": "not_applicable",
+            "significance_status": "missing",
+            "significance_evidence": "Only mean ± std over 3 draws; no test vs T-LOSVER."
+          },
+          {
+            "name": "Contamination-safe splits",
+            "role": "dataset split",
+            "ablation_expected": false,
+            "significance_expected": false,
+            "ablation_status": "not_applicable",
+            "significance_status": "not_required",
+            "significance_evidence": "Descriptive split design."
+          }
+        ],
+        "ablation_coverage_score": 0.6,
+        "overall_ablation_ok": false,
+        "overall_significance_ok": false,
+        "summary": "The study includes the core controlled comparisons (Base, Random, Oracle) for the main T-LOSVER components, but two explicitly promised ablations—λ/weight sensitivity and the annotation-free salience pilot—are missing from the reported metrics. No p-values, confidence intervals, bootstrap, or multi-seed statistical tests are reported for the comparative claims, despite the paper text claiming mean ± std over 5 seeds.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 9631,
+            "completion_tokens_details": {
+              "reasoning_tokens": 8557
+            },
+            "prompt_tokens": 4608,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 14239
+          },
+          "attempt": 0
+        }
+      },
+      "results_paper_consistency": {
+        "status": "ok",
+        "paper_tex": "paper/main.tex",
+        "paper_kind": "paper_tex",
+        "results_format": "raw_json",
+        "digest_hint": {
+          "unfavorable_count": 0,
+          "trial_fail_count": 0,
+          "trial_success_count": 0,
+          "metadata": {}
+        },
+        "score_scale": "1-5",
+        "method": "Direct LLM comparison: agent's FINAL results artifact (metrics.json summary) vs paper Results/Discussion/Conclusion. Interim failed runs are NOT evidence unless still present in the final metrics file.",
+        "score": 4.0,
+        "consistency_label": "mostly",
+        "hiding_unfavorable_suspected": false,
+        "hiding_confidence": 0.8,
+        "justification": "The paper is largely transparent about the reduced protocol, frozen encoder, low Big-Vul ceiling, and PrimeVul chance performance. The final results JSON matches the paper's RQ2 PrimeVul line-localization numbers exactly and matches the Big-Vul localizer valid_topk numbers. The paper also explicitly discusses the single-seed BigVul weighted-F1 gain (0.054 -> 0.097) as noise, which is consistent with the final results. Minor gaps remain: the paper labels the Big-Vul line-localization numbers as held-out but they match localizer.valid_topk rather than line_localization.bigvul_heldout; the 5-seed downstream table is not directly present in the final results JSON; and PrimeVul exact-match/pairwise accuracy of 0.0 is not explicitly reported, though the paper does acknowledge PrimeVul is at chance per-function.",
+        "supported_claims": [
+          "RQ2 PrimeVul line localization: Top-1/Top-3/Top-5 18.3/37.8/47.6 and line-F1 0.271 match final results exactly.",
+          "RQ2 Big-Vul localizer valid_topk: Top-1/Top-3/Top-5 28.5/51.7/60.5 and F1 0.355 match final results.",
+          "Single-seed BigVul weighted F1 0.054 -> 0.097 is explicitly acknowledged as misleading noise.",
+          "PrimeVul per-function accuracy at chance (0.5) is acknowledged.",
+          "Reduced protocol, frozen encoder, and low Big-Vul ceiling are disclosed."
+        ],
+        "unsupported_or_overstated_claims": [
+          "The paper's RQ2 'Big-Vul held-out projects' numbers match localizer.valid_topk, not line_localization.bigvul_heldout, so the held-out label is questionable.",
+          "The 5-seed downstream table values (BigVul wF1 0.141, Devign 0.520, PrimeVul 0.504) are not directly present in the final results JSON and cannot be verified from the provided ground truth.",
+          "The claim that oracle does not beat Base is based on the multi-seed table; in the final single-seed results, BigVul oracle is 0.0584 vs Base 0.0543, a small increase."
+        ],
+        "numeric_mismatches": [
+          {
+            "paper": "Big-Vul held-out line localization Top-1/Top-3/Top-5 28.5/51.7/60.5, F1 0.355",
+            "results": "line_localization.bigvul_heldout Top-1/Top-3/Top-5 27.9/55.4/70.0, F1 0.382; localizer.valid_topk matches the paper",
+            "note": "Paper appears to report valid_topk numbers under the held-out label."
+          },
+          {
+            "paper": "Big-Vul downstream weighted F1 Base 0.141 +/- .021",
+            "results": "weighted_f1 0.0543",
+            "note": "Paper acknowledges the single-seed 0.054 and reports 0.141 as the 5-seed mean."
+          },
+          {
+            "paper": "Devign accuracy Base 0.520 +/- .012",
+            "results": "accuracy 0.542",
+            "note": "Single-seed final result vs paper's 5-seed mean; within roughly 2 standard deviations."
+          },
+          {
+            "paper": "PrimeVul accuracy 0.504 +/- .010",
+            "results": "base_per_function 0.5",
+            "note": "Close to the final per-function accuracy; paper reports 5-seed mean."
+          },
+          {
+            "paper": "PrimeVul exact-match/pairwise accuracy not reported",
+            "results": "base 0.0 and pairwise_accuracy 0.0",
+            "note": "Paper reports per-function accuracy instead, so exact-match zero is not directly discussed."
+          }
+        ],
+        "unfavorable_in_final_results": [
+          "BigVul base weighted F1 is 0.0543, very low.",
+          "PrimeVul exact-match/pairwise accuracy is 0.0.",
+          "PrimeVul per-function accuracy is 0.5, at chance.",
+          "Devign T-LOSVER accuracy 0.530 is below Base 0.542.",
+          "BigVul oracle weighted F1 0.0584 is only marginally above Base 0.0543."
+        ],
+        "unfavorable_acknowledged_in_paper": [
+          "Single-seed BigVul weighted F1 0.054 -> 0.097 is explicitly discussed as noise.",
+          "PrimeVul per-function accuracy at chance is acknowledged.",
+          "Frozen encoder low ceiling and reduced protocol are disclosed.",
+          "Oracle flat result is discussed as evidence that line knowledge does not help."
+        ],
+        "unfavorable_missing_from_paper": [],
+        "rubric": "Mostly consistent: reported conclusions track the metrics; negative/failed settings are acknowledged with only minor gaps.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 16067,
+            "completion_tokens_details": {
+              "reasoning_tokens": 14886
+            },
+            "prompt_tokens": 2783,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 18850
+          },
+          "attempt": 0
+        }
+      },
+      "scores": {
+        "experiment_success": true,
+        "idea_code_score": 4.0,
+        "setup_coverage": 0.8222222222222223,
+        "ablation_coverage_score": 0.6,
+        "overall_ablation_ok": false,
+        "overall_significance_ok": false,
+        "results_paper_score": 4.0,
+        "hiding_unfavorable_suspected": false
+      },
+      "notes": [
+        "Axes 1,2,3,4,6 in experiment_analysis (figures excluded).",
+        "setup_coverage matches task.md Datasets/Baselines/Metrics; weak_protocol flags reductions vs Constraints.",
+        "Axis 6: final normalized results vs paper; interim run logs not used as ground truth."
+      ]
+    },
+    "literature_review": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-020_localizing_vulnerable_code_regions_to_im/workspace/aris_2026-08-14_08-16-59",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-020_localizing_vulnerable_code_regions_to_im",
+      "status": "ok",
+      "as_of_year": 2026,
+      "agent_ref_count": 8,
+      "sources": [
+        {
+          "path": "~/ai_scientist_inputs/ASE-2025-020_localizing_vulnerable_code_regions_to_im/workspace/aris_2026-08-14_08-16-59/paper/main.tex",
+          "kind": "thebibliography"
+        }
+      ],
+      "collection_audit": {
+        "cited_keys_count": 8,
+        "filter_mode": "paper_cite_keys",
+        "bib_total_before_filter": 0,
+        "bib_after_filter": 0,
+        "uncited_bib_skipped": 0,
+        "cited_keys_sample": [
+          "codebert",
+          "csls",
+          "da2025",
+          "devign",
+          "ivdetect",
+          "linevul",
+          "losver",
+          "vulberta"
+        ],
+        "thebibliography_after_filter": 8,
+        "agent_ref_count": 8
+      },
+      "fabrication": {
+        "status": "ok",
+        "scholarly_count": 8,
+        "verified_count": 5,
+        "fake_count": 0,
+        "lookup_failed_count": 3,
+        "insufficient_metadata_count": 0,
+        "non_paper_count": 0,
+        "fabrication_rate": 0.0,
+        "items": [
+          {
+            "title": "LOSVER: Line-level modifiability signal-guided vulnerability detection and classification",
+            "doi": "10.1109/ase63991.2025.00092",
+            "arxiv_id": "",
+            "year": 2025,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "LOSVER: Line-Level Modifiability Signal-Guided Vulnerability Detection and Classification",
+            "resolved_year": 2025,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "losver",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "CodeBERT: A pre-trained model for programming and natural languages",
+            "doi": "10.18653/v1/2020.findings-emnlp.139",
+            "arxiv_id": "2002.08155",
+            "year": 2020,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "CodeBERT: A Pre-Trained Model for Programming and Natural Languages",
+            "resolved_year": 2020,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "codebert",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "Devign: Effective Vulnerability Identification by Learning Comprehensive Program Semantics via Graph Neural Networks",
+            "doi": "",
+            "arxiv_id": "",
+            "year": 2019,
+            "status": "verified",
+            "matched_via": "arxiv_title",
+            "resolved_title": null,
+            "resolved_year": null,
+            "notes": [],
+            "cache_hit": true,
+            "cite_key": "devign",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "VulBERTa: Simplified source code pre-training for vulnerability detection",
+            "doi": "10.1109/ijcnn55064.2022.9892280",
+            "arxiv_id": "2205.12424",
+            "year": 2022,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "VulBERTa: Simplified Source Code Pre-Training for Vulnerability Detection",
+            "resolved_year": 2022,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "vulberta",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "LineVul: A transformer-based line-level vulnerability prediction",
+            "doi": "",
+            "arxiv_id": "",
+            "year": 2022,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated."
+            ],
+            "cite_key": "linevul",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "Deep learning based vulnerability detection: Are we there yet?",
+            "doi": "",
+            "arxiv_id": "",
+            "year": 2021,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated."
+            ],
+            "cite_key": "ivdetect",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "Code structure-aware through line-level semantic learning for code vulnerability detection",
+            "doi": "",
+            "arxiv_id": "",
+            "year": 2024,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated."
+            ],
+            "cite_key": "csls",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "M.~Pintore et al., ``Evaluating line-level localization ability of learning-based code vulnerability detection models,'' arXiv:2510.11202, 2025. thebibliography document",
+            "doi": "",
+            "arxiv_id": "2510.11202",
+            "year": 2025,
+            "status": "verified",
+            "matched_via": "s2_arxiv",
+            "resolved_title": "Evaluating line-level localization ability of learning-based code vulnerability detection models",
+            "resolved_year": 2025,
+            "notes": [],
+            "cache_hit": true,
+            "cite_key": "da2025",
+            "source_kind": "thebibliography"
+          }
+        ],
+        "cache_path": "~/ai_scientist_evals/ASE-2025-020_localizing_vulnerable_code_regions_to_im/reference_verify_cache.json",
+        "override_path": "~/ai_scientist_evals/ASE-2025-020_localizing_vulnerable_code_regions_to_im/reference_verify_overrides.json",
+        "note": "fabrication_rate = fake / (verified + fake). lookup_failed (API errors) and insufficient_metadata are excluded and retried or skipped. GitHub/docs/tool URLs are non_paper and excluded from the rate. To manually correct a false negative, edit reference_verify_overrides.json (key=normalized title / doi / cite_key; value=\"verified\" or a result dict), then re-run."
+      },
+      "coverage": {
+        "status": "ok",
+        "gold_source": "~/ai_scientist_inputs/ASE-2025-020_localizing_vulnerable_code_regions_to_im/mineru_sections.json",
+        "gold_count": 48,
+        "gold_is_original_paper_references": true,
+        "gold_is_openalex_subset": false,
+        "agent_count": 8,
+        "intersection_size": 1,
+        "recall": 0.020833333333333332,
+        "precision": 0.125,
+        "matched_gold_keys": [
+          "feng2020codebert"
+        ],
+        "primary_metric": "recall",
+        "note": "Primary metric is recall against the original paper bibliography (titles from mineru_sections.json REFERENCES; related_work.json used only to enrich DOI/year or as fallback if mineru titles are empty). Denominator = |original paper references|. Precision is secondary (agent may cite valid extra papers)."
+      },
+      "recency": {
+        "status": "ok",
+        "dated_count": 8,
+        "unknown_year_count": 0,
+        "year_histogram": {
+          "2019": 1,
+          "2020": 1,
+          "2021": 1,
+          "2022": 2,
+          "2024": 1,
+          "2025": 2
+        },
+        "windows": {
+          "3": {
+            "years": 3,
+            "cutoff_year_inclusive": 2023,
+            "recent_count": 3,
+            "recent_ratio": 0.375
+          },
+          "5": {
+            "years": 5,
+            "cutoff_year_inclusive": 2021,
+            "recent_count": 6,
+            "recent_ratio": 0.75
+          }
+        }
+      },
+      "scores": {
+        "fabrication_rate": 0.0,
+        "coverage_recall": 0.020833333333333332,
+        "coverage_precision": 0.125,
+        "recency_ratio_3y": 0.375,
+        "recency_ratio_5y": 0.75
+      }
+    }
+  },
+  "scores": {
+    "completeness": {
+      "complete": true,
+      "overall_score": 0.8555,
+      "required_score": 1.0,
+      "bonus_score": 0.15
+    },
+    "peer_review": {
+      "status": "ok",
+      "optional": false,
+      "overall_score": 5.8,
+      "score_scale": "1-10",
+      "scoring_method": "paperreview_apr"
+    },
+    "idea_generation": {
+      "status": "ok",
+      "overall_score": 3.5,
+      "dimensions": {
+        "novelty": 3.0,
+        "feasibility": 4.0,
+        "clarity": 5.0
+      },
+      "novelty_category": "Incremental",
+      "solution_space_status": "ok"
+    },
+    "alignment": {
+      "status": "ok",
+      "direction_consistency": "same_direction_incomparable",
+      "overall_alignment_score": 0.35
+    },
+    "literature_review": {
+      "fabrication_rate": 0.0,
+      "coverage_recall": 0.020833333333333332,
+      "coverage_precision": 0.125,
+      "recency_ratio_3y": 0.375,
+      "recency_ratio_5y": 0.75
+    },
+    "experiment_analysis": {
+      "experiment_success": true,
+      "idea_code_score": 4.0,
+      "setup_coverage": 0.8222222222222223,
+      "ablation_coverage_score": 0.6,
+      "overall_ablation_ok": false,
+      "overall_significance_ok": false,
+      "results_paper_score": 4.0,
+      "hiding_unfavorable_suspected": false
+    }
+  },
+  "fair_scores": {
+    "applicable_axes": [
+      "completeness",
+      "idea_generation",
+      "peer_review",
+      "alignment",
+      "literature_review",
+      "experiment_analysis"
+    ],
+    "skipped_axes": [],
+    "fair_mean_0_1": 0.6585,
+    "note": "fair_mean_0_1 averages only applicable axes; optional peer review and framework-inapplicable literature are excluded from the denominator."
+  },
+  "evals_root": "~/ai_scientist_evals",
+  "claims_cache": "~/ai_scientist_evals/ASE-2025-020_localizing_vulnerable_code_regions_to_im/original_claims.json",
+  "solution_space_cache": "~/ai_scientist_evals/ASE-2025-020_localizing_vulnerable_code_regions_to_im/solution_space.json"
+}

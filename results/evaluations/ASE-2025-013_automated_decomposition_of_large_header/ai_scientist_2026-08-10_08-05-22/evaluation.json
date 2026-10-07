@@ -1,0 +1,1155 @@
+{
+  "run_dir": "~/ai_scientist_inputs/ASE-2025-013_automated_decomposition_of_large_header/workspace/ai_scientist_2026-08-10_08-05-22",
+  "task_dir": "~/ai_scientist_inputs/ASE-2025-013_automated_decomposition_of_large_header",
+  "framework": "ai_scientist",
+  "fairness_audit": [
+    {
+      "axis": "completeness",
+      "was_unfair": "Required both paper.tex AND paper.pdf; any tool missing one failed equally.",
+      "fix": "Paper gate: PDF=1.0; TeX-only=0.5; ``complete`` requires PDF."
+    },
+    {
+      "axis": "completeness",
+      "was_unfair": "``results`` counted stub/seed JSON (dataset_candidate/metrics.json).",
+      "fix": "``results`` requires substantive numeric results via results_normalize."
+    },
+    {
+      "axis": "experiment_success",
+      "was_unfair": "Only metrics.json; ignored results.json / experiment_results.txt.",
+      "fix": "Framework-ordered result candidates + normalized loaders."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Penalized tools with no bib; airesearcher has no workspace references.",
+      "fix": "literature_applicable=false → status not_applicable; excluded from fair aggregate."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "related_work.json subset as gold made recall hard to interpret.",
+      "fix": "Coverage gold is original paper REFERENCES from mineru; related_work only enriches metadata/fallback."
+    },
+    {
+      "axis": "peer_review",
+      "was_unfair": "Missing Stanford report looked like evaluation failure.",
+      "fix": "status not_provided; optional axis, never counts as tool failure."
+    },
+    {
+      "axis": "paths/find_results",
+      "was_unfair": "Picked downloads/** and sandbox noise (e.g. airesearcher LLVM tree).",
+      "fix": "Exclude downloads/, seeds/, dataset_candidate/, sandbox junk paths."
+    },
+    {
+      "axis": "paths/framework_noise",
+      "was_unfair": "DeepScientist .deepscientist_npm / runtime / skills templates counted as code/paper/results.",
+      "fix": "FRAMEWORK_NOISE_DIRS+markers; quest worktree + eval_output results; paper md drafts; reject template tex."
+    },
+    {
+      "axis": "paths/paper_tex",
+      "was_unfair": "tiny_scientist / ACL runs store paper under latex/*.tex; evaluator only looked at paper/main.tex.",
+      "fix": "latex/**/*.tex with substantive-body heuristic; find_paper_document uses same rules."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Entire custom.bib (300+ anthology entries) verified when paper had zero \\cite commands.",
+      "fix": "collect_agent_references filters bib to in-text cite keys; skips uncited bulk bib (>40 entries)."
+    },
+    {
+      "axis": "paths/ai_scientist_summaries",
+      "was_unfair": "AI Scientist can persist substantive results and paper-like drafts in *_summary.json logs rather than paper/main.tex or results/**/*.json.",
+      "fix": "Treat draft_summary/research_summary as weak paper documents and summary JSONs as result candidates."
+    },
+    {
+      "axis": "framework/ai_scientist_v2",
+      "was_unfair": "Manifest framework ``ai_scientist_v2`` fell through to profile ``unknown``, skipping AI-Scientist idea/result path priorities.",
+      "fix": "Normalize ``ai_scientist_v2`` (and common aliases) to profile key ``ai_scientist``."
+    },
+    {
+      "axis": "idea_generation",
+      "was_unfair": "plan.md/todos.md weak proxies scored same as structured idea.json.",
+      "fix": "Framework idea_priority tried first; missing idea → not_applicable where appropriate."
+    }
+  ],
+  "generated_at": "2026-10-01T15:12:56",
+  "axes": [
+    "alignment",
+    "completeness",
+    "experiment_analysis",
+    "idea_generation",
+    "literature_review",
+    "peer_review"
+  ],
+  "results": {
+    "completeness": {
+      "framework": "ai_scientist",
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-013_automated_decomposition_of_large_header/workspace/ai_scientist_2026-08-10_08-05-22",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-013_automated_decomposition_of_large_header",
+      "complete": false,
+      "required_score": 0.75,
+      "bonus_score": 0.03,
+      "overall_score": 0.6,
+      "missing": [
+        "paper"
+      ],
+      "required": {
+        "idea": {
+          "path": "session/idea.json",
+          "bytes": 7485,
+          "via": "candidate"
+        },
+        "code": {
+          "count": 15,
+          "files": [
+            {
+              "path": "experiments/2026-08-10_08-09-13_hermes_decomp_ma_debate_attempt_0/logs/0-run/experiment_results/experiment_47527fab6a78433f9dd5aeb50ea67bb7_proc_1616/experiment_code.py",
+              "bytes": 201,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-08-10_08-09-13_hermes_decomp_ma_debate_attempt_0/logs/0-run/experiment_results/experiment_47527fab6a78433f9dd5aeb50ea67bb7_proc_1616/plotting_code.py",
+              "bytes": 52,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-08-10_08-09-13_hermes_decomp_ma_debate_attempt_0/logs/0-run/experiment_results/experiment_4dd168d357c6420486561c96cb7b7699_proc_1616/experiment_code.py",
+              "bytes": 8814,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-08-10_08-09-13_hermes_decomp_ma_debate_attempt_0/logs/0-run/experiment_results/experiment_4dd168d357c6420486561c96cb7b7699_proc_1616/plotting_code.py",
+              "bytes": 2930,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-08-10_08-09-13_hermes_decomp_ma_debate_attempt_0/logs/0-run/experiment_results/experiment_903584f723ed415581e7a2f5f504ff0b_proc_1614/experiment_code.py",
+              "bytes": 12093,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-08-10_08-09-13_hermes_decomp_ma_debate_attempt_0/logs/0-run/experiment_results/experiment_903584f723ed415581e7a2f5f504ff0b_proc_1614/plotting_code.py",
+              "bytes": 1684,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-08-10_08-09-13_hermes_decomp_ma_debate_attempt_0/logs/0-run/experiment_results/experiment_a298242d03664531acdc8ea29dd35be6_proc_1613/plotting_code.py",
+              "bytes": 52,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-08-10_08-09-13_hermes_decomp_ma_debate_attempt_0/logs/0-run/experiment_results/experiment_dae4f19d91f54883a45883aa61cd5f4c_proc_1613/experiment_code.py",
+              "bytes": 12471,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-08-10_08-09-13_hermes_decomp_ma_debate_attempt_0/logs/0-run/experiment_results/experiment_dae4f19d91f54883a45883aa61cd5f4c_proc_1613/plotting_code.py",
+              "bytes": 3728,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-08-10_08-09-13_hermes_decomp_ma_debate_attempt_0/logs/0-run/stage_1_initial_implementation_1_preliminary/best_solution_eec8148647f4428cb98acb9e8094c60c.py",
+              "bytes": 9501,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-08-10_08-46-30_hermes_decomp_ma_debate_attempt_0/0-run/process_ForkProcess-1/runfile.py",
+              "bytes": 11790,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-08-10_08-46-30_hermes_decomp_ma_debate_attempt_0/0-run/process_ForkProcess-2/runfile.py",
+              "bytes": 12635,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-08-10_08-46-30_hermes_decomp_ma_debate_attempt_0/0-run/process_ForkProcess-3/runfile.py",
+              "bytes": 5863,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-08-10_08-46-30_hermes_decomp_ma_debate_attempt_0/0-run/process_ForkProcess-4/runfile.py",
+              "bytes": 8981,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-08-10_08-46-30_hermes_decomp_ma_debate_attempt_0/logs/0-run/stage_1_initial_implementation_1_preliminary/best_solution_4eeebfde0a5b400e9098e43051368eda.py",
+              "bytes": 8876,
+              "via": "glob"
+            }
+          ]
+        },
+        "results": {
+          "substantive": true,
+          "normalized_path": "experiments/2026-08-10_08-09-13_hermes_decomp_ma_debate_attempt_0/logs/0-run/experiment_results/experiment_903584f723ed415581e7a2f5f504ff0b_proc_1614/experiment_data.npy",
+          "numeric_leaf_count": 234,
+          "discovered_files": [
+            {
+              "path": "session/data/metrics.json",
+              "bytes": 623,
+              "via": "candidate"
+            },
+            {
+              "path": "experiments/2026-08-10_08-09-13_hermes_decomp_ma_debate_attempt_0/logs/0-run/experiment_results/experiment_4dd168d357c6420486561c96cb7b7699_proc_1616/experiment_data.npy",
+              "bytes": 2185,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-08-10_08-09-13_hermes_decomp_ma_debate_attempt_0/logs/0-run/experiment_results/experiment_903584f723ed415581e7a2f5f504ff0b_proc_1614/experiment_data.npy",
+              "bytes": 1670,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-08-10_08-09-13_hermes_decomp_ma_debate_attempt_0/logs/0-run/experiment_results/experiment_dae4f19d91f54883a45883aa61cd5f4c_proc_1613/cycle_counts.npy",
+              "bytes": 168,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-08-10_08-09-13_hermes_decomp_ma_debate_attempt_0/logs/0-run/experiment_results/experiment_dae4f19d91f54883a45883aa61cd5f4c_proc_1613/experiment_data.npy",
+              "bytes": 551,
+              "via": "glob"
+            }
+          ],
+          "metrics_keys_sample": [
+            "synthetic_data"
+          ]
+        },
+        "paper": {
+          "tex": null,
+          "pdf": null,
+          "md": null,
+          "json": null,
+          "status": "missing",
+          "score": 0.0
+        }
+      },
+      "bonus": {
+        "experiment_plan": null,
+        "experiment_log": {
+          "path": "ai_scientist_run.log",
+          "bytes": 395327,
+          "via": "glob"
+        },
+        "review": null,
+        "readme": null,
+        "narrative": null,
+        "bib": null
+      },
+      "manifest_status": {
+        "pipeline": false
+      },
+      "gate_scores": {
+        "idea": 1.0,
+        "code": 1.0,
+        "results": 1.0,
+        "paper": 0.0
+      },
+      "fairness": {
+        "gates": [
+          "idea",
+          "code",
+          "results",
+          "paper"
+        ],
+        "paper_gate_rule": "PDF=1.0; TeX-only/md_only/json_only=0.5; complete requires PDF",
+        "results_gate_rule": "substantive numeric results via framework-aware normalize_results",
+        "audit_ref": "framework_profile.FAIRNESS_AUDIT"
+      },
+      "notes": [
+        "Required: idea, code, substantive results, paper (PDF full; TeX/markdown/JSON draft half).",
+        "Stub/seed metrics (e.g. dataset_candidate/metrics.json) do not satisfy results.",
+        "Framework noise (.deepscientist_npm, skills/templates, runtime) is excluded from code/results/paper.",
+        "Manifest status is informational; disk presence is authoritative."
+      ]
+    },
+    "idea_generation": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-013_automated_decomposition_of_large_header/workspace/ai_scientist_2026-08-10_08-05-22",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-013_automated_decomposition_of_large_header",
+      "idea_path": "~/ai_scientist_inputs/ASE-2025-013_automated_decomposition_of_large_header/workspace/ai_scientist_2026-08-10_08-05-22/session/idea.json",
+      "status": "ok",
+      "dimensions": {
+        "novelty": {
+          "score": 3.0,
+          "justification": "The core method is a 'multi-agent debate framework that employs three specialized LLM agents—a Semantic Agent for functional cohesion, a Structural Agent for dependency minimization, and a Compiler Agent for acyclicity and completeness verification' with 'iterative critique' and 'majority voting'. This is closest to R10 (LLM header decomposition), R3/R4 (header decomposition), and R38/R39/R40 (iterative/multi-agent LLM refactoring). It fixes single-model bias and cyclic dependency issues, but does not overturn the prevailing LLM-refactoring or clustering paradigm.",
+          "rubric": "Incremental: a meaningful extension or optimization of prior baseline work that fixes a concrete prior limitation, but the core paradigm is unchanged.",
+          "category": "Incremental",
+          "nearest_solution_space_ids": [
+            "R3",
+            "R4",
+            "R10",
+            "R38",
+            "R39",
+            "R40"
+          ],
+          "differentiation": "The idea extends LLM-based header decomposition (HFDecomposer/R10) and graph-clustering decomposition (R3/R4) by adding a multi-agent debate mechanism with specialized Semantic, Structural, and Compiler agents, iterative critique, and majority voting. Multi-agent LLM refactoring/design localization already appears in R38/R39/R40, so the core paradigm is not new, but the specific role decomposition and compiler-feedback loop for C header decomposition is a meaningful extension."
+        },
+        "feasibility": {
+          "score": 3.0,
+          "justification": "The plan requires building a multi-agent orchestration pipeline with three LLM roles, iterative debate rounds, compiler simulation, and static-analysis integration, then evaluating on 'the HFDecomposer dataset of 153 real-world header refactorings'. This is nontrivial research engineering, but the dataset exists and the approach can likely be built by scripting existing LLM APIs and open-source C analysis tools rather than creating low-level compiler tooling from scratch.",
+          "rubric": "Moderate workload (sweet spot): needs nontrivial coding such as scripting existing open-source tools (parsers, CFG extractors) or building a custom graph-processing pipeline; standard research engineering effort."
+        },
+        "clarity": {
+          "score": 3.0,
+          "justification": "The abstract gives a clear What/Why/How and names metrics and ablations, but key execution details are underspecified: it says 'The Compiler Agent then simulates compilation, identifies errors, and provides targeted feedback' without explaining how simulation works, how decompositions are represented, how consensus/majority voting is implemented, or how static analysis data is consumed. The experiment design is framed but not concrete enough to be directly turned into a rigorous proposal.",
+          "rubric": "Complete frame but missing details: What/Why/How are present, yet key technical execution details or specific comparison plans are underspecified."
+        }
+      },
+      "overall_score": 3.0,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "novelty",
+        "feasibility",
+        "clarity"
+      ],
+      "solution_space": {
+        "status": "ok",
+        "paper_count": 46,
+        "entry_count": 46,
+        "cache_hit": true,
+        "source_file": "~/ai_scientist_inputs/ASE-2025-013_automated_decomposition_of_large_header/mineru_sections.json",
+        "stats": {
+          "papers": 46,
+          "extracted": 46,
+          "usable_abstracts": 25,
+          "citation_meta_abstracts": 0,
+          "missing_abstracts": 21,
+          "mineru_titles": 41,
+          "related_work_titles": 30,
+          "abstracts_attached": 25,
+          "related_work_extras": 5,
+          "batches": 3
+        },
+        "error": null
+      },
+      "notes": [
+        "Scores the intermediate idea artifact (not the final paper).",
+        "Dimensions: novelty, feasibility, clarity (each 1-5). Excitement removed.",
+        "Novelty is scored against a Solution Space built from mineru REFERENCES titles (+ related_work.json abstracts when matched)."
+      ],
+      "idea_via": "candidate",
+      "idea_relative": "session/idea.json",
+      "summary": "HeaderDecomp-MA proposes a multi-agent LLM debate framework for decomposing large C header files, using Semantic, Structural, and Compiler agents that iteratively critique and revise candidate decompositions before majority voting. It targets known LLM limitations: entity omission, single-model bias, and cyclic dependencies. The idea is a reasonable incremental extension of existing LLM refactoring and header decomposition work, with moderate engineering feasibility and a plausible evaluation on a real-world dataset. However, the abstract lacks concrete technical details on compiler simulation, consensus mechanics, and static-analysis integration, limiting clarity and making the contribution more evolutionary than paradigm-shifting.",
+      "strengths": [
+        "Addresses concrete failure modes of prior LLM header decomposition: entity omission, cyclic dependencies, and single-model bias.",
+        "Uses a real-world dataset of 153 developer refactorings and established clustering metrics (ACC, F1, MoJoFM, ARI, NMI).",
+        "Includes ablation studies and qualitative analysis, suggesting a plan to isolate the effect of role specialization and debate rounds."
+      ],
+      "weaknesses": [
+        "Core contribution is incremental relative to existing multi-agent LLM refactoring and header decomposition work.",
+        "Compiler Agent 'simulates compilation' is vague and may not guarantee actual compilability.",
+        "Lacks implementation-level detail on agent prompts, decomposition representation, consensus protocol, and static-analysis usage."
+      ],
+      "llm_meta": {
+        "model": "deepseek-v4-pro-0813",
+        "base_url": "https://api-sg.umodelverse.ai/v1",
+        "usage": {
+          "completion_tokens": 2337,
+          "completion_tokens_details": {
+            "reasoning_tokens": 1511
+          },
+          "prompt_tokens": 4724,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "total_tokens": 7061
+        },
+        "attempt": 0
+      }
+    },
+    "peer_review": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-013_automated_decomposition_of_large_header/workspace/ai_scientist_2026-08-10_08-05-22",
+      "review_report": null,
+      "paper_pdf": null,
+      "paper_tex": null,
+      "status": "not_provided",
+      "dimensions": {},
+      "overall_score": null,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "soundness",
+        "significance",
+        "novelty",
+        "presentation",
+        "credibility"
+      ],
+      "notes": [
+        "Stanford Agentic Reviewer (paperreview.ai): manual download to artifacts/peer_review/stanford_apr.md, or pass --auto-paperreview.",
+        "Dimensions: soundness, significance, novelty, presentation, credibility (each 1-5)."
+      ],
+      "paperreview": {
+        "status": "skipped",
+        "reason": "no_pdf"
+      },
+      "optional": true,
+      "hint": "Optional external review (Stanford APR). Upload paper/main.pdf to https://paperreview.ai/ , save review to ~/ai_scientist_inputs/ASE-2025-013_automated_decomposition_of_large_header/workspace/ai_scientist_2026-08-10_08-05-22/artifacts/peer_review/stanford_apr.md"
+    },
+    "alignment": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-013_automated_decomposition_of_large_header/workspace/ai_scientist_2026-08-10_08-05-22",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-013_automated_decomposition_of_large_header",
+      "status": "ok",
+      "original": {
+        "paper_title": "Enhancing LLMs with Staged Grouping and Dehallucination for Header File Decomposition",
+        "selection": {
+          "num_blocks": 8,
+          "total_chars": 31998,
+          "inferred_roles": {
+            "abstract": 1,
+            "introduction": 1,
+            "experiment": 4,
+            "discussion": 1,
+            "conclusion": 1
+          },
+          "mineru_raw_keys": {
+            "field:abstract": 1,
+            "field:introduction": 1,
+            "field:experiment": 1,
+            "other": 3,
+            "discussion": 1,
+            "conclusion": 1
+          },
+          "infer_reasons": {
+            "top_level_field": 3,
+            "body_override": 2,
+            "title": 3
+          },
+          "rescued_from_other": 3,
+          "note": "mineru key is unreliable; blocks are selected by title/body/inheritance. rescued_from_other counts sections labeled other but treated as typed roles."
+        },
+        "claims": [
+          {
+            "id": "C1",
+            "statement": "HFDecomposer outperforms the traditional state-of-the-art header file decomposition approach by 11%.",
+            "direction": "improves",
+            "metric_names": [
+              "accuracy",
+              "ACC"
+            ],
+            "evidence_quote": "outperforms the traditional stateof-the-art approach by 11%",
+            "confidence": 0.95
+          },
+          {
+            "id": "C2",
+            "statement": "HFDecomposer mitigates LLM hallucinations in header file decomposition.",
+            "direction": "improves",
+            "metric_names": [
+              "incomplete cases",
+              "missing entities"
+            ],
+            "evidence_quote": "The number of incomplete cases dropped dramatically from 122 to below 20 for GPT-4o.",
+            "confidence": 0.9
+          },
+          {
+            "id": "C3",
+            "statement": "HFDecomposer reduces cyclic dependency issues compared to LLM baselines.",
+            "direction": "improves",
+            "metric_names": [
+              "cyclic cases",
+              "cyclic dependency"
+            ],
+            "evidence_quote": "Our approach significantly enhances LLMs' ability to generate decompositions with fewer cyclic dependencies.",
+            "confidence": 0.9
+          },
+          {
+            "id": "C4",
+            "statement": "The two-stage grouping framework handles lengthy header files effectively.",
+            "direction": "improves",
+            "metric_names": [
+              "completion rate",
+              "grouping accuracy"
+            ],
+            "evidence_quote": "both models successfully processed all header files in the dataset, achieving 100% completion rate",
+            "confidence": 0.9
+          },
+          {
+            "id": "C5",
+            "statement": "HFDecomposer outperforms baseline methods in decomposition accuracy.",
+            "direction": "improves",
+            "metric_names": [
+              "ACC",
+              "F1",
+              "MoJoFM",
+              "ARI",
+              "NMI"
+            ],
+            "evidence_quote": "HFDecomposer significantly outperforms state-of-the-art methods",
+            "confidence": 0.8
+          }
+        ],
+        "metrics": [
+          {
+            "name": "ACC",
+            "value": 70.1,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "Wang et al. baseline, all header files",
+            "is_sota_or_best": false,
+            "baseline_name": "Wang et al.",
+            "baseline_value": null,
+            "evidence_quote": "Wang et al. ... ACC 70.1",
+            "confidence": 0.9
+          },
+          {
+            "name": "F1",
+            "value": 65.2,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "Wang et al. baseline, all header files",
+            "is_sota_or_best": false,
+            "baseline_name": "Wang et al.",
+            "baseline_value": null,
+            "evidence_quote": "Wang et al. ... F1 65.2",
+            "confidence": 0.9
+          },
+          {
+            "name": "MoJoFM",
+            "value": 78.0,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "Wang et al. baseline, all header files",
+            "is_sota_or_best": false,
+            "baseline_name": "Wang et al.",
+            "baseline_value": null,
+            "evidence_quote": "Wang et al. ... MoJoFM 78.0",
+            "confidence": 0.9
+          },
+          {
+            "name": "ARI",
+            "value": 21.9,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "Wang et al. baseline, all header files",
+            "is_sota_or_best": false,
+            "baseline_name": "Wang et al.",
+            "baseline_value": null,
+            "evidence_quote": "Wang et al. ... ARI 21.9",
+            "confidence": 0.9
+          },
+          {
+            "name": "NMI",
+            "value": 25.8,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "Wang et al. baseline, all header files",
+            "is_sota_or_best": false,
+            "baseline_name": "Wang et al.",
+            "baseline_value": null,
+            "evidence_quote": "Wang et al. ... NMI 25.8",
+            "confidence": 0.9
+          },
+          {
+            "name": "ACC",
+            "value": 75.4,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "GPT-4o baseline, all header files",
+            "is_sota_or_best": false,
+            "baseline_name": "GPT-4o",
+            "baseline_value": null,
+            "evidence_quote": "GPT-4o ... ACC 75.4",
+            "confidence": 0.9
+          },
+          {
+            "name": "F1",
+            "value": 68.3,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "GPT-4o baseline, all header files",
+            "is_sota_or_best": false,
+            "baseline_name": "GPT-4o",
+            "baseline_value": null,
+            "evidence_quote": "GPT-4o ... F1 68.3",
+            "confidence": 0.9
+          },
+          {
+            "name": "MoJoFM",
+            "value": 80.2,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "GPT-4o baseline, all header files",
+            "is_sota_or_best": false,
+            "baseline_name": "GPT-4o",
+            "baseline_value": null,
+            "evidence_quote": "GPT-4o ... MoJoFM 80.2",
+            "confidence": 0.9
+          }
+        ],
+        "overall_conclusion": null,
+        "comparable_notes": null,
+        "cache_hit": true
+      },
+      "agent": {
+        "status": "ok",
+        "run_dir": "~/ai_scientist_inputs/ASE-2025-013_automated_decomposition_of_large_header/workspace/ai_scientist_2026-08-10_08-05-22",
+        "claims": [
+          {
+            "id": "A1",
+            "statement": "The debate procedure reached a final debate cycles value of 170, compared with a random baseline cycles mean of 393.4 in synthetic data.",
+            "direction": "improves",
+            "metric_names": [
+              "final_debate_cycles"
+            ],
+            "evidence_quote": "\"random_baseline_cycles_mean\": 393.4 ... \"final_debate_cycles\": 170",
+            "confidence": 0.7
+          }
+        ],
+        "metrics": [
+          {
+            "name": "final_debate_cycles",
+            "value": 170.0,
+            "unit": "cycles",
+            "higher_is_better": false,
+            "setting": "synthetic_data",
+            "is_sota_or_best": false,
+            "baseline_name": "random_baseline_cycles_mean",
+            "baseline_value": 393.4,
+            "evidence_quote": "\"final_debate_cycles\": 170",
+            "confidence": 0.9
+          },
+          {
+            "name": "random_baseline_cycles_mean",
+            "value": 393.4,
+            "unit": "cycles",
+            "higher_is_better": false,
+            "setting": "synthetic_data random baseline",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "\"random_baseline_cycles_mean\": 393.4",
+            "confidence": 0.9
+          }
+        ],
+        "overall_conclusion": "In the provided synthetic experiment data, debate reduced the final cycles to 170, which is lower than the random baseline mean of 393.4 cycles.",
+        "sources": {
+          "metrics_path": "experiments/2026-08-10_08-09-13_hermes_decomp_ma_debate_attempt_0/logs/0-run/experiment_results/experiment_903584f723ed415581e7a2f5f504ff0b_proc_1614/experiment_data.npy",
+          "paper_tex_path": null
+        },
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 1241,
+            "completion_tokens_details": {
+              "reasoning_tokens": 849
+            },
+            "prompt_tokens": 1458,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 2699
+          },
+          "attempt": 0
+        }
+      },
+      "comparison": {
+        "status": "ok",
+        "claim_alignment": [
+          {
+            "original_claim_id": "C1",
+            "agent_claim_id": null,
+            "label": "incomparable",
+            "rationale": "The agent reports synthetic debate-cycle results, not header-file decomposition accuracy versus the traditional SOTA."
+          },
+          {
+            "original_claim_id": "C2",
+            "agent_claim_id": null,
+            "label": "incomparable",
+            "rationale": "The agent has no evidence on incomplete cases or missing entities for HFDecomposer hallucination reduction."
+          },
+          {
+            "original_claim_id": "C3",
+            "agent_claim_id": null,
+            "label": "incomparable",
+            "rationale": "The agent does not measure cyclic dependency cases in header file decomposition."
+          },
+          {
+            "original_claim_id": "C4",
+            "agent_claim_id": null,
+            "label": "incomparable",
+            "rationale": "The agent does not report completion rate or grouping accuracy on lengthy header files."
+          },
+          {
+            "original_claim_id": "C5",
+            "agent_claim_id": null,
+            "label": "incomparable",
+            "rationale": "The agent does not report ACC, F1, MoJoFM, ARI, or NMI for header-file decomposition baselines."
+          }
+        ],
+        "metric_alignment": [
+          {
+            "original_metric": "ACC",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 70.1,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Original Wang et al. baseline ACC; agent has no header-file decomposition ACC measurement."
+          },
+          {
+            "original_metric": "F1",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 65.2,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Original Wang et al. baseline F1; agent has no comparable F1 metric."
+          },
+          {
+            "original_metric": "MoJoFM",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 78.0,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Original Wang et al. baseline MoJoFM; agent reports only debate cycles."
+          },
+          {
+            "original_metric": "ARI",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 21.9,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Original Wang et al. baseline ARI; agent has no ARI measurement."
+          },
+          {
+            "original_metric": "NMI",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 25.8,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Original Wang et al. baseline NMI; agent has no NMI measurement."
+          },
+          {
+            "original_metric": "ACC",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 75.4,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Original GPT-4o baseline ACC; agent has no comparable decomposition accuracy metric."
+          },
+          {
+            "original_metric": "F1",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 68.3,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Original GPT-4o baseline F1; agent has no comparable F1 metric."
+          },
+          {
+            "original_metric": "MoJoFM",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 80.2,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Original GPT-4o baseline MoJoFM; agent has no comparable MoJoFM metric."
+          }
+        ],
+        "summary": {
+          "direction_consistency": "same_direction_incomparable",
+          "consistent_claim_ratio": 0.0,
+          "has_comparable_metrics": false,
+          "sota_improvement_summary": "N/A",
+          "overall_alignment_score": 0.4,
+          "score_rationale": "The agent reports unrelated synthetic debate-cycle results and does not address any of the original header-file decomposition claims or metrics. | Postprocessed: all claims incomparable with near-zero score; raised to 0.4 (same-direction protocol/scale mismatch floor).",
+          "score_postprocessed": true
+        },
+        "warnings": [
+          "Agent-run metrics are final_debate_cycles and random_baseline_cycles_mean from synthetic data, which do not correspond to the original header-file decomposition metrics.",
+          "No deltas were computed because no original metric had a comparable agent counterpart."
+        ],
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 4135,
+            "completion_tokens_details": {
+              "reasoning_tokens": 2877
+            },
+            "prompt_tokens": 2761,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 6896
+          },
+          "attempt": 0
+        }
+      },
+      "overall_alignment_score": 0.4,
+      "direction_consistency": "same_direction_incomparable"
+    },
+    "experiment_analysis": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-013_automated_decomposition_of_large_header/workspace/ai_scientist_2026-08-10_08-05-22",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-013_automated_decomposition_of_large_header",
+      "status": "ok",
+      "metrics_path": "experiments/2026-08-10_08-09-13_hermes_decomp_ma_debate_attempt_0/logs/0-run/experiment_results/experiment_903584f723ed415581e7a2f5f504ff0b_proc_1614/experiment_data.npy",
+      "experiment_success": {
+        "status": "ok",
+        "success": true,
+        "metrics_path": "experiments/2026-08-10_08-09-13_hermes_decomp_ma_debate_attempt_0/logs/0-run/experiment_results/experiment_903584f723ed415581e7a2f5f504ff0b_proc_1614/experiment_data.npy",
+        "absolute_metrics_path": "~/ai_scientist_inputs/ASE-2025-013_automated_decomposition_of_large_header/workspace/ai_scientist_2026-08-10_08-05-22/experiments/2026-08-10_08-09-13_hermes_decomp_ma_debate_attempt_0/logs/0-run/experiment_results/experiment_903584f723ed415581e7a2f5f504ff0b_proc_1614/experiment_data.npy",
+        "checks": {
+          "has_results_file": true,
+          "non_stub": true,
+          "numeric_leaf_count": 234,
+          "min_numeric_ok": true
+        },
+        "manifest_hints": {
+          "status": {
+            "pipeline": false
+          },
+          "returncode": 1,
+          "benchmark_complete": null,
+          "artifacts_metrics_flag": false
+        },
+        "warnings": [
+          "manifest.returncode=1"
+        ],
+        "suspicious_values": [],
+        "note": "success=true requires substantive results (framework-aware path) with >=3 numeric leaves. Supports metrics.json, results.json, experiment_results.txt, etc. Manifest returncode/benchmark_complete are soft warnings only."
+      },
+      "idea_code_consistency": {
+        "status": "ok",
+        "idea_path": "session/idea.json",
+        "code_files": [
+          "experiments/2026-08-10_08-09-13_hermes_decomp_ma_debate_attempt_0/logs/0-run/experiment_results/experiment_47527fab6a78433f9dd5aeb50ea67bb7_proc_1616/experiment_code.py",
+          "experiments/2026-08-10_08-09-13_hermes_decomp_ma_debate_attempt_0/logs/0-run/experiment_results/experiment_47527fab6a78433f9dd5aeb50ea67bb7_proc_1616/plotting_code.py",
+          "experiments/2026-08-10_08-09-13_hermes_decomp_ma_debate_attempt_0/logs/0-run/experiment_results/experiment_4dd168d357c6420486561c96cb7b7699_proc_1616/experiment_code.py",
+          "experiments/2026-08-10_08-09-13_hermes_decomp_ma_debate_attempt_0/logs/0-run/experiment_results/experiment_4dd168d357c6420486561c96cb7b7699_proc_1616/plotting_code.py"
+        ],
+        "score_scale": "1-5",
+        "score": 2.0,
+        "label": "weak",
+        "justification": "The code superficially mirrors the idea's agent roles (semantic, structural, compiler feedback) and debate/voting structure, but it implements a synthetic graph-clustering toy problem using KMeans and NetworkX instead of LLM-based decomposition of real C header files. The core hypothesis about multi-agent LLM debate for header decomposition is not tested, the HFDecomposer dataset and real-world evaluation metrics are absent, and no LLM or compiler simulation is used.",
+        "matched_elements": [
+          "Semantic and structural agent roles are represented",
+          "Compiler agent provides cycle-based feedback and revision",
+          "Iterative debate rounds are implemented",
+          "Consensus voting among proposals is present",
+          "Dependency cycles are used as a quality signal"
+        ],
+        "missing_or_divergent_elements": [
+          "Real C header file decomposition problem replaced by synthetic graph clustering",
+          "LLM agents replaced by KMeans, SCC, and random/numeric heuristics",
+          "HFDecomposer dataset of 153 real refactorings not used",
+          "Evaluation metrics ACC, F1, MoJoFM, ARI, NMI not computed",
+          "Compilation success rate not evaluated",
+          "Baselines such as HFDecomposer and single-agent LLM baselines not implemented",
+          "Static analysis data from actual C projects is absent"
+        ],
+        "rubric": "Weak alignment: only superficial overlap; core hypothesis, method, or evaluation in the idea is missing or replaced.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 1084,
+            "completion_tokens_details": {
+              "reasoning_tokens": 780
+            },
+            "prompt_tokens": 3691,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 4775
+          },
+          "attempt": 1
+        }
+      },
+      "setup_coverage": {
+        "status": "ok",
+        "overall_coverage": 0.6444444444444445,
+        "datasets": {
+          "gold_count": 1,
+          "hit_count": 1,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "Real-world Header File Decomposition Dataset"
+          ],
+          "misses": []
+        },
+        "baselines": {
+          "gold_count": 3,
+          "hit_count": 1,
+          "miss_count": 2,
+          "coverage": 0.3333333333333333,
+          "hits": [
+            "Wang et al.'s clustering-based approach"
+          ],
+          "misses": [
+            "GPT-4o",
+            "DeepSeek-V3"
+          ]
+        },
+        "metrics": {
+          "gold_count": 5,
+          "hit_count": 3,
+          "miss_count": 2,
+          "coverage": 0.6,
+          "hits": [
+            "Accuracy (ACC)",
+            "F1-score",
+            "Adjusted Rand Index (ARI)"
+          ],
+          "misses": [
+            "MoJoFM",
+            "Normalized Mutual Information (NMI)"
+          ]
+        },
+        "agent_protocol": {},
+        "gold_protocol": {},
+        "dataset_dirs": [
+          "dataset_candidate"
+        ],
+        "flags": {
+          "weaker_baseline_suspected": true,
+          "weak_protocol": [],
+          "synthetic_data": "synthetic_allowed_by_task",
+          "gold_allows_synthetic": true
+        },
+        "gold_sources": [
+          "~/ai_scientist_inputs/ASE-2025-013_automated_decomposition_of_large_header/task.md",
+          "~/ai_scientist_inputs/ASE-2025-013_automated_decomposition_of_large_header/metadata.json"
+        ],
+        "note": "Coverage is name/alias matching against task.md Datasets/Baselines/Metrics. weak_protocol flags large reductions in trials/timeout vs Constraints. Synthetic corpora are not penalized when the task itself requires synthesis."
+      },
+      "ablation_significance": {
+        "status": "ok",
+        "idea_path": "session/idea.json",
+        "significance_signals_rule_based": {
+          "signals": [],
+          "artifact_paths": [],
+          "has_any_significance_artifact": false
+        },
+        "evidence_format": "raw_json",
+        "study_type": "new_method",
+        "components": [
+          {
+            "name": "Semantic Agent",
+            "role": "module/agent",
+            "ablation_expected": true,
+            "significance_expected": true,
+            "ablation_status": "partial",
+            "ablation_evidence": "Plotting code refers to baseline_semantic for a synthetic dependency-cycle comparison, but metrics.json does not report the semantic-only result or an isolated removal of the Semantic Agent from the full framework.",
+            "significance_status": "missing",
+            "significance_evidence": "No confidence intervals, bootstrap, or statistical tests are reported for the Semantic Agent comparison."
+          },
+          {
+            "name": "Structural Agent",
+            "role": "module/agent",
+            "ablation_expected": true,
+            "significance_expected": true,
+            "ablation_status": "partial",
+            "ablation_evidence": "Plotting code refers to baseline_structural for a synthetic dependency-cycle comparison, but metrics.json does not report the structural-only result or an isolated removal of the Structural Agent.",
+            "significance_status": "missing",
+            "significance_evidence": "No confidence intervals, bootstrap, or statistical tests are reported for the Structural Agent comparison."
+          },
+          {
+            "name": "Compiler Agent",
+            "role": "module/verifier",
+            "ablation_expected": true,
+            "significance_expected": true,
+            "ablation_status": "missing",
+            "ablation_evidence": "No ablation or controlled comparison removing/disabling the Compiler Agent is present in metrics.json or shown code.",
+            "significance_status": "missing",
+            "significance_evidence": "No statistical tests or confidence intervals for Compiler Agent contribution are reported."
+          },
+          {
+            "name": "Iterative debate rounds",
+            "role": "procedure/hyperparameter",
+            "ablation_expected": true,
+            "significance_expected": true,
+            "ablation_status": "partial",
+            "ablation_evidence": "metrics.json includes debate_cycles_per_round and final_debate_cycles, showing cycle reduction from 409 to 170 over rounds in synthetic data, but there is no controlled no-debate or fixed-round ablation arm.",
+            "significance_status": "missing",
+            "significance_evidence": "Cycle counts are descriptive; no statistical test, confidence interval, or bootstrap is provided."
+          },
+          {
+            "name": "Majority voting consensus",
+            "role": "aggregation",
+            "ablation_expected": true,
+            "significance_expected": true,
+            "ablation_status": "missing",
+            "ablation_evidence": "No ablation against alternative aggregation, such as best agent, averaging, or single final proposal, is reported.",
+            "significance_status": "missing",
+            "significance_evidence": "No statistical comparison of aggregation methods is provided."
+          },
+          {
+            "name": "Single-agent LLM baselines",
+            "role": "baseline",
+            "ablation_expected": false,
+            "significance_expected": true,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "Baseline comparisons are primary comparisons, not component ablations.",
+            "significance_status": "missing",
+            "significance_evidence": "The claimed comparison with single-agent LLM baselines is absent from the provided results; no p-values or confidence intervals are reported."
+          },
+          {
+            "name": "HFDecomposer baseline",
+            "role": "baseline",
+            "ablation_expected": false,
+            "significance_expected": true,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "Baseline comparison, not an ablation.",
+            "significance_status": "missing",
+            "significance_evidence": "No HFDecomposer comparison results or significance test appear in metrics.json or code."
+          },
+          {
+            "name": "Random baseline",
+            "role": "baseline",
+            "ablation_expected": false,
+            "significance_expected": true,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "Baseline comparison, not an ablation.",
+            "significance_status": "partial",
+            "significance_evidence": "metrics.json reports random_baseline_cycles_mean and std, enabling descriptive comparison, but no formal statistical test against the final debate result is provided."
+          }
+        ],
+        "ablation_coverage_score": 0.3,
+        "overall_ablation_ok": false,
+        "overall_significance_ok": false,
+        "summary": "The run only provides synthetic dependency-cycle results and code flags for some single-agent baselines. It lacks the claimed HFDecomposer dataset evaluation, clustering metrics, complete component ablations, and any formal significance testing.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 8222,
+            "completion_tokens_details": {
+              "reasoning_tokens": 7179
+            },
+            "prompt_tokens": 3593,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 11815
+          },
+          "attempt": 0
+        }
+      },
+      "results_paper_consistency": {
+        "status": "missing_paper"
+      },
+      "scores": {
+        "experiment_success": true,
+        "idea_code_score": 2.0,
+        "setup_coverage": 0.6444444444444445,
+        "ablation_coverage_score": 0.3,
+        "overall_ablation_ok": false,
+        "overall_significance_ok": false,
+        "results_paper_score": null,
+        "hiding_unfavorable_suspected": null
+      },
+      "notes": [
+        "Axes 1,2,3,4,6 in experiment_analysis (figures excluded).",
+        "setup_coverage matches task.md Datasets/Baselines/Metrics; weak_protocol flags reductions vs Constraints.",
+        "Axis 6: final normalized results vs paper; interim run logs not used as ground truth."
+      ]
+    },
+    "literature_review": {
+      "run_dir": "~/ai_scientist_inputs/ASE-2025-013_automated_decomposition_of_large_header/workspace/ai_scientist_2026-08-10_08-05-22",
+      "task_dir": "~/ai_scientist_inputs/ASE-2025-013_automated_decomposition_of_large_header",
+      "status": "not_applicable",
+      "as_of_year": 2026,
+      "agent_ref_count": 0,
+      "sources": [],
+      "collection_audit": {
+        "cited_keys_count": 0,
+        "filter_mode": "none",
+        "bib_total_before_filter": 0,
+        "bib_after_filter": 0,
+        "uncited_bib_skipped": 0
+      },
+      "fabrication": null,
+      "coverage": null,
+      "recency": null,
+      "reason": "no_reference_artifacts",
+      "hint": "No literature artifacts found (bib / thebibliography / shortlist / related_work.txt / arxiv index). Marked not_applicable rather than failure — tool may not emit references in-run."
+    }
+  },
+  "scores": {
+    "completeness": {
+      "complete": false,
+      "overall_score": 0.6,
+      "required_score": 0.75,
+      "bonus_score": 0.03
+    },
+    "peer_review": {
+      "status": "not_provided",
+      "optional": true,
+      "overall_score": null,
+      "score_scale": "1-5",
+      "scoring_method": null
+    },
+    "idea_generation": {
+      "status": "ok",
+      "overall_score": 3.0,
+      "dimensions": {
+        "novelty": 3.0,
+        "feasibility": 3.0,
+        "clarity": 3.0
+      },
+      "novelty_category": "Incremental",
+      "solution_space_status": "ok"
+    },
+    "alignment": {
+      "status": "ok",
+      "direction_consistency": "same_direction_incomparable",
+      "overall_alignment_score": 0.4
+    },
+    "literature_review": {
+      "fabrication_rate": null,
+      "coverage_recall": null,
+      "recency_ratio_3y": null,
+      "recency_ratio_5y": null
+    },
+    "experiment_analysis": {
+      "experiment_success": true,
+      "idea_code_score": 2.0,
+      "setup_coverage": 0.6444444444444445,
+      "ablation_coverage_score": 0.3,
+      "overall_ablation_ok": false,
+      "overall_significance_ok": false,
+      "results_paper_score": null,
+      "hiding_unfavorable_suspected": null
+    }
+  },
+  "fair_scores": {
+    "applicable_axes": [
+      "completeness",
+      "idea_generation",
+      "alignment",
+      "experiment_analysis"
+    ],
+    "skipped_axes": [
+      {
+        "axis": "peer_review",
+        "reason": "optional_external_review"
+      },
+      {
+        "axis": "literature_review",
+        "reason": "not_applicable"
+      }
+    ],
+    "fair_mean_0_1": 0.6079,
+    "note": "fair_mean_0_1 averages only applicable axes; optional peer review and framework-inapplicable literature are excluded from the denominator."
+  },
+  "evals_root": "~/ai_scientist_evals",
+  "claims_cache": "~/ai_scientist_evals/ASE-2025-013_automated_decomposition_of_large_header/original_claims.json",
+  "solution_space_cache": "~/ai_scientist_evals/ASE-2025-013_automated_decomposition_of_large_header/solution_space.json"
+}

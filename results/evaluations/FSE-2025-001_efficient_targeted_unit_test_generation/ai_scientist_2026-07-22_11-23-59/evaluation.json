@@ -1,0 +1,1248 @@
+{
+  "generated_at": "2026-08-20T12:23:27",
+  "run_dir": "~/ai_scientist_inputs/FSE-2025-001_efficient_targeted_unit_test_generation/workspace/ai_scientist_2026-07-22_11-23-59",
+  "task_dir": "~/ai_scientist_inputs/FSE-2025-001_efficient_targeted_unit_test_generation",
+  "framework": "ai_scientist",
+  "fairness_audit": [
+    {
+      "axis": "completeness",
+      "was_unfair": "Required both paper.tex AND paper.pdf; any tool missing one failed equally.",
+      "fix": "Paper gate: PDF=1.0; TeX-only=0.5; ``complete`` requires PDF."
+    },
+    {
+      "axis": "completeness",
+      "was_unfair": "``results`` counted stub/seed JSON (dataset_candidate/metrics.json).",
+      "fix": "``results`` requires substantive numeric results via results_normalize."
+    },
+    {
+      "axis": "experiment_success",
+      "was_unfair": "Only metrics.json; ignored results.json / experiment_results.txt.",
+      "fix": "Framework-ordered result candidates + normalized loaders."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Penalized tools with no bib; airesearcher has no workspace references.",
+      "fix": "literature_applicable=false → status not_applicable; excluded from fair aggregate."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "related_work.json subset as gold made recall hard to interpret.",
+      "fix": "Coverage gold is original paper REFERENCES from mineru; related_work only enriches metadata/fallback."
+    },
+    {
+      "axis": "peer_review",
+      "was_unfair": "Missing Stanford report looked like evaluation failure.",
+      "fix": "status not_provided; optional axis, never counts as tool failure."
+    },
+    {
+      "axis": "paths/find_results",
+      "was_unfair": "Picked downloads/** and sandbox noise (e.g. airesearcher LLVM tree).",
+      "fix": "Exclude downloads/, seeds/, dataset_candidate/, sandbox junk paths."
+    },
+    {
+      "axis": "paths/framework_noise",
+      "was_unfair": "DeepScientist .deepscientist_npm / runtime / skills templates counted as code/paper/results.",
+      "fix": "FRAMEWORK_NOISE_DIRS+markers; quest worktree + eval_output results; paper md drafts; reject template tex."
+    },
+    {
+      "axis": "paths/paper_tex",
+      "was_unfair": "tiny_scientist / ACL runs store paper under latex/*.tex; evaluator only looked at paper/main.tex.",
+      "fix": "latex/**/*.tex with substantive-body heuristic; find_paper_document uses same rules."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Entire custom.bib (300+ anthology entries) verified when paper had zero \\cite commands.",
+      "fix": "collect_agent_references filters bib to in-text cite keys; skips uncited bulk bib (>40 entries)."
+    },
+    {
+      "axis": "paths/ai_scientist_summaries",
+      "was_unfair": "AI Scientist can persist substantive results and paper-like drafts in *_summary.json logs rather than paper/main.tex or results/**/*.json.",
+      "fix": "Treat draft_summary/research_summary as weak paper documents and summary JSONs as result candidates."
+    },
+    {
+      "axis": "idea_generation",
+      "was_unfair": "plan.md/todos.md weak proxies scored same as structured idea.json.",
+      "fix": "Framework idea_priority tried first; missing idea → not_applicable where appropriate."
+    }
+  ],
+  "axes": [
+    "alignment",
+    "completeness",
+    "experiment_analysis",
+    "idea_generation",
+    "literature_review",
+    "peer_review"
+  ],
+  "results": {
+    "completeness": {
+      "framework": "ai_scientist",
+      "run_dir": "~/ai_scientist_inputs/FSE-2025-001_efficient_targeted_unit_test_generation/workspace/ai_scientist_2026-07-22_11-23-59",
+      "task_dir": "~/ai_scientist_inputs/FSE-2025-001_efficient_targeted_unit_test_generation",
+      "complete": false,
+      "required_score": 0.875,
+      "bonus_score": 0.03,
+      "overall_score": 0.7,
+      "missing": [],
+      "required": {
+        "idea": {
+          "path": "session/idea.json",
+          "bytes": 9972,
+          "via": "candidate"
+        },
+        "code": {
+          "count": 79,
+          "files": [
+            {
+              "path": "experiments/2026-07-22_11-25-57_efficient_targeted_unit_test_generation_for_runt_attempt_0/auto_plot_aggregator.py",
+              "bytes": 7833,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-07-22_11-25-57_efficient_targeted_unit_test_generation_for_runt_attempt_0/logs/0-run/experiment_results/experiment_06c4a0ad3e0648bdb0abef8d4b50c3f8_proc_2794/experiment_code.py",
+              "bytes": 11982,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-07-22_11-25-57_efficient_targeted_unit_test_generation_for_runt_attempt_0/logs/0-run/experiment_results/experiment_06c4a0ad3e0648bdb0abef8d4b50c3f8_proc_2794/plotting_code.py",
+              "bytes": 1982,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-07-22_11-25-57_efficient_targeted_unit_test_generation_for_runt_attempt_0/logs/0-run/experiment_results/experiment_0ba604f7dce644629ebac93aef5fbdd4_proc_2024/experiment_code.py",
+              "bytes": 12334,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-07-22_11-25-57_efficient_targeted_unit_test_generation_for_runt_attempt_0/logs/0-run/experiment_results/experiment_0ba604f7dce644629ebac93aef5fbdd4_proc_2024/plotting_code.py",
+              "bytes": 2559,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-07-22_11-25-57_efficient_targeted_unit_test_generation_for_runt_attempt_0/logs/0-run/experiment_results/experiment_10b048bae4174686999081af9a3ec178_proc_2796/experiment_code.py",
+              "bytes": 11738,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-07-22_11-25-57_efficient_targeted_unit_test_generation_for_runt_attempt_0/logs/0-run/experiment_results/experiment_10b048bae4174686999081af9a3ec178_proc_2796/plotting_code.py",
+              "bytes": 3229,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-07-22_11-25-57_efficient_targeted_unit_test_generation_for_runt_attempt_0/logs/0-run/experiment_results/experiment_11ef417a15f44ff8b89b32eb4b47b40e_proc_2023/experiment_code.py",
+              "bytes": 11671,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-07-22_11-25-57_efficient_targeted_unit_test_generation_for_runt_attempt_0/logs/0-run/experiment_results/experiment_11ef417a15f44ff8b89b32eb4b47b40e_proc_2023/plotting_code.py",
+              "bytes": 3085,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-07-22_11-25-57_efficient_targeted_unit_test_generation_for_runt_attempt_0/logs/0-run/experiment_results/experiment_17c2b28a3e084a919eba3c4e72336b46_proc_2793/experiment_code.py",
+              "bytes": 12120,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-07-22_11-25-57_efficient_targeted_unit_test_generation_for_runt_attempt_0/logs/0-run/experiment_results/experiment_17c2b28a3e084a919eba3c4e72336b46_proc_2793/plotting_code.py",
+              "bytes": 3490,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-07-22_11-25-57_efficient_targeted_unit_test_generation_for_runt_attempt_0/logs/0-run/experiment_results/experiment_1814d17b12c44ccdacf7f32d15016362_proc_2796/experiment_code.py",
+              "bytes": 12143,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-07-22_11-25-57_efficient_targeted_unit_test_generation_for_runt_attempt_0/logs/0-run/experiment_results/experiment_1814d17b12c44ccdacf7f32d15016362_proc_2796/plotting_code.py",
+              "bytes": 3249,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-07-22_11-25-57_efficient_targeted_unit_test_generation_for_runt_attempt_0/logs/0-run/experiment_results/experiment_20cc286d75864eff8f94776e45eebf57_proc_2795/experiment_code.py",
+              "bytes": 16865,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-07-22_11-25-57_efficient_targeted_unit_test_generation_for_runt_attempt_0/logs/0-run/experiment_results/experiment_20cc286d75864eff8f94776e45eebf57_proc_2795/plotting_code.py",
+              "bytes": 6108,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-07-22_11-25-57_efficient_targeted_unit_test_generation_for_runt_attempt_0/logs/0-run/experiment_results/experiment_258b4649f3e741669b3aa592459651de_proc_2022/experiment_code.py",
+              "bytes": 11470,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-07-22_11-25-57_efficient_targeted_unit_test_generation_for_runt_attempt_0/logs/0-run/experiment_results/experiment_258b4649f3e741669b3aa592459651de_proc_2022/plotting_code.py",
+              "bytes": 3085,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-07-22_11-25-57_efficient_targeted_unit_test_generation_for_runt_attempt_0/logs/0-run/experiment_results/experiment_2fbff05ee07a41b0947f2ad2ce7f5b60_proc_1649/experiment_code.py",
+              "bytes": 3894,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-07-22_11-25-57_efficient_targeted_unit_test_generation_for_runt_attempt_0/logs/0-run/experiment_results/experiment_2fbff05ee07a41b0947f2ad2ce7f5b60_proc_1649/plotting_code.py",
+              "bytes": 3676,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-07-22_11-25-57_efficient_targeted_unit_test_generation_for_runt_attempt_0/logs/0-run/experiment_results/experiment_3e3ef3e5714643aab62aeb8b3b8cec30_proc_1833/experiment_code.py",
+              "bytes": 7322,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-07-22_11-25-57_efficient_targeted_unit_test_generation_for_runt_attempt_0/logs/0-run/experiment_results/experiment_3e3ef3e5714643aab62aeb8b3b8cec30_proc_1833/plotting_code.py",
+              "bytes": 3771,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-07-22_11-25-57_efficient_targeted_unit_test_generation_for_runt_attempt_0/logs/0-run/experiment_results/experiment_3f6a954adc9a485b917a8b38695025bf_proc_2796/experiment_code.py",
+              "bytes": 14175,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-07-22_11-25-57_efficient_targeted_unit_test_generation_for_runt_attempt_0/logs/0-run/experiment_results/experiment_3f6a954adc9a485b917a8b38695025bf_proc_2796/plotting_code.py",
+              "bytes": 4389,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-07-22_11-25-57_efficient_targeted_unit_test_generation_for_runt_attempt_0/logs/0-run/experiment_results/experiment_42ffd1fd78594a51ae04a11e40871490_proc_1647/experiment_code.py",
+              "bytes": 5488,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-07-22_11-25-57_efficient_targeted_unit_test_generation_for_runt_attempt_0/logs/0-run/experiment_results/experiment_42ffd1fd78594a51ae04a11e40871490_proc_1647/plotting_code.py",
+              "bytes": 2166,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-07-22_11-25-57_efficient_targeted_unit_test_generation_for_runt_attempt_0/logs/0-run/experiment_results/experiment_4b71e5c865414d59a86c8263f28f9002_proc_2795/experiment_code.py",
+              "bytes": 11603,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-07-22_11-25-57_efficient_targeted_unit_test_generation_for_runt_attempt_0/logs/0-run/experiment_results/experiment_4b71e5c865414d59a86c8263f28f9002_proc_2795/plotting_code.py",
+              "bytes": 2754,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-07-22_11-25-57_efficient_targeted_unit_test_generation_for_runt_attempt_0/logs/0-run/experiment_results/experiment_4e9ec314b12b4526b706ded4002d5a26_proc_2794/experiment_code.py",
+              "bytes": 12431,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-07-22_11-25-57_efficient_targeted_unit_test_generation_for_runt_attempt_0/logs/0-run/experiment_results/experiment_4e9ec314b12b4526b706ded4002d5a26_proc_2794/plotting_code.py",
+              "bytes": 3076,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-07-22_11-25-57_efficient_targeted_unit_test_generation_for_runt_attempt_0/logs/0-run/experiment_results/experiment_4fd921b2c429421b8b652d953e733d89_proc_1831/experiment_code.py",
+              "bytes": 5379,
+              "via": "glob"
+            }
+          ]
+        },
+        "results": {
+          "substantive": true,
+          "normalized_path": "experiments/2026-07-22_11-25-57_efficient_targeted_unit_test_generation_for_runt_attempt_0/logs/0-run/ablation_summary.json",
+          "numeric_leaf_count": 338,
+          "discovered_files": [
+            {
+              "path": "session/data/metrics.json",
+              "bytes": 157,
+              "via": "candidate"
+            },
+            {
+              "path": "experiments/2026-07-22_11-25-57_efficient_targeted_unit_test_generation_for_runt_attempt_0/logs/0-run/ablation_summary.json",
+              "bytes": 321667,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-07-22_11-25-57_efficient_targeted_unit_test_generation_for_runt_attempt_0/logs/0-run/baseline_summary.json",
+              "bytes": 94934,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-07-22_11-25-57_efficient_targeted_unit_test_generation_for_runt_attempt_0/logs/0-run/draft_summary.json",
+              "bytes": 8109,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-07-22_11-25-57_efficient_targeted_unit_test_generation_for_runt_attempt_0/logs/0-run/research_summary.json",
+              "bytes": 96183,
+              "via": "glob"
+            }
+          ],
+          "metrics_keys_sample": []
+        },
+        "paper": {
+          "tex": null,
+          "pdf": null,
+          "md": null,
+          "json": {
+            "path": "experiments/2026-07-22_11-25-57_efficient_targeted_unit_test_generation_for_runt_attempt_0/logs/0-run/draft_summary.json",
+            "bytes": 8109,
+            "via": "glob"
+          },
+          "status": "json_only",
+          "score": 0.5
+        }
+      },
+      "bonus": {
+        "experiment_plan": null,
+        "experiment_log": {
+          "path": "ai_scientist_run.log",
+          "bytes": 1775846,
+          "via": "glob"
+        },
+        "review": null,
+        "readme": null,
+        "narrative": null,
+        "bib": null
+      },
+      "manifest_status": null,
+      "gate_scores": {
+        "idea": 1.0,
+        "code": 1.0,
+        "results": 1.0,
+        "paper": 0.5
+      },
+      "fairness": {
+        "gates": [
+          "idea",
+          "code",
+          "results",
+          "paper"
+        ],
+        "paper_gate_rule": "PDF=1.0; TeX-only/md_only/json_only=0.5; complete requires PDF",
+        "results_gate_rule": "substantive numeric results via framework-aware normalize_results",
+        "audit_ref": "framework_profile.FAIRNESS_AUDIT"
+      },
+      "notes": [
+        "Required: idea, code, substantive results, paper (PDF full; TeX/markdown/JSON draft half).",
+        "Stub/seed metrics (e.g. dataset_candidate/metrics.json) do not satisfy results.",
+        "Framework noise (.deepscientist_npm, skills/templates, runtime) is excluded from code/results/paper.",
+        "Manifest status is informational; disk presence is authoritative."
+      ]
+    },
+    "idea_generation": {
+      "run_dir": "~/ai_scientist_inputs/FSE-2025-001_efficient_targeted_unit_test_generation/workspace/ai_scientist_2026-07-22_11-23-59",
+      "task_dir": "~/ai_scientist_inputs/FSE-2025-001_efficient_targeted_unit_test_generation",
+      "idea_path": "~/ai_scientist_inputs/FSE-2025-001_efficient_targeted_unit_test_generation/workspace/ai_scientist_2026-07-22_11-23-59/session/idea.json",
+      "status": "ok",
+      "dimensions": {
+        "novelty": {
+          "score": 1.0,
+          "justification": "The idea text contains no concrete method, only a problem statement and experiment setup. The core goal is already present in the Solution Space (e.g., R20, R24).",
+          "rubric": "Existing: the idea's core method is already clearly present or solved in the Solution Space; only tiny parameter / test-case changes.",
+          "category": "Existing",
+          "nearest_solution_space_ids": [
+            "R20",
+            "R24"
+          ],
+          "differentiation": "The idea does not propose any method; it merely restates the problem of targeted test generation for exceptions, which is already addressed by existing works."
+        },
+        "feasibility": {
+          "score": 1.0,
+          "justification": "No implementation plan is provided; the idea is just a problem description, making it impossible to assess or execute any engineering effort.",
+          "rubric": "Theoretically infeasible / compute catastrophe: NP-hard-scale computation, must dynamically reproduce extremely complex system-level vulnerability environments, or depends on unavailable closed-source model internal weights; not doable by a single person."
+        },
+        "clarity": {
+          "score": 1.0,
+          "justification": "The idea lacks any technical approach, algorithm, or system design. It only defines the problem and evaluation metrics, with no method description.",
+          "rubric": "Vague concept: full of empty buzzwords; problem undefined; method only gives a high-level direction with little substance."
+        }
+      },
+      "overall_score": 1.0,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "novelty",
+        "feasibility",
+        "clarity"
+      ],
+      "solution_space": {
+        "status": "ok",
+        "paper_count": 37,
+        "entry_count": 37,
+        "cache_hit": false,
+        "source_file": "~/ai_scientist_inputs/FSE-2025-001_efficient_targeted_unit_test_generation/mineru_sections.json",
+        "stats": {
+          "papers": 37,
+          "extracted": 37,
+          "usable_abstracts": 4,
+          "citation_meta_abstracts": 0,
+          "missing_abstracts": 33,
+          "mineru_titles": 36,
+          "related_work_titles": 5,
+          "abstracts_attached": 4,
+          "related_work_extras": 1,
+          "batches": 3
+        },
+        "error": null
+      },
+      "notes": [
+        "Scores the intermediate idea artifact (not the final paper).",
+        "Dimensions: novelty, feasibility, clarity (each 1-5). Excitement removed.",
+        "Novelty is scored against a Solution Space built from mineru REFERENCES titles (+ related_work.json abstracts when matched)."
+      ],
+      "idea_via": "candidate",
+      "idea_relative": "session/idea.json",
+      "summary": "The idea is not a research idea but a restatement of the task's problem statement. It proposes no method, algorithm, or system design, making it impossible to evaluate novelty, feasibility, or clarity. It is essentially a placeholder.",
+      "strengths": [],
+      "weaknesses": [
+        "No method proposed",
+        "No technical contribution",
+        "Merely restates the problem"
+      ],
+      "llm_meta": {
+        "model": "deepseek-v4-pro",
+        "base_url": "https://api-sg.umodelverse.ai/v1",
+        "usage": {
+          "completion_tokens": 1412,
+          "completion_tokens_details": {
+            "reasoning_tokens": 1096
+          },
+          "prompt_tokens": 5186,
+          "prompt_tokens_details": null,
+          "reasoning_tokens": 1096,
+          "total_tokens": 6598
+        },
+        "attempt": 0
+      }
+    },
+    "peer_review": {
+      "run_dir": "~/ai_scientist_inputs/FSE-2025-001_efficient_targeted_unit_test_generation/workspace/ai_scientist_2026-07-22_11-23-59",
+      "review_report": null,
+      "paper_pdf": null,
+      "paper_tex": null,
+      "status": "not_provided",
+      "dimensions": {},
+      "overall_score": null,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "soundness",
+        "significance",
+        "novelty",
+        "presentation",
+        "credibility"
+      ],
+      "notes": [
+        "Stanford Agentic Reviewer (paperreview.ai): manual download to artifacts/peer_review/stanford_apr.md, or pass --auto-paperreview.",
+        "Dimensions: soundness, significance, novelty, presentation, credibility (each 1-5)."
+      ],
+      "paperreview": null,
+      "optional": true,
+      "hint": "Optional external review (Stanford APR). Upload paper/main.pdf to https://paperreview.ai/ , save review to ~/ai_scientist_inputs/FSE-2025-001_efficient_targeted_unit_test_generation/workspace/ai_scientist_2026-07-22_11-23-59/artifacts/peer_review/stanford_apr.md"
+    },
+    "alignment": {
+      "run_dir": "~/ai_scientist_inputs/FSE-2025-001_efficient_targeted_unit_test_generation/workspace/ai_scientist_2026-07-22_11-23-59",
+      "task_dir": "~/ai_scientist_inputs/FSE-2025-001_efficient_targeted_unit_test_generation",
+      "status": "ok",
+      "original": {
+        "paper_title": "UnitCon: Synthesizing Targeted Unit Tests for Java Runtime Exceptions",
+        "selection": {
+          "num_blocks": 7,
+          "total_chars": 31998,
+          "inferred_roles": {
+            "abstract": 1,
+            "introduction": 1,
+            "experiment": 4,
+            "conclusion": 1
+          },
+          "mineru_raw_keys": {
+            "field:abstract": 1,
+            "field:introduction": 1,
+            "field:experiment": 1,
+            "other": 3,
+            "conclusion": 1
+          },
+          "infer_reasons": {
+            "top_level_field": 3,
+            "title": 4
+          },
+          "rescued_from_other": 3,
+          "note": "mineru key is unreliable; blocks are selected by title/body/inheritance. rescued_from_other counts sections labeled other but treated as typed roles."
+        },
+        "claims": [
+          {
+            "id": "C1",
+            "statement": "UnitCon consistently reproduces more target runtime exceptions than state-of-the-art baselines, achieving a 52.5% success rate compared to the best baseline average of 44.3%.",
+            "direction": "improves",
+            "metric_names": [
+              "target_error_reproduction_rate"
+            ],
+            "evidence_quote": "UnitCon generated error-triggering test cases for 104 out of 198 (52.5%) projects within 10 minutes. On the other hand, the other tools succeeded in ... at most 87.7 (44.3%) cases, on average.",
+            "confidence": 0.95
+          },
+          {
+            "id": "C2",
+            "statement": "UnitCon reproduces 1.2–3.6 times more target errors than the baselines, confirming a substantial improvement in targeted test generation.",
+            "direction": "improves",
+            "metric_names": [
+              "improvement_factor_over_baseline"
+            ],
+            "evidence_quote": "In total, UnitCon reproduces 1.2–3.6× more target errors than baselines.",
+            "confidence": 0.9
+          },
+          {
+            "id": "C3",
+            "statement": "UnitCon is effective at revealing previously unknown bugs in real-world projects, discovering 21 new NPE bugs across 51 open-source projects.",
+            "direction": "neutral",
+            "metric_names": [
+              "new_bugs_found"
+            ],
+            "evidence_quote": "discovered 21 previously unknown NPE bugs",
+            "confidence": 0.9
+          },
+          {
+            "id": "C4",
+            "statement": "UnitCon uniquely reproduces errors that no other tool can find, with the highest number of exclusively reproduced errors (8) among the compared tools.",
+            "direction": "mixed",
+            "metric_names": [
+              "exclusive_reproduced_errors"
+            ],
+            "evidence_quote": "UnitCon exclusively reproduced 8 errors that none of the other tools found, which is the highest number of uniquely reproduced errors among the six tools.",
+            "confidence": 0.9
+          }
+        ],
+        "metrics": [
+          {
+            "name": "target_error_reproduction_rate",
+            "value": 0.525,
+            "unit": "ratio",
+            "higher_is_better": true,
+            "setting": "198 benchmark projects, 10-minute time limit per project",
+            "is_sota_or_best": true,
+            "baseline_name": "best baseline average (EvoSuite variants)",
+            "baseline_value": 0.443,
+            "evidence_quote": "UnitCon generated error-triggering test cases for 104 out of 198 (52.5%) projects within 10 minutes. On the other hand, the other tools succeeded in ... at most 87.7 (44.3%) cases, on average.",
+            "confidence": 0.95
+          },
+          {
+            "name": "improvement_factor_over_baseline",
+            "value": null,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "Ratio of UnitCon's reproduced errors to baselines' errors; range 1.2x to 3.6x across tools",
+            "is_sota_or_best": true,
+            "baseline_name": "EvoSuite, EvoFuzz, NPETest, UTBot, Randoop",
+            "baseline_value": null,
+            "evidence_quote": "In total, UnitCon reproduces 1.2–3.6× more target errors than baselines.",
+            "confidence": 0.9
+          },
+          {
+            "name": "new_bugs_found",
+            "value": 21,
+            "unit": "count",
+            "higher_is_better": true,
+            "setting": "51 real-world open-source projects, inspecting Infer NPE alarms",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "discovered 21 previously unknown NPE bugs",
+            "confidence": 0.9
+          },
+          {
+            "name": "exclusive_reproduced_errors",
+            "value": 8,
+            "unit": "count",
+            "higher_is_better": true,
+            "setting": "198 benchmark projects, comparison with 5 baselines over 10 runs",
+            "is_sota_or_best": true,
+            "baseline_name": "Other baselines (EvoSuite, EvoFuzz, etc.)",
+            "baseline_value": null,
+            "evidence_quote": "UnitCon exclusively reproduced 8 errors that none of the other tools found, which is the highest number of uniquely reproduced errors among the six tools.",
+            "confidence": 0.9
+          }
+        ],
+        "overall_conclusion": "UnitCon significantly outperforms existing unit test generation tools in reproducing targeted runtime exceptions, achieving a 52.5% success rate (vs. 44.3% best baseline) and finding 21 new real-world bugs. The key innovation is using static analysis to prune and prioritize the test search space.",
+        "comparable_notes": "Baselines were run with targeted options where available (class or method level). All tools were limited to 10 minutes per benchmark. Baselines were run 10 times with different random seeds; their best performances are reported. UnitCon's static analysis time was included in the time limit. Tools were not allowed to use mock objects for fairness.",
+        "cache_hit": true
+      },
+      "agent": {
+        "status": "ok",
+        "run_dir": "~/ai_scientist_inputs/FSE-2025-001_efficient_targeted_unit_test_generation/workspace/ai_scientist_2026-07-22_11-23-59",
+        "claims": [
+          {
+            "id": "A1",
+            "statement": "Random search achieves a mean success rate of 62.9% on moderately difficult synthetic targets.",
+            "direction": "neutral",
+            "metric_names": [
+              "target_exception_triggering_success_rate"
+            ],
+            "evidence_quote": "Mean success rate from first experiment (Node 2fbff05ee07a41b0947f2ad2ce7f5b60): 0.629",
+            "confidence": 0.9
+          },
+          {
+            "id": "A2",
+            "statement": "Random search achieves perfect success rates (100%) on three synthetic programs with attempt budgets of 500, 1000, and 2000.",
+            "direction": "neutral",
+            "metric_names": [
+              "target_exception_triggering_success_rate"
+            ],
+            "evidence_quote": "Success rate for all three programs (prog_0, prog_1, prog_2) with 500-attempt budget: 1.0; with 1000-attempt budget: 1.0; with 2000-attempt budget: 1.0",
+            "confidence": 0.9
+          },
+          {
+            "id": "A3",
+            "statement": "Success rates vary across random seeds, ranging approximately from 0.5 to 0.7.",
+            "direction": "neutral",
+            "metric_names": [
+              "target_exception_triggering_success_rate"
+            ],
+            "evidence_quote": "The bar chart displays the success rate of triggering exceptions for each seed, with success rates consistently around or above 0.5 across all seeds. The highest success rate is observed for seed 5, reaching nearly 0.7.",
+            "confidence": 0.7
+          },
+          {
+            "id": "A4",
+            "statement": "The majority of synthetic targets have moderate difficulty (around 8 on a scale).",
+            "direction": "neutral",
+            "metric_names": [],
+            "evidence_quote": "The histogram illustrates the distribution of target difficulties, with a notable peak around the difficulty level of 8.",
+            "confidence": 0.7
+          },
+          {
+            "id": "A5",
+            "statement": "ClassCast and NullPointer exceptions are the most common target exception types.",
+            "direction": "neutral",
+            "metric_names": [],
+            "evidence_quote": "ClassCast and NullPointer exceptions are the most common, each having around 70 targets, while IndexOutOfBounds exceptions are less frequent.",
+            "confidence": 0.7
+          }
+        ],
+        "metrics": [
+          {
+            "name": "target_exception_triggering_success_rate",
+            "value": 0.629,
+            "unit": "proportion",
+            "higher_is_better": true,
+            "setting": "synthetic targets with varying difficulty, random search, first experiment",
+            "is_sota_or_best": false,
+            "baseline_name": "random search",
+            "baseline_value": null,
+            "evidence_quote": "Mean success rate from first experiment (Node 2fbff05ee07a41b0947f2ad2ce7f5b60): 0.629",
+            "confidence": 0.9
+          },
+          {
+            "name": "target_exception_triggering_success_rate",
+            "value": 1.0,
+            "unit": "proportion",
+            "higher_is_better": true,
+            "setting": "three synthetic programs (prog_0, prog_1, prog_2) with attempt budgets 500, 1000, 2000, second experiment",
+            "is_sota_or_best": false,
+            "baseline_name": "random search",
+            "baseline_value": null,
+            "evidence_quote": "Success rate for all three programs with 500-attempt budget: 1.0; with 1000-attempt budget: 1.0; with 2000-attempt budget: 1.0",
+            "confidence": 0.9
+          }
+        ],
+        "overall_conclusion": "Random search establishes a baseline for targeted unit test generation, achieving moderate success (62.9%) on moderately difficult synthetic targets and perfect success on simpler programs, with performance varying by seed and target difficulty.",
+        "sources": {
+          "metrics_path": "experiments/2026-07-22_11-25-57_efficient_targeted_unit_test_generation_for_runt_attempt_0/logs/0-run/ablation_summary.json",
+          "paper_tex_path": "experiments/2026-07-22_11-25-57_efficient_targeted_unit_test_generation_for_runt_attempt_0/logs/0-run/draft_summary.json"
+        },
+        "llm_meta": {
+          "model": "deepseek-v4-pro",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 2154,
+            "completion_tokens_details": {
+              "reasoning_tokens": 1222
+            },
+            "prompt_tokens": 3818,
+            "prompt_tokens_details": null,
+            "reasoning_tokens": 1222,
+            "total_tokens": 5972
+          },
+          "attempt": 0
+        }
+      },
+      "comparison": {
+        "status": "ok",
+        "claim_alignment": [
+          {
+            "original_claim_id": "C1",
+            "agent_claim_id": null,
+            "label": "incomparable",
+            "rationale": "Agent evaluates random search on synthetic targets, not UnitCon on the original benchmark of 198 real-world projects. Different dataset and protocol."
+          },
+          {
+            "original_claim_id": "C2",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "Agent makes no claim about improvement factor over baselines."
+          },
+          {
+            "original_claim_id": "C3",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "Agent makes no claim about discovering new bugs in real-world projects."
+          },
+          {
+            "original_claim_id": "C4",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "Agent makes no claim about exclusively reproduced errors."
+          }
+        ],
+        "metric_alignment": [
+          {
+            "original_metric": "target_error_reproduction_rate",
+            "agent_metric": "target_exception_triggering_success_rate",
+            "comparable": false,
+            "original_value": 0.525,
+            "agent_value": 0.629,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Agent's metric is measured on synthetic targets with random search, not on the original 198-project benchmark with UnitCon. Different datasets and protocols."
+          },
+          {
+            "original_metric": "improvement_factor_over_baseline",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": null,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Agent does not report any improvement factor over baselines."
+          },
+          {
+            "original_metric": "new_bugs_found",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 21,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Agent does not report any new bugs found."
+          },
+          {
+            "original_metric": "exclusive_reproduced_errors",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 8,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Agent does not report any exclusive reproduced errors."
+          }
+        ],
+        "summary": {
+          "direction_consistency": "same_direction_incomparable",
+          "consistent_claim_ratio": 0.0,
+          "has_comparable_metrics": false,
+          "sota_improvement_summary": "N/A",
+          "overall_alignment_score": 0.4,
+          "score_rationale": "Agent works on the same research problem (targeted unit test generation for runtime exceptions) but uses a different protocol (random search on synthetic targets) and does not compare to UnitCon or its baselines. All original claims are incomparable or missing, so no direct alignment. Score set to 0.4 to reflect same direction but incomparable evidence."
+        },
+        "warnings": [
+          "Agent's experiments are on synthetic targets, not the original benchmark of 198 real-world projects. No comparison to UnitCon or baselines. The agent's success rate (62.9%) is not directly comparable to UnitCon's 52.5% due to different datasets and protocols."
+        ],
+        "llm_meta": {
+          "model": "deepseek-v4-pro",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 1925,
+            "completion_tokens_details": {
+              "reasoning_tokens": 1067
+            },
+            "prompt_tokens": 2887,
+            "prompt_tokens_details": null,
+            "reasoning_tokens": 1067,
+            "total_tokens": 4812
+          },
+          "attempt": 0
+        }
+      },
+      "overall_alignment_score": 0.4,
+      "direction_consistency": "same_direction_incomparable"
+    },
+    "experiment_analysis": {
+      "run_dir": "~/ai_scientist_inputs/FSE-2025-001_efficient_targeted_unit_test_generation/workspace/ai_scientist_2026-07-22_11-23-59",
+      "task_dir": "~/ai_scientist_inputs/FSE-2025-001_efficient_targeted_unit_test_generation",
+      "status": "ok",
+      "metrics_path": "experiments/2026-07-22_11-25-57_efficient_targeted_unit_test_generation_for_runt_attempt_0/logs/0-run/ablation_summary.json",
+      "experiment_success": {
+        "status": "ok",
+        "success": true,
+        "metrics_path": "experiments/2026-07-22_11-25-57_efficient_targeted_unit_test_generation_for_runt_attempt_0/logs/0-run/ablation_summary.json",
+        "absolute_metrics_path": "~/ai_scientist_inputs/FSE-2025-001_efficient_targeted_unit_test_generation/workspace/ai_scientist_2026-07-22_11-23-59/experiments/2026-07-22_11-25-57_efficient_targeted_unit_test_generation_for_runt_attempt_0/logs/0-run/ablation_summary.json",
+        "checks": {
+          "has_results_file": true,
+          "non_stub": true,
+          "numeric_leaf_count": 338,
+          "min_numeric_ok": true
+        },
+        "manifest_hints": {
+          "status": null,
+          "returncode": null,
+          "benchmark_complete": null,
+          "artifacts_metrics_flag": false
+        },
+        "warnings": [],
+        "suspicious_values": [],
+        "note": "success=true requires substantive results (framework-aware path) with >=3 numeric leaves. Supports metrics.json, results.json, experiment_results.txt, etc. Manifest returncode/benchmark_complete are soft warnings only."
+      },
+      "idea_code_consistency": {
+        "status": "ok",
+        "idea_path": "session/idea.json",
+        "code_files": [
+          "experiments/2026-07-22_11-25-57_efficient_targeted_unit_test_generation_for_runt_attempt_0/auto_plot_aggregator.py",
+          "experiments/2026-07-22_11-25-57_efficient_targeted_unit_test_generation_for_runt_attempt_0/logs/0-run/experiment_results/experiment_06c4a0ad3e0648bdb0abef8d4b50c3f8_proc_2794/experiment_code.py",
+          "experiments/2026-07-22_11-25-57_efficient_targeted_unit_test_generation_for_runt_attempt_0/logs/0-run/experiment_results/experiment_06c4a0ad3e0648bdb0abef8d4b50c3f8_proc_2794/plotting_code.py",
+          "experiments/2026-07-22_11-25-57_efficient_targeted_unit_test_generation_for_runt_attempt_0/logs/0-run/experiment_results/experiment_0ba604f7dce644629ebac93aef5fbdd4_proc_2024/experiment_code.py"
+        ],
+        "score_scale": "1-5",
+        "score": 1.0,
+        "label": "severe_mismatch",
+        "justification": "The code implements a method-level parameter vulnerability prediction task using synthetic data from HuggingFace, while the idea is about generating unit tests to trigger runtime exceptions at specific locations in Java programs using Defects4J and comparing with Randoop/EvoSuite. No element of the idea is implemented.",
+        "matched_elements": [],
+        "missing_or_divergent_elements": [
+          "Targeted unit test generation for runtime exceptions",
+          "Defects4J dataset usage",
+          "Randoop and EvoSuite baselines",
+          "Target Exception Triggering Rate metric",
+          "Number of Triggered Exceptions metric",
+          "Real Bug Discovery metric",
+          "Java program under test with specific exception locations",
+          "Time budget per target",
+          "No source code modification constraint"
+        ],
+        "rubric": "Severe mismatch: code implements a different problem/method than the idea, or is unrelated boilerplate.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 576,
+            "completion_tokens_details": {
+              "reasoning_tokens": 386
+            },
+            "prompt_tokens": 5239,
+            "prompt_tokens_details": null,
+            "reasoning_tokens": 386,
+            "total_tokens": 5815
+          },
+          "attempt": 0
+        }
+      },
+      "setup_coverage": {
+        "status": "ok",
+        "overall_coverage": 0.38888888888888884,
+        "datasets": {
+          "gold_count": 2,
+          "hit_count": 1,
+          "miss_count": 1,
+          "coverage": 0.5,
+          "hits": [
+            "Java Defect Benchmark Suite (e.g., Defects4J)"
+          ],
+          "misses": [
+            "Real-world Open-Source Java Projects"
+          ]
+        },
+        "baselines": {
+          "gold_count": 2,
+          "hit_count": 0,
+          "miss_count": 2,
+          "coverage": 0.0,
+          "hits": [],
+          "misses": [
+            "Randoop",
+            "EvoSuite"
+          ]
+        },
+        "metrics": {
+          "gold_count": 3,
+          "hit_count": 2,
+          "miss_count": 1,
+          "coverage": 0.6666666666666666,
+          "hits": [
+            "Target Exception Triggering Rate",
+            "Number of Triggered Exceptions"
+          ],
+          "misses": [
+            "Real Bug Discovery"
+          ]
+        },
+        "agent_protocol": {},
+        "gold_protocol": {},
+        "dataset_dirs": [
+          "dataset_candidate"
+        ],
+        "flags": {
+          "weaker_baseline_suspected": true,
+          "weak_protocol": [],
+          "synthetic_data": "synthetic_allowed_by_task",
+          "gold_allows_synthetic": true
+        },
+        "gold_sources": [
+          "~/ai_scientist_inputs/FSE-2025-001_efficient_targeted_unit_test_generation/task.md",
+          "~/ai_scientist_inputs/FSE-2025-001_efficient_targeted_unit_test_generation/metadata.json"
+        ],
+        "note": "Coverage is name/alias matching against task.md Datasets/Baselines/Metrics. weak_protocol flags large reductions in trials/timeout vs Constraints. Synthetic corpora are not penalized when the task itself requires synthesis."
+      },
+      "ablation_significance": {
+        "status": "ok",
+        "idea_path": "session/idea.json",
+        "significance_signals_rule_based": {
+          "signals": [
+            "paper_contains:significant"
+          ],
+          "artifact_paths": [],
+          "has_any_significance_artifact": true
+        },
+        "evidence_format": "raw_json_truncated",
+        "study_type": "new_method",
+        "components": [
+          {
+            "name": "Method embedding predictor",
+            "role": "module",
+            "ablation_expected": true,
+            "significance_expected": false,
+            "ablation_status": "present",
+            "ablation_evidence": "Ablation study 'No Method Embedding Predictor' conducted, replacing method-embedding predictor with simple feed-forward network using only padded argument bits.",
+            "significance_status": "not_required",
+            "significance_evidence": "Ablation does not require significance testing."
+          },
+          {
+            "name": "Random search baseline",
+            "role": "baseline",
+            "ablation_expected": false,
+            "significance_expected": true,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "Baseline is a comparison, not a method component to ablate.",
+            "significance_status": "missing",
+            "significance_evidence": "No confidence intervals, p-values, or statistical tests reported for comparison with neural-guided search."
+          },
+          {
+            "name": "Genetic algorithm baseline",
+            "role": "baseline",
+            "ablation_expected": false,
+            "significance_expected": true,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "Baseline is a comparison, not a method component to ablate.",
+            "significance_status": "missing",
+            "significance_evidence": "No confidence intervals, p-values, or statistical tests reported for comparison with neural-guided search."
+          }
+        ],
+        "ablation_coverage_score": 1.0,
+        "overall_ablation_ok": true,
+        "overall_significance_ok": false,
+        "summary": "The method includes a neural-guided search with a method embedding predictor. An ablation study removing the method embedding is present. However, comparisons against baselines lack statistical significance testing, which is expected for this type of study.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 2431,
+            "completion_tokens_details": {
+              "reasoning_tokens": 1997
+            },
+            "prompt_tokens": 5325,
+            "prompt_tokens_details": null,
+            "reasoning_tokens": 1997,
+            "total_tokens": 7756
+          },
+          "attempt": 0
+        }
+      },
+      "results_paper_consistency": {
+        "status": "ok",
+        "paper_tex": "experiments/2026-07-22_11-25-57_efficient_targeted_unit_test_generation_for_runt_attempt_0/logs/0-run/draft_summary.json",
+        "paper_kind": "paper_json",
+        "results_format": "raw_json_truncated",
+        "digest_hint": {
+          "unfavorable_count": 0,
+          "trial_fail_count": 0,
+          "trial_success_count": 0,
+          "metadata": {}
+        },
+        "score_scale": "1-5",
+        "method": "Direct LLM comparison: agent's FINAL results artifact (metrics.json summary) vs paper Results/Discussion/Conclusion. Interim failed runs are NOT evidence unless still present in the final metrics file.",
+        "score": 1.0,
+        "consistency_label": "severe",
+        "hiding_unfavorable_suspected": true,
+        "hiding_confidence": 1.0,
+        "justification": "The paper's analysis and conclusions describe random search baselines on synthetic programs with success rates (0.629, 1.0), but the provided final experimental results are from a neural-guided search system with cross-dataset evaluation, reporting metrics like average candidate tests (e.g., 1.0, 1.43, 2.09) and training losses. There is no overlap in experiments, metrics, or plots. The paper completely ignores the actual final results and presents unrelated claims, indicating severe inconsistency and concealment of the true experimental outcomes.",
+        "supported_claims": [],
+        "unsupported_or_overstated_claims": [
+          "All paper claims about random search baselines, success rates, difficulty distribution, exception type counts, per-seed success rates, and success rate comparison are unsupported by the final results."
+        ],
+        "numeric_mismatches": [
+          {
+            "paper": "Mean success rate 0.629 from first experiment; success rates 1.0 for all programs in second experiment",
+            "results": "No success rates present; metrics include average candidate tests (e.g., random: 2.09, 2.04, 1.97; neural: 1.0, 1.43, 1.0) and training losses (0.2923, 0.0096, 0.2907)",
+            "note": "The paper's key numbers are entirely absent from the final results; the final results contain completely different metrics."
+          }
+        ],
+        "unfavorable_in_final_results": [],
+        "unfavorable_acknowledged_in_paper": [],
+        "unfavorable_missing_from_paper": [],
+        "rubric": "Severe inconsistency or concealment: paper claims contradict metrics, invent numbers, or omit clear failures/negative findings that dominate the results.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 1354,
+            "completion_tokens_details": {
+              "reasoning_tokens": 918
+            },
+            "prompt_tokens": 9675,
+            "prompt_tokens_details": null,
+            "reasoning_tokens": 918,
+            "total_tokens": 11029
+          },
+          "attempt": 0
+        }
+      },
+      "scores": {
+        "experiment_success": true,
+        "idea_code_score": 1.0,
+        "setup_coverage": 0.38888888888888884,
+        "ablation_coverage_score": 1.0,
+        "overall_ablation_ok": true,
+        "overall_significance_ok": false,
+        "results_paper_score": 1.0,
+        "hiding_unfavorable_suspected": true
+      },
+      "notes": [
+        "Axes 1,2,3,4,6 in experiment_analysis (figures excluded).",
+        "setup_coverage matches task.md Datasets/Baselines/Metrics; weak_protocol flags reductions vs Constraints.",
+        "Axis 6: final normalized results vs paper; interim run logs not used as ground truth."
+      ]
+    },
+    "literature_review": {
+      "run_dir": "~/ai_scientist_inputs/FSE-2025-001_efficient_targeted_unit_test_generation/workspace/ai_scientist_2026-07-22_11-23-59",
+      "task_dir": "~/ai_scientist_inputs/FSE-2025-001_efficient_targeted_unit_test_generation",
+      "status": "ok",
+      "as_of_year": 2026,
+      "agent_ref_count": 5,
+      "sources": [
+        {
+          "path": "~/ai_scientist_inputs/FSE-2025-001_efficient_targeted_unit_test_generation/workspace/ai_scientist_2026-07-22_11-23-59/experiments/2026-07-22_11-25-57_efficient_targeted_unit_test_generation_for_runt_attempt_0/cached_citations.bib",
+          "kind": "bib"
+        }
+      ],
+      "collection_audit": {
+        "cited_keys_count": 0,
+        "filter_mode": "small_uncited_bib",
+        "bib_total_before_filter": 5,
+        "bib_after_filter": 5,
+        "uncited_bib_skipped": 0,
+        "agent_ref_count": 5
+      },
+      "fabrication": {
+        "status": "ok",
+        "scholarly_count": 5,
+        "verified_count": 3,
+        "fake_count": 0,
+        "lookup_failed_count": 2,
+        "non_paper_count": 0,
+        "fabrication_rate": 0.0,
+        "items": [
+          {
+            "title": "Randoop: Feedback-Directed Random Testing for Java",
+            "doi": "10.1145/1297846.1297902",
+            "arxiv_id": "",
+            "year": 2007,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Randoop: feedback-directed random testing for Java",
+            "resolved_year": 2007,
+            "notes": [],
+            "cache_hit": true,
+            "cite_key": "pacheco2007randoopfr",
+            "source_kind": "bib"
+          },
+          {
+            "title": "EvoSuite: automatic test suite generation for object-oriented software",
+            "doi": "",
+            "arxiv_id": "",
+            "year": 2011,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated.",
+              "Saw 1 conclusive miss(es) mixed with 1 API error(s)."
+            ],
+            "cache_hit": true,
+            "cite_key": "fraser2011evosuiteat",
+            "source_kind": "bib"
+          },
+          {
+            "title": "Defects4J: a database of existing faults to enable controlled testing studies for Java programs",
+            "doi": "10.1145/2610384.2628055",
+            "arxiv_id": "",
+            "year": 2014,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Defects4J: a database of existing faults to enable controlled testing studies for Java programs",
+            "resolved_year": 2014,
+            "notes": [],
+            "cache_hit": true,
+            "cite_key": "just2014defects4jad",
+            "source_kind": "bib"
+          },
+          {
+            "title": "CodeXGLUE: A Machine Learning Benchmark Dataset for Code Understanding and Generation",
+            "doi": "",
+            "arxiv_id": "2102.04664",
+            "year": 2021,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "CodeXGLUE: A Machine Learning Benchmark Dataset for Code Understanding and Generation",
+            "resolved_year": 2021,
+            "notes": [],
+            "cache_hit": true,
+            "cite_key": "lu2021codexglueam",
+            "source_kind": "bib"
+          },
+          {
+            "title": "MultiPL-E: A Scalable and Polyglot Approach to Benchmarking Neural Code Generation",
+            "doi": "",
+            "arxiv_id": "",
+            "year": 2023,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated.",
+              "Saw 1 conclusive miss(es) mixed with 1 API error(s)."
+            ],
+            "cache_hit": true,
+            "cite_key": "cassano2023multipleas",
+            "source_kind": "bib"
+          }
+        ],
+        "cache_path": "~/ai_scientist_evals/FSE-2025-001_efficient_targeted_unit_test_generation/reference_verify_cache.json",
+        "override_path": "~/ai_scientist_evals/FSE-2025-001_efficient_targeted_unit_test_generation/reference_verify_overrides.json",
+        "note": "fabrication_rate = fake / (verified + fake); lookup_failed (API errors) excluded. GitHub/docs/tool URLs are non_paper and excluded from the rate. To manually correct a false negative, edit reference_verify_overrides.json (key=normalized title / doi / cite_key; value=\"verified\" or a result dict), then re-run."
+      },
+      "coverage": {
+        "status": "ok",
+        "gold_source": "~/ai_scientist_inputs/FSE-2025-001_efficient_targeted_unit_test_generation/mineru_sections.json",
+        "gold_count": 36,
+        "gold_is_original_paper_references": true,
+        "gold_is_openalex_subset": false,
+        "agent_count": 5,
+        "intersection_size": 1,
+        "recall": 0.027777777777777776,
+        "precision": 0.2,
+        "matched_gold_keys": [
+          "mineru_ref_15"
+        ],
+        "primary_metric": "recall",
+        "note": "Primary metric is recall against the original paper bibliography (titles from mineru_sections.json REFERENCES; related_work.json used only to enrich DOI/year or as fallback if mineru titles are empty). Denominator = |original paper references|. Precision is secondary (agent may cite valid extra papers)."
+      },
+      "recency": {
+        "status": "ok",
+        "dated_count": 5,
+        "unknown_year_count": 0,
+        "year_histogram": {
+          "2007": 1,
+          "2011": 1,
+          "2014": 1,
+          "2021": 1,
+          "2023": 1
+        },
+        "windows": {
+          "3": {
+            "years": 3,
+            "cutoff_year_inclusive": 2023,
+            "recent_count": 1,
+            "recent_ratio": 0.2
+          },
+          "5": {
+            "years": 5,
+            "cutoff_year_inclusive": 2021,
+            "recent_count": 2,
+            "recent_ratio": 0.4
+          }
+        }
+      },
+      "scores": {
+        "fabrication_rate": 0.0,
+        "coverage_recall": 0.027777777777777776,
+        "coverage_precision": 0.2,
+        "recency_ratio_3y": 0.2,
+        "recency_ratio_5y": 0.4
+      }
+    }
+  },
+  "scores": {
+    "completeness": {
+      "complete": false,
+      "overall_score": 0.7,
+      "required_score": 0.875,
+      "bonus_score": 0.03
+    },
+    "peer_review": {
+      "status": "not_provided",
+      "optional": true,
+      "overall_score": null,
+      "score_scale": "1-5",
+      "scoring_method": null
+    },
+    "idea_generation": {
+      "status": "ok",
+      "overall_score": 1.0,
+      "dimensions": {
+        "novelty": 1.0,
+        "feasibility": 1.0,
+        "clarity": 1.0
+      },
+      "novelty_category": "Existing",
+      "solution_space_status": "ok"
+    },
+    "alignment": {
+      "status": "ok",
+      "direction_consistency": "same_direction_incomparable",
+      "overall_alignment_score": 0.4
+    },
+    "literature_review": {
+      "fabrication_rate": 0.0,
+      "coverage_recall": 0.027777777777777776,
+      "coverage_precision": 0.2,
+      "recency_ratio_3y": 0.2,
+      "recency_ratio_5y": 0.4
+    },
+    "experiment_analysis": {
+      "experiment_success": true,
+      "idea_code_score": 1.0,
+      "setup_coverage": 0.38888888888888884,
+      "ablation_coverage_score": 1.0,
+      "overall_ablation_ok": true,
+      "overall_significance_ok": false,
+      "results_paper_score": 1.0,
+      "hiding_unfavorable_suspected": true
+    }
+  },
+  "fair_scores": {
+    "applicable_axes": [
+      "completeness",
+      "idea_generation",
+      "alignment",
+      "literature_review",
+      "experiment_analysis"
+    ],
+    "skipped_axes": [
+      {
+        "axis": "peer_review",
+        "reason": "optional_external_review"
+      }
+    ],
+    "fair_mean_0_1": 0.4663,
+    "note": "fair_mean_0_1 averages only applicable axes; optional peer review and framework-inapplicable literature are excluded from the denominator."
+  },
+  "evals_root": "~/ai_scientist_evals",
+  "claims_cache": "~/ai_scientist_evals/FSE-2025-001_efficient_targeted_unit_test_generation/original_claims.json",
+  "solution_space_cache": "~/ai_scientist_evals/FSE-2025-001_efficient_targeted_unit_test_generation/solution_space.json"
+}

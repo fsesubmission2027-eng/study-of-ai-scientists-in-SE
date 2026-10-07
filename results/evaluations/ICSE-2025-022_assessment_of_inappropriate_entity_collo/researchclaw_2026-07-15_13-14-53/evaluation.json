@@ -1,0 +1,1913 @@
+{
+  "generated_at": "2026-09-29T04:39:48",
+  "run_dir": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/workspace/researchclaw_2026-07-15_13-14-53",
+  "task_dir": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo",
+  "framework": "researchclaw",
+  "fairness_audit": [
+    {
+      "axis": "completeness",
+      "was_unfair": "Required both paper.tex AND paper.pdf; any tool missing one failed equally.",
+      "fix": "Paper gate: PDF=1.0; TeX-only=0.5; ``complete`` requires PDF."
+    },
+    {
+      "axis": "completeness",
+      "was_unfair": "``results`` counted stub/seed JSON (dataset_candidate/metrics.json).",
+      "fix": "``results`` requires substantive numeric results via results_normalize."
+    },
+    {
+      "axis": "experiment_success",
+      "was_unfair": "Only metrics.json; ignored results.json / experiment_results.txt.",
+      "fix": "Framework-ordered result candidates + normalized loaders."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Penalized tools with no bib; airesearcher has no workspace references.",
+      "fix": "literature_applicable=false → status not_applicable; excluded from fair aggregate."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "related_work.json subset as gold made recall hard to interpret.",
+      "fix": "Coverage gold is original paper REFERENCES from mineru; related_work only enriches metadata/fallback."
+    },
+    {
+      "axis": "peer_review",
+      "was_unfair": "Missing Stanford report looked like evaluation failure.",
+      "fix": "status not_provided; optional axis, never counts as tool failure."
+    },
+    {
+      "axis": "paths/find_results",
+      "was_unfair": "Picked downloads/** and sandbox noise (e.g. airesearcher LLVM tree).",
+      "fix": "Exclude downloads/, seeds/, dataset_candidate/, sandbox junk paths."
+    },
+    {
+      "axis": "paths/framework_noise",
+      "was_unfair": "DeepScientist .deepscientist_npm / runtime / skills templates counted as code/paper/results.",
+      "fix": "FRAMEWORK_NOISE_DIRS+markers; quest worktree + eval_output results; paper md drafts; reject template tex."
+    },
+    {
+      "axis": "paths/paper_tex",
+      "was_unfair": "tiny_scientist / ACL runs store paper under latex/*.tex; evaluator only looked at paper/main.tex.",
+      "fix": "latex/**/*.tex with substantive-body heuristic; find_paper_document uses same rules."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Entire custom.bib (300+ anthology entries) verified when paper had zero \\cite commands.",
+      "fix": "collect_agent_references filters bib to in-text cite keys; skips uncited bulk bib (>40 entries)."
+    },
+    {
+      "axis": "paths/ai_scientist_summaries",
+      "was_unfair": "AI Scientist can persist substantive results and paper-like drafts in *_summary.json logs rather than paper/main.tex or results/**/*.json.",
+      "fix": "Treat draft_summary/research_summary as weak paper documents and summary JSONs as result candidates."
+    },
+    {
+      "axis": "framework/ai_scientist_v2",
+      "was_unfair": "Manifest framework ``ai_scientist_v2`` fell through to profile ``unknown``, skipping AI-Scientist idea/result path priorities.",
+      "fix": "Normalize ``ai_scientist_v2`` (and common aliases) to profile key ``ai_scientist``."
+    },
+    {
+      "axis": "idea_generation",
+      "was_unfair": "plan.md/todos.md weak proxies scored same as structured idea.json.",
+      "fix": "Framework idea_priority tried first; missing idea → not_applicable where appropriate."
+    }
+  ],
+  "axes": [
+    "alignment",
+    "completeness",
+    "experiment_analysis",
+    "idea_generation",
+    "literature_review",
+    "peer_review"
+  ],
+  "results": {
+    "completeness": {
+      "framework": "researchclaw",
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/workspace/researchclaw_2026-07-15_13-14-53",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo",
+      "complete": false,
+      "required_score": 0.5,
+      "bonus_score": 0.09,
+      "overall_score": 0.4,
+      "missing": [
+        "results",
+        "paper"
+      ],
+      "required": {
+        "idea": {
+          "path": "artifacts/idea.json",
+          "bytes": 24843,
+          "via": "candidate"
+        },
+        "code": {
+          "count": 13,
+          "files": [
+            {
+              "path": "artifacts/code/config.py",
+              "bytes": 2639,
+              "via": "glob"
+            },
+            {
+              "path": "artifacts/code/data.py",
+              "bytes": 4514,
+              "via": "glob"
+            },
+            {
+              "path": "artifacts/code/experiment_config.py",
+              "bytes": 2639,
+              "via": "glob"
+            },
+            {
+              "path": "artifacts/code/main.py",
+              "bytes": 19932,
+              "via": "glob"
+            },
+            {
+              "path": "artifacts/code/model.py",
+              "bytes": 4616,
+              "via": "glob"
+            },
+            {
+              "path": "stage-10/agent_runs/attempt_001/main.py",
+              "bytes": 1069,
+              "via": "glob"
+            },
+            {
+              "path": "stage-10/agent_sandbox/_docker_project_1/experiment_harness.py",
+              "bytes": 4239,
+              "via": "glob"
+            },
+            {
+              "path": "stage-10/agent_sandbox/_docker_project_1/main.py",
+              "bytes": 1069,
+              "via": "glob"
+            },
+            {
+              "path": "stage-10/experiment/config.py",
+              "bytes": 2639,
+              "via": "glob"
+            },
+            {
+              "path": "stage-10/experiment/data.py",
+              "bytes": 4514,
+              "via": "glob"
+            },
+            {
+              "path": "stage-10/experiment/experiment_config.py",
+              "bytes": 2639,
+              "via": "glob"
+            },
+            {
+              "path": "stage-10/experiment/main.py",
+              "bytes": 19932,
+              "via": "glob"
+            },
+            {
+              "path": "stage-10/experiment/model.py",
+              "bytes": 4616,
+              "via": "glob"
+            }
+          ]
+        },
+        "results": {
+          "substantive": false,
+          "normalized_path": null,
+          "numeric_leaf_count": 0,
+          "discovered_files": [],
+          "metrics_keys_sample": []
+        },
+        "paper": {
+          "tex": null,
+          "pdf": null,
+          "md": null,
+          "json": null,
+          "status": "missing",
+          "score": 0.0
+        }
+      },
+      "bonus": {
+        "experiment_plan": {
+          "path": "stage-09/exp_plan.yaml",
+          "bytes": 1506,
+          "via": "candidate"
+        },
+        "experiment_log": {
+          "path": "researchclaw_run.log",
+          "bytes": 8563,
+          "via": "glob"
+        },
+        "review": null,
+        "readme": null,
+        "narrative": null,
+        "bib": {
+          "path": "stage-04/references.bib",
+          "bytes": 21612,
+          "via": "glob"
+        }
+      },
+      "manifest_status": {
+        "pipeline": false,
+        "idea": true,
+        "code": true,
+        "results": false,
+        "paper": false
+      },
+      "gate_scores": {
+        "idea": 1.0,
+        "code": 1.0,
+        "results": 0.0,
+        "paper": 0.0
+      },
+      "fairness": {
+        "gates": [
+          "idea",
+          "code",
+          "results",
+          "paper"
+        ],
+        "paper_gate_rule": "PDF=1.0; TeX-only/md_only/json_only=0.5; complete requires PDF",
+        "results_gate_rule": "substantive numeric results via framework-aware normalize_results",
+        "audit_ref": "framework_profile.FAIRNESS_AUDIT"
+      },
+      "notes": [
+        "Required: idea, code, substantive results, paper (PDF full; TeX/markdown/JSON draft half).",
+        "Stub/seed metrics (e.g. dataset_candidate/metrics.json) do not satisfy results.",
+        "Framework noise (.deepscientist_npm, skills/templates, runtime) is excluded from code/results/paper.",
+        "Manifest status is informational; disk presence is authoritative."
+      ]
+    },
+    "idea_generation": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/workspace/researchclaw_2026-07-15_13-14-53",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo",
+      "idea_path": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/workspace/researchclaw_2026-07-15_13-14-53/artifacts/idea.json",
+      "status": "ok",
+      "dimensions": {
+        "novelty": {
+          "score": null,
+          "justification": "",
+          "rubric": null,
+          "category": null,
+          "nearest_solution_space_ids": [],
+          "differentiation": ""
+        },
+        "feasibility": {
+          "score": null,
+          "justification": "",
+          "rubric": null
+        },
+        "clarity": {
+          "score": null,
+          "justification": "",
+          "rubric": null
+        }
+      },
+      "overall_score": null,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "novelty",
+        "feasibility",
+        "clarity"
+      ],
+      "solution_space": {
+        "status": "ok",
+        "paper_count": 80,
+        "entry_count": 80,
+        "cache_hit": true,
+        "source_file": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/mineru_sections.json",
+        "stats": {
+          "papers": 80,
+          "extracted": 80,
+          "usable_abstracts": 53,
+          "citation_meta_abstracts": 0,
+          "missing_abstracts": 27,
+          "mineru_titles": 74,
+          "related_work_titles": 69,
+          "abstracts_attached": 53,
+          "related_work_extras": 6,
+          "batches": 5
+        },
+        "error": null
+      },
+      "notes": [
+        "Scores the intermediate idea artifact (not the final paper).",
+        "Dimensions: novelty, feasibility, clarity (each 1-5). Excitement removed.",
+        "Novelty is scored against a Solution Space built from mineru REFERENCES titles (+ related_work.json abstracts when matched)."
+      ],
+      "idea_via": "candidate",
+      "idea_relative": "artifacts/idea.json",
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "llm_meta": {
+        "model": "deepseek-v4-pro-0813",
+        "base_url": "https://api-sg.umodelverse.ai/v1",
+        "usage": {
+          "completion_tokens": 1855,
+          "completion_tokens_details": {
+            "reasoning_tokens": 1853
+          },
+          "prompt_tokens": 2764,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "total_tokens": 4619
+        },
+        "attempt": 0
+      }
+    },
+    "peer_review": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/workspace/researchclaw_2026-07-15_13-14-53",
+      "review_report": null,
+      "paper_pdf": null,
+      "paper_tex": null,
+      "status": "not_provided",
+      "dimensions": {},
+      "overall_score": null,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "soundness",
+        "significance",
+        "novelty",
+        "presentation",
+        "credibility"
+      ],
+      "notes": [
+        "Stanford Agentic Reviewer (paperreview.ai): manual download to artifacts/peer_review/stanford_apr.md, or pass --auto-paperreview.",
+        "Dimensions: soundness, significance, novelty, presentation, credibility (each 1-5)."
+      ],
+      "paperreview": {
+        "status": "skipped",
+        "reason": "no_pdf"
+      },
+      "optional": true,
+      "hint": "Optional external review (Stanford APR). Upload paper/main.pdf to https://paperreview.ai/ , save review to ~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/workspace/researchclaw_2026-07-15_13-14-53/artifacts/peer_review/stanford_apr.md"
+    },
+    "alignment": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/workspace/researchclaw_2026-07-15_13-14-53",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo",
+      "status": "missing_agent_paper_or_metrics",
+      "original": {
+        "status": "ok",
+        "task_dir": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo",
+        "paper_title": "PairSmell: A Novel Perspective Inspecting Software Modular Structure",
+        "task_id": "ICSE-2025-022",
+        "selection": {
+          "num_blocks": 7,
+          "total_chars": 31998,
+          "inferred_roles": {
+            "abstract": 1,
+            "introduction": 1,
+            "experiment": 3,
+            "discussion": 1,
+            "conclusion": 1
+          },
+          "mineru_raw_keys": {
+            "field:abstract": 1,
+            "field:introduction": 1,
+            "field:experiment": 1,
+            "other": 3,
+            "conclusion": 1
+          },
+          "infer_reasons": {
+            "top_level_field": 3,
+            "title": 3,
+            "body_override": 1
+          },
+          "rescued_from_other": 3,
+          "note": "mineru key is unreliable; blocks are selected by title/body/inheritance. rescued_from_other counts sections labeled other but treated as typed roles."
+        },
+        "claims": [
+          {
+            "id": "C1",
+            "statement": "PairSmell introduces a granular, pair-level architectural smell that uses multiple modularization tools to identify inapt modular relations.",
+            "direction": "neutral",
+            "metric_names": [],
+            "evidence_quote": "PairSmell exploits modularization by comparing each pair's apt MR with its actual MR.",
+            "confidence": 0.9
+          },
+          {
+            "id": "C2",
+            "statement": "PairSmell is prevalent in the 20 studied projects, with 260,003 instances identified.",
+            "direction": "neutral",
+            "metric_names": [
+              "total_PairSmells",
+              "InSep_count",
+              "InCol_count"
+            ],
+            "evidence_quote": "260,003 instances over 20 projects: 73,536 InSep, 186,467 InCol.",
+            "confidence": 0.95
+          },
+          {
+            "id": "C3",
+            "statement": "InSep pairs co-change 190% more than properly separated pairs, indicating detrimental modular structure."
+          }
+        ],
+        "metrics": [],
+        "overall_conclusion": null,
+        "comparable_notes": null,
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 1946,
+            "completion_tokens_details": {
+              "reasoning_tokens": 1758
+            },
+            "prompt_tokens": 496,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 2442
+          },
+          "attempt": 1
+        },
+        "cache_hit": true
+      },
+      "agent": {
+        "status": "missing_agent_paper_or_metrics",
+        "run_dir": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/workspace/researchclaw_2026-07-15_13-14-53"
+      }
+    },
+    "experiment_analysis": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/workspace/researchclaw_2026-07-15_13-14-53",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo",
+      "status": "ok",
+      "metrics_path": null,
+      "experiment_success": {
+        "status": "failed_or_incomplete",
+        "success": false,
+        "metrics_path": null,
+        "absolute_metrics_path": null,
+        "checks": {
+          "has_results_file": false,
+          "non_stub": false,
+          "numeric_leaf_count": 0,
+          "min_numeric_ok": false
+        },
+        "manifest_hints": {
+          "status": {
+            "pipeline": false,
+            "idea": true,
+            "code": true,
+            "results": false,
+            "paper": false
+          },
+          "returncode": 1,
+          "benchmark_complete": null,
+          "artifacts_metrics_flag": false
+        },
+        "warnings": [
+          "manifest.returncode=1"
+        ],
+        "suspicious_values": [],
+        "note": "success=true requires substantive results (framework-aware path) with >=3 numeric leaves. Supports metrics.json, results.json, experiment_results.txt, etc. Manifest returncode/benchmark_complete are soft warnings only."
+      },
+      "idea_code_consistency": {
+        "status": "ok",
+        "idea_path": "artifacts/idea.json",
+        "code_files": [
+          "stage-10/experiment/main.py"
+        ],
+        "score_scale": "1-5",
+        "score": 1.0,
+        "label": "severe_mismatch",
+        "justification": "The code is an incomplete synthetic data-generation harness rather than an implementation of the proposed OSS mining study. It does not implement repository mining, co-change classification into functional vs cross-cutting, defect density via SZZ, shared-committer survival analysis, or the frustration index. None of the three hypotheses' evaluation protocols or statistical tests are present, and the file is truncated mid-function.",
+        "matched_elements": [
+          "Mentions module assignments, coupling, co-change counts, and bug-fix counts as conceptual variables.",
+          "Includes a minimal experiment harness with time budget and metrics reporting.",
+          "Uses synthetic project data generation rather than real repositories."
+        ],
+        "missing_or_divergent_elements": [
+          "Real OSS repository mining or use of the specified Java projects.",
+          "Functional vs cross-cutting co-change classification rules.",
+          "SZZ-based defect tracing and defect density analysis.",
+          "Mann-Whitney U and Cliff's delta statistical tests for Hypothesis 1.",
+          "Shared committer extraction and Cox proportional-hazards survival analysis for Hypothesis 2.",
+          "Frustration index computation, micro-commit ratio, and chi-squared tests for Hypothesis 3.",
+          "Complete executable code; the provided file is truncated mid-function."
+        ],
+        "rubric": "Severe mismatch: code implements a different problem/method than the idea, or is unrelated boilerplate.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 544,
+            "completion_tokens_details": {
+              "reasoning_tokens": 257
+            },
+            "prompt_tokens": 3499,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 4043
+          },
+          "attempt": 0
+        }
+      },
+      "setup_coverage": {
+        "status": "ok",
+        "overall_coverage": 0.3333333333333333,
+        "datasets": {
+          "gold_count": 1,
+          "hit_count": 0,
+          "miss_count": 1,
+          "coverage": 0.0,
+          "hits": [],
+          "misses": [
+            "20-Project PairSmell Dataset"
+          ]
+        },
+        "baselines": {
+          "gold_count": 0,
+          "hit_count": 0,
+          "miss_count": 0,
+          "coverage": null,
+          "hits": [],
+          "misses": []
+        },
+        "metrics": {
+          "gold_count": 6,
+          "hit_count": 4,
+          "miss_count": 2,
+          "coverage": 0.6666666666666666,
+          "hits": [
+            "Percentage of affected entities/pairs",
+            "Commit Overlap Rate (COR)",
+            "Code Change Overlap (CCO)",
+            "Relative co-change factor (K_COR, K_CCO, K_DOR)"
+          ],
+          "misses": [
+            "Smell density",
+            "Developer Overlap Rate (DOR)"
+          ]
+        },
+        "agent_protocol": {},
+        "gold_protocol": {},
+        "dataset_dirs": [
+          "dataset_candidate"
+        ],
+        "flags": {
+          "weaker_baseline_suspected": false,
+          "weak_protocol": [],
+          "synthetic_data": "unexpected_synthetic_or_local_only_data",
+          "gold_allows_synthetic": false
+        },
+        "gold_sources": [
+          "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/task.md",
+          "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/metadata.json"
+        ],
+        "note": "Coverage is name/alias matching against task.md Datasets/Baselines/Metrics. weak_protocol flags large reductions in trials/timeout vs Constraints. Synthetic corpora are not penalized when the task itself requires synthesis."
+      },
+      "ablation_significance": {
+        "status": "ok",
+        "idea_path": "artifacts/idea.json",
+        "significance_signals_rule_based": {
+          "signals": [],
+          "artifact_paths": [],
+          "has_any_significance_artifact": false
+        },
+        "evidence_format": null,
+        "study_type": "pilot",
+        "components": [
+          {
+            "name": "Functional vs cross-cutting co-change classifier (H1)",
+            "role": "classification filter / condition for inapt separation",
+            "ablation_expected": true,
+            "significance_expected": true,
+            "ablation_status": "missing",
+            "ablation_evidence": "No metrics.json or real OSS evidence; only synthetic code scaffold.",
+            "significance_status": "missing",
+            "significance_evidence": "No p-values, CIs, or effect sizes reported."
+          },
+          {
+            "name": "Shared committer variable (H2)",
+            "role": "moderator/grouping variable",
+            "ablation_expected": true,
+            "significance_expected": true,
+            "ablation_status": "missing",
+            "ablation_evidence": "No survival analysis or group comparison executed.",
+            "significance_status": "missing",
+            "significance_evidence": "No Cox model or hazard ratio CI reported."
+          },
+          {
+            "name": "Functional frustration index (H3)",
+            "role": "novel metric",
+            "ablation_expected": true,
+            "significance_expected": true,
+            "ablation_status": "missing",
+            "ablation_evidence": "No frustration index or churn analysis executed.",
+            "significance_status": "missing",
+            "significance_evidence": "No Mann-Whitney or Chi-squared results reported."
+          }
+        ],
+        "ablation_coverage_score": 0.0,
+        "overall_ablation_ok": null,
+        "overall_significance_ok": null,
+        "summary": "The run is a synthetic pilot scaffold with no metrics or real OSS evidence, so expected ablations and significance tests are missing.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 1654,
+            "completion_tokens_details": {
+              "reasoning_tokens": 1252
+            },
+            "prompt_tokens": 4663,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 6317
+          },
+          "attempt": 1
+        }
+      },
+      "results_paper_consistency": {
+        "status": "missing_metrics"
+      },
+      "scores": {
+        "experiment_success": false,
+        "idea_code_score": 1.0,
+        "setup_coverage": 0.3333333333333333,
+        "ablation_coverage_score": 0.0,
+        "overall_ablation_ok": null,
+        "overall_significance_ok": null,
+        "results_paper_score": null,
+        "hiding_unfavorable_suspected": null
+      },
+      "notes": [
+        "Axes 1,2,3,4,6 in experiment_analysis (figures excluded).",
+        "setup_coverage matches task.md Datasets/Baselines/Metrics; weak_protocol flags reductions vs Constraints.",
+        "Axis 6: final normalized results vs paper; interim run logs not used as ground truth."
+      ]
+    },
+    "literature_review": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/workspace/researchclaw_2026-07-15_13-14-53",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo",
+      "status": "ok",
+      "as_of_year": 2026,
+      "agent_ref_count": 72,
+      "sources": [
+        {
+          "path": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/workspace/researchclaw_2026-07-15_13-14-53/stage-05/shortlist.jsonl",
+          "kind": "shortlist"
+        },
+        {
+          "path": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/workspace/researchclaw_2026-07-15_13-14-53/stage-04/references.bib",
+          "kind": "bib"
+        }
+      ],
+      "collection_audit": {
+        "cited_keys_count": 0,
+        "filter_mode": "non_bib_sources",
+        "bib_total_before_filter": 72,
+        "bib_after_filter": 0,
+        "uncited_bib_skipped": 72,
+        "agent_ref_count": 72
+      },
+      "fabrication": {
+        "status": "ok",
+        "scholarly_count": 70,
+        "verified_count": 61,
+        "fake_count": 0,
+        "lookup_failed_count": 9,
+        "non_paper_count": 2,
+        "fabrication_rate": 0.0,
+        "items": [
+          {
+            "title": "Design Rules",
+            "doi": "10.7551/mitpress/2366.001.0001",
+            "arxiv_id": "",
+            "year": 2000,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Design rules for high-efficiency both-sides-contacted silicon solar cells with balanced charge carrier transport and recombination losses",
+            "resolved_year": 2021,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "baldwin2000design",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "The 4+1 View Model of architecture",
+            "doi": "10.1109/52.469759",
+            "arxiv_id": "",
+            "year": 1995,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "The 4+1 View Model of Architecture",
+            "resolved_year": 1995,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "kruchten1995view",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Combining multiple clusterings using evidence accumulation",
+            "doi": "10.1109/tpami.2005.113",
+            "arxiv_id": "",
+            "year": 2005,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Combining multiple clusterings using evidence accumulation",
+            "resolved_year": 2005,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "fred2005combining",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Mining version histories to guide software changes",
+            "doi": "10.1109/tse.2005.72",
+            "arxiv_id": "",
+            "year": 2005,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Mining version histories to guide software changes",
+            "resolved_year": 2005,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "zimmermann2005mining",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "On the automatic modularization of software systems using the Bunch tool",
+            "doi": "10.1109/tse.2006.31",
+            "arxiv_id": "",
+            "year": 2006,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "On the automatic modularization of software systems using the Bunch tool",
+            "resolved_year": 2006,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "mitchell2006automatic",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Quantifying the Effect of Code Smells on Maintenance Effort",
+            "doi": "10.1109/tse.2012.89",
+            "arxiv_id": "",
+            "year": 2013,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Ieee Transactions on Software Engineering Quantifying the Effect of Code Smells on Maintenance Effort",
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "sjberg2013quantifying",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "An Exploratory Study of the Impact of Code Smells on Software Change-proneness",
+            "doi": "10.1109/wcre.2009.28",
+            "arxiv_id": "",
+            "year": 2009,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "An Exploratory Study of the Impact of Code Smells on Software Change-proneness",
+            "resolved_year": 2009,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "khomh2009exploratory",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "LIMBO: Scalable Clustering of Categorical Data",
+            "doi": "10.1007/978-3-540-24741-8_9",
+            "arxiv_id": "",
+            "year": 2004,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated.",
+              "Saw 1 conclusive miss(es) mixed with 2 API error(s)."
+            ],
+            "cite_key": "andritsos2004limbo",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "ACCD: an algorithm for comprehension-driven clustering",
+            "doi": "10.1109/wcre.2000.891477",
+            "arxiv_id": "",
+            "year": 2002,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "ACCD: an algorithm for comprehension-driven clustering",
+            "resolved_year": 2000,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "tzerpos2002accd",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Do code smells reflect important maintainability aspects?",
+            "doi": "10.1109/icsm.2012.6405287",
+            "arxiv_id": "",
+            "year": 2012,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Do code smells reflect important maintainability aspects?",
+            "resolved_year": 2012,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "yamashita2012code",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Identifying Architectural Bad Smells",
+            "doi": "10.1109/csmr.2009.59",
+            "arxiv_id": "",
+            "year": 2009,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Identifying Architectural Bad Smells",
+            "resolved_year": 2009,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "garcia2009identifying",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "A comparative analysis of software architecture recovery techniques",
+            "doi": "10.1109/ase.2013.6693106",
+            "arxiv_id": "",
+            "year": 2013,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "A comparative analysis of software architecture recovery techniques",
+            "resolved_year": 2013,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "garcia2013comparative",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "From clustering to clustering ensemble selection: A review",
+            "doi": "10.1016/j.engappai.2021.104388",
+            "arxiv_id": "",
+            "year": 2021,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "From clustering to clustering ensemble selection: A review",
+            "resolved_year": 2021,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "golalipour2021clustering",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Detecting software modularity violations",
+            "doi": "10.1145/1985793.1985850",
+            "arxiv_id": "",
+            "year": 2011,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated.",
+              "Saw 1 conclusive miss(es) mixed with 2 API error(s)."
+            ],
+            "cite_key": "wong2011detecting",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Arcan: A Tool for Architectural Smells Detection",
+            "doi": "10.1109/icsaw.2017.16",
+            "arxiv_id": "",
+            "year": 2017,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Arcan: A Tool for Architectural Smells Detection",
+            "resolved_year": 2017,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "fontana2017arcan",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "The weighted combined algorithm: a linkage algorithm for software clustering",
+            "doi": "10.1109/csmr.2004.1281402",
+            "arxiv_id": "",
+            "year": 2004,
+            "status": "non_paper",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "Treated as tool/docs/repo resource, not a scholarly paper."
+            ],
+            "cite_key": "maqbool2004weighted",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "A Precise Method-Method Interaction-Based Cohesion Metric for Object-Oriented Classes",
+            "doi": "10.1145/2089116.2089118",
+            "arxiv_id": "",
+            "year": 2012,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "A Precise Method-Method Interaction-Based Cohesion Metric for Object-Oriented Classes",
+            "resolved_year": 2012,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "dallal2012precise",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Using Cohesion and Coupling for Software Remodularization",
+            "doi": "10.1145/2928268",
+            "arxiv_id": "",
+            "year": 2016,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Using Cohesion and Coupling for Software Remodularization",
+            "resolved_year": 2016,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "candela2016cohesion",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "An Empirical Study of Architectural Decay in Open-Source Software",
+            "doi": "10.1109/icsa.2018.00027",
+            "arxiv_id": "",
+            "year": 2018,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "An Empirical Study of Architectural Decay in Open-Source Software",
+            "resolved_year": 2018,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "le2018empirical",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "An empirical analysis of the costs of clone- and platform-oriented software reuse",
+            "doi": "10.1145/3368089.3409684",
+            "arxiv_id": "",
+            "year": 2020,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated.",
+              "Saw 1 conclusive miss(es) mixed with 2 API error(s)."
+            ],
+            "cite_key": "kruger2020empirical",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Decoupling level",
+            "doi": "10.1145/2884781.2884825",
+            "arxiv_id": "",
+            "year": 2016,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Analysis of the Decoupling Level and Water-Saving Targets: Economic Growth and Water Consumption in the Production-Living-Ecological Systems",
+            "resolved_year": 2024,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "mo2016decoupling",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Using structural and semantic measures to improve software modularization",
+            "doi": "10.1007/s10664-012-9226-8",
+            "arxiv_id": "",
+            "year": 2012,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Using structural and semantic measures to improve software modularization",
+            "resolved_year": 2012,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "bavota2012structural",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Security Smells in Ansible and Chef Scripts",
+            "doi": "10.1145/3408897",
+            "arxiv_id": "",
+            "year": 2021,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Security Smells in Ansible and Chef Scripts",
+            "resolved_year": 2019,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "rahman2021security",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "A longitudinal analysis of bloated Java dependencies",
+            "doi": "10.1145/3468264.3468589",
+            "arxiv_id": "",
+            "year": 2021,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "A longitudinal analysis of bloated Java dependencies",
+            "resolved_year": 2021,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "sotovalero2021longitudinal",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Architecture Anti-Patterns: Automatically Detectable Violations of Design Principles",
+            "doi": "10.1109/tse.2019.2910856",
+            "arxiv_id": "",
+            "year": 2019,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Architecture Anti-Patterns: Automatically Detectable Violations of Design Principles",
+            "resolved_year": 2021,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "mo2019architecture",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "On the correlation between size and metric validity",
+            "doi": "10.1007/s10664-017-9513-5",
+            "arxiv_id": "",
+            "year": 2017,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "On the correlation between size and metric validity",
+            "resolved_year": 2017,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "gil2017correlation",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Cohesion-Driven Decomposition of Service Interfaces without Access to Source Code",
+            "doi": "10.1109/tsc.2014.2310195",
+            "arxiv_id": "",
+            "year": 2014,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Cohesion-Driven Decomposition of Service Interfaces without Access to Source Code",
+            "resolved_year": 2015,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "athanasopoulos2014cohesiondriven",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Dependency Smells in JavaScript Projects",
+            "doi": "10.1109/tse.2021.3106247",
+            "arxiv_id": "",
+            "year": 2021,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Dependency Smells in JavaScript Projects",
+            "resolved_year": 2020,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "jafari2021dependency",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Using indirect coupling metrics to predict package maintainability and testability",
+            "doi": "10.1016/j.jss.2016.02.024",
+            "arxiv_id": "",
+            "year": 2016,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Using indirect coupling metrics to predict package maintainability and testability",
+            "resolved_year": 2016,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "almugrin2016indirect",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "A graph-based clustering algorithm for software systems modularization",
+            "doi": "10.1016/j.infsof.2020.106469",
+            "arxiv_id": "",
+            "year": 2020,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated.",
+              "Saw 1 conclusive miss(es) mixed with 2 API error(s)."
+            ],
+            "cite_key": "pourasghar2020graphbased",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "A Fast Clustering Algorithm for Modularization of Large-Scale Software Systems",
+            "doi": "10.1109/tse.2020.3022212",
+            "arxiv_id": "",
+            "year": 2020,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "A Fast Clustering Algorithm for Modularization of Large-Scale Software Systems",
+            "resolved_year": 2022,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "teymourian2020fast",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "On the Prevalence, Impact, and Evolution of SQL Code Smells in Data-Intensive Systems",
+            "doi": "10.1145/3379597.3387467",
+            "arxiv_id": "",
+            "year": 2020,
+            "status": "verified",
+            "matched_via": "arxiv_title",
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "muse2020prevalence",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "A systematic mapping study on architectural smells detection",
+            "doi": "10.1016/j.jss.2020.110885",
+            "arxiv_id": "",
+            "year": 2020,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "A systematic mapping study on architectural smells detection",
+            "resolved_year": 2020,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "mumtaz2020systematic",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Configuration smells in continuous delivery pipelines: a linter and a six-month study on GitLab",
+            "doi": "10.1145/3368089.3409709",
+            "arxiv_id": "",
+            "year": 2020,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Configuration smells in continuous delivery pipelines: a linter and a six-month study on GitLab",
+            "resolved_year": 2020,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "vassallo2020configuration",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Just-In-Time Test Smell Detection and Refactoring",
+            "doi": "10.1145/3387904.3389296",
+            "arxiv_id": "",
+            "year": 2020,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Just-In-Time Test Smell Detection and Refactoring: The DARTS Project",
+            "resolved_year": 2020,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "lambiase2020justintime",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Introducing a Ripple Effect Measure: A Theoretical and Empirical Validation",
+            "doi": "10.1109/esem.2015.7321204",
+            "arxiv_id": "",
+            "year": 2015,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Introducing a Ripple Effect Measure: A Theoretical and Empirical Validation",
+            "resolved_year": 2015,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "arvanitou2015introducing",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Group decision-making in software architecture: A study on industrial practices",
+            "doi": "10.1016/j.infsof.2018.04.009",
+            "arxiv_id": "",
+            "year": 2018,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated.",
+              "Saw 1 conclusive miss(es) mixed with 2 API error(s)."
+            ],
+            "cite_key": "rekha2018group",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Forecasting Architectural Decay From Evolutionary History",
+            "doi": "10.1109/tse.2021.3060068",
+            "arxiv_id": "",
+            "year": 2021,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Forecasting Architectural Decay From Evolutionary History",
+            "resolved_year": 2022,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "garcia2021forecasting",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Detecting the Locations and Predicting the Maintenance Costs of Compound Architectural Debts",
+            "doi": "10.1109/tse.2021.3102221",
+            "arxiv_id": "",
+            "year": 2021,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Detecting the Locations and Predicting the Maintenance Costs of Compound Architectural Debts",
+            "resolved_year": 2021,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "xiao2021detecting",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Automatic clustering constraints derivation from object-oriented software using weighted complex network with graph theory analysis",
+            "doi": "10.1016/j.jss.2017.08.017",
+            "arxiv_id": "",
+            "year": 2017,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Automatic clustering constraints derivation from object-oriented software using weighted complex network with graph theory analysis",
+            "resolved_year": 2017,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "chong2017automatic",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Design pattern decay",
+            "doi": "10.1145/2652524.2652570",
+            "arxiv_id": "",
+            "year": 2014,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Design pattern decay: the case for class grime",
+            "resolved_year": 2014,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "griffith2014design",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "A learning-based module extraction method for object-oriented systems",
+            "doi": "10.1016/j.jss.2014.07.038",
+            "arxiv_id": "",
+            "year": 2014,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "A learning-based module extraction method for object-oriented systems",
+            "resolved_year": 2014,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "erdemir2014learningbased",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "An aggregated coupling measure for the analysis of object-oriented software systems",
+            "doi": "10.1016/j.jss.2018.10.052",
+            "arxiv_id": "",
+            "year": 2018,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "An aggregated coupling measure for the analysis of object-oriented software systems",
+            "resolved_year": 2019,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "czibula2018aggregated",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Exploring the architectural impact of possible dependencies in Python software",
+            "doi": "10.1145/3324884.3416619",
+            "arxiv_id": "",
+            "year": 2020,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Exploring the Architectural Impact of Possible Dependencies in Python Software",
+            "resolved_year": 2020,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "jin2020exploring",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "A decision support system to refactor class cycles",
+            "doi": "10.1109/icsm.2015.7332469",
+            "arxiv_id": "",
+            "year": 2015,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated.",
+              "Saw 1 conclusive miss(es) mixed with 2 API error(s)."
+            ],
+            "cite_key": "oyetoyan2015decision",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "A design structure matrix approach for measuring co-change-modularity of software products",
+            "doi": "10.1145/3196398.3196409",
+            "arxiv_id": "",
+            "year": 2018,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "A Design Structure Matrix Approach for Measuring Co-change-Modularity of Software Products",
+            "resolved_year": 2018,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "benkoczi2018design",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "How disabled tests manifest in test maintainability challenges?",
+            "doi": "10.1145/3468264.3468609",
+            "arxiv_id": "",
+            "year": 2021,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "How disabled tests manifest in test maintainability challenges?",
+            "resolved_year": 2021,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "kim2021disabled",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Decomposition of Monolith Applications Into Microservices Architectures: A Systematic Review",
+            "doi": "10.1109/tse.2023.3287297",
+            "arxiv_id": "",
+            "year": 2023,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Decomposition of Monolith Applications Into Microservices Architectures: A Systematic Review",
+            "resolved_year": 2023,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "abgaz2023decomposition",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Ensemble Clustering via Co-Association Matrix Self-Enhancement",
+            "doi": "10.1109/tnnls.2023.3249207",
+            "arxiv_id": "",
+            "year": 2023,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Ensemble Clustering via Co-Association Matrix Self-Enhancement",
+            "resolved_year": 2022,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "jia2023ensemble",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "ReposVul: A Repository-Level High-Quality Vulnerability Dataset",
+            "doi": "10.1145/3639478.3647634",
+            "arxiv_id": "2401.13169",
+            "year": 2024,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "ReposVul: A Repository-Level High-Quality Vulnerability Dataset",
+            "resolved_year": 2024,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "wang2024reposvul",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "The Smelly Eight: An Empirical Study on the Prevalence of Code Smells in Quantum Computing",
+            "doi": "10.1109/icse48619.2023.00041",
+            "arxiv_id": "",
+            "year": 2023,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated.",
+              "Saw 1 conclusive miss(es) mixed with 2 API error(s)."
+            ],
+            "cite_key": "chen2023smelly",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Machine Learning for Technical Debt Identification",
+            "doi": "10.1109/tse.2021.3129355",
+            "arxiv_id": "",
+            "year": 2021,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Machine Learning for Technical Debt Identification",
+            "resolved_year": 2022,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "tsoukalas2021machine",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "What Every Engineer Should Know about Software Engineering",
+            "doi": "10.1201/9781003218647",
+            "arxiv_id": "",
+            "year": 2022,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "What Every Engineer Should Know about Software Engineering",
+            "resolved_year": 2007,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "laplante2022what",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "On measuring coupling between microservices",
+            "doi": "10.1016/j.jss.2023.111670",
+            "arxiv_id": "",
+            "year": 2023,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated.",
+              "Saw 1 conclusive miss(es) mixed with 2 API error(s)."
+            ],
+            "cite_key": "zhong2023measuring",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Trust-based consensus reaching process for product design decision-making with heterogeneous information",
+            "doi": "10.1016/j.aei.2023.101934",
+            "arxiv_id": "",
+            "year": 2023,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Trust-based consensus reaching process for product design decision-making with heterogeneous information",
+            "resolved_year": 2023,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "yang2023trustbased",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Software Architecture Recovery with Information Fusion",
+            "doi": "10.1145/3611643.3616285",
+            "arxiv_id": "",
+            "year": 2023,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Software Architecture Recovery with Information Fusion",
+            "resolved_year": 2023,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "zhang2023software",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Video Game Bad Smells: What They Are and How Developers Perceive Them",
+            "doi": "10.1145/3563214",
+            "arxiv_id": "",
+            "year": 2022,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Video Game Bad Smells: What They Are and How Developers Perceive Them",
+            "resolved_year": 2022,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "nardone2022video",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "An Architectural Technical Debt Index Based on Machine Learning and Architectural Smells",
+            "doi": "10.1109/tse.2023.3286179",
+            "arxiv_id": "",
+            "year": 2023,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "An Architectural Technical Debt Index Based on Machine Learning and Architectural Smells",
+            "resolved_year": 2023,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "sas2023architectural",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Revisiting the debate: Are code metrics useful for measuring maintenance effort?",
+            "doi": "10.1007/s10664-022-10193-8",
+            "arxiv_id": "",
+            "year": 2022,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Revisiting the debate: Are code metrics useful for measuring maintenance effort?",
+            "resolved_year": 2022,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "chowdhury2022revisiting",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Do Static Analysis Tools Affect Software Quality when Using Test-driven Development?",
+            "doi": "10.1145/3544902.3546233",
+            "arxiv_id": "",
+            "year": 2022,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Do Static Analysis Tools Affect Software Quality when Using Test-driven Development?",
+            "resolved_year": 2022,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "romano2022static",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "The Lost World: Characterizing and Detecting Undiscovered Test Smells",
+            "doi": "10.1145/3631973",
+            "arxiv_id": "",
+            "year": 2023,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "The Lost World: Characterizing and Detecting Undiscovered Test Smells",
+            "resolved_year": 2023,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "yang2023lost",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "An Empirical Study of Refactoring Rhythms and Tactics in the Software Development Process",
+            "doi": "10.1109/tse.2023.3326775",
+            "arxiv_id": "",
+            "year": 2023,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "An Empirical Study of Refactoring Rhythms and Tactics in the Software Development Process",
+            "resolved_year": 2023,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "noei2023empirical",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Inefficiency Measurement",
+            "doi": "10.1257/mic.6.2.79",
+            "arxiv_id": "",
+            "year": 2014,
+            "status": "verified",
+            "matched_via": "arxiv_title",
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "chambers2014inefficiency",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Enhancing software modularization via semantic outliers filtration and label propagation",
+            "doi": "10.1016/j.infsof.2021.106818",
+            "arxiv_id": "",
+            "year": 2022,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Enhancing software modularization via semantic outliers filtration and label propagation",
+            "resolved_year": 2022,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "yang2022enhancing",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Automatic Detection and Analysis of Technical Debts in Peer-Review Documentation of R Packages",
+            "doi": "10.1109/saner53432.2022.00094",
+            "arxiv_id": "",
+            "year": 2022,
+            "status": "non_paper",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "Treated as tool/docs/repo resource, not a scholarly paper."
+            ],
+            "cite_key": "khan2022automatic",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Exploring the Impact of Code Clones on Deep Learning Software",
+            "doi": "10.1145/3607181",
+            "arxiv_id": "",
+            "year": 2023,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Exploring the Impact of Code Clones on Deep Learning Software",
+            "resolved_year": 2023,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "mo2023exploring",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Dependency Facade: The Coupling and Conflicts between Android Framework and Its Customization",
+            "doi": "10.1109/icse48619.2023.00144",
+            "arxiv_id": "",
+            "year": 2023,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Dependency Facade: The Coupling and Conflicts between Android Framework and Its Customization",
+            "resolved_year": 2023,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "jin2023dependency",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Software design analysis and technical debt management based on design rule theory",
+            "doi": "10.1016/j.infsof.2023.107322",
+            "arxiv_id": "",
+            "year": 2023,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Software design analysis and technical debt management based on design rule theory",
+            "resolved_year": 2023,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "cai2023software",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Prevalence and severity of design anti-patterns in open source programs—A large-scale study",
+            "doi": "10.1016/j.infsof.2024.107429",
+            "arxiv_id": "",
+            "year": 2024,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Prevalence and severity of design anti-patterns in open source programs - A large-scale study",
+            "resolved_year": 2024,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "liu2024prevalence",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "A systematic review of refactoring opportunities by software antipattern detection",
+            "doi": "10.1007/s10515-024-00443-y",
+            "arxiv_id": "",
+            "year": 2024,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "A systematic review of refactoring opportunities by software antipattern detection",
+            "resolved_year": 2024,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "kalhor2024systematic",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Dazed and Confused: Studying the Prevalence of Atoms of Confusion in Long-Lived Java Libraries",
+            "doi": "10.1109/icsme55016.2022.00018",
+            "arxiv_id": "",
+            "year": 2022,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Dazed and Confused: Studying the Prevalence of Atoms of Confusion in Long-Lived Java Libraries",
+            "resolved_year": 2022,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "mendes2022dazed",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Hotspot Patterns: The Formal Definition and Automatic Detection of Architecture Smells",
+            "doi": "10.21236/ada621415",
+            "arxiv_id": "",
+            "year": 2015,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated.",
+              "Saw 1 conclusive miss(es) mixed with 2 API error(s)."
+            ],
+            "cite_key": "mo2015hotspot",
+            "source_kind": "shortlist"
+          }
+        ],
+        "cache_path": "~/ai_scientist_evals/ICSE-2025-022_assessment_of_inappropriate_entity_collo/reference_verify_cache.json",
+        "override_path": "~/ai_scientist_evals/ICSE-2025-022_assessment_of_inappropriate_entity_collo/reference_verify_overrides.json",
+        "note": "fabrication_rate = fake / (verified + fake); lookup_failed (API errors) excluded. GitHub/docs/tool URLs are non_paper and excluded from the rate. To manually correct a false negative, edit reference_verify_overrides.json (key=normalized title / doi / cite_key; value=\"verified\" or a result dict), then re-run."
+      },
+      "coverage": {
+        "status": "ok",
+        "gold_source": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/mineru_sections.json",
+        "gold_count": 74,
+        "gold_is_original_paper_references": true,
+        "gold_is_openalex_subset": false,
+        "agent_count": 72,
+        "intersection_size": 63,
+        "recall": 0.8513513513513513,
+        "precision": 0.875,
+        "matched_gold_keys": [
+          "abgaz2023decomposition",
+          "almugrin2016indirect",
+          "arvanitou2015introducing",
+          "athanasopoulos2014cohesiondriven",
+          "bavota2012structural",
+          "benkoczi2018design",
+          "cai2023software",
+          "candela2016cohesion",
+          "chambers2014inefficiency",
+          "chen2023smelly",
+          "chong2017automatic",
+          "chowdhury2022revisiting",
+          "czibula2018aggregated",
+          "erdemir2014learningbased",
+          "fred2005combining",
+          "garcia2009identifying",
+          "garcia2013comparative",
+          "garcia2021forecasting",
+          "gil2017correlation",
+          "golalipour2021clustering",
+          "griffith2014design",
+          "jafari2021dependency",
+          "jin2020exploring",
+          "jin2023dependency",
+          "kalhor2024systematic",
+          "khan2022automatic",
+          "khomh2009exploratory",
+          "kim2021disabled",
+          "kruchten1995view",
+          "kruger2020empirical",
+          "lambiase2020justintime",
+          "le2018empirical",
+          "liu2024prevalence",
+          "maqbool2004weighted",
+          "mendes2022dazed",
+          "mitchell2006automatic",
+          "mo2015hotspot",
+          "mo2016decoupling",
+          "mo2023exploring",
+          "mumtaz2020systematic",
+          "muse2020prevalence",
+          "nardone2022video",
+          "noei2023empirical",
+          "oyetoyan2015decision",
+          "pourasghar2020graphbased",
+          "rahman2021security",
+          "rekha2018group",
+          "sas2023architectural",
+          "sjberg2013quantifying",
+          "sotovalero2021longitudinal",
+          "teymourian2020fast",
+          "tsoukalas2021machine",
+          "vassallo2020configuration",
+          "wang2024reposvul",
+          "wong2011detecting",
+          "xiao2021detecting",
+          "yamashita2012code",
+          "yang2022enhancing",
+          "yang2023lost",
+          "yang2023trustbased",
+          "zhang2023software",
+          "zhong2023measuring",
+          "zimmermann2005mining"
+        ],
+        "primary_metric": "recall",
+        "note": "Primary metric is recall against the original paper bibliography (titles from mineru_sections.json REFERENCES; related_work.json used only to enrich DOI/year or as fallback if mineru titles are empty). Denominator = |original paper references|. Precision is secondary (agent may cite valid extra papers)."
+      },
+      "recency": {
+        "status": "ok",
+        "dated_count": 70,
+        "unknown_year_count": 0,
+        "year_histogram": {
+          "1995": 1,
+          "2000": 1,
+          "2004": 1,
+          "2005": 2,
+          "2006": 1,
+          "2007": 1,
+          "2009": 2,
+          "2011": 1,
+          "2012": 3,
+          "2013": 2,
+          "2014": 3,
+          "2015": 4,
+          "2016": 2,
+          "2017": 3,
+          "2018": 3,
+          "2019": 2,
+          "2020": 8,
+          "2021": 6,
+          "2022": 9,
+          "2023": 11,
+          "2024": 4
+        },
+        "windows": {
+          "3": {
+            "years": 3,
+            "cutoff_year_inclusive": 2023,
+            "recent_count": 15,
+            "recent_ratio": 0.21428571428571427
+          },
+          "5": {
+            "years": 5,
+            "cutoff_year_inclusive": 2021,
+            "recent_count": 30,
+            "recent_ratio": 0.42857142857142855
+          }
+        }
+      },
+      "scores": {
+        "fabrication_rate": 0.0,
+        "coverage_recall": 0.8513513513513513,
+        "coverage_precision": 0.875,
+        "recency_ratio_3y": 0.21428571428571427,
+        "recency_ratio_5y": 0.42857142857142855
+      }
+    }
+  },
+  "scores": {
+    "completeness": {
+      "complete": false,
+      "overall_score": 0.4,
+      "required_score": 0.5,
+      "bonus_score": 0.09
+    },
+    "peer_review": {
+      "status": "not_provided",
+      "optional": true,
+      "overall_score": null,
+      "score_scale": "1-5",
+      "scoring_method": null
+    },
+    "idea_generation": {
+      "status": "ok",
+      "overall_score": null,
+      "dimensions": {
+        "novelty": null,
+        "feasibility": null,
+        "clarity": null
+      },
+      "novelty_category": null,
+      "solution_space_status": "ok"
+    },
+    "alignment": {
+      "status": "missing_agent_paper_or_metrics",
+      "direction_consistency": null,
+      "overall_alignment_score": null
+    },
+    "literature_review": {
+      "fabrication_rate": 0.0,
+      "coverage_recall": 0.8513513513513513,
+      "coverage_precision": 0.875,
+      "recency_ratio_3y": 0.21428571428571427,
+      "recency_ratio_5y": 0.42857142857142855
+    },
+    "experiment_analysis": {
+      "experiment_success": false,
+      "idea_code_score": 1.0,
+      "setup_coverage": 0.3333333333333333,
+      "ablation_coverage_score": 0.0,
+      "overall_ablation_ok": null,
+      "overall_significance_ok": null,
+      "results_paper_score": null,
+      "hiding_unfavorable_suspected": null
+    }
+  },
+  "fair_scores": {
+    "applicable_axes": [
+      "completeness",
+      "literature_review",
+      "experiment_analysis"
+    ],
+    "skipped_axes": [
+      {
+        "axis": "peer_review",
+        "reason": "optional_external_review"
+      }
+    ],
+    "fair_mean_0_1": 0.4554,
+    "note": "fair_mean_0_1 averages only applicable axes; optional peer review and framework-inapplicable literature are excluded from the denominator."
+  },
+  "evals_root": "~/ai_scientist_evals",
+  "claims_cache": "~/ai_scientist_evals/ICSE-2025-022_assessment_of_inappropriate_entity_collo/original_claims.json",
+  "solution_space_cache": "~/ai_scientist_evals/ICSE-2025-022_assessment_of_inappropriate_entity_collo/solution_space.json"
+}

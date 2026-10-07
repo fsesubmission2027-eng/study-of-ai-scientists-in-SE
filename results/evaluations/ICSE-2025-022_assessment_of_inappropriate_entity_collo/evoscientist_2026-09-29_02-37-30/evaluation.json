@@ -1,0 +1,986 @@
+{
+  "run_dir": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/workspace/evoscientist_2026-09-29_02-37-30",
+  "task_dir": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo",
+  "framework": "evoscientist",
+  "fairness_audit": [
+    {
+      "axis": "completeness",
+      "was_unfair": "Required both paper.tex AND paper.pdf; any tool missing one failed equally.",
+      "fix": "Paper gate: PDF=1.0; TeX-only=0.5; ``complete`` requires PDF."
+    },
+    {
+      "axis": "completeness",
+      "was_unfair": "``results`` counted stub/seed JSON (dataset_candidate/metrics.json).",
+      "fix": "``results`` requires substantive numeric results via results_normalize."
+    },
+    {
+      "axis": "experiment_success",
+      "was_unfair": "Only metrics.json; ignored results.json / experiment_results.txt.",
+      "fix": "Framework-ordered result candidates + normalized loaders."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Penalized tools with no bib; airesearcher has no workspace references.",
+      "fix": "literature_applicable=false → status not_applicable; excluded from fair aggregate."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "related_work.json subset as gold made recall hard to interpret.",
+      "fix": "Coverage gold is original paper REFERENCES from mineru; related_work only enriches metadata/fallback."
+    },
+    {
+      "axis": "peer_review",
+      "was_unfair": "Missing Stanford report looked like evaluation failure.",
+      "fix": "status not_provided; optional axis, never counts as tool failure."
+    },
+    {
+      "axis": "paths/find_results",
+      "was_unfair": "Picked downloads/** and sandbox noise (e.g. airesearcher LLVM tree).",
+      "fix": "Exclude downloads/, seeds/, dataset_candidate/, sandbox junk paths."
+    },
+    {
+      "axis": "paths/framework_noise",
+      "was_unfair": "DeepScientist .deepscientist_npm / runtime / skills templates counted as code/paper/results.",
+      "fix": "FRAMEWORK_NOISE_DIRS+markers; quest worktree + eval_output results; paper md drafts; reject template tex."
+    },
+    {
+      "axis": "paths/paper_tex",
+      "was_unfair": "tiny_scientist / ACL runs store paper under latex/*.tex; evaluator only looked at paper/main.tex.",
+      "fix": "latex/**/*.tex with substantive-body heuristic; find_paper_document uses same rules."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Entire custom.bib (300+ anthology entries) verified when paper had zero \\cite commands.",
+      "fix": "collect_agent_references filters bib to in-text cite keys; skips uncited bulk bib (>40 entries)."
+    },
+    {
+      "axis": "paths/ai_scientist_summaries",
+      "was_unfair": "AI Scientist can persist substantive results and paper-like drafts in *_summary.json logs rather than paper/main.tex or results/**/*.json.",
+      "fix": "Treat draft_summary/research_summary as weak paper documents and summary JSONs as result candidates."
+    },
+    {
+      "axis": "framework/ai_scientist_v2",
+      "was_unfair": "Manifest framework ``ai_scientist_v2`` fell through to profile ``unknown``, skipping AI-Scientist idea/result path priorities.",
+      "fix": "Normalize ``ai_scientist_v2`` (and common aliases) to profile key ``ai_scientist``."
+    },
+    {
+      "axis": "idea_generation",
+      "was_unfair": "plan.md/todos.md weak proxies scored same as structured idea.json.",
+      "fix": "Framework idea_priority tried first; missing idea → not_applicable where appropriate."
+    }
+  ],
+  "generated_at": "2026-10-01T13:27:09",
+  "axes": [
+    "alignment",
+    "completeness",
+    "experiment_analysis",
+    "idea_generation",
+    "literature_review",
+    "peer_review"
+  ],
+  "results": {
+    "completeness": {
+      "framework": "evoscientist",
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/workspace/evoscientist_2026-09-29_02-37-30",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo",
+      "complete": true,
+      "required_score": 1.0,
+      "bonus_score": 0.09,
+      "overall_score": 0.8453,
+      "missing": [],
+      "required": {
+        "idea": {
+          "path": "plan.md",
+          "bytes": 1266,
+          "via": "candidate"
+        },
+        "code": {
+          "count": 10,
+          "files": [
+            {
+              "path": "project/main.py",
+              "bytes": 477,
+              "via": "glob"
+            },
+            {
+              "path": "project/pairsmell/__init__.py",
+              "bytes": 323,
+              "via": "glob"
+            },
+            {
+              "path": "project/pairsmell/cochange.py",
+              "bytes": 3772,
+              "via": "glob"
+            },
+            {
+              "path": "project/pairsmell/data.py",
+              "bytes": 7124,
+              "via": "glob"
+            },
+            {
+              "path": "project/pairsmell/detect.py",
+              "bytes": 7620,
+              "via": "glob"
+            },
+            {
+              "path": "project/pairsmell/evolution.py",
+              "bytes": 1205,
+              "via": "glob"
+            },
+            {
+              "path": "project/scripts/analyze.py",
+              "bytes": 11275,
+              "via": "glob"
+            },
+            {
+              "path": "project/scripts/compute_metrics.py",
+              "bytes": 6117,
+              "via": "glob"
+            },
+            {
+              "path": "project/scripts/finalize_metrics.py",
+              "bytes": 7038,
+              "via": "glob"
+            },
+            {
+              "path": "project/scripts/run_all.py",
+              "bytes": 13066,
+              "via": "glob"
+            }
+          ]
+        },
+        "results": {
+          "substantive": true,
+          "normalized_path": "results/metrics.json",
+          "numeric_leaf_count": 43,
+          "discovered_files": [
+            {
+              "path": "results/metrics.json",
+              "bytes": 2654,
+              "via": "candidate"
+            }
+          ],
+          "metrics_keys_sample": [
+            "percentage_of_affected_entities_pairs",
+            "smell_density",
+            "commit_overlap_rate_cor",
+            "code_change_overlap_cco",
+            "developer_overlap_rate_dor",
+            "relative_co_change_factor_k_cor_k_cco_k_dor",
+            "percentage_affected_entities_insep_pct",
+            "percentage_affected_entities_incol_pct",
+            "smell_density_insep",
+            "smell_density_incol",
+            "K_COR_insep",
+            "K_CCO_insep",
+            "K_DOR_insep",
+            "K_COR_incol",
+            "K_CCO_incol",
+            "K_DOR_incol",
+            "persistence_insep",
+            "persistence_incol",
+            "detail"
+          ]
+        },
+        "paper": {
+          "tex": {
+            "path": "paper/main.tex",
+            "bytes": 10642,
+            "via": "candidate"
+          },
+          "pdf": {
+            "path": "paper/main.pdf",
+            "bytes": 241086,
+            "via": "compiled_promoted"
+          },
+          "md": {
+            "path": "paper/paper.md",
+            "bytes": 3506,
+            "via": "candidate"
+          },
+          "json": null,
+          "status": "pdf",
+          "score": 1.0
+        }
+      },
+      "bonus": {
+        "experiment_plan": {
+          "path": "plan.md",
+          "bytes": 1266,
+          "via": "candidate"
+        },
+        "experiment_log": {
+          "path": "evoscientist_run.log",
+          "bytes": 53560,
+          "via": "glob"
+        },
+        "review": null,
+        "readme": {
+          "path": "README.md",
+          "bytes": 3113,
+          "via": "candidate"
+        },
+        "narrative": null,
+        "bib": null
+      },
+      "manifest_status": {
+        "research_request": true,
+        "plan": true,
+        "metrics": true,
+        "paper_tex": true,
+        "paper_pdf": false,
+        "readme": true
+      },
+      "gate_scores": {
+        "idea": 1.0,
+        "code": 1.0,
+        "results": 1.0,
+        "paper": 1.0
+      },
+      "fairness": {
+        "gates": [
+          "idea",
+          "code",
+          "results",
+          "paper"
+        ],
+        "paper_gate_rule": "PDF=1.0; TeX-only/md_only/json_only=0.5; complete requires PDF",
+        "results_gate_rule": "substantive numeric results via framework-aware normalize_results",
+        "audit_ref": "framework_profile.FAIRNESS_AUDIT"
+      },
+      "notes": [
+        "Required: idea, code, substantive results, paper (PDF full; TeX/markdown/JSON draft half).",
+        "Stub/seed metrics (e.g. dataset_candidate/metrics.json) do not satisfy results.",
+        "Framework noise (.deepscientist_npm, skills/templates, runtime) is excluded from code/results/paper.",
+        "Manifest status is informational; disk presence is authoritative."
+      ]
+    },
+    "idea_generation": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/workspace/evoscientist_2026-09-29_02-37-30",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo",
+      "idea_path": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/workspace/evoscientist_2026-09-29_02-37-30/plan.md",
+      "status": "ok",
+      "dimensions": {
+        "novelty": {
+          "score": 3.0,
+          "justification": "The idea explicitly builds on 'PairSmell reproduction + severity-aware extension' and proposes 'PairSmell-S — a type-specific severity model (`S_InSep = coupling`, `S_InCol = 1 - agreement`) plus agreement-threshold sensitivity.' Closest Solution Space entries R62, R21, and R15 detect modularity violations, co-change modularity, or survey architectural smells, but do not define this pair-type-specific severity model. This is a meaningful extension of prior baseline work rather than a new paradigm.",
+          "rubric": "Incremental: a meaningful extension or optimization of prior baseline work that fixes a concrete prior limitation, but the core paradigm is unchanged.",
+          "category": "Incremental",
+          "nearest_solution_space_ids": [
+            "R62",
+            "R21",
+            "R15"
+          ],
+          "differentiation": "Adds a pair-type-specific severity model, 'S_InSep = coupling' and 'S_InCol = 1 - agreement', plus agreement-threshold sensitivity, whereas R62/R21 focus on modularity violations and co-change metrics without this severity scoring."
+        },
+        "feasibility": {
+          "score": 4.0,
+          "justification": "The artifact states Implementation/Experiments are DONE using existing scripts and metrics, and the setup depends on 'Computing co-change and dependency metrics from Git repositories and source code ... with standard tools (e.g., pydriller, Understand).' The burden is low to moderate, with no custom low-level tooling or compute catastrophe.",
+          "rubric": "Low barrier / easy to implement: core logic can be quickly built on existing Python libraries or common ML frameworks; only small changes to a standard evaluation flow (e.g. prompt strategy tweaks or swapping metrics)."
+        },
+        "clarity": {
+          "score": 4.0,
+          "justification": "The plan gives concrete stages, formulas, and quantitative results such as 'Prevalence: InSep 12.16% / InCol 67.34%' and 'K_COR/CCO/DOR = 3.30/3.44/2.75.' However, it lacks detailed baseline/comparison design and limitations, so it is clear and concrete but not pseudocode-level rigorous.",
+          "rubric": "Clear and concrete: steps are explicit with a reasonable, specific experiment design (baseline tools, metric definitions); can be turned into a solid proposal."
+        }
+      },
+      "overall_score": 3.5,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "novelty",
+        "feasibility",
+        "clarity"
+      ],
+      "solution_space": {
+        "status": "ok",
+        "paper_count": 80,
+        "entry_count": 80,
+        "cache_hit": true,
+        "source_file": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/mineru_sections.json",
+        "stats": {
+          "papers": 80,
+          "extracted": 80,
+          "usable_abstracts": 53,
+          "citation_meta_abstracts": 0,
+          "missing_abstracts": 27,
+          "mineru_titles": 74,
+          "related_work_titles": 69,
+          "abstracts_attached": 53,
+          "related_work_extras": 6,
+          "batches": 5
+        },
+        "error": null
+      },
+      "notes": [
+        "Scores the intermediate idea artifact (not the final paper).",
+        "Dimensions: novelty, feasibility, clarity (each 1-5). Excitement removed.",
+        "Novelty is scored against a Solution Space built from mineru REFERENCES titles (+ related_work.json abstracts when matched)."
+      ],
+      "idea_via": "candidate",
+      "idea_relative": "plan.md",
+      "summary": "The plan reproduces PairSmell and adds a severity model scoring inappropriate separation by coupling and inappropriate collocation by 1-agreement, with co-change and evolution analyses. It is feasible, uses public datasets and standard tools, and reports concrete results. However, the contribution is incremental over prior modularity-violation and co-change work, and the artifact lacks detailed comparison and limitation discussion.",
+      "strengths": [
+        "Concrete severity formulas and reported quantitative results",
+        "Reproducible use of public dataset and standard mining tools",
+        "Addresses clear RQs with prevalence, co-change, and evolution evidence"
+      ],
+      "weaknesses": [
+        "Incremental novelty relative to modularity-violation and co-change work",
+        "Artifact omits detailed baseline/comparison design and limitations",
+        "Severity model is relatively simple and may not capture deeper architectural mechanisms"
+      ],
+      "llm_meta": {
+        "model": "deepseek-v4-pro-0813",
+        "base_url": "https://api-sg.umodelverse.ai/v1",
+        "usage": {
+          "completion_tokens": 2885,
+          "completion_tokens_details": {
+            "reasoning_tokens": 2271
+          },
+          "prompt_tokens": 6045,
+          "prompt_tokens_details": {
+            "cached_tokens": 4096
+          },
+          "total_tokens": 8930
+        },
+        "attempt": 0
+      }
+    },
+    "peer_review": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/workspace/evoscientist_2026-09-29_02-37-30",
+      "review_report": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/workspace/evoscientist_2026-09-29_02-37-30/artifacts/peer_review/stanford_apr.md",
+      "paper_pdf": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/workspace/evoscientist_2026-09-29_02-37-30/paper/main.pdf",
+      "paper_tex": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/workspace/evoscientist_2026-09-29_02-37-30/paper/main.tex",
+      "status": "ok",
+      "dimensions": {},
+      "overall_score": 3.9,
+      "score_scale": "1-10",
+      "dimension_order": [],
+      "notes": [
+        "Scored from paperreview.ai (Stanford APR) native ratings; benchmark 5-dimension LLM rubric skipped.",
+        "Overall scale: 1-10."
+      ],
+      "paperreview": {
+        "status": "fetched",
+        "token_file": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/workspace/evoscientist_2026-09-29_02-37-30/artifacts/peer_review/paperreview.token.txt",
+        "json": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/workspace/evoscientist_2026-09-29_02-37-30/artifacts/peer_review/stanford_apr.json",
+        "markdown": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/workspace/evoscientist_2026-09-29_02-37-30/artifacts/peer_review/stanford_apr.md",
+        "apr_scores": {
+          "scale": "1-10",
+          "overall": 3.9,
+          "dimensions": {}
+        },
+        "pdf_rebuild": null
+      },
+      "scoring_method": "paperreview_apr",
+      "scoring_source": "paperreview_json",
+      "apr_dimensions": {},
+      "summary": "",
+      "red_flags": []
+    },
+    "alignment": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/workspace/evoscientist_2026-09-29_02-37-30",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo",
+      "status": "ok",
+      "original": {
+        "paper_title": "PairSmell: A Novel Perspective Inspecting Software Modular Structure",
+        "selection": {
+          "num_blocks": 7,
+          "total_chars": 31998,
+          "inferred_roles": {
+            "abstract": 1,
+            "introduction": 1,
+            "experiment": 3,
+            "discussion": 1,
+            "conclusion": 1
+          },
+          "mineru_raw_keys": {
+            "field:abstract": 1,
+            "field:introduction": 1,
+            "field:experiment": 1,
+            "other": 3,
+            "conclusion": 1
+          },
+          "infer_reasons": {
+            "top_level_field": 3,
+            "title": 3,
+            "body_override": 1
+          },
+          "rescued_from_other": 3,
+          "note": "mineru key is unreliable; blocks are selected by title/body/inheritance. rescued_from_other counts sections labeled other but treated as typed roles."
+        },
+        "claims": [
+          {
+            "id": "C1",
+            "statement": "PairSmell introduces a granular, pair-level architectural smell that uses multiple modularization tools to identify inapt modular relations.",
+            "direction": "neutral",
+            "metric_names": [],
+            "evidence_quote": "PairSmell exploits modularization by comparing each pair's apt MR with its actual MR.",
+            "confidence": 0.9
+          },
+          {
+            "id": "C2",
+            "statement": "PairSmell is prevalent in the 20 studied projects, with 260,003 instances identified.",
+            "direction": "neutral",
+            "metric_names": [
+              "total_PairSmells",
+              "InSep_count",
+              "InCol_count"
+            ],
+            "evidence_quote": "260,003 instances over 20 projects: 73,536 InSep, 186,467 InCol.",
+            "confidence": 0.95
+          },
+          {
+            "id": "C3",
+            "statement": "InSep pairs co-change 190% more than properly separated pairs, indicating detrimental modular structure."
+          }
+        ],
+        "metrics": [],
+        "overall_conclusion": null,
+        "comparable_notes": null,
+        "cache_hit": true
+      },
+      "agent": {
+        "status": "ok",
+        "run_dir": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/workspace/evoscientist_2026-09-29_02-37-30",
+        "claims": [
+          {
+            "id": "A1",
+            "statement": "InSep pairs co-change 3.3x-3.4x more than properly separated pairs, with K_COR=3.30, K_CCO=3.44, and K_DOR=2.75.",
+            "direction": "neutral",
+            "metric_names": [
+              "K_COR_insep",
+              "K_CCO_insep",
+              "K_DOR_insep"
+            ],
+            "evidence_quote": "InSep pairs co-change $3.3\\times$--$3.4\\times$ more than properly separated pairs (K$_{\\text{COR}}$=3.30, K$_{\\text{CCO}}$=3.44, K$_{\\text{DOR}}$=2.75)",
+            "confidence": 0.95
+          },
+          {
+            "id": "A2",
+            "statement": "InCol pairs co-change about 30% less than properly collocated pairs, with K_COR=0.72, K_CCO=0.68, and K_DOR=0.68.",
+            "direction": "neutral",
+            "metric_names": [
+              "K_COR_incol",
+              "K_CCO_incol",
+              "K_DOR_incol"
+            ],
+            "evidence_quote": "InCol pairs co-change $\\sim30\\%$ less (K$_{\\text{COR}}$=0.72, K$_{\\text{CCO}}$=0.68, K$_{\\text{DOR}}$=0.68).",
+            "confidence": 0.95
+          },
+          {
+            "id": "A3",
+            "statement": "The separation consensus metric predicts InSep co-change better than randomized baseline.",
+            "direction": "neutral",
+            "metric_names": [],
+            "evidence_quote": "Static coupling strength ranks InSep pairs by predicted co-change (positive correlation on 14/16 projects, binomial $p=0.004$).",
+            "confidence": 0.9
+          },
+          {
+            "id": "A4",
+            "statement": "The colocation consensus metric predicts InCol independence better than randomized baseline.",
+            "direction": "neutral",
+            "metric_names": [],
+            "evidence_quote": "Separation consensus ranks InCol pairs by independence (negative correlation on 16/20 projects, $p=0.012$).",
+            "confidence": 0.9
+          },
+          {
+            "id": "A5",
+            "statement": "Relaxing the consensus threshold increases InSep candidates far more than InCol candidates.",
+            "direction": "neutral",
+            "metric_names": [],
+            "evidence_quote": "Relaxing the consensus from unanimity (3/3) to majority (2/3) grows the InSep population by $\\sim50\\times$ and InCol by $\\sim3\\times$.",
+            "confidence": 0.9
+          },
+          {
+            "id": "A6",
+            "statement": "On average 12.16% of entities are involved in at least one InSep pair and 67.34% in at least one InCol pair; 72.97% are affected by at least one smell of either type.",
+            "direction": "neutral",
+            "metric_names": [],
+            "evidence_quote": "On average \\textbf{12.16\\%} of entities are involved in at least one InSep pair and \\textbf{67.34\\%} in at least one InCol pair; 72.97\\% are affected by at least one smell of either type.",
+            "confidence": 0.85
+          },
+          {
+            "id": "A7",
+            "statement": "InCol pairs are more stable than InSep pairs over time.",
+            "direction": "neutral",
+            "metric_names": [],
+            "evidence_quote": "Pair-level persistence is 23.9\\% for InSep and 55.1\\% for InCol across consecutive snapshots.",
+            "confidence": 0.85
+          },
+          {
+            "id": "A8",
+            "statement": "InSep prevalence matches the original paper, but InCol prevalence is higher than reported.",
+            "direction": "neutral",
+            "metric_names": [],
+            "evidence_quote": "InSep matches the paper's 14.60\\%; InCol is inflated relative to the paper's 20.44\\%.",
+            "confidence": 0.8
+          }
+        ],
+        "metrics": [],
+        "overall_conclusion": null,
+        "sources": {
+          "metrics_path": "results/metrics.json",
+          "paper_tex_path": "paper/main.tex"
+        },
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 3858,
+            "completion_tokens_details": {
+              "reasoning_tokens": 2889
+            },
+            "prompt_tokens": 5280,
+            "prompt_tokens_details": {
+              "cached_tokens": 2048
+            },
+            "total_tokens": 9138
+          },
+          "attempt": 3
+        }
+      },
+      "comparison": {
+        "status": "ok",
+        "claim_alignment": [
+          {
+            "original_claim_id": "C1",
+            "agent_claim_id": "A3",
+            "label": "consistent",
+            "rationale": "Agent uses separation and colocation consensus metrics from multiple modularization tools and tests their predictive value, consistent with the PairSmell pair-level architectural smell perspective."
+          },
+          {
+            "original_claim_id": "C2",
+            "agent_claim_id": "A8",
+            "label": "partial",
+            "rationale": "Agent A8 states InSep prevalence matches the paper's 14.60%, but InCol prevalence is higher than reported and total raw counts 260,003, 73,536 InSep, and 186,467 InCol are not directly compared."
+          },
+          {
+            "original_claim_id": "C3",
+            "agent_claim_id": "A1",
+            "label": "consistent",
+            "rationale": "Agent A1 reports InSep pairs co-change 3.3x-3.4x more than properly separated pairs, matching the direction of the original 190% more co-change claim, though using a ratio rather than percent increase."
+          }
+        ],
+        "metric_alignment": [],
+        "summary": {
+          "direction_consistency": "mixed",
+          "consistent_claim_ratio": 0.67,
+          "has_comparable_metrics": false,
+          "sota_improvement_summary": "N/A",
+          "overall_alignment_score": 0.67,
+          "score_rationale": "Two of three original claims are clearly supported in the same direction; prevalence is only partially addressed without exact total-count comparison, and no direct numeric metric deltas are available."
+        },
+        "warnings": [
+          "Original C2 raw counts (260,003; 73,536; 186,467) are not directly compared by the agent.",
+          "Original metric list is empty, so metric_alignment has no comparable numeric deltas."
+        ],
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 2351,
+            "completion_tokens_details": {
+              "reasoning_tokens": 1918
+            },
+            "prompt_tokens": 3451,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 5802
+          },
+          "attempt": 1
+        }
+      },
+      "overall_alignment_score": 0.67,
+      "direction_consistency": "mixed"
+    },
+    "experiment_analysis": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/workspace/evoscientist_2026-09-29_02-37-30",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo",
+      "status": "ok",
+      "metrics_path": "results/metrics.json",
+      "experiment_success": {
+        "status": "ok",
+        "success": true,
+        "metrics_path": "results/metrics.json",
+        "absolute_metrics_path": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/workspace/evoscientist_2026-09-29_02-37-30/results/metrics.json",
+        "checks": {
+          "has_results_file": true,
+          "non_stub": true,
+          "numeric_leaf_count": 43,
+          "min_numeric_ok": true
+        },
+        "manifest_hints": {
+          "status": {
+            "research_request": true,
+            "plan": true,
+            "metrics": true,
+            "paper_tex": true,
+            "paper_pdf": false,
+            "readme": true
+          },
+          "returncode": 0,
+          "benchmark_complete": true,
+          "artifacts_metrics_flag": false
+        },
+        "warnings": [],
+        "suspicious_values": [],
+        "note": "success=true requires substantive results (framework-aware path) with >=3 numeric leaves. Supports metrics.json, results.json, experiment_results.txt, etc. Manifest returncode/benchmark_complete are soft warnings only."
+      },
+      "idea_code_consistency": {
+        "status": "ok",
+        "idea_path": "plan.md",
+        "code_files": [
+          "project/main.py"
+        ],
+        "score_scale": "1-5",
+        "score": 2.0,
+        "label": "weak",
+        "justification": "The provided code is only a thin entry point that imports scripts.run_all. It names the expected RQ1/RQ2/RQ3 pipeline and result outputs, but none of the actual PairSmell-S method, severity model, metrics, evaluation protocol, or analysis is implemented or visible in the code shown.",
+        "matched_elements": [
+          "Entry point is named PairSmell-S",
+          "Mentions RQ1 prevalence, RQ2 co-change + severity, and RQ3 evolution",
+          "Writes results/*.json",
+          "Delegates to scripts.run_all for the full pipeline"
+        ],
+        "missing_or_divergent_elements": [
+          "PairSmell-S type-specific severity model implementation",
+          "Prevalence computation over 473 snapshots",
+          "Co-change metrics K_COR, CCO, DOR and severity statistics",
+          "Evolution persistence analysis",
+          "Data loading and actual metrics.json generation",
+          "Concrete evaluation protocol and run_all implementation"
+        ],
+        "rubric": "Weak alignment: only superficial overlap; core hypothesis, method, or evaluation in the idea is missing or replaced.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 1330,
+            "completion_tokens_details": {
+              "reasoning_tokens": 1097
+            },
+            "prompt_tokens": 1021,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 2351
+          },
+          "attempt": 0
+        }
+      },
+      "setup_coverage": {
+        "status": "ok",
+        "overall_coverage": 1.0,
+        "datasets": {
+          "gold_count": 1,
+          "hit_count": 1,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "20-Project PairSmell Dataset"
+          ],
+          "misses": []
+        },
+        "baselines": {
+          "gold_count": 0,
+          "hit_count": 0,
+          "miss_count": 0,
+          "coverage": null,
+          "hits": [],
+          "misses": []
+        },
+        "metrics": {
+          "gold_count": 6,
+          "hit_count": 6,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "Percentage of affected entities/pairs",
+            "Smell density",
+            "Commit Overlap Rate (COR)",
+            "Code Change Overlap (CCO)",
+            "Developer Overlap Rate (DOR)",
+            "Relative co-change factor (K_COR, K_CCO, K_DOR)"
+          ],
+          "misses": []
+        },
+        "agent_protocol": {},
+        "gold_protocol": {},
+        "dataset_dirs": [
+          "dataset_candidate"
+        ],
+        "flags": {
+          "weaker_baseline_suspected": false,
+          "weak_protocol": [],
+          "synthetic_data": "unexpected_synthetic_or_local_only_data",
+          "gold_allows_synthetic": false
+        },
+        "gold_sources": [
+          "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/task.md",
+          "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/metadata.json"
+        ],
+        "note": "Coverage is name/alias matching against task.md Datasets/Baselines/Metrics. weak_protocol flags large reductions in trials/timeout vs Constraints. Synthetic corpora are not penalized when the task itself requires synthesis."
+      },
+      "ablation_significance": {
+        "status": "ok",
+        "idea_path": "plan.md",
+        "significance_signals_rule_based": {
+          "signals": [
+            "file:stats.py:scipy.stats"
+          ],
+          "artifact_paths": [
+            ".container-home/.local/lib/python3.11/site-packages/scipy/stats/stats.py"
+          ],
+          "has_any_significance_artifact": true
+        },
+        "evidence_format": "raw_json",
+        "study_type": null,
+        "components": [],
+        "ablation_coverage_score": null,
+        "overall_ablation_ok": null,
+        "overall_significance_ok": null,
+        "summary": "",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 3500,
+            "completion_tokens_details": {
+              "reasoning_tokens": 3500
+            },
+            "prompt_tokens": 2932,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 6432
+          },
+          "attempt": 0
+        }
+      },
+      "results_paper_consistency": {
+        "status": "ok",
+        "paper_tex": "paper/main.tex",
+        "paper_kind": "paper_tex",
+        "results_format": "raw_json",
+        "digest_hint": {
+          "unfavorable_count": 0,
+          "trial_fail_count": 0,
+          "trial_success_count": 0,
+          "metadata": {}
+        },
+        "score_scale": "1-5",
+        "method": "Direct LLM comparison: agent's FINAL results artifact (metrics.json summary) vs paper Results/Discussion/Conclusion. Interim failed runs are NOT evidence unless still present in the final metrics file.",
+        "score": null,
+        "consistency_label": null,
+        "hiding_unfavorable_suspected": false,
+        "hiding_confidence": null,
+        "justification": "",
+        "supported_claims": [],
+        "unsupported_or_overstated_claims": [],
+        "numeric_mismatches": [],
+        "unfavorable_in_final_results": [],
+        "unfavorable_acknowledged_in_paper": [],
+        "unfavorable_missing_from_paper": [],
+        "rubric": null,
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 504,
+            "completion_tokens_details": {
+              "reasoning_tokens": 502
+            },
+            "prompt_tokens": 3264,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 3768
+          },
+          "attempt": 3
+        }
+      },
+      "scores": {
+        "experiment_success": true,
+        "idea_code_score": 2.0,
+        "setup_coverage": 1.0,
+        "ablation_coverage_score": null,
+        "overall_ablation_ok": null,
+        "overall_significance_ok": null,
+        "results_paper_score": null,
+        "hiding_unfavorable_suspected": false
+      },
+      "notes": [
+        "Axes 1,2,3,4,6 in experiment_analysis (figures excluded).",
+        "setup_coverage matches task.md Datasets/Baselines/Metrics; weak_protocol flags reductions vs Constraints.",
+        "Axis 6: final normalized results vs paper; interim run logs not used as ground truth."
+      ]
+    },
+    "literature_review": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/workspace/evoscientist_2026-09-29_02-37-30",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo",
+      "status": "ok",
+      "as_of_year": 2026,
+      "agent_ref_count": 1,
+      "sources": [
+        {
+          "path": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/workspace/evoscientist_2026-09-29_02-37-30/project/literature_synthesis.md",
+          "kind": "literature_synthesis"
+        },
+        {
+          "path": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/workspace/evoscientist_2026-09-29_02-37-30/paper/main.tex",
+          "kind": "thebibliography"
+        }
+      ],
+      "collection_audit": {
+        "cited_keys_count": 1,
+        "filter_mode": "paper_cite_keys",
+        "bib_total_before_filter": 0,
+        "bib_after_filter": 0,
+        "uncited_bib_skipped": 0,
+        "cited_keys_sample": [
+          "pairsmell"
+        ],
+        "thebibliography_after_filter": 1,
+        "agent_ref_count": 1
+      },
+      "fabrication": {
+        "status": "ok",
+        "scholarly_count": 1,
+        "verified_count": 1,
+        "fake_count": 0,
+        "lookup_failed_count": 0,
+        "insufficient_metadata_count": 0,
+        "non_paper_count": 0,
+        "fabrication_rate": 0.0,
+        "items": [
+          {
+            "title": "PairSmell: A Novel Perspective Inspecting Software Modular Structure",
+            "doi": "10.1109/icse55347.2025.00072",
+            "arxiv_id": "2411.01012",
+            "year": 2025,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "PairSmell: A Novel Perspective Inspecting Software Modular Structure",
+            "resolved_year": 2024,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "pairsmell",
+            "source_kind": "thebibliography"
+          }
+        ],
+        "cache_path": "~/ai_scientist_evals/ICSE-2025-022_assessment_of_inappropriate_entity_collo/reference_verify_cache.json",
+        "override_path": "~/ai_scientist_evals/ICSE-2025-022_assessment_of_inappropriate_entity_collo/reference_verify_overrides.json",
+        "note": "fabrication_rate = fake / (verified + fake). lookup_failed (API errors) and insufficient_metadata are excluded and retried or skipped. GitHub/docs/tool URLs are non_paper and excluded from the rate. To manually correct a false negative, edit reference_verify_overrides.json (key=normalized title / doi / cite_key; value=\"verified\" or a result dict), then re-run."
+      },
+      "coverage": {
+        "status": "ok",
+        "gold_source": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/mineru_sections.json",
+        "gold_count": 74,
+        "gold_is_original_paper_references": true,
+        "gold_is_openalex_subset": false,
+        "agent_count": 1,
+        "intersection_size": 0,
+        "recall": 0.0,
+        "precision": 0.0,
+        "matched_gold_keys": [],
+        "primary_metric": "recall",
+        "note": "Primary metric is recall against the original paper bibliography (titles from mineru_sections.json REFERENCES; related_work.json used only to enrich DOI/year or as fallback if mineru titles are empty). Denominator = |original paper references|. Precision is secondary (agent may cite valid extra papers)."
+      },
+      "recency": {
+        "status": "ok",
+        "dated_count": 1,
+        "unknown_year_count": 0,
+        "year_histogram": {
+          "2024": 1
+        },
+        "windows": {
+          "3": {
+            "years": 3,
+            "cutoff_year_inclusive": 2023,
+            "recent_count": 1,
+            "recent_ratio": 1.0
+          },
+          "5": {
+            "years": 5,
+            "cutoff_year_inclusive": 2021,
+            "recent_count": 1,
+            "recent_ratio": 1.0
+          }
+        }
+      },
+      "scores": {
+        "fabrication_rate": 0.0,
+        "coverage_recall": 0.0,
+        "coverage_precision": 0.0,
+        "recency_ratio_3y": 1.0,
+        "recency_ratio_5y": 1.0
+      }
+    }
+  },
+  "scores": {
+    "completeness": {
+      "complete": true,
+      "overall_score": 0.8453,
+      "required_score": 1.0,
+      "bonus_score": 0.09
+    },
+    "peer_review": {
+      "status": "ok",
+      "optional": false,
+      "overall_score": 3.9,
+      "score_scale": "1-10",
+      "scoring_method": "paperreview_apr"
+    },
+    "idea_generation": {
+      "status": "ok",
+      "overall_score": 3.5,
+      "dimensions": {
+        "novelty": 3.0,
+        "feasibility": 4.0,
+        "clarity": 4.0
+      },
+      "novelty_category": "Incremental",
+      "solution_space_status": "ok"
+    },
+    "alignment": {
+      "status": "ok",
+      "direction_consistency": "mixed",
+      "overall_alignment_score": 0.67
+    },
+    "literature_review": {
+      "fabrication_rate": 0.0,
+      "coverage_recall": 0.0,
+      "coverage_precision": 0.0,
+      "recency_ratio_3y": 1.0,
+      "recency_ratio_5y": 1.0
+    },
+    "experiment_analysis": {
+      "experiment_success": true,
+      "idea_code_score": 2.0,
+      "setup_coverage": 1.0,
+      "ablation_coverage_score": null,
+      "overall_ablation_ok": null,
+      "overall_significance_ok": null,
+      "results_paper_score": null,
+      "hiding_unfavorable_suspected": false
+    }
+  },
+  "fair_scores": {
+    "applicable_axes": [
+      "completeness",
+      "idea_generation",
+      "peer_review",
+      "alignment",
+      "literature_review",
+      "experiment_analysis"
+    ],
+    "skipped_axes": [],
+    "fair_mean_0_1": 0.7044,
+    "note": "fair_mean_0_1 averages only applicable axes; optional peer review and framework-inapplicable literature are excluded from the denominator."
+  },
+  "evals_root": "~/ai_scientist_evals",
+  "claims_cache": "~/ai_scientist_evals/ICSE-2025-022_assessment_of_inappropriate_entity_collo/original_claims.json",
+  "solution_space_cache": "~/ai_scientist_evals/ICSE-2025-022_assessment_of_inappropriate_entity_collo/solution_space.json"
+}

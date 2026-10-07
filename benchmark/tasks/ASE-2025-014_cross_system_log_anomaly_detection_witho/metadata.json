@@ -1,0 +1,217 @@
+{
+  "id": "ASE-2025-014",
+  "paper_id": "113ae3702c43664313db094f5f937b9eb2975b48",
+  "title": "LogMoE: Lightweight Expert Mixture for Cross-System Log Anomaly Detection",
+  "abstract": "Robust anomaly detection in system logs plays a crucial role in maintaining stable and reliable software operations. However, existing methods often struggle to accommodate evolving log formats and distributional shifts across systems, as they heavily rely on large volumes of labeled data, log parsing, and predefined event templates. To address these challenges, we propose LogMoE, a scalable and parsing-free log anomaly detection framework. LogMoE utilizes labeled logs from multiple mature systems to train a set of lightweight expert models, which are integrated via a gating mechanism within a Mixture-of-Experts (MoE) architecture. This design enables LogMoE to generalize effectively to previously unseen target systems. By eliminating the need for log parsing, our approach remains robust against the heterogeneity of log formats and syntactic structures. We conduct extensive evaluations on eight log datasets under varying generalization scenarios: single-system, homogeneous-system, and heterogeneous-system. Experimental results demonstrate that LogMoE consistently achieves robust generalization, particularly under conditions with scarce labeled data in the target system. As such, LogMoE provides a scalable, parsing-free, and generalization-capable solution tailored for complex and continuously evolving software system environments, positioning it as a future-ready approach to log anomaly detection.",
+  "year": 2025,
+  "citation_count": 2,
+  "venue": "40th IEEE/ACM International Conference on Automated Software Engineering (ASE 2025)",
+  "venue_short": "ASE 2025",
+  "authors": [
+    "Jiaxing Qi",
+    "Zhongzhi Luan",
+    "Shaohan Huang",
+    "Carol Fung",
+    "Yuchen Wang",
+    "Aibin Wang",
+    "Hongyu Zhang",
+    "Hailong Yang",
+    "Depei Qian"
+  ],
+  "pdf_url": "",
+  "paper_url": "https://www.semanticscholar.org/paper/113ae3702c43664313db094f5f937b9eb2975b48",
+  "paper_type": "methodology",
+  "award": "ACM SIGSOFT Distinguished Paper Award",
+  "subfield_label": "AIOps & System Reliability",
+  "introduction": "Modern large-scale software systems (e.g., cloud services, HPC clusters) generate massive volumes of logs that record runtime states and events. These logs are critical for anomaly detection, helping identify early signs of faults and ensuring high availability and reliability of systems [1]- [4]. However, manual inspection of such logs is labor-intensive and errorprone, making automated log anomaly detection a vital topic in AIOps and system monitoring.\n\nDespite rapid progress, log anomaly detection still faces several challenges. First, supervised approaches [5], [6] often rely on large amounts of labeled anomaly logs, which are costly and time-consuming to acquire, especially for newly deployed *Corresponding author or proprietary systems. Second, most existing approaches [7]- [9] depend on log parsing to convert raw logs into structured formats, followed by frequency or sequence modeling. These approaches implicitly assume that log formats and event types remain stable over time [10], [11]. However, log evolution, such as software version upgrades or architectural changes, leads to new or altered log templates, which causes parsing errors, unrecognized events, and unstable sequences [12], [13].\n\nTo reduce data dependency, semi and unsupervised approaches detect anomalies by learning patterns from normal data alone. For instance, DeepLog and LogAnomaly [14], [15] use LSTM-based language models to predict the next event and flag low-probability ones as anomalies. However, these models typically rely on accurate log parsing and stable event sequences-assumptions that often break in evolving environments. Parsing errors can propagate through the pipeline and significantly degrade performance [16]- [19]. To mitigate this, recent efforts explore parser-free approaches [20], [21] that operate directly on raw log messages. Yet, many of these approaches still struggle to maintain robustness under log evolution and cross-system scenarios.\n\nTo improve the models' generalization and robustness, researchers have introduced transfer learning and domain adaptation techniques to apply models trained on mature systems to target systems. LogTransfer [22] uses GloVe embeddings and LSTM models to extract sequence patterns from source logs and transfer knowledge via shared layers. LogTAD [23] applies adversarial domain adaptation to align log distributions without requiring labeled anomalies. EvLog [12] introduces a multi-level log representation learning framework that avoids parsing and incorporates attention to handle evolving logs. More recently, LogDLR [24] leverages adversarial training to extract domain-invariant features. MetaLog [9] applies MAML-style meta-learning with globally consistent semantic embeddings to achieve strong few-shot adaptation. Nevertheless, most existing approaches rely on partial structural assumptions or require meticulously designed cross-system alignment strategies, which limit their scalability and hinder seamless integration into plug-and-play systems.\n\nIn light of these limitations, we propose LogMoE, a scalable and parser-free framework for cross-system log anomaly detection (see Figure 1). Unlike prior approaches that rely on parsing or require costly labeled data from target systems, LogMoE utilizes a pool of lightweight domain experts, each trained on logs from a mature source system, and dynamically integrates them via a gating-based Mixture-of-Experts (MoE) architecture [25]- [27]. This design offers several advantages: it (1) eliminates dependence on log parsing, (2) supports generalization cross-systems with diverse log formats, and (3) enables zero-shot inference without retraining or fine-tuning on the target domain. The MoE architecture decouples the modeling of system-specific log semantics by assigning each expert to a dedicated source system. During the detection stage, the gating network dynamically selects experts based on input semantics, enabling LogMoE to adapt to postdeployment distribution shifts and log format changes. This mechanism absorbs evolving patterns by routing inputs to relevant experts, supporting cross-system generalization [28], [29]. Moreover, unlike parsing-based approaches [9], [22], LogMoE operates directly on raw-text embeddings, ensuring robustness to syntactic and semantic variations without structural normalization. Each expert is implemented using parameter-efficient Low-rank adaptation (LoRA) [30]- [32], allowing LogMoE to scale to more source systems without incurring significant computational costs. We evaluate LogMoE on eight public log datasets across three generalization scenarios: single-system, homogeneous-system, and heterogeneoussystem. Experimental results show that LogMoE consistently achieves competitive or superior performance, even with no labeled logs from the target system. Our contributions are summarized as follows:\n\n• We identify and formalize the problem of heterogeneoussystem generalization in log anomaly detection, which remains underexplored in prior work.",
+  "experiment": "Datasets. Our evaluation is conducted on eight public log datasets. Four datasets, Liberty, Thunderbird (TDB), Spirit, and BGL, originate from large-scale supercomputing systems and are widely used in prior studies [7], [9], [37]. The other four datasets, Hadoop2, Hadoop3, Spark2, and Spark3, are provided by EvLog [12] and correspond to different software versions of DDP systems. These versioned datasets are specifically used to evaluate the cross-version generalization capabilities of models under software evolution scenarios. Table II summarizes the statistics of these datasets.\n\nBaselines. We compare LogMoE with six representative baselines covering supervised, semi-supervised, transfer learning, and meta-learning paradigms. LogRobust [16] is an attention-enhanced supervised model designed to improve robustness against unstable logs. PLELog [38] employs semi-supervised learning by iteratively refining pseudo-labels. EvLog [12] introduces multi-level representations and attention mechanisms to handle log evolution across software versions. LogTransfer [22] and LogTAD [23] are transfer-based approaches; the former is supervised and assumes structural similarity between domains, while the latter adopts unsupervised domain adaptation. MetaLog [9] utilizes meta-learning to enhance generalization across systems with limited target supervision. These baselines form a comprehensive foundation for evaluating the generalization ability of LogMoE.\n\nMetrics and Implementation Details. Following prior works [12], [22], we adopt standard classification metrics: Precision, Recall, and F1-score, which evaluate overall performance. All methods are implemented in PyTorch. We adopt a frozen BERT-base model as the shared encoder across all experts. For the LoRA modules, we set the rank to r = 4. Each expert is trained independently for 100 epochs using the Adam optimizer with a learning rate of 1 × 10 -4 . The gating module is trained using 1% anomaly logs from the target system when available; otherwise, it is optimized with an entropy regularization objective with λ = 0.5. The log sequence window size is set to 100 throughout all experiments.\n\nExperimental Settings. To evaluate generalization capability, we consider three progressive levels of difficulty: i) Single-system generalization: Training and testing on different partitions of the same system. ii) Homogeneous-system generalization: Transfer across different systems with similar infrastructures or vendors. iii) Heterogeneous-system generalization: Transfer across systems with different architectures and vendors. These settings reflect real-world operational environments, where labeled logs are available only for legacy systems, but anomaly detection must be applied to new or evolving systems without or fewer manual annotations.\n\n1) Single-system generalization: As shown in Table III, LogMoE achieves the best performance across all systems, demonstrating strong effectiveness even without distribution shifts. In this setting, LogMoE is reduced to a single-expert model, yet still significantly outperforms both traditional and recent methods. This confirms that the modular MoE design does not compromise performance in single-system scenarios. Although only one expert is used, the gating mechanism is retained for consistency and future extensibility. These results establish a strong lower bound, validating that LogMoE is both accurate and efficient in standard settings.\n\n2) Homogeneous-system generalization: Table IV presents the results when each target system is tested using models trained on other systems of the same category. Compared to the single-system scenario, this scenario introduces moderate domain shifts caused by differences in component configurations and log formats within the same type.\n\nWe observe that LogMoE consistently outperforms all baselines across both supercomputer and DDP systems. This demonstrates that its expert modularity and gating mechanism enable effective knowledge transfer between related systems. For instance, when testing on a Spark system, LogMoE can dynamically route inputs to the most relevant expert trained on other Spark variants, yielding better generalization. These results confirm that LogMoE is not only competitive in singlesystem scenarios, but also adaptable to homogeneous-system variability. However, traditional supervised methods such as LogRobust and PLELog suffer a notable performance drop, indicating limited generalization capacity beyond the training system. Transfer learning methods like LogTransfer and LogTAD improve over them by aligning latent representations across domains, but still face difficulties when handling diverse log semantics. MetaLog and EvLog perform more robustly, benefiting from meta-learning and multi-view modeling. 3) Heterogeneous-system generalization: Table V shows the results when models are trained on systems of a different type from the test system, e.g., training on supercomputers and testing on DDP systems, or vice versa. This is the most challenging setting, involving both structural and semantic shifts across system domains.\n\nWe observe that traditional supervised and semi-supervised methods like LogRobust and PLELog struggle significantly in this setting due to their reliance on domain-specific patterns and lack of adaptation mechanisms. Even advanced methods such as LogTransfer and LogTAD, though equipped with transfer modules, often assume certain shared distributions or similar feature spaces between source and target, which do not hold in this scenario. Their generalization degrades notably when system behaviors diverge significantly. LogMoE, in contrast, consistently achieves the best perfor-mance across all cross-domain pairs. This validates its design philosophy: by maintaining a pool of system-specific experts and using a learned gating mechanism, LogMoE can select and interpolate relevant expertise even for unseen domains. For instance, when tested on a Spark system after training only on supercomputers, LogMoE dynamically routes inputs through the most semantically aligned expert, rather than relying on rigid shared representations. These results demonstrate that LogMoE uniquely addresses the core difficulty of cross-domain generalization-distribution mismatch-through modular specialization and adaptive routing, setting it apart from all prior methods. We also compared the performance of LogMoE under different window sizes. The results and discussion are provided in the README at the code link. (a) Homogeneous-system (b) Heterogeneous-system Fig. 4: Ablation study under homogeneous-system scenario and heterogeneous-system scenario.\n\nWe conduct ablation studies to examine the individual contributions of key components in LogMoE. Specifically, we compare four model variants: (1) Single-Expert (S-Expert), which randomly activates a single expert at inference time without any ensemble or gating mechanism; (2) Uniform Ensemble (U-Ensemble), which averages the outputs of all experts with equal weights, removing the gating mechanism;\n\n(3) LogMoE w/o LoRA, where each expert is implemented as a fully fine-tuned BERT model instead of using parameterefficient adaptation; and (4) LogMoE (full), our complete framework that integrates LoRA-based experts with a learned gating mechanism. These variants allow us to isolate the effects of expert diversity, gating strategy, and parameter efficiency on the model's generalization performance.\n\nAs shown in Figure 4, the results reveal that incorporating multiple experts leads to substantial gains over using a single expert, highlighting the importance of expert diversity. Moreover, the learned gating mechanism consistently outperforms uniform averaging, indicating the effectiveness of adaptive expert selection in handling system heterogeneity. Notably, LoRA-based adaptation achieves competitive performance compared to full fine-tuning, while offering significant parameter efficiency. These findings collectively validate that both expert diversity and input-dependent composition are critical for achieving robust cross-system generalization.\n\nLogMoE is designed to deliver strong generalization capabilities while maintaining lightweight computational over-head. This section evaluates its parameter efficiency, inference latency, and scalability, highlighting the advantages of modularity and low-rank adaptation. Parameter Efficiency. In LogMoE, all experts share a frozen BERT-base encoder with approximately 110 million parameters. Each expert introduces a lightweight set of LoRAs (rank r = 4), inserted into the final attention layer and the pooling projection layer. This design adds only ∼6K trainable parameters per expert. As shown in Table VI, this enables the deployment of hundreds of domain-specific experts while keeping the total number of trainable parameters still far below that of a fully fine-tuned BERT model. This parameter-efficient setup supports scalable expert expansion without incurring significant memory or computational overhead.\n\nInference Time. We measure inference latency using batches of 1000 log sequences. The comparison is conducted under two configurations: (i) Full-BERT baseline, where each system requires a separate fine-tuned model; and (ii) LogMoE with top-1 routing, where only one expert is activated per input through the gate mechanism. As shown in Table VII, LogMoE reduces average inference latency from 978 ms to 412 ms, achieving a 2.37× speedup without compromising accuracy.\n\nScalability. A key strength of LogMoE is its support for incremental expert addition without the need to retrain the entire model. When integrating a new system, only a LoRA and a lightweight classification head are trained. The gate module, composed of a few linear layers over pooled semantic embeddings, can be efficiently fine-tuned on a small set of labeled or pseudo-labeled samples. This modular training paradigm ensures that previously learned experts remain unaffected, facilitating continual learning in dynamic environments.\n\nTo evaluate the effectiveness and scalability of LogMoE under adaptive routing, we conduct an expert scaling experiment with soft routing Specifically, we fix the target system (Liberty) and gradually expand the number of source experts from 1 to 7 in the following order: Hadoop2, Hadoop3, Spark2, Spark3, TDB, Spirit, and BGL. After each addition, all existing experts are frozen, and only the gating mechanism is fine-tuned.\n\nAs shown in Figure 5, LogMoE exhibits substantial performance improvements as more relevant experts are introduced. The F1 score increases steadily, with Spark3 providing the most significant gain, and further improvements are observed after incorporating Spirit and BGL. Interestingly, although soft routing is used, the gate learns to allocate increasingly selective weights as the expert pool grows. This is reflected by a decrease in gate entropy beyond the fourth expert, indicating a trend toward dynamic sparsity. Such behavior suggests that the gate automatically focuses on a few highutility experts even without explicit sparsity regularization. Meanwhile, inference latency increases moderately with expert count, confirming that the computational overhead of soft routing remains acceptable. These results validate that LogMoE supports scalable expert composition and efficient adaptation without retraining prior components.\n\nTo gain a deeper understanding of how LogMoE dynamically integrates knowledge from multiple system-specific ex-perts, we visualize the gate weights assigned to each expert during inference. Figures 6 and7 present heatmaps of the gate weight distributions under two cross-domain generalization scenarios: DDP → Supercomputer and Supercomputer → DDP, respectively.\n\nFor each scenario, we randomly sample 200 log sequences from the test set of each target system. The gate module outputs a probability distribution over experts, which we visualize across these test samples. Each row in the heatmap corresponds to a log sequence, and each column corresponds to an expert trained on a specific source system. The visualizations reveal several key insights:\n\n• Adaptive Expert Selection. The gate assigns diverse weights depending on the semantic content of the input log, confirming its ability to perform fine-grained, inputdependent expert routing. For instance, in the DDP → Supercomputer transfer (Figure 6), Spark3 often receives higher attention when the target is Liberty or TDB, indicating semantic similarity among these systems. • Cross-System Knowledge Utilization. Even when the target system differs significantly from any single source domain, the gate assigns weights across multiple experts rather than relying on one, thereby leveraging complementary knowledge from the expert pool. This behavior becomes more evident in cross-domain scenarios, reflecting both the larger distributional shift and the necessity for aggregation across heterogeneous domains. • Sparse Activation for Efficiency. The gate typically produces sharp and sparse distributions, with high probability mass concentrated on a small subset of experts. This sparsity implies that only a few experts are actively involved in each prediction, reducing computational overhead and avoiding unnecessary interference among unrelated domains. Such sparse activation not only improves runtime efficiency but also preserves the independence and specialization of each expert module.\n\nThese results demonstrate that the learned gate is both functional and interpretable. It enables LogMoE to generalize across diverse systems by selectively reusing relevant expertise while maintaining modular efficiency. Through compact parameterization, sparse expert activation, and modular expansion capabilities, LogMoE achieves an effective trade-off between generalization power and deployment efficiency.\n\nAs summarized in Table VIII, LogMoE presents several distinctive advantages over prior approaches [39]- [41]. First, unlike existing supervised or transfer-based approaches such as LogRobust and LogTransfer, which require extensive labeled data from the target system, LogMoE supports zeroshot anomaly detection. This enables it to generalize to previously unseen systems without requiring any target-side labels, addressing a major limitation in practical deployment scenarios. Second, LogMoE introduces a Mixture-of-Experts architecture, where each expert is trained independently on a specific mature system. By leveraging a gating mechanism to assign expert weights based on inputs dynamically, LogMoE effectively captures system-specific patterns while maintaining adaptability across diverse systems. This expert-based design offers greater generalization capability than single-model solutions such as MetaLog or LogTAD, which rely on shared representations and are often sensitive to source-target domain shifts. Third, LogMoE avoids dependency on log parsers and instead operates directly on log sequences using a shared PLM backbone. It injects system-specific knowledge via lightweight parameter-efficient fine-tuning (LoRA), achieving high inference efficiency with minimal additional overhead.\n\nLog-based anomaly detection approaches can be categorized based on their generalization capabilities into three primary classes: single-system generalization, homogeneous-system generalization, and heterogeneous-system generalization.\n\n1) Single-system Generalization. These approaches focus on detecting anomalies within a single system, relying on the system's stable log structures and behaviors. Early approaches, such as DeepLog [14] and LogAnomaly [15], utilize sequential models like LSTMs to capture normal log patterns, flagging deviations as anomalies. Recent advancements aim to enhance the adaptability and efficiency of singlesystem anomaly detection. For instance, FastLogAD [42] introduces a generator-discriminator framework that generates pseudo-anomalies through mask-guided techniques, enabling the model to learn discriminative features without requiring labeled anomalies. This approach not only improves detection accuracy but also accelerates the training process. While effective within their respective systems, these models struggle to generalize across different systems due to variations in log formats and behaviors [19], [43]- [46].\n\n2) Homogeneous-system generalization. These approaches aim to generalize anomaly detection across multiple systems with similar structures or functionalities. LogTransfer [22] applies transfer learning by aligning latent features between source and target systems, enabling knowledge transfer for anomaly detection. MetaLog [9] incorporates a globally consistent semantic embedding module and employs meta-learning to adapt to new systems with minimal labeled data. CroSysLog [37] leverages neural representations and meta-learning to perform log-event level anomaly detection across supercomputing systems, facilitating adaptation with limited labeled data. LogFormer [7] introduces a Transformerbased framework with pre-training and adapter-based tuning stages, improving generalization across multiple domains. MLAD [47] employs Sentence-BERT to capture semantic similarities across log sequences from different systems, using a Gaussian Mixture Model to handle the \"identical shortcut\" problem and enhance cross-system detection. While these approaches have made significant strides in extending anomaly detection capabilities across systems with similar structures or functionalities, they often assume consistent log formats, semantics, and operational behaviors across systems, which is rarely the case in real-world scenarios.\n\n3) Heterogeneous-system generalization. These methods address the challenges of generalizing anomaly detection across systems with diverse structures and log formats. To the best of our knowledge, LogMoE is the first work that explicitly targets heterogeneous-system generalization in log anomaly detection. We hope this direction encourages future research toward more general, modular, and robust solutions for log anomaly detection in complex software infrastructures.\n\nWe present LogMoE, a parameter-efficient Mixture-of-Experts framework for cross-system log anomaly detection. By combining domain-specialized experts with a learnable gating mechanism, LogMoE enables scalable generalization across heterogeneous systems without requiring full model finetuning. Extensive experiments show that LogMoE achieves superior performance and efficiency in both zero-shot and fewshot settings. In future work, we plan to explore automated expert pruning, integrate continual learning to handle log evolution over time, and investigate the combination of Log-MoE with LLM-based log understanding to further enhance robustness and interpretability.",
+  "section_quality": {
+    "has_abstract": true,
+    "has_introduction": true,
+    "has_experiment": true,
+    "intro_chars": 5036,
+    "experiment_chars": 18874
+  },
+  "introduction_source": "grobid_tei",
+  "experiment_source": "grobid_tei",
+  "background_source": "introduction",
+  "experiment_source_used": "experiment_section",
+  "task_title": "Cross-System Log Anomaly Detection Without Log Parsing",
+  "background": "Modern large-scale software systems generate massive volumes of logs that are critical for anomaly detection and system reliability. Manual inspection is infeasible, prompting the development of automated log anomaly detection methods. However, supervised techniques require expensive labeled data, and most unsupervised or semi-supervised approaches depend on log parsing to extract templates, assuming stable log formats. In practice, software version upgrades and architectural changes cause log evolution, breaking parsing-based pipelines and reducing anomaly detection accuracy. Furthermore, transferring learned models from one system (e.g., a mature supercomputer) to another (e.g., a new data processing cluster) remains a significant challenge, as existing cross-system methods often assume structural similarities that do not hold across heterogeneous environments. This task targets the design of a robust anomaly detection framework that can operate without parsing and generalize to unseen target systems using only labeled logs from source systems.",
+  "research_question": "How can we detect anomalies in system logs across heterogeneous, previously unseen target systems without requiring log parsing or labeled anomaly data from those systems?",
+  "experiment_setup": {
+    "datasets": [
+      {
+        "name": "Liberty",
+        "source": "https://github.com/logpai/loghub",
+        "description": "Supercomputing log dataset from the Liberty system, containing normal and anomaly logs.",
+        "access": "open"
+      },
+      {
+        "name": "Thunderbird (TDB)",
+        "source": "https://github.com/logpai/loghub",
+        "description": "Supercomputing log dataset from the Thunderbird system.",
+        "access": "open"
+      },
+      {
+        "name": "Spirit",
+        "source": "https://github.com/logpai/loghub",
+        "description": "Supercomputing log dataset from the Spirit system.",
+        "access": "open"
+      },
+      {
+        "name": "BGL",
+        "source": "https://github.com/logpai/loghub",
+        "description": "Supercomputing log dataset from the BlueGene/L system.",
+        "access": "open"
+      },
+      {
+        "name": "Hadoop2",
+        "source": "https://github.com/EvLog/dataset",
+        "description": "Versioned log dataset from Hadoop distributed processing system (version 2).",
+        "access": "open"
+      },
+      {
+        "name": "Hadoop3",
+        "source": "https://github.com/EvLog/dataset",
+        "description": "Versioned log dataset from Hadoop distributed processing system (version 3).",
+        "access": "open"
+      },
+      {
+        "name": "Spark2",
+        "source": "https://github.com/EvLog/dataset",
+        "description": "Versioned log dataset from Spark distributed processing system (version 2).",
+        "access": "open"
+      },
+      {
+        "name": "Spark3",
+        "source": "https://github.com/EvLog/dataset",
+        "description": "Versioned log dataset from Spark distributed processing system (version 3).",
+        "access": "open"
+      }
+    ],
+    "baselines": [
+      {
+        "name": "LogRobust",
+        "reference": "LogRobust: Robust Log-based Anomaly Detection on Unstable Log Data (ESEC/FSE 2019)"
+      },
+      {
+        "name": "PLELog",
+        "reference": "PLELog: Semi-supervised Log-based Anomaly Detection via Probabilistic Label Estimation (ICSE 2021)"
+      },
+      {
+        "name": "EvLog",
+        "reference": "EvLog: A Multi-Level Representation Learning Framework for Log Anomaly Detection under Software Evolution (ICSE 2022)"
+      },
+      {
+        "name": "LogTransfer",
+        "reference": "LogTransfer: Transfer Learning for Log-based Anomaly Detection (IEEE TSC 2019)"
+      },
+      {
+        "name": "LogTAD",
+        "reference": "LogTAD: Adversarial Domain Adaptation for Log-based Anomaly Detection (ICSE 2020)"
+      },
+      {
+        "name": "MetaLog",
+        "reference": "MetaLog: Meta-Learning for Log-based Anomaly Detection with Limited Supervision (ASE 2023)"
+      }
+    ],
+    "metrics": [
+      {
+        "name": "Precision",
+        "definition": "Proportion of detected anomalies that are true anomalies."
+      },
+      {
+        "name": "Recall",
+        "definition": "Proportion of true anomalies that are correctly detected."
+      },
+      {
+        "name": "F1-score",
+        "definition": "Harmonic mean of precision and recall, treating anomaly detection as a binary classification task."
+      }
+    ],
+    "rqs": [
+      "RQ1: How well does the method perform when training and testing on different partitions of the same system (single-system generalization)?",
+      "RQ2: How well does the method transfer between different systems of the same type (homogeneous-system generalization)?",
+      "RQ3: How well does the method transfer across systems of entirely different types (heterogeneous-system generalization)?"
+    ],
+    "target_subject": "Log files from large-scale computing systems, specifically supercomputing clusters (e.g., Liberty, Thunderbird) and distributed data processing systems (e.g., Hadoop, Spark), which produce large volumes of semi-structured text logs with evolving formats across software versions and system architectures.",
+    "constraints": "No log parsing or template extraction may be used; raw log messages are the only input. No labeled anomaly samples from the target system are permitted during training; the method must generalize in a zero-shot manner using only source system data. The approach must handle completely unseen log formats and distribution shifts across systems."
+  },
+  "expected_artifacts": [
+    "idea",
+    "code",
+    "experiment_results",
+    "paper"
+  ],
+  "feasibility_notes": "All datasets are publicly available from established repositories (Loghub for supercomputer logs, and the EvLog dataset for Hadoop/Spark versioned logs). Baselines have open-source implementations or can be reimplemented. Training BERT-based models on multiple datasets requires moderate GPU resources; full experimental evaluation over multiple source-target combinations may need several days of compute time. The primary challenge is managing the combinatorial setup and ensuring fair comparison across diverse systems.",
+  "difficulty": "hard",
+  "seed_papers": [
+    {
+      "title": "Med-MoE: Mixture of Domain-Specific Experts for Lightweight Medical Vision-Language Models",
+      "year": 2024,
+      "authors": [
+        "Songtao Jiang",
+        "Tuo Zheng",
+        "Yan Zhang"
+      ],
+      "doi": "10.18653/v1/2024.findings-emnlp.221",
+      "arxiv_id": "2404.10237",
+      "pdf_url": "",
+      "citation_count": 84
+    },
+    {
+      "title": "Exploiting Inter-Layer Expert Affinity for Accelerating Mixture-of-Experts Model Inference",
+      "year": 2024,
+      "authors": [
+        "Jinghan Yao",
+        "Quentin G. Anthony",
+        "A. Shafi"
+      ],
+      "doi": "10.1109/IPDPS57955.2024.00086",
+      "arxiv_id": "2401.08383",
+      "pdf_url": "",
+      "citation_count": 38
+    },
+    {
+      "title": "ExpertFlow: Optimized Expert Activation and Token Allocation for Efficient Mixture-of-Experts Inference",
+      "year": 2024,
+      "authors": [
+        "Xin He",
+        "Shunkang Zhang",
+        "Yuxin Wang"
+      ],
+      "doi": "10.48550/arXiv.2410.17954",
+      "arxiv_id": null,
+      "pdf_url": "",
+      "citation_count": 28
+    },
+    {
+      "title": "A Lightweight Multi-View Learning Approach for Phishing Attack Detection Using Transformer with Mixture of Experts",
+      "year": 2023,
+      "authors": [
+        "Yanbin Wang",
+        "Wenrui Ma",
+        "Haitao Xu"
+      ],
+      "doi": "10.3390/app13137429",
+      "arxiv_id": null,
+      "pdf_url": "https://www.mdpi.com/2076-3417/13/13/7429/pdf?version=1687751283",
+      "citation_count": 25
+    },
+    {
+      "title": "Understanding and Leveraging the Expert Specialization of Context Faithfulness in Mixture-of-Experts LLMs",
+      "year": 2025,
+      "authors": [
+        "Jun Bai",
+        "Minghao Tong",
+        "Yang Liu"
+      ],
+      "doi": "10.48550/arXiv.2508.19594",
+      "arxiv_id": "2508.19594",
+      "pdf_url": "",
+      "citation_count": 7
+    }
+  ],
+  "paper_title": "LogMoE: Lightweight Expert Mixture for Cross-System Log Anomaly Detection"
+}

@@ -1,0 +1,962 @@
+{
+  "generated_at": "2026-08-20T13:19:10",
+  "run_dir": "~/ai_scientist_inputs/FSE-2025-001_efficient_targeted_unit_test_generation/workspace/researchclaw_2026-07-21_12-56-09",
+  "task_dir": "~/ai_scientist_inputs/FSE-2025-001_efficient_targeted_unit_test_generation",
+  "framework": "researchclaw",
+  "fairness_audit": [
+    {
+      "axis": "completeness",
+      "was_unfair": "Required both paper.tex AND paper.pdf; any tool missing one failed equally.",
+      "fix": "Paper gate: PDF=1.0; TeX-only=0.5; ``complete`` requires PDF."
+    },
+    {
+      "axis": "completeness",
+      "was_unfair": "``results`` counted stub/seed JSON (dataset_candidate/metrics.json).",
+      "fix": "``results`` requires substantive numeric results via results_normalize."
+    },
+    {
+      "axis": "experiment_success",
+      "was_unfair": "Only metrics.json; ignored results.json / experiment_results.txt.",
+      "fix": "Framework-ordered result candidates + normalized loaders."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Penalized tools with no bib; airesearcher has no workspace references.",
+      "fix": "literature_applicable=false → status not_applicable; excluded from fair aggregate."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "related_work.json subset as gold made recall hard to interpret.",
+      "fix": "Coverage gold is original paper REFERENCES from mineru; related_work only enriches metadata/fallback."
+    },
+    {
+      "axis": "peer_review",
+      "was_unfair": "Missing Stanford report looked like evaluation failure.",
+      "fix": "status not_provided; optional axis, never counts as tool failure."
+    },
+    {
+      "axis": "paths/find_results",
+      "was_unfair": "Picked downloads/** and sandbox noise (e.g. airesearcher LLVM tree).",
+      "fix": "Exclude downloads/, seeds/, dataset_candidate/, sandbox junk paths."
+    },
+    {
+      "axis": "paths/framework_noise",
+      "was_unfair": "DeepScientist .deepscientist_npm / runtime / skills templates counted as code/paper/results.",
+      "fix": "FRAMEWORK_NOISE_DIRS+markers; quest worktree + eval_output results; paper md drafts; reject template tex."
+    },
+    {
+      "axis": "paths/paper_tex",
+      "was_unfair": "tiny_scientist / ACL runs store paper under latex/*.tex; evaluator only looked at paper/main.tex.",
+      "fix": "latex/**/*.tex with substantive-body heuristic; find_paper_document uses same rules."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Entire custom.bib (300+ anthology entries) verified when paper had zero \\cite commands.",
+      "fix": "collect_agent_references filters bib to in-text cite keys; skips uncited bulk bib (>40 entries)."
+    },
+    {
+      "axis": "paths/ai_scientist_summaries",
+      "was_unfair": "AI Scientist can persist substantive results and paper-like drafts in *_summary.json logs rather than paper/main.tex or results/**/*.json.",
+      "fix": "Treat draft_summary/research_summary as weak paper documents and summary JSONs as result candidates."
+    },
+    {
+      "axis": "idea_generation",
+      "was_unfair": "plan.md/todos.md weak proxies scored same as structured idea.json.",
+      "fix": "Framework idea_priority tried first; missing idea → not_applicable where appropriate."
+    }
+  ],
+  "axes": [
+    "alignment",
+    "completeness",
+    "experiment_analysis",
+    "idea_generation",
+    "literature_review",
+    "peer_review"
+  ],
+  "results": {
+    "completeness": {
+      "framework": "researchclaw",
+      "run_dir": "~/ai_scientist_inputs/FSE-2025-001_efficient_targeted_unit_test_generation/workspace/researchclaw_2026-07-21_12-56-09",
+      "task_dir": "~/ai_scientist_inputs/FSE-2025-001_efficient_targeted_unit_test_generation",
+      "complete": false,
+      "required_score": 0.5,
+      "bonus_score": 0.09,
+      "overall_score": 0.4,
+      "missing": [
+        "results",
+        "paper"
+      ],
+      "required": {
+        "idea": {
+          "path": "artifacts/idea.json",
+          "bytes": 36126,
+          "via": "candidate"
+        },
+        "code": {
+          "count": 4,
+          "files": [
+            {
+              "path": "artifacts/code/experiment.py",
+              "bytes": 48569,
+              "via": "glob"
+            },
+            {
+              "path": "artifacts/code/main.py",
+              "bytes": 135,
+              "via": "glob"
+            },
+            {
+              "path": "stage-10/experiment/experiment.py",
+              "bytes": 48569,
+              "via": "glob"
+            },
+            {
+              "path": "stage-10/experiment/main.py",
+              "bytes": 135,
+              "via": "glob"
+            }
+          ]
+        },
+        "results": {
+          "substantive": false,
+          "normalized_path": null,
+          "numeric_leaf_count": 0,
+          "discovered_files": [
+            {
+              "path": "artifacts/results/run-1.json",
+              "bytes": 1076,
+              "via": "glob"
+            },
+            {
+              "path": "stage-12/runs/run-1.json",
+              "bytes": 1076,
+              "via": "glob"
+            }
+          ],
+          "metrics_keys_sample": []
+        },
+        "paper": {
+          "tex": null,
+          "pdf": null,
+          "md": null,
+          "json": null,
+          "status": "missing",
+          "score": 0.0
+        }
+      },
+      "bonus": {
+        "experiment_plan": {
+          "path": "stage-09/exp_plan.yaml",
+          "bytes": 3453,
+          "via": "candidate"
+        },
+        "experiment_log": {
+          "path": "researchclaw_run.log",
+          "bytes": 4885,
+          "via": "glob"
+        },
+        "review": null,
+        "readme": null,
+        "narrative": null,
+        "bib": {
+          "path": "stage-04/references.bib",
+          "bytes": 1811,
+          "via": "glob"
+        }
+      },
+      "manifest_status": {
+        "pipeline": false,
+        "idea": true,
+        "code": true,
+        "results": true,
+        "paper": false
+      },
+      "gate_scores": {
+        "idea": 1.0,
+        "code": 1.0,
+        "results": 0.0,
+        "paper": 0.0
+      },
+      "fairness": {
+        "gates": [
+          "idea",
+          "code",
+          "results",
+          "paper"
+        ],
+        "paper_gate_rule": "PDF=1.0; TeX-only/md_only/json_only=0.5; complete requires PDF",
+        "results_gate_rule": "substantive numeric results via framework-aware normalize_results",
+        "audit_ref": "framework_profile.FAIRNESS_AUDIT"
+      },
+      "notes": [
+        "Required: idea, code, substantive results, paper (PDF full; TeX/markdown/JSON draft half).",
+        "Stub/seed metrics (e.g. dataset_candidate/metrics.json) do not satisfy results.",
+        "Framework noise (.deepscientist_npm, skills/templates, runtime) is excluded from code/results/paper.",
+        "Manifest status is informational; disk presence is authoritative."
+      ]
+    },
+    "idea_generation": {
+      "run_dir": "~/ai_scientist_inputs/FSE-2025-001_efficient_targeted_unit_test_generation/workspace/researchclaw_2026-07-21_12-56-09",
+      "task_dir": "~/ai_scientist_inputs/FSE-2025-001_efficient_targeted_unit_test_generation",
+      "idea_path": "~/ai_scientist_inputs/FSE-2025-001_efficient_targeted_unit_test_generation/workspace/researchclaw_2026-07-21_12-56-09/artifacts/idea.json",
+      "status": "ok",
+      "dimensions": {
+        "novelty": {
+          "score": 4.0,
+          "justification": "The core method combines directed fuzzing distance metrics (R3, R6), search-based test generation (R12, R20), and symbolic execution (R24) with novel cross-domain imports: a learned inverse dynamics planner from robotics/RL and differentiable relaxation from ML. This non-obvious linkage yields a 1+1>2 effect, but the underlying paradigm of targeted test generation is not overturned.",
+          "rubric": "Novel Combo / Cross-domain: spots a non-obvious link across areas and cleverly imports an existing method from another domain to address the current pain point, yielding a 1+1>2 effect.",
+          "category": "Novel Combo",
+          "nearest_solution_space_ids": [
+            "R3",
+            "R6",
+            "R12",
+            "R20",
+            "R22",
+            "R24"
+          ],
+          "differentiation": "Introduces a learned backward planner (inverse dynamics) and differentiable relaxation for near-miss rescue, which are not present in existing directed fuzzing or search-based test generation tools; combines with environment synthesis via causal interventions and mining, going beyond prior work like R20 or R12."
+        },
+        "feasibility": {
+          "score": 3.0,
+          "justification": "The plan requires nontrivial engineering: building a learned planner, implementing causal intervention-based environment synthesis, and integrating deviation-aware metrics into EvoSuite. However, it uses existing tools (EvoSuite, Defects4J) and bounded datasets (30-100 targets) with modest compute (single GPU, multi-core CPU). Prototype effort is estimated at 1-3 engineer-months per hypothesis, fitting standard research engineering workload.",
+          "rubric": "Moderate workload (sweet spot): needs nontrivial coding such as scripting existing open-source tools (parsers, CFG extractors) or building a custom graph-processing pipeline; standard research engineering effort."
+        },
+        "clarity": {
+          "score": 5.0,
+          "justification": "The idea is exceptionally clear and rigorous. Each hypothesis includes a concrete statement, rationale, measurable predictions with specific datasets, baselines, success/failure thresholds, and ablation plans. Unresolved disagreements are explicitly listed with adjudication strategies. The overall engineering feasibility and budgets are detailed, providing pseudocode-level clarity.",
+          "rubric": "Extremely clear and rigorous: system-architecture or pseudocode-level clarity; elaborates the plan in detail and also discusses limitations or defenses/mitigations."
+        }
+      },
+      "overall_score": 4.0,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "novelty",
+        "feasibility",
+        "clarity"
+      ],
+      "solution_space": {
+        "status": "ok",
+        "paper_count": 37,
+        "entry_count": 37,
+        "cache_hit": true,
+        "source_file": "~/ai_scientist_inputs/FSE-2025-001_efficient_targeted_unit_test_generation/mineru_sections.json",
+        "stats": {
+          "papers": 37,
+          "extracted": 37,
+          "usable_abstracts": 4,
+          "citation_meta_abstracts": 0,
+          "missing_abstracts": 33,
+          "mineru_titles": 36,
+          "related_work_titles": 5,
+          "abstracts_attached": 4,
+          "related_work_extras": 1,
+          "batches": 3
+        },
+        "error": null
+      },
+      "notes": [
+        "Scores the intermediate idea artifact (not the final paper).",
+        "Dimensions: novelty, feasibility, clarity (each 1-5). Excitement removed.",
+        "Novelty is scored against a Solution Space built from mineru REFERENCES titles (+ related_work.json abstracts when matched)."
+      ],
+      "idea_via": "candidate",
+      "idea_relative": "artifacts/idea.json",
+      "summary": "A well-structured proposal for targeted unit test generation that combines a learned backward planner, environment synthesis via causal interventions, and a deviation-aware search with differentiable rescue. The approach is a novel combination of existing and cross-domain techniques, with clear, falsifiable hypotheses and concrete evaluation plans. Feasibility is moderate due to multi-component engineering, but the plan is bounded and pragmatic.",
+      "strengths": [
+        "Highly detailed and falsifiable hypotheses with explicit success/failure criteria and ablation studies.",
+        "Novel integration of inverse dynamics learning and differentiable relaxation into test generation, addressing multiple bottlenecks.",
+        "Pragmatic scoping with small datasets, bounded budgets, and clear adjudication of disagreements among perspectives."
+      ],
+      "weaknesses": [
+        "Multi-component system introduces integration risk; failure of one component (e.g., learned planner) could undermine overall results.",
+        "Differentiable rescue is high-risk and may not scale beyond microbenchmarks, as acknowledged.",
+        "Environment synthesis via causal interventions is complex and may require significant engineering to implement reliably."
+      ],
+      "llm_meta": {
+        "model": "deepseek-v4-pro",
+        "base_url": "https://api-sg.umodelverse.ai/v1",
+        "usage": {
+          "completion_tokens": 2148,
+          "completion_tokens_details": {
+            "reasoning_tokens": 1508
+          },
+          "prompt_tokens": 6363,
+          "prompt_tokens_details": null,
+          "reasoning_tokens": 1508,
+          "total_tokens": 8511
+        },
+        "attempt": 0
+      }
+    },
+    "peer_review": {
+      "run_dir": "~/ai_scientist_inputs/FSE-2025-001_efficient_targeted_unit_test_generation/workspace/researchclaw_2026-07-21_12-56-09",
+      "review_report": null,
+      "paper_pdf": null,
+      "paper_tex": null,
+      "status": "not_provided",
+      "dimensions": {},
+      "overall_score": null,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "soundness",
+        "significance",
+        "novelty",
+        "presentation",
+        "credibility"
+      ],
+      "notes": [
+        "Stanford Agentic Reviewer (paperreview.ai): manual download to artifacts/peer_review/stanford_apr.md, or pass --auto-paperreview.",
+        "Dimensions: soundness, significance, novelty, presentation, credibility (each 1-5)."
+      ],
+      "paperreview": null,
+      "optional": true,
+      "hint": "Optional external review (Stanford APR). Upload paper/main.pdf to https://paperreview.ai/ , save review to ~/ai_scientist_inputs/FSE-2025-001_efficient_targeted_unit_test_generation/workspace/researchclaw_2026-07-21_12-56-09/artifacts/peer_review/stanford_apr.md"
+    },
+    "alignment": {
+      "run_dir": "~/ai_scientist_inputs/FSE-2025-001_efficient_targeted_unit_test_generation/workspace/researchclaw_2026-07-21_12-56-09",
+      "task_dir": "~/ai_scientist_inputs/FSE-2025-001_efficient_targeted_unit_test_generation",
+      "status": "missing_agent_paper_or_metrics",
+      "original": {
+        "status": "ok",
+        "task_dir": "~/ai_scientist_inputs/FSE-2025-001_efficient_targeted_unit_test_generation",
+        "paper_title": "UnitCon: Synthesizing Targeted Unit Tests for Java Runtime Exceptions",
+        "task_id": "FSE-2025-001",
+        "selection": {
+          "num_blocks": 7,
+          "total_chars": 31998,
+          "inferred_roles": {
+            "abstract": 1,
+            "introduction": 1,
+            "experiment": 4,
+            "conclusion": 1
+          },
+          "mineru_raw_keys": {
+            "field:abstract": 1,
+            "field:introduction": 1,
+            "field:experiment": 1,
+            "other": 3,
+            "conclusion": 1
+          },
+          "infer_reasons": {
+            "top_level_field": 3,
+            "title": 4
+          },
+          "rescued_from_other": 3,
+          "note": "mineru key is unreliable; blocks are selected by title/body/inheritance. rescued_from_other counts sections labeled other but treated as typed roles."
+        },
+        "claims": [
+          {
+            "id": "C1",
+            "statement": "UnitCon consistently reproduces more target runtime exceptions than state-of-the-art baselines, achieving a 52.5% success rate compared to the best baseline average of 44.3%.",
+            "direction": "improves",
+            "metric_names": [
+              "target_error_reproduction_rate"
+            ],
+            "evidence_quote": "UnitCon generated error-triggering test cases for 104 out of 198 (52.5%) projects within 10 minutes. On the other hand, the other tools succeeded in ... at most 87.7 (44.3%) cases, on average.",
+            "confidence": 0.95
+          },
+          {
+            "id": "C2",
+            "statement": "UnitCon reproduces 1.2–3.6 times more target errors than the baselines, confirming a substantial improvement in targeted test generation.",
+            "direction": "improves",
+            "metric_names": [
+              "improvement_factor_over_baseline"
+            ],
+            "evidence_quote": "In total, UnitCon reproduces 1.2–3.6× more target errors than baselines.",
+            "confidence": 0.9
+          },
+          {
+            "id": "C3",
+            "statement": "UnitCon is effective at revealing previously unknown bugs in real-world projects, discovering 21 new NPE bugs across 51 open-source projects.",
+            "direction": "neutral",
+            "metric_names": [
+              "new_bugs_found"
+            ],
+            "evidence_quote": "discovered 21 previously unknown NPE bugs",
+            "confidence": 0.9
+          },
+          {
+            "id": "C4",
+            "statement": "UnitCon uniquely reproduces errors that no other tool can find, with the highest number of exclusively reproduced errors (8) among the compared tools.",
+            "direction": "mixed",
+            "metric_names": [
+              "exclusive_reproduced_errors"
+            ],
+            "evidence_quote": "UnitCon exclusively reproduced 8 errors that none of the other tools found, which is the highest number of uniquely reproduced errors among the six tools.",
+            "confidence": 0.9
+          }
+        ],
+        "metrics": [
+          {
+            "name": "target_error_reproduction_rate",
+            "value": 0.525,
+            "unit": "ratio",
+            "higher_is_better": true,
+            "setting": "198 benchmark projects, 10-minute time limit per project",
+            "is_sota_or_best": true,
+            "baseline_name": "best baseline average (EvoSuite variants)",
+            "baseline_value": 0.443,
+            "evidence_quote": "UnitCon generated error-triggering test cases for 104 out of 198 (52.5%) projects within 10 minutes. On the other hand, the other tools succeeded in ... at most 87.7 (44.3%) cases, on average.",
+            "confidence": 0.95
+          },
+          {
+            "name": "improvement_factor_over_baseline",
+            "value": null,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "Ratio of UnitCon's reproduced errors to baselines' errors; range 1.2x to 3.6x across tools",
+            "is_sota_or_best": true,
+            "baseline_name": "EvoSuite, EvoFuzz, NPETest, UTBot, Randoop",
+            "baseline_value": null,
+            "evidence_quote": "In total, UnitCon reproduces 1.2–3.6× more target errors than baselines.",
+            "confidence": 0.9
+          },
+          {
+            "name": "new_bugs_found",
+            "value": 21,
+            "unit": "count",
+            "higher_is_better": true,
+            "setting": "51 real-world open-source projects, inspecting Infer NPE alarms",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "discovered 21 previously unknown NPE bugs",
+            "confidence": 0.9
+          },
+          {
+            "name": "exclusive_reproduced_errors",
+            "value": 8,
+            "unit": "count",
+            "higher_is_better": true,
+            "setting": "198 benchmark projects, comparison with 5 baselines over 10 runs",
+            "is_sota_or_best": true,
+            "baseline_name": "Other baselines (EvoSuite, EvoFuzz, etc.)",
+            "baseline_value": null,
+            "evidence_quote": "UnitCon exclusively reproduced 8 errors that none of the other tools found, which is the highest number of uniquely reproduced errors among the six tools.",
+            "confidence": 0.9
+          }
+        ],
+        "overall_conclusion": "UnitCon significantly outperforms existing unit test generation tools in reproducing targeted runtime exceptions, achieving a 52.5% success rate (vs. 44.3% best baseline) and finding 21 new real-world bugs. The key innovation is using static analysis to prune and prioritize the test search space.",
+        "comparable_notes": "Baselines were run with targeted options where available (class or method level). All tools were limited to 10 minutes per benchmark. Baselines were run 10 times with different random seeds; their best performances are reported. UnitCon's static analysis time was included in the time limit. Tools were not allowed to use mock objects for fairness.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 1618,
+            "completion_tokens_details": {
+              "reasoning_tokens": 420
+            },
+            "prompt_tokens": 9689,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 11307
+          },
+          "attempt": 1
+        },
+        "cache_hit": true
+      },
+      "agent": {
+        "status": "missing_agent_paper_or_metrics",
+        "run_dir": "~/ai_scientist_inputs/FSE-2025-001_efficient_targeted_unit_test_generation/workspace/researchclaw_2026-07-21_12-56-09"
+      }
+    },
+    "experiment_analysis": {
+      "run_dir": "~/ai_scientist_inputs/FSE-2025-001_efficient_targeted_unit_test_generation/workspace/researchclaw_2026-07-21_12-56-09",
+      "task_dir": "~/ai_scientist_inputs/FSE-2025-001_efficient_targeted_unit_test_generation",
+      "status": "ok",
+      "metrics_path": null,
+      "experiment_success": {
+        "status": "failed_or_incomplete",
+        "success": false,
+        "metrics_path": null,
+        "absolute_metrics_path": null,
+        "checks": {
+          "has_results_file": false,
+          "non_stub": false,
+          "numeric_leaf_count": 0,
+          "min_numeric_ok": false
+        },
+        "manifest_hints": {
+          "status": {
+            "pipeline": false,
+            "idea": true,
+            "code": true,
+            "results": true,
+            "paper": false
+          },
+          "returncode": 1,
+          "benchmark_complete": null,
+          "artifacts_metrics_flag": false
+        },
+        "warnings": [
+          "manifest.returncode=1"
+        ],
+        "suspicious_values": [],
+        "note": "success=true requires substantive results (framework-aware path) with >=3 numeric leaves. Supports metrics.json, results.json, experiment_results.txt, etc. Manifest returncode/benchmark_complete are soft warnings only."
+      },
+      "idea_code_consistency": {
+        "status": "ok",
+        "idea_path": "artifacts/idea.json",
+        "code_files": [
+          "artifacts/code/experiment.py",
+          "stage-10/experiment/main.py"
+        ],
+        "score_scale": "1-5",
+        "score": 1.0,
+        "label": "severe_mismatch",
+        "justification": "The code implements a basic DSL and a partial method executor with mentions of backward slicing and learned seeding, but it does not realize any of the three hypotheses from the idea. The evaluation protocol, baselines, metrics, and specific methods (learned planner, concolic concretization, environment synthesis, deviation-aware search, differentiable rescue) are entirely absent. The code appears to be an unrelated experiment skeleton.",
+        "matched_elements": [
+          "Mentions 'backward program slicing' and 'learned input seeding', which loosely relate to the idea of backward planning, but the implementation is not the learned backward planner with cheap validation and selective concolic concretization as described."
+        ],
+        "missing_or_divergent_elements": [
+          "Learned Transformer/RNN planner",
+          "Cheap runtime validation",
+          "Selective concolic concretization",
+          "Environment synthesis via causal interventions and mining",
+          "Deviation-aware distance metric",
+          "Differentiable rescue",
+          "Specific datasets (microbenchmarks, real-world subset)",
+          "Baselines (EvoSuite-like)",
+          "Success criteria and metrics",
+          "Ablations as described (learned-only, learned+selective concolic, concolic-only, etc.)",
+          "Statistical protocol and per-target budgets"
+        ],
+        "rubric": "Severe mismatch: code implements a different problem/method than the idea, or is unrelated boilerplate.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 1074,
+            "completion_tokens_details": {
+              "reasoning_tokens": 779
+            },
+            "prompt_tokens": 3726,
+            "prompt_tokens_details": null,
+            "reasoning_tokens": 779,
+            "total_tokens": 4800
+          },
+          "attempt": 0
+        }
+      },
+      "setup_coverage": {
+        "status": "ok",
+        "overall_coverage": 0.2222222222222222,
+        "datasets": {
+          "gold_count": 2,
+          "hit_count": 0,
+          "miss_count": 2,
+          "coverage": 0.0,
+          "hits": [],
+          "misses": [
+            "Java Defect Benchmark Suite (e.g., Defects4J)",
+            "Real-world Open-Source Java Projects"
+          ]
+        },
+        "baselines": {
+          "gold_count": 2,
+          "hit_count": 0,
+          "miss_count": 2,
+          "coverage": 0.0,
+          "hits": [],
+          "misses": [
+            "Randoop",
+            "EvoSuite"
+          ]
+        },
+        "metrics": {
+          "gold_count": 3,
+          "hit_count": 2,
+          "miss_count": 1,
+          "coverage": 0.6666666666666666,
+          "hits": [
+            "Target Exception Triggering Rate",
+            "Number of Triggered Exceptions"
+          ],
+          "misses": [
+            "Real Bug Discovery"
+          ]
+        },
+        "agent_protocol": {},
+        "gold_protocol": {},
+        "dataset_dirs": [
+          "dataset_candidate"
+        ],
+        "flags": {
+          "weaker_baseline_suspected": true,
+          "weak_protocol": [],
+          "synthetic_data": "synthetic_allowed_by_task",
+          "gold_allows_synthetic": true
+        },
+        "gold_sources": [
+          "~/ai_scientist_inputs/FSE-2025-001_efficient_targeted_unit_test_generation/task.md",
+          "~/ai_scientist_inputs/FSE-2025-001_efficient_targeted_unit_test_generation/metadata.json"
+        ],
+        "note": "Coverage is name/alias matching against task.md Datasets/Baselines/Metrics. weak_protocol flags large reductions in trials/timeout vs Constraints. Synthetic corpora are not penalized when the task itself requires synthesis."
+      },
+      "ablation_significance": {
+        "status": "ok",
+        "idea_path": "artifacts/idea.json",
+        "significance_signals_rule_based": {
+          "signals": [],
+          "artifact_paths": [],
+          "has_any_significance_artifact": false
+        },
+        "evidence_format": null,
+        "study_type": "pilot",
+        "components": [
+          {
+            "name": "backward slicing",
+            "role": "module",
+            "ablation_expected": true,
+            "significance_expected": false,
+            "ablation_status": "present",
+            "ablation_evidence": "Code includes 'no_backward_slicing' ablation flag.",
+            "significance_status": "not_required",
+            "significance_evidence": "Pilot study; significance not required."
+          },
+          {
+            "name": "learned input seeding",
+            "role": "module",
+            "ablation_expected": true,
+            "significance_expected": false,
+            "ablation_status": "present",
+            "ablation_evidence": "Code includes 'no_learned_seeding' ablation flag.",
+            "significance_status": "not_required",
+            "significance_evidence": "Pilot study; significance not required."
+          },
+          {
+            "name": "call-sequence synthesis",
+            "role": "module",
+            "ablation_expected": true,
+            "significance_expected": false,
+            "ablation_status": "missing",
+            "ablation_evidence": "No ablation flag or controlled comparison for this component.",
+            "significance_status": "not_required",
+            "significance_evidence": "Pilot study; significance not required."
+          },
+          {
+            "name": "path-ranking heuristics",
+            "role": "module",
+            "ablation_expected": true,
+            "significance_expected": false,
+            "ablation_status": "missing",
+            "ablation_evidence": "No ablation flag or controlled comparison for this component.",
+            "significance_status": "not_required",
+            "significance_evidence": "Pilot study; significance not required."
+          },
+          {
+            "name": "constraint-guided solving",
+            "role": "module",
+            "ablation_expected": true,
+            "significance_expected": false,
+            "ablation_status": "missing",
+            "ablation_evidence": "No ablation flag or controlled comparison for this component.",
+            "significance_status": "not_required",
+            "significance_evidence": "Pilot study; significance not required."
+          }
+        ],
+        "ablation_coverage_score": 0.4,
+        "overall_ablation_ok": false,
+        "overall_significance_ok": true,
+        "summary": "The run implements a method with five components but only ablates two (backward slicing and learned seeding). Call-sequence synthesis, path-ranking heuristics, and constraint-guided solving lack ablations. The experiment is a small pilot on synthetic data, so formal significance testing is not required, though the code includes CI computations. No results are provided, and the experiment does not align with the proposed hypotheses' required ablations.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 3463,
+            "completion_tokens_details": {
+              "reasoning_tokens": 2850
+            },
+            "prompt_tokens": 3138,
+            "prompt_tokens_details": null,
+            "reasoning_tokens": 2850,
+            "total_tokens": 6601
+          },
+          "attempt": 0
+        }
+      },
+      "results_paper_consistency": {
+        "status": "missing_metrics"
+      },
+      "scores": {
+        "experiment_success": false,
+        "idea_code_score": 1.0,
+        "setup_coverage": 0.2222222222222222,
+        "ablation_coverage_score": 0.4,
+        "overall_ablation_ok": false,
+        "overall_significance_ok": true,
+        "results_paper_score": null,
+        "hiding_unfavorable_suspected": null
+      },
+      "notes": [
+        "Axes 1,2,3,4,6 in experiment_analysis (figures excluded).",
+        "setup_coverage matches task.md Datasets/Baselines/Metrics; weak_protocol flags reductions vs Constraints.",
+        "Axis 6: final normalized results vs paper; interim run logs not used as ground truth."
+      ]
+    },
+    "literature_review": {
+      "run_dir": "~/ai_scientist_inputs/FSE-2025-001_efficient_targeted_unit_test_generation/workspace/researchclaw_2026-07-21_12-56-09",
+      "task_dir": "~/ai_scientist_inputs/FSE-2025-001_efficient_targeted_unit_test_generation",
+      "status": "ok",
+      "as_of_year": 2026,
+      "agent_ref_count": 7,
+      "sources": [
+        {
+          "path": "~/ai_scientist_inputs/FSE-2025-001_efficient_targeted_unit_test_generation/workspace/researchclaw_2026-07-21_12-56-09/stage-05/shortlist.jsonl",
+          "kind": "shortlist"
+        },
+        {
+          "path": "~/ai_scientist_inputs/FSE-2025-001_efficient_targeted_unit_test_generation/workspace/researchclaw_2026-07-21_12-56-09/stage-04/references.bib",
+          "kind": "bib"
+        }
+      ],
+      "collection_audit": {
+        "cited_keys_count": 0,
+        "filter_mode": "non_bib_sources",
+        "bib_total_before_filter": 7,
+        "bib_after_filter": 0,
+        "uncited_bib_skipped": 7,
+        "agent_ref_count": 7
+      },
+      "fabrication": {
+        "status": "ok",
+        "scholarly_count": 7,
+        "verified_count": 5,
+        "fake_count": 0,
+        "lookup_failed_count": 2,
+        "non_paper_count": 0,
+        "fabrication_rate": 0.0,
+        "items": [
+          {
+            "title": "CUTE",
+            "doi": "10.1145/1081706.1081750",
+            "arxiv_id": "",
+            "year": 2005,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated.",
+              "Saw 1 conclusive miss(es) mixed with 2 API error(s)."
+            ],
+            "cache_hit": true,
+            "cite_key": "sen2005cute",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Automated Test Case Generation as a Many-Objective Optimisation Problem with Dynamic Selection of the Targets",
+            "doi": "10.1109/tse.2017.2663435",
+            "arxiv_id": "",
+            "year": 2017,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Automated Test Case Generation as a Many-Objective Optimisation Problem with Dynamic Selection of the Targets",
+            "resolved_year": 2018,
+            "notes": [],
+            "cache_hit": true,
+            "cite_key": "panichella2017automated",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "BEACON: Directed Grey-Box Fuzzing with Provable Path Pruning",
+            "doi": "10.1109/sp46214.2022.9833751",
+            "arxiv_id": "",
+            "year": 2022,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated.",
+              "Saw 1 conclusive miss(es) mixed with 2 API error(s)."
+            ],
+            "cache_hit": true,
+            "cite_key": "huang2022beacon",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "WindRanger",
+            "doi": "10.1145/3510003.3510197",
+            "arxiv_id": "",
+            "year": 2022,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Windranger: A Directed Greybox Fuzzer driven by Deviation Basic Blocks",
+            "resolved_year": 2022,
+            "notes": [],
+            "cache_hit": true,
+            "cite_key": "du2022windranger",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "EvoFuzz at the SBFT 2024 Tool Competition",
+            "doi": "10.1145/3643659.3648556",
+            "arxiv_id": "",
+            "year": 2024,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "EvoFuzz at the SBFT 2024 Tool Competition",
+            "resolved_year": 2024,
+            "notes": [],
+            "cache_hit": true,
+            "cite_key": "moon2024evofuzz",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Proceedings of the 1994 international symposium on Software testing and analysis - ISSTA '94",
+            "doi": "10.1145/186258",
+            "arxiv_id": "",
+            "year": 1994,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Proceedings of the 1994 International Symposium on Software Testing and Analysis, ISSTA 1994, Seattle, WA, USA, August 17-19, 1994",
+            "resolved_year": 1994,
+            "notes": [],
+            "cache_hit": true,
+            "cite_key": "anon1994proceedings",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "2023 IEEE/ACM International Workshop on Search-Based and Fuzz Testing (SBFT)",
+            "doi": "10.1109/sbft59156.2023",
+            "arxiv_id": "",
+            "year": 2023,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "IEEE/ACM International Workshop on Search-Based and Fuzz Testing, SBFT@ICSE 2023, Melbourne, Australia, May 14, 2023",
+            "resolved_year": 2023,
+            "notes": [],
+            "cache_hit": true,
+            "cite_key": "anon2023ieeeacm",
+            "source_kind": "shortlist"
+          }
+        ],
+        "cache_path": "~/ai_scientist_evals/FSE-2025-001_efficient_targeted_unit_test_generation/reference_verify_cache.json",
+        "override_path": "~/ai_scientist_evals/FSE-2025-001_efficient_targeted_unit_test_generation/reference_verify_overrides.json",
+        "note": "fabrication_rate = fake / (verified + fake); lookup_failed (API errors) excluded. GitHub/docs/tool URLs are non_paper and excluded from the rate. To manually correct a false negative, edit reference_verify_overrides.json (key=normalized title / doi / cite_key; value=\"verified\" or a result dict), then re-run."
+      },
+      "coverage": {
+        "status": "ok",
+        "gold_source": "~/ai_scientist_inputs/FSE-2025-001_efficient_targeted_unit_test_generation/mineru_sections.json",
+        "gold_count": 36,
+        "gold_is_original_paper_references": true,
+        "gold_is_openalex_subset": false,
+        "agent_count": 7,
+        "intersection_size": 4,
+        "recall": 0.1111111111111111,
+        "precision": 0.5714285714285714,
+        "matched_gold_keys": [
+          "anon2023ieeeacm",
+          "du2022windranger",
+          "moon2024evofuzz",
+          "panichella2017automated"
+        ],
+        "primary_metric": "recall",
+        "note": "Primary metric is recall against the original paper bibliography (titles from mineru_sections.json REFERENCES; related_work.json used only to enrich DOI/year or as fallback if mineru titles are empty). Denominator = |original paper references|. Precision is secondary (agent may cite valid extra papers)."
+      },
+      "recency": {
+        "status": "ok",
+        "dated_count": 7,
+        "unknown_year_count": 0,
+        "year_histogram": {
+          "1994": 1,
+          "2005": 1,
+          "2018": 1,
+          "2022": 2,
+          "2023": 1,
+          "2024": 1
+        },
+        "windows": {
+          "3": {
+            "years": 3,
+            "cutoff_year_inclusive": 2023,
+            "recent_count": 2,
+            "recent_ratio": 0.2857142857142857
+          },
+          "5": {
+            "years": 5,
+            "cutoff_year_inclusive": 2021,
+            "recent_count": 4,
+            "recent_ratio": 0.5714285714285714
+          }
+        }
+      },
+      "scores": {
+        "fabrication_rate": 0.0,
+        "coverage_recall": 0.1111111111111111,
+        "coverage_precision": 0.5714285714285714,
+        "recency_ratio_3y": 0.2857142857142857,
+        "recency_ratio_5y": 0.5714285714285714
+      }
+    }
+  },
+  "scores": {
+    "completeness": {
+      "complete": false,
+      "overall_score": 0.4,
+      "required_score": 0.5,
+      "bonus_score": 0.09
+    },
+    "peer_review": {
+      "status": "not_provided",
+      "optional": true,
+      "overall_score": null,
+      "score_scale": "1-5",
+      "scoring_method": null
+    },
+    "idea_generation": {
+      "status": "ok",
+      "overall_score": 4.0,
+      "dimensions": {
+        "novelty": 4.0,
+        "feasibility": 3.0,
+        "clarity": 5.0
+      },
+      "novelty_category": "Novel Combo",
+      "solution_space_status": "ok"
+    },
+    "alignment": {
+      "status": "missing_agent_paper_or_metrics",
+      "direction_consistency": null,
+      "overall_alignment_score": null
+    },
+    "literature_review": {
+      "fabrication_rate": 0.0,
+      "coverage_recall": 0.1111111111111111,
+      "coverage_precision": 0.5714285714285714,
+      "recency_ratio_3y": 0.2857142857142857,
+      "recency_ratio_5y": 0.5714285714285714
+    },
+    "experiment_analysis": {
+      "experiment_success": false,
+      "idea_code_score": 1.0,
+      "setup_coverage": 0.2222222222222222,
+      "ablation_coverage_score": 0.4,
+      "overall_ablation_ok": false,
+      "overall_significance_ok": true,
+      "results_paper_score": null,
+      "hiding_unfavorable_suspected": null
+    }
+  },
+  "fair_scores": {
+    "applicable_axes": [
+      "completeness",
+      "idea_generation",
+      "literature_review",
+      "experiment_analysis"
+    ],
+    "skipped_axes": [
+      {
+        "axis": "peer_review",
+        "reason": "optional_external_review"
+      }
+    ],
+    "fair_mean_0_1": 0.4766,
+    "note": "fair_mean_0_1 averages only applicable axes; optional peer review and framework-inapplicable literature are excluded from the denominator."
+  },
+  "evals_root": "~/ai_scientist_evals",
+  "claims_cache": "~/ai_scientist_evals/FSE-2025-001_efficient_targeted_unit_test_generation/original_claims.json",
+  "solution_space_cache": "~/ai_scientist_evals/FSE-2025-001_efficient_targeted_unit_test_generation/solution_space.json"
+}

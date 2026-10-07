@@ -1,0 +1,42 @@
+{
+  "forbid_synthetic_pilot": true,
+  "agent_data_note": "Use the real LOSVER datasets at `dataset_candidate/losver/`. The mount is read-only; copy code/data into `project/` before writing outputs.",
+  "required_metrics": [
+    "accuracy",
+    "weighted_f1",
+    "top_n_accuracy",
+    "line_level_f1",
+    "pairwise_accuracy"
+  ],
+  "benchmark_rules": [
+    "Use the complete real provided Devign / Big-Vul / PrimeVul files under `dataset_candidate/losver/datasets/`; do not invent substitute CSVs or toy functions when the corpus is readable.",
+    "Read `dataset_candidate/dataset_paths.json` before experiments and use `$LOSVER_HOME`, `$DEVIGN_HOME`, `$BIGVUL_HOME`, `$PRIMEVUL_HOME`, `$LOSVER_REPOS` in scripts.",
+    "The shared package is read-only. Copy `source_code/` and selected jsonl files into `project/` before editing scripts or writing checkpoints.",
+    "The Python environment is installed automatically (`python` or `/opt/ase-2025-020-venv/bin/python`) with CPU torch + transformers. Reinstall a CUDA wheel only if a GPU is actually available.",
+    "Evaluate binary detection accuracy on Devign, weighted F1 on Big-Vul CWE classification, and pair-wise accuracy on PrimeVul paired functions.",
+    "Line-level ground truth is available for all three datasets, so `top_n_accuracy` and `line_level_f1` must be reported on Devign: use `devign/*_with_lines.jsonl` (field `lines_ground_truth`, drop records whose value is `[-1]`). Big-Vul line labels come from `func_before` vs `func_after`; PrimeVul from the paired records.",
+    "Regenerate Devign line labels offline with `build_devign_line_gt.py` against the bare clones under `$LOSVER_REPOS` if you change the preprocessing; do not fetch from the network and do not fabricate line labels.",
+    "Figshare checkpoints are not pre-mounted. Do not treat them as required for a scoped valid experiment.",
+    "Scope down from the paper protocol (full UniXcoder 40+8/16 epoch training on V100) when needed — report the reduced subset, token limit, and hardware.",
+    "Do not claim full paper reproduction unless the protocol and resources match."
+  ],
+  "non_goals": [
+    "Requiring GPU / CUDA for a valid scoped experiment",
+    "Re-cloning FFmpeg and QEMU inside the container (bare clones are already mounted read-only at `$LOSVER_REPOS`)",
+    "Downloading Figshare pretrained checkpoints (~author models) as a required dependency",
+    "Fabricating Devign / Big-Vul / PrimeVul labels without documenting synthetic construction"
+  ],
+  "dataset_env": {
+    "LOSVER_HOME": "dataset_candidate/losver",
+    "DEVIGN_HOME": "dataset_candidate/losver/datasets/devign",
+    "BIGVUL_HOME": "dataset_candidate/losver/datasets/bigvul",
+    "PRIMEVUL_HOME": "dataset_candidate/losver/datasets/primevul",
+    "LOSVER_REPOS": "dataset_candidate/losver/repos"
+  },
+  "exclude_from_agent": [
+    "container_setup.sh",
+    "README.md",
+    "benchmark_config.json",
+    "requirements.txt"
+  ]
+}

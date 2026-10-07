@@ -1,0 +1,1240 @@
+{
+  "run_dir": "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement/workspace/evoscientist_2026-09-13_08-25-19",
+  "task_dir": "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement",
+  "framework": "evoscientist",
+  "fairness_audit": [
+    {
+      "axis": "completeness",
+      "was_unfair": "Required both paper.tex AND paper.pdf; any tool missing one failed equally.",
+      "fix": "Paper gate: PDF=1.0; TeX-only=0.5; ``complete`` requires PDF."
+    },
+    {
+      "axis": "completeness",
+      "was_unfair": "``results`` counted stub/seed JSON (dataset_candidate/metrics.json).",
+      "fix": "``results`` requires substantive numeric results via results_normalize."
+    },
+    {
+      "axis": "experiment_success",
+      "was_unfair": "Only metrics.json; ignored results.json / experiment_results.txt.",
+      "fix": "Framework-ordered result candidates + normalized loaders."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Penalized tools with no bib; airesearcher has no workspace references.",
+      "fix": "literature_applicable=false → status not_applicable; excluded from fair aggregate."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "related_work.json subset as gold made recall hard to interpret.",
+      "fix": "Coverage gold is original paper REFERENCES from mineru; related_work only enriches metadata/fallback."
+    },
+    {
+      "axis": "peer_review",
+      "was_unfair": "Missing Stanford report looked like evaluation failure.",
+      "fix": "status not_provided; optional axis, never counts as tool failure."
+    },
+    {
+      "axis": "paths/find_results",
+      "was_unfair": "Picked downloads/** and sandbox noise (e.g. airesearcher LLVM tree).",
+      "fix": "Exclude downloads/, seeds/, dataset_candidate/, sandbox junk paths."
+    },
+    {
+      "axis": "paths/framework_noise",
+      "was_unfair": "DeepScientist .deepscientist_npm / runtime / skills templates counted as code/paper/results.",
+      "fix": "FRAMEWORK_NOISE_DIRS+markers; quest worktree + eval_output results; paper md drafts; reject template tex."
+    },
+    {
+      "axis": "paths/paper_tex",
+      "was_unfair": "tiny_scientist / ACL runs store paper under latex/*.tex; evaluator only looked at paper/main.tex.",
+      "fix": "latex/**/*.tex with substantive-body heuristic; find_paper_document uses same rules."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Entire custom.bib (300+ anthology entries) verified when paper had zero \\cite commands.",
+      "fix": "collect_agent_references filters bib to in-text cite keys; skips uncited bulk bib (>40 entries)."
+    },
+    {
+      "axis": "paths/ai_scientist_summaries",
+      "was_unfair": "AI Scientist can persist substantive results and paper-like drafts in *_summary.json logs rather than paper/main.tex or results/**/*.json.",
+      "fix": "Treat draft_summary/research_summary as weak paper documents and summary JSONs as result candidates."
+    },
+    {
+      "axis": "framework/ai_scientist_v2",
+      "was_unfair": "Manifest framework ``ai_scientist_v2`` fell through to profile ``unknown``, skipping AI-Scientist idea/result path priorities.",
+      "fix": "Normalize ``ai_scientist_v2`` (and common aliases) to profile key ``ai_scientist``."
+    },
+    {
+      "axis": "idea_generation",
+      "was_unfair": "plan.md/todos.md weak proxies scored same as structured idea.json.",
+      "fix": "Framework idea_priority tried first; missing idea → not_applicable where appropriate."
+    }
+  ],
+  "generated_at": "2026-10-01T02:54:11",
+  "axes": [
+    "alignment",
+    "completeness",
+    "experiment_analysis",
+    "idea_generation",
+    "literature_review",
+    "peer_review"
+  ],
+  "results": {
+    "completeness": {
+      "framework": "evoscientist",
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement/workspace/evoscientist_2026-09-13_08-25-19",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement",
+      "complete": true,
+      "required_score": 1.0,
+      "bonus_score": 0.13,
+      "overall_score": 0.8521,
+      "missing": [],
+      "required": {
+        "idea": {
+          "path": "plan.md",
+          "bytes": 2537,
+          "via": "candidate"
+        },
+        "code": {
+          "count": 2975,
+          "files": [
+            {
+              "path": "project/config.py",
+              "bytes": 3264,
+              "via": "glob"
+            },
+            {
+              "path": "project/evaluate.py",
+              "bytes": 8694,
+              "via": "glob"
+            },
+            {
+              "path": "project/features.py",
+              "bytes": 5132,
+              "via": "glob"
+            },
+            {
+              "path": "project/figures.py",
+              "bytes": 4150,
+              "via": "glob"
+            },
+            {
+              "path": "project/gen_systems.py",
+              "bytes": 831,
+              "via": "glob"
+            },
+            {
+              "path": "project/gen_trees.py",
+              "bytes": 2667,
+              "via": "glob"
+            },
+            {
+              "path": "project/lpea/RLTestingLyapunov/Evaluation.py",
+              "bytes": 894,
+              "via": "glob"
+            },
+            {
+              "path": "project/lpea/RLTestingLyapunov/LPEA_Env.py",
+              "bytes": 2739,
+              "via": "glob"
+            },
+            {
+              "path": "project/lpea/RLTestingLyapunov/LPEA_Oracle.py",
+              "bytes": 2366,
+              "via": "glob"
+            },
+            {
+              "path": "project/lpea/RLTestingLyapunov/Lyaponov_oracle_util.py",
+              "bytes": 8193,
+              "via": "glob"
+            },
+            {
+              "path": "project/lpea/RLTestingLyapunov/Util.py",
+              "bytes": 5488,
+              "via": "glob"
+            },
+            {
+              "path": "project/lpea/RLTestingLyapunov/bug_injection.py",
+              "bytes": 159,
+              "via": "glob"
+            },
+            {
+              "path": "project/lpea/RLTestingLyapunov/bug_lib.py",
+              "bytes": 23385,
+              "via": "glob"
+            },
+            {
+              "path": "project/lpea/RLTestingLyapunov/config_parser.py",
+              "bytes": 373,
+              "via": "glob"
+            },
+            {
+              "path": "project/lpea/archived_code/stable_baselines3/__init__.py",
+              "bytes": 939,
+              "via": "glob"
+            },
+            {
+              "path": "project/lpea/archived_code/stable_baselines3/a2c/__init__.py",
+              "bytes": 189,
+              "via": "glob"
+            },
+            {
+              "path": "project/lpea/archived_code/stable_baselines3/a2c/a2c.py",
+              "bytes": 9207,
+              "via": "glob"
+            },
+            {
+              "path": "project/lpea/archived_code/stable_baselines3/a2c/policies.py",
+              "bytes": 301,
+              "via": "glob"
+            },
+            {
+              "path": "project/lpea/archived_code/stable_baselines3/common/atari_wrappers.py",
+              "bytes": 11290,
+              "via": "glob"
+            },
+            {
+              "path": "project/lpea/archived_code/stable_baselines3/common/base_class.py",
+              "bytes": 36960,
+              "via": "glob"
+            },
+            {
+              "path": "project/lpea/archived_code/stable_baselines3/common/buffers.py",
+              "bytes": 34591,
+              "via": "glob"
+            },
+            {
+              "path": "project/lpea/archived_code/stable_baselines3/common/callbacks.py",
+              "bytes": 27118,
+              "via": "glob"
+            },
+            {
+              "path": "project/lpea/archived_code/stable_baselines3/common/distributions.py",
+              "bytes": 27792,
+              "via": "glob"
+            },
+            {
+              "path": "project/lpea/archived_code/stable_baselines3/common/env_checker.py",
+              "bytes": 22097,
+              "via": "glob"
+            },
+            {
+              "path": "project/lpea/archived_code/stable_baselines3/common/env_util.py",
+              "bytes": 7630,
+              "via": "glob"
+            },
+            {
+              "path": "project/lpea/archived_code/stable_baselines3/common/envs/__init__.py",
+              "bytes": 533,
+              "via": "glob"
+            },
+            {
+              "path": "project/lpea/archived_code/stable_baselines3/common/envs/bit_flipping_env.py",
+              "bytes": 9212,
+              "via": "glob"
+            },
+            {
+              "path": "project/lpea/archived_code/stable_baselines3/common/envs/identity_env.py",
+              "bytes": 6029,
+              "via": "glob"
+            },
+            {
+              "path": "project/lpea/archived_code/stable_baselines3/common/envs/multi_input_envs.py",
+              "bytes": 6499,
+              "via": "glob"
+            },
+            {
+              "path": "project/lpea/archived_code/stable_baselines3/common/evaluation.py",
+              "bytes": 6451,
+              "via": "glob"
+            }
+          ]
+        },
+        "results": {
+          "substantive": true,
+          "normalized_path": "results/metrics.json",
+          "numeric_leaf_count": 72,
+          "discovered_files": [
+            {
+              "path": "results/metrics.json",
+              "bytes": 2293,
+              "via": "candidate"
+            }
+          ],
+          "metrics_keys_sample": [
+            "task",
+            "method",
+            "accuracy",
+            "precision",
+            "recall",
+            "f1",
+            "false_positive_count",
+            "false_negative_count",
+            "true_positive_count",
+            "true_negative_count",
+            "roc_auc",
+            "n_evaluated",
+            "n_total",
+            "n_crashed",
+            "Precision",
+            "Recall",
+            "avg_precision",
+            "avg_recall",
+            "baseline_lpea",
+            "mbfo_unsupervised_mahalanobis_roc_auc",
+            "mbfo_unsupervised_isolation_forest_roc_auc",
+            "mbfo_logreg_cv_roc_auc",
+            "single_signal_ablation_roc_auc",
+            "human_oracle_accuracy",
+            "per_algorithm",
+            "details"
+          ]
+        },
+        "paper": {
+          "tex": null,
+          "pdf": {
+            "path": "paper/main.pdf",
+            "bytes": 59164,
+            "via": "candidate"
+          },
+          "md": {
+            "path": "paper/paper.md",
+            "bytes": 17649,
+            "via": "candidate"
+          },
+          "json": null,
+          "status": "pdf",
+          "score": 1.0
+        }
+      },
+      "bonus": {
+        "experiment_plan": {
+          "path": "plan.md",
+          "bytes": 2537,
+          "via": "candidate"
+        },
+        "experiment_log": {
+          "path": "evoscientist_run.log",
+          "bytes": 61474,
+          "via": "glob"
+        },
+        "review": {
+          "path": "artifacts/peer_review/paperreview.token.txt",
+          "bytes": 44,
+          "via": "glob"
+        },
+        "readme": {
+          "path": "README.md",
+          "bytes": 4122,
+          "via": "candidate"
+        },
+        "narrative": null,
+        "bib": null
+      },
+      "manifest_status": {
+        "research_request": true,
+        "plan": true,
+        "metrics": true,
+        "paper_tex": false,
+        "paper_pdf": false,
+        "readme": true
+      },
+      "gate_scores": {
+        "idea": 1.0,
+        "code": 1.0,
+        "results": 1.0,
+        "paper": 1.0
+      },
+      "fairness": {
+        "gates": [
+          "idea",
+          "code",
+          "results",
+          "paper"
+        ],
+        "paper_gate_rule": "PDF=1.0; TeX-only/md_only/json_only=0.5; complete requires PDF",
+        "results_gate_rule": "substantive numeric results via framework-aware normalize_results",
+        "audit_ref": "framework_profile.FAIRNESS_AUDIT"
+      },
+      "notes": [
+        "Required: idea, code, substantive results, paper (PDF full; TeX/markdown/JSON draft half).",
+        "Stub/seed metrics (e.g. dataset_candidate/metrics.json) do not satisfy results.",
+        "Framework noise (.deepscientist_npm, skills/templates, runtime) is excluded from code/results/paper.",
+        "Manifest status is informational; disk presence is authoritative."
+      ]
+    },
+    "idea_generation": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement/workspace/evoscientist_2026-09-13_08-25-19",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement",
+      "idea_path": "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement/workspace/evoscientist_2026-09-13_08-25-19/plan.md",
+      "status": "ok",
+      "dimensions": {
+        "novelty": {
+          "score": 3.0,
+          "justification": "The core idea generalizes an existing oracle: 'LPEA reduces all behavior to one binary Lyapunov signal + two hand-set thresholds. MBFO generalizes it to 22 continuous behavioral signals... fused by detectors calibrated only on bug-less behavior.' This fixes a concrete baseline limitation but keeps the behavior-to-oracle paradigm incremental.",
+          "rubric": "Incremental: a meaningful extension or optimization of prior baseline work that fixes a concrete prior limitation, but the core paradigm is unchanged.",
+          "category": "Incremental",
+          "nearest_solution_space_ids": [
+            "R4",
+            "R19",
+            "R20"
+          ],
+          "differentiation": "Closest Solution Space entries provide oracle surveys, model-based agent oracles, or formal/property-based RL testing. MBFO instead uses multiple continuous behavioral statistics calibrated only on bug-less behavior, but the plan explicitly positions itself as generalizing the existing LPEA single-signal Lyapunov oracle rather than introducing a new paradigm."
+        },
+        "feasibility": {
+          "score": 4.0,
+          "justification": "The plan uses the existing LPEA artifact and an SB3 fork, with implementation described as completed in a standard Python pipeline and parallel CPU training. It discloses reduced protocol settings: 'I=5 agents/impl... TD3 steps 90k→30k for CPU budget'. This is low-to-moderate engineering on existing libraries, though feature extraction and detector calibration still require scripting.",
+          "rubric": "Low barrier / easy to implement: core logic can be quickly built on existing Python libraries or common ML frameworks; only small changes to a standard evaluation flow (e.g. prompt strategy tweaks or swapping metrics)."
+        },
+        "clarity": {
+          "score": 4.0,
+          "justification": "Stages, files, metrics, and RQ1-RQ3 are explicit: 'MBFO unsupervised Mahalanobis ROC-AUC 0.930', 'Beats LPEA... and the human oracle'. The plan is concrete, but the 22 signals are only named by category, such as 'potential statistics, drift, action magnitude, policy smoothness, cross-run consistency', rather than individually defined.",
+          "rubric": "Clear and concrete: steps are explicit with a reasonable, specific experiment design (baseline tools, metric definitions); can be turned into a solid proposal."
+        }
+      },
+      "overall_score": 3.6666666666666665,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "novelty",
+        "feasibility",
+        "clarity"
+      ],
+      "solution_space": {
+        "status": "ok",
+        "paper_count": 27,
+        "entry_count": 27,
+        "cache_hit": true,
+        "source_file": "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement/mineru_sections.json",
+        "stats": {
+          "papers": 27,
+          "extracted": 27,
+          "usable_abstracts": 12,
+          "citation_meta_abstracts": 0,
+          "missing_abstracts": 15,
+          "mineru_titles": 26,
+          "related_work_titles": 19,
+          "abstracts_attached": 12,
+          "related_work_extras": 1,
+          "batches": 2
+        },
+        "error": null
+      },
+      "notes": [
+        "Scores the intermediate idea artifact (not the final paper).",
+        "Dimensions: novelty, feasibility, clarity (each 1-5). Excitement removed.",
+        "Novelty is scored against a Solution Space built from mineru REFERENCES titles (+ related_work.json abstracts when matched)."
+      ],
+      "idea_via": "candidate",
+      "idea_relative": "plan.md",
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "llm_meta": {
+        "model": "deepseek-v4-pro-0813",
+        "base_url": "https://api-sg.umodelverse.ai/v1",
+        "usage": {
+          "completion_tokens": 2141,
+          "completion_tokens_details": {
+            "reasoning_tokens": 1740
+          },
+          "prompt_tokens": 668,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "total_tokens": 2809
+        },
+        "attempt": 0
+      }
+    },
+    "peer_review": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement/workspace/evoscientist_2026-09-13_08-25-19",
+      "review_report": "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement/workspace/evoscientist_2026-09-13_08-25-19/artifacts/peer_review/stanford_apr.md",
+      "paper_pdf": "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement/workspace/evoscientist_2026-09-13_08-25-19/paper/main.pdf",
+      "paper_tex": null,
+      "status": "ok",
+      "dimensions": {},
+      "overall_score": 5.2,
+      "score_scale": "1-10",
+      "dimension_order": [],
+      "notes": [
+        "Scored from paperreview.ai (Stanford APR) native ratings; benchmark 5-dimension LLM rubric skipped.",
+        "Overall scale: 1-10."
+      ],
+      "paperreview": {
+        "status": "fetched",
+        "token_file": "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement/workspace/evoscientist_2026-09-13_08-25-19/artifacts/peer_review/paperreview.token.txt",
+        "json": "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement/workspace/evoscientist_2026-09-13_08-25-19/artifacts/peer_review/stanford_apr.json",
+        "markdown": "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement/workspace/evoscientist_2026-09-13_08-25-19/artifacts/peer_review/stanford_apr.md",
+        "apr_scores": {
+          "scale": "1-10",
+          "overall": 5.2,
+          "dimensions": {
+            "Claims_Support": 0.0,
+            "Experimental_Soundness": 0.0,
+            "Writing_Clarity": 0.0,
+            "Prior_Work_Context": 0.0,
+            "Question_Importance": 1.0,
+            "Originality": 0.0,
+            "Value_to_Community": 0.0
+          }
+        },
+        "pdf_rebuild": null
+      },
+      "scoring_method": "paperreview_apr",
+      "scoring_source": "paperreview_json",
+      "apr_dimensions": {
+        "Claims_Support": 0.0,
+        "Experimental_Soundness": 0.0,
+        "Writing_Clarity": 0.0,
+        "Prior_Work_Context": 0.0,
+        "Question_Importance": 1.0,
+        "Originality": 0.0,
+        "Value_to_Community": 0.0
+      },
+      "summary": "",
+      "red_flags": []
+    },
+    "alignment": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement/workspace/evoscientist_2026-09-13_08-25-19",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement",
+      "status": "ok",
+      "original": {
+        "paper_title": "A Test Oracle for Reinforcement Learning Software based on Lyapunov Stability Control Theory",
+        "selection": {
+          "num_blocks": 7,
+          "total_chars": 31998,
+          "inferred_roles": {
+            "abstract": 1,
+            "introduction": 1,
+            "experiment": 4,
+            "conclusion": 1
+          },
+          "mineru_raw_keys": {
+            "field:abstract": 1,
+            "field:introduction": 1,
+            "field:experiment": 1,
+            "other": 3,
+            "conclusion": 1
+          },
+          "infer_reasons": {
+            "top_level_field": 3,
+            "inherited": 2,
+            "body_override": 1,
+            "title": 1
+          },
+          "rescued_from_other": 3,
+          "note": "mineru key is unreliable; blocks are selected by title/body/inheritance. rescued_from_other counts sections labeled other but treated as typed roles."
+        },
+        "claims": [
+          {
+            "id": "C1",
+            "statement": "The proposed LPEA(ϑ=100%, θ=75%) oracle outperforms the human oracle on accuracy, precision, recall, F1 score, true positive rate, true negative rate, false positive rate"
+          }
+        ],
+        "metrics": [],
+        "overall_conclusion": null,
+        "comparable_notes": null,
+        "cache_hit": true
+      },
+      "agent": {
+        "status": "ok",
+        "run_dir": "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement/workspace/evoscientist_2026-09-13_08-25-19",
+        "claims": [
+          {
+            "id": "A1",
+            "statement": "MBFO improves over LPEA with an unsupervised Mahalanobis ROC-AUC of 0.930 versus LPEA's single-signal AUC of 0.845 on the LPEA benchmark.",
+            "direction": "improves",
+            "metric_names": [
+              "mbfo_unsupervised_mahalanobis_roc_auc",
+              "lpea_single_signal_roc_auc"
+            ],
+            "evidence_quote": "On the LPEA benchmark ... MBFO reaches ROC-AUC **0.930** unsupervised (Mahalanobis) and **0.885** supervised (random-forest CV), versus LPEA's best grid accuracy of **0.784** and single-signal AUC of 0.845.",
+            "confidence": 0.95
+          },
+          {
+            "id": "A2",
+            "statement": "MBFO supervised random-forest CV ROC-AUC is 0.885, higher than LPEA's best grid accuracy of 0.784.",
+            "direction": "improves",
+            "metric_names": [
+              "mbfo_supervised_rf_roc_auc",
+              "lpea_accuracy"
+            ],
+            "evidence_quote": "MBFO reaches ROC-AUC **0.930** unsupervised (Mahalanobis) and **0.885** supervised (random-forest CV), versus LPEA's best grid accuracy of **0.784** and single-signal AUC of 0.845.",
+            "confidence": 0.9
+          },
+          {
+            "id": "A3",
+            "statement": "MBFO remains robust on TD3 while LPEA collapses to chance, with LPEA accuracy 0.500 and MBFO RF AUC 0.838.",
+            "direction": "improves",
+            "metric_names": [
+              "td3_lpea_accuracy",
+              "td3_mbfo_rf_auc"
+            ],
+            "evidence_quote": "Most strikingly, LPEA's strict threshold collapses to chance on the off-policy algorithm TD3 (accuracy 0.500, flagging all 15 bug-less implementations), while MBFO stays robust there (AUC 0.838).",
+            "confidence": 0.95
+          },
+          {
+            "id": "A4",
+            "statement": "MBFO extracts 22 continuous behavioral signals including Lyapunov-potential statistics, one-step drift, action magnitude, policy smoothness, and cross-run consistency.",
+            "direction": "neutral",
+            "metric_names": [],
+            "evidence_quote": "MBFO ... extracts 22 continuous behavioral signals from an agent's interaction with the test environment — Lyapunov-potential statistics, one-step drift, action magnitude, policy smoothness, and *cross-run consistency* across independently-trained agents",
+            "confidence": 0.93
+          },
+          {
+            "id": "A5",
+            "statement": "MBFO's continuous score surfaces the false-positive/false-negative trade-off that LPEA's discrete grid cannot express.",
+            "direction": "neutral",
+            "metric_names": [],
+            "evidence_quote": "MBFO's continuous score also surfaces the false-positive / false-negative trade-off that LPEA's discrete grid cannot.",
+            "confidence": 0.9
+          },
+          {
+            "id": "A6",
+            "statement": "MBFO has higher precision than LPEA (0.8776 vs 0.746) but lower recall (0.7818 vs 0.8545).",
+            "direction": "mixed",
+            "metric_names": [
+              "mbfo_precision",
+              "lpea_precision",
+              "mbfo_recall",
+              "lpea_recall"
+            ],
+            "evidence_quote": "metrics.json: MBFO precision 0.8776, recall 0.7818; LPEA baseline precision 0.746, recall 0.8545.",
+            "confidence": 0.9
+          }
+        ],
+        "metrics": [
+          {
+            "name": "mbfo_unsupervised_mahalanobis_roc_auc",
+            "value": 0.9299,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "MBFO unsupervised Mahalanobis detector on 112-implementation LPEA benchmark",
+            "is_sota_or_best": true,
+            "baseline_name": "lpea_single_signal_roc_auc",
+            "baseline_value": 0.845,
+            "evidence_quote": "MBFO reaches ROC-AUC **0.930** unsupervised (Mahalanobis) ... versus LPEA's ... single-signal AUC of 0.845.",
+            "confidence": 0.95
+          },
+          {
+            "name": "mbfo_unsupervised_isolation_forest_roc_auc",
+            "value": 0.9084,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "MBFO unsupervised Isolation Forest detector",
+            "is_sota_or_best": false,
+            "baseline_name": "lpea_single_signal_roc_auc",
+            "baseline_value": 0.845,
+            "evidence_quote": "metrics.json: mbfo_unsupervised_isolation_forest_roc_auc 0.9084.",
+            "confidence": 0.9
+          },
+          {
+            "name": "mbfo_supervised_rf_roc_auc",
+            "value": 0.8849,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "MBFO supervised random forest, stratified 5-fold CV",
+            "is_sota_or_best": false,
+            "baseline_name": "lpea_single_signal_roc_auc",
+            "baseline_value": 0.845,
+            "evidence_quote": "MBFO reaches ROC-AUC ... **0.885** supervised (random-forest CV) ... versus LPEA's ... single-signal AUC of 0.845.",
+            "confidence": 0.95
+          },
+          {
+            "name": "mbfo_logreg_cv_roc_auc",
+            "value": 0.8718,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "MBFO supervised logistic regression CV",
+            "is_sota_or_best": false,
+            "baseline_name": "lpea_single_signal_roc_auc",
+            "baseline_value": 0.845,
+            "evidence_quote": "metrics.json: mbfo_logreg_cv_roc_auc 0.8718.",
+            "confidence": 0.9
+          },
+          {
+            "name": "mbfo_accuracy",
+            "value": 0.8378,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "MBFO Random Forest, stratified 5-fold CV",
+            "is_sota_or_best": false,
+            "baseline_name": "lpea_accuracy",
+            "baseline_value": 0.7838,
+            "evidence_quote": "metrics.json: accuracy 0.8378; baseline_lpea accuracy 0.7838.",
+            "confidence": 0.95
+          },
+          {
+            "name": "mbfo_precision",
+            "value": 0.8776,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "MBFO Random Forest, stratified 5-fold CV",
+            "is_sota_or_best": false,
+            "baseline_name": "lpea_precision",
+            "baseline_value": 0.746,
+            "evidence_quote": "metrics.json: precision 0.8776; baseline_lpea precision 0.746.",
+            "confidence": 0.95
+          },
+          {
+            "name": "mbfo_recall",
+            "value": 0.7818,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "MBFO Random Forest, stratified 5-fold CV",
+            "is_sota_or_best": false,
+            "baseline_name": "lpea_recall",
+            "baseline_value": 0.8545,
+            "evidence_quote": "metrics.json: recall 0.7818; baseline_lpea recall 0.8545.",
+            "confidence": 0.95
+          },
+          {
+            "name": "mbfo_f1",
+            "value": 0.8269,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "MBFO Random Forest, stratified 5-fold CV",
+            "is_sota_or_best": false,
+            "baseline_name": "lpea_f1",
+            "baseline_value": 0.7966,
+            "evidence_quote": "metrics.json: f1 0.8269; baseline_lpea f1 0.7966.",
+            "confidence": 0.95
+          },
+          {
+            "name": "lpea_accuracy",
+            "value": 0.7838,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "LPEA best grid accuracy on 112 implementations",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "LPEA's best grid accuracy of **0.784**.",
+            "confidence": 0.95
+          },
+          {
+            "name": "lpea_precision",
+            "value": 0.746,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "LPEA baseline",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "metrics.json: baseline_lpea precision 0.746.",
+            "confidence": 0.9
+          },
+          {
+            "name": "lpea_recall",
+            "value": 0.8545,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "LPEA baseline",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "metrics.json: baseline_lpea recall 0.8545.",
+            "confidence": 0.9
+          },
+          {
+            "name": "lpea_f1",
+            "value": 0.7966,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "LPEA baseline",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "metrics.json: baseline_lpea f1 0.7966.",
+            "confidence": 0.9
+          },
+          {
+            "name": "lpea_single_signal_roc_auc",
+            "value": 0.845,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "LPEA single-signal AUC",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "single-signal AUC of 0.845.",
+            "confidence": 0.95
+          },
+          {
+            "name": "single_signal_ablation_roc_auc",
+            "value": 0.789,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "Single-signal ablation",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "metrics.json: single_signal_ablation_roc_auc 0.789.",
+            "confidence": 0.85
+          },
+          {
+            "name": "human_oracle_accuracy",
+            "value": 0.5,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "Human oracle accuracy",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "metrics.json: human_oracle_accuracy 0.5.",
+            "confidence": 0.85
+          },
+          {
+            "name": "td3_lpea_accuracy",
+            "value": 0.5,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "LPEA on TD3",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "LPEA's strict threshold collapses to chance on the off-policy algorithm TD3 (accuracy 0.500).",
+            "confidence": 0.95
+          },
+          {
+            "name": "td3_mbfo_rf_auc",
+            "value": 0.8377777777777778,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "MBFO RF AUC on TD3",
+            "is_sota_or_best": false,
+            "baseline_name": "td3_lpea_accuracy",
+            "baseline_value": 0.5,
+            "evidence_quote": "while MBFO stays robust there (AUC 0.838).",
+            "confidence": 0.95
+          },
+          {
+            "name": "a2c_lpea_accuracy",
+            "value": 0.8947368421052632,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "LPEA on A2C",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "metrics.json: per_algorithm.a2c.lpea.accuracy 0.8947368421052632.",
+            "confidence": 0.9
+          },
+          {
+            "name": "a2c_mbfo_rf_auc",
+            "value": 0.8822714681440443,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "MBFO RF AUC on A2C",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "metrics.json: per_algorithm.a2c.mbfo_rf_auc 0.8822714681440443.",
+            "confidence": 0.9
+          },
+          {
+            "name": "ppo_lpea_accuracy",
+            "value": 0.8837209302325582,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "LPEA on PPO",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "metrics.json: per_algorithm.ppo.lpea.accuracy 0.8837209302325582.",
+            "confidence": 0.9
+          },
+          {
+            "name": "ppo_mbfo_rf_auc",
+            "value": 0.9826839826839826,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "MBFO RF AUC on PPO",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "metrics.json: per_algorithm.ppo.mbfo_rf_auc 0.9826839826839826.",
+            "confidence": 0.9
+          }
+        ],
+        "overall_conclusion": "MBFO improves over LPEA on the LPEA benchmark, achieving 0.9299 unsupervised Mahalanobis ROC-AUC, 0.9084 unsupervised Isolation Forest ROC-AUC, 0.8849 supervised random-forest ROC-AUC, and remaining robust on TD3 where LPEA drops to 0.500 accuracy.",
+        "sources": {
+          "metrics_path": "results/metrics.json",
+          "paper_tex_path": "paper/paper.md"
+        },
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 10321,
+            "completion_tokens_details": {
+              "reasoning_tokens": 6760
+            },
+            "prompt_tokens": 3497,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 13818
+          },
+          "attempt": 0
+        }
+      },
+      "comparison": {
+        "status": "ok",
+        "claim_alignment": [
+          {
+            "original_claim_id": "C1",
+            "agent_claim_id": null,
+            "label": "partial",
+            "rationale": "The agent does not directly compare LPEA with the human oracle. It reports LPEA accuracy 0.7838 versus human oracle accuracy 0.5, supporting the accuracy component, but it does not report precision, recall, F1, TPR, TNR, or FPR for the human oracle."
+          }
+        ],
+        "metric_alignment": [],
+        "summary": {
+          "direction_consistency": "consistent",
+          "consistent_claim_ratio": 0.5,
+          "has_comparable_metrics": false,
+          "sota_improvement_summary": "Original metrics were not extracted; the agent reports MBFO improving over LPEA on several metrics but does not directly establish the original LPEA-vs-human-oracle claim beyond accuracy.",
+          "overall_alignment_score": 0.55,
+          "score_rationale": "The available LPEA-versus-human accuracy evidence points in the same direction as the original claim, but the multi-metric human-oracle comparison is largely unaddressed."
+        },
+        "warnings": [
+          "Agent extraction focuses on MBFO vs LPEA and does not report LPEA vs human oracle on precision, recall, F1, TPR, TNR, or FPR.",
+          "The specific LPEA configuration from C1, LPEA(ϑ=100%, θ=75%), is not explicitly identified in the agent run; LPEA metrics may use a different threshold or grid."
+        ],
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 4303,
+            "completion_tokens_details": {
+              "reasoning_tokens": 3943
+            },
+            "prompt_tokens": 4582,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 8885
+          },
+          "attempt": 0
+        }
+      },
+      "overall_alignment_score": 0.55,
+      "direction_consistency": "consistent"
+    },
+    "experiment_analysis": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement/workspace/evoscientist_2026-09-13_08-25-19",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement",
+      "status": "ok",
+      "metrics_path": "results/metrics.json",
+      "experiment_success": {
+        "status": "ok",
+        "success": true,
+        "metrics_path": "results/metrics.json",
+        "absolute_metrics_path": "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement/workspace/evoscientist_2026-09-13_08-25-19/results/metrics.json",
+        "checks": {
+          "has_results_file": true,
+          "non_stub": true,
+          "numeric_leaf_count": 72,
+          "min_numeric_ok": true
+        },
+        "manifest_hints": {
+          "status": {
+            "research_request": true,
+            "plan": true,
+            "metrics": true,
+            "paper_tex": false,
+            "paper_pdf": false,
+            "readme": true
+          },
+          "returncode": 2,
+          "benchmark_complete": false,
+          "artifacts_metrics_flag": false
+        },
+        "warnings": [
+          "manifest.returncode=2",
+          "manifest.benchmark_complete=false"
+        ],
+        "suspicious_values": [],
+        "note": "success=true requires substantive results (framework-aware path) with >=3 numeric leaves. Supports metrics.json, results.json, experiment_results.txt, etc. Manifest returncode/benchmark_complete are soft warnings only."
+      },
+      "idea_code_consistency": {
+        "status": "ok",
+        "idea_path": "plan.md",
+        "code_files": [
+          "project/config.py",
+          "project/evaluate.py",
+          "project/features.py",
+          "project/figures.py"
+        ],
+        "score_scale": "1-5",
+        "score": 5.0,
+        "label": "excellent",
+        "justification": "The provided code snippets implement the stated MBFO pipeline and evaluation protocol with the disclosed reduced protocol. The feature extraction, implementation list, detector imports, and evaluation metrics align with the idea; any omissions appear to be due to truncation rather than divergence.",
+        "matched_elements": [
+          "Config captures protocol reductions (I=5, TD3 steps=30k) that match the idea's disclosures.",
+          "implementation_list() generates 56 buggy and 56 bugless implementations across A2C/PPO/TD3.",
+          "features.py extracts 22 per-agent behavioral signals and aggregates mean/std into implementation-level features.",
+          "evaluate.py includes LPEA baseline, unsupervised detectors (Mahalanobis, IsolationForest), supervised classifiers (RF/LogReg), and ROC/AUC metrics.",
+          "figures.py includes LPEA grid, AUC bars, per-algorithm RQ3, and feature importance plots."
+        ],
+        "missing_or_divergent_elements": [
+          "Human-oracle reference comparison is not visible in the provided code fragments; it may reside in omitted results sections.",
+          "The evaluate.py excerpt is truncated before the full MBFO detector loop, so the complete computation is assumed from imports and preprocessing.",
+          "fig_roc appears as a no-op, which is acceptable if ROC curves are not required for the main evaluation."
+        ],
+        "rubric": "Excellent alignment: experiment entrypoints, metrics, and protocol clearly realize the stated idea (including scoped reductions that match the idea text).",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 1146,
+            "completion_tokens_details": {
+              "reasoning_tokens": 841
+            },
+            "prompt_tokens": 6943,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 8089
+          },
+          "attempt": 1
+        }
+      },
+      "setup_coverage": {
+        "status": "ok",
+        "overall_coverage": 0.9583333333333334,
+        "datasets": {
+          "gold_count": 2,
+          "hit_count": 2,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "RL Software Bug Benchmark (LPEA AE artifact)",
+            "RL Software Bug Benchmark"
+          ],
+          "misses": []
+        },
+        "baselines": {
+          "gold_count": 1,
+          "hit_count": 1,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "Human Oracle (STARLA-expanded)"
+          ],
+          "misses": []
+        },
+        "metrics": {
+          "gold_count": 8,
+          "hit_count": 7,
+          "miss_count": 1,
+          "coverage": 0.875,
+          "hits": [
+            "False Positive Count (FP)",
+            "True Negative Count (TN)",
+            "False Negative Count (FN)",
+            "Accuracy",
+            "Precision",
+            "Recall",
+            "F1 Score"
+          ],
+          "misses": [
+            "ROC AUC"
+          ]
+        },
+        "agent_protocol": {},
+        "gold_protocol": {},
+        "dataset_dirs": [
+          "dataset_candidate"
+        ],
+        "flags": {
+          "weaker_baseline_suspected": false,
+          "weak_protocol": [],
+          "synthetic_data": "unexpected_synthetic_or_local_only_data",
+          "gold_allows_synthetic": false
+        },
+        "gold_sources": [
+          "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement/task.md",
+          "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement/metadata.json"
+        ],
+        "note": "Coverage is name/alias matching against task.md Datasets/Baselines/Metrics. weak_protocol flags large reductions in trials/timeout vs Constraints. Synthetic corpora are not penalized when the task itself requires synthesis."
+      },
+      "ablation_significance": {
+        "status": "ok",
+        "idea_path": "plan.md",
+        "significance_signals_rule_based": {
+          "signals": [],
+          "artifact_paths": [],
+          "has_any_significance_artifact": false
+        },
+        "evidence_format": "raw_json",
+        "study_type": null,
+        "components": [],
+        "ablation_coverage_score": null,
+        "overall_ablation_ok": null,
+        "overall_significance_ok": null,
+        "summary": "",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 612,
+            "completion_tokens_details": {
+              "reasoning_tokens": 610
+            },
+            "prompt_tokens": 2794,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 3406
+          },
+          "attempt": 3
+        }
+      },
+      "results_paper_consistency": {
+        "status": "ok",
+        "paper_tex": "paper/paper.md",
+        "paper_kind": "paper_md",
+        "results_format": "raw_json",
+        "digest_hint": {
+          "unfavorable_count": 0,
+          "trial_fail_count": 0,
+          "trial_success_count": 0,
+          "metadata": {}
+        },
+        "score_scale": "1-5",
+        "method": "Direct LLM comparison: agent's FINAL results artifact (metrics.json summary) vs paper Results/Discussion/Conclusion. Interim failed runs are NOT evidence unless still present in the final metrics file.",
+        "score": null,
+        "consistency_label": null,
+        "hiding_unfavorable_suspected": false,
+        "hiding_confidence": null,
+        "justification": "",
+        "supported_claims": [],
+        "unsupported_or_overstated_claims": [],
+        "numeric_mismatches": [],
+        "unfavorable_in_final_results": [],
+        "unfavorable_acknowledged_in_paper": [],
+        "unfavorable_missing_from_paper": [],
+        "rubric": null,
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 320,
+            "completion_tokens_details": {
+              "reasoning_tokens": 318
+            },
+            "prompt_tokens": 3263,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 3583
+          },
+          "attempt": 0
+        }
+      },
+      "scores": {
+        "experiment_success": true,
+        "idea_code_score": 5.0,
+        "setup_coverage": 0.9583333333333334,
+        "ablation_coverage_score": null,
+        "overall_ablation_ok": null,
+        "overall_significance_ok": null,
+        "results_paper_score": null,
+        "hiding_unfavorable_suspected": false
+      },
+      "notes": [
+        "Axes 1,2,3,4,6 in experiment_analysis (figures excluded).",
+        "setup_coverage matches task.md Datasets/Baselines/Metrics; weak_protocol flags reductions vs Constraints.",
+        "Axis 6: final normalized results vs paper; interim run logs not used as ground truth."
+      ]
+    },
+    "literature_review": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement/workspace/evoscientist_2026-09-13_08-25-19",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement",
+      "status": "not_applicable",
+      "as_of_year": 2026,
+      "agent_ref_count": 0,
+      "sources": [],
+      "collection_audit": {
+        "cited_keys_count": 0,
+        "filter_mode": "none",
+        "bib_total_before_filter": 0,
+        "bib_after_filter": 0,
+        "uncited_bib_skipped": 0
+      },
+      "fabrication": null,
+      "coverage": null,
+      "recency": null,
+      "reason": "no_reference_artifacts",
+      "hint": "No literature artifacts found (bib / thebibliography / shortlist / related_work.txt / arxiv index). Marked not_applicable rather than failure — tool may not emit references in-run."
+    }
+  },
+  "scores": {
+    "completeness": {
+      "complete": true,
+      "overall_score": 0.8521,
+      "required_score": 1.0,
+      "bonus_score": 0.13
+    },
+    "peer_review": {
+      "status": "ok",
+      "optional": false,
+      "overall_score": 5.2,
+      "score_scale": "1-10",
+      "scoring_method": "paperreview_apr"
+    },
+    "idea_generation": {
+      "status": "ok",
+      "overall_score": 3.6666666666666665,
+      "dimensions": {
+        "novelty": 3.0,
+        "feasibility": 4.0,
+        "clarity": 4.0
+      },
+      "novelty_category": "Incremental",
+      "solution_space_status": "ok"
+    },
+    "alignment": {
+      "status": "ok",
+      "direction_consistency": "consistent",
+      "overall_alignment_score": 0.55
+    },
+    "literature_review": {
+      "fabrication_rate": null,
+      "coverage_recall": null,
+      "recency_ratio_3y": null,
+      "recency_ratio_5y": null
+    },
+    "experiment_analysis": {
+      "experiment_success": true,
+      "idea_code_score": 5.0,
+      "setup_coverage": 0.9583333333333334,
+      "ablation_coverage_score": null,
+      "overall_ablation_ok": null,
+      "overall_significance_ok": null,
+      "results_paper_score": null,
+      "hiding_unfavorable_suspected": false
+    }
+  },
+  "fair_scores": {
+    "applicable_axes": [
+      "completeness",
+      "idea_generation",
+      "peer_review",
+      "alignment",
+      "experiment_analysis"
+    ],
+    "skipped_axes": [
+      {
+        "axis": "literature_review",
+        "reason": "not_applicable"
+      }
+    ],
+    "fair_mean_0_1": 0.7579,
+    "note": "fair_mean_0_1 averages only applicable axes; optional peer review and framework-inapplicable literature are excluded from the denominator."
+  },
+  "evals_root": "~/ai_scientist_evals",
+  "claims_cache": "~/ai_scientist_evals/ICSE-2025-019_automated_test_oracles_for_reinforcement/original_claims.json",
+  "solution_space_cache": "~/ai_scientist_evals/ICSE-2025-019_automated_test_oracles_for_reinforcement/solution_space.json"
+}

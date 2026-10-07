@@ -1,0 +1,160 @@
+{
+  "id": "ICSE-2025-009",
+  "paper_id": "a0ae5c05d0417d4e0fac8373787bb41b9e27d7d0",
+  "title": "Towards Neural Synthesis for SMT-assisted Proof-Oriented Programming",
+  "abstract": "Proof-oriented programs mix computational content with proofs of program correctness. However, the human effort involved in programming and proving is still substantial, despite the use of Satisfiability Modulo Theories (SMT) solvers to automate proofs in languages such as F*. Seeking to spur research on using AI to automate the construction of proof-oriented programs, we curate a dataset of 600K lines of open-source F* programs and proofs, including software used in production systems ranging from Windows and Linux, to Python and Firefox. Our dataset includes around 32K top-level F* definitions, each representing a type-directed program and proof synthesis problem-producing a definition given a formal specification expressed as an F* type. We provide a program-fragment checker that queries F* to check the correctness of candidate solutions. We believe this is the largest corpus of SMT-assisted program proofs coupled with a reproducible program-fragment checker. Grounded in this dataset, we investigate the use of AI to synthesize programs and their proofs in F*, with promising results. Our main finding in that the performance of fine-tuned smaller language models (such as Phi-2 or StarCoder) compare favorably with large language models (such as GPT-4), at a much lower computational cost. We also identify various type-based retrieval augmentation techniques and find that they boost performance significantly. With detailed error analysis and case studies, we identify potential strengths and weaknesses of models and techniques and suggest directions for future improvements.",
+  "year": 2025,
+  "citation_count": 28,
+  "venue": "47th International Conference on Software Engineering (ICSE 2025)",
+  "venue_short": "ICSE 2025",
+  "authors": [
+    "Saikat Chakraborty",
+    "Gabriel Ebner",
+    "Siddharth Bhat",
+    "Sarah Fakhoury",
+    "Sakina Fatima",
+    "Shuvendu K. Lahiri"
+  ],
+  "pdf_url": "",
+  "paper_url": "https://www.semanticscholar.org/paper/a0ae5c05d0417d4e0fac8373787bb41b9e27d7d0",
+  "paper_type": "methodology",
+  "award": "ACM SIGSOFT Distinguished Paper Award",
+  "subfield_label": "Program Analysis & Verification",
+  "introduction": "The recent excitement around AI-assisted programming has been tempered by concerns around the trustworthiness of AIgenerated code [1]. Languages that offer static guarantees can help reduce some of these concerns, e.g., having AI generate safe Rust code rather than C eliminates the risk of AI-introduced memory safety issues. Taking this line of thinking to its limit, using AI to generate code in prooforiented languages which allow programs to be augmented with specification and proofs of correctness could eliminate trust in AI-generated code, so long as the specification can be audited to match a human's intent. Conversely, proof-oriented * Work done as interns at Microsoft Research languages often require a high-level of human expertise-AI assistance could help make them easier to use.\n\nRecognizing the potential dual benefit (i.e., trustworthy AI programming & easier program proof) many researchers have begun investigating using AI to synthesize proofs. However, most of the prior work has focused on using AI with tacticbased proof assistants, such as Coq, Lean, and Isabelle [2]- [5], including projects like CoqGym [6], which builds models based on hundreds of Coq projects containing more than 70,000 tactic scripts, and LeanDojo [7], which uses mathlib [8], a large corpus of formalized mathematics in Lean. AI automation for proof-oriented programming languages like F ⋆ [9], Dafny [10], Viper [11], Verus [12] and others has received comparatively less attention. The prior work [13]- [18] has been limited by the availability of data, focusing instead on small, hand-crafted problem sets numbering in the few hundreds. This is unfortunate, since proof-oriented languages may be close to the limit of symbolic automation provided by SMT solvers and AI automation could open the door to further automation that has remained out of reach. Additionally, to achieve the promise of trustworthy AI programming, we believe it is essential to develop AI for program and proof synthesis rather that only on mostly mathematical tactic-based proofs.\n\nTowards this end, our paper makes the following three major contributions:\n\n1. A new dataset of programs and proofs: Aiming to spur research in AI-assisted proof-oriented programming, our first main contribution is FSTARDATASET, a dataset of F ⋆ programs and proofs extracted from 2060 source files, representing about 600K lines of source code, drawn from 8 open source projects. The dataset provides around 32K top-level F ⋆ definitions, coupled with tooling that allows each definition to be checked in isolation. We believe this is the largest dataset of SMT-assisted proof-oriented programs and we envision for it to be a live, evolving data set, with new projects added to it over time. Indeed, currently FSTARDATASET has grown to include 4 additional projects reaching 940K lines of source code (see Appendix A, and B for details and initial results). Although we currently focus on F ⋆ , we hope for the dataset to also grow to include data from other proof-oriented languages.",
+  "experiment": "Phi2 full model performance is as in Table II. When we remove the related examples from the prompt (Phi2 -re ) and finetune a model, for intra-project, the performance drops by ∼5 percentage points. Interestingly, without the related examples, the performance in cross-project examples increases slightly.\n\nSince we extract the related examples from other projects in the training set, and there is little to no helpful examples in the Phi2 full model for the cross-project examples. Thus we conjecture, the related examples from the same project helps the model most.\n\nOn the other hand, in Phi2 -ctx , we observe the performance dropping significantly from the Phi2 full model for both intraproject and cross-project examples. Such a drop is not surprising, since even for a human user, the file context has the most relevant information about the target definition, e.g., in the FStar.OrdSet.where example shown in §V-B, the local file context defines the type ordset a f as an ordered list, crucial information for synthesizing a solution.\n\nFinally, when we remove the selected premises (Phi2 -pre ), the performance remains very close to the Phi2 full model. This is surprising, since prior work [7] demonstrates that premise selection improves the performance of proof synthesis. To investigate further, we fine-tuned Phi2 ideal , where instead of using premise selection model, we use the ideal premises. The results reveal that, with ideal premises, the performance does improve significantly from Phi2 full model to 35.84% in intra-project and 23.74%in cross-project. Additionally, the number of \"Identifier not found\" errors with Phi2 ideal reduces significantly to 22149 from 30108 such errors in Phi2 full . As such, Phi2 ideal suggests that a premise selection model that better approximates the ideal premises can provide a significant improvement-see §VI for more discussion.\n\nResult 3: File context and related examples are very important sources of information for synthesizing definitions in F ⋆ . Without the context, the performance of a model drops down by up to 29.6% and up to 16.55% without the related examples. An ideal premise selection roof line suggests that it may also provide significant improvements, however our current premise selection model does not significantly impact performance.\n\nThis section takes a closer look at some of the results from §V. We report on additional experiments and explore potential for future improvements.\n\nIn addition to the semantic verify@k metric of the prior section, we also evaluate how close a model's generated solutions are to the ground truth solution (g). We calculate the normalized edit (Levenshtein) distance between tokenized g and solution v. For every problem which has a nonempty set of verified candidate solution (V S), we define the distance as min v∈V S lev dist(g, v). The lev dist calculates the edit distance between g and v and normalized it w.r.t. the number of tokens in g. Figure 5 shows the distribution of distances. Prompted LLMs such as GPT-3.5 and GPT-4 generate solutions that are further away from the ground truth compared to fine-tuned models.\n\nThroughout the paper, for a fair comparison, we restrict the maximum number of tokens for different models to 2048 tokens. However, some LLMs accommodate much larger prompts, e.g., gpt-3.5-turbo-16K with 16K. While experimenting on these larger context models are expensive, we evaluate GPT-3.5 and GPT-4 models allowing maximum 10K tokens for context, 3K for related examples, and 2K for selected premises, and 1K maximum generation length. To keep the cost of experiment tractable, we randomly sample 100 problems for evaluation. As Table IV shows, we observe that, with increased capacity, both GPT-3.5 and GPT-4 improves by a large margin compared smaller capacities. While GPT-4 with 16K token capacity achieves 50% verify@10, finetuned StarCoder achieves 45% with only 2K tokens. Further experiments with GPT-4 on the entire data set would be more definitive, though the cost is prohibitive.\n\nFollowing our observation that that majority of the errors are due to hallucinated identifiers, we investigated how much each of the prompt components help the model generate correct identifiers. We calculated the percentage of overlap between the identifiers used in the ground truth and different prompt components and investigate whether this correlates with model performance. Figure 6 shows that when there is a higher overlap between an information modality and the ground truth identifiers, the models are more likely to generate verified definitions (with statistical significance). While in theory, it is impossible to know the name of the identifiers that will be used in a definition a priori, the analysis suggests that better retrieval augmentation could boost performance. We compared four embedding models for premise selection, before and after fine-tuning: the small 22M parameter model all-MiniLM-L6-v2 from sentence transformers [40], the text-embedding-ada-002 model [39] from OpenAI, as well as two generic transformer models from the Pythia [47] family with 70M and 160M parameters. Comparing the Mean Average Precision (MAP) and Normalized Cumulative Discounted Gain (NDCG) (Table V), without fine-tuning the Ada model achieves roughly 25% higher performance. Surprisingly, the off-the-shelf Pythia models are competitive with all-MiniLM-L6-v2 even though they are not trained on any contrastive objective. After fine-tuning, all of the models have comparable performance irrespective of model size. However, the training does not generalize well and fine-tuning only barely improves performance on the cross-project set. In addition to presenting a natural language prompt (NL prompt) (see §IV for details), we investigated alternative prompting strategies. In particular, we created a structured format format similar to the format proposed by Gupta et al. [48].\n\nIn this version, every input modalities are surrounded by tags such as <context> and </context>, surrounding the file context <related> and </related> around the related examples. In another version, we create a completion style where all the prompt components are concatenated with a separator token <|end_of_text|>, the default padding token of Phi-2, without any description of each of the components. Natural language prompts are slightly better that structured prompts, while the completion-style prompt performs substantially worse. We conjecture that since the Phi-2 model is pre-trained mostly on natural language, wrapping the prompt components with natural language help during fine-tuning; the structured tag formats also help the model distinguish the components. Such a distinction is lost in the completion style prompt.\n\nData contamination. The training data for GPT-3.5 and GPT-4 is not publicly known, but it is very likely that it intersects the intra-project and cross-project test sets because those are taken from repositories publicly hosted on GitHub. On the other hand, despite maintaining file level separation between train and test sets, we observe that there are a small number of clones (i.e., examples with different names, yet same definitions) between train and test set. In particular, we identified 343 such clones in intra-project test set and 7 in the cross-project test set. While these solutions are clones, the context they are in are different. Hence, the prompt to the language model (see Section IV for prompt preparation) are different for these. While the related examples retrieval method are in general capable of finding these clones, we argue that such a setup is not unrealistic for real development, where developer often reuse code written elsewhere.\n\nHints about the definition problem statement. The synthesis problem in this paper requires the model to synthesize a definition for a given type. However, there are some implicit hints about the definition that are present in the types, and context. For instance, consider the example sort in §II, the type contains an effect decreases (length l), which implicitly tells the model that there will be an induction on the length of thel. While these are hints potentially helping the model, we argue that these are the hints that a developer writing F ⋆ code may already know.\n\nPreciseness of specifications. We consider a problem to be solved if the solution type-checks. For problems in the proof class, all solutions are equivalent, so no further inspection is necessary for a successful proof. However, in other cases, specifications may only be partial and, although type-correct, a solution may still be subject to inspection to confirm if it matches a user's under-specified intent.\n\nNon-deterministic nature of LLMs. Large Language Models, especially those for which we do not have access to the model weights (e.g., GPT-3.5/GPT-4) often go through regular updates. Hence, it it very difficult, if not impossible, to reproduce some of the results from those LLMs. In contrast, the fine-tuned model, being smaller in size, will be accessible to those seeking to reproduce our results.\n\nIn the past 15 years, an increasing number of software systems have been proven correct, both using interactive theorem provers like Coq and Isabelle/HOL, as well using SMTassisted proof-oriented languages like F ⋆ and Dafny. Software proofs require expertise and can be quite verbose. A common metric used to evaluate proof effort is a proof:code ratio, i.e., the number of lines of proof for each line of executable code. This ratio is typically higher in interactive proof assistants than in SMT-assisted proof-oriented languages. For example, sel4 in Isabelle/HOL [49] incurs a proof:code ratio of 20:1 despite the use of automated theorem provers integrated with Isabelle/HOL, e.g., Sledgehammer [50]. Meanwhile, Ironclad in Dafny [24] reports a ratio of 5:1, and EverCrypt in F ⋆ [31] reports a ratio of 3:1, through the use of SMT-solvers and programs that mix computational content and proofs. Improved automation through the use of AI in both settings could help lower these overheads.\n\nIn the context of interactive theorem provers, machinelearning has been used to improve premise selection in theorem provers [51], [52]. Predictive models based on existing proofs to guide proof search have been used in TacticToe [53], TacTok [54]. GPT-f [55] uses expert iteration and HTPS [3] online reinforcement learning to improve the model by selflearning based on previous proof attempts. Baldur [2] uses an LLM-based synthesis and fine-tuned repair model to complete full proofs for Isabelle/HOL theorems. LeanDojo [7] and LEGO-Prover [56] integrate retrieval augmentation to find relevant existing theorems and proofs from the library. Draftsketch-proof [57] introduced the use of informal sketches as an intermediate step, which has also been used in [58], [59].\n\nIn the context of SMT-assisted program verifiers, recent approaches leverage LLMs for synthesizing loop invariants [13]- [16]. Closest to our work, Rakib et al. [18] leverage LLMs along with retrieval augmentation to generate both functional specification and code with proofs from natural language in Dafny. However, the specifications generated may be too weak or incorrect and requires a human to audit them; this makes it subjective and difficult to treat as a benchmark problem set unlike FSTARDATASET where specifications are drawn from ground truth. In addition, prior works on automating proof-oriented programming [18], [60] are evaluated on much smaller benchmarks with less than 200 mostly introductory algorithmic tasks. In contrast with FSTARDATASET we provide a benchmark with more than 32K reproducible F ⋆ programs and proofs that form part of production software deployed in real-world.\n\nAdditionally, many works use LLMs for general-purpose programming tasks [61]- [64]. Recent approaches [65], [66] even attempt at formalizing functional specifications for languages such as python-without access to static verifiers, these functional specifications often are used as runtime assertions.\n\nAiming to enhance both the trustworthiness of AI-generated code and to ease program proof, we investigate AI-based program and proof synthesis backed by a program verifier. While prior work has predominantly focused on tactic-based proof, we investigate AI automation for F ⋆ , a proof-oriented language with SMT-based automation. To fuel future research in this direction, we introduce the FSTARDATASET, a public benchmark dataset of F ⋆ programs and proofs. We expect FSTARDATASET to evolve and grow: indeed in recent weeks, after our experiments, it has grown to include four more projects, reaching 940K lines of F ⋆ code and proofs.\n\nOn a type-based program and proof synthesis task, we evaluate several state-of-the-art LLMs such as GPT-3.5 and GPT-4, fine-tune smaller language models such as StarCoder. Our findings suggest that LLMs, when trained on appropriate datasets and prompted effectively with necessary information through retrieval, can automate a significant portion programs and proof. However, beyond boosting synthesis performance, many interesting problems remain, notably around specification formulation and modular decomposition of proofs, exciting areas for further exploration.\n\nOverall, with this paper, we contribute to the ongoing discourse on trustworthy AI programming and lay a foundation for advancements in AI-assisted proof-oriented programming.\n\nSince the initial version of this paper, we have extended our dataset to a larger FSTARDATASET version 2. As mentioned previously, we envision FSTARDATASET to be a live, evolving dataset drawn from active F ⋆ projects. As such, while version 2 primarily includes data from four additional F ⋆ projects not included in the original version, it also contains data from the original 8 projects, both in the form of new definitions that were previously not present, as well as changes to some of the original definitions. The four new projects are as follows:\n\n• Starmada: a framework for doing proofs by stepwise refinement for concurrent programs in a weak memory model. Starmada is an experimental version of Armada [67] implemented in F ⋆ , relying on various advanced features of F ⋆ 's dependent type system for more generic and abstract proofs. • Zeta: a high performance, concurrent monitor for stateful services proven correct in F ⋆ and its Steel concurrent separation logic [68]. • Dice-star: a verified implementation of the DICE measured boot protocol for embedded devices [69]. • Noise-star: a verified compiler for implementations of Noise protocols, a family of key-exchange protocols [70].\n\nIn total, FSTARDATASET v2 contains 54,404 definitions from 12 projects, representing around 940,000 lines of F ⋆ code and proofs. To avoid cross-contamination, we made sure that the F* files that belonged to training dataset in V1 also remained in the training set on V2. The V2 dataset is available in https://huggingface.co/datasets/ microsoft/FStarDataSet-V2.\n\nImproving the RAG. In §V-A we reported that all models performed better on the intra-project examples as compared to the cross-project examples. We indicated that a cause of this might be the manner in which related examples are retrieved, quoting:\n\nBoth models also perform better on intra-project examples than on cross-project examples. When constructing prompts, we only retrieve related examples from the training data split, which specifically does not include any examples from the cross-project set-as such, the cross-project examples benefit less from retrieval augmentation. We have revised the manner in which related examples are retrieved. Rather than restricting related examples to only be fetched from the training data, for a given synthesis problem, we search for examples from all files that do not depend on the file of the current problem-this dependence information is available in metadata present in the dataset. We employ the same embedding-based retrieval augmentation technique described in §IV, ranking examples according to their similarity to the goal type and include as many related examples as can fit in the token window, in descending order of similarity score.\n\nResults on V2 with Improved RAG. Table VIII presents an overview of our results on the FSTARDATASET-V2 from the fine-tuned model trained on the V1 training set. In addition, Figure 7 shows performance of different models across different types of problems. We have yet to run all the configurations reported in Table II on the full v2 dataset. We do not report results of the non-fine-tuned versions of Phi-2, Orca-2, and StarCoder on v2, as the performance of these models without fine-tuning on the v1 dataset was not competitive. More notably, we have not yet completed a full run of GPT-4 on the v2 dataset, as a full run is very resource intensive. Our results make it clear that fine-tuned models are not overfitted to a particular version of the dataset. Our prior results extend well to the new dataset, and indeed with our new retrieval augmentation strategy, the difference in performance between the intra-project and cross-project classes is not significant. Perhaps surprisingly, the performance across the board on the cross-project class is better than in the intra-project class: this is explained by noting that the cross-project class contains a larger proportion of simply typed definitions (44.3%) that the intra-project class (33.5%). In addition, cross-project examples are shorter than that of Intra-Project examples.",
+  "section_quality": {
+    "has_abstract": true,
+    "has_introduction": true,
+    "has_experiment": true,
+    "intro_chars": 3047,
+    "experiment_chars": 17598
+  },
+  "introduction_source": "grobid_tei",
+  "experiment_source": "grobid_tei",
+  "background_source": "introduction",
+  "experiment_source_used": "experiment_section",
+  "task_title": "Evaluating Language Models for Type-Directed Synthesis of Verified Programs",
+  "background": "AI-assisted programming raises trustworthiness concerns, especially for critical software. Proof-oriented languages embed specifications and proofs, allowing fully verified implementations, but their use demands deep expertise and significant manual effort. While AI has been successfully applied to tactic-based proof assistants like Coq and Lean, automation for proof-oriented programming languages such as F* remains under-explored, largely due to a lack of large, curated datasets. A systematic, large-scale investigation is needed to understand the potential of language models to automate the construction of verified programs and proofs in these languages.",
+  "research_question": "To what extent can language models, both large prompted models and fine-tuned smaller models, automatically generate correct verified implementations and proofs in a proof-oriented language from formal type specifications?",
+  "experiment_setup": {
+    "datasets": [
+      {
+        "name": "A corpus of F* programs and proofs extracted from 2,060 source files (approximately 600K lines of code) across 8 open-source projects, comprising around 32K top-level definitions, each posing a type-directed synthesis problem.",
+        "source": "GitHub: [URL to be provided – the dataset is publicly released alongside the paper]",
+        "description": "Each example consists of an F* top-level definition's type signature along with its surrounding file context. The goal is to generate the full definition (implementation + proof) that passes the F* type-checker.",
+        "access": "open"
+      }
+    ],
+    "baselines": [
+      {
+        "name": "Phi-2 (2.7B parameters)",
+        "reference": "Microsoft, 2023 (arXiv:2309.05463)"
+      },
+      {
+        "name": "StarCoder (15.5B parameters)",
+        "reference": "BigCode, 2023 (arXiv:2305.06161)"
+      },
+      {
+        "name": "GPT-3.5 (turbo)",
+        "reference": "OpenAI, 2023"
+      },
+      {
+        "name": "GPT-4",
+        "reference": "OpenAI, 2023"
+      }
+    ],
+    "metrics": [
+      {
+        "name": "verify@k",
+        "definition": "The proportion of problems for which at least one of k generated candidate definitions passes the F* type-checker (i.e., is semantically verified)."
+      },
+      {
+        "name": "Normalized edit distance",
+        "definition": "The minimum token-level Levenshtein distance between a verified generated solution and the ground truth, normalized by the number of tokens in the ground truth."
+      }
+    ],
+    "rqs": [
+      "RQ1: How does the performance of fine-tuned small language models compare to large prompted language models on type-directed program and proof synthesis in F*?",
+      "RQ2: What is the individual contribution of file context, related examples, and premise selection to the success rate of definition synthesis?",
+      "RQ3: What are the most frequent failure modes of language models on this task, and how do they relate to identifier hallucination and dataset overlap?"
+    ],
+    "target_subject": "Open-source F* projects covering domains such as cryptography, systems programming, and web security. Example project areas include verified TLS implementations, low-level parsers, and secure communication libraries.",
+    "constraints": "Models are limited to generating a maximum of 2048 tokens per problem. Evaluation uses a strict train/test split at the file level to prevent information leakage. Solutions must be checked by the F* type-checker; only definitions passing the type-checker count as correct. No access to the ground-truth definition is allowed during generation."
+  },
+  "expected_artifacts": [
+    "idea",
+    "code",
+    "experiment_results",
+    "paper"
+  ],
+  "feasibility_notes": "The dataset and evaluation harness require a working F* toolchain, which is publicly available. Fine-tuning a 2.7B parameter model on the full dataset requires approx. 8-16 hours on a single A100 GPU. Evaluation involves repeated calls to the F* type-checker, making it CPU-intensive but parallelizable. While the main baselines are open-weight or accessible via API, reproducing the exact prompt preparations and retrieval augmentation details may require careful reimplementation based on paper descriptions.",
+  "difficulty": "medium",
+  "seed_papers": [
+    {
+      "title": "A robotic platform for the synthesis of colloidal nanocrystals",
+      "year": 2023,
+      "authors": [
+        "Haitao Zhao",
+        "Wei Chen",
+        "Hao Huang"
+      ],
+      "doi": "10.1038/s44160-023-00250-5",
+      "arxiv_id": null,
+      "pdf_url": "https://www.nature.com/articles/s44160-023-00250-5.pdf",
+      "citation_count": 133
+    },
+    {
+      "title": "Wafer-scale integration of two-dimensional perovskite oxides towards motion recognition",
+      "year": 2024,
+      "authors": [
+        "Ming Deng",
+        "Ziqing Li",
+        "Shiyuan Liu"
+      ],
+      "doi": "10.1038/s41467-024-52840-2",
+      "arxiv_id": null,
+      "pdf_url": "https://doi.org/10.1038/s41467-024-52840-2",
+      "citation_count": 72
+    },
+    {
+      "title": "Learning Probabilistic Termination Proofs",
+      "year": 2021,
+      "authors": [
+        "A. Abate",
+        "Mirco Giacobbe",
+        "Diptarko Roy"
+      ],
+      "doi": "10.1007/978-3-030-81688-9_1",
+      "arxiv_id": null,
+      "pdf_url": "https://link.springer.com/content/pdf/10.1007/978-3-030-81688-9_1.pdf",
+      "citation_count": 38
+    },
+    {
+      "title": "MBA-Blast: Unveiling and Simplifying Mixed Boolean-Arithmetic Obfuscation",
+      "year": 2021,
+      "authors": [
+        "Binbin Liu",
+        "Junfu Shen",
+        "Jiang Ming"
+      ],
+      "doi": null,
+      "arxiv_id": null,
+      "pdf_url": "",
+      "citation_count": 38
+    },
+    {
+      "title": "Magnetic manipulation of Fe3O4@BaTiO3 nanochains to regulate extracellular topographical and electrical cues.",
+      "year": 2023,
+      "authors": [
+        "Yusheng Zhang",
+        "Borui Su",
+        "Yuan Tian"
+      ],
+      "doi": "10.1016/j.actbio.2023.07.029",
+      "arxiv_id": null,
+      "pdf_url": "https://doi.org/10.1016/j.actbio.2023.07.029",
+      "citation_count": 27
+    }
+  ],
+  "paper_title": "Towards Neural Synthesis for SMT-assisted Proof-Oriented Programming"
+}

@@ -1,0 +1,36 @@
+{
+  "forbid_synthetic_pilot": true,
+  "agent_data_note": "Use mounted SV-COMP 2024 (+ optional 2023) under `dataset_candidate/hetrify-svcomp/`. Construct RISC-V assembly / missing-function / binary tasks as in Hetrify (ICSE 2025). Backend verifier is CBMC; compile with riscv64-unknown-elf-gcc. Prefer real SV-COMP tasks over invented C. Report reduced timeouts/unwind when sandbox RAM << 384GB.",
+  "required_metrics": [
+    "correctness_rate",
+    "error_rate"
+  ],
+  "benchmark_rules": [
+    "Read `dataset_candidate/dataset_paths.json` and env `HETRIFY_SVCOMP_HOME` / `SVCOMP24_HOME` / `SVCOMP23_HOME`.",
+    "Pool: SV-COMP C verification tasks; paper used 100 small (1–3 funcs) + 30 large (>5 funcs, >300 LOC) constructable subsets.",
+    "Compile unverifiable segments / programs with riscv64-unknown-elf-gcc to assembly, static libs, or binaries as needed.",
+    "Convert RISC-V assembly/binary (or missing closed-source segments) to verifiable C with semantic-equivalence guarantees (Hetrify-style), then verify with CBMC.",
+    "Baselines: direct CBMC on stubs for missing functions; Ghidra decompile→CBMC when available; IDA Pro is commercial and usually unavailable — document skip.",
+    "Primary metrics: Correctness Rate = Correct / Total; Error Rate = 1 - (Correct + Timeouts) / Total.",
+    "Paper protocol: timeout 3000s; correct programs unwind=20; incorrect: no fixed unwind. If resource-limited, use a disclosed reduced protocol on a smaller subset.",
+    "Shared mount is read-only. Copy selected tasks under `project/` before modification; write results under `project/` or `results/`."
+  ],
+  "non_goals": [
+    "Claiming full 384GB dual-EPYC reproduction without matching hardware",
+    "Using IDA Pro without a licensed install",
+    "Fabricating SV-COMP-like tasks unrelated to the mounted benchmarks",
+    "Skipping CBMC entirely in favor of informal testing only"
+  ],
+  "dataset_env": {
+    "HETRIFY_SVCOMP_HOME": "dataset_candidate/hetrify-svcomp",
+    "SVCOMP24_HOME": "dataset_candidate/hetrify-svcomp/svcomp24",
+    "SVCOMP23_HOME": "dataset_candidate/hetrify-svcomp/svcomp23",
+    "CBMC_DEB": "dataset_candidate/hetrify-svcomp/tools/cbmc.deb"
+  },
+  "exclude_from_agent": [
+    "container_setup.sh",
+    "README.md",
+    "benchmark_config.json",
+    "requirements.txt"
+  ]
+}

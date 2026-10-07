@@ -1,0 +1,33 @@
+{
+  "forbid_synthetic_pilot": true,
+  "agent_data_note": "Use purified PairSmell inputs via `dataset_candidate/pairsmell/` (~20 project directories; each has snapshot subdirs). Do **not** invent synthetic graphs or restore deleted `_Agreement/` labels (smell_4.csv / insep_smell_4.csv).",
+  "required_metrics": [
+    "percentage_of_affected_entities_pairs",
+    "smell_density",
+    "commit_overlap_rate_cor",
+    "code_change_overlap_cco",
+    "developer_overlap_rate_dor",
+    "relative_co_change_factor_k_cor_k_cco_k_dor"
+  ],
+  "benchmark_rules": [
+    "PairSmell data is available at `dataset_candidate/pairsmell/` (workspace symlink; use this path for ls/read_file and for $PAIRSMELL_HOME in scripts).",
+    "Detect InSep/InCol from modularization outputs (ACDC/FCA/WCA_LIMBO) vs folder modules yourself.",
+    "Forbidden: reading `_Agreement/`, `smell_4.csv`, `insep_smell_4.csv`, or fabricating commit/dependency data.",
+    "Computation should use standard Python tooling (pandas/numpy/networkx/pydriller as needed).",
+    "If the full 20-project package is incomplete, document the blocker and use an explicit subset with evidence.",
+    "Detection of InSep/InCol must remain automated and must not rely on developer annotations."
+  ],
+  "non_goals": [
+    "Using sample_*.csv or toy graphs as the main evaluation data",
+    "Reading / restoring author precomputed PairSmell CSVs under `_Agreement/`",
+    "Claiming full 20-project / 473-snapshot reproduction without the mounted package",
+    "Manual ground-truth modular structure labels for smell detection"
+  ],
+  "dataset_env": {
+    "PAIRSMELL_HOME": "dataset_candidate/pairsmell"
+  },
+  "exclude_from_agent": [
+    "sample_pairs.csv",
+    "sample_projects.csv"
+  ]
+}

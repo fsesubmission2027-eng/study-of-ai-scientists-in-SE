@@ -1,0 +1,1323 @@
+{
+  "run_dir": "~/ai_scientist_inputs/ICSE-2025-002_evaluating_assisting_exploration_strateg/workspace/airesearcher_2026-09-01_14-53-07",
+  "task_dir": "~/ai_scientist_inputs/ICSE-2025-002_evaluating_assisting_exploration_strateg",
+  "framework": "airesearcher",
+  "fairness_audit": [
+    {
+      "axis": "completeness",
+      "was_unfair": "Required both paper.tex AND paper.pdf; any tool missing one failed equally.",
+      "fix": "Paper gate: PDF=1.0; TeX-only=0.5; ``complete`` requires PDF."
+    },
+    {
+      "axis": "completeness",
+      "was_unfair": "``results`` counted stub/seed JSON (dataset_candidate/metrics.json).",
+      "fix": "``results`` requires substantive numeric results via results_normalize."
+    },
+    {
+      "axis": "experiment_success",
+      "was_unfair": "Only metrics.json; ignored results.json / experiment_results.txt.",
+      "fix": "Framework-ordered result candidates + normalized loaders."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Penalized tools with no bib; airesearcher has no workspace references.",
+      "fix": "literature_applicable=false → status not_applicable; excluded from fair aggregate."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "related_work.json subset as gold made recall hard to interpret.",
+      "fix": "Coverage gold is original paper REFERENCES from mineru; related_work only enriches metadata/fallback."
+    },
+    {
+      "axis": "peer_review",
+      "was_unfair": "Missing Stanford report looked like evaluation failure.",
+      "fix": "status not_provided; optional axis, never counts as tool failure."
+    },
+    {
+      "axis": "paths/find_results",
+      "was_unfair": "Picked downloads/** and sandbox noise (e.g. airesearcher LLVM tree).",
+      "fix": "Exclude downloads/, seeds/, dataset_candidate/, sandbox junk paths."
+    },
+    {
+      "axis": "paths/framework_noise",
+      "was_unfair": "DeepScientist .deepscientist_npm / runtime / skills templates counted as code/paper/results.",
+      "fix": "FRAMEWORK_NOISE_DIRS+markers; quest worktree + eval_output results; paper md drafts; reject template tex."
+    },
+    {
+      "axis": "paths/paper_tex",
+      "was_unfair": "tiny_scientist / ACL runs store paper under latex/*.tex; evaluator only looked at paper/main.tex.",
+      "fix": "latex/**/*.tex with substantive-body heuristic; find_paper_document uses same rules."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Entire custom.bib (300+ anthology entries) verified when paper had zero \\cite commands.",
+      "fix": "collect_agent_references filters bib to in-text cite keys; skips uncited bulk bib (>40 entries)."
+    },
+    {
+      "axis": "paths/ai_scientist_summaries",
+      "was_unfair": "AI Scientist can persist substantive results and paper-like drafts in *_summary.json logs rather than paper/main.tex or results/**/*.json.",
+      "fix": "Treat draft_summary/research_summary as weak paper documents and summary JSONs as result candidates."
+    },
+    {
+      "axis": "framework/ai_scientist_v2",
+      "was_unfair": "Manifest framework ``ai_scientist_v2`` fell through to profile ``unknown``, skipping AI-Scientist idea/result path priorities.",
+      "fix": "Normalize ``ai_scientist_v2`` (and common aliases) to profile key ``ai_scientist``."
+    },
+    {
+      "axis": "idea_generation",
+      "was_unfair": "plan.md/todos.md weak proxies scored same as structured idea.json.",
+      "fix": "Framework idea_priority tried first; missing idea → not_applicable where appropriate."
+    }
+  ],
+  "generated_at": "2026-10-01T10:52:22",
+  "axes": [
+    "alignment",
+    "completeness",
+    "experiment_analysis",
+    "idea_generation",
+    "literature_review",
+    "peer_review"
+  ],
+  "results": {
+    "completeness": {
+      "framework": "airesearcher",
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-002_evaluating_assisting_exploration_strateg/workspace/airesearcher_2026-09-01_14-53-07",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-002_evaluating_assisting_exploration_strateg",
+      "complete": false,
+      "required_score": 0.75,
+      "bonus_score": 0.09,
+      "overall_score": 0.6,
+      "missing": [
+        "idea"
+      ],
+      "required": {
+        "idea": null,
+        "code": {
+          "count": 30,
+          "files": [
+            {
+              "path": ".airesearcher-benchmark/metaprompt.py",
+              "bytes": 11682,
+              "via": "glob"
+            },
+            {
+              "path": "project/CDFuzz/.travis/check_fuzzer_stats.sh",
+              "bytes": 1628,
+              "via": "glob"
+            },
+            {
+              "path": "project/CDFuzz/experimental/asan_cgroups/limit_memory.sh",
+              "bytes": 4202,
+              "via": "glob"
+            },
+            {
+              "path": "project/CDFuzz/experimental/crash_triage/triage_crashes.sh",
+              "bytes": 2946,
+              "via": "glob"
+            },
+            {
+              "path": "project/CDFuzz/experimental/distributed_fuzzing/sync_script.sh",
+              "bytes": 2709,
+              "via": "glob"
+            },
+            {
+              "path": "project/CDFuzz/qemu_mode/build_qemu_support.sh",
+              "bytes": 5265,
+              "via": "glob"
+            },
+            {
+              "path": "project/ablation_study.py",
+              "bytes": 7418,
+              "via": "glob"
+            },
+            {
+              "path": "project/data_processing/__init__.py",
+              "bytes": 338,
+              "via": "glob"
+            },
+            {
+              "path": "project/data_processing/coverage.py",
+              "bytes": 1856,
+              "via": "glob"
+            },
+            {
+              "path": "project/data_processing/stats.py",
+              "bytes": 2631,
+              "via": "glob"
+            },
+            {
+              "path": "project/model/__init__.py",
+              "bytes": 1176,
+              "via": "glob"
+            },
+            {
+              "path": "project/model/concolic.py",
+              "bytes": 3897,
+              "via": "glob"
+            },
+            {
+              "path": "project/model/dictionary.py",
+              "bytes": 9309,
+              "via": "glob"
+            },
+            {
+              "path": "project/model/edge_coverage.py",
+              "bytes": 3441,
+              "via": "glob"
+            },
+            {
+              "path": "project/model/fairfuzz.py",
+              "bytes": 3046,
+              "via": "glob"
+            },
+            {
+              "path": "project/model/gradient.py",
+              "bytes": 5278,
+              "via": "glob"
+            },
+            {
+              "path": "project/model/input_to_state.py",
+              "bytes": 5582,
+              "via": "glob"
+            },
+            {
+              "path": "project/model/mopt.py",
+              "bytes": 4236,
+              "via": "glob"
+            },
+            {
+              "path": "project/run_training_testing.py",
+              "bytes": 8639,
+              "via": "glob"
+            },
+            {
+              "path": "project/scripts/00_setup_cdfuzz.sh",
+              "bytes": 1349,
+              "via": "glob"
+            },
+            {
+              "path": "project/scripts/01_setup_llvm_dev.sh",
+              "bytes": 2018,
+              "via": "glob"
+            },
+            {
+              "path": "project/scripts/02_build_targets.sh",
+              "bytes": 4486,
+              "via": "glob"
+            },
+            {
+              "path": "project/testing/enrich_metrics.py",
+              "bytes": 4182,
+              "via": "glob"
+            },
+            {
+              "path": "project/testing/metrics.py",
+              "bytes": 2579,
+              "via": "glob"
+            },
+            {
+              "path": "project/tests/test_model.py",
+              "bytes": 4546,
+              "via": "glob"
+            },
+            {
+              "path": "project/training/campaign.py",
+              "bytes": 6355,
+              "via": "glob"
+            },
+            {
+              "path": "project/visualize_results.py",
+              "bytes": 10512,
+              "via": "glob"
+            },
+            {
+              "path": "reference_repos/AFLplusplus/.custom-format.py",
+              "bytes": 6489,
+              "via": "glob"
+            },
+            {
+              "path": "reference_repos/AFLplusplus/afl-cmin.py",
+              "bytes": 33025,
+              "via": "glob"
+            },
+            {
+              "path": "reference_repos/qsym/setup.py",
+              "bytes": 2020,
+              "via": "glob"
+            }
+          ]
+        },
+        "results": {
+          "substantive": true,
+          "normalized_path": "results/metrics.json",
+          "numeric_leaf_count": 38,
+          "discovered_files": [
+            {
+              "path": "results/metrics.json",
+              "bytes": 1568,
+              "via": "candidate"
+            },
+            {
+              "path": "results/ablation.json",
+              "bytes": 1681,
+              "via": "glob"
+            },
+            {
+              "path": "results/config.json",
+              "bytes": 752,
+              "via": "glob"
+            },
+            {
+              "path": "results/state_analysis.json",
+              "bytes": 439,
+              "via": "glob"
+            }
+          ],
+          "metrics_keys_sample": [
+            "dictionary_token_taxonomy",
+            "edge_coverage",
+            "epoch_seconds",
+            "epochs",
+            "equality_constraints_explored",
+            "mann_whitney_u",
+            "programs",
+            "required_metrics"
+          ]
+        },
+        "paper": {
+          "tex": null,
+          "pdf": {
+            "path": "paper/main.pdf",
+            "bytes": 50665,
+            "via": "candidate"
+          },
+          "md": {
+            "path": "paper/paper.md",
+            "bytes": 11382,
+            "via": "candidate"
+          },
+          "json": null,
+          "status": "pdf",
+          "score": 1.0
+        }
+      },
+      "bonus": {
+        "experiment_plan": null,
+        "experiment_log": {
+          "path": "airesearcher_run.log",
+          "bytes": 2682666,
+          "via": "glob"
+        },
+        "review": {
+          "path": "artifacts/peer_review/paperreview.token.txt",
+          "bytes": 44,
+          "via": "glob"
+        },
+        "readme": {
+          "path": "README_BENCHMARK.md",
+          "bytes": 889,
+          "via": "candidate"
+        },
+        "narrative": null,
+        "bib": null
+      },
+      "manifest_status": {
+        "pipeline": false,
+        "research_brief": true,
+        "instance": true,
+        "source_papers": true,
+        "metrics": true,
+        "project": true,
+        "paper": true
+      },
+      "gate_scores": {
+        "idea": 0.0,
+        "code": 1.0,
+        "results": 1.0,
+        "paper": 1.0
+      },
+      "fairness": {
+        "gates": [
+          "idea",
+          "code",
+          "results",
+          "paper"
+        ],
+        "paper_gate_rule": "PDF=1.0; TeX-only/md_only/json_only=0.5; complete requires PDF",
+        "results_gate_rule": "substantive numeric results via framework-aware normalize_results",
+        "audit_ref": "framework_profile.FAIRNESS_AUDIT"
+      },
+      "notes": [
+        "Required: idea, code, substantive results, paper (PDF full; TeX/markdown/JSON draft half).",
+        "Stub/seed metrics (e.g. dataset_candidate/metrics.json) do not satisfy results.",
+        "Framework noise (.deepscientist_npm, skills/templates, runtime) is excluded from code/results/paper.",
+        "Manifest status is informational; disk presence is authoritative."
+      ]
+    },
+    "idea_generation": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-002_evaluating_assisting_exploration_strateg/workspace/airesearcher_2026-09-01_14-53-07",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-002_evaluating_assisting_exploration_strateg",
+      "idea_path": null,
+      "status": "missing_idea",
+      "dimensions": {},
+      "overall_score": null,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "novelty",
+        "feasibility",
+        "clarity"
+      ],
+      "solution_space": null,
+      "notes": [
+        "Scores the intermediate idea artifact (not the final paper).",
+        "Dimensions: novelty, feasibility, clarity (each 1-5). Excitement removed.",
+        "Novelty is scored against a Solution Space built from mineru REFERENCES titles (+ related_work.json abstracts when matched)."
+      ],
+      "hint": "No idea artifact found under candidates like artifacts/idea.json, idea-stage/IDEA_REPORT.md, session/idea.json, tiny_idea.json, selected_idea.md."
+    },
+    "peer_review": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-002_evaluating_assisting_exploration_strateg/workspace/airesearcher_2026-09-01_14-53-07",
+      "review_report": "~/ai_scientist_inputs/ICSE-2025-002_evaluating_assisting_exploration_strateg/workspace/airesearcher_2026-09-01_14-53-07/artifacts/peer_review/stanford_apr.md",
+      "paper_pdf": "~/ai_scientist_inputs/ICSE-2025-002_evaluating_assisting_exploration_strateg/workspace/airesearcher_2026-09-01_14-53-07/paper/main.pdf",
+      "paper_tex": null,
+      "status": "ok",
+      "dimensions": {},
+      "overall_score": 4.3,
+      "score_scale": "1-10",
+      "dimension_order": [],
+      "notes": [
+        "Scored from paperreview.ai (Stanford APR) native ratings; benchmark 5-dimension LLM rubric skipped.",
+        "Overall scale: 1-10."
+      ],
+      "paperreview": {
+        "status": "fetched",
+        "token_file": "~/ai_scientist_inputs/ICSE-2025-002_evaluating_assisting_exploration_strateg/workspace/airesearcher_2026-09-01_14-53-07/artifacts/peer_review/paperreview.token.txt",
+        "json": "~/ai_scientist_inputs/ICSE-2025-002_evaluating_assisting_exploration_strateg/workspace/airesearcher_2026-09-01_14-53-07/artifacts/peer_review/stanford_apr.json",
+        "markdown": "~/ai_scientist_inputs/ICSE-2025-002_evaluating_assisting_exploration_strateg/workspace/airesearcher_2026-09-01_14-53-07/artifacts/peer_review/stanford_apr.md",
+        "apr_scores": {
+          "scale": "1-10",
+          "overall": 4.3,
+          "dimensions": {}
+        },
+        "pdf_rebuild": null
+      },
+      "scoring_method": "paperreview_apr",
+      "scoring_source": "paperreview_json",
+      "apr_dimensions": {},
+      "summary": "",
+      "red_flags": []
+    },
+    "alignment": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-002_evaluating_assisting_exploration_strateg/workspace/airesearcher_2026-09-01_14-53-07",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-002_evaluating_assisting_exploration_strateg",
+      "status": "ok",
+      "original": {
+        "paper_title": "Tumbling Down the Rabbit Hole: How do Assisting Exploration Strategies Facilitate Grey-box Fuzzing?",
+        "selection": {
+          "num_blocks": 7,
+          "total_chars": 31998,
+          "inferred_roles": {
+            "abstract": 1,
+            "introduction": 1,
+            "experiment": 3,
+            "discussion": 1,
+            "conclusion": 1
+          },
+          "mineru_raw_keys": {
+            "field:abstract": 1,
+            "field:introduction": 1,
+            "field:experiment": 1,
+            "other": 3,
+            "conclusion": 1
+          },
+          "infer_reasons": {
+            "top_level_field": 3,
+            "body_override": 2,
+            "title": 2
+          },
+          "rescued_from_other": 3,
+          "note": "mineru key is unreliable; blocks are selected by title/body/inheritance. rescued_from_other counts sections labeled other but treated as typed roles."
+        },
+        "claims": [
+          {
+            "id": "C1",
+            "statement": "The dictionary strategy achieves similar or even slightly better average edge coverage than other studied assisting exploration strategies.",
+            "direction": "improves",
+            "metric_names": [
+              "average_edge_coverage"
+            ],
+            "evidence_quote": "AFL activating the dictionary strategy slightly outperforms the best-performing SMT-solver-based fuzzer QSYM in terms of the average edge coverage (5,094 vs. 5,067 explored edges).",
+            "confidence": 0.95
+          },
+          {
+            "id": "C2",
+            "statement": "Activating dictionary strategies improves average edge coverage over original grey-box fuzzers by 7.9% to 10.9%.",
+            "direction": "improves",
+            "metric_names": [
+              "average_edge_coverage",
+              "relative_edge_coverage_improvement"
+            ],
+            "evidence_quote": "all Fuzzer_Dicts outperform all original grey-box fuzzers in terms of the average edge coverage by 7.9% to 10.9%",
+            "confidence": 0.95
+          },
+          {
+            "id": "C3",
+            "statement": "Constraint-solver-based and input-to-state-correspondence fuzzers outperform the best grey-box fuzzer AFL++ by 4.7% in average edge coverage, but the advantage is limited and may not generalize across benchmarks.",
+            "direction": "mixed",
+            "metric_names": [
+              "average_edge_coverage",
+              "relative_edge_coverage_improvement"
+            ],
+            "evidence_quote": "QSYM, MEUZZ, PANGOLIN, Angora and REDQUEEN outperform the best-performing greybox fuzzer, i.e., AFL++, by 4.7% in terms of the average edge coverage.",
+            "confidence": 0.8
+          },
+          {
+            "id": "C4",
+            "statement": "The performance advantage of the best constraint-solving fuzzer QSYM over AFL++ is benchmark-dependent, with QSYM winning on 11 projects and AFL++ winning on the remaining 10 projects.",
+            "direction": "mixed",
+            "metric_names": [
+              "average_edge_coverage"
+            ],
+            "evidence_quote": "QSYM outperforms AFL++ in 11 projects ... while AFL++ outperforms QSYM in the remaining ten projects",
+            "confidence": 0.9
+          },
+          {
+            "id": "C5",
+            "statement": "Assisting exploration strategies improve over grey-box fuzzers mainly by exploring program states guarded by equality constraints.",
+            "direction": "improves",
+            "metric_names": [
+              "equality_constraint_ratio"
+            ],
+            "evidence_quote": "the majority of the constraints which can be explored by the fuzzers integrating assisting exploration strategies but cannot be explored by their corresponding grey-box fuzzers are equality constraints.",
+            "confidence": 0.9
+          },
+          {
+            "id": "C6",
+            "statement": "Most equality constraints unexplored by original fuzzers are constant-evaluating equality constraints of the form input [==|!=] CONSTANT.",
+            "direction": "neutral",
+            "metric_names": [
+              "constant_evaluating_equality_constraint_ratio"
+            ],
+            "evidence_quote": "92.3% of these unexplored equality constraints share the same form as input [==|!=] CONSTANT",
+            "confidence": 0.9
+          },
+          {
+            "id": "C7",
+            "statement": "REDQUEEN's input-to-state correspondence strategy can incur large execution-time costs without consistently improving edge exploration.",
+            "direction": "mixed",
+            "metric_names": [
+              "execution_time_ratio",
+              "edge_exploration_ratio"
+            ],
+            "evidence_quote": "executing 21 hours but only exploring 21.5% edges in readelf",
+            "confidence": 0.85
+          },
+          {
+            "id": "C8",
+            "statement": "CDFUZZ increases average edge coverage by 16.1% over the best performer in the study, AFL++ with the dictionary strategy.",
+            "direction": "improves",
+            "metric_names": [
+              "edge_coverage_improvement"
+            ],
+            "evidence_quote": "CDFUZZ increases the edge coverage by 16.1% on average for all benchmark projects over the best performer in our study (i.e., AFL++ with the dictionary strategy).",
+            "confidence": 0.98
+          },
+          {
+            "id": "C9",
+            "statement": "CDFUZZ exposes 37 previously unknown bugs, of which 30 are exposed only by CDFUZZ, 9 are confirmed, and 7 are fixed.",
+            "direction": "improves",
+            "metric_names": [
+              "previously_unknown_bugs",
+              "confirmed_bugs",
+              "fixed_bugs"
+            ],
+            "evidence_quote": "CDFUZZ also exposed 37 previously unknown bugs where 30 of them can only be exposed by CDFUZZ ... nine of them have been confirmed and seven have been fixed.",
+            "confidence": 0.95
+          }
+        ],
+        "metrics": [
+          {
+            "name": "average_edge_coverage",
+            "value": 5094.0,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "AFL_Dict across 21 projects, 24-hour budget, average of 5 runs",
+            "is_sota_or_best": false,
+            "baseline_name": "AFL",
+            "baseline_value": 4626.0,
+            "evidence_quote": "AFL_Dict explores 10.1% more edges than AFL (5,094 vs. 4,626 explored edges)",
+            "confidence": 0.98
+          },
+          {
+            "name": "relative_edge_coverage_improvement",
+            "value": 10.1,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "AFL_Dict vs AFL on 21 projects",
+            "is_sota_or_best": false,
+            "baseline_name": "AFL",
+            "baseline_value": 4626.0,
+            "evidence_quote": "AFL_Dict explores 10.1% more edges than AFL (5,094 vs. 4,626 explored edges)",
+            "confidence": 0.98
+          },
+          {
+            "name": "average_edge_coverage",
+            "value": 5067.0,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "QSYM across 21 projects, 24-hour budget, average of 5 runs",
+            "is_sota_or_best": false,
+            "baseline_name": "AFL_Dict",
+            "baseline_value": 5094.0,
+            "evidence_quote": "AFL activating the dictionary strategy slightly outperforms the best-performing SMT-solver-based fuzzer QSYM in terms of the average edge coverage (5,094 vs. 5,067 explored edges)",
+            "confidence": 0.95
+          },
+          {
+            "name": "relative_edge_coverage_improvement",
+            "value": 4.7,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "QSYM, MEUZZ, PANGOLIN, Angora, REDQUEEN vs AFL++ average edge coverage",
+            "is_sota_or_best": false,
+            "baseline_name": "AFL++",
+            "baseline_value": null,
+            "evidence_quote": "QSYM, MEUZZ, PANGOLIN, Angora and REDQUEEN outperform the best-performing greybox fuzzer, i.e., AFL++, by 4.7% in terms of the average edge coverage.",
+            "confidence": 0.7
+          },
+          {
+            "name": "equality_constraint_ratio",
+            "value": 98.1,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "Critical constraints explored by AFL_Dict but not by AFL",
+            "is_sota_or_best": false,
+            "baseline_name": "AFL",
+            "baseline_value": null,
+            "evidence_quote": "98.1% of the critical constraints explored by AFL_Dict ... but not by their corresponding grey-box fuzzers, are equality constraints.",
+            "confidence": 0.95
+          },
+          {
+            "name": "constant_evaluating_equality_constraint_ratio",
+            "value": 92.3,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "Equality constraints unexplored by original fuzzers across studied subjects",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "92.3% of these unexplored equality constraints share the same form as input [==|!=] CONSTANT",
+            "confidence": 0.9
+          },
+          {
+            "name": "edge_coverage_improvement",
+            "value": 16.1,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "CDFUZZ vs AFL++_Dict on 21 projects, 24-hour budget",
+            "is_sota_or_best": true,
+            "baseline_name": "AFL++_Dict",
+            "baseline_value": null,
+            "evidence_quote": "CDFUZZ increases the edge coverage by 16.1% on average for all benchmark projects over the best performer in our study (i.e., AFL++ with the dictionary strategy).",
+            "confidence": 0.98
+          },
+          {
+            "name": "previously_unknown_bugs",
+            "value": 37.0,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "CDFUZZ evaluation on 21 projects",
+            "is_sota_or_best": true,
+            "baseline_name": "other evaluated fuzzers",
+            "baseline_value": 7.0,
+            "evidence_quote": "CDFUZZ also exposed 37 previously unknown bugs where 30 of them can only be exposed by CDFUZZ ... other evaluated fuzzers can only expose 7 of them within the given time limit",
+            "confidence": 0.95
+          },
+          {
+            "name": "confirmed_bugs",
+            "value": 9.0,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "Previously unknown bugs exposed by CDFUZZ",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "nine of them have been confirmed and seven have been fixed",
+            "confidence": 0.95
+          },
+          {
+            "name": "fixed_bugs",
+            "value": 7.0,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "Previously unknown bugs exposed by CDFUZZ",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "nine of them have been confirmed and seven have been fixed",
+            "confidence": 0.95
+          }
+        ],
+        "overall_conclusion": "The study finds that the lightweight dictionary strategy is the most promising assisting exploration strategy, achieving similar or slightly better edge coverage than SMT-solver-based and other strategies while being more practical to enhance. Based on this, CDFUZZ customizes per-seed dictionaries and improves average edge coverage by 16.1% over the best studied baseline, exposing 37 previously unknown bugs.",
+        "comparable_notes": "Fair comparisons should use equivalent protocols: 21 real-world benchmark projects, 24-hour execution budget, five repeated runs averaged, edge coverage measured via AFL afl-showmap unique edges, AFL llvm-mode with LLVM-13 instrumentation, and dictionaries generated automatically via FuzzingDriver to reduce token-selection bias.",
+        "cache_hit": true
+      },
+      "agent": {
+        "status": "ok",
+        "run_dir": "~/ai_scientist_inputs/ICSE-2025-002_evaluating_assisting_exploration_strateg/workspace/airesearcher_2026-09-01_14-53-07",
+        "claims": [
+          {
+            "id": "C1",
+            "statement": "Compile-time dictionary extraction yields the largest coverage gains across the two real-world programs.",
+            "direction": "improves",
+            "metric_names": [
+              "edge_coverage"
+            ],
+            "evidence_quote": "confirm that compile-time dictionary extraction yields the largest coverage gains, and reveal *which* strategy family helps *which* class of program state.",
+            "confidence": 0.9
+          },
+          {
+            "id": "C2",
+            "statement": "CDFuzz enhanced (edge-keyed dictionary) achieved the highest edge coverage on jhead.",
+            "direction": "improves",
+            "metric_names": [
+              "edge_coverage"
+            ],
+            "evidence_quote": "\"jhead\": {\"aflpp\": 221.0, \"aflpp_dict\": 232.0, \"aflpp_redqueen\": 269.0, \"cdfuzz\": 439.0, \"cdfuzz_enhanced\": 472.0}",
+            "confidence": 0.95
+          },
+          {
+            "id": "C3",
+            "statement": "CDFuzz (dictionary) achieved the highest edge coverage on xmlwf.",
+            "direction": "improves",
+            "metric_names": [
+              "edge_coverage"
+            ],
+            "evidence_quote": "\"xmlwf\": {\"aflpp\": 1367.0, \"aflpp_dict\": 1389.0, \"aflpp_redqueen\": 1404.0, \"cdfuzz\": 1766.0, \"cdfuzz_enhanced\": 1749.0}",
+            "confidence": 0.95
+          },
+          {
+            "id": "C4",
+            "statement": "On jhead, AFL++ REDQUEEN/CmpLog, CDFuzz, and CDFuzz enhanced all significantly outperformed AFL++ dictionary in edge coverage.",
+            "direction": "improves",
+            "metric_names": [
+              "edge_coverage"
+            ],
+            "evidence_quote": "\"jhead\": {\"aflpp_redqueen_vs_aflpp_dict\": {\"U\": 0.0, \"p\": 0.00902343881808032}, \"cdfuzz_enhanced_vs_aflpp_dict\": {\"U\": 0.0, \"p\": 0.00902343881808032}, \"cdfuzz_vs_aflpp_dict\": {\"U\": 0.0, \"p\": 0.00902343881808032}}",
+            "confidence": 0.9
+          },
+          {
+            "id": "C5",
+            "statement": "On xmlwf, AFL++ REDQUEEN/CmpLog did not significantly differ from AFL++ dictionary in edge coverage.",
+            "direction": "no_difference",
+            "metric_names": [
+              "edge_coverage"
+            ],
+            "evidence_quote": "\"xmlwf\": {\"aflpp_redqueen_vs_aflpp_dict\": {\"U\": 11.0, \"p\": 0.7540225300620749}}",
+            "confidence": 0.9
+          },
+          {
+            "id": "C6",
+            "statement": "jhead's constraint profile is dominated by strcmp command-line flag parsing, while xmlwf is dominated by a switch-driven UTF-8/token state machine.",
+            "direction": "neutral",
+            "metric_names": [
+              "dictionary_token_taxonomy"
+            ],
+            "evidence_quote": "This difference — jhead is dominated by `strcmp` command-line flag parsing, xmlwf by a large `switch`-driven UTF-8/token state machine — is the key to RQ2 (Section 5.2).",
+            "confidence": 0.9
+          }
+        ],
+        "metrics": [
+          {
+            "name": "edge_coverage",
+            "value": 221.0,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "jhead / aflpp",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "\"jhead\": {\"aflpp\": 221.0}",
+            "confidence": 0.95
+          },
+          {
+            "name": "edge_coverage",
+            "value": 232.0,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "jhead / aflpp_dict",
+            "is_sota_or_best": false,
+            "baseline_name": "aflpp",
+            "baseline_value": 221.0,
+            "evidence_quote": "\"jhead\": {\"aflpp_dict\": 232.0}",
+            "confidence": 0.95
+          },
+          {
+            "name": "edge_coverage",
+            "value": 269.0,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "jhead / aflpp_redqueen",
+            "is_sota_or_best": false,
+            "baseline_name": "aflpp",
+            "baseline_value": 221.0,
+            "evidence_quote": "\"jhead\": {\"aflpp_redqueen\": 269.0}",
+            "confidence": 0.95
+          },
+          {
+            "name": "edge_coverage",
+            "value": 439.0,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "jhead / cdfuzz",
+            "is_sota_or_best": false,
+            "baseline_name": "aflpp",
+            "baseline_value": 221.0,
+            "evidence_quote": "\"jhead\": {\"cdfuzz\": 439.0}",
+            "confidence": 0.95
+          },
+          {
+            "name": "edge_coverage",
+            "value": 472.0,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "jhead / cdfuzz_enhanced",
+            "is_sota_or_best": true,
+            "baseline_name": "aflpp",
+            "baseline_value": 221.0,
+            "evidence_quote": "\"jhead\": {\"cdfuzz_enhanced\": 472.0}",
+            "confidence": 0.95
+          },
+          {
+            "name": "edge_coverage",
+            "value": 1367.0,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "xmlwf / aflpp",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "\"xmlwf\": {\"aflpp\": 1367.0}",
+            "confidence": 0.95
+          },
+          {
+            "name": "edge_coverage",
+            "value": 1389.0,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "xmlwf / aflpp_dict",
+            "is_sota_or_best": false,
+            "baseline_name": "aflpp",
+            "baseline_value": 1367.0,
+            "evidence_quote": "\"xmlwf\": {\"aflpp_dict\": 1389.0}",
+            "confidence": 0.95
+          },
+          {
+            "name": "edge_coverage",
+            "value": 1404.0,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "xmlwf / aflpp_redqueen",
+            "is_sota_or_best": false,
+            "baseline_name": "aflpp",
+            "baseline_value": 1367.0,
+            "evidence_quote": "\"xmlwf\": {\"aflpp_redqueen\": 1404.0}",
+            "confidence": 0.95
+          },
+          {
+            "name": "edge_coverage",
+            "value": 1766.0,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "xmlwf / cdfuzz",
+            "is_sota_or_best": true,
+            "baseline_name": "aflpp",
+            "baseline_value": 1367.0,
+            "evidence_quote": "\"xmlwf\": {\"cdfuzz\": 1766.0}",
+            "confidence": 0.95
+          },
+          {
+            "name": "edge_coverage",
+            "value": 1749.0,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "xmlwf / cdfuzz_enhanced",
+            "is_sota_or_best": false,
+            "baseline_name": "aflpp",
+            "baseline_value": 1367.0,
+            "evidence_quote": "\"xmlwf\": {\"cdfuzz_enhanced\": 1749.0}",
+            "confidence": 0.95
+          }
+        ],
+        "overall_conclusion": "Compile-time dictionary extraction produced the largest edge-coverage gains: on jhead, CDFuzz enhanced reached 472.0 edges versus 221.0 for AFL++ baseline; on xmlwf, CDFuzz reached 1766.0 edges versus 1367.0 for AFL++ baseline. REDQUEEN/CmpLog did not significantly differ from AFL++ dictionary on xmlwf (p=0.754), while dictionary-strategy comparisons on jhead were significant (p=0.009).",
+        "sources": {
+          "metrics_path": "results/metrics.json",
+          "paper_tex_path": "paper/paper.md"
+        },
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 9304,
+            "completion_tokens_details": {
+              "reasoning_tokens": 7190
+            },
+            "prompt_tokens": 3209,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 12513
+          },
+          "attempt": 1
+        }
+      },
+      "comparison": {
+        "status": "ok",
+        "claim_alignment": [
+          {
+            "original_claim_id": "C1",
+            "agent_claim_id": "A1",
+            "label": "partial",
+            "rationale": "Agent finds dictionary/extracted tokens improve coverage and reports dictionary-strategy gains, but evaluates only two programs and does not compare against the SMT-solver-based or other assisting strategies from the original."
+          },
+          {
+            "original_claim_id": "C2",
+            "agent_claim_id": "A1",
+            "label": "consistent",
+            "rationale": "Agent's edge-coverage values show aflpp_dict > aflpp on both jhead (232 vs 221) and xmlwf (1389 vs 1367), so dictionary activation improves over the corresponding grey-box fuzzer, matching the original direction."
+          },
+          {
+            "original_claim_id": "C3",
+            "agent_claim_id": "A5",
+            "label": "partial",
+            "rationale": "Agent evaluates REDQUEEN/CmpLog but not the listed solver-based fuzzers; it shows REDQUEEN outperforms AFL++ on the two programs but has no significant difference versus the AFL++ dictionary on xmlwf, partially matching the limited-advantage claim."
+          },
+          {
+            "original_claim_id": "C4",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "Agent does not compare QSYM versus AFL++ on any project set."
+          },
+          {
+            "original_claim_id": "C5",
+            "agent_claim_id": "A6",
+            "label": "partial",
+            "rationale": "Agent discusses program-state classes (strcmp flag parsing vs switch-driven token state machine) but does not measure or report the equality-constraint ratio cited in the original."
+          },
+          {
+            "original_claim_id": "C6",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "Agent does not report the proportion of unexplored equality constraints that are constant-evaluating input [==|!=] CONSTANT."
+          },
+          {
+            "original_claim_id": "C7",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "Agent does not report execution-time costs or execution-time ratios for REDQUEEN."
+          },
+          {
+            "original_claim_id": "C8",
+            "agent_claim_id": "A3",
+            "label": "consistent",
+            "rationale": "Agent shows CDFuzz dictionary reaches higher edge coverage than the corresponding AFL++ dictionary baseline in both reduced-program settings (e.g., 1766 vs 1389 on xmlwf), matching the original improvement direction over the dictionary-equipped best performer."
+          },
+          {
+            "original_claim_id": "C9",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "Agent does not report bug counts, confirmed bugs, or fixed bugs."
+          }
+        ],
+        "metric_alignment": [
+          {
+            "original_metric": "average_edge_coverage",
+            "agent_metric": "edge_coverage",
+            "comparable": false,
+            "original_value": 5094.0,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Original is average edge coverage over 21 projects for AFL_Dict; agent reports per-program edge coverage for jhead and xmlwf, so protocols are not equivalent."
+          },
+          {
+            "original_metric": "relative_edge_coverage_improvement",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 10.1,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Original 10.1% improvement is aggregated over 21 projects; agent does not report an equivalent aggregated relative improvement."
+          },
+          {
+            "original_metric": "average_edge_coverage",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 5067.0,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Original compares QSYM average coverage; agent has no QSYM run."
+          },
+          {
+            "original_metric": "relative_edge_coverage_improvement",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 4.7,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Original aggregates QSYM/MEUZZ/PANGOLIN/Angora/REDQUEEN over AFL++; agent does not evaluate those solver-based fuzzers."
+          },
+          {
+            "original_metric": "equality_constraint_ratio",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 98.1,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Agent does not report equality-constraint ratios."
+          },
+          {
+            "original_metric": "constant_evaluating_equality_constraint_ratio",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 92.3,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Agent does not report constant-evaluating equality-constraint ratios."
+          },
+          {
+            "original_metric": "edge_coverage_improvement",
+            "agent_metric": "edge_coverage",
+            "comparable": false,
+            "original_value": 16.1,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Original is a 21-project average improvement over AFL++_Dict; agent provides per-program edge counts on two programs, so the 16.1% SOTA comparison is not directly comparable."
+          },
+          {
+            "original_metric": "previously_unknown_bugs",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 37.0,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Agent run does not report bug-discovery results."
+          },
+          {
+            "original_metric": "confirmed_bugs",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 9.0,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Agent run does not report confirmed-bug counts."
+          },
+          {
+            "original_metric": "fixed_bugs",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 7.0,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Agent run does not report fixed-bug counts."
+          }
+        ],
+        "summary": {
+          "direction_consistency": "consistent",
+          "consistent_claim_ratio": 0.222,
+          "has_comparable_metrics": false,
+          "sota_improvement_summary": "N/A",
+          "overall_alignment_score": 0.45,
+          "score_rationale": "Addressable claim directions agree (dictionary and CDFuzz improve coverage; REDQUEEN advantage is limited), but the agent is reduced-scale and omits solver-based strategies, bug counts, and equality-constraint metrics."
+        },
+        "warnings": [
+          "Agent protocol uses only two programs (jhead, xmlwf) instead of the original 21-project, 24-hour, 5-run protocol; edge-coverage values are not comparable to original aggregate metrics.",
+          "Agent does not evaluate QSYM, MEUZZ, PANGOLIN, Angora, or other solver-based fuzzers.",
+          "Agent reports no bug-discovery, confirmed/fixed bug counts, execution-time ratios, or equality-constraint ratios."
+        ],
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 11331,
+            "completion_tokens_details": {
+              "reasoning_tokens": 9377
+            },
+            "prompt_tokens": 5680,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 17011
+          },
+          "attempt": 1
+        }
+      },
+      "overall_alignment_score": 0.45,
+      "direction_consistency": "consistent"
+    },
+    "experiment_analysis": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-002_evaluating_assisting_exploration_strateg/workspace/airesearcher_2026-09-01_14-53-07",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-002_evaluating_assisting_exploration_strateg",
+      "status": "ok",
+      "metrics_path": "results/metrics.json",
+      "experiment_success": {
+        "status": "ok",
+        "success": true,
+        "metrics_path": "results/metrics.json",
+        "absolute_metrics_path": "~/ai_scientist_inputs/ICSE-2025-002_evaluating_assisting_exploration_strateg/workspace/airesearcher_2026-09-01_14-53-07/results/metrics.json",
+        "checks": {
+          "has_results_file": true,
+          "non_stub": true,
+          "numeric_leaf_count": 38,
+          "min_numeric_ok": true
+        },
+        "manifest_hints": {
+          "status": {
+            "pipeline": false,
+            "research_brief": true,
+            "instance": true,
+            "source_papers": true,
+            "metrics": true,
+            "project": true,
+            "paper": true
+          },
+          "returncode": 1,
+          "benchmark_complete": null,
+          "artifacts_metrics_flag": true
+        },
+        "warnings": [
+          "manifest.returncode=1"
+        ],
+        "suspicious_values": [],
+        "note": "success=true requires substantive results (framework-aware path) with >=3 numeric leaves. Supports metrics.json, results.json, experiment_results.txt, etc. Manifest returncode/benchmark_complete are soft warnings only."
+      },
+      "idea_code_consistency": {
+        "status": "missing_idea"
+      },
+      "setup_coverage": {
+        "status": "ok",
+        "overall_coverage": 1.0,
+        "datasets": {
+          "gold_count": 1,
+          "hit_count": 1,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "Fuzzing evaluation benchmark (21 real-world programs)"
+          ],
+          "misses": []
+        },
+        "baselines": {
+          "gold_count": 9,
+          "hit_count": 9,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "AFL",
+            "AFL++",
+            "MOpt-AFL",
+            "FairFuzz",
+            "QSYM",
+            "MEUZZ",
+            "Pangolin",
+            "Angora",
+            "REDQUEEN (AFL++ redqueen mode)"
+          ],
+          "misses": []
+        },
+        "metrics": {
+          "gold_count": 1,
+          "hit_count": 1,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "Edge coverage"
+          ],
+          "misses": []
+        },
+        "agent_protocol": {},
+        "gold_protocol": {
+          "timeout_hours": 24
+        },
+        "dataset_dirs": [
+          "dataset_candidate"
+        ],
+        "flags": {
+          "weaker_baseline_suspected": false,
+          "weak_protocol": [],
+          "synthetic_data": "synthetic_allowed_by_task",
+          "gold_allows_synthetic": true
+        },
+        "gold_sources": [
+          "~/ai_scientist_inputs/ICSE-2025-002_evaluating_assisting_exploration_strateg/task.md",
+          "~/ai_scientist_inputs/ICSE-2025-002_evaluating_assisting_exploration_strateg/metadata.json"
+        ],
+        "note": "Coverage is name/alias matching against task.md Datasets/Baselines/Metrics. weak_protocol flags large reductions in trials/timeout vs Constraints. Synthetic corpora are not penalized when the task itself requires synthesis."
+      },
+      "ablation_significance": {
+        "status": "missing_idea"
+      },
+      "results_paper_consistency": {
+        "status": "ok",
+        "paper_tex": "paper/paper.md",
+        "paper_kind": "paper_md",
+        "results_format": "raw_json",
+        "digest_hint": {
+          "unfavorable_count": 0,
+          "trial_fail_count": 0,
+          "trial_success_count": 0,
+          "metadata": {}
+        },
+        "score_scale": "1-5",
+        "method": "Direct LLM comparison: agent's FINAL results artifact (metrics.json summary) vs paper Results/Discussion/Conclusion. Interim failed runs are NOT evidence unless still present in the final metrics file.",
+        "score": 4.0,
+        "consistency_label": "mostly",
+        "hiding_unfavorable_suspected": false,
+        "hiding_confidence": 0.15,
+        "justification": "The final results support the paper's main qualitative claims: CDFuzz/dictionary-based variants achieve the largest edge-coverage gains on both programs, and jhead/xmlwf show substantially different constraint profiles. Minor negative details are not explicit in the supplied abstract excerpt, but they do not contradict the paper's stated conclusions.",
+        "supported_claims": [
+          "Compile-time/dictionary-based methods yield the largest coverage gains; CDFuzz and CDFuzz-enhanced exceed AFL++ dictionary and REDQUEEN on both jhead and xmlwf.",
+          "The two targets have dramatically different constraint profiles: xmlwf is switch-table-heavy, while jhead has relatively more string/ICMP-style constraints.",
+          "Equal time budgets and multiple epochs are reflected in the final results through epoch_seconds=60 and epochs=5.",
+          "Strategy effectiveness is target-dependent; REDQUEEN improved significantly over AFL++ dictionary for jhead (p=0.009), but not for xmlwf (p=0.754)."
+        ],
+        "unsupported_or_overstated_claims": [],
+        "numeric_mismatches": [],
+        "unfavorable_in_final_results": [
+          "xmlwf AFL++/REDQUEEN vs AFL++/dictionary edge coverage was not significantly different (p=0.754; 1404 vs 1389).",
+          "xmlwf CDFuzz-enhanced edge coverage was slightly lower than CDFuzz (1749 vs 1766)."
+        ],
+        "unfavorable_acknowledged_in_paper": [],
+        "unfavorable_missing_from_paper": [],
+        "rubric": "Mostly consistent: reported conclusions track the metrics; negative/failed settings are acknowledged with only minor gaps.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 2340,
+            "completion_tokens_details": {
+              "reasoning_tokens": 1911
+            },
+            "prompt_tokens": 3157,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 5497
+          },
+          "attempt": 0
+        }
+      },
+      "scores": {
+        "experiment_success": true,
+        "idea_code_score": null,
+        "setup_coverage": 1.0,
+        "ablation_coverage_score": null,
+        "overall_ablation_ok": null,
+        "overall_significance_ok": null,
+        "results_paper_score": 4.0,
+        "hiding_unfavorable_suspected": false
+      },
+      "notes": [
+        "Axes 1,2,3,4,6 in experiment_analysis (figures excluded).",
+        "setup_coverage matches task.md Datasets/Baselines/Metrics; weak_protocol flags reductions vs Constraints.",
+        "Axis 6: final normalized results vs paper; interim run logs not used as ground truth."
+      ]
+    },
+    "literature_review": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-002_evaluating_assisting_exploration_strateg/workspace/airesearcher_2026-09-01_14-53-07",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-002_evaluating_assisting_exploration_strateg",
+      "status": "not_applicable",
+      "framework": "airesearcher",
+      "reason": "Framework does not produce workspace reference artifacts for fair comparison.",
+      "scores": null
+    }
+  },
+  "scores": {
+    "completeness": {
+      "complete": false,
+      "overall_score": 0.6,
+      "required_score": 0.75,
+      "bonus_score": 0.09
+    },
+    "peer_review": {
+      "status": "ok",
+      "optional": false,
+      "overall_score": 4.3,
+      "score_scale": "1-10",
+      "scoring_method": "paperreview_apr"
+    },
+    "idea_generation": {
+      "status": "missing_idea",
+      "overall_score": null,
+      "dimensions": {
+        "novelty": null,
+        "feasibility": null,
+        "clarity": null
+      },
+      "novelty_category": null,
+      "solution_space_status": null
+    },
+    "alignment": {
+      "status": "ok",
+      "direction_consistency": "consistent",
+      "overall_alignment_score": 0.45
+    },
+    "literature_review": {
+      "fabrication_rate": null,
+      "coverage_recall": null,
+      "recency_ratio_3y": null,
+      "recency_ratio_5y": null
+    },
+    "experiment_analysis": {
+      "experiment_success": true,
+      "idea_code_score": null,
+      "setup_coverage": 1.0,
+      "ablation_coverage_score": null,
+      "overall_ablation_ok": null,
+      "overall_significance_ok": null,
+      "results_paper_score": 4.0,
+      "hiding_unfavorable_suspected": false
+    }
+  },
+  "fair_scores": {
+    "applicable_axes": [
+      "completeness",
+      "peer_review",
+      "alignment",
+      "experiment_analysis"
+    ],
+    "skipped_axes": [
+      {
+        "axis": "idea_generation",
+        "reason": "missing_idea"
+      },
+      {
+        "axis": "literature_review",
+        "reason": "not_applicable"
+      }
+    ],
+    "fair_mean_0_1": 0.6408,
+    "note": "fair_mean_0_1 averages only applicable axes; optional peer review and framework-inapplicable literature are excluded from the denominator."
+  },
+  "evals_root": "~/ai_scientist_evals",
+  "claims_cache": "~/ai_scientist_evals/ICSE-2025-002_evaluating_assisting_exploration_strateg/original_claims.json",
+  "solution_space_cache": "~/ai_scientist_evals/ICSE-2025-002_evaluating_assisting_exploration_strateg/solution_space.json"
+}

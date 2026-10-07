@@ -1,0 +1,140 @@
+{
+  "status": "ok",
+  "task_dir": "~/ai_scientist_inputs/FSE-2025-001_efficient_targeted_unit_test_generation",
+  "paper_title": "UnitCon: Synthesizing Targeted Unit Tests for Java Runtime Exceptions",
+  "task_id": "FSE-2025-001",
+  "selection": {
+    "num_blocks": 7,
+    "total_chars": 31998,
+    "inferred_roles": {
+      "abstract": 1,
+      "introduction": 1,
+      "experiment": 4,
+      "conclusion": 1
+    },
+    "mineru_raw_keys": {
+      "field:abstract": 1,
+      "field:introduction": 1,
+      "field:experiment": 1,
+      "other": 3,
+      "conclusion": 1
+    },
+    "infer_reasons": {
+      "top_level_field": 3,
+      "title": 4
+    },
+    "rescued_from_other": 3,
+    "note": "mineru key is unreliable; blocks are selected by title/body/inheritance. rescued_from_other counts sections labeled other but treated as typed roles."
+  },
+  "claims": [
+    {
+      "id": "C1",
+      "statement": "UnitCon consistently reproduces more target runtime exceptions than state-of-the-art baselines, achieving a 52.5% success rate compared to the best baseline average of 44.3%.",
+      "direction": "improves",
+      "metric_names": [
+        "target_error_reproduction_rate"
+      ],
+      "evidence_quote": "UnitCon generated error-triggering test cases for 104 out of 198 (52.5%) projects within 10 minutes. On the other hand, the other tools succeeded in ... at most 87.7 (44.3%) cases, on average.",
+      "confidence": 0.95
+    },
+    {
+      "id": "C2",
+      "statement": "UnitCon reproduces 1.2–3.6 times more target errors than the baselines, confirming a substantial improvement in targeted test generation.",
+      "direction": "improves",
+      "metric_names": [
+        "improvement_factor_over_baseline"
+      ],
+      "evidence_quote": "In total, UnitCon reproduces 1.2–3.6× more target errors than baselines.",
+      "confidence": 0.9
+    },
+    {
+      "id": "C3",
+      "statement": "UnitCon is effective at revealing previously unknown bugs in real-world projects, discovering 21 new NPE bugs across 51 open-source projects.",
+      "direction": "neutral",
+      "metric_names": [
+        "new_bugs_found"
+      ],
+      "evidence_quote": "discovered 21 previously unknown NPE bugs",
+      "confidence": 0.9
+    },
+    {
+      "id": "C4",
+      "statement": "UnitCon uniquely reproduces errors that no other tool can find, with the highest number of exclusively reproduced errors (8) among the compared tools.",
+      "direction": "mixed",
+      "metric_names": [
+        "exclusive_reproduced_errors"
+      ],
+      "evidence_quote": "UnitCon exclusively reproduced 8 errors that none of the other tools found, which is the highest number of uniquely reproduced errors among the six tools.",
+      "confidence": 0.9
+    }
+  ],
+  "metrics": [
+    {
+      "name": "target_error_reproduction_rate",
+      "value": 0.525,
+      "unit": "ratio",
+      "higher_is_better": true,
+      "setting": "198 benchmark projects, 10-minute time limit per project",
+      "is_sota_or_best": true,
+      "baseline_name": "best baseline average (EvoSuite variants)",
+      "baseline_value": 0.443,
+      "evidence_quote": "UnitCon generated error-triggering test cases for 104 out of 198 (52.5%) projects within 10 minutes. On the other hand, the other tools succeeded in ... at most 87.7 (44.3%) cases, on average.",
+      "confidence": 0.95
+    },
+    {
+      "name": "improvement_factor_over_baseline",
+      "value": null,
+      "unit": null,
+      "higher_is_better": true,
+      "setting": "Ratio of UnitCon's reproduced errors to baselines' errors; range 1.2x to 3.6x across tools",
+      "is_sota_or_best": true,
+      "baseline_name": "EvoSuite, EvoFuzz, NPETest, UTBot, Randoop",
+      "baseline_value": null,
+      "evidence_quote": "In total, UnitCon reproduces 1.2–3.6× more target errors than baselines.",
+      "confidence": 0.9
+    },
+    {
+      "name": "new_bugs_found",
+      "value": 21,
+      "unit": "count",
+      "higher_is_better": true,
+      "setting": "51 real-world open-source projects, inspecting Infer NPE alarms",
+      "is_sota_or_best": false,
+      "baseline_name": null,
+      "baseline_value": null,
+      "evidence_quote": "discovered 21 previously unknown NPE bugs",
+      "confidence": 0.9
+    },
+    {
+      "name": "exclusive_reproduced_errors",
+      "value": 8,
+      "unit": "count",
+      "higher_is_better": true,
+      "setting": "198 benchmark projects, comparison with 5 baselines over 10 runs",
+      "is_sota_or_best": true,
+      "baseline_name": "Other baselines (EvoSuite, EvoFuzz, etc.)",
+      "baseline_value": null,
+      "evidence_quote": "UnitCon exclusively reproduced 8 errors that none of the other tools found, which is the highest number of uniquely reproduced errors among the six tools.",
+      "confidence": 0.9
+    }
+  ],
+  "overall_conclusion": "UnitCon significantly outperforms existing unit test generation tools in reproducing targeted runtime exceptions, achieving a 52.5% success rate (vs. 44.3% best baseline) and finding 21 new real-world bugs. The key innovation is using static analysis to prune and prioritize the test search space.",
+  "comparable_notes": "Baselines were run with targeted options where available (class or method level). All tools were limited to 10 minutes per benchmark. Baselines were run 10 times with different random seeds; their best performances are reported. UnitCon's static analysis time was included in the time limit. Tools were not allowed to use mock objects for fairness.",
+  "llm_meta": {
+    "model": "deepseek-v4-pro",
+    "base_url": "https://api-sg.umodelverse.ai/v1",
+    "usage": {
+      "completion_tokens": 1618,
+      "completion_tokens_details": {
+        "reasoning_tokens": 420
+      },
+      "prompt_tokens": 9689,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "total_tokens": 11307
+    },
+    "attempt": 1
+  },
+  "cache_hit": false
+}

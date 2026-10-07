@@ -1,0 +1,34 @@
+{
+  "forbid_synthetic_pilot": true,
+  "agent_data_note": "Use the real Valg artifact at `dataset_candidate/valg/`. It is mounted read-only; copy needed files to `project/` before modifying scripts or writing outputs.",
+  "required_metrics": [
+    "speedup",
+    "violation_preservation",
+    "unique_trace_coverage",
+    "redundancy_reduction"
+  ],
+  "benchmark_rules": [
+    "Use only the provided Valg replication package under `dataset_candidate/valg/`; do not invent synthetic project SHA lists.",
+    "Read `dataset_candidate/dataset_paths.json` before experiments and use `$VALG_HOME` in scripts.",
+    "The shared package is read-only. Copy `scripts/`, `experiments/`, or selected project checkouts into `project/` before editing or writing intermediate files.",
+    "Java 8, Maven 3.8.8, AspectJ 1.9.7, and a Python analysis venv are prepared automatically (`java`/`mvn`/`ajc`/`python` on PATH via `/opt/ase-2025-016-*`).",
+    "Evaluate Speedup, Violation Preservation, Unique Trace Coverage, and Redundancy Reduction against JavaMOP / TraceMOP baselines packaged in the artifact.",
+    "Scope down from the paper protocol (64 single-revision / 46 multi-revision projects + full TraceMOP) when needed — report the reduced subset and wall-clock budget.",
+    "Subject repositories are cloned at runtime from `data/projects.csv` + `data/shas/`; document which projects were actually run.",
+    "Do not claim full paper reproduction unless the protocol and resources match."
+  ],
+  "non_goals": [
+    "Requiring GPU / CUDA for a valid experiment",
+    "Re-mining GitHub stars or rebuilding the 64-project list from scratch as a required dependency",
+    "Fabricating monitor traces or violation tables without documenting synthetic construction"
+  ],
+  "dataset_env": {
+    "VALG_HOME": "dataset_candidate/valg"
+  },
+  "exclude_from_agent": [
+    "container_setup.sh",
+    "README.md",
+    "benchmark_config.json",
+    "requirements.txt"
+  ]
+}

@@ -1,0 +1,1266 @@
+{
+  "generated_at": "2026-09-29T02:22:17",
+  "run_dir": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/workspace/aris_2026-07-10_13-00-52",
+  "task_dir": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo",
+  "framework": "aris",
+  "fairness_audit": [
+    {
+      "axis": "completeness",
+      "was_unfair": "Required both paper.tex AND paper.pdf; any tool missing one failed equally.",
+      "fix": "Paper gate: PDF=1.0; TeX-only=0.5; ``complete`` requires PDF."
+    },
+    {
+      "axis": "completeness",
+      "was_unfair": "``results`` counted stub/seed JSON (dataset_candidate/metrics.json).",
+      "fix": "``results`` requires substantive numeric results via results_normalize."
+    },
+    {
+      "axis": "experiment_success",
+      "was_unfair": "Only metrics.json; ignored results.json / experiment_results.txt.",
+      "fix": "Framework-ordered result candidates + normalized loaders."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Penalized tools with no bib; airesearcher has no workspace references.",
+      "fix": "literature_applicable=false → status not_applicable; excluded from fair aggregate."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "related_work.json subset as gold made recall hard to interpret.",
+      "fix": "Coverage gold is original paper REFERENCES from mineru; related_work only enriches metadata/fallback."
+    },
+    {
+      "axis": "peer_review",
+      "was_unfair": "Missing Stanford report looked like evaluation failure.",
+      "fix": "status not_provided; optional axis, never counts as tool failure."
+    },
+    {
+      "axis": "paths/find_results",
+      "was_unfair": "Picked downloads/** and sandbox noise (e.g. airesearcher LLVM tree).",
+      "fix": "Exclude downloads/, seeds/, dataset_candidate/, sandbox junk paths."
+    },
+    {
+      "axis": "paths/framework_noise",
+      "was_unfair": "DeepScientist .deepscientist_npm / runtime / skills templates counted as code/paper/results.",
+      "fix": "FRAMEWORK_NOISE_DIRS+markers; quest worktree + eval_output results; paper md drafts; reject template tex."
+    },
+    {
+      "axis": "paths/paper_tex",
+      "was_unfair": "tiny_scientist / ACL runs store paper under latex/*.tex; evaluator only looked at paper/main.tex.",
+      "fix": "latex/**/*.tex with substantive-body heuristic; find_paper_document uses same rules."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Entire custom.bib (300+ anthology entries) verified when paper had zero \\cite commands.",
+      "fix": "collect_agent_references filters bib to in-text cite keys; skips uncited bulk bib (>40 entries)."
+    },
+    {
+      "axis": "paths/ai_scientist_summaries",
+      "was_unfair": "AI Scientist can persist substantive results and paper-like drafts in *_summary.json logs rather than paper/main.tex or results/**/*.json.",
+      "fix": "Treat draft_summary/research_summary as weak paper documents and summary JSONs as result candidates."
+    },
+    {
+      "axis": "framework/ai_scientist_v2",
+      "was_unfair": "Manifest framework ``ai_scientist_v2`` fell through to profile ``unknown``, skipping AI-Scientist idea/result path priorities.",
+      "fix": "Normalize ``ai_scientist_v2`` (and common aliases) to profile key ``ai_scientist``."
+    },
+    {
+      "axis": "idea_generation",
+      "was_unfair": "plan.md/todos.md weak proxies scored same as structured idea.json.",
+      "fix": "Framework idea_priority tried first; missing idea → not_applicable where appropriate."
+    }
+  ],
+  "axes": [
+    "alignment",
+    "completeness",
+    "experiment_analysis",
+    "idea_generation",
+    "literature_review",
+    "peer_review"
+  ],
+  "results": {
+    "completeness": {
+      "framework": "aris",
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/workspace/aris_2026-07-10_13-00-52",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo",
+      "complete": true,
+      "required_score": 1.0,
+      "bonus_score": 0.07,
+      "overall_score": 0.8419,
+      "missing": [],
+      "required": {
+        "idea": {
+          "path": "idea-stage/IDEA_REPORT.md",
+          "bytes": 4465,
+          "via": "candidate"
+        },
+        "code": {
+          "count": 2,
+          "files": [
+            {
+              "path": "project/experiment_runner.py",
+              "bytes": 32537,
+              "via": "glob"
+            },
+            {
+              "path": "project/statistical_analysis.py",
+              "bytes": 14259,
+              "via": "glob"
+            }
+          ]
+        },
+        "results": {
+          "substantive": true,
+          "normalized_path": "experiment_results/metrics.json",
+          "numeric_leaf_count": 207,
+          "discovered_files": [
+            {
+              "path": "experiment_results/metrics.json",
+              "bytes": 8576,
+              "via": "candidate"
+            },
+            {
+              "path": "experiment_results/statistical_analysis.json",
+              "bytes": 2497,
+              "via": "glob"
+            }
+          ],
+          "metrics_keys_sample": [
+            "generated_by",
+            "experiment_command",
+            "timestamp",
+            "RQ1",
+            "RQ2",
+            "RQ3",
+            "project_summaries"
+          ]
+        },
+        "paper": {
+          "tex": {
+            "path": "paper/main.tex",
+            "bytes": 23269,
+            "via": "candidate"
+          },
+          "pdf": {
+            "path": "paper/main.pdf",
+            "bytes": 181646,
+            "via": "candidate"
+          },
+          "md": null,
+          "json": null,
+          "status": "pdf",
+          "score": 1.0
+        }
+      },
+      "bonus": {
+        "experiment_plan": null,
+        "experiment_log": {
+          "path": "aris_run.log",
+          "bytes": 152824,
+          "via": "glob"
+        },
+        "review": null,
+        "readme": {
+          "path": "README_BENCHMARK.md",
+          "bytes": 817,
+          "via": "candidate"
+        },
+        "narrative": {
+          "path": "NARRATIVE_REPORT.md",
+          "bytes": 7392,
+          "via": "candidate"
+        },
+        "bib": null
+      },
+      "manifest_status": {
+        "idea": true,
+        "experiment_plan": false,
+        "experiment_log": false,
+        "metrics": false,
+        "review": false,
+        "narrative": true,
+        "paper_tex": true,
+        "paper_pdf": true
+      },
+      "gate_scores": {
+        "idea": 1.0,
+        "code": 1.0,
+        "results": 1.0,
+        "paper": 1.0
+      },
+      "fairness": {
+        "gates": [
+          "idea",
+          "code",
+          "results",
+          "paper"
+        ],
+        "paper_gate_rule": "PDF=1.0; TeX-only/md_only/json_only=0.5; complete requires PDF",
+        "results_gate_rule": "substantive numeric results via framework-aware normalize_results",
+        "audit_ref": "framework_profile.FAIRNESS_AUDIT"
+      },
+      "notes": [
+        "Required: idea, code, substantive results, paper (PDF full; TeX/markdown/JSON draft half).",
+        "Stub/seed metrics (e.g. dataset_candidate/metrics.json) do not satisfy results.",
+        "Framework noise (.deepscientist_npm, skills/templates, runtime) is excluded from code/results/paper.",
+        "Manifest status is informational; disk presence is authoritative."
+      ]
+    },
+    "idea_generation": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/workspace/aris_2026-07-10_13-00-52",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo",
+      "idea_path": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/workspace/aris_2026-07-10_13-00-52/idea-stage/IDEA_REPORT.md",
+      "status": "ok",
+      "dimensions": {
+        "novelty": {
+          "score": 3.0,
+          "justification": "The core concept of modularity violation is already present in the Solution Space, especially R62: 'detects modularity violations by comparing expected co-change based on modular structure with actual co-change from version history.' The idea proposes a related but shifted mechanism: 'Detect Inappropriate Separated (InSep) and Inappropriate Collocated (InCol) entity pairs by comparing the modular structure produced by automated modularization tools... against the dependency graph.' It refines granularity and operationalization, but does not overturn the prevailing paradigm.",
+          "rubric": "Incremental: a meaningful extension or optimization of prior baseline work that fixes a concrete prior limitation, but the core paradigm is unchanged.",
+          "category": "Incremental",
+          "nearest_solution_space_ids": [
+            "R62",
+            "R21",
+            "R5"
+          ],
+          "differentiation": "The idea defines a fine-grained pair taxonomy (InSep, InCol, Col, AptSep) by comparing modularization outputs with the dependency graph, then studies prevalence, co-change impact, and evolution; R62 already detects modularity violations via expected vs actual co-change, and R21 measures co-change-modularity, while R5 supplies one of the modularization algorithms used here."
+        },
+        "feasibility": {
+          "score": 4.0,
+          "justification": "The artifact states: '20 open-source C/C++ and Java projects from the PairSmell replication package, containing: Dependency graphs for multiple snapshots, FCA modularization outputs, Commit histories,' and implementation is described as a 'Single Python script that loads all data, performs pair detection, computes co-change metrics, and outputs structured results.' This is a standard empirical mining pipeline with existing data, so it is low barrier, though some custom co-change and pair computation is still required.",
+          "rubric": "Low barrier / easy to implement: core logic can be quickly built on existing Python libraries or common ML frameworks; only small changes to a standard evaluation flow (e.g. prompt strategy tweaks or swapping metrics)."
+        },
+        "clarity": {
+          "score": 4.0,
+          "justification": "The report provides a concrete method flow: '1. Modularization: Use FCA... 2. Dependency Extraction... 3. Pair Classification...' and defines categories as 'InSep... InCol... Col... AptSep...' It also lists explicit metrics such as 'COR (Commit Overlap Rate), CCO (Code Change Overlap), and DOR (Developer Overlap Rate)' and expected artifacts. However, baseline comparisons against prior modularity-violation tools and statistical testing details remain underspecified.",
+          "rubric": "Clear and concrete: steps are explicit with a reasonable, specific experiment design (baseline tools, metric definitions); can be turned into a solid proposal."
+        }
+      },
+      "overall_score": 3.5,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "novelty",
+        "feasibility",
+        "clarity"
+      ],
+      "solution_space": {
+        "status": "ok",
+        "paper_count": 80,
+        "entry_count": 80,
+        "cache_hit": true,
+        "source_file": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/mineru_sections.json",
+        "stats": {
+          "papers": 80,
+          "extracted": 80,
+          "usable_abstracts": 53,
+          "citation_meta_abstracts": 0,
+          "missing_abstracts": 27,
+          "mineru_titles": 74,
+          "related_work_titles": 69,
+          "abstracts_attached": 53,
+          "related_work_extras": 6,
+          "batches": 5
+        },
+        "error": null
+      },
+      "notes": [
+        "Scores the intermediate idea artifact (not the final paper).",
+        "Dimensions: novelty, feasibility, clarity (each 1-5). Excitement removed.",
+        "Novelty is scored against a Solution Space built from mineru REFERENCES titles (+ related_work.json abstracts when matched)."
+      ],
+      "idea_via": "candidate",
+      "idea_relative": "idea-stage/IDEA_REPORT.md",
+      "summary": "The idea proposes detecting fine-grained PairSmells by classifying entity pairs from FCA modularization versus dependency graphs into InSep, InCol, Col, and AptSep, then analyzing their prevalence, co-change correlates, and evolution across 20 projects. It is concrete and feasible using the provided replication package, but its contribution is incremental relative to prior modularity violation and co-change modularity work. The empirical design is reasonably clear, though baseline and statistical comparison details are missing.",
+      "strengths": [
+        "Uses a publicly available replication package with dependency graphs, modularization outputs, and commit histories.",
+        "Gives explicit pair-level classification rules and operationalizes the smells clearly.",
+        "Connects structural pairing to established co-change and developer-overlap metrics.",
+        "Research questions are concrete and address prevalence, impact, and evolution."
+      ],
+      "weaknesses": [
+        "Novelty is limited because modularity violation detection via modular structure already exists in the Solution Space.",
+        "No explicit baseline tool or prior smell detector is compared, weakening empirical claims.",
+        "Statistical analysis plan and effect-size/significance testing details are not specified.",
+        "All-pairs computation may face scalability issues on larger snapshots, but no mitigation is discussed."
+      ],
+      "llm_meta": {
+        "model": "deepseek-v4-pro-0813",
+        "base_url": "https://api-sg.umodelverse.ai/v1",
+        "usage": {
+          "completion_tokens": 2980,
+          "completion_tokens_details": {
+            "reasoning_tokens": 2216
+          },
+          "prompt_tokens": 6584,
+          "prompt_tokens_details": {
+            "cached_tokens": 4096
+          },
+          "total_tokens": 9564
+        },
+        "attempt": 0
+      }
+    },
+    "peer_review": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/workspace/aris_2026-07-10_13-00-52",
+      "review_report": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/workspace/aris_2026-07-10_13-00-52/artifacts/peer_review/stanford_apr.md",
+      "paper_pdf": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/workspace/aris_2026-07-10_13-00-52/paper/main.pdf",
+      "paper_tex": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/workspace/aris_2026-07-10_13-00-52/paper/main.tex",
+      "status": "ok",
+      "dimensions": {},
+      "overall_score": 5.2,
+      "score_scale": "1-10",
+      "dimension_order": [],
+      "notes": [
+        "Scored from paperreview.ai (Stanford APR) native ratings; benchmark 5-dimension LLM rubric skipped.",
+        "Overall scale: 1-10."
+      ],
+      "paperreview": {
+        "status": "fetched",
+        "token_file": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/workspace/aris_2026-07-10_13-00-52/artifacts/peer_review/paperreview.token.txt",
+        "json": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/workspace/aris_2026-07-10_13-00-52/artifacts/peer_review/stanford_apr.json",
+        "markdown": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/workspace/aris_2026-07-10_13-00-52/artifacts/peer_review/stanford_apr.md",
+        "apr_scores": {
+          "scale": "1-10",
+          "overall": 5.2,
+          "dimensions": {
+            "Claims_Support": 0.0,
+            "Experimental_Soundness": 0.0,
+            "Writing_Clarity": 0.0,
+            "Prior_Work_Context": 0.0,
+            "Question_Importance": 1.0,
+            "Originality": 0.0,
+            "Value_to_Community": 0.0
+          }
+        },
+        "pdf_rebuild": null
+      },
+      "scoring_method": "paperreview_apr",
+      "scoring_source": "paperreview_json",
+      "apr_dimensions": {
+        "Claims_Support": 0.0,
+        "Experimental_Soundness": 0.0,
+        "Writing_Clarity": 0.0,
+        "Prior_Work_Context": 0.0,
+        "Question_Importance": 1.0,
+        "Originality": 0.0,
+        "Value_to_Community": 0.0
+      },
+      "summary": "",
+      "red_flags": []
+    },
+    "alignment": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/workspace/aris_2026-07-10_13-00-52",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo",
+      "status": "ok",
+      "original": {
+        "paper_title": "PairSmell: A Novel Perspective Inspecting Software Modular Structure",
+        "selection": {
+          "num_blocks": 7,
+          "total_chars": 31998,
+          "inferred_roles": {
+            "abstract": 1,
+            "introduction": 1,
+            "experiment": 3,
+            "discussion": 1,
+            "conclusion": 1
+          },
+          "mineru_raw_keys": {
+            "field:abstract": 1,
+            "field:introduction": 1,
+            "field:experiment": 1,
+            "other": 3,
+            "conclusion": 1
+          },
+          "infer_reasons": {
+            "top_level_field": 3,
+            "title": 3,
+            "body_override": 1
+          },
+          "rescued_from_other": 3,
+          "note": "mineru key is unreliable; blocks are selected by title/body/inheritance. rescued_from_other counts sections labeled other but treated as typed roles."
+        },
+        "claims": [
+          {
+            "id": "C1",
+            "statement": "PairSmell introduces a granular, pair-level architectural smell that uses multiple modularization tools to identify inapt modular relations.",
+            "direction": "neutral",
+            "metric_names": [],
+            "evidence_quote": "PairSmell exploits modularization by comparing each pair's apt MR with its actual MR.",
+            "confidence": 0.9
+          },
+          {
+            "id": "C2",
+            "statement": "PairSmell is prevalent in the 20 studied projects, with 260,003 instances identified.",
+            "direction": "neutral",
+            "metric_names": [
+              "total_PairSmells",
+              "InSep_count",
+              "InCol_count"
+            ],
+            "evidence_quote": "260,003 instances over 20 projects: 73,536 InSep, 186,467 InCol.",
+            "confidence": 0.95
+          },
+          {
+            "id": "C3",
+            "statement": "InSep pairs co-change 190% more than properly separated pairs, indicating detrimental modular structure."
+          }
+        ],
+        "metrics": [],
+        "overall_conclusion": null,
+        "comparable_notes": null,
+        "cache_hit": true
+      },
+      "agent": {
+        "status": "ok",
+        "run_dir": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/workspace/aris_2026-07-10_13-00-52",
+        "claims": [
+          {
+            "id": "A1",
+            "statement": "...",
+            "direction": "improves|degrades|no_difference|mixed|neutral|unknown",
+            "metric_names": [],
+            "evidence_quote": "...",
+            "confidence": 0.0
+          }
+        ],
+        "metrics": [
+          {
+            "name": "...",
+            "value": 0.0,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "...",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "...",
+            "confidence": 0.0
+          }
+        ],
+        "overall_conclusion": "...",
+        "sources": {
+          "metrics_path": "experiment_results/metrics.json",
+          "paper_tex_path": "paper/main.tex"
+        },
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 5000,
+            "completion_tokens_details": {
+              "reasoning_tokens": 5000
+            },
+            "prompt_tokens": 4669,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 9669
+          },
+          "attempt": 0
+        }
+      },
+      "comparison": {
+        "status": "ok",
+        "claim_alignment": [
+          {
+            "original_claim_id": "C1",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "Agent extraction contains only a placeholder claim A1 with statement '...' and no substantive content; it does not address the PairSmell pair-level architectural smell claim."
+          },
+          {
+            "original_claim_id": "C2",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "Agent extraction provides no prevalence data or counts; the original 260,003 PairSmell instances claim is not addressed."
+          },
+          {
+            "original_claim_id": "C3",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "Agent extraction provides no co-change analysis or result addressing the 190% InSep co-change claim."
+          }
+        ],
+        "metric_alignment": [
+          {
+            "original_metric": "total_PairSmells",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 260003,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Metric name and value appear in original claim C2, but the agent run provided no corresponding metric."
+          },
+          {
+            "original_metric": "InSep_count",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 73536,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Metric name and value appear in original claim C2, but the agent run provided no corresponding metric."
+          },
+          {
+            "original_metric": "InCol_count",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 186467,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Metric name and value appear in original claim C2, but the agent run provided no corresponding metric."
+          }
+        ],
+        "summary": {
+          "direction_consistency": "unknown",
+          "consistent_claim_ratio": 0.0,
+          "has_comparable_metrics": false,
+          "sota_improvement_summary": "N/A",
+          "overall_alignment_score": 0.0,
+          "score_rationale": "Agent run provided only placeholder template fields and no substantive claims or metrics, so no alignment with the original paper's claims or metrics can be established."
+        },
+        "warnings": [
+          "AGENT extraction appears to be an empty template with placeholder values; no substantive claims or metrics were provided.",
+          "Metric values were taken from original claim C2 rather than an original metrics table; no agent metrics were available for comparison."
+        ],
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 3462,
+            "completion_tokens_details": {
+              "reasoning_tokens": 2784
+            },
+            "prompt_tokens": 1293,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 4755
+          },
+          "attempt": 0
+        }
+      },
+      "overall_alignment_score": 0.0,
+      "direction_consistency": "unknown"
+    },
+    "experiment_analysis": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/workspace/aris_2026-07-10_13-00-52",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo",
+      "status": "ok",
+      "metrics_path": "experiment_results/metrics.json",
+      "experiment_success": {
+        "status": "ok",
+        "success": true,
+        "metrics_path": "experiment_results/metrics.json",
+        "absolute_metrics_path": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/workspace/aris_2026-07-10_13-00-52/experiment_results/metrics.json",
+        "checks": {
+          "has_results_file": true,
+          "non_stub": true,
+          "numeric_leaf_count": 207,
+          "min_numeric_ok": true
+        },
+        "manifest_hints": {
+          "status": {
+            "idea": true,
+            "experiment_plan": false,
+            "experiment_log": false,
+            "metrics": false,
+            "review": false,
+            "narrative": true,
+            "paper_tex": true,
+            "paper_pdf": true
+          },
+          "returncode": 1,
+          "benchmark_complete": false,
+          "artifacts_metrics_flag": false
+        },
+        "warnings": [
+          "manifest.returncode=1",
+          "manifest.benchmark_complete=false"
+        ],
+        "suspicious_values": [],
+        "note": "success=true requires substantive results (framework-aware path) with >=3 numeric leaves. Supports metrics.json, results.json, experiment_results.txt, etc. Manifest returncode/benchmark_complete are soft warnings only."
+      },
+      "idea_code_consistency": {
+        "status": "ok",
+        "idea_path": "idea-stage/IDEA_REPORT.md",
+        "code_files": [
+          "project/experiment_runner.py"
+        ],
+        "score_scale": "1-5",
+        "score": 2.0,
+        "label": "weak",
+        "justification": "The provided code contains only data-loading and path-helper utilities for FCA clusters, dependency files, WCA/LIMBO dependencies, folder structure, and commit history. The core PairSmell methodology is not implemented: there is no pair classification into InSep/InCol/Col/AptSep, no computation of COR/CCO/DOR or K factors, no evolution analysis, and no experiment results output. Thus only superficial overlap with the stated idea is present in the visible code.",
+        "matched_elements": [
+          "Configuration for PairSmell dataset path and output directory",
+          "Loading FCA modularization clusters",
+          "Loading dependency-file.json",
+          "Loading WCA_LIMBO dep.rsf dependencies",
+          "Deriving folder-based module labels from entity paths",
+          "Stub/start of commit history loading"
+        ],
+        "missing_or_divergent_elements": [
+          "Core pair classification logic (InSep, InCol, Col, AptSep)",
+          "Co-change metric computation (COR, CCO, DOR)",
+          "Relative co-change factors (K_COR, K_CCO, K_DOR)",
+          "Evolution/snapshot trend analysis or linear regression",
+          "Main experiment entrypoint and result output files",
+          "Support for ACDC and LIMBO modularization outputs beyond WCA_LIMBO deps"
+        ],
+        "rubric": "Weak alignment: only superficial overlap; core hypothesis, method, or evaluation in the idea is missing or replaced.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 1066,
+            "completion_tokens_details": {
+              "reasoning_tokens": 762
+            },
+            "prompt_tokens": 2305,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 3371
+          },
+          "attempt": 0
+        }
+      },
+      "setup_coverage": {
+        "status": "ok",
+        "overall_coverage": 1.0,
+        "datasets": {
+          "gold_count": 1,
+          "hit_count": 1,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "20-Project PairSmell Dataset"
+          ],
+          "misses": []
+        },
+        "baselines": {
+          "gold_count": 0,
+          "hit_count": 0,
+          "miss_count": 0,
+          "coverage": null,
+          "hits": [],
+          "misses": []
+        },
+        "metrics": {
+          "gold_count": 6,
+          "hit_count": 6,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "Percentage of affected entities/pairs",
+            "Smell density",
+            "Commit Overlap Rate (COR)",
+            "Code Change Overlap (CCO)",
+            "Developer Overlap Rate (DOR)",
+            "Relative co-change factor (K_COR, K_CCO, K_DOR)"
+          ],
+          "misses": []
+        },
+        "agent_protocol": {},
+        "gold_protocol": {},
+        "dataset_dirs": [
+          "dataset_candidate"
+        ],
+        "flags": {
+          "weaker_baseline_suspected": false,
+          "weak_protocol": [],
+          "synthetic_data": "unexpected_synthetic_or_local_only_data",
+          "gold_allows_synthetic": false
+        },
+        "gold_sources": [
+          "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/task.md",
+          "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/metadata.json"
+        ],
+        "note": "Coverage is name/alias matching against task.md Datasets/Baselines/Metrics. weak_protocol flags large reductions in trials/timeout vs Constraints. Synthetic corpora are not penalized when the task itself requires synthesis."
+      },
+      "ablation_significance": {
+        "status": "ok",
+        "idea_path": "idea-stage/IDEA_REPORT.md",
+        "significance_signals_rule_based": {
+          "signals": [
+            "paper_contains:significant"
+          ],
+          "artifact_paths": [],
+          "has_any_significance_artifact": true
+        },
+        "evidence_format": "raw_json_truncated",
+        "study_type": "new_method",
+        "components": [
+          {
+            "name": "FCA modularization",
+            "role": "modularization algorithm",
+            "ablation_expected": true,
+            "significance_expected": false,
+            "ablation_status": "missing",
+            "ablation_evidence": "No evidence of alternative modularization (e.g., folder structure or other algorithms WCA/LIMBO/ACDC) being used as controlled comparison or ablation; only FCA outputs are loaded.",
+            "significance_status": "not_required",
+            "significance_evidence": "N/A"
+          },
+          {
+            "name": "Dependency graph extraction",
+            "role": "input data extraction",
+            "ablation_expected": false,
+            "significance_expected": false,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "Required for pair classification; removing it would make classification impossible.",
+            "significance_status": "not_required",
+            "significance_evidence": "N/A"
+          },
+          {
+            "name": "Pair classification matrix",
+            "role": "core classification algorithm",
+            "ablation_expected": false,
+            "significance_expected": false,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "Central taxonomy; removing it would remove the method.",
+            "significance_status": "not_required",
+            "significance_evidence": "N/A"
+          },
+          {
+            "name": "Co-change analysis",
+            "role": "evaluation metrics",
+            "ablation_expected": false,
+            "significance_expected": true,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "Outcome measurement, not a removable method module.",
+            "significance_status": "partial",
+            "significance_evidence": "Method mentions Welch's t-test and Cohen's d, but final results do not report p-values, confidence intervals, or effect sizes."
+          },
+          {
+            "name": "Evolution analysis",
+            "role": "temporal trend analysis",
+            "ablation_expected": false,
+            "significance_expected": false,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "Descriptive trend analysis, not a removable method module.",
+            "significance_status": "not_required",
+            "significance_evidence": "N/A"
+          }
+        ],
+        "ablation_coverage_score": 0.0,
+        "overall_ablation_ok": false,
+        "overall_significance_ok": false,
+        "summary": "Evaluates PairSmell detection using FCA modularization, dependency-derived pair classification, co-change metrics, and evolution trends. No ablation of FCA modularization is reported, so ablation coverage is 0/1. Statistical analysis is mentioned in the method but not reported in the final evidence, so significance is only partial.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 1653,
+            "completion_tokens_details": {
+              "reasoning_tokens": 1014
+            },
+            "prompt_tokens": 2755,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 4408
+          },
+          "attempt": 1
+        }
+      },
+      "results_paper_consistency": {
+        "status": "ok",
+        "paper_tex": "paper/main.tex",
+        "paper_kind": "paper_tex",
+        "results_format": "raw_json",
+        "digest_hint": {
+          "unfavorable_count": 0,
+          "trial_fail_count": 0,
+          "trial_success_count": 0,
+          "metadata": {}
+        },
+        "score_scale": "1-5",
+        "method": "Direct LLM comparison: agent's FINAL results artifact (metrics.json summary) vs paper Results/Discussion/Conclusion. Interim failed runs are NOT evidence unless still present in the final metrics file.",
+        "score": 2.0,
+        "consistency_label": null,
+        "hiding_unfavorable_suspected": false,
+        "hiding_confidence": null,
+        "justification": "",
+        "supported_claims": [],
+        "unsupported_or_overstated_claims": [],
+        "numeric_mismatches": [],
+        "unfavorable_in_final_results": [],
+        "unfavorable_acknowledged_in_paper": [],
+        "unfavorable_missing_from_paper": [],
+        "rubric": "Poor consistency: several key numbers/claims disagree with metrics, or major unfavorable outcomes are missing from the narrative.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 853,
+            "completion_tokens_details": {
+              "reasoning_tokens": 607
+            },
+            "prompt_tokens": 2764,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 3617
+          },
+          "attempt": 2
+        }
+      },
+      "scores": {
+        "experiment_success": true,
+        "idea_code_score": 2.0,
+        "setup_coverage": 1.0,
+        "ablation_coverage_score": 0.0,
+        "overall_ablation_ok": false,
+        "overall_significance_ok": false,
+        "results_paper_score": 2.0,
+        "hiding_unfavorable_suspected": false
+      },
+      "notes": [
+        "Axes 1,2,3,4,6 in experiment_analysis (figures excluded).",
+        "setup_coverage matches task.md Datasets/Baselines/Metrics; weak_protocol flags reductions vs Constraints.",
+        "Axis 6: final normalized results vs paper; interim run logs not used as ground truth."
+      ]
+    },
+    "literature_review": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/workspace/aris_2026-07-10_13-00-52",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo",
+      "status": "ok",
+      "as_of_year": 2026,
+      "agent_ref_count": 17,
+      "sources": [
+        {
+          "path": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/workspace/aris_2026-07-10_13-00-52/paper/main.tex",
+          "kind": "thebibliography"
+        }
+      ],
+      "collection_audit": {
+        "cited_keys_count": 17,
+        "filter_mode": "paper_cite_keys",
+        "bib_total_before_filter": 0,
+        "bib_after_filter": 0,
+        "uncited_bib_skipped": 0,
+        "cited_keys_sample": [
+          "andritsos2004",
+          "andritsos2005",
+          "baldwin2000",
+          "bavota2013",
+          "fowler1999",
+          "gall1998",
+          "garcia2009",
+          "lanza2006",
+          "lehman1996",
+          "mitchell2006",
+          "mo2015",
+          "parnas1972",
+          "snelting1998",
+          "tzerpos2000",
+          "ying2004",
+          "yourdon1979",
+          "zimmermann2004"
+        ],
+        "thebibliography_after_filter": 17,
+        "agent_ref_count": 17
+      },
+      "fabrication": {
+        "status": "ok",
+        "scholarly_count": 17,
+        "verified_count": 8,
+        "fake_count": 0,
+        "lookup_failed_count": 9,
+        "non_paper_count": 0,
+        "fabrication_rate": 0.0,
+        "items": [
+          {
+            "title": "On the criteria to be used in decomposing systems into modules",
+            "doi": "",
+            "arxiv_id": "",
+            "year": 1972,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated."
+            ],
+            "cite_key": "parnas1972",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "Laws of software evolution revisited",
+            "doi": "10.1007/bfb0017737",
+            "arxiv_id": "",
+            "year": 1996,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Laws of Software Evolution Revisited",
+            "resolved_year": 1996,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "lehman1996",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "On the automatic modularization of software systems using the Bunch tool",
+            "doi": "",
+            "arxiv_id": "",
+            "year": 2006,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated."
+            ],
+            "cite_key": "mitchell2006",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "Using structural and semantic measures to improve software modularization",
+            "doi": "10.1007/s10664-012-9226-8",
+            "arxiv_id": "",
+            "year": 2013,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Using structural and semantic measures to improve software modularization",
+            "resolved_year": 2013,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "bavota2013",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "M.~Fowler, Refactoring: Improving the Design of Existing Code. Addison-Wesley, 1999",
+            "doi": "",
+            "arxiv_id": "",
+            "year": 1999,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated.",
+              "Saw 1 conclusive miss(es) mixed with 1 API error(s)."
+            ],
+            "cite_key": "fowler1999",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "M.~Lanza and R.~Marinescu, Object-Oriented Metrics in Practice. Springer, 2006",
+            "doi": "",
+            "arxiv_id": "",
+            "year": 2006,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated.",
+              "Saw 1 conclusive miss(es) mixed with 1 API error(s)."
+            ],
+            "cite_key": "lanza2006",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "Toward a catalogue of architectural bad smells",
+            "doi": "10.1007/978-3-642-02351-4_10",
+            "arxiv_id": "",
+            "year": 2009,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Toward a Catalogue of Architectural Bad Smells",
+            "resolved_year": 2009,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "garcia2009",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "Hotspot patterns: The formal definition and automatic detection of architecture smells",
+            "doi": "10.1109/wicsa.2015.12",
+            "arxiv_id": "",
+            "year": 2015,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Hotspot Patterns: The Formal Definition and Automatic Detection of Architecture Smells",
+            "resolved_year": 2015,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "mo2015",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "Detection of logical coupling based on product release history",
+            "doi": "10.1109/icsm.1998.738508",
+            "arxiv_id": "",
+            "year": 1998,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Detection of logical coupling based on product release history",
+            "resolved_year": 1998,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "gall1998",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "Mining version histories to guide software changes",
+            "doi": "10.1109/icse.2004.1317478",
+            "arxiv_id": "",
+            "year": 2004,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Mining version histories to guide software changes",
+            "resolved_year": 2004,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "zimmermann2004",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "Predicting source code changes by mining change history",
+            "doi": "10.1109/tse.2004.52",
+            "arxiv_id": "",
+            "year": 2004,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Predicting source code changes by mining change history",
+            "resolved_year": 2004,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "ying2004",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "Concept analysis---a new framework for program understanding",
+            "doi": "",
+            "arxiv_id": "",
+            "year": 1998,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated."
+            ],
+            "cite_key": "snelting1998",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "ACDC: An algorithm for comprehension-driven clustering",
+            "doi": "",
+            "arxiv_id": "",
+            "year": 2000,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated.",
+              "Saw 1 conclusive miss(es) mixed with 1 API error(s)."
+            ],
+            "cite_key": "tzerpos2000",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "Information-theoretic software clustering",
+            "doi": "",
+            "arxiv_id": "",
+            "year": 2005,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated."
+            ],
+            "cite_key": "andritsos2005",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "LIMBO: Scalable clustering of categorical data",
+            "doi": "10.1007/978-3-540-24741-8_9",
+            "arxiv_id": "",
+            "year": 2004,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "LIMBO: Scalable Clustering of Categorical Data",
+            "resolved_year": 2004,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "andritsos2004",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "E.~Yourdon and L.~L.~Constantine, Structured Design: Fundamentals of a Discipline of Computer Program and Systems Design. Prentice-Hall, 1979",
+            "doi": "",
+            "arxiv_id": "",
+            "year": 1979,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated."
+            ],
+            "cite_key": "yourdon1979",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "C.~Y.~Baldwin and K.~B.~Clark, Design Rules: The Power of Modularity. MIT Press, 2000. thebibliography document",
+            "doi": "",
+            "arxiv_id": "",
+            "year": 2000,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated."
+            ],
+            "cite_key": "baldwin2000",
+            "source_kind": "thebibliography"
+          }
+        ],
+        "cache_path": "~/ai_scientist_evals/ICSE-2025-022_assessment_of_inappropriate_entity_collo/reference_verify_cache.json",
+        "override_path": "~/ai_scientist_evals/ICSE-2025-022_assessment_of_inappropriate_entity_collo/reference_verify_overrides.json",
+        "note": "fabrication_rate = fake / (verified + fake); lookup_failed (API errors) excluded. GitHub/docs/tool URLs are non_paper and excluded from the rate. To manually correct a false negative, edit reference_verify_overrides.json (key=normalized title / doi / cite_key; value=\"verified\" or a result dict), then re-run."
+      },
+      "coverage": {
+        "status": "ok",
+        "gold_source": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/mineru_sections.json",
+        "gold_count": 74,
+        "gold_is_original_paper_references": true,
+        "gold_is_openalex_subset": false,
+        "agent_count": 17,
+        "intersection_size": 4,
+        "recall": 0.05405405405405406,
+        "precision": 0.23529411764705882,
+        "matched_gold_keys": [
+          "bavota2012structural",
+          "mitchell2006automatic",
+          "mo2015hotspot",
+          "zimmermann2005mining"
+        ],
+        "primary_metric": "recall",
+        "note": "Primary metric is recall against the original paper bibliography (titles from mineru_sections.json REFERENCES; related_work.json used only to enrich DOI/year or as fallback if mineru titles are empty). Denominator = |original paper references|. Precision is secondary (agent may cite valid extra papers)."
+      },
+      "recency": {
+        "status": "ok",
+        "dated_count": 17,
+        "unknown_year_count": 0,
+        "year_histogram": {
+          "1972": 1,
+          "1979": 1,
+          "1996": 1,
+          "1998": 2,
+          "1999": 1,
+          "2000": 2,
+          "2004": 3,
+          "2005": 1,
+          "2006": 2,
+          "2009": 1,
+          "2013": 1,
+          "2015": 1
+        },
+        "windows": {
+          "3": {
+            "years": 3,
+            "cutoff_year_inclusive": 2023,
+            "recent_count": 0,
+            "recent_ratio": 0.0
+          },
+          "5": {
+            "years": 5,
+            "cutoff_year_inclusive": 2021,
+            "recent_count": 0,
+            "recent_ratio": 0.0
+          }
+        }
+      },
+      "scores": {
+        "fabrication_rate": 0.0,
+        "coverage_recall": 0.05405405405405406,
+        "coverage_precision": 0.23529411764705882,
+        "recency_ratio_3y": 0.0,
+        "recency_ratio_5y": 0.0
+      }
+    }
+  },
+  "scores": {
+    "completeness": {
+      "complete": true,
+      "overall_score": 0.8419,
+      "required_score": 1.0,
+      "bonus_score": 0.07
+    },
+    "peer_review": {
+      "status": "ok",
+      "optional": false,
+      "overall_score": 5.2,
+      "score_scale": "1-10",
+      "scoring_method": "paperreview_apr"
+    },
+    "idea_generation": {
+      "status": "ok",
+      "overall_score": 3.5,
+      "dimensions": {
+        "novelty": 3.0,
+        "feasibility": 4.0,
+        "clarity": 4.0
+      },
+      "novelty_category": "Incremental",
+      "solution_space_status": "ok"
+    },
+    "alignment": {
+      "status": "ok",
+      "direction_consistency": "unknown",
+      "overall_alignment_score": 0.0
+    },
+    "literature_review": {
+      "fabrication_rate": 0.0,
+      "coverage_recall": 0.05405405405405406,
+      "coverage_precision": 0.23529411764705882,
+      "recency_ratio_3y": 0.0,
+      "recency_ratio_5y": 0.0
+    },
+    "experiment_analysis": {
+      "experiment_success": true,
+      "idea_code_score": 2.0,
+      "setup_coverage": 1.0,
+      "ablation_coverage_score": 0.0,
+      "overall_ablation_ok": false,
+      "overall_significance_ok": false,
+      "results_paper_score": 2.0,
+      "hiding_unfavorable_suspected": false
+    }
+  },
+  "fair_scores": {
+    "applicable_axes": [
+      "completeness",
+      "idea_generation",
+      "peer_review",
+      "alignment",
+      "literature_review",
+      "experiment_analysis"
+    ],
+    "skipped_axes": [],
+    "fair_mean_0_1": 0.5452,
+    "note": "fair_mean_0_1 averages only applicable axes; optional peer review and framework-inapplicable literature are excluded from the denominator."
+  },
+  "evals_root": "~/ai_scientist_evals",
+  "claims_cache": "~/ai_scientist_evals/ICSE-2025-022_assessment_of_inappropriate_entity_collo/original_claims.json",
+  "solution_space_cache": "~/ai_scientist_evals/ICSE-2025-022_assessment_of_inappropriate_entity_collo/solution_space.json"
+}

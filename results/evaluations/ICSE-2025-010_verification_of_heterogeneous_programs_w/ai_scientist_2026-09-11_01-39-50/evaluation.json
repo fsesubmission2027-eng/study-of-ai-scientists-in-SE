@@ -1,0 +1,911 @@
+{
+  "run_dir": "~/ai_scientist_inputs/ICSE-2025-010_verification_of_heterogeneous_programs_w/workspace/ai_scientist_2026-09-11_01-39-50",
+  "task_dir": "~/ai_scientist_inputs/ICSE-2025-010_verification_of_heterogeneous_programs_w",
+  "framework": "ai_scientist",
+  "fairness_audit": [
+    {
+      "axis": "completeness",
+      "was_unfair": "Required both paper.tex AND paper.pdf; any tool missing one failed equally.",
+      "fix": "Paper gate: PDF=1.0; TeX-only=0.5; ``complete`` requires PDF."
+    },
+    {
+      "axis": "completeness",
+      "was_unfair": "``results`` counted stub/seed JSON (dataset_candidate/metrics.json).",
+      "fix": "``results`` requires substantive numeric results via results_normalize."
+    },
+    {
+      "axis": "experiment_success",
+      "was_unfair": "Only metrics.json; ignored results.json / experiment_results.txt.",
+      "fix": "Framework-ordered result candidates + normalized loaders."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Penalized tools with no bib; airesearcher has no workspace references.",
+      "fix": "literature_applicable=false → status not_applicable; excluded from fair aggregate."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "related_work.json subset as gold made recall hard to interpret.",
+      "fix": "Coverage gold is original paper REFERENCES from mineru; related_work only enriches metadata/fallback."
+    },
+    {
+      "axis": "peer_review",
+      "was_unfair": "Missing Stanford report looked like evaluation failure.",
+      "fix": "status not_provided; optional axis, never counts as tool failure."
+    },
+    {
+      "axis": "paths/find_results",
+      "was_unfair": "Picked downloads/** and sandbox noise (e.g. airesearcher LLVM tree).",
+      "fix": "Exclude downloads/, seeds/, dataset_candidate/, sandbox junk paths."
+    },
+    {
+      "axis": "paths/framework_noise",
+      "was_unfair": "DeepScientist .deepscientist_npm / runtime / skills templates counted as code/paper/results.",
+      "fix": "FRAMEWORK_NOISE_DIRS+markers; quest worktree + eval_output results; paper md drafts; reject template tex."
+    },
+    {
+      "axis": "paths/paper_tex",
+      "was_unfair": "tiny_scientist / ACL runs store paper under latex/*.tex; evaluator only looked at paper/main.tex.",
+      "fix": "latex/**/*.tex with substantive-body heuristic; find_paper_document uses same rules."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Entire custom.bib (300+ anthology entries) verified when paper had zero \\cite commands.",
+      "fix": "collect_agent_references filters bib to in-text cite keys; skips uncited bulk bib (>40 entries)."
+    },
+    {
+      "axis": "paths/ai_scientist_summaries",
+      "was_unfair": "AI Scientist can persist substantive results and paper-like drafts in *_summary.json logs rather than paper/main.tex or results/**/*.json.",
+      "fix": "Treat draft_summary/research_summary as weak paper documents and summary JSONs as result candidates."
+    },
+    {
+      "axis": "framework/ai_scientist_v2",
+      "was_unfair": "Manifest framework ``ai_scientist_v2`` fell through to profile ``unknown``, skipping AI-Scientist idea/result path priorities.",
+      "fix": "Normalize ``ai_scientist_v2`` (and common aliases) to profile key ``ai_scientist``."
+    },
+    {
+      "axis": "idea_generation",
+      "was_unfair": "plan.md/todos.md weak proxies scored same as structured idea.json.",
+      "fix": "Framework idea_priority tried first; missing idea → not_applicable where appropriate."
+    }
+  ],
+  "generated_at": "2026-10-01T15:12:57",
+  "axes": [
+    "alignment",
+    "completeness",
+    "experiment_analysis",
+    "idea_generation",
+    "literature_review",
+    "peer_review"
+  ],
+  "results": {
+    "completeness": {
+      "framework": "ai_scientist",
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-010_verification_of_heterogeneous_programs_w/workspace/ai_scientist_2026-09-11_01-39-50",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-010_verification_of_heterogeneous_programs_w",
+      "complete": false,
+      "required_score": 0.75,
+      "bonus_score": 0.03,
+      "overall_score": 0.6,
+      "missing": [
+        "paper"
+      ],
+      "required": {
+        "idea": {
+          "path": "session/idea.json",
+          "bytes": 10439,
+          "via": "candidate"
+        },
+        "code": {
+          "count": 11,
+          "files": [
+            {
+              "path": "experiments/2026-09-11_01-43-01_verification_of_heterogeneous_programs_with_inac_attempt_0/logs/0-run/experiment_results/experiment_602ea745121449c191105b5e9364f1c8_proc_5899/experiment_code.py",
+              "bytes": 12103,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-09-11_01-43-01_verification_of_heterogeneous_programs_with_inac_attempt_0/logs/0-run/experiment_results/experiment_602ea745121449c191105b5e9364f1c8_proc_5899/plotting_code.py",
+              "bytes": 4149,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-09-11_01-43-01_verification_of_heterogeneous_programs_with_inac_attempt_0/logs/0-run/experiment_results/experiment_942912d142074c1bbaf8545e24dd7489_proc_5899/experiment_code.py",
+              "bytes": 15127,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-09-11_01-43-01_verification_of_heterogeneous_programs_with_inac_attempt_0/logs/0-run/experiment_results/experiment_942912d142074c1bbaf8545e24dd7489_proc_5899/plotting_code.py",
+              "bytes": 5832,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-09-11_01-43-01_verification_of_heterogeneous_programs_with_inac_attempt_0/logs/0-run/experiment_results/experiment_cd9ec52027b24f5b83cdddc82f029c7f_proc_5896/experiment_code.py",
+              "bytes": 9316,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-09-11_01-43-01_verification_of_heterogeneous_programs_with_inac_attempt_0/logs/0-run/experiment_results/experiment_cd9ec52027b24f5b83cdddc82f029c7f_proc_5896/plotting_code.py",
+              "bytes": 5798,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-09-11_01-43-01_verification_of_heterogeneous_programs_with_inac_attempt_0/logs/0-run/experiment_results/experiment_d790f5a94a1142ba983e2e787c16ed71_proc_5896/experiment_code.py",
+              "bytes": 13490,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-09-11_01-43-01_verification_of_heterogeneous_programs_with_inac_attempt_0/logs/0-run/experiment_results/experiment_d790f5a94a1142ba983e2e787c16ed71_proc_5896/plotting_code.py",
+              "bytes": 5157,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-09-11_01-43-01_verification_of_heterogeneous_programs_with_inac_attempt_0/logs/0-run/experiment_results/experiment_dba55aeba54f4de68d9f6c27851d1c0e_proc_5898/experiment_code.py",
+              "bytes": 12075,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-09-11_01-43-01_verification_of_heterogeneous_programs_with_inac_attempt_0/logs/0-run/experiment_results/experiment_dba55aeba54f4de68d9f6c27851d1c0e_proc_5898/plotting_code.py",
+              "bytes": 4366,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-09-11_01-43-01_verification_of_heterogeneous_programs_with_inac_attempt_0/logs/0-run/stage_1_initial_implementation_1_preliminary/best_solution_d34246d294ff402eb22c53c70f0c954c.py",
+              "bytes": 14024,
+              "via": "glob"
+            }
+          ]
+        },
+        "results": {
+          "substantive": true,
+          "normalized_path": "experiments/2026-09-11_01-43-01_verification_of_heterogeneous_programs_with_inac_attempt_0/logs/0-run/experiment_results/experiment_942912d142074c1bbaf8545e24dd7489_proc_5899/experiment_data.npy",
+          "numeric_leaf_count": 254,
+          "discovered_files": [
+            {
+              "path": "session/data/metrics.json",
+              "bytes": 587,
+              "via": "candidate"
+            },
+            {
+              "path": "experiments/2026-09-11_01-43-01_verification_of_heterogeneous_programs_with_inac_attempt_0/logs/0-run/experiment_results/experiment_602ea745121449c191105b5e9364f1c8_proc_5899/experiment_data.npy",
+              "bytes": 3933,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-09-11_01-43-01_verification_of_heterogeneous_programs_with_inac_attempt_0/logs/0-run/experiment_results/experiment_602ea745121449c191105b5e9364f1c8_proc_5899/test_ground_truth.npy",
+              "bytes": 288,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-09-11_01-43-01_verification_of_heterogeneous_programs_with_inac_attempt_0/logs/0-run/experiment_results/experiment_602ea745121449c191105b5e9364f1c8_proc_5899/test_predictions.npy",
+              "bytes": 448,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-09-11_01-43-01_verification_of_heterogeneous_programs_with_inac_attempt_0/logs/0-run/experiment_results/experiment_602ea745121449c191105b5e9364f1c8_proc_5899/train_acc.npy",
+              "bytes": 368,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-09-11_01-43-01_verification_of_heterogeneous_programs_with_inac_attempt_0/logs/0-run/experiment_results/experiment_602ea745121449c191105b5e9364f1c8_proc_5899/train_loss.npy",
+              "bytes": 368,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-09-11_01-43-01_verification_of_heterogeneous_programs_with_inac_attempt_0/logs/0-run/experiment_results/experiment_602ea745121449c191105b5e9364f1c8_proc_5899/train_losses.npy",
+              "bytes": 608,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-09-11_01-43-01_verification_of_heterogeneous_programs_with_inac_attempt_0/logs/0-run/experiment_results/experiment_602ea745121449c191105b5e9364f1c8_proc_5899/val_acc.npy",
+              "bytes": 368,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-09-11_01-43-01_verification_of_heterogeneous_programs_with_inac_attempt_0/logs/0-run/experiment_results/experiment_602ea745121449c191105b5e9364f1c8_proc_5899/val_loss.npy",
+              "bytes": 368,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-09-11_01-43-01_verification_of_heterogeneous_programs_with_inac_attempt_0/logs/0-run/experiment_results/experiment_602ea745121449c191105b5e9364f1c8_proc_5899/val_losses.npy",
+              "bytes": 608,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-09-11_01-43-01_verification_of_heterogeneous_programs_with_inac_attempt_0/logs/0-run/experiment_results/experiment_942912d142074c1bbaf8545e24dd7489_proc_5899/experiment_data.npy",
+              "bytes": 3208,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-09-11_01-43-01_verification_of_heterogeneous_programs_with_inac_attempt_0/logs/0-run/experiment_results/experiment_942912d142074c1bbaf8545e24dd7489_proc_5899/train_accs.npy",
+              "bytes": 528,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-09-11_01-43-01_verification_of_heterogeneous_programs_with_inac_attempt_0/logs/0-run/experiment_results/experiment_942912d142074c1bbaf8545e24dd7489_proc_5899/train_losses.npy",
+              "bytes": 528,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-09-11_01-43-01_verification_of_heterogeneous_programs_with_inac_attempt_0/logs/0-run/experiment_results/experiment_942912d142074c1bbaf8545e24dd7489_proc_5899/val_accs.npy",
+              "bytes": 528,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-09-11_01-43-01_verification_of_heterogeneous_programs_with_inac_attempt_0/logs/0-run/experiment_results/experiment_942912d142074c1bbaf8545e24dd7489_proc_5899/val_losses.npy",
+              "bytes": 528,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-09-11_01-43-01_verification_of_heterogeneous_programs_with_inac_attempt_0/logs/0-run/experiment_results/experiment_cd9ec52027b24f5b83cdddc82f029c7f_proc_5896/correctness_rate.npy",
+              "bytes": 136,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-09-11_01-43-01_verification_of_heterogeneous_programs_with_inac_attempt_0/logs/0-run/experiment_results/experiment_cd9ec52027b24f5b83cdddc82f029c7f_proc_5896/experiment_data.npy",
+              "bytes": 599,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-09-11_01-43-01_verification_of_heterogeneous_programs_with_inac_attempt_0/logs/0-run/experiment_results/experiment_cd9ec52027b24f5b83cdddc82f029c7f_proc_5896/ground_truth.npy",
+              "bytes": 208,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-09-11_01-43-01_verification_of_heterogeneous_programs_with_inac_attempt_0/logs/0-run/experiment_results/experiment_cd9ec52027b24f5b83cdddc82f029c7f_proc_5896/predictions.npy",
+              "bytes": 208,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-09-11_01-43-01_verification_of_heterogeneous_programs_with_inac_attempt_0/logs/0-run/experiment_results/experiment_cd9ec52027b24f5b83cdddc82f029c7f_proc_5896/verification_times.npy",
+              "bytes": 208,
+              "via": "glob"
+            }
+          ],
+          "metrics_keys_sample": [
+            "synthetic_fallback"
+          ]
+        },
+        "paper": {
+          "tex": null,
+          "pdf": null,
+          "md": null,
+          "json": null,
+          "status": "missing",
+          "score": 0.0
+        }
+      },
+      "bonus": {
+        "experiment_plan": null,
+        "experiment_log": {
+          "path": "ai_scientist_run.log",
+          "bytes": 397494,
+          "via": "glob"
+        },
+        "review": null,
+        "readme": null,
+        "narrative": null,
+        "bib": null
+      },
+      "manifest_status": {
+        "pipeline": false
+      },
+      "gate_scores": {
+        "idea": 1.0,
+        "code": 1.0,
+        "results": 1.0,
+        "paper": 0.0
+      },
+      "fairness": {
+        "gates": [
+          "idea",
+          "code",
+          "results",
+          "paper"
+        ],
+        "paper_gate_rule": "PDF=1.0; TeX-only/md_only/json_only=0.5; complete requires PDF",
+        "results_gate_rule": "substantive numeric results via framework-aware normalize_results",
+        "audit_ref": "framework_profile.FAIRNESS_AUDIT"
+      },
+      "notes": [
+        "Required: idea, code, substantive results, paper (PDF full; TeX/markdown/JSON draft half).",
+        "Stub/seed metrics (e.g. dataset_candidate/metrics.json) do not satisfy results.",
+        "Framework noise (.deepscientist_npm, skills/templates, runtime) is excluded from code/results/paper.",
+        "Manifest status is informational; disk presence is authoritative."
+      ]
+    },
+    "idea_generation": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-010_verification_of_heterogeneous_programs_w/workspace/ai_scientist_2026-09-11_01-39-50",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-010_verification_of_heterogeneous_programs_w",
+      "idea_path": "~/ai_scientist_inputs/ICSE-2025-010_verification_of_heterogeneous_programs_w/workspace/ai_scientist_2026-09-11_01-39-50/session/idea.json",
+      "status": "ok",
+      "dimensions": {
+        "novelty": {
+          "score": 1.0,
+          "justification": "The idea states only the research question and constraints, e.g. 'CBMC must be used as the backend verifier' and compares 'IDA Pro' and 'Ghidra', but no core method or contribution is introduced beyond existing tools.",
+          "rubric": "Existing: the idea's core method is already clearly present or solved in the Solution Space; only tiny parameter / test-case changes.",
+          "category": "Existing",
+          "nearest_solution_space_ids": [
+            "R16",
+            "R6",
+            "R12",
+            "R19"
+          ],
+          "differentiation": "The artifact does not propose any new verification method; it only describes an experiment setup using existing tools. Its named components are already present in the Solution Space: CBMC as backend verifier, IDA Pro/Ghidra as decompilers, and SV-COMP benchmarks/toolchain."
+        },
+        "feasibility": {
+          "score": 2.0,
+          "justification": "The experimental pipeline is concrete but heavy, requiring construction of RISC-V assembly, missing-function, and binary tasks with 'riscv64-unknown-elf-gcc' and a 'timeout of 3000 seconds per'",
+          "rubric": "Extreme engineering barrier: requires building complex low-level tooling from scratch (custom compiler plugins, new vulnerability execution sandboxes), or an extremely heavy experimental pipeline with multi-month development."
+        },
+        "clarity": {
+          "score": null,
+          "justification": "",
+          "rubric": null
+        }
+      },
+      "overall_score": 1.5,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "novelty",
+        "feasibility",
+        "clarity"
+      ],
+      "solution_space": {
+        "status": "ok",
+        "paper_count": 42,
+        "entry_count": 42,
+        "cache_hit": false,
+        "source_file": "~/ai_scientist_inputs/ICSE-2025-010_verification_of_heterogeneous_programs_w/mineru_sections.json",
+        "stats": {
+          "papers": 42,
+          "extracted": 42,
+          "usable_abstracts": 19,
+          "citation_meta_abstracts": 0,
+          "missing_abstracts": 23,
+          "mineru_titles": 38,
+          "related_work_titles": 26,
+          "abstracts_attached": 19,
+          "related_work_extras": 4,
+          "batches": 3
+        },
+        "error": null
+      },
+      "notes": [
+        "Scores the intermediate idea artifact (not the final paper).",
+        "Dimensions: novelty, feasibility, clarity (each 1-5). Excitement removed.",
+        "Novelty is scored against a Solution Space built from mineru REFERENCES titles (+ related_work.json abstracts when matched)."
+      ],
+      "idea_via": "candidate",
+      "idea_relative": "session/idea.json",
+      "summary": "",
+      "strengths": [],
+      "weaknesses": [],
+      "llm_meta": {
+        "model": "deepseek-v4-pro-0813",
+        "base_url": "https://api-sg.umodelverse.ai/v1",
+        "usage": {
+          "completion_tokens": 2212,
+          "completion_tokens_details": {
+            "reasoning_tokens": 1974
+          },
+          "prompt_tokens": 496,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "total_tokens": 2708
+        },
+        "attempt": 0
+      }
+    },
+    "peer_review": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-010_verification_of_heterogeneous_programs_w/workspace/ai_scientist_2026-09-11_01-39-50",
+      "review_report": null,
+      "paper_pdf": null,
+      "paper_tex": null,
+      "status": "not_provided",
+      "dimensions": {},
+      "overall_score": null,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "soundness",
+        "significance",
+        "novelty",
+        "presentation",
+        "credibility"
+      ],
+      "notes": [
+        "Stanford Agentic Reviewer (paperreview.ai): manual download to artifacts/peer_review/stanford_apr.md, or pass --auto-paperreview.",
+        "Dimensions: soundness, significance, novelty, presentation, credibility (each 1-5)."
+      ],
+      "paperreview": {
+        "status": "skipped",
+        "reason": "no_pdf"
+      },
+      "optional": true,
+      "hint": "Optional external review (Stanford APR). Upload paper/main.pdf to https://paperreview.ai/ , save review to ~/ai_scientist_inputs/ICSE-2025-010_verification_of_heterogeneous_programs_w/workspace/ai_scientist_2026-09-11_01-39-50/artifacts/peer_review/stanford_apr.md"
+    },
+    "alignment": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-010_verification_of_heterogeneous_programs_w/workspace/ai_scientist_2026-09-11_01-39-50",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-010_verification_of_heterogeneous_programs_w",
+      "status": "missing_agent_paper_or_metrics",
+      "original": {
+        "status": "ok",
+        "task_dir": "~/ai_scientist_inputs/ICSE-2025-010_verification_of_heterogeneous_programs_w",
+        "paper_title": "Hetrify: Efficient Verification of Heterogeneous Programs on RISC-V",
+        "task_id": "ICSE-2025-010",
+        "selection": {
+          "num_blocks": 12,
+          "total_chars": 31998,
+          "inferred_roles": {
+            "abstract": 1,
+            "introduction": 1,
+            "experiment": 6,
+            "method": 1,
+            "discussion": 2,
+            "conclusion": 1
+          },
+          "mineru_raw_keys": {
+            "field:abstract": 1,
+            "field:introduction": 1,
+            "field:experiment": 1,
+            "other": 7,
+            "discussion": 1,
+            "conclusion": 1
+          },
+          "infer_reasons": {
+            "top_level_field": 3,
+            "body_override": 2,
+            "title": 5,
+            "inherited": 2
+          },
+          "rescued_from_other": 7,
+          "note": "mineru key is unreliable; blocks are selected by title/body/inheritance. rescued_from_other counts sections labeled other but treated as typed roles."
+        },
+        "claims": [
+          {
+            "id": "C1",
+            "statement": "Hetrify achieves 100% correct verification rate for correct RISC-V assembly programs at unwind factor 20.",
+            "direction": "improves",
+            "metric_names": [
+              "correct_rate"
+            ],
+            "evidence_quote": "For correct programs, a 100% success rate was achieved at an unwind factor of 20",
+            "confidence": 0.95
+          },
+          {
+            "id": "C2",
+            "statement": "Hetrify reaches 96% correct rate and 0% error rate for incorrect RISC-V assembly programs with no unwind limit.",
+            "direction": "improves",
+            "metric_names": [
+              "correct_rate",
+              "error_rate"
+            ],
+            "evidence_quote": "reaching 96% with no unwind limit",
+            "confidence": 0.95
+          },
+          {
+            "id": "C3",
+            "statement": "Post-conversion verification of large heterogeneous programs with missing source functions reaches 100% correct rate with no errors.",
+            "direction": "improves",
+            "metric_names": [
+              "correct_rate",
+              "error_rate"
+            ],
+            "evidence_quote": "post-conversion verification achieved a perfect correctness rate of 100% with no errors",
+            "confidence": 0.95
+          }
+        ],
+        "metrics": [
+          {
+            "name": "correct_rate",
+            "value": 100.0,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "RISC-V assembly verification, correct programs, unwind factor 20",
+            "is_sota_or_best": true,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "Correct Rate 100%",
+            "confidence": 0.95
+          },
+          {
+            "name": "correct_rate",
+            "value": 96.0,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "RISC-V assembly verification, incorrect programs, no unwind limit",
+            "is_sota_or_best": true,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "Correct Rate 96%",
+            "confidence": 0.95
+          },
+          {
+            "name": "error_rate",
+            "value": 0.0,
+            "unit": "%",
+            "higher_is_better": false,
+            "setting": "RISC-V assembly verification, incorrect programs, no unwind limit",
+            "is_sota_or_best": true,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "Error Rate 0%",
+            "confidence": 0.95
+          }
+        ],
+        "overall_conclusion": "Hetrify enables effective RISC-V low-level and heterogeneous program verification by converting binaries and assembly into verifiable C code, achieving high verification rates and zero verification errors in key experimental settings.",
+        "comparable_notes": "Experiments used CBMC v5.95 on Ubuntu 22.04 with a 3000-second timeout. Assembly programs came from SV-COMP 2024, and large heterogeneous programs from SV-COMP 2024/2023. Correct programs used fixed unwind factors while incorrect programs used higher or no unwind bounds.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 1687,
+            "completion_tokens_details": {
+              "reasoning_tokens": 964
+            },
+            "prompt_tokens": 10423,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 12110
+          },
+          "attempt": 1
+        },
+        "cache_hit": false
+      },
+      "agent": {
+        "status": "missing_agent_paper_or_metrics",
+        "run_dir": "~/ai_scientist_inputs/ICSE-2025-010_verification_of_heterogeneous_programs_w/workspace/ai_scientist_2026-09-11_01-39-50"
+      }
+    },
+    "experiment_analysis": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-010_verification_of_heterogeneous_programs_w/workspace/ai_scientist_2026-09-11_01-39-50",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-010_verification_of_heterogeneous_programs_w",
+      "status": "ok",
+      "metrics_path": null,
+      "experiment_success": {
+        "status": "failed_or_incomplete",
+        "success": false,
+        "metrics_path": null,
+        "absolute_metrics_path": null,
+        "checks": {
+          "has_results_file": false,
+          "non_stub": false,
+          "numeric_leaf_count": 0,
+          "min_numeric_ok": false
+        },
+        "manifest_hints": {
+          "status": {
+            "pipeline": false
+          },
+          "returncode": 1,
+          "benchmark_complete": null,
+          "artifacts_metrics_flag": false
+        },
+        "warnings": [
+          "manifest.returncode=1"
+        ],
+        "suspicious_values": [],
+        "note": "success=true requires substantive results (framework-aware path) with >=3 numeric leaves. Supports metrics.json, results.json, experiment_results.txt, etc. Manifest returncode/benchmark_complete are soft warnings only."
+      },
+      "idea_code_consistency": {
+        "status": "ok",
+        "idea_path": "session/idea.json",
+        "code_files": [
+          "experiments/2026-09-11_01-43-01_verification_of_heterogeneous_programs_with_inac_attempt_0/logs/0-run/experiment_results/experiment_602ea745121449c191105b5e9364f1c8_proc_5899/experiment_code.py",
+          "experiments/2026-09-11_01-43-01_verification_of_heterogeneous_programs_with_inac_attempt_0/logs/0-run/experiment_results/experiment_602ea745121449c191105b5e9364f1c8_proc_5899/plotting_code.py",
+          "experiments/2026-09-11_01-43-01_verification_of_heterogeneous_programs_with_inac_attempt_0/logs/0-run/experiment_results/experiment_942912d142074c1bbaf8545e24dd7489_proc_5899/experiment_code.py",
+          "experiments/2026-09-11_01-43-01_verification_of_heterogeneous_programs_with_inac_attempt_0/logs/0-run/experiment_results/experiment_942912d142074c1bbaf8545e24dd7489_proc_5899/plotting_code.py"
+        ],
+        "score_scale": "1-5",
+        "score": 1.0,
+        "label": "severe_mismatch",
+        "justification": "The experiment code implements a PyTorch neural-network classifier trained on syntactic source-code features to predict verifier labels, while the idea requires a formal verification method for heterogeneous programs with inaccessible source code using CBMC as a backend on RISC-V assembly, missing-function C libraries, and binary executables. There is no implementation of the stated verification approach, no CBMC integration, no RISC-V compilation or binary handling, and no comparison against IDA Pro or Ghidra. The evaluation uses synthetic and real C file features for ML accuracy/loss rather than the required correctness/error-rate verification protocol.",
+        "matched_elements": [
+          "Attempts to locate SV-COMP-like dataset directories",
+          "Uses true/false unreachability labels from file paths"
+        ],
+        "missing_or_divergent_elements": [
+          "CBMC backend verification",
+          "RISC-V assembly and binary program handling",
+          "Missing-function/library construction from source code",
+          "IDA Pro and Ghidra baselines",
+          "Correctness Rate and Error Rate metrics as specified",
+          "Formal verification algorithm or semantic equivalence method",
+          "Timeout/unwind-factor protocol",
+          "Large heterogeneous C programs with missing functions"
+        ],
+        "rubric": "Severe mismatch: code implements a different problem/method than the idea, or is unrelated boilerplate.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 411,
+            "completion_tokens_details": {
+              "reasoning_tokens": 134
+            },
+            "prompt_tokens": 5022,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 5433
+          },
+          "attempt": 0
+        }
+      },
+      "setup_coverage": {
+        "status": "ok",
+        "overall_coverage": 0.6666666666666666,
+        "datasets": {
+          "gold_count": 3,
+          "hit_count": 2,
+          "miss_count": 1,
+          "coverage": 0.6666666666666666,
+          "hits": [
+            "RISC-V Assembly Programs from SV-COMP",
+            "Large Heterogeneous C Programs with Missing Functions"
+          ],
+          "misses": [
+            "RISC-V Binary Programs"
+          ]
+        },
+        "baselines": {
+          "gold_count": 3,
+          "hit_count": 1,
+          "miss_count": 2,
+          "coverage": 0.3333333333333333,
+          "hits": [
+            "Direct CBMC verification"
+          ],
+          "misses": [
+            "IDA Pro",
+            "Ghidra"
+          ]
+        },
+        "metrics": {
+          "gold_count": 2,
+          "hit_count": 2,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "Correctness Rate",
+            "Error Rate"
+          ],
+          "misses": []
+        },
+        "agent_protocol": {},
+        "gold_protocol": {},
+        "dataset_dirs": [
+          "dataset_candidate"
+        ],
+        "flags": {
+          "weaker_baseline_suspected": true,
+          "weak_protocol": [],
+          "synthetic_data": "synthetic_allowed_by_task",
+          "gold_allows_synthetic": true
+        },
+        "gold_sources": [
+          "~/ai_scientist_inputs/ICSE-2025-010_verification_of_heterogeneous_programs_w/task.md",
+          "~/ai_scientist_inputs/ICSE-2025-010_verification_of_heterogeneous_programs_w/metadata.json"
+        ],
+        "note": "Coverage is name/alias matching against task.md Datasets/Baselines/Metrics. weak_protocol flags large reductions in trials/timeout vs Constraints. Synthetic corpora are not penalized when the task itself requires synthesis."
+      },
+      "ablation_significance": {
+        "status": "ok",
+        "idea_path": "session/idea.json",
+        "significance_signals_rule_based": {
+          "signals": [
+            "file:stats.py:scipy.stats"
+          ],
+          "artifact_paths": [
+            ".container-home/.local/lib/python3.11/site-packages/scipy/stats/stats.py",
+            ".container-home/.local/lib/python3.11/site-packages/sklearn/utils/stats.py"
+          ],
+          "has_any_significance_artifact": true
+        },
+        "evidence_format": null,
+        "study_type": "empirical_comparison",
+        "components": [
+          {
+            "name": "Proposed heterogeneous-program verification approach",
+            "role": "method",
+            "ablation_expected": false,
+            "significance_expected": true,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "The idea does not decompose the proposed approach into removable submodules, so component ablation is not applicable; baseline comparisons are the primary empirical evidence.",
+            "significance_status": "missing",
+            "significance_evidence": "No CI, bootstrap, p-value, or paired comparison across the 100/30 task sets appears in the final metrics or provided code; the provided code trains a source-level classifier rather than reporting the proposed verification comparisons."
+          },
+          {
+            "name": "Direct CBMC verification with stubs",
+            "role": "baseline",
+            "ablation_expected": false,
+            "significance_expected": true,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "Baseline comparison, not a removable module; no ablation expected.",
+            "significance_status": "missing",
+            "significance_evidence": "No statistical comparison with proposed method is present; final results are empty."
+          },
+          {
+            "name": "IDA Pro decompiler baseline",
+            "role": "baseline",
+            "ablation_expected": false,
+            "significance_expected": true,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "Baseline comparison, not ablation target.",
+            "significance_status": "missing",
+            "significance_evidence": "No correctness-rate comparison or statistical test with IDA Pro is present."
+          },
+          {
+            "name": "Ghidra decompiler baseline",
+            "role": "baseline",
+            "ablation_expected": false,
+            "significance_expected": true,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "Baseline comparison, not ablation target.",
+            "significance_status": "missing",
+            "significance_evidence": "No correctness-rate comparison or statistical test with Ghidra is present."
+          },
+          {
+            "name": "RISC-V Assembly Programs from SV-COMP",
+            "role": "dataset",
+            "ablation_expected": false,
+            "significance_expected": false,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "Dataset split/benchmark partition, not a method component requiring ablation.",
+            "significance_status": "not_required",
+            "significance_evidence": "Descriptive benchmark results need no separate significance test at component level."
+          },
+          {
+            "name": "Large Heterogeneous C Programs with Missing Functions",
+            "role": "dataset",
+            "ablation_expected": false,
+            "significance_expected": false,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "Dataset split/benchmark partition, not a method component requiring ablation.",
+            "significance_status": "not_required",
+            "significance_evidence": "Descriptive benchmark results need no separate significance test at component level."
+          },
+          {
+            "name": "RISC-V Binary Programs dataset",
+            "role": "dataset",
+            "ablation_expected": false,
+            "significance_expected": false,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "Dataset split/benchmark partition, not a method component requiring ablation.",
+            "significance_status": "not_required",
+            "significance_evidence": "Descriptive benchmark results need no separate significance test at component level."
+          }
+        ],
+        "ablation_coverage_score": 1.0,
+        "overall_ablation_ok": true,
+        "overall_significance_ok": false,
+        "summary": "The planned study is an empirical comparison of a proposed verification approach against CBMC-stub, IDA Pro, and Ghidra baselines on SV-COMP-derived datasets. No removable method submodules are specified, so no component ablations are expected. However, the provided experiment evidence does not report the planned verification comparisons or any statistical tests/CIs; final results are empty and the code appears to train an unrelated source-level ML classifier. Statistical evidence for baseline differences is therefore missing.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 3500,
+            "completion_tokens_details": {
+              "reasoning_tokens": 3500
+            },
+            "prompt_tokens": 3044,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 6544
+          },
+          "attempt": 0
+        }
+      },
+      "results_paper_consistency": {
+        "status": "missing_metrics"
+      },
+      "scores": {
+        "experiment_success": false,
+        "idea_code_score": 1.0,
+        "setup_coverage": 0.6666666666666666,
+        "ablation_coverage_score": 1.0,
+        "overall_ablation_ok": true,
+        "overall_significance_ok": false,
+        "results_paper_score": null,
+        "hiding_unfavorable_suspected": null
+      },
+      "notes": [
+        "Axes 1,2,3,4,6 in experiment_analysis (figures excluded).",
+        "setup_coverage matches task.md Datasets/Baselines/Metrics; weak_protocol flags reductions vs Constraints.",
+        "Axis 6: final normalized results vs paper; interim run logs not used as ground truth."
+      ]
+    },
+    "literature_review": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-010_verification_of_heterogeneous_programs_w/workspace/ai_scientist_2026-09-11_01-39-50",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-010_verification_of_heterogeneous_programs_w",
+      "status": "not_applicable",
+      "as_of_year": 2026,
+      "agent_ref_count": 0,
+      "sources": [],
+      "collection_audit": {
+        "cited_keys_count": 0,
+        "filter_mode": "none",
+        "bib_total_before_filter": 0,
+        "bib_after_filter": 0,
+        "uncited_bib_skipped": 0
+      },
+      "fabrication": null,
+      "coverage": null,
+      "recency": null,
+      "reason": "no_reference_artifacts",
+      "hint": "No literature artifacts found (bib / thebibliography / shortlist / related_work.txt / arxiv index). Marked not_applicable rather than failure — tool may not emit references in-run."
+    }
+  },
+  "scores": {
+    "completeness": {
+      "complete": false,
+      "overall_score": 0.6,
+      "required_score": 0.75,
+      "bonus_score": 0.03
+    },
+    "peer_review": {
+      "status": "not_provided",
+      "optional": true,
+      "overall_score": null,
+      "score_scale": "1-5",
+      "scoring_method": null
+    },
+    "idea_generation": {
+      "status": "ok",
+      "overall_score": 1.5,
+      "dimensions": {
+        "novelty": 1.0,
+        "feasibility": 2.0,
+        "clarity": null
+      },
+      "novelty_category": "Existing",
+      "solution_space_status": "ok"
+    },
+    "alignment": {
+      "status": "missing_agent_paper_or_metrics",
+      "direction_consistency": null,
+      "overall_alignment_score": null
+    },
+    "literature_review": {
+      "fabrication_rate": null,
+      "coverage_recall": null,
+      "recency_ratio_3y": null,
+      "recency_ratio_5y": null
+    },
+    "experiment_analysis": {
+      "experiment_success": false,
+      "idea_code_score": 1.0,
+      "setup_coverage": 0.6666666666666666,
+      "ablation_coverage_score": 1.0,
+      "overall_ablation_ok": true,
+      "overall_significance_ok": false,
+      "results_paper_score": null,
+      "hiding_unfavorable_suspected": null
+    }
+  },
+  "fair_scores": {
+    "applicable_axes": [
+      "completeness",
+      "idea_generation",
+      "experiment_analysis"
+    ],
+    "skipped_axes": [
+      {
+        "axis": "peer_review",
+        "reason": "optional_external_review"
+      },
+      {
+        "axis": "literature_review",
+        "reason": "not_applicable"
+      }
+    ],
+    "fair_mean_0_1": 0.4463,
+    "note": "fair_mean_0_1 averages only applicable axes; optional peer review and framework-inapplicable literature are excluded from the denominator."
+  },
+  "evals_root": "~/ai_scientist_evals",
+  "claims_cache": "~/ai_scientist_evals/ICSE-2025-010_verification_of_heterogeneous_programs_w/original_claims.json",
+  "solution_space_cache": "~/ai_scientist_evals/ICSE-2025-010_verification_of_heterogeneous_programs_w/solution_space.json"
+}

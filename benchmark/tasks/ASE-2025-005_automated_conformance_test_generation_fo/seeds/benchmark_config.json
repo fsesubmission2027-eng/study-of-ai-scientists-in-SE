@@ -1,0 +1,28 @@
+{
+  "forbid_synthetic_pilot": true,
+  "agent_data_note": "Use the pinned WEST branch checkout prepared at /opt/west. The mechanized specification and official conformance suite are repository sources, not a separate downloadable dataset.",
+  "required_metrics": [
+    "test_validity_rate",
+    "generated_test_count",
+    "generation_failures",
+    "engine_execution_failures"
+  ],
+  "benchmark_rules": [
+    "Run a preflight build check before long generation: build or invoke watsup on the included engine-specific specification.",
+    "Use the official reference interpreter or WABT validation as an oracle and report the exact validity definition.",
+    "Use Wasmtime as the required lightweight engine baseline; browser engines are optional because building V8, SpiderMonkey, and JavaScriptCore is too expensive for container startup.",
+    "Keep generation and execution timeout at 3 seconds per test when comparing with the paper.",
+    "Scale the 5 engines x 24 hours protocol down explicitly for an AI-Scientist benchmark run and do not claim a full reproduction.",
+    "Preserve generated .wast files and group failures before counting unique defects."
+  ],
+  "non_goals": [
+    "Building all browser engines during container startup",
+    "Claiming a new engine bug from an untriaged crash or mismatch",
+    "Treating SpecTec main as equivalent to the paper's WEST branch"
+  ],
+  "exclude_from_agent": [
+    "container_setup.sh",
+    "README.md",
+    "benchmark_config.json"
+  ]
+}

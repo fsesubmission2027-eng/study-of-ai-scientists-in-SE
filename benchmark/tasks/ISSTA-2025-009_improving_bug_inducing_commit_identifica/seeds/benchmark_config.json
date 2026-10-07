@@ -1,0 +1,36 @@
+{
+  "forbid_synthetic_pilot": true,
+  "agent_data_note": "Use the mounted LLM4SZZ artifact at `dataset_candidate/llm4szz-issta2025/`. Evaluation JSONs are under `dataset/` (DS_LINUX / DS_GITHUB / DS_APACHE); source under `package/`; paper LLM logs under `package/save_logs/`.",
+  "required_metrics": [
+    "precision",
+    "recall",
+    "f1_score"
+  ],
+  "benchmark_rules": [
+    "Artifact is at `dataset_candidate/llm4szz-issta2025/` (workspace symlink; use for ls/read_file and $LLM4SZZ_HOME / $DS_HOME).",
+    "Primary inputs: dataset/DS_LINUX.json, dataset/DS_GITHUB.json, dataset/DS_APACHE.json, package/llm4szz.py, package/cal_statistics.py.",
+    "Use the provided DS_LINUX, DS_GITHUB, and DS_APACHE datasets as stated in the task.",
+    "Evaluation must follow the paper protocol on the provided combined evaluation sets (including the DS_LINUX evaluation sample shipped in the artifact).",
+    "The method must only use information from the bug-fixing commit patch, commit message, and VCS history.",
+    "Forbidden: fabricating Precision / Recall / F1 that were not measured.",
+    "Follow the paper evaluation protocol (LLM4SZZ vs SZZ variants / NeuralSZZ; three repeats) as stated in the task."
+  ],
+  "non_goals": [
+    "Using a handful of hand-written toy commit pairs as the sole evaluation evidence",
+    "Fabricating Precision / Recall / F1 that were not executed",
+    "Substituting SZZ-generated noisy corpora for the provided developer-annotated DS_LINUX / DS_GITHUB / DS_APACHE sets"
+  ],
+  "dataset_env": {
+    "LLM4SZZ_HOME": "dataset_candidate/llm4szz-issta2025/package",
+    "DS_HOME": "dataset_candidate/llm4szz-issta2025/dataset",
+    "DS_LINUX": "dataset_candidate/llm4szz-issta2025/dataset/DS_LINUX.json",
+    "DS_GITHUB": "dataset_candidate/llm4szz-issta2025/dataset/DS_GITHUB.json",
+    "DS_APACHE": "dataset_candidate/llm4szz-issta2025/dataset/DS_APACHE.json"
+  },
+  "exclude_from_agent": [
+    "container_setup.sh",
+    "README.md",
+    "benchmark_config.json",
+    "requirements.txt"
+  ]
+}

@@ -1,0 +1,98 @@
+{
+  "layout": "icse2025_thanos_dbms_differential_testing",
+  "layout_note": "ICSE 2025 THANOS paper: storage-engine rotation differential testing on MySQL, MariaDB, Percona. Baseline fuzzer sources are pre-cloned; DBMS binaries must be built with AFL++ inside the container.",
+  "workspace_symlink": "dataset_candidate/dbms-differential-testing-tools",
+  "paper_title": "Thanos: DBMS Bug Detection via Storage Engine Rotation Based Differential Testing",
+  "paper_doi": "10.1109/ICSE55347.2025.00001",
+  "thanos_repo": "https://github.com/Thanos2024/Thanos",
+  "thanos_repo_note": "As of 2026-09, GitHub returns 404 — agent may need author artifact or reimplementation from paper.",
+  "read_only": true,
+  "copy_note": "Shared tool clones are read-only. Copy or vendor sources into project/ before patching. Write builds, server datadirs, and metrics under project/ or results/.",
+  "data_roots": {
+    "artifact_root": "dataset_candidate/dbms-differential-testing-tools",
+    "sqlancer": "dataset_candidate/dbms-differential-testing-tools/sqlancer",
+    "sqlsmith": "dataset_candidate/dbms-differential-testing-tools/sqlsmith",
+    "squirrel": "dataset_candidate/dbms-differential-testing-tools/squirrel",
+    "thanos": "dataset_candidate/dbms-differential-testing-tools/thanos",
+    "meta": "dataset_candidate/dbms-differential-testing-tools/.artifact_meta.txt"
+  },
+  "tested_dbms": [
+    {
+      "name": "MySQL",
+      "version_hint": "8.0.x stable",
+      "source": "https://github.com/mysql/mysql-server",
+      "storage_engines_examples": ["InnoDB", "MyISAM", "Memory", "CSV", "Archive"]
+    },
+    {
+      "name": "MariaDB",
+      "version_hint": "10.x stable",
+      "source": "https://github.com/MariaDB/server",
+      "storage_engines_examples": ["InnoDB", "Aria", "MyISAM", "Mroonga", "Archive", "Memory"]
+    },
+    {
+      "name": "Percona Server",
+      "version_hint": "8.0.x stable",
+      "source": "https://github.com/percona/percona-server",
+      "storage_engines_examples": ["InnoDB", "MyISAM", "Memory"]
+    }
+  ],
+  "baseline_tools": [
+    {
+      "name": "SQLancer",
+      "repo": "https://github.com/sqlancer/sqlancer",
+      "role": "metamorphic / logic-bug testing"
+    },
+    {
+      "name": "SQLsmith",
+      "repo": "https://github.com/anse1/sqlsmith",
+      "role": "generation-based crash fuzzing"
+    },
+    {
+      "name": "SQUIRREL",
+      "repo": "https://github.com/s3team/Squirrel",
+      "role": "coverage-guided mutation fuzzing"
+    }
+  ],
+  "instance_counts": {
+    "git_clones_total_approx": "20M",
+    "sqlancer_clone": "13M",
+    "sqlsmith_clone": "1M",
+    "squirrel_clone": "6M",
+    "thanos_clone": "unknown (repo often unavailable)",
+    "mysql_source_plus_build": "5-15GB per DBMS",
+    "full_three_dbms_builds": "15-45GB disk (sources + AFL++ instrumented builds)",
+    "paper_ram_per_dbms_instance": "40GiB",
+    "paper_cpus_per_dbms_instance": 5,
+    "paper_time_per_tool_dbms": "24 hours",
+    "note": "No static SQL dataset — test cases are generated at runtime. Feature-equivalence tables ship with THANOS artifact when available."
+  },
+  "dataset_env": {
+    "DBMS_DIFFERENTIAL_TESTING_TOOLS_HOME": "dataset_candidate/dbms-differential-testing-tools",
+    "SQLANCER_HOME": "dataset_candidate/dbms-differential-testing-tools/sqlancer",
+    "SQLSMITH_HOME": "dataset_candidate/dbms-differential-testing-tools/sqlsmith",
+    "SQUIRREL_HOME": "dataset_candidate/dbms-differential-testing-tools/squirrel",
+    "THANOS_HOME": "dataset_candidate/dbms-differential-testing-tools/thanos"
+  },
+  "python_environment": {
+    "python": "/opt/icse-2025-004-venv/bin/python",
+    "activation": "source /opt/icse-2025-004-venv/bin/activate",
+    "note": "Java 17 + Gradle for SQLancer; AFL++ for DBMS instrumentation; bison/flex for THANOS AST pipeline."
+  },
+  "toolchain": {
+    "afl_plus_plus": "afl-fuzz, afl-clang-fast (system package)",
+    "java": "openjdk-17-jdk",
+    "odbc": "unixodbc + libmysqlclient-dev"
+  },
+  "paper_protocol": {
+    "dbms_count": 3,
+    "tools": ["THANOS", "SQLancer", "SQLsmith", "SQUIRREL"],
+    "time_budget_hours": 24,
+    "primary_metrics": ["branch_coverage", "confirmed_bug_count"],
+    "oracle_types": ["query_result", "error_message", "database_final_state"]
+  },
+  "not_provided": {
+    "prebuilt_dbms_binaries": "Agent must compile each DBMS with AFL++ (expect ~1 hour compile per target).",
+    "thanos_official_artifact": "Thanos2024/Thanos may be private or removed — check .artifact_meta.txt after host download script.",
+    "prebuilt_fuzzer_binaries": "Agent must build SQLancer (Gradle), SQLsmith, SQUIRREL per upstream instructions."
+  }
+}

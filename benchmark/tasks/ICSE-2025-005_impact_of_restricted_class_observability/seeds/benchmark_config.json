@@ -1,0 +1,36 @@
+{
+  "forbid_synthetic_pilot": true,
+  "agent_data_note": "Use mounted SF110 + EvoSuite at `dataset_candidate/sf110-evosuite/`. Run DynaMOSA with paper budgets (180s search / 600s assertion timeout). Implement observability treatments (injected getters and/or recursive assertions) without changing coverage goals or the mutant set. Follow the paper protocol: 100 CC>3 classes × 4 configs × 30 seeds.",
+  "required_metrics": [
+    "mutation_score",
+    "statement_coverage",
+    "branch_coverage"
+  ],
+  "benchmark_rules": [
+    "Read `dataset_candidate/dataset_paths.json` (and `dataset_candidate/sf110-evosuite/`) and env `SF110_EVOSUITE_HOME` / `EVOSUITE_JAR`.",
+    "Subjects: 100 non-trivial SF110 classes with cyclomatic complexity > 3 (same subset as prior EvoSuite studies / paper).",
+    "Baseline: EvoSuite DynaMOSA with search budget 180s and assertion timeout 600s.",
+    "Treatments: (1) injected public getters for private/protected fields; (2) recursive assertions on composed objects (depth n=3); (3) both combined.",
+    "Injected code must be ignored for coverage goals and mutation analysis so mutant sets match the baseline.",
+    "Primary metric: mutation score; also report statement/branch/suite coverage and A12 vs baseline across 30 seeds per class/config.",
+    "Shared mount is read-only. Copy CUTs and write generated tests, logs, and metrics under `project/` or `results/`.",
+    "If the exact 100-class list is missing, reconstruct CC>3 filtering or obtain figshare replication https://figshare.com/s/46bfa8872f668fafdf66."
+  ],
+  "non_goals": [
+    "Using only trivial accessor-only classes as the primary evaluation",
+    "Changing coverage goals or mutant operators between treatments",
+    "Reporting coverage-only results without mutation score"
+  ],
+  "dataset_env": {
+    "SF110_EVOSUITE_HOME": "dataset_candidate/sf110-evosuite",
+    "SF110_HOME": "dataset_candidate/sf110-evosuite/SF110-20130704",
+    "SF110_SRC_HOME": "dataset_candidate/sf110-evosuite/SF110-20130704-src",
+    "EVOSUITE_JAR": "dataset_candidate/sf110-evosuite/tools/evosuite-1.2.0.jar"
+  },
+  "exclude_from_agent": [
+    "container_setup.sh",
+    "README.md",
+    "benchmark_config.json",
+    "requirements.txt"
+  ]
+}

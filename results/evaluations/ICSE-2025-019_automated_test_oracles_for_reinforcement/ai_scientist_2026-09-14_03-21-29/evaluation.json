@@ -1,0 +1,678 @@
+{
+  "run_dir": "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement/workspace/ai_scientist_2026-09-14_03-21-29",
+  "task_dir": "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement",
+  "framework": "ai_scientist",
+  "fairness_audit": [
+    {
+      "axis": "completeness",
+      "was_unfair": "Required both paper.tex AND paper.pdf; any tool missing one failed equally.",
+      "fix": "Paper gate: PDF=1.0; TeX-only=0.5; ``complete`` requires PDF."
+    },
+    {
+      "axis": "completeness",
+      "was_unfair": "``results`` counted stub/seed JSON (dataset_candidate/metrics.json).",
+      "fix": "``results`` requires substantive numeric results via results_normalize."
+    },
+    {
+      "axis": "experiment_success",
+      "was_unfair": "Only metrics.json; ignored results.json / experiment_results.txt.",
+      "fix": "Framework-ordered result candidates + normalized loaders."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Penalized tools with no bib; airesearcher has no workspace references.",
+      "fix": "literature_applicable=false → status not_applicable; excluded from fair aggregate."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "related_work.json subset as gold made recall hard to interpret.",
+      "fix": "Coverage gold is original paper REFERENCES from mineru; related_work only enriches metadata/fallback."
+    },
+    {
+      "axis": "peer_review",
+      "was_unfair": "Missing Stanford report looked like evaluation failure.",
+      "fix": "status not_provided; optional axis, never counts as tool failure."
+    },
+    {
+      "axis": "paths/find_results",
+      "was_unfair": "Picked downloads/** and sandbox noise (e.g. airesearcher LLVM tree).",
+      "fix": "Exclude downloads/, seeds/, dataset_candidate/, sandbox junk paths."
+    },
+    {
+      "axis": "paths/framework_noise",
+      "was_unfair": "DeepScientist .deepscientist_npm / runtime / skills templates counted as code/paper/results.",
+      "fix": "FRAMEWORK_NOISE_DIRS+markers; quest worktree + eval_output results; paper md drafts; reject template tex."
+    },
+    {
+      "axis": "paths/paper_tex",
+      "was_unfair": "tiny_scientist / ACL runs store paper under latex/*.tex; evaluator only looked at paper/main.tex.",
+      "fix": "latex/**/*.tex with substantive-body heuristic; find_paper_document uses same rules."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Entire custom.bib (300+ anthology entries) verified when paper had zero \\cite commands.",
+      "fix": "collect_agent_references filters bib to in-text cite keys; skips uncited bulk bib (>40 entries)."
+    },
+    {
+      "axis": "paths/ai_scientist_summaries",
+      "was_unfair": "AI Scientist can persist substantive results and paper-like drafts in *_summary.json logs rather than paper/main.tex or results/**/*.json.",
+      "fix": "Treat draft_summary/research_summary as weak paper documents and summary JSONs as result candidates."
+    },
+    {
+      "axis": "framework/ai_scientist_v2",
+      "was_unfair": "Manifest framework ``ai_scientist_v2`` fell through to profile ``unknown``, skipping AI-Scientist idea/result path priorities.",
+      "fix": "Normalize ``ai_scientist_v2`` (and common aliases) to profile key ``ai_scientist``."
+    },
+    {
+      "axis": "idea_generation",
+      "was_unfair": "plan.md/todos.md weak proxies scored same as structured idea.json.",
+      "fix": "Framework idea_priority tried first; missing idea → not_applicable where appropriate."
+    }
+  ],
+  "generated_at": "2026-10-01T15:12:59",
+  "axes": [
+    "alignment",
+    "completeness",
+    "experiment_analysis",
+    "idea_generation",
+    "literature_review",
+    "peer_review"
+  ],
+  "results": {
+    "completeness": {
+      "framework": "ai_scientist",
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement/workspace/ai_scientist_2026-09-14_03-21-29",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement",
+      "complete": false,
+      "required_score": 0.75,
+      "bonus_score": 0.03,
+      "overall_score": 0.6,
+      "missing": [
+        "paper"
+      ],
+      "required": {
+        "idea": {
+          "path": "session/idea.json",
+          "bytes": 11085,
+          "via": "candidate"
+        },
+        "code": {
+          "count": 5,
+          "files": [
+            {
+              "path": "experiments/2026-09-14_03-31-06_automated_test_oracles_for_reinforcement_learnin_attempt_0/logs/0-run/experiment_results/experiment_a570a6883b7344ef91ee59b5d402db2d_proc_405/experiment_code.py",
+              "bytes": 11984,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-09-14_03-31-06_automated_test_oracles_for_reinforcement_learnin_attempt_0/logs/0-run/experiment_results/experiment_a570a6883b7344ef91ee59b5d402db2d_proc_405/plotting_code.py",
+              "bytes": 8303,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-09-14_03-31-06_automated_test_oracles_for_reinforcement_learnin_attempt_0/logs/0-run/experiment_results/experiment_d8e931aec67e4471a81ac2a692bac0ad_proc_403/experiment_code.py",
+              "bytes": 14043,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-09-14_03-31-06_automated_test_oracles_for_reinforcement_learnin_attempt_0/logs/0-run/experiment_results/experiment_d8e931aec67e4471a81ac2a692bac0ad_proc_403/plotting_code.py",
+              "bytes": 3189,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-09-14_03-31-06_automated_test_oracles_for_reinforcement_learnin_attempt_0/logs/0-run/stage_1_initial_implementation_1_preliminary/best_solution_19eb58ae36a54df4bb916822499da7ba.py",
+              "bytes": 12406,
+              "via": "glob"
+            }
+          ]
+        },
+        "results": {
+          "substantive": true,
+          "normalized_path": "experiments/2026-09-14_03-31-06_automated_test_oracles_for_reinforcement_learnin_attempt_0/logs/0-run/experiment_results/experiment_a570a6883b7344ef91ee59b5d402db2d_proc_405/experiment_data.npy",
+          "numeric_leaf_count": 311,
+          "discovered_files": [
+            {
+              "path": "experiments/2026-09-14_03-31-06_automated_test_oracles_for_reinforcement_learnin_attempt_0/logs/0-run/experiment_results/experiment_a570a6883b7344ef91ee59b5d402db2d_proc_405/experiment_data.npy",
+              "bytes": 11380,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-09-14_03-31-06_automated_test_oracles_for_reinforcement_learnin_attempt_0/logs/0-run/experiment_results/experiment_a570a6883b7344ef91ee59b5d402db2d_proc_405/test_ground_truth.npy",
+              "bytes": 1084,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-09-14_03-31-06_automated_test_oracles_for_reinforcement_learnin_attempt_0/logs/0-run/experiment_results/experiment_a570a6883b7344ef91ee59b5d402db2d_proc_405/test_predictions.npy",
+              "bytes": 1084,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/2026-09-14_03-31-06_automated_test_oracles_for_reinforcement_learnin_attempt_0/logs/0-run/experiment_results/experiment_d8e931aec67e4471a81ac2a692bac0ad_proc_403/experiment_data.npy",
+              "bytes": 5618,
+              "via": "glob"
+            }
+          ],
+          "metrics_keys_sample": [
+            "synthetic_rl_behavior_traces"
+          ]
+        },
+        "paper": {
+          "tex": null,
+          "pdf": null,
+          "md": null,
+          "json": null,
+          "status": "missing",
+          "score": 0.0
+        }
+      },
+      "bonus": {
+        "experiment_plan": null,
+        "experiment_log": {
+          "path": "ai_scientist_run.log",
+          "bytes": 384876,
+          "via": "glob"
+        },
+        "review": null,
+        "readme": null,
+        "narrative": null,
+        "bib": null
+      },
+      "manifest_status": {
+        "pipeline": false
+      },
+      "gate_scores": {
+        "idea": 1.0,
+        "code": 1.0,
+        "results": 1.0,
+        "paper": 0.0
+      },
+      "fairness": {
+        "gates": [
+          "idea",
+          "code",
+          "results",
+          "paper"
+        ],
+        "paper_gate_rule": "PDF=1.0; TeX-only/md_only/json_only=0.5; complete requires PDF",
+        "results_gate_rule": "substantive numeric results via framework-aware normalize_results",
+        "audit_ref": "framework_profile.FAIRNESS_AUDIT"
+      },
+      "notes": [
+        "Required: idea, code, substantive results, paper (PDF full; TeX/markdown/JSON draft half).",
+        "Stub/seed metrics (e.g. dataset_candidate/metrics.json) do not satisfy results.",
+        "Framework noise (.deepscientist_npm, skills/templates, runtime) is excluded from code/results/paper.",
+        "Manifest status is informational; disk presence is authoritative."
+      ]
+    },
+    "idea_generation": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement/workspace/ai_scientist_2026-09-14_03-21-29",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement",
+      "idea_path": "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement/workspace/ai_scientist_2026-09-14_03-21-29/session/idea.json",
+      "status": "ok",
+      "dimensions": {
+        "novelty": {
+          "score": 1.0,
+          "justification": "The idea's core method is absent. It says only 'How to design an automated test oracle for RL software that effectively detects bugs in RL implementations using only the behavior of the trained agents?' and 'The oracle must be fully automated and require no human judgment.' This restates the problem surveyed in R4 and the RL testing/oracle goals in R19/R20 rather than introducing a new technique.",
+          "rubric": "Existing: the idea's core method is already clearly present or solved in the Solution Space; only tiny parameter / test-case changes.",
+          "category": "Existing",
+          "nearest_solution_space_ids": [
+            "R4",
+            "R19",
+            "R20"
+          ],
+          "differentiation": "None. The submission restates the test oracle problem and evaluation protocol for RL software but does not propose a concrete oracle mechanism, architecture, or algorithmic contribution beyond prior automated oracle work."
+        },
+        "feasibility": {
+          "score": 2.0,
+          "justification": "No implementable oracle mechanism is specified, so realizing this idea would require designing the entire black-box correctness oracle from scratch. The available LPEA AE artifact and existing benchmark metrics reduce some data/framework burden, but because the actual method is undefined, the engineering path is heavy and unclear rather than a low-barrier modification.",
+          "rubric": "Extreme engineering barrier: requires building complex low-level tooling from scratch (custom compiler plugins, new vulnerability execution sandboxes), or an extremely heavy experimental pipeline with multi-month development."
+        },
+        "clarity": {
+          "score": 1.0,
+          "justification": "Although the text describes a problem, dataset, metrics, and research questions, it provides no actual method. Phrases such as 'How to design an automated test oracle...' and 'Expected Artifacts - idea - code - experiment_results - paper' only give a high-level direction; the central oracle design is missing, so there is little substantive technical content to evaluate.",
+          "rubric": "Vague concept: full of empty buzzwords; problem undefined; method only gives a high-level direction with little substance."
+        }
+      },
+      "overall_score": 1.5,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "novelty",
+        "feasibility",
+        "clarity"
+      ],
+      "solution_space": {
+        "status": "ok",
+        "paper_count": 27,
+        "entry_count": 27,
+        "cache_hit": false,
+        "source_file": "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement/mineru_sections.json",
+        "stats": {
+          "papers": 27,
+          "extracted": 27,
+          "usable_abstracts": 12,
+          "citation_meta_abstracts": 0,
+          "missing_abstracts": 15,
+          "mineru_titles": 26,
+          "related_work_titles": 19,
+          "abstracts_attached": 12,
+          "related_work_extras": 1,
+          "batches": 2
+        },
+        "error": null
+      },
+      "notes": [
+        "Scores the intermediate idea artifact (not the final paper).",
+        "Dimensions: novelty, feasibility, clarity (each 1-5). Excitement removed.",
+        "Novelty is scored against a Solution Space built from mineru REFERENCES titles (+ related_work.json abstracts when matched)."
+      ],
+      "idea_via": "candidate",
+      "idea_relative": "session/idea.json",
+      "summary": "This submission is essentially the task specification, not a research idea. It defines the RL test oracle problem, lists the LPEA benchmark, metrics, and comparison to a human oracle, but never proposes an automated oracle mechanism. Consequently, novelty is equivalent to existing problem statements in the solution space, clarity is low because the core method is absent, and feasibility is difficult because the implementation path is undefined. The experiment setup is useful, but it cannot substitute for a concrete technical contribution.",
+      "strengths": [
+        "Uses the provided real RL bug benchmark and clearly defines evaluation metrics such as FP, TN, FN, accuracy, precision, recall, F1, and ROC AUC.",
+        "States a clear black-box constraint: 'decisions must be based solely on the behaviour of the trained agents' and requires full automation.",
+        "Includes useful sub-questions comparing the oracle to a human oracle and comparing performance across A2C, PPO, and TD3."
+      ],
+      "weaknesses": [
+        "No actual oracle algorithm, architecture, or mechanism is proposed.",
+        "The idea restates the task background and research question rather than introducing a novel contribution.",
+        "There is no technical plan for converting agent behavior into a correctness decision.",
+        "No concrete baseline tools or implementation pipeline are specified for the proposed oracle."
+      ],
+      "llm_meta": {
+        "model": "deepseek-v4-pro-0813",
+        "base_url": "https://api-sg.umodelverse.ai/v1",
+        "usage": {
+          "completion_tokens": 2985,
+          "completion_tokens_details": {
+            "reasoning_tokens": 2340
+          },
+          "prompt_tokens": 5457,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "total_tokens": 8442
+        },
+        "attempt": 0
+      }
+    },
+    "peer_review": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement/workspace/ai_scientist_2026-09-14_03-21-29",
+      "review_report": null,
+      "paper_pdf": null,
+      "paper_tex": null,
+      "status": "not_provided",
+      "dimensions": {},
+      "overall_score": null,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "soundness",
+        "significance",
+        "novelty",
+        "presentation",
+        "credibility"
+      ],
+      "notes": [
+        "Stanford Agentic Reviewer (paperreview.ai): manual download to artifacts/peer_review/stanford_apr.md, or pass --auto-paperreview.",
+        "Dimensions: soundness, significance, novelty, presentation, credibility (each 1-5)."
+      ],
+      "paperreview": {
+        "status": "skipped",
+        "reason": "no_pdf"
+      },
+      "optional": true,
+      "hint": "Optional external review (Stanford APR). Upload paper/main.pdf to https://paperreview.ai/ , save review to ~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement/workspace/ai_scientist_2026-09-14_03-21-29/artifacts/peer_review/stanford_apr.md"
+    },
+    "alignment": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement/workspace/ai_scientist_2026-09-14_03-21-29",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement",
+      "status": "missing_agent_paper_or_metrics",
+      "original": {
+        "status": "ok",
+        "task_dir": "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement",
+        "paper_title": "A Test Oracle for Reinforcement Learning Software based on Lyapunov Stability Control Theory",
+        "task_id": "ICSE-2025-019",
+        "selection": {
+          "num_blocks": 7,
+          "total_chars": 31998,
+          "inferred_roles": {
+            "abstract": 1,
+            "introduction": 1,
+            "experiment": 4,
+            "conclusion": 1
+          },
+          "mineru_raw_keys": {
+            "field:abstract": 1,
+            "field:introduction": 1,
+            "field:experiment": 1,
+            "other": 3,
+            "conclusion": 1
+          },
+          "infer_reasons": {
+            "top_level_field": 3,
+            "inherited": 2,
+            "body_override": 1,
+            "title": 1
+          },
+          "rescued_from_other": 3,
+          "note": "mineru key is unreliable; blocks are selected by title/body/inheritance. rescued_from_other counts sections labeled other but treated as typed roles."
+        },
+        "claims": [],
+        "metrics": [],
+        "overall_conclusion": null,
+        "comparable_notes": null,
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 3500,
+            "completion_tokens_details": {
+              "reasoning_tokens": 3500
+            },
+            "prompt_tokens": 10123,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 13623
+          },
+          "attempt": 0
+        },
+        "cache_hit": true
+      },
+      "agent": {
+        "status": "missing_agent_paper_or_metrics",
+        "run_dir": "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement/workspace/ai_scientist_2026-09-14_03-21-29"
+      }
+    },
+    "experiment_analysis": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement/workspace/ai_scientist_2026-09-14_03-21-29",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement",
+      "status": "ok",
+      "metrics_path": null,
+      "experiment_success": {
+        "status": "failed_or_incomplete",
+        "success": false,
+        "metrics_path": null,
+        "absolute_metrics_path": null,
+        "checks": {
+          "has_results_file": false,
+          "non_stub": false,
+          "numeric_leaf_count": 0,
+          "min_numeric_ok": false
+        },
+        "manifest_hints": {
+          "status": {
+            "pipeline": false
+          },
+          "returncode": 1,
+          "benchmark_complete": null,
+          "artifacts_metrics_flag": false
+        },
+        "warnings": [
+          "manifest.returncode=1"
+        ],
+        "suspicious_values": [],
+        "note": "success=true requires substantive results (framework-aware path) with >=3 numeric leaves. Supports metrics.json, results.json, experiment_results.txt, etc. Manifest returncode/benchmark_complete are soft warnings only."
+      },
+      "idea_code_consistency": {
+        "status": "ok",
+        "idea_path": "session/idea.json",
+        "code_files": [
+          "experiments/2026-09-14_03-31-06_automated_test_oracles_for_reinforcement_learnin_attempt_0/logs/0-run/experiment_results/experiment_a570a6883b7344ef91ee59b5d402db2d_proc_405/experiment_code.py",
+          "experiments/2026-09-14_03-31-06_automated_test_oracles_for_reinforcement_learnin_attempt_0/logs/0-run/experiment_results/experiment_a570a6883b7344ef91ee59b5d402db2d_proc_405/plotting_code.py",
+          "experiments/2026-09-14_03-31-06_automated_test_oracles_for_reinforcement_learnin_attempt_0/logs/0-run/experiment_results/experiment_d8e931aec67e4471a81ac2a692bac0ad_proc_403/experiment_code.py",
+          "experiments/2026-09-14_03-31-06_automated_test_oracles_for_reinforcement_learnin_attempt_0/logs/0-run/experiment_results/experiment_d8e931aec67e4471a81ac2a692bac0ad_proc_403/plotting_code.py"
+        ],
+        "score_scale": "1-5",
+        "score": 2.0,
+        "label": "weak",
+        "justification": "The code implements a generic supervised bug/non-bug classifier and superficially references the LPEA dataset, but it does not implement the core research idea of an oracle based on behavior of trained RL agents. It creates labels from a bug-library record count and synthetic behavior features rather than actually running or evaluating Stable Baselines3 A2C/PPO/TD3 implementations or their agent-environment interactions. The human oracle baseline, ROC AUC/FP/FN trade-off analysis, and algorithm-specific study are absent.",
+        "matched_elements": [
+          "Attempts to locate and use the LPEA oracle dataset directory",
+          "Frames the task as binary buggy vs bug-less classification",
+          "Computes evaluation metrics such as accuracy, precision, recall, MCC, and confusion matrix",
+          "Automated train/validation/test split and model evaluation"
+        ],
+        "missing_or_divergent_elements": [
+          "No execution or evaluation of trained RL agents or their interaction traces",
+          "LPEA benchmark implementations of A2C, PPO, and TD3 are not used",
+          "Behavior-based oracle constrained to agent behavior without source code is not implemented",
+          "No comparison with the Human Oracle (STARLA-expanded) baseline",
+          "No ROC AUC, false positive/false negative count, or precision/recall/F1 evaluation on real buggy/bug-less implementations",
+          "No RQ3 comparison across on-policy and off-policy algorithms"
+        ],
+        "rubric": "Weak alignment: only superficial overlap; core hypothesis, method, or evaluation in the idea is missing or replaced.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 1442,
+            "completion_tokens_details": {
+              "reasoning_tokens": 1114
+            },
+            "prompt_tokens": 5134,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 6576
+          },
+          "attempt": 0
+        }
+      },
+      "setup_coverage": {
+        "status": "ok",
+        "overall_coverage": 0.7916666666666666,
+        "datasets": {
+          "gold_count": 2,
+          "hit_count": 1,
+          "miss_count": 1,
+          "coverage": 0.5,
+          "hits": [
+            "RL Software Bug Benchmark (LPEA AE artifact)"
+          ],
+          "misses": [
+            "RL Software Bug Benchmark"
+          ]
+        },
+        "baselines": {
+          "gold_count": 1,
+          "hit_count": 1,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "Human Oracle (STARLA-expanded)"
+          ],
+          "misses": []
+        },
+        "metrics": {
+          "gold_count": 8,
+          "hit_count": 7,
+          "miss_count": 1,
+          "coverage": 0.875,
+          "hits": [
+            "False Positive Count (FP)",
+            "True Negative Count (TN)",
+            "False Negative Count (FN)",
+            "Accuracy",
+            "Precision",
+            "Recall",
+            "F1 Score"
+          ],
+          "misses": [
+            "ROC AUC"
+          ]
+        },
+        "agent_protocol": {},
+        "gold_protocol": {},
+        "dataset_dirs": [
+          "dataset_candidate"
+        ],
+        "flags": {
+          "weaker_baseline_suspected": false,
+          "weak_protocol": [],
+          "synthetic_data": "unexpected_synthetic_or_local_only_data",
+          "gold_allows_synthetic": false
+        },
+        "gold_sources": [
+          "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement/task.md",
+          "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement/metadata.json"
+        ],
+        "note": "Coverage is name/alias matching against task.md Datasets/Baselines/Metrics. weak_protocol flags large reductions in trials/timeout vs Constraints. Synthetic corpora are not penalized when the task itself requires synthesis."
+      },
+      "ablation_significance": {
+        "status": "ok",
+        "idea_path": "session/idea.json",
+        "significance_signals_rule_based": {
+          "signals": [
+            "file:stats.py:scipy.stats"
+          ],
+          "artifact_paths": [
+            ".container-home/.local/lib/python3.11/site-packages/scipy/stats/stats.py",
+            ".container-home/.local/lib/python3.11/site-packages/sklearn/utils/stats.py"
+          ],
+          "has_any_significance_artifact": true
+        },
+        "evidence_format": null,
+        "study_type": "empirical_comparison",
+        "components": [
+          {
+            "name": "Automated test oracle (behavior-trace classifier)",
+            "role": "module",
+            "ablation_expected": false,
+            "significance_expected": false,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "No removable submodules or alternative design components are specified in the method; the design is evaluated mainly through baseline comparison.",
+            "significance_status": "not_applicable"
+          }
+        ],
+        "ablation_coverage_score": null,
+        "overall_ablation_ok": null,
+        "overall_significance_ok": null,
+        "summary": "",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 1925,
+            "completion_tokens_details": {
+              "reasoning_tokens": 1804
+            },
+            "prompt_tokens": 375,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 2300
+          },
+          "attempt": 0
+        }
+      },
+      "results_paper_consistency": {
+        "status": "missing_metrics"
+      },
+      "scores": {
+        "experiment_success": false,
+        "idea_code_score": 2.0,
+        "setup_coverage": 0.7916666666666666,
+        "ablation_coverage_score": null,
+        "overall_ablation_ok": null,
+        "overall_significance_ok": null,
+        "results_paper_score": null,
+        "hiding_unfavorable_suspected": null
+      },
+      "notes": [
+        "Axes 1,2,3,4,6 in experiment_analysis (figures excluded).",
+        "setup_coverage matches task.md Datasets/Baselines/Metrics; weak_protocol flags reductions vs Constraints.",
+        "Axis 6: final normalized results vs paper; interim run logs not used as ground truth."
+      ]
+    },
+    "literature_review": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement/workspace/ai_scientist_2026-09-14_03-21-29",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-019_automated_test_oracles_for_reinforcement",
+      "status": "not_applicable",
+      "as_of_year": 2026,
+      "agent_ref_count": 0,
+      "sources": [],
+      "collection_audit": {
+        "cited_keys_count": 0,
+        "filter_mode": "none",
+        "bib_total_before_filter": 0,
+        "bib_after_filter": 0,
+        "uncited_bib_skipped": 0
+      },
+      "fabrication": null,
+      "coverage": null,
+      "recency": null,
+      "reason": "no_reference_artifacts",
+      "hint": "No literature artifacts found (bib / thebibliography / shortlist / related_work.txt / arxiv index). Marked not_applicable rather than failure — tool may not emit references in-run."
+    }
+  },
+  "scores": {
+    "completeness": {
+      "complete": false,
+      "overall_score": 0.6,
+      "required_score": 0.75,
+      "bonus_score": 0.03
+    },
+    "peer_review": {
+      "status": "not_provided",
+      "optional": true,
+      "overall_score": null,
+      "score_scale": "1-5",
+      "scoring_method": null
+    },
+    "idea_generation": {
+      "status": "ok",
+      "overall_score": 1.5,
+      "dimensions": {
+        "novelty": 1.0,
+        "feasibility": 2.0,
+        "clarity": 1.0
+      },
+      "novelty_category": "Existing",
+      "solution_space_status": "ok"
+    },
+    "alignment": {
+      "status": "missing_agent_paper_or_metrics",
+      "direction_consistency": null,
+      "overall_alignment_score": null
+    },
+    "literature_review": {
+      "fabrication_rate": null,
+      "coverage_recall": null,
+      "recency_ratio_3y": null,
+      "recency_ratio_5y": null
+    },
+    "experiment_analysis": {
+      "experiment_success": false,
+      "idea_code_score": 2.0,
+      "setup_coverage": 0.7916666666666666,
+      "ablation_coverage_score": null,
+      "overall_ablation_ok": null,
+      "overall_significance_ok": null,
+      "results_paper_score": null,
+      "hiding_unfavorable_suspected": null
+    }
+  },
+  "fair_scores": {
+    "applicable_axes": [
+      "completeness",
+      "idea_generation",
+      "experiment_analysis"
+    ],
+    "skipped_axes": [
+      {
+        "axis": "peer_review",
+        "reason": "optional_external_review"
+      },
+      {
+        "axis": "literature_review",
+        "reason": "not_applicable"
+      }
+    ],
+    "fair_mean_0_1": 0.4824,
+    "note": "fair_mean_0_1 averages only applicable axes; optional peer review and framework-inapplicable literature are excluded from the denominator."
+  },
+  "evals_root": "~/ai_scientist_evals",
+  "claims_cache": "~/ai_scientist_evals/ICSE-2025-019_automated_test_oracles_for_reinforcement/original_claims.json",
+  "solution_space_cache": "~/ai_scientist_evals/ICSE-2025-019_automated_test_oracles_for_reinforcement/solution_space.json"
+}

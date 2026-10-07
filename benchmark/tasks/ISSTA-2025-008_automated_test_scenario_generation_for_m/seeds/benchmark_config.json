@@ -1,0 +1,38 @@
+{
+  "forbid_synthetic_pilot": true,
+  "agent_data_note": "Use the mounted ASVTestSceneGeneration artifact at `dataset_candidate/asvtestscenegeneration-issta2025/`. CommonOcean AIS XML scenarios are under `assets/common_ocean_scenarios/`; COLREGS functional equivalence classes under `assets/functional_models/`; SB/RS code under `src/`.",
+  "required_metrics": [
+    "relevance_ratio_T_and_C",
+    "ambiguous_relevance_ratio_A_and_C",
+    "equivalence_class_coverage",
+    "distribution_divergence_kl",
+    "average_generation_time",
+    "success_rate"
+  ],
+  "benchmark_rules": [
+    "Artifact is at `dataset_candidate/asvtestscenegeneration-issta2025/` (workspace symlink; use for ls/read_file and $ASVTESTSCENEGENERATION_HOME).",
+    "Primary inputs: assets/common_ocean_scenarios/*.xml (CommonOcean CO baseline), assets/functional_models/ (equivalence classes), src/scripts/{evaluation_main,scenic_script,common_ocean_scenario_parser}.py.",
+    "Use the provided CommonOcean scenarios and constructable COLREGS functional equivalence classes as stated in the task.",
+    "Scenario generation must operate at the functional/logical level without requiring high-fidelity hydrodynamic simulation.",
+    "Scalability should be demonstrated up to at least 6 vessels (problem size K=2..6), matching the paper protocol.",
+    "Forbidden: fabricating relevance ratios, equivalence-class coverage, KL divergence, or runtime/success-rate numbers that were not measured.",
+    "Follow the paper evaluation protocol (SB search-based, RS Scenic rejection sampling, CommonOcean AIS baseline) as stated in the task."
+  ],
+  "non_goals": [
+    "Using a handful of hand-written toy vessel placements as the sole evaluation evidence",
+    "Fabricating COLREGS relevance or coverage results that were not executed",
+    "Substituting unrelated automotive CommonRoad corpora for the provided CommonOcean maritime scenarios"
+  ],
+  "dataset_env": {
+    "ASVTESTSCENEGENERATION_HOME": "dataset_candidate/asvtestscenegeneration-issta2025",
+    "COMMONOCEAN_HOME": "dataset_candidate/asvtestscenegeneration-issta2025/assets/common_ocean_scenarios",
+    "FUNCTIONAL_MODELS_HOME": "dataset_candidate/asvtestscenegeneration-issta2025/assets/functional_models",
+    "ASV_SRC": "dataset_candidate/asvtestscenegeneration-issta2025/src"
+  },
+  "exclude_from_agent": [
+    "container_setup.sh",
+    "README.md",
+    "benchmark_config.json",
+    "requirements.txt"
+  ]
+}

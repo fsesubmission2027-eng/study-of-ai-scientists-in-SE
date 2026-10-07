@@ -1,0 +1,168 @@
+{
+  "id": "ICSE-2025-007",
+  "paper_id": "b4ce726e4857c775b48178534c4d8623c48788b4",
+  "title": "Unseen Horizons: Unveiling the Real Capability of LLM Code Generation Beyond the Familiar",
+  "abstract": "Recently, large language models (LLMs) have shown strong potential in code generation tasks. However, there are still gaps before they can be fully applied in actual software development processes. Accurately assessing the code generation capabilities of large language models has become an important basis for evaluating and improving the models. Some existing works have constructed datasets to evaluate the capabilities of these models. However, the current evaluation process may encounter the illusion of\"Specialist in Familiarity\", primarily due to three gaps: the exposure of target code, case timeliness, and dependency availability. The fundamental reason for these gaps is that the code in current datasets may have been extensively exposed and exercised during the training phase, and due to the continuous training and development of LLM, their timeliness has been severely compromised. The key to solve the problem is to, as much as possible, evaluate the LLMs using code that they have not encountered before. Thus, the fundamental idea in this paper is to draw on the concept of code obfuscation, changing code at different levels while ensuring the functionality and output. To this end, we build a code-obfuscation based benchmark OBFUSEVAL. We first collect 1,354 raw cases from five real-world projects, including function description and code. Then we use three-level strategy (symbol, structure and semantic) to obfuscate descriptions, code and context dependencies. We evaluate four LLMs on OBFU- SEVAL and compared the effectiveness of different obfuscation strategy. We use official test suites of these projects to evaluate the generated code. The results show that after obfuscation, the average decrease ratio of test pass rate can up to 62.5%.",
+  "year": 2025,
+  "citation_count": 13,
+  "venue": "47th International Conference on Software Engineering (ICSE 2025)",
+  "venue_short": "ICSE 2025",
+  "authors": [
+    "Yuanliang Zhang",
+    "Yifan Xie",
+    "Shanshan Li",
+    "Ke Liu",
+    "Chong Wang",
+    "Zhouyang Jia",
+    "Xiangbing Huang",
+    "Jie Song",
+    "Chaopeng Luo",
+    "Zhizheng Zheng",
+    "Rulin Xu",
+    "Yitong Liu",
+    "Si Zheng",
+    "Liao Xiangke"
+  ],
+  "pdf_url": "",
+  "paper_url": "https://www.semanticscholar.org/paper/b4ce726e4857c775b48178534c4d8623c48788b4",
+  "paper_type": "study",
+  "award": "ACM SIGSOFT Distinguished Paper Award",
+  "subfield_label": "LLM for Software Engineering",
+  "introduction": "With the rapid development of the Large Language Model (LLM), the code generation capability of LLMs has attracted lots of attention [1]- [8]. However, how to accurately assess the code generation capability of LLMs in production-level software development is still an open question. A variety of benchmark tests for code generation have been proposed, however, there are still gaps between these benchmark tests and the actual software development process.\n\nTraditional datasets as evaluation benchmarks [9]- [12] play key roles in evaluating the capabilities of LLMs. However, they focus mainly on standalone functions based on algorithmic problems, which cannot reflect the complexity of real software development, as LLMs may face potential challenges in handling code that is interdependent with other contextual elements of the project [13]. There have been several benchmarks [13]- [16] which are built based on realworld production projects, while there remain three gaps for these benchmarks to objectively evaluate the code generation capability of LLM: exposure of target code, case timeliness, and dependency availability. Gap 1: Target code has been exposed in the pre-training stage. Previous benchmarks [13], [15], [16] have only rewritten the functional descriptions without modifying the code itself. This could result in the target code being exposed to LLMs during training, making the evaluation results not objective as the code has been exercised extensively. Gap 2: Collected case is time-sensitive. With the rapid development of LLMs, data will be continuously trained. Although previous benchmark [14] has collected modified code from history after LLMs training, the modified code may still have been exposed to LLMs because of the existence of code clones. In addition, benchmarks that rely on historical data will suffer from the timeliness problem and cannot be used to evaluate subsequent releases of LLMs. Gap 3: Precise dependencies are difficult to provide in real usage scenarios. Existing benchmarks [13], [15] directly provide the model with all the dependencies needed to generate the target code. However, such conditions can not be always satisfied in real development.\n\nIn conclusion, existing evaluation process may suffer from the \"Specialist in Familiarity\" problem, which means LLMs can perform well on code that they are very familiar with, often due to extensive experience or repeated exposure. This term highlights the individual's strength in specific, wellknown domains, but it also implies that their expertise may not extend beyond these familiar areas. The primary reason is that the code used to evaluate LLMs may be extensively exposed and exercised for training. As shown in Fig. 1, the unfamiliarity of code to LLM is increased along with the timeline. Unfortunately, even for the code collected after LLM training and release may be similar to the training data due to the existence of code reuse.\n\nTo solve these problems, we need to evaluate using code that LLMs have not encountered before as much as possible.\n\nTo this end, we propose a new obfuscation-based benchmark OBFUSEVAL to evaluate LLMs' code generation capability. Our main target is to evaluate the LLM on the code generation tasks that it has never encountered before and simulate real software development process. OBFUSEVAL has three key characteristics: 1) To solve Gap 1, we collect highly starred projects from GitHub [17] and select functions from them that are introduced after a certain time point. These functions are covered by the official test suites. 2) To solve Gap 2, all the raw data have been obfuscated by different-level strategies (symbol, structure, and semantic) to rewrite both functional descriptions and code. The process of code obfuscation can ensure that datasets are reused without the concern that they might still become training data in the future (the code obfuscation process can be repeated). 3) To solve Gap 3, we provide relevant code dependencies in a compromise manner, simulating real-world development scenarios without deliberately sacrificing the generation capabilities of LLM. We identify all the contextual dependencies necessary for each function, including necessary API calls, structures, macros, etc., and also add some dependencies that are not related to the target function code for obfuscation.\n\nTo effectively utilize our dataset and evaluate LLM's real capability on generating unfamiliar code, we built a projectlevel execution platform that provides an off-the-shelf runtime environment to automatically evaluate the functional correctness of the generated code. We developed this platform based on Docker, cloning and building the environment for all projects. Given a model-generated code, the code will automatically replace the original code. Then the projects will be compiled and tested to see whether there are compilation errors or test failures.\n\nWe comprehensively evaluated four state-of-the-art code generation models (ChatGPT3.5, ChatGPT4-1106, ChatGPT4-0125, and DeepSeek-Coder-V2) on OBFUSEVAL. We analyzed each model's effectiveness under different obfuscation strategies. The results show that after code obfuscation, the average decrease ratio of test pass rate can up to 62.5%. In addition, we found that even passing all the tests, code generated by LLMs may still suffer from non-functional code issues (e.g., code robustness), which can guide the developers to better discern and utilize the code generated by LLMs.\n\nThe main contributions of the paper are as follows: • We reveal that existing benchmarks are insufficient for objectively evaluating the code generation capabilities of LLMs, primarily due to three gaps: exposure of target code, case timeliness, and dependency availability. • We propose an obfuscation-based approach to rewrite the functional descriptions, code, and dependencies to prevent the target code from being exposed in the training stage. We design different levels of obfuscation strategies and examine their effectiveness. Future research can design sophisticated obfuscation process to better explore the potential of LLM's capability based on our results. • We build an obfuscation-based benchmark OBFUSEVAL 1using code from real-world projects. We evaluated four state-of-the-art code generation models on OBFUSEVAL.\n\nThe results show that after code obfuscation, the average decrease ratio of test pass rate is 15.3%-62.5%, demonstrating the inflated capabilities of LLMs. We also identify nonfunctional code issues in the passed cases which can be studied in future work.",
+  "experiment": "In this section, we describe our experimental setup and the evaluation results of four LLMs on our dataset. Our evaluation focuses primarily on the performance of LLMs on our dataset, and whether code obfuscation can further reveal the true capabilities of these LLMs.\n\nWe chose a general-purpose large language model, ChatGPT, and a code-focused large language model, DeepSeek. Both of them are mature and widely-used LLMs. For ChatGPT, we use the \"gpt-3.5-turbo-1106\" [62], \"gpt-4-turbo-1106\" [63], and \"gpt-4-turbo-0125\" [63] in our experiments. For DeepSeek, we use DeepSeek-coder-v2 [64] with the default settings. We use default value for LLM's parameters when generating code.\n\n2) Raw data selection: Note that the training datasets for gpt-4-turbo-1106 were finalized as of April 2023 (gpt-3.5-turbo-1106 is also before that time). We selected the code starting from May 2023 to Dec 2023 as the original data. Therefore, for gpt-3.5-turbo-1106 and gpt-4-turbo-1106, these codes were not included in the training set, while for gpt-4-turbo-0125 and DeepSeek-coder-v2, they might have encountered some of these code snippets during training. By doing so, we not only ensure a balanced distribution in our dataset (with both seen and unseen data), but also objectively and authentically demonstrate the generative capabilities of LLMs across different types of code.\n\n3) Evaluation Metrics: To assess the correctness of the generated code snippet, we employed two key performance metrics to measure the code generation capabilities of the LLMs in real-world development scenarios: Compile Pass Rate (CPR) and Test Pass Rate (TPR). We first replace the original function with the function generated by the LLMs and then compile the software. After that, we perform system tests associated with that function.\n\nCPR and TPR are representative metrics that can illustrate generated code that passes compilation and tests respectively. CPR demonstrates the basic ability of large language models to generate syntactically correct code, while TPR reflects the capability of large language models to understand and correctly generate complex functional code. Specifically, TPR can demonstrate whether the LLM can be used directly in production scenarios. Both CPR and TPR use pass@5 rate to eliminate fluctuations. 1 ↑ / ↓ means that the pass rate has increased / decreased by less than 30% (ratio) . ⇑ / ⇓ means that the pass rate has increased / decreased by more than 30% (ratio) . 2 The change magnitudes are calculated by comparing to \"Original\" and the \"Original(Semantic)\".\n\nTo evaluate the performance of large models on our dataset, we conduct experiments on four large models using OBFUSE-VAL. Specifically, we explore the effectiveness of code obfuscation and the various among different obfuscation strategies. We investigate the following three research questions:\n\n• RQ1: How effective are large language models in generating code on our datasets? • RQ2: How does code obfuscation further reveal the capabilities of LLMs, and how effective are different obfuscation strategies? • RQ3: What are the issues hidden in LLM-generated code?\n\n1) RQ1: How effective are large language models in generating code on our datasets: The model usually performs better on the code similar to training data. Thus, we collected code data after model training and utilized code obfuscation methods to further eliminate code leakage. In this research question, we conduct experiments with several widely used and proven effective large language models on our collected dataset. The overall results are presented in Table IV and Table V.\n\nThe CPRs are among 16.0% to 49.0% on original raw code, with an average of 32.8%, which is significantly lower than the LLM's performance on traditional datasets (e.g., humaneval). The average TPRs are 21.1% and 20.0% on original code generation and completion. After we applied different levels of code obfuscation, this result dropped to 6.9% and 15.6%. This indicates that the code generated by LLMs is difficult to pass the official tests of software and be directly used in production environments. Developers still need to manually fix and adjust the code.\n\nConclusion for RQ1: Large Language Models still fall significantly short of meeting the requirements for unfamiliar code generation/completion tasks in real-world production environments. The basic pass rate of compilation remains a significant bottleneck. Even if it passes the compilation, it may still not meet the actual functional requirements of the software.\n\n2) RQ2: How does code obfuscation further reveal the capabilities of LLMs, and how effective are different obfuscation strategies: We use three obfuscation strategies (Section III-B) to modify the collected raw code to minimize the possibility that the code might resemble the training data. We specifically compare the TPR before and after different code obfuscations to evaluate the syntactic and functional correctness of generated code. We try them separately and also their combinations. The results are shown in Fig. 6 (detailed data can be found in Table IV andTable V).\n\nOverall effect. All obfuscation strategies have reduced the TPR of code generation by LLMs. Since we did not deliberately increase the difficulty and complexity of the code in code obfuscation (discussed in Section V), code obfuscation can make the tested code less familiar to large models. Even though the decline may not be particularly significant, it represents the trend of the LLMs' capabilities, and if applied in a large-scale production environment, it could still have a considerable impact.\n\nAs for tested LLMs, GPT4-1106, GPT4-0125 and DeepSeek Code are obviously better than GPT3.5. However, the ranking of their capability on the Original code is inconsistent. After obfuscation, their ranking becomes more stable (GPT4-0125>DeepSeek Code>GPT4-1106>GPT3.5). This further proves that using code obfuscation can more accurately demonstrate the capabilities of the models.\n\nStrategy comparison. In this paper, we intuitively determine the effectiveness of code obfuscation strategies by the TPR decrease ratio comparing to the Original code tasks (eliminate the inflated capabilities of the large model). Symbol and structure obfuscation can be very effective with the average TPR decrease ratio of 24.6% and 32.1%. Semantic obfuscation is not that effective, with an average decrease ratio 15.3%. This is mainly because our current semantic obfuscation strategies are still relatively simple (using some heuristics to rewrite code manually), without making in-depth modifications to the code. We also find that the use of mixed strategies can lead to a further decrease in TPR (Symbol + Structure can have an average decrease ratio of 62.5%), demonstrating the effectiveness of mixed strategies.\n\nAlthough different obfuscation methods have different effectiveness, we still recommend that future researchers should try various obfuscation strategies and their combinations, which can not only ensure the fairness of code obfuscation but also explore the performance of LLMs on more types of code implementations.\n\nAll obfuscation strategies can help eliminate the inflated code generation capabilities of LLMs. symbol and structure obfuscation are particularly effective. Future research could further explore more sophisticated semantic obfuscation methods and additional strategies, and automate the entire obfuscation process efficiently.\n\n3) RQ3: What are the issues hidden in LLM-generated code: To enable developers to better utilize the code generated by large language models for downstream development tasks, we further analyzed common issues hidden in the generated code that may affect development tasks. Due to the large size of the OBFUSEVAL, we employed stratified sampling for manual code review. The sample size was calculated through the finite population correction, ensuring our sample accurately represents the dataset. We set the confidence level to 95% and the margin of error to 5%, which are standard statistical thresholds. Through this method, we extracted 299 pieces of LLM-generated code from five software and identified the following three categories of issues:\n\n• Syntax errors: Codes lead to compilation errors.\n\n• Functional errors: Codes fail to meet the functional requirements of development (fail the official tests). • Non-functional code quality issues: Codes potentially causing performance and reliability issues. Due to the target software being from diverse domains, the functionalities and the code semantics are various, so we mainly focus on syntax errors and non-functional code quality issues.\n\nSyntax Errors. We refer to the LLM-generated code that causes compilation errors in the software as syntax error code. Such errors significantly impact development efficiency. We extract error logs and manually analyze the code that failed to compile, ultimately categorizing the syntax errors into 5 major categories and 21 subcategories, as shown in Table VI.\n\nIn summary, large language models perform worst in handling function and type declarations, particularly implicit function declarations and type conflicts. And LLMs perform poorly in generating code related to structures, often resulting in issues such as accessing non-existent members. These errors may be due to the presence of similarly named functions or structures in the training data of the LLMs, leading to the use of functions or structures outside the provided context in code generation tasks. We recommend that developers focus on checking external dependencies such as called functions and structures when using LLMs to generate code. Additionally, LLMs often perform poorly when handling code involving pointers, leading to errors such as converting integers to pointers without casting, and incompatible pointer types.\n\nNon-functional code quality issues. For LLM-generated codes that have passed systematic testing, we conducted a manual code quality review and found that the code often had non-functional quality issues such as poor performance, and security vulnerabilities. These issues do not directly affect the normal execution of the code, but they can pose potential threats to the software. For example, poor performance may cause system response time delays, affecting user experience and overall performance; security vulnerabilities may be exploited by malicious attackers, leading to data breaches or system crashes. We have summarized common non-functional code quality issues into the following three categories:\n\n• Resource Management: In LLM-generated code, resource management code is often inadequate, especially in terms of memory or file management. For example, LLM-generated code often does not free dynamically allocated memory at the end of the program. Such code can pass compilation and testing, but it may lead to potential memory leaks, resulting in software performance issues. • Code Efficiency: Fig. 7(a) shows an example of low code efficiency. Wtiff pack2tiff is an image data conversion function in the libvips software. In the original code, the function adopts corresponding processing methods according to different image encoding formats, while the LLMgenerated code uses an inefficient loop to process each pixel, modifying and copying pixel by pixel. Although the LLM-generated code can meet functionality, its performance is far inferior to the original code, affecting the overall performance of the software. shows an example of missing error handling. In the original code, the program first checks if the myself pointer is NULL to prevent null pointer reference. However, the LLM-generated code does not perform null pointer checks, which could lead to accessing the pointer when it is uninitialized or freed, causing software crashes.\n\nConclusion for RQ3: Function and Type Declaration Errors are the most common syntax error of LLM generated code. While, even if the code passes compilation and system testing, it may still have non-functional issues which will negatively affect software reliability and performance. Future research should establish more comprehensive evaluation metrics to evaluate the quality of code generated by LLMs.\n\nRaw data collection. To simulate real-world development scenarios, we select mature system software from the real world as the target software for our research. We chose these software systems because they are widely used, have a rich development history, and contain mature test suites. We believe our study is representative, although some results may not apply to all kinds of software and all kinds of code language. There are other human efforts evolved in the data collection process (e.g., description rewriting). To minimize the impact of human error, we organize a team of seven senior software engineers, each with at least five years of experience in C programming. Additionally, we conduct a double-check progress in each step.\n\nCode complexity. Obfuscation strategies can introduce changes in code complexity, primarily in structural and semantic obfuscation. For example, function inlining in structural obfuscation may lead to an increase in the number of lines of code, potentially affecting the generation capabilities of large models. In practice, we did not intentionally increase the complexity of the code in any obfuscation method; our guiding principle was to ensure that the semantics of the code remained the same before and after obfuscation. Testing process. Due to the presence of flaky tests, the testing environment of real software projects can be unstable. Even correct code may fail tests due to contextual or environmental issues. Therefore, for each case, we run tests at least five times to mitigate intermediate test results. Official test suites may not comprehensively test the correctness of functionality, but this represents the best efforts, allowing for a better assessment of whether the code meets development requirements.\n\nAccurately assessing the code generation capabilities of LLMs is crucial for their evaluation and improvement. While existing works have constructed datasets to gauge these capabilities, three main gaps persist in objectively evaluating LLMs' real potential: the exposure of target code, case timeliness, and dependency availability. These gaps arise because the code in current datasets may have been exposed during the training phase of LLMs, and the continuous training and development of LLMs severely compromise their timeliness. To address the problem, this paper adopts the concept of code obfuscation, altering code at various levels while preserving its functionality and output. We developed a code-obfuscationbased benchmark, OBFUSEVAL, by collecting 1,354 raw cases from five real-world projects, which include function descriptions and code. We then obfuscated descriptions, code, and context dependencies using a three-level strategy (symbol, structure, and semantic). Evaluating four LLMs on OBFUSE-VAL and comparing the effectiveness of different obfuscation strategies, we found that after obfuscation, the average test pass rate can decreased by 15.3%-62.5%.",
+  "section_quality": {
+    "has_abstract": true,
+    "has_introduction": true,
+    "has_experiment": true,
+    "intro_chars": 6610,
+    "experiment_chars": 15215
+  },
+  "introduction_source": "grobid_tei",
+  "experiment_source": "grobid_tei",
+  "background_source": "introduction",
+  "experiment_source_used": "experiment_section",
+  "task_title": "A Benchmark for Evaluating LLM Code Generation on Unfamiliar Real-World Code",
+  "background": "Large language models (LLMs) have shown impressive code generation abilities, but existing benchmarks often overestimate their performance because they test code that may have been encountered during training. Three critical gaps cause this bias: (1) the target code appears in the training set, (2) benchmark cases become stale as models are retrained, and (3) realistic project-level dependencies are not provided. These factors lead to a 'Specialist in Familiarity' problem where models excel on known code but fail on genuinely unseen tasks. A new evaluation benchmark is needed that addresses these gaps by testing LLMs on code unlikely to have been memorized, while providing a realistic development context.",
+  "research_question": "How to design a benchmark that faithfully evaluates the code generation capabilities of LLMs on unfamiliar code, avoiding inflated performance due to training data exposure, and reflecting real-world software development constraints?",
+  "experiment_setup": {
+    "datasets": [
+      {
+        "name": "Unfamiliar-Code Eval Benchmark",
+        "source": "Constructable via the following procedure: (i) select highly starred GitHub projects; (ii) extract functions introduced after a known LLM training cutoff date and covered by official test suites; (iii) automatically transform the code to reduce familiarity while preserving functionality (e.g., renaming identifiers, restructuring code, altering syntactic patterns); (iv) collect surrounding contextual dependencies (some necessary, some irrelevant) to simulate partial dependency knowledge.",
+        "description": "1,354 functions from 5 real-world projects, each with functional descriptions, corresponding code, and curated dependencies; designed to be entirely regeneratable with different transformations to avoid staleness.",
+        "access": "constructable"
+      }
+    ],
+    "baselines": [
+      {
+        "name": "HumanEval",
+        "reference": "https://github.com/openai/human-eval"
+      },
+      {
+        "name": "MBPP",
+        "reference": "https://github.com/google-research/google-research/tree/master/mbpp"
+      },
+      {
+        "name": "APPS",
+        "reference": "https://github.com/hendrycks/apps"
+      },
+      {
+        "name": "CodeXGLUE",
+        "reference": "https://github.com/microsoft/CodeXGLUE"
+      }
+    ],
+    "metrics": [
+      {
+        "name": "Compile Pass Rate (CPR@5)",
+        "definition": "Fraction of generated code snippets that compile successfully when substituted into the original project, averaged over 5 independent generations per function."
+      },
+      {
+        "name": "Test Pass Rate (TPR@5)",
+        "definition": "Fraction of generated code snippets that pass the associated official system tests, using pass@5 to reduce variance."
+      }
+    ],
+    "rqs": [
+      "RQ1: How do LLMs perform on the constructed benchmark compared to traditional code generation benchmarks?",
+      "RQ2: How do different transformation strategies (varying levels of code unfamiliarity) impact LLM performance?",
+      "RQ3: What types of defects are common in LLM-generated code that passes compilation but fails functional testing?"
+    ],
+    "target_subject": "General-purpose and code-specialized large language models for code generation, e.g., GPT-3.5, GPT-4, DeepSeek-Coder.",
+    "constraints": "The benchmark must ensure the evaluated code was not part of any known training set for the target LLMs; it must provide only partial, realistic dependency context (not all dependencies explicitly given); and the entire benchmark must be re-generatable (e.g., through re-application of transformation rules) to prevent staleness over time."
+  },
+  "expected_artifacts": [
+    "idea",
+    "code",
+    "experiment_results",
+    "paper"
+  ],
+  "feasibility_notes": "Mining GitHub projects for candidate functions and their test integration requires substantial infrastructure and careful date filtering. Building a Docker-based execution environment for each project to compile and test generated code is resource-intensive and may need customized setups per project. The code transformation step demands robust program analysis and rewriting tools to modify code without altering functionality, which can be technically challenging, especially for complex language constructs.",
+  "difficulty": "hard",
+  "seed_papers": [
+    {
+      "title": "N$^{2}$M$^{2}$: Learning Navigation for Arbitrary Mobile Manipulation Motions in Unseen and Dynamic Environments",
+      "year": 2022,
+      "authors": [
+        "Daniel Honerkamp",
+        "T. Welschehold",
+        "A. Valada"
+      ],
+      "doi": "10.1109/TRO.2023.3284346",
+      "arxiv_id": "2206.08737",
+      "pdf_url": "https://arxiv.org/pdf/2206.08737",
+      "citation_count": 41
+    },
+    {
+      "title": "Future Horizons: AI-Enhanced Threat Detection in Cloud Environments: Unveiling Opportunities for Research",
+      "year": 2024,
+      "authors": [
+        "Haroon Arif",
+        "Aashesh Kumar",
+        "M. Fahad"
+      ],
+      "doi": "10.47709/ijmdsa.v2i2.3452",
+      "arxiv_id": null,
+      "pdf_url": "https://jurnal.itscience.org/index.php/ijmdsa/article/download/3452/2693",
+      "citation_count": 36
+    },
+    {
+      "title": "From Real World to Logic and Back: Learning Generalizable Relational Concepts For Long Horizon Robot Planning",
+      "year": 2024,
+      "authors": [
+        "Naman Shah",
+        "Jayesh Nagpal",
+        "Pulkit Verma"
+      ],
+      "doi": null,
+      "arxiv_id": "2402.11871",
+      "pdf_url": "",
+      "citation_count": 12
+    },
+    {
+      "title": "GRU-Based Deep Learning Framework for Real-Time, Accurate, and Scalable UAV Trajectory Prediction",
+      "year": 2025,
+      "authors": [
+        "Seungwon Yoon",
+        "Dahyun Jang",
+        "Hyewon Yoon"
+      ],
+      "doi": "10.3390/drones9020142",
+      "arxiv_id": null,
+      "pdf_url": "",
+      "citation_count": 12
+    },
+    {
+      "title": "Did You Note My Palette? Unveiling Synthetic Images Through Color Statistics",
+      "year": 2024,
+      "authors": [
+        "Lea Uhlenbrock",
+        "D. Cozzolino",
+        "Denise Moussa"
+      ],
+      "doi": "10.1145/3658664.3659652",
+      "arxiv_id": null,
+      "pdf_url": "",
+      "citation_count": 11
+    }
+  ],
+  "paper_title": "Unseen Horizons: Unveiling the Real Capability of LLM Code Generation Beyond the Familiar"
+}

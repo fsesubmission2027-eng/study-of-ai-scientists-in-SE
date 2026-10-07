@@ -1,0 +1,29 @@
+{
+  "forbid_synthetic_pilot": true,
+  "agent_data_note": "Use Defects4J only via `dataset_candidate/defects4j/` (workspace symlink). Do **not** use synthetic/sample target lists from seeds. Never use legacy `/shared/defects4j` paths for file tools.",
+  "required_metrics": [
+    "target_exception_triggering_rate",
+    "num_triggered_exceptions"
+  ],
+  "benchmark_rules": [
+    "Defects4J is available at `dataset_candidate/defects4j/`; invoke via `$DEFECTS4J_HOME/framework/bin/defects4j` (DEFECTS4J_HOME=`dataset_candidate/defects4j`).",
+    "Invoke Defects4J with `$DEFECTS4J_HOME/framework/bin/defects4j` inside the task container only.",
+    "Forbidden: toy Java programs, mock baselines, or sample_*.csv pilot targets as evaluation data.",
+    "Compare against Randoop and/or EvoSuite on real Defects4J checkouts.",
+    "Respect the per-target time budget (default 10 minutes) from the task brief.",
+    "Do not modify source code of programs under test."
+  ],
+  "non_goals": [
+    "Using sample_targets.csv or synthetic stand-ins instead of Defects4J",
+    "Collecting all 51 open-source Java projects in one benchmark run (start with a Defects4J subset)",
+    "Claiming real bug discovery without executed evidence"
+  ],
+  "dataset_env": {
+    "DEFECTS4J_HOME": "dataset_candidate/defects4j",
+    "JAVA_HOME": "/usr/lib/jvm/java-11-openjdk-amd64"
+  },
+  "exclude_from_agent": [
+    "sample_targets.csv",
+    "sample_rechecks.csv"
+  ]
+}

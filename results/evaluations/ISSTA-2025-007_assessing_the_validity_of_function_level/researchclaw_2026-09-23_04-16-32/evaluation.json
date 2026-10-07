@@ -1,0 +1,1163 @@
+{
+  "generated_at": "2026-09-30T02:40:16",
+  "run_dir": "~/ai_scientist_inputs/ISSTA-2025-007_assessing_the_validity_of_function_level/workspace/researchclaw_2026-09-23_04-16-32",
+  "task_dir": "~/ai_scientist_inputs/ISSTA-2025-007_assessing_the_validity_of_function_level",
+  "framework": "researchclaw",
+  "fairness_audit": [
+    {
+      "axis": "completeness",
+      "was_unfair": "Required both paper.tex AND paper.pdf; any tool missing one failed equally.",
+      "fix": "Paper gate: PDF=1.0; TeX-only=0.5; ``complete`` requires PDF."
+    },
+    {
+      "axis": "completeness",
+      "was_unfair": "``results`` counted stub/seed JSON (dataset_candidate/metrics.json).",
+      "fix": "``results`` requires substantive numeric results via results_normalize."
+    },
+    {
+      "axis": "experiment_success",
+      "was_unfair": "Only metrics.json; ignored results.json / experiment_results.txt.",
+      "fix": "Framework-ordered result candidates + normalized loaders."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Penalized tools with no bib; airesearcher has no workspace references.",
+      "fix": "literature_applicable=false → status not_applicable; excluded from fair aggregate."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "related_work.json subset as gold made recall hard to interpret.",
+      "fix": "Coverage gold is original paper REFERENCES from mineru; related_work only enriches metadata/fallback."
+    },
+    {
+      "axis": "peer_review",
+      "was_unfair": "Missing Stanford report looked like evaluation failure.",
+      "fix": "status not_provided; optional axis, never counts as tool failure."
+    },
+    {
+      "axis": "paths/find_results",
+      "was_unfair": "Picked downloads/** and sandbox noise (e.g. airesearcher LLVM tree).",
+      "fix": "Exclude downloads/, seeds/, dataset_candidate/, sandbox junk paths."
+    },
+    {
+      "axis": "paths/framework_noise",
+      "was_unfair": "DeepScientist .deepscientist_npm / runtime / skills templates counted as code/paper/results.",
+      "fix": "FRAMEWORK_NOISE_DIRS+markers; quest worktree + eval_output results; paper md drafts; reject template tex."
+    },
+    {
+      "axis": "paths/paper_tex",
+      "was_unfair": "tiny_scientist / ACL runs store paper under latex/*.tex; evaluator only looked at paper/main.tex.",
+      "fix": "latex/**/*.tex with substantive-body heuristic; find_paper_document uses same rules."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Entire custom.bib (300+ anthology entries) verified when paper had zero \\cite commands.",
+      "fix": "collect_agent_references filters bib to in-text cite keys; skips uncited bulk bib (>40 entries)."
+    },
+    {
+      "axis": "paths/ai_scientist_summaries",
+      "was_unfair": "AI Scientist can persist substantive results and paper-like drafts in *_summary.json logs rather than paper/main.tex or results/**/*.json.",
+      "fix": "Treat draft_summary/research_summary as weak paper documents and summary JSONs as result candidates."
+    },
+    {
+      "axis": "framework/ai_scientist_v2",
+      "was_unfair": "Manifest framework ``ai_scientist_v2`` fell through to profile ``unknown``, skipping AI-Scientist idea/result path priorities.",
+      "fix": "Normalize ``ai_scientist_v2`` (and common aliases) to profile key ``ai_scientist``."
+    },
+    {
+      "axis": "idea_generation",
+      "was_unfair": "plan.md/todos.md weak proxies scored same as structured idea.json.",
+      "fix": "Framework idea_priority tried first; missing idea → not_applicable where appropriate."
+    }
+  ],
+  "axes": [
+    "alignment",
+    "completeness",
+    "experiment_analysis",
+    "idea_generation",
+    "literature_review",
+    "peer_review"
+  ],
+  "results": {
+    "completeness": {
+      "framework": "researchclaw",
+      "run_dir": "~/ai_scientist_inputs/ISSTA-2025-007_assessing_the_validity_of_function_level/workspace/researchclaw_2026-09-23_04-16-32",
+      "task_dir": "~/ai_scientist_inputs/ISSTA-2025-007_assessing_the_validity_of_function_level",
+      "complete": false,
+      "required_score": 0.0,
+      "bonus_score": 0.05,
+      "overall_score": 0.0,
+      "missing": [
+        "idea",
+        "code",
+        "results",
+        "paper"
+      ],
+      "required": {
+        "idea": null,
+        "code": {
+          "count": 0,
+          "files": []
+        },
+        "results": {
+          "substantive": false,
+          "normalized_path": null,
+          "numeric_leaf_count": 0,
+          "discovered_files": [],
+          "metrics_keys_sample": []
+        },
+        "paper": {
+          "tex": null,
+          "pdf": null,
+          "md": null,
+          "json": null,
+          "status": "missing",
+          "score": 0.0
+        }
+      },
+      "bonus": {
+        "experiment_plan": null,
+        "experiment_log": {
+          "path": "researchclaw_run.log",
+          "bytes": 2878,
+          "via": "glob"
+        },
+        "review": null,
+        "readme": null,
+        "narrative": null,
+        "bib": {
+          "path": "stage-04/references.bib",
+          "bytes": 9288,
+          "via": "glob"
+        }
+      },
+      "manifest_status": null,
+      "gate_scores": {
+        "idea": 0.0,
+        "code": 0.0,
+        "results": 0.0,
+        "paper": 0.0
+      },
+      "fairness": {
+        "gates": [
+          "idea",
+          "code",
+          "results",
+          "paper"
+        ],
+        "paper_gate_rule": "PDF=1.0; TeX-only/md_only/json_only=0.5; complete requires PDF",
+        "results_gate_rule": "substantive numeric results via framework-aware normalize_results",
+        "audit_ref": "framework_profile.FAIRNESS_AUDIT"
+      },
+      "notes": [
+        "Required: idea, code, substantive results, paper (PDF full; TeX/markdown/JSON draft half).",
+        "Stub/seed metrics (e.g. dataset_candidate/metrics.json) do not satisfy results.",
+        "Framework noise (.deepscientist_npm, skills/templates, runtime) is excluded from code/results/paper.",
+        "Manifest status is informational; disk presence is authoritative."
+      ]
+    },
+    "idea_generation": {
+      "run_dir": "~/ai_scientist_inputs/ISSTA-2025-007_assessing_the_validity_of_function_level/workspace/researchclaw_2026-09-23_04-16-32",
+      "task_dir": "~/ai_scientist_inputs/ISSTA-2025-007_assessing_the_validity_of_function_level",
+      "idea_path": null,
+      "status": "missing_idea",
+      "dimensions": {},
+      "overall_score": null,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "novelty",
+        "feasibility",
+        "clarity"
+      ],
+      "solution_space": null,
+      "notes": [
+        "Scores the intermediate idea artifact (not the final paper).",
+        "Dimensions: novelty, feasibility, clarity (each 1-5). Excitement removed.",
+        "Novelty is scored against a Solution Space built from mineru REFERENCES titles (+ related_work.json abstracts when matched)."
+      ],
+      "hint": "No idea artifact found under candidates like artifacts/idea.json, idea-stage/IDEA_REPORT.md, session/idea.json, tiny_idea.json, selected_idea.md."
+    },
+    "peer_review": {
+      "run_dir": "~/ai_scientist_inputs/ISSTA-2025-007_assessing_the_validity_of_function_level/workspace/researchclaw_2026-09-23_04-16-32",
+      "review_report": null,
+      "paper_pdf": null,
+      "paper_tex": null,
+      "status": "not_provided",
+      "dimensions": {},
+      "overall_score": null,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "soundness",
+        "significance",
+        "novelty",
+        "presentation",
+        "credibility"
+      ],
+      "notes": [
+        "Stanford Agentic Reviewer (paperreview.ai): manual download to artifacts/peer_review/stanford_apr.md, or pass --auto-paperreview.",
+        "Dimensions: soundness, significance, novelty, presentation, credibility (each 1-5)."
+      ],
+      "paperreview": {
+        "status": "skipped",
+        "reason": "no_pdf"
+      },
+      "optional": true,
+      "hint": "Optional external review (Stanford APR). Upload paper/main.pdf to https://paperreview.ai/ , save review to ~/ai_scientist_inputs/ISSTA-2025-007_assessing_the_validity_of_function_level/workspace/researchclaw_2026-09-23_04-16-32/artifacts/peer_review/stanford_apr.md"
+    },
+    "alignment": {
+      "run_dir": "~/ai_scientist_inputs/ISSTA-2025-007_assessing_the_validity_of_function_level/workspace/researchclaw_2026-09-23_04-16-32",
+      "task_dir": "~/ai_scientist_inputs/ISSTA-2025-007_assessing_the_validity_of_function_level",
+      "status": "missing_agent_paper_or_metrics",
+      "original": {
+        "status": "ok",
+        "task_dir": "~/ai_scientist_inputs/ISSTA-2025-007_assessing_the_validity_of_function_level",
+        "paper_title": "Top Score on the Wrong Exam: On Benchmarking in Machine Learning for Vulnerability Detection",
+        "task_id": "ISSTA-2025-007",
+        "selection": {
+          "num_blocks": 6,
+          "total_chars": 31998,
+          "inferred_roles": {
+            "abstract": 1,
+            "introduction": 1,
+            "experiment": 3,
+            "discussion": 1
+          },
+          "mineru_raw_keys": {
+            "field:abstract": 1,
+            "field:introduction": 1,
+            "field:experiment": 1,
+            "other": 3
+          },
+          "infer_reasons": {
+            "top_level_field": 3,
+            "inherited": 1,
+            "body_override": 1,
+            "title": 1
+          },
+          "rescued_from_other": 3,
+          "note": "mineru key is unreliable; blocks are selected by title/body/inheritance. rescued_from_other counts sections labeled other but treated as typed roles."
+        },
+        "claims": [
+          {
+            "id": "C1",
+            "statement": "The prevailing function-level binary classification definition of ML4VD is ill-defined because vulnerability often cannot be decided without calling context.",
+            "direction": "neutral",
+            "metric_names": [
+              "context_dependent_vulnerability_ratio",
+              "context_dependent_security_ratio"
+            ],
+            "evidence_quote": "the vulnerability of a function cannot be decided without further context for more than 90% of functions",
+            "confidence": 0.95
+          },
+          {
+            "id": "C2",
+            "statement": "Popular ML4VD datasets contain noisy labels: only 39%-65% of sampled functions labeled vulnerable actually contain security vulnerabilities.",
+            "direction": "degrades",
+            "metric_names": [
+              "noisy_label_ratio"
+            ],
+            "evidence_quote": "Out of the 100 functions per dataset that were originally labeled as vulnerable, only 39%-65% actually contain security vulnerabilities.",
+            "confidence": 0.95
+          },
+          {
+            "id": "C3",
+            "statement": "High ML4VD benchmark scores can be achieved via spurious correlations without detecting vulnerabilities.",
+            "direction": "degrades",
+            "metric_names": [
+              "accuracy",
+              "success_ratio"
+            ],
+            "evidence_quote": "high scores can be achieved even when only word counts are available",
+            "confidence": 0.9
+          }
+        ],
+        "metrics": [
+          {
+            "name": "context_dependent_vulnerability_ratio",
+            "value": 0.9,
+            "unit": "ratio",
+            "higher_is_better": false,
+            "setting": "manual labeling of 300 vulnerable-labeled functions from BigVul, Devign, DiverseVul",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "the vulnerability of a function cannot be decided without further context for more than 90% of functions",
+            "confidence": 0.9
+          },
+          {
+            "name": "noisy_label_ratio",
+            "value": 0.39,
+            "unit": "ratio",
+            "higher_is_better": false,
+            "setting": "BigVul sample of 100 vulnerable-labeled functions",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "only 39%-65% (Devign: 47%, BigVul: 39%, DiverseVul: 65%) actually contain security vulnerabilities",
+            "confidence": 0.95
+          },
+          {
+            "name": "noisy_label_ratio",
+            "value": 0.47,
+            "unit": "ratio",
+            "higher_is_better": false,
+            "setting": "Devign sample of 100 vulnerable-labeled functions",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "Devign: 47%",
+            "confidence": 0.95
+          },
+          {
+            "name": "noisy_label_ratio",
+            "value": 0.65,
+            "unit": "ratio",
+            "higher_is_better": false,
+            "setting": "DiverseVul sample of 100 vulnerable-labeled functions",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "DiverseVul: 65%",
+            "confidence": 0.95
+          },
+          {
+            "name": "inter_rater_agreement",
+            "value": 0.82,
+            "unit": "ratio",
+            "higher_is_better": true,
+            "setting": "first labeling step: vulnerable vs secure",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "the labels of the two researchers agreed for 82% of all functions",
+            "confidence": 0.95
+          },
+          {
+            "name": "cohen_kappa",
+            "value": 0.64,
+            "unit": "ratio",
+            "higher_is_better": true,
+            "setting": "first labeling step: vulnerable vs secure",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "resulting in a Cohen Kappa value of 0.64",
+            "confidence": 0.95
+          },
+          {
+            "name": "inter_rater_agreement",
+            "value": 0.98,
+            "unit": "ratio",
+            "higher_is_better": true,
+            "setting": "second labeling step: context dependence",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "the labels of the two researchers agreed for 98% of all functions",
+            "confidence": 0.95
+          },
+          {
+            "name": "cohen_kappa",
+            "value": 0.96,
+            "unit": "ratio",
+            "higher_is_better": true,
+            "setting": "second labeling step: context dependence",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "resulting in a Cohen Kappa value of 0.96",
+            "confidence": 0.95
+          }
+        ],
+        "overall_conclusion": "The paper argues that function-level binary classification is an ill-defined task for ML4VD because vulnerability labels depend heavily on context and many labels are noisy. Popular datasets can be exploited via spurious correlations, so reported high scores do not demonstrate real vulnerability detection capability.",
+        "comparable_notes": "Fair comparisons should account for dataset noise, use patch-commit/CVE-confirmed labels, and report whether vulnerability is context-dependent versus context-independent. Evaluations should not rely solely on function-level classification accuracy without addressing spurious correlations.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 2664,
+            "completion_tokens_details": {
+              "reasoning_tokens": 1321
+            },
+            "prompt_tokens": 8314,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 10978
+          },
+          "attempt": 1
+        },
+        "cache_hit": true
+      },
+      "agent": {
+        "status": "missing_agent_paper_or_metrics",
+        "run_dir": "~/ai_scientist_inputs/ISSTA-2025-007_assessing_the_validity_of_function_level/workspace/researchclaw_2026-09-23_04-16-32"
+      }
+    },
+    "experiment_analysis": {
+      "run_dir": "~/ai_scientist_inputs/ISSTA-2025-007_assessing_the_validity_of_function_level/workspace/researchclaw_2026-09-23_04-16-32",
+      "task_dir": "~/ai_scientist_inputs/ISSTA-2025-007_assessing_the_validity_of_function_level",
+      "status": "ok",
+      "metrics_path": null,
+      "experiment_success": {
+        "status": "failed_or_incomplete",
+        "success": false,
+        "metrics_path": null,
+        "absolute_metrics_path": null,
+        "checks": {
+          "has_results_file": false,
+          "non_stub": false,
+          "numeric_leaf_count": 0,
+          "min_numeric_ok": false
+        },
+        "manifest_hints": {
+          "status": null,
+          "returncode": null,
+          "benchmark_complete": null,
+          "artifacts_metrics_flag": false
+        },
+        "warnings": [],
+        "suspicious_values": [],
+        "note": "success=true requires substantive results (framework-aware path) with >=3 numeric leaves. Supports metrics.json, results.json, experiment_results.txt, etc. Manifest returncode/benchmark_complete are soft warnings only."
+      },
+      "idea_code_consistency": {
+        "status": "missing_idea"
+      },
+      "setup_coverage": {
+        "status": "ok",
+        "overall_coverage": 0.0,
+        "datasets": {
+          "gold_count": 3,
+          "hit_count": 0,
+          "miss_count": 3,
+          "coverage": 0.0,
+          "hits": [],
+          "misses": [
+            "BigVul",
+            "Devign",
+            "DiverseVul"
+          ]
+        },
+        "baselines": {
+          "gold_count": 4,
+          "hit_count": 0,
+          "miss_count": 4,
+          "coverage": 0.0,
+          "hits": [],
+          "misses": [
+            "Gradient boosting on word counts",
+            "Devign model",
+            "ReVeal model",
+            "BigVul model"
+          ]
+        },
+        "metrics": {
+          "gold_count": 7,
+          "hit_count": 0,
+          "miss_count": 7,
+          "coverage": 0.0,
+          "hits": [],
+          "misses": [
+            "Accuracy",
+            "Precision",
+            "Recall",
+            "F1-score",
+            "AUC-ROC",
+            "Context-dependency rate",
+            "Cohen's Kappa"
+          ]
+        },
+        "agent_protocol": {},
+        "gold_protocol": {},
+        "dataset_dirs": [
+          "dataset_candidate"
+        ],
+        "flags": {
+          "weaker_baseline_suspected": true,
+          "weak_protocol": [],
+          "synthetic_data": "unexpected_synthetic_or_local_only_data",
+          "gold_allows_synthetic": false
+        },
+        "gold_sources": [
+          "~/ai_scientist_inputs/ISSTA-2025-007_assessing_the_validity_of_function_level/task.md",
+          "~/ai_scientist_inputs/ISSTA-2025-007_assessing_the_validity_of_function_level/metadata.json"
+        ],
+        "note": "Coverage is name/alias matching against task.md Datasets/Baselines/Metrics. weak_protocol flags large reductions in trials/timeout vs Constraints. Synthetic corpora are not penalized when the task itself requires synthesis."
+      },
+      "ablation_significance": {
+        "status": "missing_idea"
+      },
+      "results_paper_consistency": {
+        "status": "missing_metrics"
+      },
+      "scores": {
+        "experiment_success": false,
+        "idea_code_score": null,
+        "setup_coverage": 0.0,
+        "ablation_coverage_score": null,
+        "overall_ablation_ok": null,
+        "overall_significance_ok": null,
+        "results_paper_score": null,
+        "hiding_unfavorable_suspected": null
+      },
+      "notes": [
+        "Axes 1,2,3,4,6 in experiment_analysis (figures excluded).",
+        "setup_coverage matches task.md Datasets/Baselines/Metrics; weak_protocol flags reductions vs Constraints.",
+        "Axis 6: final normalized results vs paper; interim run logs not used as ground truth."
+      ]
+    },
+    "literature_review": {
+      "run_dir": "~/ai_scientist_inputs/ISSTA-2025-007_assessing_the_validity_of_function_level/workspace/researchclaw_2026-09-23_04-16-32",
+      "task_dir": "~/ai_scientist_inputs/ISSTA-2025-007_assessing_the_validity_of_function_level",
+      "status": "ok",
+      "as_of_year": 2026,
+      "agent_ref_count": 32,
+      "sources": [
+        {
+          "path": "~/ai_scientist_inputs/ISSTA-2025-007_assessing_the_validity_of_function_level/workspace/researchclaw_2026-09-23_04-16-32/stage-05/shortlist.jsonl",
+          "kind": "shortlist"
+        },
+        {
+          "path": "~/ai_scientist_inputs/ISSTA-2025-007_assessing_the_validity_of_function_level/workspace/researchclaw_2026-09-23_04-16-32/stage-04/references.bib",
+          "kind": "bib"
+        }
+      ],
+      "collection_audit": {
+        "cited_keys_count": 0,
+        "filter_mode": "non_bib_sources",
+        "bib_total_before_filter": 32,
+        "bib_after_filter": 0,
+        "uncited_bib_skipped": 32,
+        "agent_ref_count": 32
+      },
+      "fabrication": {
+        "status": "ok",
+        "scholarly_count": 31,
+        "verified_count": 27,
+        "fake_count": 0,
+        "lookup_failed_count": 4,
+        "non_paper_count": 1,
+        "fabrication_rate": 0.0,
+        "items": [
+          {
+            "title": "The Measurement of Observer Agreement for Categorical Data",
+            "doi": "10.2307/2529310",
+            "arxiv_id": "",
+            "year": 1977,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "The measurement of observer agreement for categorical data.",
+            "resolved_year": 1977,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "landis1977measurement",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "A Coefficient of Agreement for Nominal Scales",
+            "doi": "10.1177/001316446002000104",
+            "arxiv_id": "",
+            "year": 1960,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "A Coefficient of Agreement for Nominal Scales",
+            "resolved_year": 1960,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "cohen1960coefficient",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Learning from Imbalanced Data",
+            "doi": "10.1109/tkde.2008.239",
+            "arxiv_id": "",
+            "year": 2009,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Learning From Imbalanced Data",
+            "resolved_year": 2019,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "he2009learning",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "An axiomatic basis for computer programming",
+            "doi": "10.1145/363235.363259",
+            "arxiv_id": "",
+            "year": 1969,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated."
+            ],
+            "cite_key": "hoare1969axiomatic",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Guidelines for conducting systematic mapping studies in software engineering: An update",
+            "doi": "10.1016/j.infsof.2015.03.007",
+            "arxiv_id": "",
+            "year": 2015,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Guidelines for conducting systematic mapping studies in software engineering: An update",
+            "resolved_year": 2015,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "petersen2015guidelines",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Principles of Program Analysis",
+            "doi": "10.1007/978-3-662-03811-6",
+            "arxiv_id": "",
+            "year": 1999,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Principles of Program Analysis",
+            "resolved_year": 1999,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "nielson1999principles",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "CodeT5: Identifier-aware Unified Pre-trained Encoder-Decoder Models for Code Understanding and Generation",
+            "doi": "10.18653/v1/2021.emnlp-main.685",
+            "arxiv_id": "2109.00859",
+            "year": 2021,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "CodeT5: Identifier-aware Unified Pre-trained Encoder-Decoder Models for Code Understanding and Generation",
+            "resolved_year": 2021,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "wang2021codet",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Why don't software developers use static analysis tools to find bugs?",
+            "doi": "10.1109/icse.2013.6606613",
+            "arxiv_id": "",
+            "year": 2013,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Why don't software developers use static analysis tools to find bugs?",
+            "resolved_year": 2013,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "johnson2013dont",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "A C/C++ Code Vulnerability Dataset with Code Changes and CVE Summaries",
+            "doi": "10.1145/3379597.3387501",
+            "arxiv_id": "",
+            "year": 2020,
+            "status": "non_paper",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "Treated as tool/docs/repo resource, not a scholarly paper."
+            ],
+            "cite_key": "fan2020code",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "QuickCheck",
+            "doi": "10.1145/357766.351266",
+            "arxiv_id": "",
+            "year": 2000,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Makina: A QuickCheck state machine library",
+            "resolved_year": 2025,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "claessen2000quickcheck",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "DiverseVul: A New Vulnerable Source Code Dataset for Deep Learning Based Vulnerability Detection",
+            "doi": "10.1145/3607199.3607242",
+            "arxiv_id": "2304.00409",
+            "year": 2023,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "DiverseVul: A New Vulnerable Source Code Dataset for Deep Learning Based Vulnerability Detection",
+            "resolved_year": 2023,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "chen2023diversevul",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Fuzzing: Challenges and Reflections",
+            "doi": "10.1109/ms.2020.3016773",
+            "arxiv_id": "",
+            "year": 2020,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Fuzzing: Challenges and Reflections",
+            "resolved_year": 2020,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "boehme2020fuzzing",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Data Quality for Software Vulnerability Datasets",
+            "doi": "10.1109/icse48619.2023.00022",
+            "arxiv_id": "",
+            "year": 2023,
+            "status": "verified",
+            "matched_via": "arxiv_title",
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "croft2023data",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Semantic fuzzing with zest",
+            "doi": "10.1145/3293882.3330576",
+            "arxiv_id": "",
+            "year": 2019,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Replication Package for \"Semantic Fuzzing with Zest\"",
+            "resolved_year": 2019,
+            "cache_hit": false,
+            "notes": [
+              "DOI resolved to unrelated title ('Validity Fuzzing and Parametric Generators for Effective Random Testing'); continuing other lookups."
+            ],
+            "cite_key": "padhye2019semantic",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "An empirical study on the effectiveness of static C code analyzers for vulnerability detection",
+            "doi": "10.1145/3533767.3534380",
+            "arxiv_id": "",
+            "year": 2022,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "An empirical study on the effectiveness of static C code analyzers for vulnerability detection",
+            "resolved_year": 2022,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "lipp2022empirical",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "JQF: coverage-guided property-based testing in Java",
+            "doi": "10.1145/3293882.3339002",
+            "arxiv_id": "",
+            "year": 2019,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "JQF: coverage-guided property-based testing in Java",
+            "resolved_year": 2019,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "padhye2019coverageguided",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "LLMs Cannot Reliably Identify and Reason About Security Vulnerabilities (Yet?): A Comprehensive Evaluation, Framework, and Benchmarks",
+            "doi": "10.1109/sp54263.2024.00210",
+            "arxiv_id": "",
+            "year": 2024,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "LLMs Cannot Reliably Identify and Reason About Security Vulnerabilities (Yet?): A Comprehensive Evaluation, Framework, and Benchmarks",
+            "resolved_year": 2023,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "ullah2024llms",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Dataflow Analysis-Inspired Deep Learning for Efficient Vulnerability Detection",
+            "doi": "10.1145/3597503.3623345",
+            "arxiv_id": "",
+            "year": 2024,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Dataflow Analysis-Inspired Deep Learning for Efficient Vulnerability Detection",
+            "resolved_year": 2022,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "steenhoek2024dataflow",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Finding real bugs in big programs with incorrectness logic",
+            "doi": "10.1145/3527325",
+            "arxiv_id": "",
+            "year": 2022,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Finding real bugs in big programs with incorrectness logic",
+            "resolved_year": 2022,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "le2022finding",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Vu1SPG: Vulnerability detection based on slice property graph representation learning",
+            "doi": "10.1109/issre52982.2021.00054",
+            "arxiv_id": "2109.02527",
+            "year": 2021,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Vu1SPG: Vulnerability detection based on slice property graph representation learning",
+            "resolved_year": 2021,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "zheng2021vuspg",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Towards Causal Deep Learning for Vulnerability Detection",
+            "doi": "10.1145/3597503.3639170",
+            "arxiv_id": "2310.07958",
+            "year": 2024,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Towards Causal Deep Learning for Vulnerability Detection",
+            "resolved_year": 2023,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "rahman2024causal",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Pre-training by Predicting Program Dependencies for Vulnerability Analysis Tasks",
+            "doi": "10.1145/3597503.3639142",
+            "arxiv_id": "",
+            "year": 2024,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Pre-training by Predicting Program Dependencies for Vulnerability Analysis Tasks",
+            "resolved_year": 2024,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "liu2024pretraining",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Retesting software during development and maintenance",
+            "doi": "10.1109/fosm.2008.4659253",
+            "arxiv_id": "",
+            "year": 2008,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Retesting software during development and maintenance",
+            "resolved_year": 2008,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "harrold2008retesting",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "On the Effectiveness of Function-Level Vulnerability Detectors for Inter-Procedural Vulnerabilities",
+            "doi": "10.1145/3597503.3639218",
+            "arxiv_id": "",
+            "year": 2024,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "On the Effectiveness of Function-Level Vulnerability Detectors for Inter-Procedural Vulnerabilities",
+            "resolved_year": 2024,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "li2024effectiveness",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Toward Improved Deep Learning-based Vulnerability Detection",
+            "doi": "10.1145/3597503.3608141",
+            "arxiv_id": "",
+            "year": 2024,
+            "status": "verified",
+            "matched_via": "arxiv_title",
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "sejfia2024improved",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Learning Program Semantics for Vulnerability Detection via Vulnerability-Specific Inter-procedural Slicing",
+            "doi": "10.1145/3611643.3616351",
+            "arxiv_id": "",
+            "year": 2023,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Learning Program Semantics for Vulnerability Detection via Vulnerability-Specific Inter-procedural Slicing",
+            "resolved_year": 2023,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "wu2023learning",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Detecting Overfitting of Machine Learning Techniques for Automatic Vulnerability Detection",
+            "doi": "10.1145/3611643.3617845",
+            "arxiv_id": "",
+            "year": 2023,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated."
+            ],
+            "cite_key": "risse2023detecting",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Boosting Fuzzer Efficiency: An Information Theoretic Perspective",
+            "doi": "10.1145/3611019",
+            "arxiv_id": "",
+            "year": 2023,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated.",
+              "Saw 1 conclusive miss(es) mixed with 2 API error(s)."
+            ],
+            "cite_key": "bohme2023boosting",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Snopy: Bridging Sample Denoising with Causal Graph Learning for Effective Vulnerability Detection",
+            "doi": "10.1145/3691620.3695057",
+            "arxiv_id": "",
+            "year": 2024,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Snopy: Bridging Sample Denoising with Causal Graph Learning for Effective Vulnerability Detection",
+            "resolved_year": 2024,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "cao2024snopy",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "MendelFuzz: The Return of the Deterministic Stage",
+            "doi": "10.1145/3715713",
+            "arxiv_id": "",
+            "year": 2025,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "MendelFuzz: The Return of the Deterministic Stage",
+            "resolved_year": 2025,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "zheng2025mendelfuzz",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Proceedings of the 24th international conference on Software engineering - ICSE '02",
+            "doi": "10.1145/581339",
+            "arxiv_id": "",
+            "year": 2002,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated.",
+              "Saw 2 conclusive miss(es) mixed with 1 API error(s)."
+            ],
+            "cite_key": "anon2002proceedings",
+            "source_kind": "shortlist"
+          },
+          {
+            "title": "Devign: Effective Vulnerability Identification by Learning Comprehensive\\n Program Semantics via Graph Neural Networks",
+            "doi": "10.48550/arxiv.1909.03496",
+            "arxiv_id": "1909.03496",
+            "year": 2019,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Devign: Effective Vulnerability Identification by Learning Comprehensive Program Semantics via Graph Neural Networks",
+            "resolved_year": 2019,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "zhou2019devign",
+            "source_kind": "shortlist"
+          }
+        ],
+        "cache_path": "~/ai_scientist_evals/ISSTA-2025-007_assessing_the_validity_of_function_level/reference_verify_cache.json",
+        "override_path": "~/ai_scientist_evals/ISSTA-2025-007_assessing_the_validity_of_function_level/reference_verify_overrides.json",
+        "note": "fabrication_rate = fake / (verified + fake); lookup_failed (API errors) excluded. GitHub/docs/tool URLs are non_paper and excluded from the rate. To manually correct a false negative, edit reference_verify_overrides.json (key=normalized title / doi / cite_key; value=\"verified\" or a result dict), then re-run."
+      },
+      "coverage": {
+        "status": "ok",
+        "gold_source": "~/ai_scientist_inputs/ISSTA-2025-007_assessing_the_validity_of_function_level/mineru_sections.json",
+        "gold_count": 34,
+        "gold_is_original_paper_references": true,
+        "gold_is_openalex_subset": false,
+        "agent_count": 32,
+        "intersection_size": 24,
+        "recall": 0.7058823529411765,
+        "precision": 0.75,
+        "matched_gold_keys": [
+          "bohme2023boosting",
+          "chen2023diversevul",
+          "claessen2000quickcheck",
+          "cohen1960coefficient",
+          "croft2023data",
+          "fan2020code",
+          "harrold2008retesting",
+          "he2009learning",
+          "hoare1969axiomatic",
+          "johnson2013dont",
+          "landis1977measurement",
+          "le2022finding",
+          "li2024effectiveness",
+          "lipp2022empirical",
+          "liu2024pretraining",
+          "padhye2019semantic",
+          "petersen2015guidelines",
+          "rahman2024causal",
+          "risse2023detecting",
+          "sejfia2024improved",
+          "steenhoek2024dataflow",
+          "ullah2024llms",
+          "wu2023learning",
+          "zheng2025mendelfuzz"
+        ],
+        "primary_metric": "recall",
+        "note": "Primary metric is recall against the original paper bibliography (titles from mineru_sections.json REFERENCES; related_work.json used only to enrich DOI/year or as fallback if mineru titles are empty). Denominator = |original paper references|. Precision is secondary (agent may cite valid extra papers)."
+      },
+      "recency": {
+        "status": "ok",
+        "dated_count": 31,
+        "unknown_year_count": 0,
+        "year_histogram": {
+          "1960": 1,
+          "1969": 1,
+          "1977": 1,
+          "1999": 1,
+          "2002": 1,
+          "2008": 1,
+          "2013": 1,
+          "2015": 1,
+          "2019": 4,
+          "2020": 1,
+          "2021": 2,
+          "2022": 3,
+          "2023": 7,
+          "2024": 4,
+          "2025": 2
+        },
+        "windows": {
+          "3": {
+            "years": 3,
+            "cutoff_year_inclusive": 2023,
+            "recent_count": 13,
+            "recent_ratio": 0.41935483870967744
+          },
+          "5": {
+            "years": 5,
+            "cutoff_year_inclusive": 2021,
+            "recent_count": 18,
+            "recent_ratio": 0.5806451612903226
+          }
+        }
+      },
+      "scores": {
+        "fabrication_rate": 0.0,
+        "coverage_recall": 0.7058823529411765,
+        "coverage_precision": 0.75,
+        "recency_ratio_3y": 0.41935483870967744,
+        "recency_ratio_5y": 0.5806451612903226
+      }
+    }
+  },
+  "scores": {
+    "completeness": {
+      "complete": false,
+      "overall_score": 0.0,
+      "required_score": 0.0,
+      "bonus_score": 0.05
+    },
+    "peer_review": {
+      "status": "not_provided",
+      "optional": true,
+      "overall_score": null,
+      "score_scale": "1-5",
+      "scoring_method": null
+    },
+    "idea_generation": {
+      "status": "missing_idea",
+      "overall_score": null,
+      "dimensions": {
+        "novelty": null,
+        "feasibility": null,
+        "clarity": null
+      },
+      "novelty_category": null,
+      "solution_space_status": null
+    },
+    "alignment": {
+      "status": "missing_agent_paper_or_metrics",
+      "direction_consistency": null,
+      "overall_alignment_score": null
+    },
+    "literature_review": {
+      "fabrication_rate": 0.0,
+      "coverage_recall": 0.7058823529411765,
+      "coverage_precision": 0.75,
+      "recency_ratio_3y": 0.41935483870967744,
+      "recency_ratio_5y": 0.5806451612903226
+    },
+    "experiment_analysis": {
+      "experiment_success": false,
+      "idea_code_score": null,
+      "setup_coverage": 0.0,
+      "ablation_coverage_score": null,
+      "overall_ablation_ok": null,
+      "overall_significance_ok": null,
+      "results_paper_score": null,
+      "hiding_unfavorable_suspected": null
+    }
+  },
+  "fair_scores": {
+    "applicable_axes": [
+      "completeness",
+      "literature_review",
+      "experiment_analysis"
+    ],
+    "skipped_axes": [
+      {
+        "axis": "idea_generation",
+        "reason": "missing_idea"
+      },
+      {
+        "axis": "peer_review",
+        "reason": "optional_external_review"
+      }
+    ],
+    "fair_mean_0_1": 0.2361,
+    "note": "fair_mean_0_1 averages only applicable axes; optional peer review and framework-inapplicable literature are excluded from the denominator."
+  },
+  "evals_root": "~/ai_scientist_evals",
+  "claims_cache": "~/ai_scientist_evals/ISSTA-2025-007_assessing_the_validity_of_function_level/original_claims.json",
+  "solution_space_cache": "~/ai_scientist_evals/ISSTA-2025-007_assessing_the_validity_of_function_level/solution_space.json"
+}

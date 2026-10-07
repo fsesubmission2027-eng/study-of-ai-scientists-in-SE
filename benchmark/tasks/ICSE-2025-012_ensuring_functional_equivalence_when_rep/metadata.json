@@ -1,0 +1,145 @@
+{
+  "id": "ICSE-2025-012",
+  "paper_id": "e56de33bce7195454f69417161e04a8217b0d7e9",
+  "title": "Formally Verified Cloud-Scale Authorization",
+  "abstract": "All critical systems must evolve to meet the needs of a growing and diversifying user base. But supporting that evolution is challenging at increasing scale: Maintainers must find a way to ensure that each change does only what is intended, and will not inadvertently change behavior for existing users. This paper presents how we addressed this challenge for the Amazon Web Services (AWS) authorization engine, invoked 1 billion times per second, by using formal verification. Over a period of four years, we built a new authorization engine, one that behaves functionally the same as its predecessor, using the verification-aware programming language Dafny. We can now confidently deploy enhancements and optimizations while maintaining the highest assurance of both correctness and backward compatibility. We deployed the new engine in 2024 without incident and customers immediately enjoyed a threefold performance improvement. The methodology we followed to build this new engine was not an off-the-shelf application of an existing verification tool, and this paper presents several key insights: 1) Rather than prove correct the existing engine, written in Java, we found it more effective to write a new engine in Dafny, a language built for verification from the ground up, and then compile the result to Java. 2) To ensure performance, debuggability, and to gain trust from stakeholders, we needed to generate readable, idiomatic Java code, essentially a transliteration of the source Dafny. 3) To ensure that the specification matches the system's actual behavior, we performed extensive differential and shadow testing throughout the development process, ultimately comparing against 1015 production samples prior to deployment. Our approach demonstrates how formal verification can be effectively applied to evolve critical legacy software at scale.",
+  "year": 2025,
+  "citation_count": 3,
+  "venue": "47th International Conference on Software Engineering (ICSE 2025)",
+  "venue_short": "ICSE 2025",
+  "authors": [
+    "Aleks Chakarov",
+    "Jaco Geldenhuys",
+    "Matthew Heck",
+    "Michael Emmi"
+  ],
+  "pdf_url": "",
+  "paper_url": "https://www.semanticscholar.org/paper/e56de33bce7195454f69417161e04a8217b0d7e9",
+  "paper_type": "methodology",
+  "award": "ACM SIGSOFT Distinguished Paper Award",
+  "subfield_label": "Program Analysis & Verification",
+  "introduction": "To control access to their data and resources, AWS customers write policies that express fine-grained permissions. A cloud-hosted authorization engine evaluates incoming requests against those policies to either grant or deny access. It must ensure that decisions are both fast, to not slow down normal processing too much, and correct, by adhering to public documentation and meeting customer expectations. This authorization engine is used to secure access to over 200 fully featured services, invoked over 1 billion times per second.\n\nToday, any change to the authorization engine undergoes a rigorous evaluation of both design and implementation, leveraging unit and integration testing and multiple rounds of code review. Changes are also reviewed by a central security team and undergo extensive third-party penetration testing. While effective, in 2019 we decided even more assurance was needed to allow our authorization system to evolve rapidly to meet AWS's increasing scope and scale. Indeed, the challenge of ensuring the engine's speed and correctness had increased over time, causing us to wrestle with the question: How do we confidently deploy enhancements to this security-critical component and know that backward compatibility and performance for existing customer workflows are preserved? This challenge is not unique to our engine-it is a core challenge for any critical system developed over a long period of time in response to a growing and diversifying user-base.\n\nWe sought to gain this confidence through the application of formal methods, which involve writing a formal specification and proving that code correctly implements that specification. While the obvious benefit of formal methods is assured correctness, it also endows two other benefits:\n\n• Understanding: A precise formal specification is easier to read and understand than an optimized implementation. Thus, we can be more confident that changes we make are the right ones, since they are expressed as simple changes to the specification. • Agility: Formal proofs make changes easier to deploy. This is because proofs give a strong guarantee that changes we make to the production code always precisely match our specification, i.e., they do what we intend.\n\nFor example, if we want to optimize the engine, we can prove that the optimized version still meets the existing specification. If we wish to add a new feature, we can prove that the new specification is backward compatible with the old one before proving the new code satisfies it. Over a period of four years we developed a new, formally verified authorization engine, called AuthV2, that is behaviorally equivalent to the original engine, called AuthV1. 2 The effort split evenly between i) specification, proofs, and implementation; ii) compilation; and iii) testing and validation. AuthV2 was successfully deployed to production in early 2024. It computes authorization decisions three times faster than AuthV1. In addition, using our new formal methodsdriven development process, we have already been able to confidently-and swiftly-make changes to AuthV2 after it was deployed.\n\nWe believe AuthV2 to be the first successful application of formal verification to build a performant, functionally equivalent replacement for a highly scaled, legacy system. The core contribution of this paper is to show what was required, beyond a straightforward application of an existing verification tool, to achieve this result: we had to develop new solutions, integrate multiple tools and languages, and use them at scale. The paper recounts the four-phase process we followed to successfully launch AuthV2: reverse-engineer the formal specification (Section IV); build a high-quality verification-aware 2 AuthV1 and AuthV2 are pseudonyms.\n\nimplementation and prove it correct (Section V); generate idiomatic code from that implementation (Section VI); and validate the generated code for performance and correctness under deployment conditions (Section VII). There are several takeaways from our experience that were key to its success.\n\nFirst, we needed to rewrite AuthV1 to be amenable to formal verification. It is non-trivial to formally verify software written in a general-purpose language that has not been designed with formal verification in mind. AuthV1 is deployed in Java for a JVM-based environment. It relies on features that make formal verification challenging, such as complex exception handling, use of mutable state, and heap manipulation. Therefore, following the lead of several past projects [49], [60] we elected to write AuthV2 in a language built to support formal verification from the ground up. Our language of choice was Dafny [20], [48], which leverages SMT solving to automate much of the proof task. While Dafny has been applied to several prior projects (e.g., [3], [35]), we present novel insights from using it in practice and at scale, e.g., explaining how we managed the problem of proof brittleness (aka proof instability [70], [71]).\n\nSecond, to compile the verified Dafny code to Java we developed our own idiomatic compiler that generates readable and performant code, rather than use Dafny's existing Java compiler. Doing so made AuthV2's Java code reviewable by the operators of AuthV1, who were not Dafny experts, helping build their trust in its launch readiness. Idiomatic compilation also makes AuthV2 easily debuggable in the context of the larger Java codebase it operates within. And it preserves the optimizations expressed in AuthV2's Dafny source code. Our compiler goes beyond the scope of prior idiomatic compilers for verified code [32], [61] by supporting more sophisticated source-language constructs and environment models, and leveraging annotation-based static checks.\n\nThird, while much focus in the formal methods community is on proof/verification technology, it is no less important to be sure your proofs consider the right specification. We used extensive systematic, differential testing to ensure the specification was accurate and complete, and thus that AuthV2 (now and in the future) exhibits no deviations from behavior established by AuthV1. In particular, we wrote the initial Au-thV2 specification to be executable, and then extensively tested it against the legacy AuthV1 on synthetic and logged data. We also shadow-tested AuthV2 against AuthV1 on production authorization data, ultimately testing against 10 15 production samples prior to launch. Doing so was pivotal to ironing out last, corner-case mismatches.\n\nThis paper details the four-phase process we followed to build AuthV2, highlighting these takeaways along the way. It concludes with a detailed comparison of related verification efforts (Section VIII), and ideas for further work (Section IX).",
+  "experiment": "",
+  "section_quality": {
+    "has_abstract": true,
+    "has_introduction": true,
+    "has_experiment": false,
+    "intro_chars": 6783,
+    "experiment_chars": 0
+  },
+  "introduction_source": "grobid_tei",
+  "experiment_source": "none",
+  "background_source": "introduction",
+  "experiment_source_used": "not_available",
+  "task_title": "Ensuring Functional Equivalence When Replacing a Large-Scale Authorization Engine",
+  "background": "Amazon Web Services (AWS) manages access control for over 200 services via a central authorization engine that processes over 1 billion requests per second. Any modification to this engine must guarantee backward compatibility and correctness to avoid disrupting existing customer workflows. Currently, changes undergo rigorous manual review and testing, but these methods cannot provide formal guarantees against subtle behavioral regressions. The challenge is to develop a replacement engine that is guaranteed to be behaviorally equivalent to the legacy system, while also meeting strict performance requirements.",
+  "research_question": "How can a new authorization engine be built to guarantee that it behaves identically to an existing legacy engine for all possible requests, while achieving competitive performance?",
+  "experiment_setup": {
+    "datasets": [
+      {
+        "name": "Production Authorization Request Logs",
+        "source": "Restricted; available only with permission from AWS, but similar synthetic datasets can be constructed from public cloud API specifications and access patterns.",
+        "description": "A large corpus of real authorization requests from AWS production environments, spanning diverse services and permission configurations. The original study eventually compared against up to 10^15 samples.",
+        "access": "restricted"
+      }
+    ],
+    "baselines": [
+      {
+        "name": "Original authorization engine (pre-replacement version)",
+        "reference": "Internally deployed AWS IAM authorization engine; publicly documented API behavior at https://docs.aws.amazon.com/IAM/"
+      }
+    ],
+    "metrics": [
+      {
+        "name": "Behavioral equivalence",
+        "definition": "Percentage of test requests for which the new engine produces an identical allow/deny decision to the original engine."
+      },
+      {
+        "name": "Throughput",
+        "definition": "Number of authorization decisions completed per second under sustained load."
+      },
+      {
+        "name": "Latency",
+        "definition": "End-to-end response time measured at the 50th, 95th, and 99th percentiles."
+      }
+    ],
+    "rqs": [
+      "RQ1: Does the replacement engine produce identical authorization decisions for a large and diverse sample of production requests?",
+      "RQ2: How does the throughput and latency of the replacement engine compare to the original engine under typical and peak loads?"
+    ],
+    "target_subject": "Cloud infrastructure authorization engines that evaluate permissions for API requests. Examples include AWS IAM authorization engine, Google Cloud Identity and Access Management, and Azure RBAC engine.",
+    "constraints": "The replacement engine must run in the existing Java Virtual Machine (JVM) production environment, accept the same request format (e.g., AWS IAM policy evaluation requests), produce identical output decisions for all previously permissible inputs, and integrate without requiring client-side changes."
+  },
+  "expected_artifacts": [
+    "idea",
+    "code",
+    "experiment_results",
+    "paper"
+  ],
+  "feasibility_notes": "The production dataset used for differential testing is proprietary and not publicly available; a researcher would need to either gain access or generate a synthetic dataset based on public documentation, which may not capture edge cases. Guaranteeing full behavioral equivalence for all possible requests is extremely challenging and may require substantial formal reasoning effort. The original development effort spanned four years with a team of experts; an AI Scientist must scope the problem (e.g., a simplified authorization model) to make it tractable.",
+  "difficulty": "hard",
+  "seed_papers": [
+    {
+      "title": "LMAAS-IoT: Lightweight multi-factor authentication and authorization scheme for real-time data access in IoT cloud-based environment",
+      "year": 2021,
+      "authors": [
+        "A. Alsahlani",
+        "A. Popa"
+      ],
+      "doi": "10.1016/j.jnca.2021.103177",
+      "arxiv_id": null,
+      "pdf_url": "",
+      "citation_count": 49
+    },
+    {
+      "title": "Zero-Trust Security in Intrusion Detection Networks: An AI-Powered Threat Detection in Cloud Environment",
+      "year": 2025,
+      "authors": [
+        "Surendra Narang",
+        "Anila Gogineni"
+      ],
+      "doi": "10.38124/ijsrmt.v4i5.542",
+      "arxiv_id": null,
+      "pdf_url": "",
+      "citation_count": 32
+    },
+    {
+      "title": "Role of Identity and Access Management in Zero Trust Architecture for Cloud Security: Challenges and Solutions",
+      "year": 2025,
+      "authors": [
+        "Vikas Prajapati"
+      ],
+      "doi": "10.48175/ijarsct-23902",
+      "arxiv_id": null,
+      "pdf_url": "https://doi.org/10.48175/ijarsct-23902",
+      "citation_count": 24
+    },
+    {
+      "title": "Blockchain-Assisted Secure Deduplication for Large-Scale Cloud Storage Service",
+      "year": 2024,
+      "authors": [
+        "Zhongyun Hua",
+        "Yufei Yao",
+        "Mingyang Song"
+      ],
+      "doi": "10.1109/TSC.2024.3350086",
+      "arxiv_id": null,
+      "pdf_url": "",
+      "citation_count": 11
+    },
+    {
+      "title": "A Formal Approach for the Identification of Authorization Policy Conflicts within Multi-Cloud Environments",
+      "year": 2022,
+      "authors": [
+        "Ehtesham Zahoor",
+        "Asim Ikram",
+        "Sabina Akhtar"
+      ],
+      "doi": "10.1007/s10723-022-09606-1",
+      "arxiv_id": null,
+      "pdf_url": "",
+      "citation_count": 6
+    }
+  ],
+  "paper_title": "Formally Verified Cloud-Scale Authorization"
+}

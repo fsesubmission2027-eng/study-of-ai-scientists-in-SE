@@ -1,0 +1,152 @@
+{
+  "id": "ICSE-2025-017",
+  "paper_id": "88ea7b1e930697114fb08b7876ffe50d368b39b4",
+  "title": "Enhancing The Open Network: Definition and Automated Detection of Smart Contract Defects",
+  "abstract": "The Open Network (TON), designed to support Telegram's extensive user base of hundreds of millions, has garnered considerable attention since its launch in 2022. FunC is the most popular programming language for writing smart contracts on TON. It is distinguished by a unique syntax compared to other smart contract languages. Despite growing interest, research on the practical defects of TON smart contracts is still in its early stages. In this paper, we summarize eight smart contract defects identified from TON's official blogs and audit reports, each with detailed definitions and code examples. Furthermore, we propose a static analysis framework called TONScanner to facilitate the detection of these defects. Specifically, TONScanner reuses FunC compiler's frontend code to transform the FunC source code into FunC intermediate representation (IR) in the form of a directed acyclic graph (DAG). Based on this IR, TONScanner constructs a control flow graph (CFG), then transforms it into a static single assignment (SSA) form to simplify further analysis. TONScanner also integrates Data Dependency, Call Graph, Taint Analysis, and Cell Construct, which are specifically tailored for TON blockchain's unique data structures. These components finally facilitate the identification of the eight defects. We evaluate the effectiveness of TONScanner by applying it to 1,640 smart contracts and find a total of 14,995 defects. Through random sampling and manual labeling, we find that TONScanner achieves an overall precision of 97.49%. The results reveal that current TON contracts contain numerous defects, indicating that developers are prone to making errors. TONScanner has proven its ability to accurately identify these defects, thereby aiding in their correction.",
+  "year": 2025,
+  "citation_count": 5,
+  "venue": "47th International Conference on Software Engineering (ICSE 2025)",
+  "venue_short": "ICSE 2025",
+  "authors": [
+    "Hao Song",
+    "Teng Li",
+    "Jiachi Chen",
+    "Ting Chen",
+    "Beibei Li",
+    "Zhangyan Lin",
+    "Yi Lu",
+    "Pan Li",
+    "Xihan Zhou"
+  ],
+  "pdf_url": "",
+  "paper_url": "https://www.semanticscholar.org/paper/88ea7b1e930697114fb08b7876ffe50d368b39b4",
+  "paper_type": "methodology",
+  "award": "ACM SIGSOFT Distinguished Paper Award",
+  "subfield_label": "Software Security",
+  "introduction": "The Open Network (TON) blockchain [1] is designed to make blockchain technology [2] a readily accessible tool for * Jiachi Chen and Ting Chen are the corresponding authors.\n\nglobal users [3]. It aims to be capable of handling millions of transactions per second [4], thereby becoming a ubiquitous decentralized application (DApp) platform. Leveraging the extensive user base of Telegram, TON blockchain has garnered significant attention since its testnet phase. Following the launch of the mainnet in 2022, TON blockchain has attracted a substantial number of users interacting with DApps on the platform. As of July 2024, according to DefiLlama, the Total Value Locked (TVL) on TON blockchain has reached $752.95 million [5]. Compared to the beginning of the year, TVL on TON blockchain has increased approximately 55 times.\n\nThe backend of DApps on TON blockchain is developed based on smart contract technology. Smart contracts are Turingcomplete programs that run on the blockchain, allowing users to interact with the decentralized ledger by invoking these contracts [6], [7], [8]. TON blockchain uses \"sharding\" to horizontally scale overall system performance. This design differentiates TON from traditional blockchain platforms, as TON smart contracts do not perform atomic, synchronous access to persistent states [9]. Instead, the communication paradigm between smart contracts has shifted to a non-atomic, asynchronous approach. To meet performance and scalability requirements, TON innovatively introduces the cell as its basic data structure [10]. The storage and retrieval of smart contract data in TON are centered around the cell. TON smart contracts also break the limitation of immutable code by providing a native upgrade mechanism [11]. Due to the non-atomicity of calls, unique data structure, and modifiability of TON blockchain, there are significant differences in the implementation of smart contracts compared to traditional blockchain platforms like Ethereum. Given the unique characteristics of the TON blockchain, developers may face an increased risk of contract defects during the development process. Contract defects refer to errors, flaws, or bugs within smart contracts that result in incorrect or unexpected outcomes, or cause the contract to behave in unforeseen ways [12]. Despite numerous previous studies reporting various smart contract defects and some works proposing frameworks or tools for defect detection, most of this research has focused primarily on Ethereum [13], [14], [12], [15], [16]. To the best of our knowledge, there is currently no research specifically addressing smart contract defects on TON blockchain.\n\nTo address this research gap, we first conduct an empirical study to define smart contract defects. Specifically, we collect blogs from the official documentations [17], the official blogs [18] and the research community [19] recommended by the official sources. Additionally, we gather audit reports from blockchain security companies. These sources provide substantial guidance for our defect definitions. Based on open card sorting approach [20], we ultimately define eight types of FunC [21] smart contract defects (FunC is the smart contract language of TON blockchain, which will be introduced in Section II): Bad Randomness, Precision Loss, Unchecked Return, Global Var Redefined, Improper Function Modifier, Unchecked Bounced Message, Inconsistent Data, and Lack End Parse. The first three defects may also appear on other blockchains, while the latter five are specific to TON.\n\nFurthermore, to identify the eight defined TON smart contract defects, we propose a static analysis framework called TONScanner. Specifically, TONScanner leverages the FunC compiler to transform smart contract source code into a FunC intermediate representation (FunC IR) with a directed acyclic graph (DAG). Using FunC IR, TONScanner constructs a Control Flow Graph (CFG) [22]. To enhance analysis efficiency, TONScanner transforms the non-Static Single Assignment (SSA) form CFG into SSA form, resulting in SSA-form IR. TONScanner integrates the Data Dependency, Call Graph, Taint Analysis [23], and a customized Cell Construct as analyzers. Utilizing these four analyzers, TONScanner builds eight detectors for the eight previously defined defects.\n\nBased on the requirements for open-source and verified code, we collect 922 real-world FunC contracts and 718 Tact contracts (Tact [24] is built on FunC, details see Section II), totaling 1,640 contracts. Running our framework on these two datasets, we find a total of 14,995 defects, indicating that the defined defects are prevalent on TON blockchain. To evaluate the performance of TONScanner, we randomly sample the two datasets, using a confidence interval of 10 and a confidence level of 95%. We then manually label them and compare the results with our detection outcomes. TONScanner achieves precision rates of 95.09% and 100% on the FunC and Tact datasets, respectively, with an overall precision of 97.49%.\n\nThe main contributions of our work are as follows:\n\n• We define eight types of FunC smart contract defects, including five of them are specific to TON blockchain. For each defect, we provide a code example to help developers understand and avoid these defects.\n\n• We develop a framework named TONScanner, based on static analysis, for detecting smart contract defects on TON blockchain. This framework transforms source code into a SSA-form IR, enabling efficient and accurate defect detection. TONScanner is also highly scalable, supporting the addition of new defect detectors to address future updates and newly identified defects. • We test 1,640 smart contracts with TONScanner, finding a total of 14,995 defects. Additionally, our framework achieves an overall precision of 97.49% on the manually labeled datasets that we randomly sample from these smart contracts. We publish datasets, raw data, and TONScanner at https://anonymous.4open.science/r/TON_support_material-ECD4/.",
+  "experiment": "The experiment is conducted on a server running Ubuntu 18.04.5 LTS and equipped with 12 Intel Xeon Gold 6132 CPUs and 120 GB memory.\n\n1) Dataset: We collect TON contract dataset from two sources: TON Verifier [58] and GitHub. TON Verifier is an open-source platform maintained by the official TON team, featuring verified and deployed smart contracts on TON blockchain. For the open-source dataset from GitHub, we used GitHub's advanced search function to filter repositories using keywords such as file types \".func\", \".fc\", \".tact\", entry functions \"recv_internal\" and \"TON\" to obtain the final results. Both of them were collected by April 2024, and then we deduplicated all the collected smart contracts. We finally obtained 294 contracts from onchain and 628 contracts from GitHub, resulting in a total of 922 unique FunC contracts. For contracts originally written in Tact, we use the Tact compiler to compile them into FunC form and then apply the same deduplication method as used for FunC contracts. This process results in 258 contracts onchain and 460 contracts from GitHub, totaling 718 unique Tact contracts. We divide the dataset into FunC and Tact categories to facilitate the evaluation.\n\n2) Evaluation Metrics: In this paper, we summarize the following research questions (RQs):\n\n• RQ1. What is the prevalence of the eight defects in realworld smart contracts? • RQ2. What is the effectiveness of TONScanner in identifying defects in FunC dataset? • RQ3. What is the effectiveness of TONScanner in identifying defects in Tact dataset?\n\nTo answer RQ1, we run TONScanner on 922 FunC contracts and 718 Tact contracts. The detailed results are shown in Table II, where the column # Defects shows how many relevant defects appear in the collected datasets (it is possible that a contract contains multiple defects).\n\nFor FunC contracts, UR and LEP are the most common defects. TON use the cell for data storage, which allows only sequential access, leading to a significant amount of UR when preceding data is not used. Most users, when encountering the cell for the first time, are unaware of the necessity to use end_parse to verify the cell, which results in a high incidence of LEPs. For Tact contracts, UR, LEP and ID are prevalent and occur frequently, both due to defects caused by the Tact compiler. Due to the insufficient knowledge of TON's nonatomic and bounced message characteristics, there is often inadequate handling of bounced messages. This oversight results in a significant prevalence of UBM. Other defects occur relatively infrequently. They are typically associated with users' coding practices (e.g., PL and GVR), specific business logic (e.g., BR), or they trigger severe errors that are more readily detected (e.g., IFM). Overall, TONScanner detects 7,744 defects in FunC contracts, averaging 8.4 defects per contract. For Tact contracts, TONScanner detects 7,251 defects, averaging 10.1 defects per contract.\n\nIn the FunC dataset, we find 1 smart contract containing 6 types of defects, making it the contract with the most defects. There are 33 smart contracts with 5 types of defects, 190 smart contracts with 4 types of defects, 379 smart contracts with 3 types of defects, and 225 smart contracts with 2 types of defects. In the Tact dataset, we find 31 smart contracts containing 5 types of defects, making these the contracts with the most defects. There are 510 smart contracts with 4 types of defects, 136 smart contracts with 3 types of defects, and 40 smart contracts with 2 types of defects. According to the TONScanner report, 1,545 smart contracts contain at least one defect, accounting for about 94% of the collected dataset. This indicates that many TON smart contract developers lack sufficient experience to meet secure development requirements.\n\nIn this RQ, we evaluate the performance of TONScanner based on the FunC dataset. Specifically, we randomly sample contracts from the positive results reported for each defect. To determine the sample size for each defect, we follow a confidence interval-based sampling method [59] to generalize the total number of issues discovered for that defect. We set a confidence interval of 10 and a confidence level of 95%, calculating the required number of samples [60]. The calculated sample sizes for the eight defects are 2, 46, 94, 16, 4, 72, 80, and 93, respectively. We then sample the evaluation dataset based on these results and carefully manually label them by two authors. During the labeling process, we separate false positives from true positives to analyze the performance of TONScanner on the FunC dataset.\n\nColumns 4, 6, 8 and 10 of Table II summarize the results of applying TONScanner to our manually labeled FunC contract samples. Due to the low number of detected BR, GVR, and IFM defects, we analyze all contracts with these three defects to make the results more reliable. Columns 6 and 8 display the number of samples categorized as true positives (TP) and false positives (FP), respectively. We use precision rate to demonstrate the performance of detecting each defect. The precision rate is calculated #T P #T P +#F P × 100%. We also calculate the overall precision to demonstrate the effectiveness of TONScanner on the FunC dataset. The formula for this calculation is n i=1 pc i ×|ci| n i=1 |ci| , in which p ci represents the precision of detecting defect i, and |c i | is the number of defect i in the FunC dataset.\n\nFor UBM, ID, and LEP defects, TONScanner reports them at a precision of 93.06%, 83.75%, and 97.85%, respectively. For the remaining 5 defects, our tool achieves 100% precision. Furthermore, the overall precision of TONScanner achieves 95.09% on the FunC dataset. 3) As for LEP, we find that false positives occur due to load operations on cells within complex loops, which makes it challenging to accurately identify the cell structure and the usage of end_parse.\n\nFalse Negatives Analysis. To find contracts with defects that TONScanner fails to report, we follow the same sampling method used for precision analysis, adopting a confidence interval of 10 and a confidence level of 95%. We sample 87 contracts from the 922 FunC contracts and conduct a manual audit to identify defects, resulting in a total of 830 defects. We compare the manually labeled results with the tool's detection results, finding that 25 defects are missed. Among these, 13 are LEP defects, and 12 are UBM defects. (1) When a cell is used within a loop, the number of iterations cannot be determined. This makes it impossible to pinpoint the position of end_parse, resulting in LEP defects being missed. (2) When sending messages, contract developers do not always adhere to the officially standardized message format but instead use custom message formats. This leads to message parsing failures, resulting in missed UBM defects.\n\nTo answer RQ3, we select the same sampling method. The calculated sample sizes for the six defects are 34, 94, 6, 51, 86, and 91, respectively. Two authors then manually label the samples, analyze the results, and calculate the TP and FP. We use the precision rate to evaluate the performance of TONScanner on the Tact dataset. False Positive Analysis. TONScanner reports six detected defects with 100% precision, indicating that it maintains a high detection precision on the Tact dataset as well. TONScanner did not detect any BR defects because they are rely on specific business scenarios and are relatively rare. The absence of GVR is due to the syntax characteristics of Tact, which uses member variables of the Contract class to store global data, so there are no custom global variables in the generated FunC code. Among the six detected defects, only PL and UBM are controlled by the developer, while the others are caused by the compiler. Through the sampling analysis of the detection results, all these defects are true positives. The four compiler-caused defects show the same defect pattern, indicating that the Tact compiler is currently immature and needs optimization. False Negatives Analysis. To find missed defects in contracts, we use the same sampling method as in the previous section. We sample 85 Tact contracts from the 718 in the Tact dataset. After manually auditing and labeling the defects, we identify a total of 740 defects. Comparing the labeled results with TONScanner's detection results, we find one missed LEP defect. The reason for this missed detection is caused by loops.\n\nListing 9 is taken from contractfoot_1 . The code is to extract the necessary information from the incoming message, then construct and forward the message. However, it is flagged as having a UBM defect, which is an FP. To distinguish different messages, different op codes are used, and the recipient performs different operations depending on the value of the op (line 1). When conducting UBM defect detection, it is necessary to identify the op. However, in this case, the condition if(op == op::proxy_send) imposes a constraint on the op within the if-branch. This limits the flexibility of the implementation, as it can only send messages that match the op value. In the case of FPs in UBM defect detection, to achieve the desired constraint functionality, it requires symbolic execution techniques.\n\n1 if (op == op::proxy_send) { 2 ;;...more code logic... 3 } Listing 9. FP instance of UBM defect Listing 10 is taken from contract 3 . This code performs the parsing of a job task and status checking. The end_parse function is missing, but TONScanner encountered an FN issue. The missed LEP defects occur because when a cell is used within a loop (lines 3-4), the number of iterations cannot be determined, leading to inaccurate cell analysis. As a result, it is impossible to identify the position of the end_parse. The missed LEP defects occur because when a cell is used within a loop, the number of iterations cannot be determined, leading to inaccurate cell analysis. As a result, it is impossible to identify the position of the end_parse.\n\nInternal Validity. To evaluate TONScanner, we need to conduct random sampling checks on the collected smart contract dataset. Individual misunderstandings of smart contracts can lead to inaccuracies in our calculated precision. To reduce errors, we select the most experienced authors to perform the initial checks. After this, we invite security experts to review the results, ensuring the accuracy of our final calculations. External Validity. TON has garnered significant attention, leading developers to deploy an increasing number of new smart contracts. Many new TON ecosystem projects may publish their blogs and audit reports, potentially exposing new defects.\n\nOur tool adopts a modular design, enabling the development of analyzers and detectors for new defects without affecting the overall architecture. Additionally, it allows for the restructuring of existing analyzers and detectors to adapt to updates.\n\nTo assist developers in writing secure TON smart contracts, we provide possible defect solutions at Table III to help developers avoid the defined defects.\n\nPossible Solution\n\nUse external sources of randomness via oracles.\n\nAllow multiplication to be executed before division.\n\nCheck return values every time.\n\nAvoid defining variables with the same names as global variables.\n\nAdd the impure modifier when a function has side effects; otherwise, remove it.\n\nCatch and process bounced message.\n\nEnsure that the order and type of read/write variables are consistent each time.\n\nInclude the end_parse function after each slice read.\n\nAtzei et al. summarized 12 security vulnerabilities at three levels-Solidity, EVM, and blockchain. Although this work represents the first comprehensive overview of attacks on Ethereum smart contracts, it does not provide rigorous definitions of the vulnerabilities from a security perspective [61]. Chen et al. used an open card sorting approach to identify and categorize 20 Ethereum smart contract defects from posts collected on StackExchange [12]. In another study, they developed a tool named DefectChecker, which can detect the smart contract defects they defined in their previous work by analyzing the bytecode of smart contracts [14]. The research team recently provided precise definitions for five specific defects in NFT smart contracts. Based on these definitions, they developed a tool called NFTGuard, which uses symbolic execution to detect these defined defects [37]. Overall, current research on smart contract defect definitions remains focused on the Solidity language and the Ethereum ecosystem. Studies on other smart contract development languages and blockchain ecosystems are limited. Our work addresses this gap by identifying defects specific to FunC smart contracts.\n\nTools for detecting security issues in Solidity smart contracts are currently abundant. Specifically, Luu et al. proposed a tool named Oyente, which detects smart contract vulnerabilities based on symbolic execution [62]. Similarly, Nikolić et al. developed a tool called MAIAN, also based on symbolic execution, that detects smart contract security issues using defined execution rules, similar to Oyente [63]. Securify decompiles EVM bytecode and analyzes semantic information to detect smart contract security issues, capable of identifying 9 security problems [64]. Mythril, an industrial tool developed by ConsenSys, constructs a CFG and uses Z3 [65] as an SMT solver to detect issues based on predefined rules [66]. All these tools are developed using static analysis techniques, consistent with the technical background of our work. Some work is based on dynamic techniques. Specifically, ContractFuzzer [67], ItyFuzz [68], and sFuzz [69] utilize fuzzing techniques to detect security issues in Solidity smart contracts.\n\nIn this paper, our research addresses a significant gap in the field of smart contract security on TON blockchain, an area previously underexplored compared to platforms like Ethereum. We analyze the collected official blogs and audit reports to define 8 defects in TON smart contracts. Additionally, we provide FunC code examples for each defect, which helps developers and researchers gain a deeper understanding of these defects. In this paper, we summarize eight defects for TON smart contracts by analyzing official blogs and audit reports. We then present TONScanner, a framework designed to accurately detect these TON defects. The tool leverages static analysis techniques to transform source code into a SSA-form IR, facilitating efficient and precise detection of various smart contract defects. TONScanner is built with a modular design, allowing developers to customize analyzers and detectors to identify potential new defects. Our evaluation shows that TONScanner can effectively identify defects in FunC and Tact smart contracts, discovering a total of 14,995 defects across both datasets. TONScanner achieved overall precision rates of 95.09% and 100% on the manually labeled FunC and Tact datasets, respectively. The overall precision rate on total datasets is 97.49%.",
+  "section_quality": {
+    "has_abstract": true,
+    "has_introduction": true,
+    "has_experiment": true,
+    "intro_chars": 6010,
+    "experiment_chars": 15083
+  },
+  "introduction_source": "grobid_tei",
+  "experiment_source": "grobid_tei",
+  "background_source": "introduction",
+  "experiment_source_used": "experiment_section",
+  "task_title": "Automated Detection of Smart Contract Defects on the TON Blockchain",
+  "background": "The Open Network (TON) blockchain is a high-performance platform designed for decentralized applications, supporting asynchronous communication and a unique cell-based data structure. Smart contracts on TON are written primarily in FunC or Tact, and their development introduces new defect patterns distinct from those on synchronous blockchains like Ethereum. Official documentation and security audit reports have identified several types of defects that can lead to incorrect outcomes, unexpected behavior, or security vulnerabilities. However, no automated detection tool exists for TON smart contract defects, leaving manual review as the only option, which is impractical for the growing number of contracts. This gap motivates the need for an effective method to automatically identify such defects in TON smart contracts.",
+  "research_question": "What is an effective approach to automatically detect known defect patterns in TON smart contracts with high precision?",
+  "experiment_setup": {
+    "datasets": [
+      {
+        "name": "TON FunC Smart Contracts",
+        "source": "Constructed from TON Verifier (https://verifier.ton.org) and GitHub (searching for .func/.fc files with TON-specific entry functions).",
+        "description": "922 unique FunC smart contracts (294 from on-chain verified contracts, 628 from open-source GitHub repositories).",
+        "access": "constructable"
+      },
+      {
+        "name": "TON Tact Smart Contracts",
+        "source": "Constructed by compiling Tact contracts to FunC, with sources from TON Verifier and GitHub.",
+        "description": "718 unique Tact-originated smart contracts (258 on-chain, 460 open-source) after deduplication.",
+        "access": "constructable"
+      }
+    ],
+    "baselines": [],
+    "metrics": [
+      {
+        "name": "Precision per defect",
+        "definition": "Ratio of true positive instances of a specific defect type correctly identified to all instances reported as that defect type (TP/(TP+FP))."
+      },
+      {
+        "name": "Overall precision",
+        "definition": "Weighted average of per-defect precision rates, where each defect type's precision is weighted by its total occurrences in the dataset."
+      }
+    ],
+    "rqs": [
+      "RQ1: How prevalent are the eight defined defect types in real-world FunC and Tact smart contracts?",
+      "RQ2: How effective is the detection approach in terms of precision on the FunC dataset?",
+      "RQ3: How effective is the detection approach in terms of precision on the Tact dataset?"
+    ],
+    "target_subject": "Smart contracts on the TON blockchain, written in FunC or Tact. This includes DeFi protocols, NFT marketplaces, wallets, and other decentralized applications deployed on TON.",
+    "constraints": "Detection must use only the smart contract source code; no on-chain execution or dynamic traces are allowed. The dataset consists of open-source, verifiable contracts. The analysis should be reproducible on a standard Linux server (e.g., 12-core CPU, 120 GB RAM). No existing automated TON defect detection tools are available for comparison."
+  },
+  "expected_artifacts": [
+    "idea",
+    "code",
+    "experiment_results",
+    "paper"
+  ],
+  "feasibility_notes": "Both datasets can be reconstructed by crawling TON Verifier and GitHub with the described heuristics. The public FunC/Tact compilers are available for building the analysis. The main technical challenge is accurately modeling the asynchronous message-passing and the cell data structure to detect defects, as no prior analysis framework exists for TON. The computational load is moderate, as the total contract count is under 2,000, and static analysis can run offline.",
+  "difficulty": "hard",
+  "seed_papers": [
+    {
+      "title": "Service-aware 6G: An intelligent and open network based on the convergence of communication, computing and caching",
+      "year": 2020,
+      "authors": [
+        "Yiqing Zhou",
+        "Ling Liu",
+        "Lu Wang"
+      ],
+      "doi": "10.1016/j.dcan.2020.05.003",
+      "arxiv_id": null,
+      "pdf_url": "https://doi.org/10.1016/j.dcan.2020.05.003",
+      "citation_count": 207
+    },
+    {
+      "title": "Mobile-LLaMA: Instruction Fine-Tuning Open-Source LLM for Network Analysis in 5G Networks",
+      "year": 2024,
+      "authors": [
+        "Khen Bo Kan",
+        "Hyunsu Mun",
+        "Guohong Cao"
+      ],
+      "doi": "10.1109/MNET.2024.3421306",
+      "arxiv_id": null,
+      "pdf_url": "",
+      "citation_count": 68
+    },
+    {
+      "title": "Toward an Open, Intelligent, and End-to-End Architectural Framework for Network Slicing in 6G Communication Systems",
+      "year": 2023,
+      "authors": [
+        "Mohammad Asif Habibi",
+        "B. Han",
+        "Amina Fellan"
+      ],
+      "doi": "10.1109/OJCOMS.2023.3294445",
+      "arxiv_id": null,
+      "pdf_url": "https://ieeexplore.ieee.org/ielx7/8782661/8901158/10178010.pdf",
+      "citation_count": 64
+    },
+    {
+      "title": "Control of open and disaggregated transport networks using the Open Network Operating System (ONOS) [Invited]",
+      "year": 2019,
+      "authors": [
+        "A. Giorgetti",
+        "A. Sgambelluri",
+        "R. Casellas"
+      ],
+      "doi": "10.1364/JOCN.12.00A171",
+      "arxiv_id": null,
+      "pdf_url": "https://zenodo.org/record/3989920/files/Control%20of%20Open%20and%20Disaggregated.pdf",
+      "citation_count": 46
+    },
+    {
+      "title": "Flexible distribution network: definition, configuration, operation, and pilot project",
+      "year": 2018,
+      "authors": [
+        "Jun Xiao",
+        "Ying Wang",
+        "Fengzhang Luo"
+      ],
+      "doi": "10.1049/IET-GTD.2018.5641",
+      "arxiv_id": null,
+      "pdf_url": "",
+      "citation_count": 28
+    }
+  ],
+  "paper_title": "Enhancing The Open Network: Definition and Automated Detection of Smart Contract Defects"
+}

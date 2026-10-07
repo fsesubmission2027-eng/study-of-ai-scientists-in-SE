@@ -1,0 +1,34 @@
+{
+  "forbid_synthetic_pilot": true,
+  "agent_data_note": "Use the real HFDecomposer artifact at `dataset_candidate/hfdecomposer/`. It is mounted read-only; copy needed files to `project/` before modifying scripts or writing outputs.",
+  "required_metrics": [
+    "accuracy",
+    "f1_score",
+    "mojofm",
+    "adjusted_rand_index",
+    "normalized_mutual_information"
+  ],
+  "benchmark_rules": [
+    "Use only the provided header-decomposition corpus under `dataset_candidate/hfdecomposer/dataset/`; do not replace it with fabricated ground-truth splits.",
+    "Read `dataset_candidate/dataset_paths.json` before experiments and use `$HFDECOMPOSER_HOME` in scripts.",
+    "The shared package is read-only. Copy `source_code/` or selected headers into `project/` before editing or writing intermediate files.",
+    "The Python environment is installed automatically and available through `python` or `/opt/ase-2025-013-venv/bin/python`.",
+    "Evaluate with ACC / F1 / MoJoFM / ARI / NMI against developer ground-truth decompositions in `dataset/header_files/*/refactoring_ground_truth/`.",
+    "Scope down from the paper protocol (153 headers, GPT-4o + DeepSeek-V3 APIs) when needed — report the reduced subset, LLM choice, and hardware.",
+    "Do not claim full paper reproduction unless the protocol and resources match."
+  ],
+  "non_goals": [
+    "Re-mining the full top-100 GitHub C project history as a required dependency",
+    "Requiring proprietary non-API local LLM checkpoints for a valid experiment",
+    "Fabricating 153 ground-truth decompositions without documenting synthetic construction"
+  ],
+  "dataset_env": {
+    "HFDECOMPOSER_HOME": "dataset_candidate/hfdecomposer"
+  },
+  "exclude_from_agent": [
+    "container_setup.sh",
+    "README.md",
+    "benchmark_config.json",
+    "requirements.txt"
+  ]
+}

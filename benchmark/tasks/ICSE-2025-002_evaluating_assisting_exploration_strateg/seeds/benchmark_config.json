@@ -1,0 +1,34 @@
+{
+  "forbid_synthetic_pilot": true,
+  "agent_data_note": "Use the mounted ICSE 2025 artifact at `dataset_candidate/fuzzing-empirical-study/`. Build all 21 paper benchmark targets, install all nine studied fuzzers plus CDFUZZ, and run the full ICSE 2025 evaluation protocol.",
+  "required_metrics": [
+    "edge_coverage"
+  ],
+  "benchmark_rules": [
+    "Read `dataset_candidate/dataset_paths.json` and use `$FUZZING_EMPIRICAL_STUDY_HOME` / `$CDFUZZ_HOME` before experiments.",
+    "Compile fuzz targets with AFL llvm-mode (LLVM-13): `export PATH=/usr/lib/llvm-13/bin:$PATH` and `CC=$CDFUZZ_HOME/afl-clang-fast` (build CDFuzz first).",
+    "Seed inputs live under `dataset_candidate/fuzzing-empirical-study/Experiment/seed/<program>/`.",
+    "Primary metric: edge coverage via `afl-showmap` unique edge count. Higher is better.",
+    "Run the full paper protocol: **21 benchmark programs**, **9 studied fuzzers** (AFL, AFL++, MOpt, FairFuzz, QSYM, MEUZZ, Pangolin, Angora, REDQUEEN) plus **CDFUZZ**, **24 hours per trial**, **5 independent repeats**, LLVM-13 AFL llvm-mode instrumentation.",
+    "Build every benchmark in `dataset_paths.json` → `benchmark_programs_paper`; extend `Experiment/build-bench.sh` for programs not covered (re2, jsoncpp, sqlite3, bloaty, libjpeg-turbo, libpng, libxml2).",
+    "Generate dictionaries automatically (FuzzingDriver or equivalent LLVM/CodeQL pass); do not use hand-curated token lists for dictionary-mode fuzzers.",
+    "The shared mount is read-only. Write build trees, fuzz output dirs, and metrics under `project/` or `results/`.",
+    "Install and build every studied fuzzer from upstream repos; parallelize campaigns across available CPU cores.",
+    "Report median edge coverage over 5 repeats per (program, fuzzer) cell; include RQ2 constraint-type analysis per the paper."
+  ],
+  "non_goals": [
+    "Using fabricated hello-world C files instead of the 21 real-world paper benchmarks",
+    "Substituting Demo/jhead-only experiments for the full benchmark suite",
+    "Skipping fuzzers or programs to save time without explicit failure documentation"
+  ],
+  "dataset_env": {
+    "FUZZING_EMPIRICAL_STUDY_HOME": "dataset_candidate/fuzzing-empirical-study",
+    "CDFUZZ_HOME": "dataset_candidate/fuzzing-empirical-study/CDFuzz"
+  },
+  "exclude_from_agent": [
+    "container_setup.sh",
+    "README.md",
+    "benchmark_config.json",
+    "requirements.txt"
+  ]
+}

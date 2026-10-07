@@ -1,0 +1,642 @@
+{
+  "generated_at": "2026-09-03T07:39:00",
+  "run_dir": "~/ai_scientist_inputs/FSE-2025-007_efficient_search_based_floating_point_co/workspace/researchclaw_2026-08-23_08-04-23",
+  "task_dir": "~/ai_scientist_inputs/FSE-2025-007_efficient_search_based_floating_point_co",
+  "framework": "researchclaw",
+  "fairness_audit": [
+    {
+      "axis": "completeness",
+      "was_unfair": "Required both paper.tex AND paper.pdf; any tool missing one failed equally.",
+      "fix": "Paper gate: PDF=1.0; TeX-only=0.5; ``complete`` requires PDF."
+    },
+    {
+      "axis": "completeness",
+      "was_unfair": "``results`` counted stub/seed JSON (dataset_candidate/metrics.json).",
+      "fix": "``results`` requires substantive numeric results via results_normalize."
+    },
+    {
+      "axis": "experiment_success",
+      "was_unfair": "Only metrics.json; ignored results.json / experiment_results.txt.",
+      "fix": "Framework-ordered result candidates + normalized loaders."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Penalized tools with no bib; airesearcher has no workspace references.",
+      "fix": "literature_applicable=false → status not_applicable; excluded from fair aggregate."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "related_work.json subset as gold made recall hard to interpret.",
+      "fix": "Coverage gold is original paper REFERENCES from mineru; related_work only enriches metadata/fallback."
+    },
+    {
+      "axis": "peer_review",
+      "was_unfair": "Missing Stanford report looked like evaluation failure.",
+      "fix": "status not_provided; optional axis, never counts as tool failure."
+    },
+    {
+      "axis": "paths/find_results",
+      "was_unfair": "Picked downloads/** and sandbox noise (e.g. airesearcher LLVM tree).",
+      "fix": "Exclude downloads/, seeds/, dataset_candidate/, sandbox junk paths."
+    },
+    {
+      "axis": "paths/framework_noise",
+      "was_unfair": "DeepScientist .deepscientist_npm / runtime / skills templates counted as code/paper/results.",
+      "fix": "FRAMEWORK_NOISE_DIRS+markers; quest worktree + eval_output results; paper md drafts; reject template tex."
+    },
+    {
+      "axis": "paths/paper_tex",
+      "was_unfair": "tiny_scientist / ACL runs store paper under latex/*.tex; evaluator only looked at paper/main.tex.",
+      "fix": "latex/**/*.tex with substantive-body heuristic; find_paper_document uses same rules."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Entire custom.bib (300+ anthology entries) verified when paper had zero \\cite commands.",
+      "fix": "collect_agent_references filters bib to in-text cite keys; skips uncited bulk bib (>40 entries)."
+    },
+    {
+      "axis": "paths/ai_scientist_summaries",
+      "was_unfair": "AI Scientist can persist substantive results and paper-like drafts in *_summary.json logs rather than paper/main.tex or results/**/*.json.",
+      "fix": "Treat draft_summary/research_summary as weak paper documents and summary JSONs as result candidates."
+    },
+    {
+      "axis": "framework/ai_scientist_v2",
+      "was_unfair": "Manifest framework ``ai_scientist_v2`` fell through to profile ``unknown``, skipping AI-Scientist idea/result path priorities.",
+      "fix": "Normalize ``ai_scientist_v2`` (and common aliases) to profile key ``ai_scientist``."
+    },
+    {
+      "axis": "idea_generation",
+      "was_unfair": "plan.md/todos.md weak proxies scored same as structured idea.json.",
+      "fix": "Framework idea_priority tried first; missing idea → not_applicable where appropriate."
+    }
+  ],
+  "axes": [
+    "alignment",
+    "completeness",
+    "experiment_analysis",
+    "idea_generation",
+    "literature_review",
+    "peer_review"
+  ],
+  "results": {
+    "completeness": {
+      "framework": "researchclaw",
+      "run_dir": "~/ai_scientist_inputs/FSE-2025-007_efficient_search_based_floating_point_co/workspace/researchclaw_2026-08-23_08-04-23",
+      "task_dir": "~/ai_scientist_inputs/FSE-2025-007_efficient_search_based_floating_point_co",
+      "complete": false,
+      "required_score": 0.25,
+      "bonus_score": 0.03,
+      "overall_score": 0.2,
+      "missing": [
+        "code",
+        "results",
+        "paper"
+      ],
+      "required": {
+        "idea": {
+          "path": "artifacts/idea.json",
+          "bytes": 231,
+          "via": "candidate"
+        },
+        "code": {
+          "count": 0,
+          "files": []
+        },
+        "results": {
+          "substantive": false,
+          "normalized_path": null,
+          "numeric_leaf_count": 0,
+          "discovered_files": [],
+          "metrics_keys_sample": []
+        },
+        "paper": {
+          "tex": null,
+          "pdf": null,
+          "md": null,
+          "json": null,
+          "status": "missing",
+          "score": 0.0
+        }
+      },
+      "bonus": {
+        "experiment_plan": null,
+        "experiment_log": {
+          "path": "researchclaw_run.log",
+          "bytes": 1104,
+          "via": "glob"
+        },
+        "review": null,
+        "readme": null,
+        "narrative": null,
+        "bib": null
+      },
+      "manifest_status": {
+        "pipeline": false,
+        "idea": false,
+        "code": false,
+        "results": false,
+        "paper": false
+      },
+      "gate_scores": {
+        "idea": 1.0,
+        "code": 0.0,
+        "results": 0.0,
+        "paper": 0.0
+      },
+      "fairness": {
+        "gates": [
+          "idea",
+          "code",
+          "results",
+          "paper"
+        ],
+        "paper_gate_rule": "PDF=1.0; TeX-only/md_only/json_only=0.5; complete requires PDF",
+        "results_gate_rule": "substantive numeric results via framework-aware normalize_results",
+        "audit_ref": "framework_profile.FAIRNESS_AUDIT"
+      },
+      "notes": [
+        "Required: idea, code, substantive results, paper (PDF full; TeX/markdown/JSON draft half).",
+        "Stub/seed metrics (e.g. dataset_candidate/metrics.json) do not satisfy results.",
+        "Framework noise (.deepscientist_npm, skills/templates, runtime) is excluded from code/results/paper.",
+        "Manifest status is informational; disk presence is authoritative."
+      ]
+    },
+    "idea_generation": {
+      "run_dir": "~/ai_scientist_inputs/FSE-2025-007_efficient_search_based_floating_point_co/workspace/researchclaw_2026-08-23_08-04-23",
+      "task_dir": "~/ai_scientist_inputs/FSE-2025-007_efficient_search_based_floating_point_co",
+      "idea_path": "~/ai_scientist_inputs/FSE-2025-007_efficient_search_based_floating_point_co/workspace/researchclaw_2026-08-23_08-04-23/artifacts/idea.json",
+      "status": "ok",
+      "dimensions": {
+        "novelty": {
+          "score": 2.0,
+          "justification": "The idea text only proposes making search-based floating-point constraint solvers more robust by \"employing multiple heuristic evaluation criteria to guide the optimization process\". Search-based FP solvers are already present in R36 and R38, while multi-objective and adaptive fitness concepts are present in R14, R19, and R15. Without a specified integration mechanism, this reads as a straightforward splice.",
+          "rubric": "Trivial Mashup: a hard splice of existing technique A with technique B (e.g. swapping one module for an LLM) without deep mechanism innovation at the junction.",
+          "category": "Trivial Mashup",
+          "nearest_solution_space_ids": [
+            "R36",
+            "R38",
+            "R14",
+            "R19",
+            "R15"
+          ],
+          "differentiation": "No concrete mechanism is offered beyond applying multiple criteria; search-based floating-point solving already exists in R36 and R38, and multi-objective/adaptive criteria appear in R14, R19, and R15."
+        },
+        "feasibility": {
+          "score": 2.0,
+          "justification": "The only concrete statement is \"employing multiple heuristic evaluation criteria to guide the optimization process\"; no search algorithm, fitness criteria, tooling, or benchmark pipeline is specified. Building and evaluating a competitive FP constraint solver would likely require substantial engineering, though the concept is not inherently impossible.",
+          "rubric": "Extreme engineering barrier: requires building complex low-level tooling from scratch (custom compiler plugins, new vulnerability execution sandboxes), or an extremely heavy experimental pipeline with multi-month development."
+        },
+        "clarity": {
+          "score": 1.0,
+          "justification": "The artifact consists solely of the question \"How can search-based floating-point constraint solvers be made more efficient and robust by employing multiple heuristic evaluation criteria to guide the optimization process?\". There is no proposed method, mechanism, experiment, or evaluation plan.",
+          "rubric": "Vague concept: full of empty buzzwords; problem undefined; method only gives a high-level direction with little substance."
+        }
+      },
+      "overall_score": 1.5,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "novelty",
+        "feasibility",
+        "clarity"
+      ],
+      "solution_space": {
+        "status": "ok",
+        "paper_count": 71,
+        "entry_count": 71,
+        "cache_hit": true,
+        "source_file": "~/ai_scientist_inputs/FSE-2025-007_efficient_search_based_floating_point_co/mineru_sections.json",
+        "stats": {
+          "papers": 71,
+          "extracted": 71,
+          "usable_abstracts": 28,
+          "citation_meta_abstracts": 0,
+          "missing_abstracts": 43,
+          "mineru_titles": 62,
+          "related_work_titles": 51,
+          "abstracts_attached": 28,
+          "related_work_extras": 9,
+          "batches": 4
+        },
+        "error": null
+      },
+      "notes": [
+        "Scores the intermediate idea artifact (not the final paper).",
+        "Dimensions: novelty, feasibility, clarity (each 1-5). Excitement removed.",
+        "Novelty is scored against a Solution Space built from mineru REFERENCES titles (+ related_work.json abstracts when matched)."
+      ],
+      "idea_via": "candidate",
+      "idea_relative": "artifacts/idea.json",
+      "summary": "The idea is only a high-level research question about using multiple heuristic criteria in search-based floating-point constraint solving. It lacks a concrete algorithm, fitness criteria definition, integration mechanism, or evaluation plan. Relative to the Solution Space, it recombines existing search-based FP solvers and multi-objective optimization ideas without specifying the junction. Feasibility and clarity are therefore poor, and novelty is limited to a generic combination.",
+      "strengths": [
+        "Addresses a meaningful challenge in search-based floating-point constraint solving.",
+        "Multiple fitness criteria could plausibly help preserve promising intermediate solutions."
+      ],
+      "weaknesses": [
+        "No concrete method or algorithm is described.",
+        "No experimental design, baselines, or evaluation metrics are specified in the idea artifact.",
+        "Core components already exist separately in prior work on search-based FP solving and multi-objective optimization.",
+        "Single-sentence artifact lacks technical depth and implementation details."
+      ],
+      "llm_meta": {
+        "model": "deepseek-v4-pro-0813",
+        "base_url": "https://api-sg.umodelverse.ai/v1",
+        "usage": {
+          "completion_tokens": 2188,
+          "completion_tokens_details": {
+            "reasoning_tokens": 1637
+          },
+          "prompt_tokens": 5822,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "total_tokens": 8010
+        },
+        "attempt": 0
+      }
+    },
+    "peer_review": {
+      "run_dir": "~/ai_scientist_inputs/FSE-2025-007_efficient_search_based_floating_point_co/workspace/researchclaw_2026-08-23_08-04-23",
+      "review_report": null,
+      "paper_pdf": null,
+      "paper_tex": null,
+      "status": "not_provided",
+      "dimensions": {},
+      "overall_score": null,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "soundness",
+        "significance",
+        "novelty",
+        "presentation",
+        "credibility"
+      ],
+      "notes": [
+        "Stanford Agentic Reviewer (paperreview.ai): manual download to artifacts/peer_review/stanford_apr.md, or pass --auto-paperreview.",
+        "Dimensions: soundness, significance, novelty, presentation, credibility (each 1-5)."
+      ],
+      "paperreview": {
+        "status": "skipped",
+        "reason": "no_pdf"
+      },
+      "optional": true,
+      "hint": "Optional external review (Stanford APR). Upload paper/main.pdf to https://paperreview.ai/ , save review to ~/ai_scientist_inputs/FSE-2025-007_efficient_search_based_floating_point_co/workspace/researchclaw_2026-08-23_08-04-23/artifacts/peer_review/stanford_apr.md"
+    },
+    "alignment": {
+      "run_dir": "~/ai_scientist_inputs/FSE-2025-007_efficient_search_based_floating_point_co/workspace/researchclaw_2026-08-23_08-04-23",
+      "task_dir": "~/ai_scientist_inputs/FSE-2025-007_efficient_search_based_floating_point_co",
+      "status": "missing_agent_paper_or_metrics",
+      "original": {
+        "status": "ok",
+        "task_dir": "~/ai_scientist_inputs/FSE-2025-007_efficient_search_based_floating_point_co",
+        "paper_title": "QSF: Multi-Objective Optimization based Efficient Solving for Floating-Point Constraints",
+        "task_id": "FSE-2025-007",
+        "selection": {
+          "num_blocks": 8,
+          "total_chars": 31998,
+          "inferred_roles": {
+            "abstract": 1,
+            "introduction": 1,
+            "experiment": 4,
+            "discussion": 1,
+            "conclusion": 1
+          },
+          "mineru_raw_keys": {
+            "field:abstract": 1,
+            "field:introduction": 1,
+            "other": 4,
+            "discussion": 1,
+            "conclusion": 1
+          },
+          "infer_reasons": {
+            "top_level_field": 2,
+            "title": 6
+          },
+          "rescued_from_other": 4,
+          "note": "mineru key is unreliable; blocks are selected by title/body/inheritance. rescued_from_other counts sections labeled other but treated as typed roles."
+        },
+        "claims": [
+          {
+            "id": "C1",
+            "statement": "...",
+            "direction": "improves",
+            "metric_names": [
+              "..."
+            ],
+            "evidence_quote": "...",
+            "confidence": 0.99
+          }
+        ],
+        "metrics": [
+          {
+            "name": "avg_speedup_qf_fp_60s",
+            "value": 15.72,
+            "unit": "ratio",
+            "higher_is_better": true,
+            "setting": "...",
+            "is_sota_or_best": true,
+            "baseline_name": "nine compared solvers",
+            "baseline_value": null,
+            "evidence_quote": "...",
+            "confidence": 0.99
+          }
+        ],
+        "overall_conclusion": "...",
+        "comparable_notes": "...",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 2500,
+            "completion_tokens_details": {
+              "reasoning_tokens": 2500
+            },
+            "prompt_tokens": 3661,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 6161
+          },
+          "attempt": 3
+        },
+        "cache_hit": true
+      },
+      "agent": {
+        "status": "missing_agent_paper_or_metrics",
+        "run_dir": "~/ai_scientist_inputs/FSE-2025-007_efficient_search_based_floating_point_co/workspace/researchclaw_2026-08-23_08-04-23"
+      }
+    },
+    "experiment_analysis": {
+      "run_dir": "~/ai_scientist_inputs/FSE-2025-007_efficient_search_based_floating_point_co/workspace/researchclaw_2026-08-23_08-04-23",
+      "task_dir": "~/ai_scientist_inputs/FSE-2025-007_efficient_search_based_floating_point_co",
+      "status": "ok",
+      "metrics_path": null,
+      "experiment_success": {
+        "status": "failed_or_incomplete",
+        "success": false,
+        "metrics_path": null,
+        "absolute_metrics_path": null,
+        "checks": {
+          "has_results_file": false,
+          "non_stub": false,
+          "numeric_leaf_count": 0,
+          "min_numeric_ok": false
+        },
+        "manifest_hints": {
+          "status": {
+            "pipeline": false,
+            "idea": false,
+            "code": false,
+            "results": false,
+            "paper": false
+          },
+          "returncode": 1,
+          "benchmark_complete": null,
+          "artifacts_metrics_flag": false
+        },
+        "warnings": [
+          "manifest.returncode=1"
+        ],
+        "suspicious_values": [],
+        "note": "success=true requires substantive results (framework-aware path) with >=3 numeric leaves. Supports metrics.json, results.json, experiment_results.txt, etc. Manifest returncode/benchmark_complete are soft warnings only."
+      },
+      "idea_code_consistency": {
+        "status": "missing_code",
+        "idea_path": "artifacts/idea.json"
+      },
+      "setup_coverage": {
+        "status": "ok",
+        "overall_coverage": 0.0,
+        "datasets": {
+          "gold_count": 2,
+          "hit_count": 0,
+          "miss_count": 2,
+          "coverage": 0.0,
+          "hits": [],
+          "misses": [
+            "SMT-COMP 2023 QF_FP Benchmark",
+            "Real-World Floating-Point Program Benchmark"
+          ]
+        },
+        "baselines": {
+          "gold_count": 9,
+          "hit_count": 0,
+          "miss_count": 9,
+          "coverage": 0.0,
+          "hits": [],
+          "misses": [
+            "Z3",
+            "MathSAT5",
+            "CVC5",
+            "Bitwuzla",
+            "goSAT",
+            "JFS",
+            "COLIBRI",
+            "CORAL",
+            "XSat"
+          ]
+        },
+        "metrics": {
+          "gold_count": 4,
+          "hit_count": 0,
+          "miss_count": 4,
+          "coverage": 0.0,
+          "hits": [],
+          "misses": [
+            "Solved instances",
+            "Execution time",
+            "Winning rate",
+            "Branch coverage"
+          ]
+        },
+        "agent_protocol": {},
+        "gold_protocol": {
+          "timeout_hours": 1
+        },
+        "dataset_dirs": [
+          "dataset_candidate"
+        ],
+        "flags": {
+          "weaker_baseline_suspected": true,
+          "weak_protocol": [],
+          "synthetic_data": "synthetic_allowed_by_task",
+          "gold_allows_synthetic": true
+        },
+        "gold_sources": [
+          "~/ai_scientist_inputs/FSE-2025-007_efficient_search_based_floating_point_co/task.md",
+          "~/ai_scientist_inputs/FSE-2025-007_efficient_search_based_floating_point_co/metadata.json"
+        ],
+        "note": "Coverage is name/alias matching against task.md Datasets/Baselines/Metrics. weak_protocol flags large reductions in trials/timeout vs Constraints. Synthetic corpora are not penalized when the task itself requires synthesis."
+      },
+      "ablation_significance": {
+        "status": "ok",
+        "idea_path": "artifacts/idea.json",
+        "significance_signals_rule_based": {
+          "signals": [],
+          "artifact_paths": [],
+          "has_any_significance_artifact": false
+        },
+        "evidence_format": null,
+        "study_type": "new_method",
+        "components": [
+          {
+            "name": "multiple heuristic evaluation criteria module",
+            "role": "module",
+            "ablation_expected": true,
+            "significance_expected": true,
+            "ablation_status": "missing",
+            "ablation_evidence": "No experiment evidence, results table, or code flags show a controlled comparison removing or replacing the multi-criteria heuristic module with a single-criterion baseline.",
+            "significance_status": "missing",
+            "significance_evidence": "No p-values, confidence intervals, bootstrap results, or other statistical tests are present in the provided evidence."
+          },
+          {
+            "name": "search-based floating-point constraint solver baseline",
+            "role": "baseline",
+            "ablation_expected": false,
+            "significance_expected": false,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "Baseline comparison is expected but not treated as a removable method component.",
+            "significance_status": "not_required",
+            "significance_evidence": "Significance is reported through the method evaluation rather than this baseline component itself."
+          },
+          {
+            "name": "floating-point constraint benchmark suite",
+            "role": "dataset split",
+            "ablation_expected": false,
+            "significance_expected": false,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "Dataset choice is not a removable method module for ablation.",
+            "significance_status": "not_required",
+            "significance_evidence": "No separate significance test is expected for dataset split."
+          }
+        ],
+        "ablation_coverage_score": 0.0,
+        "overall_ablation_ok": false,
+        "overall_significance_ok": false,
+        "summary": "The idea proposes a new search-based floating-point constraint solver enhanced with multiple heuristic evaluation criteria. The multi-criteria module is an expected ablation target, but no experiment evidence or controlled comparison was provided. Likewise, statistical significance testing is expected for a new method comparison, but no tests or significance artifacts are present.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 1433,
+            "completion_tokens_details": {
+              "reasoning_tokens": 974
+            },
+            "prompt_tokens": 828,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 2261
+          },
+          "attempt": 0
+        }
+      },
+      "results_paper_consistency": {
+        "status": "missing_metrics"
+      },
+      "scores": {
+        "experiment_success": false,
+        "idea_code_score": null,
+        "setup_coverage": 0.0,
+        "ablation_coverage_score": 0.0,
+        "overall_ablation_ok": false,
+        "overall_significance_ok": false,
+        "results_paper_score": null,
+        "hiding_unfavorable_suspected": null
+      },
+      "notes": [
+        "Axes 1,2,3,4,6 in experiment_analysis (figures excluded).",
+        "setup_coverage matches task.md Datasets/Baselines/Metrics; weak_protocol flags reductions vs Constraints.",
+        "Axis 6: final normalized results vs paper; interim run logs not used as ground truth."
+      ]
+    },
+    "literature_review": {
+      "run_dir": "~/ai_scientist_inputs/FSE-2025-007_efficient_search_based_floating_point_co/workspace/researchclaw_2026-08-23_08-04-23",
+      "task_dir": "~/ai_scientist_inputs/FSE-2025-007_efficient_search_based_floating_point_co",
+      "status": "not_applicable",
+      "as_of_year": 2026,
+      "agent_ref_count": 0,
+      "sources": [],
+      "collection_audit": {
+        "cited_keys_count": 0,
+        "filter_mode": "none",
+        "bib_total_before_filter": 0,
+        "bib_after_filter": 0,
+        "uncited_bib_skipped": 0
+      },
+      "fabrication": null,
+      "coverage": null,
+      "recency": null,
+      "reason": "no_reference_artifacts",
+      "hint": "No literature artifacts found (bib / thebibliography / shortlist / related_work.txt / arxiv index). Marked not_applicable rather than failure — tool may not emit references in-run."
+    }
+  },
+  "scores": {
+    "completeness": {
+      "complete": false,
+      "overall_score": 0.2,
+      "required_score": 0.25,
+      "bonus_score": 0.03
+    },
+    "peer_review": {
+      "status": "not_provided",
+      "optional": true,
+      "overall_score": null,
+      "score_scale": "1-5",
+      "scoring_method": null
+    },
+    "idea_generation": {
+      "status": "ok",
+      "overall_score": 1.5,
+      "dimensions": {
+        "novelty": 2.0,
+        "feasibility": 2.0,
+        "clarity": 1.0
+      },
+      "novelty_category": "Trivial Mashup",
+      "solution_space_status": "ok"
+    },
+    "alignment": {
+      "status": "missing_agent_paper_or_metrics",
+      "direction_consistency": null,
+      "overall_alignment_score": null
+    },
+    "literature_review": {
+      "fabrication_rate": null,
+      "coverage_recall": null,
+      "recency_ratio_3y": null,
+      "recency_ratio_5y": null
+    },
+    "experiment_analysis": {
+      "experiment_success": false,
+      "idea_code_score": null,
+      "setup_coverage": 0.0,
+      "ablation_coverage_score": 0.0,
+      "overall_ablation_ok": false,
+      "overall_significance_ok": false,
+      "results_paper_score": null,
+      "hiding_unfavorable_suspected": null
+    }
+  },
+  "fair_scores": {
+    "applicable_axes": [
+      "completeness",
+      "idea_generation",
+      "experiment_analysis"
+    ],
+    "skipped_axes": [
+      {
+        "axis": "peer_review",
+        "reason": "optional_external_review"
+      },
+      {
+        "axis": "literature_review",
+        "reason": "not_applicable"
+      }
+    ],
+    "fair_mean_0_1": 0.1833,
+    "note": "fair_mean_0_1 averages only applicable axes; optional peer review and framework-inapplicable literature are excluded from the denominator."
+  },
+  "evals_root": "~/ai_scientist_evals",
+  "claims_cache": "~/ai_scientist_evals/FSE-2025-007_efficient_search_based_floating_point_co/original_claims.json",
+  "solution_space_cache": "~/ai_scientist_evals/FSE-2025-007_efficient_search_based_floating_point_co/solution_space.json"
+}

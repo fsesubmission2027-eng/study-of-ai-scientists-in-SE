@@ -1,0 +1,38 @@
+{
+  "forbid_synthetic_pilot": true,
+  "agent_data_note": "Use mounted baseline fuzzers at `dataset_candidate/dbms-differential-testing-tools/` (SQLancer, SQLsmith, SQUIRREL). Build MySQL, MariaDB, and Percona with AFL++ instrumentation. Implement or restore THANOS storage-engine rotation differential testing per the paper protocol.",
+  "required_metrics": [
+    "branch_coverage",
+    "confirmed_bug_count"
+  ],
+  "benchmark_rules": [
+    "Read `dataset_candidate/dbms-differential-testing-tools/agent/dataset_paths.json` and env `DBMS_DIFFERENTIAL_TESTING_TOOLS_HOME`.",
+    "Test targets: MySQL 8.0.x, MariaDB 10.x, Percona Server 8.0.x — each with multiple storage engines (InnoDB, MyISAM, Memory, etc.).",
+    "Baselines: SQLancer, SQLsmith, SQUIRREL — build and configure uniformly per upstream docs.",
+    "Primary metrics: (1) branch coverage via AFL++ on instrumented DBMS binaries; (2) confirmed distinct bugs in 24h runs.",
+    "Paper protocol: 3 DBMSs × 4 tools (THANOS + 3 baselines) × 24 hours each; compare query-result, error-message, and final-state oracles.",
+    "THANOS rotates storage engines and synthesizes feature-oriented equivalent test cases; equivalence feature lists are part of the tool/paper artifact.",
+    "Use ODBC or unified client interface to schedule SQL against equivalent engine configurations.",
+    "Shared mount is read-only. Write DBMS build trees, server data dirs, fuzz output, and metrics under `project/` or `results/`.",
+    "If official THANOS repo is unavailable, implement the four-step pipeline from the paper (engine selection → equivalence extraction → feature-oriented synthesis → differential comparison).",
+    "Deduplicate bugs (minimized test case + config + output signature)."
+  ],
+  "non_goals": [
+    "Using a single default storage engine only (paper requires engine rotation)",
+    "Skipping AFL++ instrumentation when reporting branch coverage",
+    "Substituting logic-bug-only SQLancer runs without crash/oracle differential testing for THANOS comparison"
+  ],
+  "dataset_env": {
+    "DBMS_DIFFERENTIAL_TESTING_TOOLS_HOME": "dataset_candidate/dbms-differential-testing-tools",
+    "SQLANCER_HOME": "dataset_candidate/dbms-differential-testing-tools/sqlancer",
+    "SQLSMITH_HOME": "dataset_candidate/dbms-differential-testing-tools/sqlsmith",
+    "SQUIRREL_HOME": "dataset_candidate/dbms-differential-testing-tools/squirrel",
+    "THANOS_HOME": "dataset_candidate/dbms-differential-testing-tools/thanos"
+  },
+  "exclude_from_agent": [
+    "container_setup.sh",
+    "README.md",
+    "benchmark_config.json",
+    "requirements.txt"
+  ]
+}

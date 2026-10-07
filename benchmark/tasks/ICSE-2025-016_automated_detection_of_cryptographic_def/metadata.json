@@ -1,0 +1,154 @@
+{
+  "id": "ICSE-2025-016",
+  "paper_id": "f9e12d4076b84c8d5ea2dae7b9abf0eb98f3d0ce",
+  "title": "Demystifying and Detecting Cryptographic Defects in Ethereum Smart Contracts",
+  "abstract": "Ethereum has officially provided a set of system-level cryptographic APIs to enhance smart contracts with cryptographic capabilities. These APIs have been utilized in over 10% of Ethereum transactions, motivating developers to implement various on-chain cryptographic tasks, such as digital signatures. However, since developers may not always be cryptographic experts, their ad-hoc and potentially defective implementations could compromise the theoretical guarantees of cryptography, leading to real-world security issues. To mitigate this threat, we conducted the first study aimed at demystifying and detecting cryptographic defects in smart contracts. Through the analysis of 2,406 real-world security reports, we defined nine types of cryptographic defects in smart contracts with detailed descriptions and practical detection patterns. Based on this categorization, we proposed Crysol, a fuzzing-based tool to automate the detection of cryptographic defects in smart contracts. It combines transaction replaying and dynamic taint analysis to extract fine-grained crypto-related semantics and employs crypto-specific strategies to guide the test case generation process. Furthermore, we collected a large-scale dataset containing 25,745 real-world crypto-related smart contracts and evaluated CRYSOL's effectiveness on it. The result demonstrated that CRySOL achieves an overall precision of 95.4% and a recall of 91.2%. Notably, CRySOL revealed that 5,847 (22.7%) out of 25,745 smart contracts contain at least one crvptographic defect” hiahlighting the prevalence of these defects.",
+  "year": 2025,
+  "citation_count": 5,
+  "venue": "47th International Conference on Software Engineering (ICSE 2025)",
+  "venue_short": "ICSE 2025",
+  "authors": [
+    "Jiashuo Zhang",
+    "Yiming Shen",
+    "Jiachi Chen",
+    "Jianzhong Su",
+    "Yanlin Wang",
+    "Ting Chen",
+    "Jianbo Gao",
+    "Zhong Chen"
+  ],
+  "pdf_url": "",
+  "paper_url": "https://www.semanticscholar.org/paper/f9e12d4076b84c8d5ea2dae7b9abf0eb98f3d0ce",
+  "paper_type": "methodology",
+  "award": "ACM SIGSOFT Distinguished Paper Award",
+  "subfield_label": "Software Security",
+  "introduction": "Cryptographic techniques, with their strong capabilities in securing data and communication, have demonstrated significant potential in enhancing the functionality of smart contracts [1]- [3]. To prompt on-chain cryptographic practice, Ethereum has officially introduced a set of system-level cryptographic APIs [4], such as ECRECOVER, to enable basic crypto operations within smart contracts. These APIs effectively reduced the gas cost associated with complex cryptographic operations and prompted diverse on-chain cryptographic tasks such as digital signature [2] and Merkle proof [5]. Currently, more than 10% of Ethereum transactions use these crypto APIs [1], highlighting the significance and prevalence of cryptographic practices in Ethereum smart contracts. However, since smart contract developers may not necessarily be cryptographic experts, their implementation of cryptographic tasks could be error-prone. Such defective implementations can compromise the theoretical security guarantees of cryptography and lead to real-world security issues in practice [6]- [8]. For example, a security team reported 52 smart contracts that suffered signature replay attacks [6], illustrating the prevalence and damage of on-chain cryptographic defects.\n\nUnfortunately, the community still lacks knowledge and tools to mitigate this threat. A recent empirical study [1] revealed that 56.3% of smart contract developers face obstacles in securing their cryptographic implementations, and 68.1% of developers believe existing security tools need improvement to support their cryptographic practices. Although many studies have focused on defects in smart contracts [9]- [12], they mainly focus on issues arising from general programming tasks, such as Reentrancy [10] and Integer Overflow [11], while rarely addressing defects specific to cryptographic practices. Consequently, the characterization and mitigation of cryptographic defects remain an open challenge.\n\nTo bridge the gap, we conducted the first study focusing on demystifying and detecting cryptographic defects in Ethereum smart contracts. To propose the definition and categorization of common cryptographic defects, we conducted an empirical study on 2,406 smart contract security reports from real-world security teams and investigated crypto-specific security issues they reported. Based on an open-card sorting approach [13], we introduced the first systematic taxonomy of cryptographic defects in smart contracts. It includes nine categories of defects, covering common on-chain cryptographic tasks [1], including digital signature [14], Merkle proof [5], message digest [15], and random number generation [16].\n\nBased on our defect definitions, we proposed CRYSOL, a fuzzing-based approach to detect cryptographic defects in real-world smart contracts. To the best of our knowledge, it is the first security technique targeting crypto-specific defects in contracts. It integrates offline analysis with onchain historical data to address the challenges posed by complicated cryptographic operations. Specifically, CRYSOL employs transaction replay and dynamic taint analysis to initialize the fuzzing context and extract essential cryptorelated semantic information, such as data dependencies of cryptographic operations. CRYSOL utilizes a set of cryptospecific strategies to effectively generate test cases and exploit defects. These strategies guide CRYSOL's test case generation with fine-grained semantic information and prevent it from getting stuck on trivial test cases, i.e., transactions directly reverted by cryptographic checks. CRYSOL executes the test cases and detects defects based on a set of crypto-specific oracles. To evaluate CRYSOL's effectiveness, we collected a dataset containing 25,745 real-world crypto-related contracts and ran CRYSOL on it. The results indicated that CRYSOL achieves an overall precision of 95.4% and a recall of 91.2%. Moreover, they demonstrated the prevalence of cryptographic defects in real-world contracts, revealing that 5,847 (22.7%) out of these 25,745 contracts contain at least one defect.\n\nWe summarize our main contributions as follows:\n\n• We conducted the first study on cryptographic defects in smart contracts. Through the analysis of 2,406 security reports, we defined and categorized nine types of cryptographic defects, which expands the existing categorization of smart contract defects [9], [17]. We presented these defects with detailed descriptions and practical detection patterns to guide future security solutions. • We proposed CRYSOL, the first tool to detect cryptographic defects in smart contracts. It extracts fine-grained cryptographic semantics from on-chain data and employs crypto-specific strategies to guide the fuzzing process. By addressing the functional gap of existing security tools, it has the potential to secure the emerging on-chain cryptographic practice. • We collected a large-scale dataset containing 25,745 real-world crypto-related smart contracts and evaluated CRYSOL on it. CRYSOL revealed that 5,847 (22.7%) of these contracts contain at least one cryptographic defect, with an overall precision of 95.4% and a recall of 91.2%. • We published the source code of CRYSOL, all analysis results, and datasets at https://github.com/Jiashuo-Zhang/CrySol, to provide support to further studies.",
+  "experiment": "The goal of the evaluation is two-fold. Firstly, we utilize a large-scale dataset containing 25,745 crypto-related smart contracts to evaluate the effectiveness of CRYSOL in defect detection. Secondly, by analyzing the results of this large-scale experiment, we demystify cryptographic defects in the wild and gain insights into their prevalence and distribution.\n\nResearch Questions. Specifically, we focus on the following three research questions.\n\n• RQ1. What is CRYSOL's performance on our large-scale dataset? Can CRYSOL find defects with high precision? • RQ2. How effective of CRYSOL in finding cryptographic defects in terms of recall? • RQ3. What is the prevalence and distribution of cryptographic defects in real-world smart contracts?\n\nDataset.\n\nTo answer these research questions, we collected a large-scale dataset containing 25,745 real-world cryptorelated smart contracts. Specifically, using the same method as previous studies [1], we first replayed 1,704,224,022 historical Ethereum transactions from block 1 to block 15,500,000 (from 2015.07 to 2022.09) and recorded the contracts that called crypto APIs. In total, we identified 426,296 crypto-related contracts during the execution of historical transactions. After that, we queried Etherscan [60] to collect publicly available source codes and ABI information of these contracts. As a result, we found 25,745 crypto-related smart contracts have available source codes and ABI information. Among these contracts, 83.6% of smart contracts have more than 10 historical transactions, suggesting that the majority of smart contracts in our dataset are engaged in real-world applications, rather than merely being toy contracts. To retrieve contracts' historical transactions and states, CRYSOL maintained an Ethereum archive node [56] and recorded Ethereum on-chain raw states for subsequent analysis. For each contract in the dataset, CRYSOL fetched its historical transactions and states to initialize the fuzzing seed pool. To ensure efficiency, the maximum seed pool size is set to be 500 transactions, which is considered adequate to cover common usage patterns of the contracts [61]. All experiments were conducted on a machine with two Intel Xeon(R) Platinum 8352V CPUs, 512 GB RAM, and running Ubuntu 22.04.2 LTS.\n\nOur datasets, experiment outputs, and analysis results are all available in the supplementary materials [39].\n\nTo answer RQ1, we ran CRYSOL on 25,745 smart contracts and analyzed the results. CRYSOL took 408.0 hours to analyze 25,745 contracts, resulting in an average execution time of 57.1 seconds per contract. In total, CRYSOL reported that 5,847 (22.7%) contracts contain at least one defect. Table II shows a breakdown of CRYSOL's execution results for each defect type.\n\nPrecision. To evaluate the precision of CRYSOL in detecting each type of defects, we manually analyzed the defects reported by CRYSOL during the large-scale experiment. In line with previous studies [40], [62], we randomly sampled a number of defects for each defect type to make the manual analysis feasible. The sample size for each defect type was carefully chosen to achieve a confidence level of 95% and a confidence interval of 10. The second and third columns of Table II show the detected and sampled number of contracts with each defect, respectively. Then, two of the authors independently labeled these contracts as true positives (TPs) or false positives (FPs), with the help of the third author to resolve any possible disagreements. The fourth to sixth columns in Table II present the number of true positives, false positives, and the precision rate for each type of defect, respectively. We then computed CRYSOL's overall precision as a weighted average of these precision rates, with the weight being the number of each defect. As a result, the overall precision of CRYSOL is 95.4%.\n\nFalse Positives. After inspecting the false positives reported by CRYSOL, we found that they are mainly caused by the following two factors. The first is non-standard protective patterns in real-world contracts. For example, for Signature Malleability, CRYSOL reported a defect based on whether there is a condition that checks if the input s for ECRECOVER (hash,v,r,s) is less than secp256k1n/2. However, we found that some contracts used a non-standard protective pattern against signature malleability: they set the first bit of s to 0 before using it as the actual input for ECRECOVER (hash,v,r,s), thereby ensuring that s is less than secp256k1n/2. The second is the intended behavior of the contracts. For example, for Insufficient Signature Verification, CRYSOL checks whether a transaction with an invalid signature can successfully execute and make changes to the contract's storage. However, we found that some smart contracts do not revert transactions when encountering invalid signatures. Instead, they intendedly record the signature verification results on-chain and continue to execute. In such cases, the transaction with invalid signatures indeed results in the contract's storage changes, letting CRYSOL falsely report an ISV defect.\n\nTo answer RQ2, we built an annotated dataset and evaluated the recall of CRYSOL on it. We have published the annotated dataset and analysis results in our online supplement materials [39].\n\nRecall. The evaluation of the recall requires a dataset with annotations of true positives and false negatives. To establish the ground truth, we first randomly sampled a number of smart contracts from the large-scale dataset and manually annotated them. Specifically, in line with previous studies [40], we randomly sampled 96 out of 25,745 contracts to achieve a confidence interval of 10 and a confidence level of 95%. Then, we followed the same labeling process as Section V-B to manually analyze these sampled contracts. In total, we found 34 defects in these 96 contracts. After comparing these manual labels and the results given by CRYSOL, we found CRYSOL reports 31 true positives, 1 false positive, and 3 false negatives for these contracts, which yields a recall of 91.2%.\n\nFalse Negatives. In detail, CRYSOL failed to detect one SSR, one CSR, and one WR defect in 96 contracts. After inspecting these false negatives, we found that they are mainly due to the lack of information to properly initialize the fuzzing context. For example, while some smart contracts contain signature verification functionalities, such functions are rarely actually called. Consequently, CRYSOL observed limited semantic information, hindering its ability to generate valid test cases for meaningful exploration. However, automatically generating valid crypto-related transactions with solely off-line analysis is challenging. In particular, cryptographic operations could render common techniques such as concolic testing [63] ineffective, since analyzing them results in complex symbolic expressions that cannot be handled by the SMT solver [64], [65]. Addressing these challenges is beyond the scope of this paper and is left as potential future work.\n\nWhile demonstrating the effectiveness of CRYSOL, our large-scale experiment also provided a first close look at cryptographic defects in real-world smart contracts. Prevalence and Distribution of Cryptographic Defects. The first column of Table III presents the proportion of defective contracts regarding each defect type. Among nine types of defects, WR, CSR, and SM are the most common, occurring in 2,626 (10.20%), 2,536 (9.85%), and 1,803 (7.00%) of the analyzed smart contracts, respectively. While the remaining six defect types are less common (appearing in about or less than 1% of contracts), the total number of contracts affected by them is still considerable. Such results provide real-world evidence for the findings of Zhang et al. [1], which suggest a lack of understanding of crypto-specific secure practices among smart contract developers. Note that a contract with cryptographic defects indicates deviations from best practices in cryptographic implementations. While defects may not directly lead to security issues, they can undermine the contract's maintainability and increase the risk of future security vulnerabilities. For instance, the CSR defect might not initially cause security problems when only one contract verifies the authorizer's signatures. However, if the system evolves and multiple contracts start using the same authorizer's signatures for managing sensitive operations, this defect can directly enable cross-contract signature replay attacks. A more detailed analysis of these cases is provided in our online supplementary materials [39].\n\nContracts with Cryptographic Defects. To better understand cryptographic defects in the wild, we analyzed the average lines of code, number of external/public functions, Ether balances, and transaction counts of defective contracts, and presented them in columns three to six of Table III. The result shows that contracts with MR and MF defects are generally more complex than others, likely due to the inherent complexity of Merkle proofs and their applications, such as reward distribution. Furthermore, contracts with SSR, CSR, SF, SM, and ISV defects, are more frequently called by realworld transactions, indicating a broader influence associated with signature-related defects.\n\nDuring the evaluation, we found that cryptographic defects are commonly caused by the direct use of low-level crypto APIs without necessary protection. Therefore, in addition to introducing CRYSOL, we provided possible solutions for each IV. These solutions are summarized from the standard practices outlined in official Ethereum improvement proposals (EIPs) [2], [29] and defect remediation recommendations in security reports [8], [41], [48], [66].\n\nFor example, Fig. 9 shows a fixed version of the defective contract in Fig. 2. It comes from a standard template [67] provided by OpenZeppelin [68], which employs the above solutions to prevent SSR, CSR, and SF defects. It integrates a nonce in the signed message to prevent SSR defects (line 4). It also includes a domain separator containing the contract address into the signed message to prevent the CSR defects (line 5). Furthermore, to address SF defects, it replaces the address to be approved (line 9 in Fig. 9 and line 7 in Fig. 2) from msg.sender to the spender specified by the signature (line 4). It ensures that even if an attacker front-runs the signature, he cannot change the intended contract behavior, i.e., owner approving spender for a certain value of tokens.\n\nIn the supplementary material [39], we provide more realworld examples to demonstrate how these solutions are applied to prevent cryptographic defects in practice.\n\nThreats to Validity. In the experiment, we employed random sampling to evaluate the effectiveness of CRYSOL, which might introduce potential sampling bias. To reduce the impact, we carefully selected the sampling ratio and size to achieve a confidence level of 95% and a confidence interval of 10, which is considered sufficient in previous studies [1], [9], [12], [40]. Additionally, we manually labeled true/false positives and negatives of the sampled contracts, which could potentially lead to labeling mistakes. To mitigate this threat, we employed a double-check process, conducted by authors with more than three years of research experience in smart contract security.\n\nLimitations. Despite CRYSOL's strengths, it might have the following potential limitations. First, CRYSOL relies on pre-defined oracles to detect defects, which might not cover newly emerging defects beyond the existing nine categories of cryptographic defects. However, given that these defined defects are derived from up to security reports from 31 security teams and involve all common on-chain cryptographic tasks, we believe CRYSOL effectively captures common cryptographic defects in existing smart contracts. Its framework also allows future studies to easily incorporate new defects. Second, CRYSOL relies on on-chain information to guide the fuzzing process. In scenarios such as analyzing undeployed smart contracts, such information might not be directly accessible. However, internal testing conducted before contract deployment, such as acceptance testing on local testnets, typically covers the main usage patterns of the contracts. Utilizing these test transactions, CRYSOL can extract necessary information and detect defects before deployment.\n\nDue to the recurring security incidents, a substantial body of research has been dedicated to defining and detecting defects in smart contracts [69]- [71]. Luu et al. [55] took the first close look at smart contract security and proposed Oyente to detect four types of defects in smart contracts. Chen et al. [9] defined 20 types of contract defects through the analysis of Stack Exchange posts and real-world smart contracts and proposed a tool to detect them [72]. Liu et al. [12] studied access control bugs in smart contracts and detected them by dynamically role mining and conformance testing. However, they mainly studied general programming defects such as Reentrancy [10], rather than crypto-specific defects we focused on. For example, Liu et al. [12] focused on defective access control policies, rather than cryptographic defects that compromise the access control. Ye et al. [61] introduced a fuzzing tool to detect state inconsistency bugs, which utilizes contextual information collected from on-chain transactions to guide the fuzzing process.\n\nWhile there is a lack of academic research on cryptographic defects, several defects we defined have attracted attention from the industry [6], [17]. To our knowledge, the Smart Contract Weakness Classification (SWC) list [17] has the most overlap with our categorization, which includes only four of nine defects we defined. Specifically, SWC-121 [73] documents weaknesses caused by single-contract/cross-contract signature replays, involving SSR and CSR defects. SWC-133 [74] and SWC-117 [47] are analogous to HC and SM defects, respectively. While the SWC list documents these defects, it does not provide practical detect patterns or tools for their detection.\n\nCryptographic defects have become a common cause of security issues in software [75]- [78]. Lazar et al. [79] analyzed 269 crypto-related security incidents in the CVE database and found 83% of them were caused by cryptographic defects introduced by developers' non-standard practices. Egele et al. [76] summarized six common cryptographic defects in Android applications and proposed a tool to detect them. They found that 88% of 11,748 Android applications that use cryptographic functionalities contain at least one defect. Hazhirpasand et al. [80] found that 99.8% of 489 Github projects using Java Cryptography Architecture (JCA) APIs contain at least one defect.\n\nHowever, these studies mainly focus on cryptographic defects in traditional software. Our results reveal differences between cryptographic defects in smart contracts and those in other well-studied software (i.e., Java applications), in terms of both definition and detection. Firstly, due to the differences in common cryptographic tasks, the definition and categorization of defects in smart contracts differ inherently. For example, encryption-related defects are the most common in Java, but smart contracts rarely implement encryption, hence do not have these defects. Secondly, the detection methods also differ. In Java, defects often arise from direct API misuses, such as passing incorrect parameters to JCA APIs [80], and can be efficiently detected by static analyzers [78]. However, detecting smart contract defects like SSR involves analyzing multiple transactions interacting with a stateful contract, making existing detection techniques difficult to apply.\n\nIn this paper, we conducted the first study aimed at understanding and uncovering cryptographic defects in smart contracts. Through the analysis of 2,406 security reports, we proposed the first classification of cryptographic defects in smart contracts. It encompasses nine distinct defect types and covers a wide range of cryptographic tasks in smart contracts. To demonstrate these defects in real-world applications, we presented CRYSOL, a fuzzing-based tool for cryptographic defect detection. It collects fine-grained crypto-related semantics based on transaction replaying and dynamic taint analysis and incorporates crypto-specific fuzzing strategies for test case generation. The evaluation results indicated that CRYSOL can effectively detect real-world cryptographic defects, with an overall precision of 95.4% and a recall of 91.2%. Furthermore, CRYSOL revealed that 5,847 (22.7%) out of 25,745 cryptorelated smart contracts contain at least one cryptographic defect, demonstrating their prevalence in real-world cryptographic practices.",
+  "section_quality": {
+    "has_abstract": true,
+    "has_introduction": true,
+    "has_experiment": true,
+    "intro_chars": 5357,
+    "experiment_chars": 16892
+  },
+  "introduction_source": "grobid_tei",
+  "experiment_source": "grobid_tei",
+  "background_source": "introduction",
+  "experiment_source_used": "experiment_section",
+  "task_title": "Automated Detection of Cryptographic Defects in Ethereum Smart Contracts",
+  "background": "Cryptography is increasingly used in Ethereum smart contracts via official system APIs to implement tasks like digital signatures and Merkle proofs, with over 10% of transactions relying on these APIs. However, smart contract developers often lack cryptographic expertise, leading to implementation defects that compromise security guarantees. Existing security tools for smart contracts focus on generic programming errors (e.g., reentrancy, integer overflow) and do not address crypto-specific flaws. As a result, cryptographic defects remain a prevalent but undetected threat. There is a need for a systematic understanding and automated detection of such defects to secure on-chain applications.",
+  "research_question": "How can cryptographic defects in Ethereum smart contracts be automatically detected, and what is the prevalence of such defects in real-world contracts?",
+  "experiment_setup": {
+    "datasets": [
+      {
+        "name": "Crypto-related Smart Contracts Dataset",
+        "source": "Constructable from Ethereum blockchain replay (blocks 1 to 15,500,000) and Etherscan; a pre-collected version is available from the authors of the original study upon request.",
+        "description": "25,745 Ethereum smart contracts that invoke at least one official Ethereum cryptographic API (e.g., ECRECOVER), including their source code, ABI, and up to 500 historical transactions per contract.",
+        "access": "restricted"
+      }
+    ],
+    "baselines": [
+      {
+        "name": "Manual ground truth",
+        "reference": "Human expert annotation of a random sample of contracts"
+      }
+    ],
+    "metrics": [
+      {
+        "name": "Precision",
+        "definition": "The fraction of tool-reported defects that are true positives."
+      },
+      {
+        "name": "Recall",
+        "definition": "The fraction of true defects (from a manually annotated sample) that are detected by the tool."
+      },
+      {
+        "name": "Prevalence",
+        "definition": "The proportion of smart contracts in the dataset that contain at least one cryptographic defect."
+      }
+    ],
+    "rqs": [
+      "RQ1: What is the precision of the detection approach on the large-scale dataset?",
+      "RQ2: What is the recall of the approach measured against a manually annotated sample?",
+      "RQ3: What is the prevalence and distribution of cryptographic defects in real-world smart contracts?"
+    ],
+    "target_subject": "Ethereum smart contracts that use cryptographic APIs for on-chain operations, such as contracts implementing digital signature verification, Merkle proof validation, random number generation, or message digest usage.",
+    "constraints": "Only smart contracts with publicly available source code and ABI can be analyzed. The detection approach must operate without modifying the Ethereum protocol or execution environment, using only available on-chain data and source code."
+  },
+  "expected_artifacts": [
+    "idea",
+    "code",
+    "experiment_results",
+    "paper"
+  ],
+  "feasibility_notes": "Constructing the dataset requires running an Ethereum archive node and replaying over 1.7 billion transactions, which demands substantial storage (multiple TB) and weeks of processing time. A pre-built dataset may be available from the original study's authors. The detection tool requires deep domain knowledge of both cryptography and smart contract semantics. Model training or fuzzing may be time-consuming; original experiments consumed 408 CPU hours on a high-memory server. Manual labeling for recall evaluation requires cryptographic expertise and is labor-intensive.",
+  "difficulty": "hard",
+  "seed_papers": [
+    {
+      "title": "Observation of quantum entanglement with top quarks at the ATLAS detector",
+      "year": 2023,
+      "authors": [
+        "G. Aad",
+        "B. Abbott",
+        "K. Abeling"
+      ],
+      "doi": "10.1038/s41586-024-07824-z",
+      "arxiv_id": "2311.07288",
+      "pdf_url": "https://doi.org/10.1038/s41586-024-07824-z",
+      "citation_count": 169
+    },
+    {
+      "title": "An 8.3-to-18Gbps Reconfigurable SCA-Resistant/Dual-Core/Blind-Bulk AES Engine in Intel 4 CMOS",
+      "year": 2022,
+      "authors": [
+        "Raghavan Kumar",
+        "Vikram B. Suresh",
+        "M. Anders"
+      ],
+      "doi": "10.1109/ISSCC42614.2022.9731739",
+      "arxiv_id": null,
+      "pdf_url": "",
+      "citation_count": 15
+    },
+    {
+      "title": "Demystifying Cryptography: An Experimental Study of Classical and Quantum Cryptography",
+      "year": 2024,
+      "authors": [
+        "Koshik Seeburrun",
+        "Karel Veerabudren",
+        "Mrinal Sharma"
+      ],
+      "doi": "10.1109/ELECOM63163.2024.10892169",
+      "arxiv_id": null,
+      "pdf_url": "",
+      "citation_count": 1
+    },
+    {
+      "title": "Demystifying OpenZeppelin’s Own Vulnerabilities and Analyzing Their Propagation in Smart Contracts",
+      "year": 2025,
+      "authors": [
+        "Han Liu",
+        "Daoyuan Wu",
+        "Yuqiang Sun"
+      ],
+      "doi": "10.1109/ASE63991.2025.00083",
+      "arxiv_id": null,
+      "pdf_url": "",
+      "citation_count": 1
+    },
+    {
+      "title": "When Crypto Fails: Demystifying Cryptographic Defects in Ethereum Smart Contracts",
+      "year": 2025,
+      "authors": [
+        "Jiashuo Zhang",
+        "Jiachi Chen",
+        "Yiming Shen"
+      ],
+      "doi": "10.1109/TSE.2025.3551776",
+      "arxiv_id": null,
+      "pdf_url": "",
+      "citation_count": 0
+    }
+  ],
+  "paper_title": "Demystifying and Detecting Cryptographic Defects in Ethereum Smart Contracts"
+}

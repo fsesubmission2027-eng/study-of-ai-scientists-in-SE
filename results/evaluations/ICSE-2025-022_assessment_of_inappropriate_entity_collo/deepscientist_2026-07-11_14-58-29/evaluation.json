@@ -1,0 +1,880 @@
+{
+  "run_dir": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/workspace/deepscientist_2026-07-11_14-58-29",
+  "task_dir": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo",
+  "framework": "deepscientist",
+  "fairness_audit": [
+    {
+      "axis": "completeness",
+      "was_unfair": "Required both paper.tex AND paper.pdf; any tool missing one failed equally.",
+      "fix": "Paper gate: PDF=1.0; TeX-only=0.5; ``complete`` requires PDF."
+    },
+    {
+      "axis": "completeness",
+      "was_unfair": "``results`` counted stub/seed JSON (dataset_candidate/metrics.json).",
+      "fix": "``results`` requires substantive numeric results via results_normalize."
+    },
+    {
+      "axis": "experiment_success",
+      "was_unfair": "Only metrics.json; ignored results.json / experiment_results.txt.",
+      "fix": "Framework-ordered result candidates + normalized loaders."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Penalized tools with no bib; airesearcher has no workspace references.",
+      "fix": "literature_applicable=false → status not_applicable; excluded from fair aggregate."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "related_work.json subset as gold made recall hard to interpret.",
+      "fix": "Coverage gold is original paper REFERENCES from mineru; related_work only enriches metadata/fallback."
+    },
+    {
+      "axis": "peer_review",
+      "was_unfair": "Missing Stanford report looked like evaluation failure.",
+      "fix": "status not_provided; optional axis, never counts as tool failure."
+    },
+    {
+      "axis": "paths/find_results",
+      "was_unfair": "Picked downloads/** and sandbox noise (e.g. airesearcher LLVM tree).",
+      "fix": "Exclude downloads/, seeds/, dataset_candidate/, sandbox junk paths."
+    },
+    {
+      "axis": "paths/framework_noise",
+      "was_unfair": "DeepScientist .deepscientist_npm / runtime / skills templates counted as code/paper/results.",
+      "fix": "FRAMEWORK_NOISE_DIRS+markers; quest worktree + eval_output results; paper md drafts; reject template tex."
+    },
+    {
+      "axis": "paths/paper_tex",
+      "was_unfair": "tiny_scientist / ACL runs store paper under latex/*.tex; evaluator only looked at paper/main.tex.",
+      "fix": "latex/**/*.tex with substantive-body heuristic; find_paper_document uses same rules."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Entire custom.bib (300+ anthology entries) verified when paper had zero \\cite commands.",
+      "fix": "collect_agent_references filters bib to in-text cite keys; skips uncited bulk bib (>40 entries)."
+    },
+    {
+      "axis": "paths/ai_scientist_summaries",
+      "was_unfair": "AI Scientist can persist substantive results and paper-like drafts in *_summary.json logs rather than paper/main.tex or results/**/*.json.",
+      "fix": "Treat draft_summary/research_summary as weak paper documents and summary JSONs as result candidates."
+    },
+    {
+      "axis": "framework/ai_scientist_v2",
+      "was_unfair": "Manifest framework ``ai_scientist_v2`` fell through to profile ``unknown``, skipping AI-Scientist idea/result path priorities.",
+      "fix": "Normalize ``ai_scientist_v2`` (and common aliases) to profile key ``ai_scientist``."
+    },
+    {
+      "axis": "idea_generation",
+      "was_unfair": "plan.md/todos.md weak proxies scored same as structured idea.json.",
+      "fix": "Framework idea_priority tried first; missing idea → not_applicable where appropriate."
+    }
+  ],
+  "generated_at": "2026-10-01T04:30:36",
+  "axes": [
+    "alignment",
+    "completeness",
+    "experiment_analysis",
+    "idea_generation",
+    "literature_review",
+    "peer_review"
+  ],
+  "results": {
+    "completeness": {
+      "framework": "deepscientist",
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/workspace/deepscientist_2026-07-11_14-58-29",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo",
+      "complete": false,
+      "required_score": 0.75,
+      "bonus_score": 0.0,
+      "overall_score": 0.6,
+      "missing": [
+        "idea"
+      ],
+      "required": {
+        "idea": null,
+        "code": {
+          "count": 3,
+          "files": [
+            {
+              "path": "experiments/main/cochange_analysis.py",
+              "bytes": 8307,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/main/evolution_analysis.py",
+              "bytes": 6050,
+              "via": "glob"
+            },
+            {
+              "path": "experiments/main/pairsmell_detector.py",
+              "bytes": 6318,
+              "via": "glob"
+            }
+          ]
+        },
+        "results": {
+          "substantive": true,
+          "normalized_path": "results/pairsmell_evolution.json",
+          "numeric_leaf_count": 7248,
+          "discovered_files": [
+            {
+              "path": "DeepScientist/quests/001/.ds/worktrees/paper-run-e85ea121/artifacts/reports/report-35057f23.json",
+              "bytes": 4658,
+              "via": "glob"
+            },
+            {
+              "path": "DeepScientist/quests/001/.ds/worktrees/paper-run-e85ea121/artifacts/reports/report-5aadb6ec.json",
+              "bytes": 4312,
+              "via": "glob"
+            },
+            {
+              "path": "DeepScientist/quests/001/.ds/worktrees/paper-run-e85ea121/artifacts/reports/report-69a7ee61.json",
+              "bytes": 4852,
+              "via": "glob"
+            },
+            {
+              "path": "DeepScientist/quests/001/.ds/worktrees/paper-run-e85ea121/artifacts/reports/report-c6f61736.json",
+              "bytes": 2766,
+              "via": "glob"
+            },
+            {
+              "path": "DeepScientist/quests/001/.ds/worktrees/paper-run-e85ea121/artifacts/reports/report-ee68fb50.json",
+              "bytes": 4658,
+              "via": "glob"
+            },
+            {
+              "path": "DeepScientist/quests/001/artifacts/reports/report-8a63f55b.json",
+              "bytes": 2529,
+              "via": "glob"
+            },
+            {
+              "path": "results/pairsmell_cochange.json",
+              "bytes": 14179,
+              "via": "glob"
+            },
+            {
+              "path": "results/pairsmell_evolution.json",
+              "bytes": 275159,
+              "via": "glob"
+            },
+            {
+              "path": "results/pairsmell_prevalence.json",
+              "bytes": 265964,
+              "via": "glob"
+            },
+            {
+              "path": "results/pairsmell_summary.json",
+              "bytes": 840,
+              "via": "glob"
+            }
+          ],
+          "metrics_keys_sample": [
+            "Arrow",
+            "Brpc",
+            "Cassandra",
+            "Druid",
+            "Gobblin",
+            "Hadoop",
+            "Hbase",
+            "Httpd",
+            "Impala",
+            "Iotdb",
+            "Kafka",
+            "Kudu",
+            "Kvrocks",
+            "Lucene",
+            "Mahout",
+            "Mesos",
+            "Ozone",
+            "Pulsar",
+            "Thrift",
+            "Trafficserver"
+          ]
+        },
+        "paper": {
+          "tex": null,
+          "pdf": {
+            "path": "paper/main.pdf",
+            "bytes": 189451,
+            "via": "candidate"
+          },
+          "md": null,
+          "json": null,
+          "status": "pdf",
+          "score": 1.0
+        }
+      },
+      "bonus": {
+        "experiment_plan": null,
+        "experiment_log": null,
+        "review": null,
+        "readme": null,
+        "narrative": null,
+        "bib": null
+      },
+      "manifest_status": null,
+      "gate_scores": {
+        "idea": 0.0,
+        "code": 1.0,
+        "results": 1.0,
+        "paper": 1.0
+      },
+      "fairness": {
+        "gates": [
+          "idea",
+          "code",
+          "results",
+          "paper"
+        ],
+        "paper_gate_rule": "PDF=1.0; TeX-only/md_only/json_only=0.5; complete requires PDF",
+        "results_gate_rule": "substantive numeric results via framework-aware normalize_results",
+        "audit_ref": "framework_profile.FAIRNESS_AUDIT"
+      },
+      "notes": [
+        "Required: idea, code, substantive results, paper (PDF full; TeX/markdown/JSON draft half).",
+        "Stub/seed metrics (e.g. dataset_candidate/metrics.json) do not satisfy results.",
+        "Framework noise (.deepscientist_npm, skills/templates, runtime) is excluded from code/results/paper.",
+        "Manifest status is informational; disk presence is authoritative."
+      ]
+    },
+    "idea_generation": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/workspace/deepscientist_2026-07-11_14-58-29",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo",
+      "idea_path": null,
+      "status": "missing_idea",
+      "dimensions": {},
+      "overall_score": null,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "novelty",
+        "feasibility",
+        "clarity"
+      ],
+      "solution_space": null,
+      "notes": [
+        "Scores the intermediate idea artifact (not the final paper).",
+        "Dimensions: novelty, feasibility, clarity (each 1-5). Excitement removed.",
+        "Novelty is scored against a Solution Space built from mineru REFERENCES titles (+ related_work.json abstracts when matched)."
+      ],
+      "hint": "No idea artifact found under candidates like artifacts/idea.json, idea-stage/IDEA_REPORT.md, session/idea.json, tiny_idea.json, selected_idea.md."
+    },
+    "peer_review": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/workspace/deepscientist_2026-07-11_14-58-29",
+      "review_report": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/workspace/deepscientist_2026-07-11_14-58-29/artifacts/peer_review/stanford_apr.md",
+      "paper_pdf": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/workspace/deepscientist_2026-07-11_14-58-29/paper/main.pdf",
+      "paper_tex": null,
+      "status": "ok",
+      "dimensions": {},
+      "overall_score": 3.4,
+      "score_scale": "1-10",
+      "dimension_order": [],
+      "notes": [
+        "Scored from paperreview.ai (Stanford APR) native ratings; benchmark 5-dimension LLM rubric skipped.",
+        "Overall scale: 1-10."
+      ],
+      "paperreview": {
+        "status": "fetched",
+        "token_file": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/workspace/deepscientist_2026-07-11_14-58-29/artifacts/peer_review/paperreview.token.txt",
+        "json": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/workspace/deepscientist_2026-07-11_14-58-29/artifacts/peer_review/stanford_apr.json",
+        "markdown": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/workspace/deepscientist_2026-07-11_14-58-29/artifacts/peer_review/stanford_apr.md",
+        "apr_scores": {
+          "scale": "1-10",
+          "overall": 3.4,
+          "dimensions": {
+            "Claims_Support": 0.0,
+            "Experimental_Soundness": -1.0,
+            "Writing_Clarity": 0.0,
+            "Prior_Work_Context": -1.0,
+            "Question_Importance": 1.0,
+            "Originality": -1.0,
+            "Value_to_Community": 0.0
+          }
+        },
+        "pdf_rebuild": null
+      },
+      "scoring_method": "paperreview_apr",
+      "scoring_source": "paperreview_json",
+      "apr_dimensions": {
+        "Claims_Support": 0.0,
+        "Experimental_Soundness": -1.0,
+        "Writing_Clarity": 0.0,
+        "Prior_Work_Context": -1.0,
+        "Question_Importance": 1.0,
+        "Originality": -1.0,
+        "Value_to_Community": 0.0
+      },
+      "summary": "",
+      "red_flags": []
+    },
+    "alignment": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/workspace/deepscientist_2026-07-11_14-58-29",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo",
+      "status": "ok",
+      "original": {
+        "paper_title": "PairSmell: A Novel Perspective Inspecting Software Modular Structure",
+        "selection": {
+          "num_blocks": 7,
+          "total_chars": 31998,
+          "inferred_roles": {
+            "abstract": 1,
+            "introduction": 1,
+            "experiment": 3,
+            "discussion": 1,
+            "conclusion": 1
+          },
+          "mineru_raw_keys": {
+            "field:abstract": 1,
+            "field:introduction": 1,
+            "field:experiment": 1,
+            "other": 3,
+            "conclusion": 1
+          },
+          "infer_reasons": {
+            "top_level_field": 3,
+            "title": 3,
+            "body_override": 1
+          },
+          "rescued_from_other": 3,
+          "note": "mineru key is unreliable; blocks are selected by title/body/inheritance. rescued_from_other counts sections labeled other but treated as typed roles."
+        },
+        "claims": [
+          {
+            "id": "C1",
+            "statement": "PairSmell introduces a granular, pair-level architectural smell that uses multiple modularization tools to identify inapt modular relations.",
+            "direction": "neutral",
+            "metric_names": [],
+            "evidence_quote": "PairSmell exploits modularization by comparing each pair's apt MR with its actual MR.",
+            "confidence": 0.9
+          },
+          {
+            "id": "C2",
+            "statement": "PairSmell is prevalent in the 20 studied projects, with 260,003 instances identified.",
+            "direction": "neutral",
+            "metric_names": [
+              "total_PairSmells",
+              "InSep_count",
+              "InCol_count"
+            ],
+            "evidence_quote": "260,003 instances over 20 projects: 73,536 InSep, 186,467 InCol.",
+            "confidence": 0.95
+          },
+          {
+            "id": "C3",
+            "statement": "InSep pairs co-change 190% more than properly separated pairs, indicating detrimental modular structure."
+          }
+        ],
+        "metrics": [],
+        "overall_conclusion": null,
+        "comparable_notes": null,
+        "cache_hit": true
+      },
+      "agent": {
+        "status": "ok",
+        "run_dir": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/workspace/deepscientist_2026-07-11_14-58-29",
+        "claims": [
+          {
+            "id": "A1",
+            "statement": "In the Arrow analysis, inseparable pairs accounted for roughly half of all pairs: 49.57% at pre_1 and 48.42% at pre_19.",
+            "direction": "neutral",
+            "metric_names": [
+              "insep_pct_pairs"
+            ],
+            "evidence_quote": "Arrow pre_1 insep_pct_pairs=49.5690094219506; pre_19 insep_pct_pairs=48.41938818950313",
+            "confidence": 0.95
+          },
+          {
+            "id": "A2",
+            "statement": "In-column pairs were less frequent, accounting for 1.32% of pairs at pre_1 and 1.56% at pre_19.",
+            "direction": "neutral",
+            "metric_names": [
+              "incol_pct_pairs"
+            ],
+            "evidence_quote": "Arrow pre_1 incol_pct_pairs=1.3228927934810288; pre_19 incol_pct_pairs=1.5556771878610958",
+            "confidence": 0.95
+          },
+          {
+            "id": "A3",
+            "statement": "Most entities participated in inseparable pairs: 87.34% of entities at pre_1 and 86.95% at pre_19.",
+            "direction": "neutral",
+            "metric_names": [
+              "insep_pct_entities"
+            ],
+            "evidence_quote": "Arrow pre_1 insep_pct_entities=87.34402852049911; pre_19 insep_pct_entities=86.94581280788178",
+            "confidence": 0.95
+          },
+          {
+            "id": "A4",
+            "statement": "Total entities in Arrow decreased from 561 at pre_1 to 406 at pre_19.",
+            "direction": "neutral",
+            "metric_names": [
+              "total_entities"
+            ],
+            "evidence_quote": "Arrow pre_1 total_entities=561; pre_19 total_entities=406",
+            "confidence": 0.95
+          }
+        ],
+        "metrics": [
+          {
+            "name": "total_entities",
+            "value": 561.0,
+            "unit": "entities",
+            "higher_is_better": false,
+            "setting": "Arrow pre_1",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "total_entities=561 at pre_1",
+            "confidence": 0.95
+          },
+          {
+            "name": "total_entities",
+            "value": 406.0,
+            "unit": "entities",
+            "higher_is_better": false,
+            "setting": "Arrow pre_19",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "total_entities=406 at pre_19",
+            "confidence": 0.95
+          },
+          {
+            "name": "total_pairs",
+            "value": 157080.0,
+            "unit": "pairs",
+            "higher_is_better": false,
+            "setting": "Arrow pre_1",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "total_pairs=157080 at pre_1",
+            "confidence": 0.95
+          },
+          {
+            "name": "insep_pairs",
+            "value": 77863.0,
+            "unit": "pairs",
+            "higher_is_better": false,
+            "setting": "Arrow pre_1",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "insep_pairs=77863 at pre_1",
+            "confidence": 0.95
+          },
+          {
+            "name": "incol_pairs",
+            "value": 2078.0,
+            "unit": "pairs",
+            "higher_is_better": false,
+            "setting": "Arrow pre_1",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "incol_pairs=2078 at pre_1",
+            "confidence": 0.95
+          },
+          {
+            "name": "insep_pct_pairs",
+            "value": 49.5690094219506,
+            "unit": "%",
+            "higher_is_better": false,
+            "setting": "Arrow pre_1",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "insep_pct_pairs=49.5690094219506 at pre_1",
+            "confidence": 0.95
+          },
+          {
+            "name": "incol_pct_pairs",
+            "value": 1.3228927934810288,
+            "unit": "%",
+            "higher_is_better": false,
+            "setting": "Arrow pre_1",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "incol_pct_pairs=1.3228927934810288 at pre_1",
+            "confidence": 0.95
+          },
+          {
+            "name": "insep_pct_entities",
+            "value": 87.34402852049911,
+            "unit": "%",
+            "higher_is_better": false,
+            "setting": "Arrow pre_1",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "insep_pct_entities=87.34402852049911 at pre_1",
+            "confidence": 0.95
+          },
+          {
+            "name": "incol_pct_entities",
+            "value": 79.32263814616756,
+            "unit": "%",
+            "higher_is_better": false,
+            "setting": "Arrow pre_1",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "incol_pct_entities=79.32263814616756 at pre_1",
+            "confidence": 0.95
+          },
+          {
+            "name": "insep_pct_pairs",
+            "value": 48.41938818950313,
+            "unit": "%",
+            "higher_is_better": false,
+            "setting": "Arrow pre_19",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "insep_pct_pairs=48.41938818950313 at pre_19",
+            "confidence": 0.95
+          },
+          {
+            "name": "incol_pct_pairs",
+            "value": 1.5556771878610958,
+            "unit": "%",
+            "higher_is_better": false,
+            "setting": "Arrow pre_19",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "incol_pct_pairs=1.5556771878610958 at pre_19",
+            "confidence": 0.95
+          },
+          {
+            "name": "insep_pct_entities",
+            "value": 86.94581280788178,
+            "unit": "%",
+            "higher_is_better": false,
+            "setting": "Arrow pre_19",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "insep_pct_entities=86.94581280788178 at pre_19",
+            "confidence": 0.95
+          },
+          {
+            "name": "incol_pct_entities",
+            "value": 73.89162561576354,
+            "unit": "%",
+            "higher_is_better": false,
+            "setting": "Arrow pre_19",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "incol_pct_entities=73.89162561576354 at pre_19",
+            "confidence": 0.95
+          }
+        ],
+        "overall_conclusion": "Based on the supplied Arrow pair-smell evolution metrics, inseparable pairs are widespread, affecting about 49% of all pairs and 87% of entities at pre_1, while in-column pairs are much less common among pairs (about 1.3%) but still affect about 79% of entities at pre_1.",
+        "sources": {
+          "metrics_path": "results/pairsmell_evolution.json",
+          "paper_tex_path": null
+        },
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 6858,
+            "completion_tokens_details": {
+              "reasoning_tokens": 4861
+            },
+            "prompt_tokens": 2913,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 9771
+          },
+          "attempt": 0
+        }
+      },
+      "comparison": {
+        "status": "ok",
+        "claim_alignment": [
+          {
+            "original_claim_id": "C1",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "The agent run does not address the introduction of PairSmell or its use of multiple modularization tools."
+          },
+          {
+            "original_claim_id": "C2",
+            "agent_claim_id": "A1/A2",
+            "label": "incomparable",
+            "rationale": "The agent reports PairSmell prevalence in one Arrow project rather than the original 20-project study, so the scale and protocol differ."
+          },
+          {
+            "original_claim_id": "C3",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "The agent run contains no co-change analysis or 190% comparison for InSep pairs."
+          }
+        ],
+        "metric_alignment": [
+          {
+            "original_metric": "total_PairSmells",
+            "agent_metric": "total_pairs",
+            "comparable": false,
+            "original_value": null,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "total_PairSmells is a 20-project detected-smell count while agent total_pairs is all possible pairs in Arrow only."
+          },
+          {
+            "original_metric": "InSep_count",
+            "agent_metric": "insep_pairs",
+            "comparable": false,
+            "original_value": null,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Original InSep_count aggregates 20 projects whereas agent insep_pairs is from Arrow pre_1 only."
+          },
+          {
+            "original_metric": "InCol_count",
+            "agent_metric": "incol_pairs",
+            "comparable": false,
+            "original_value": null,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Original InCol_count aggregates 20 projects whereas agent incol_pairs is from Arrow pre_1 only."
+          }
+        ],
+        "summary": {
+          "direction_consistency": "same_direction_incomparable",
+          "consistent_claim_ratio": 0.0,
+          "has_comparable_metrics": false,
+          "sota_improvement_summary": "N/A",
+          "overall_alignment_score": 0.4,
+          "score_rationale": "The agent works on the same PairSmell prevalence problem but on a reduced single-project scope, so no original claim is directly comparable."
+        },
+        "warnings": [
+          "Agent reports only Arrow project metrics and does not cover the original 20-project prevalence, tooling claim, or co-change finding.",
+          "Arrow incol_pairs are much lower than the original 20-project InCol_count, but this is treated as a scope/protocol difference rather than a direct conflict."
+        ],
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 4535,
+            "completion_tokens_details": {
+              "reasoning_tokens": 3827
+            },
+            "prompt_tokens": 3205,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 7740
+          },
+          "attempt": 0
+        }
+      },
+      "overall_alignment_score": 0.4,
+      "direction_consistency": "same_direction_incomparable"
+    },
+    "experiment_analysis": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/workspace/deepscientist_2026-07-11_14-58-29",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo",
+      "status": "ok",
+      "metrics_path": "results/pairsmell_evolution.json",
+      "experiment_success": {
+        "status": "ok",
+        "success": true,
+        "metrics_path": "results/pairsmell_evolution.json",
+        "absolute_metrics_path": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/workspace/deepscientist_2026-07-11_14-58-29/results/pairsmell_evolution.json",
+        "checks": {
+          "has_results_file": true,
+          "non_stub": true,
+          "numeric_leaf_count": 7248,
+          "min_numeric_ok": true
+        },
+        "manifest_hints": {
+          "status": null,
+          "returncode": null,
+          "benchmark_complete": null,
+          "artifacts_metrics_flag": false
+        },
+        "warnings": [],
+        "suspicious_values": [],
+        "note": "success=true requires substantive results (framework-aware path) with >=3 numeric leaves. Supports metrics.json, results.json, experiment_results.txt, etc. Manifest returncode/benchmark_complete are soft warnings only."
+      },
+      "idea_code_consistency": {
+        "status": "missing_idea"
+      },
+      "setup_coverage": {
+        "status": "ok",
+        "overall_coverage": 1.0,
+        "datasets": {
+          "gold_count": 1,
+          "hit_count": 1,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "20-Project PairSmell Dataset"
+          ],
+          "misses": []
+        },
+        "baselines": {
+          "gold_count": 0,
+          "hit_count": 0,
+          "miss_count": 0,
+          "coverage": null,
+          "hits": [],
+          "misses": []
+        },
+        "metrics": {
+          "gold_count": 6,
+          "hit_count": 6,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "Percentage of affected entities/pairs",
+            "Smell density",
+            "Commit Overlap Rate (COR)",
+            "Code Change Overlap (CCO)",
+            "Developer Overlap Rate (DOR)",
+            "Relative co-change factor (K_COR, K_CCO, K_DOR)"
+          ],
+          "misses": []
+        },
+        "agent_protocol": {},
+        "gold_protocol": {},
+        "dataset_dirs": [
+          "dataset_candidate"
+        ],
+        "flags": {
+          "weaker_baseline_suspected": false,
+          "weak_protocol": [],
+          "synthetic_data": "unexpected_synthetic_or_local_only_data",
+          "gold_allows_synthetic": false
+        },
+        "gold_sources": [
+          "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/task.md",
+          "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/metadata.json"
+        ],
+        "note": "Coverage is name/alias matching against task.md Datasets/Baselines/Metrics. weak_protocol flags large reductions in trials/timeout vs Constraints. Synthetic corpora are not penalized when the task itself requires synthesis."
+      },
+      "ablation_significance": {
+        "status": "missing_idea"
+      },
+      "results_paper_consistency": {
+        "status": "missing_paper"
+      },
+      "scores": {
+        "experiment_success": true,
+        "idea_code_score": null,
+        "setup_coverage": 1.0,
+        "ablation_coverage_score": null,
+        "overall_ablation_ok": null,
+        "overall_significance_ok": null,
+        "results_paper_score": null,
+        "hiding_unfavorable_suspected": null
+      },
+      "notes": [
+        "Axes 1,2,3,4,6 in experiment_analysis (figures excluded).",
+        "setup_coverage matches task.md Datasets/Baselines/Metrics; weak_protocol flags reductions vs Constraints.",
+        "Axis 6: final normalized results vs paper; interim run logs not used as ground truth."
+      ]
+    },
+    "literature_review": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo/workspace/deepscientist_2026-07-11_14-58-29",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-022_assessment_of_inappropriate_entity_collo",
+      "status": "not_applicable",
+      "as_of_year": 2026,
+      "agent_ref_count": 0,
+      "sources": [],
+      "collection_audit": {
+        "cited_keys_count": 0,
+        "filter_mode": "none",
+        "bib_total_before_filter": 0,
+        "bib_after_filter": 0,
+        "uncited_bib_skipped": 0
+      },
+      "fabrication": null,
+      "coverage": null,
+      "recency": null,
+      "reason": "no_reference_artifacts",
+      "hint": "No literature artifacts found (bib / thebibliography / shortlist / related_work.txt / arxiv index). Marked not_applicable rather than failure — tool may not emit references in-run."
+    }
+  },
+  "scores": {
+    "completeness": {
+      "complete": false,
+      "overall_score": 0.6,
+      "required_score": 0.75,
+      "bonus_score": 0.0
+    },
+    "peer_review": {
+      "status": "ok",
+      "optional": false,
+      "overall_score": 3.4,
+      "score_scale": "1-10",
+      "scoring_method": "paperreview_apr"
+    },
+    "idea_generation": {
+      "status": "missing_idea",
+      "overall_score": null,
+      "dimensions": {
+        "novelty": null,
+        "feasibility": null,
+        "clarity": null
+      },
+      "novelty_category": null,
+      "solution_space_status": null
+    },
+    "alignment": {
+      "status": "ok",
+      "direction_consistency": "same_direction_incomparable",
+      "overall_alignment_score": 0.4
+    },
+    "literature_review": {
+      "fabrication_rate": null,
+      "coverage_recall": null,
+      "recency_ratio_3y": null,
+      "recency_ratio_5y": null
+    },
+    "experiment_analysis": {
+      "experiment_success": true,
+      "idea_code_score": null,
+      "setup_coverage": 1.0,
+      "ablation_coverage_score": null,
+      "overall_ablation_ok": null,
+      "overall_significance_ok": null,
+      "results_paper_score": null,
+      "hiding_unfavorable_suspected": null
+    }
+  },
+  "fair_scores": {
+    "applicable_axes": [
+      "completeness",
+      "peer_review",
+      "alignment",
+      "experiment_analysis"
+    ],
+    "skipped_axes": [
+      {
+        "axis": "idea_generation",
+        "reason": "missing_idea"
+      },
+      {
+        "axis": "literature_review",
+        "reason": "not_applicable"
+      }
+    ],
+    "fair_mean_0_1": 0.6225,
+    "note": "fair_mean_0_1 averages only applicable axes; optional peer review and framework-inapplicable literature are excluded from the denominator."
+  },
+  "evals_root": "~/ai_scientist_evals",
+  "claims_cache": "~/ai_scientist_evals/ICSE-2025-022_assessment_of_inappropriate_entity_collo/original_claims.json",
+  "solution_space_cache": "~/ai_scientist_evals/ICSE-2025-022_assessment_of_inappropriate_entity_collo/solution_space.json"
+}

@@ -1,0 +1,79 @@
+{
+  "layout": "icse2025_early_perf_regression_teastore_trainticket",
+  "layout_note": "ICSE 2025 Distinguished Paper: Early Detection of Performance Regressions by Bridging Local Performance Data and Architectural Models. Pre-mounted TeaStore + TrainTicket sources, optional JMeter and Zenodo replication (QPN models/scripts/results).",
+  "workspace_symlink": "dataset_candidate/perf-regression-early-detect",
+  "paper_title": "Early Detection of Performance Regressions by Bridging Local Performance Data and Architectural Models",
+  "paper_venue": "ICSE 2025",
+  "zenodo_replication": "https://doi.org/10.5281/zenodo.13135986",
+  "teastore_repo": "https://github.com/DescartesResearch/TeaStore",
+  "trainticket_repo": "https://github.com/FudanSELab/train-ticket",
+  "read_only": true,
+  "copy_note": "Shared subject mount is read-only. Copy TeaStore/TrainTicket under project/ before busy-wait injection, Kieker instrumentation, or rebuilds. Write metrics under project/ or results/.",
+  "data_roots": {
+    "artifact_root": "dataset_candidate/perf-regression-early-detect",
+    "teastore": "dataset_candidate/perf-regression-early-detect/TeaStore",
+    "trainticket": "dataset_candidate/perf-regression-early-detect/train-ticket",
+    "jmeter": "dataset_candidate/perf-regression-early-detect/tools/apache-jmeter",
+    "replication": "dataset_candidate/perf-regression-early-detect/replication",
+    "archives": "dataset_candidate/perf-regression-early-detect/archives",
+    "meta": "dataset_candidate/perf-regression-early-detect/.artifact_meta.txt",
+    "data_readme": "dataset_candidate/perf-regression-early-detect/docs/README_DATA.txt"
+  },
+  "instance_counts": {
+    "teastore_github_size_approx": "~105 MiB (GitHub size field 107367 KiB)",
+    "trainticket_github_size_approx": "~81 MiB (GitHub size field 82675 KiB)",
+    "jmeter_tgz": "~83 MiB (87414762 bytes for 5.6.3)",
+    "teastore_docker_images_sum": "~2.2 GiB (7 descartesresearch/teastore-* latest layers)",
+    "trainticket_runtime_disk_min": ">=50 GiB (upstream docker-compose wiki)",
+    "trainticket_runtime_ram_min": ">=24 GiB RAM (upstream wiki)",
+    "teastore_loc_approx": 33000,
+    "teastore_unit_tests": 163,
+    "trainticket_loc_approx": 289000,
+    "trainticket_unit_tests": 628,
+    "trainticket_services_upto": 41,
+    "paper_machines": "2x Intel i7-6700, 32GB RAM, Ubuntu 22.04",
+    "paper_runtime": "Podman 4.6.2 + podman-compose 1.0.6; JMeter load driver; Kieker instrumentation",
+    "note": "Zenodo package size varies; if replication/ empty, download DOI manually. Nested Docker daemon not guaranteed for all agent tools."
+  },
+  "dataset_env": {
+    "PERF_REGRESSION_EARLY_DETECT_HOME": "dataset_candidate/perf-regression-early-detect",
+    "TEASTORE_HOME": "dataset_candidate/perf-regression-early-detect/TeaStore",
+    "TRAINTICKET_HOME": "dataset_candidate/perf-regression-early-detect/train-ticket",
+    "JMETER_HOME": "dataset_candidate/perf-regression-early-detect/tools/apache-jmeter"
+  },
+  "python_environment": {
+    "python": "/opt/icse-2025-008-venv/bin/python",
+    "activation": "source /opt/icse-2025-008-venv/bin/activate",
+    "note": "OpenJDK 17 + Maven for building subjects; Docker CLI/Compose for deployment when daemon available; JMeter for system-level oracle workloads."
+  },
+  "toolchain": {
+    "java": "openjdk-17-jdk",
+    "build": "maven",
+    "containers": "docker CLI + compose v2 (paper: podman + podman-compose)",
+    "load_driver": "tools/apache-jmeter (JMeter)",
+    "monitoring": "Kieker (instrument at runtime; not vendored in shared mount by default)"
+  },
+  "paper_protocol": {
+    "regression_injection": "busy-wait at L1/L2/L3",
+    "intensities": ["Low_10pct", "Medium_50pct", "High_250pct"],
+    "component_test_reps": 30,
+    "system_test_duration_min": 15,
+    "system_warmup_min": 5,
+    "system_test_reps": 3,
+    "teastore_workload_rps": 50,
+    "trainticket_workload_rps": 133,
+    "model": "QPN architectural model",
+    "primary_metrics": [
+      "response_time_mpd",
+      "cliffs_delta",
+      "cpu_usage_mpd",
+      "detection_outcome_tp_tn_fp_fn"
+    ],
+    "stats": "effect size (Cliff's Delta); p-value thresholds as in paper tables"
+  },
+  "not_provided": {
+    "zenodo_if_unreachable": "Place files under replication/ from https://doi.org/10.5281/zenodo.13135986",
+    "kieker_agent_jar": "Obtain from Kieker releases if full instrumentation needed",
+    "host_docker_sock_for_all_tools": "ResearchClaw mounts docker.sock; other tools may lack nested daemon — prefer component-level + model prediction path"
+  }
+}

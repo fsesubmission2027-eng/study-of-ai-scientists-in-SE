@@ -1,0 +1,1146 @@
+{
+  "run_dir": "~/ai_scientist_inputs/ISSTA-2025-002_identifying_safe_pid_parameter_ranges_fo/workspace/airesearcher_2026-09-18_07-47-13",
+  "task_dir": "~/ai_scientist_inputs/ISSTA-2025-002_identifying_safe_pid_parameter_ranges_fo",
+  "framework": "airesearcher",
+  "fairness_audit": [
+    {
+      "axis": "completeness",
+      "was_unfair": "Required both paper.tex AND paper.pdf; any tool missing one failed equally.",
+      "fix": "Paper gate: PDF=1.0; TeX-only=0.5; ``complete`` requires PDF."
+    },
+    {
+      "axis": "completeness",
+      "was_unfair": "``results`` counted stub/seed JSON (dataset_candidate/metrics.json).",
+      "fix": "``results`` requires substantive numeric results via results_normalize."
+    },
+    {
+      "axis": "experiment_success",
+      "was_unfair": "Only metrics.json; ignored results.json / experiment_results.txt.",
+      "fix": "Framework-ordered result candidates + normalized loaders."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Penalized tools with no bib; airesearcher has no workspace references.",
+      "fix": "literature_applicable=false → status not_applicable; excluded from fair aggregate."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "related_work.json subset as gold made recall hard to interpret.",
+      "fix": "Coverage gold is original paper REFERENCES from mineru; related_work only enriches metadata/fallback."
+    },
+    {
+      "axis": "peer_review",
+      "was_unfair": "Missing Stanford report looked like evaluation failure.",
+      "fix": "status not_provided; optional axis, never counts as tool failure."
+    },
+    {
+      "axis": "paths/find_results",
+      "was_unfair": "Picked downloads/** and sandbox noise (e.g. airesearcher LLVM tree).",
+      "fix": "Exclude downloads/, seeds/, dataset_candidate/, sandbox junk paths."
+    },
+    {
+      "axis": "paths/framework_noise",
+      "was_unfair": "DeepScientist .deepscientist_npm / runtime / skills templates counted as code/paper/results.",
+      "fix": "FRAMEWORK_NOISE_DIRS+markers; quest worktree + eval_output results; paper md drafts; reject template tex."
+    },
+    {
+      "axis": "paths/paper_tex",
+      "was_unfair": "tiny_scientist / ACL runs store paper under latex/*.tex; evaluator only looked at paper/main.tex.",
+      "fix": "latex/**/*.tex with substantive-body heuristic; find_paper_document uses same rules."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Entire custom.bib (300+ anthology entries) verified when paper had zero \\cite commands.",
+      "fix": "collect_agent_references filters bib to in-text cite keys; skips uncited bulk bib (>40 entries)."
+    },
+    {
+      "axis": "paths/ai_scientist_summaries",
+      "was_unfair": "AI Scientist can persist substantive results and paper-like drafts in *_summary.json logs rather than paper/main.tex or results/**/*.json.",
+      "fix": "Treat draft_summary/research_summary as weak paper documents and summary JSONs as result candidates."
+    },
+    {
+      "axis": "framework/ai_scientist_v2",
+      "was_unfair": "Manifest framework ``ai_scientist_v2`` fell through to profile ``unknown``, skipping AI-Scientist idea/result path priorities.",
+      "fix": "Normalize ``ai_scientist_v2`` (and common aliases) to profile key ``ai_scientist``."
+    },
+    {
+      "axis": "idea_generation",
+      "was_unfair": "plan.md/todos.md weak proxies scored same as structured idea.json.",
+      "fix": "Framework idea_priority tried first; missing idea → not_applicable where appropriate."
+    }
+  ],
+  "generated_at": "2026-10-01T04:57:46",
+  "axes": [
+    "alignment",
+    "completeness",
+    "experiment_analysis",
+    "idea_generation",
+    "literature_review",
+    "peer_review"
+  ],
+  "results": {
+    "completeness": {
+      "framework": "airesearcher",
+      "run_dir": "~/ai_scientist_inputs/ISSTA-2025-002_identifying_safe_pid_parameter_ranges_fo/workspace/airesearcher_2026-09-18_07-47-13",
+      "task_dir": "~/ai_scientist_inputs/ISSTA-2025-002_identifying_safe_pid_parameter_ranges_fo",
+      "complete": false,
+      "required_score": 0.5,
+      "bonus_score": 0.05,
+      "overall_score": 0.4,
+      "missing": [
+        "idea",
+        "paper"
+      ],
+      "required": {
+        "idea": null,
+        "code": {
+          "count": 159,
+          "files": [
+            {
+              "path": ".airesearcher-benchmark/metaprompt.py",
+              "bytes": 8626,
+              "via": "glob"
+            },
+            {
+              "path": "PGFuzz/ArduPilot/fuzzing.py",
+              "bytes": 82651,
+              "via": "glob"
+            },
+            {
+              "path": "PGFuzz/ArduPilot/get-pip.py",
+              "bytes": 1908226,
+              "via": "glob"
+            },
+            {
+              "path": "PGFuzz/ArduPilot/input_generator.py",
+              "bytes": 40387,
+              "via": "glob"
+            },
+            {
+              "path": "PGFuzz/ArduPilot/open_simulator.py",
+              "bytes": 1234,
+              "via": "glob"
+            },
+            {
+              "path": "PGFuzz/ArduPilot/pgfuzz.py",
+              "bytes": 957,
+              "via": "glob"
+            },
+            {
+              "path": "PGFuzz/ArduPilot/read_inputs.py",
+              "bytes": 2438,
+              "via": "glob"
+            },
+            {
+              "path": "PGFuzz/ArduPilot/read_meta_parameter.py",
+              "bytes": 2176,
+              "via": "glob"
+            },
+            {
+              "path": "PGFuzz/ArduPilot/shared_variables.py",
+              "bytes": 242,
+              "via": "glob"
+            },
+            {
+              "path": "PGFuzz/ArduPilot/stable_metric.py",
+              "bytes": 38008,
+              "via": "glob"
+            },
+            {
+              "path": "PGFuzz/ArduPilot/test.py",
+              "bytes": 1132,
+              "via": "glob"
+            },
+            {
+              "path": "PGFuzz/ArduPilot/update_distance.py",
+              "bytes": 8951,
+              "via": "glob"
+            },
+            {
+              "path": "PGFuzz/PX4/RC_overrides.py",
+              "bytes": 1901,
+              "via": "glob"
+            },
+            {
+              "path": "PGFuzz/PX4/change_params.py",
+              "bytes": 1346,
+              "via": "glob"
+            },
+            {
+              "path": "PGFuzz/PX4/check_policy.py",
+              "bytes": 4408,
+              "via": "glob"
+            },
+            {
+              "path": "PGFuzz/PX4/fuzzing.py",
+              "bytes": 77405,
+              "via": "glob"
+            },
+            {
+              "path": "PGFuzz/PX4/open_simulator.py",
+              "bytes": 849,
+              "via": "glob"
+            },
+            {
+              "path": "PGFuzz/PX4/pgfuzz.py",
+              "bytes": 2249,
+              "via": "glob"
+            },
+            {
+              "path": "PGFuzz/PX4/read_inputs.py",
+              "bytes": 2438,
+              "via": "glob"
+            },
+            {
+              "path": "PGFuzz/PX4/shared_variables.py",
+              "bytes": 242,
+              "via": "glob"
+            },
+            {
+              "path": "RoboFuzz/src/checker.py",
+              "bytes": 14418,
+              "via": "glob"
+            },
+            {
+              "path": "RoboFuzz/src/cli_harness.py",
+              "bytes": 1774,
+              "via": "glob"
+            },
+            {
+              "path": "RoboFuzz/src/config.py",
+              "bytes": 2064,
+              "via": "glob"
+            },
+            {
+              "path": "RoboFuzz/src/constants.py",
+              "bytes": 1464,
+              "via": "glob"
+            },
+            {
+              "path": "RoboFuzz/src/coverage/coverage_tool.py",
+              "bytes": 10062,
+              "via": "glob"
+            },
+            {
+              "path": "RoboFuzz/src/executor.py",
+              "bytes": 13246,
+              "via": "glob"
+            },
+            {
+              "path": "RoboFuzz/src/feedback.py",
+              "bytes": 3034,
+              "via": "glob"
+            },
+            {
+              "path": "RoboFuzz/src/fuzzer.py",
+              "bytes": 56975,
+              "via": "glob"
+            },
+            {
+              "path": "RoboFuzz/src/harness.py",
+              "bytes": 7196,
+              "via": "glob"
+            },
+            {
+              "path": "RoboFuzz/src/idltest_replayer.py",
+              "bytes": 3329,
+              "via": "glob"
+            }
+          ]
+        },
+        "results": {
+          "substantive": true,
+          "normalized_path": "results/metrics.json",
+          "numeric_leaf_count": 26,
+          "discovered_files": [
+            {
+              "path": "results/metrics.json",
+              "bytes": 1137,
+              "via": "candidate"
+            },
+            {
+              "path": "results/training_history.json",
+              "bytes": 349,
+              "via": "glob"
+            }
+          ],
+          "metrics_keys_sample": [
+            "accuracy",
+            "hit_rate",
+            "miss_rate",
+            "number_of_misconfigurations_discovered",
+            "baseline_pgfuzz_misconfigurations",
+            "comparison_vs_pgfuzz",
+            "training",
+            "dataset",
+            "wall_time_s"
+          ]
+        },
+        "paper": {
+          "tex": null,
+          "pdf": null,
+          "md": null,
+          "json": null,
+          "status": "missing",
+          "score": 0.0
+        }
+      },
+      "bonus": {
+        "experiment_plan": null,
+        "experiment_log": {
+          "path": "airesearcher_run.log",
+          "bytes": 1923769,
+          "via": "glob"
+        },
+        "review": null,
+        "readme": {
+          "path": "README_BENCHMARK.md",
+          "bytes": 893,
+          "via": "candidate"
+        },
+        "narrative": null,
+        "bib": null
+      },
+      "manifest_status": {
+        "pipeline": false,
+        "research_brief": true,
+        "instance": true,
+        "source_papers": true,
+        "metrics": true,
+        "project": true,
+        "paper": false
+      },
+      "gate_scores": {
+        "idea": 0.0,
+        "code": 1.0,
+        "results": 1.0,
+        "paper": 0.0
+      },
+      "fairness": {
+        "gates": [
+          "idea",
+          "code",
+          "results",
+          "paper"
+        ],
+        "paper_gate_rule": "PDF=1.0; TeX-only/md_only/json_only=0.5; complete requires PDF",
+        "results_gate_rule": "substantive numeric results via framework-aware normalize_results",
+        "audit_ref": "framework_profile.FAIRNESS_AUDIT"
+      },
+      "notes": [
+        "Required: idea, code, substantive results, paper (PDF full; TeX/markdown/JSON draft half).",
+        "Stub/seed metrics (e.g. dataset_candidate/metrics.json) do not satisfy results.",
+        "Framework noise (.deepscientist_npm, skills/templates, runtime) is excluded from code/results/paper.",
+        "Manifest status is informational; disk presence is authoritative."
+      ]
+    },
+    "idea_generation": {
+      "run_dir": "~/ai_scientist_inputs/ISSTA-2025-002_identifying_safe_pid_parameter_ranges_fo/workspace/airesearcher_2026-09-18_07-47-13",
+      "task_dir": "~/ai_scientist_inputs/ISSTA-2025-002_identifying_safe_pid_parameter_ranges_fo",
+      "idea_path": null,
+      "status": "missing_idea",
+      "dimensions": {},
+      "overall_score": null,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "novelty",
+        "feasibility",
+        "clarity"
+      ],
+      "solution_space": null,
+      "notes": [
+        "Scores the intermediate idea artifact (not the final paper).",
+        "Dimensions: novelty, feasibility, clarity (each 1-5). Excitement removed.",
+        "Novelty is scored against a Solution Space built from mineru REFERENCES titles (+ related_work.json abstracts when matched)."
+      ],
+      "hint": "No idea artifact found under candidates like artifacts/idea.json, idea-stage/IDEA_REPORT.md, session/idea.json, tiny_idea.json, selected_idea.md."
+    },
+    "peer_review": {
+      "run_dir": "~/ai_scientist_inputs/ISSTA-2025-002_identifying_safe_pid_parameter_ranges_fo/workspace/airesearcher_2026-09-18_07-47-13",
+      "review_report": null,
+      "paper_pdf": null,
+      "paper_tex": null,
+      "status": "not_provided",
+      "dimensions": {},
+      "overall_score": null,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "soundness",
+        "significance",
+        "novelty",
+        "presentation",
+        "credibility"
+      ],
+      "notes": [
+        "Stanford Agentic Reviewer (paperreview.ai): manual download to artifacts/peer_review/stanford_apr.md, or pass --auto-paperreview.",
+        "Dimensions: soundness, significance, novelty, presentation, credibility (each 1-5)."
+      ],
+      "paperreview": {
+        "status": "skipped",
+        "reason": "no_pdf"
+      },
+      "optional": true,
+      "hint": "Optional external review (Stanford APR). Upload paper/main.pdf to https://paperreview.ai/ , save review to ~/ai_scientist_inputs/ISSTA-2025-002_identifying_safe_pid_parameter_ranges_fo/workspace/airesearcher_2026-09-18_07-47-13/artifacts/peer_review/stanford_apr.md"
+    },
+    "alignment": {
+      "run_dir": "~/ai_scientist_inputs/ISSTA-2025-002_identifying_safe_pid_parameter_ranges_fo/workspace/airesearcher_2026-09-18_07-47-13",
+      "task_dir": "~/ai_scientist_inputs/ISSTA-2025-002_identifying_safe_pid_parameter_ranges_fo",
+      "status": "ok",
+      "original": {
+        "paper_title": "RouthSearch: Inferring PID Parameter Specification for Flight Control Program by Coordinate Search",
+        "selection": {
+          "num_blocks": 7,
+          "total_chars": 31998,
+          "inferred_roles": {
+            "abstract": 1,
+            "introduction": 1,
+            "experiment": 3,
+            "discussion": 1,
+            "conclusion": 1
+          },
+          "mineru_raw_keys": {
+            "field:abstract": 1,
+            "field:introduction": 1,
+            "field:experiment": 1,
+            "other": 3,
+            "conclusion": 1
+          },
+          "infer_reasons": {
+            "top_level_field": 3,
+            "title": 4
+          },
+          "rescued_from_other": 3,
+          "note": "mineru key is unreliable; blocks are selected by title/body/inheritance. rescued_from_other counts sections labeled other but treated as typed roles."
+        },
+        "claims": [
+          {
+            "id": "C1",
+            "statement": "RouthSearch determines valid ranges of three-dimensional PID parameters with 92.0% accuracy compared to ground truth across eight flight modes in PX4 and ArduPilot.",
+            "direction": "neutral",
+            "metric_names": [
+              "accuracy"
+            ],
+            "evidence_quote": "determine the valid ranges of the three-dimensional PID parameters with an accuracy of 92.0% when compared to the ground truth",
+            "confidence": 0.95
+          },
+          {
+            "id": "C2",
+            "statement": "RouthSearch discovers 3,853 sets of PID misconfigurations within 48 hours, while PGFuzz discovers only 449 sets.",
+            "direction": "improves",
+            "metric_names": [
+              "misconfigurations_discovered_in_48h"
+            ],
+            "evidence_quote": "RouthSearch discovers 3,853 sets of PID misconfigurations within 48 hours, while the STOA work PGFuzz only discovers 449 sets",
+            "confidence": 0.95
+          },
+          {
+            "id": "C3",
+            "statement": "RouthSearch significantly outperforms prior work PGFuzz by 8.58 times in total PID misconfiguration discovery.",
+            "direction": "improves",
+            "metric_names": [
+              "improvement_factor"
+            ],
+            "evidence_quote": "significantly outperforming prior works by 8.58 times",
+            "confidence": 0.9
+          },
+          {
+            "id": "C4",
+            "statement": "RouthSearch helps detect three bugs in ArduPilot and PX4.",
+            "direction": "improves",
+            "metric_names": [
+              "bugs_detected"
+            ],
+            "evidence_quote": "our method helps to detect three bugs in ArduPilot and PX4",
+            "confidence": 0.9
+          },
+          {
+            "id": "C5",
+            "statement": "In bug discovery, RouthSearch exclusively found Bugs 1 and 2, which PGFuzz failed to discover, and RouthSearch consistently identified Bug 3 in 1.5 minutes whereas PGFuzz required 8.86 hours and only found it in two of three runs.",
+            "direction": "improves",
+            "metric_names": [
+              "bug_detection_time_minutes",
+              "bugs_detected"
+            ],
+            "evidence_quote": "While PGFuzz occasionally found Bug 3 in only two of the three runs and required 8.86 hours for detection in those instances, RouthSearch consistently identified the same bug in just 1.5 minutes.",
+            "confidence": 0.85
+          },
+          {
+            "id": "C6",
+            "statement": "In the case study, RouthSearch discovered 2,002 PID misconfigurations compared to 7 found by PGFuzz.",
+            "direction": "improves",
+            "metric_names": [
+              "misconfigurations_discovered_case_study"
+            ],
+            "evidence_quote": "RouthSearchdiscovered 2, 002 PID misconfigurations, compared to the 7 found by PGFuzz.",
+            "confidence": 0.7
+          }
+        ],
+        "metrics": [
+          {
+            "name": "accuracy",
+            "value": 92.0,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "boundary identification accuracy over eight flight modes in ArduPilot and PX4",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "accuracy of 92.0% when compared to the ground truth",
+            "confidence": 0.95
+          },
+          {
+            "name": "misconfigurations_discovered_in_48h",
+            "value": 3853.0,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "PID misconfiguration discovery over 48 hours across eight flight modes",
+            "is_sota_or_best": true,
+            "baseline_name": "PGFuzz",
+            "baseline_value": 449.0,
+            "evidence_quote": "RouthSearch discovers 3,853 sets of PID misconfigurations within 48 hours, while the STOA work PGFuzz only discovers 449 sets",
+            "confidence": 0.95
+          },
+          {
+            "name": "improvement_factor",
+            "value": 8.58,
+            "unit": "ratio",
+            "higher_is_better": true,
+            "setting": "misconfiguration discovery in 48 hours compared with PGFuzz",
+            "is_sota_or_best": true,
+            "baseline_name": "PGFuzz",
+            "baseline_value": null,
+            "evidence_quote": "significantly outperforming prior works by 8.58 times",
+            "confidence": 0.9
+          },
+          {
+            "name": "bugs_detected",
+            "value": 3.0,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "bugs found in ArduPilot and PX4 using RouthSearch",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "our method helps to detect three bugs in ArduPilot and PX4",
+            "confidence": 0.9
+          },
+          {
+            "name": "bug_detection_time_minutes",
+            "value": 1.5,
+            "unit": null,
+            "higher_is_better": false,
+            "setting": "Bug 3 detection time for RouthSearch; PGFuzz required 8.86 hours",
+            "is_sota_or_best": true,
+            "baseline_name": "PGFuzz",
+            "baseline_value": 8.86,
+            "evidence_quote": "RouthSearch consistently identified the same bug in just 1.5 minutes",
+            "confidence": 0.85
+          },
+          {
+            "name": "misconfigurations_discovered_case_study",
+            "value": 2002.0,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "case study bug discovery misconfigurations in ArduPilot and PX4",
+            "is_sota_or_best": true,
+            "baseline_name": "PGFuzz",
+            "baseline_value": 7.0,
+            "evidence_quote": "RouthSearchdiscovered 2, 002 PID misconfigurations, compared to the 7 found by PGFuzz.",
+            "confidence": 0.7
+          }
+        ],
+        "overall_conclusion": "RouthSearch combines the Routh-Hurwitz stability criterion with coordinate search to determine valid 3D PID parameter ranges. Across eight flight modes in ArduPilot and PX4, it achieved 92.0% accuracy and found 3,853 misconfigurations in 48 hours versus PGFuzz's 449, an 8.58x improvement. It also helped detect three bugs in ArduPilot and PX4.",
+        "comparable_notes": "Fair comparison details: experiments used ArduPilot SITL and PX4 jMAVSim with default settings; PGFuzz search space was aligned to PID control parameters and its online oracle was replaced with the same offline misbehavior validator; PGFuzz was run three times due randomness; ground truth was obtained by systematic exploration across the documented PID parameter space for each flight mode, requiring about 7000 CPU hours.",
+        "cache_hit": true
+      },
+      "agent": {
+        "status": "ok",
+        "run_dir": "~/ai_scientist_inputs/ISSTA-2025-002_identifying_safe_pid_parameter_ranges_fo/workspace/airesearcher_2026-09-18_07-47-13",
+        "claims": [
+          {
+            "id": "A1",
+            "statement": "The system reported an accuracy of 0.919375.",
+            "direction": "neutral",
+            "metric_names": [
+              "accuracy"
+            ],
+            "evidence_quote": "\"accuracy\": 0.919375",
+            "confidence": 0.95
+          },
+          {
+            "id": "A2",
+            "statement": "The reported hit rate was 0.9370546318289786 with a miss rate of 0.06294536817102137.",
+            "direction": "neutral",
+            "metric_names": [
+              "hit_rate",
+              "miss_rate"
+            ],
+            "evidence_quote": "\"hit_rate\": 0.9370546318289786, \"miss_rate\": 0.06294536817102137",
+            "confidence": 0.95
+          },
+          {
+            "id": "A3",
+            "statement": "The genetic algorithm search found the most misconfigurations among the evaluated search methods, with 1354, ahead of coordinate search with 725 and hill climbing with 499.",
+            "direction": "improves",
+            "metric_names": [
+              "misconfigurations_discovered_coordinate_search",
+              "misconfigurations_discovered_hill_climbing",
+              "misconfigurations_discovered_genetic_algorithm"
+            ],
+            "evidence_quote": "\"number_of_misconfigurations_discovered\": {\"coordinate_search\": 725, \"hill_climbing\": 499, \"genetic_algorithm\": 1354, \"best\": 1354}",
+            "confidence": 0.9
+          },
+          {
+            "id": "A4",
+            "statement": "All evaluated search methods discovered fewer misconfigurations than the PGFuzz baseline of 2792, with comparison ratios of 0.260 for coordinate search, 0.179 for hill climbing, and 0.485 for genetic algorithm.",
+            "direction": "degrades",
+            "metric_names": [
+              "baseline_pgfuzz_misconfigurations",
+              "comparison_vs_pgfuzz_coordinate_search_improvement_ratio",
+              "comparison_vs_pgfuzz_hill_climbing_improvement_ratio",
+              "comparison_vs_pgfuzz_genetic_algorithm_improvement_ratio"
+            ],
+            "evidence_quote": "\"baseline_pgfuzz_misconfigurations\": 2792",
+            "confidence": 0.85
+          },
+          {
+            "id": "A5",
+            "statement": "Training for 2 epochs on CPU achieved a final validation accuracy of 0.9049999713897705.",
+            "direction": "neutral",
+            "metric_names": [
+              "final_val_acc",
+              "final_train_acc",
+              "final_train_loss"
+            ],
+            "evidence_quote": "\"epochs\": 2, \"final_val_acc\": 0.9049999713897705, \"device\": \"cpu\"",
+            "confidence": 0.95
+          }
+        ],
+        "metrics": [
+          {
+            "name": "accuracy",
+            "value": 0.919375,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "overall",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "\"accuracy\": 0.919375",
+            "confidence": 0.95
+          },
+          {
+            "name": "hit_rate",
+            "value": 0.9370546318289786,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "overall",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "\"hit_rate\": 0.9370546318289786",
+            "confidence": 0.95
+          },
+          {
+            "name": "miss_rate",
+            "value": 0.06294536817102137,
+            "unit": null,
+            "higher_is_better": false,
+            "setting": "overall",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "\"miss_rate\": 0.06294536817102137",
+            "confidence": 0.95
+          },
+          {
+            "name": "misconfigurations_discovered_coordinate_search",
+            "value": 725,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "coordinate_search",
+            "is_sota_or_best": false,
+            "baseline_name": "PGFuzz",
+            "baseline_value": 2792,
+            "evidence_quote": "\"coordinate_search\": 725",
+            "confidence": 0.95
+          },
+          {
+            "name": "misconfigurations_discovered_hill_climbing",
+            "value": 499,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "hill_climbing",
+            "is_sota_or_best": false,
+            "baseline_name": "PGFuzz",
+            "baseline_value": 2792,
+            "evidence_quote": "\"hill_climbing\": 499",
+            "confidence": 0.95
+          },
+          {
+            "name": "misconfigurations_discovered_genetic_algorithm",
+            "value": 1354,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "genetic_algorithm",
+            "is_sota_or_best": true,
+            "baseline_name": "PGFuzz",
+            "baseline_value": 2792,
+            "evidence_quote": "\"genetic_algorithm\": 1354",
+            "confidence": 0.95
+          },
+          {
+            "name": "baseline_pgfuzz_misconfigurations",
+            "value": 2792,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "PGFuzz baseline",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "\"baseline_pgfuzz_misconfigurations\": 2792",
+            "confidence": 0.95
+          },
+          {
+            "name": "comparison_vs_pgfuzz_coordinate_search_improvement_ratio",
+            "value": 0.2596704871060172,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "coordinate_search vs PGFuzz",
+            "is_sota_or_best": false,
+            "baseline_name": "PGFuzz",
+            "baseline_value": null,
+            "evidence_quote": "\"coordinate_search\": {\"method_misconfigurations\": 725, \"baseline_misconfigurations\": 2792, \"improvement_ratio\": 0.2596704871060172}",
+            "confidence": 0.9
+          },
+          {
+            "name": "comparison_vs_pgfuzz_hill_climbing_improvement_ratio",
+            "value": 0.17872492836676218,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "hill_climbing vs PGFuzz",
+            "is_sota_or_best": false,
+            "baseline_name": "PGFuzz",
+            "baseline_value": null,
+            "evidence_quote": "\"hill_climbing\": {\"method_misconfigurations\": 499, \"baseline_misconfigurations\": 2792, \"improvement_ratio\": 0.17872492836676218}",
+            "confidence": 0.9
+          },
+          {
+            "name": "comparison_vs_pgfuzz_genetic_algorithm_improvement_ratio",
+            "value": 0.48495702005730656,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "genetic_algorithm vs PGFuzz",
+            "is_sota_or_best": true,
+            "baseline_name": "PGFuzz",
+            "baseline_value": null,
+            "evidence_quote": "\"genetic_algorithm\": {\"method_misconfigurations\": 1354, \"baseline_misconfigurations\": 2792, \"improvement_ratio\": 0.48495702005730656}",
+            "confidence": 0.9
+          },
+          {
+            "name": "final_train_loss",
+            "value": 0.3040906836305346,
+            "unit": null,
+            "higher_is_better": false,
+            "setting": "training",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "\"final_train_loss\": 0.3040906836305346",
+            "confidence": 0.95
+          },
+          {
+            "name": "final_train_acc",
+            "value": 0.9194642901420593,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "training",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "\"final_train_acc\": 0.9194642901420593",
+            "confidence": 0.95
+          },
+          {
+            "name": "final_val_acc",
+            "value": 0.9049999713897705,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "validation",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "\"final_val_acc\": 0.9049999713897705",
+            "confidence": 0.95
+          },
+          {
+            "name": "wall_time_s",
+            "value": 30.09031319618225,
+            "unit": "seconds",
+            "higher_is_better": false,
+            "setting": "overall",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "\"wall_time_s\": 30.09031319618225",
+            "confidence": 0.95
+          }
+        ],
+        "overall_conclusion": "Reported accuracy was 0.919375 and hit rate was 0.9371. Among search methods, the genetic algorithm found the most misconfigurations (1354), but all evaluated search methods discovered fewer misconfigurations than the PGFuzz baseline of 2792, with the best comparison ratio being 0.485.",
+        "sources": {
+          "metrics_path": "results/metrics.json",
+          "paper_tex_path": null
+        },
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 7911,
+            "completion_tokens_details": {
+              "reasoning_tokens": 5536
+            },
+            "prompt_tokens": 878,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 8789
+          },
+          "attempt": 0
+        }
+      },
+      "comparison": {
+        "status": "ok",
+        "claim_alignment": [
+          {
+            "original_claim_id": "C1",
+            "agent_claim_id": "A1",
+            "label": "consistent",
+            "rationale": "Agent reports 91.9375% accuracy (0.919375), closely matching the original 92.0% accuracy claim, though without the ground-truth/eight-flight-mode context."
+          },
+          {
+            "original_claim_id": "C2",
+            "agent_claim_id": "A4",
+            "label": "incomparable",
+            "rationale": "Agent reports a different protocol with PGFuzz baseline 2792 and no 48-hour total, so it cannot be compared to the original 3,853 vs 449 result."
+          },
+          {
+            "original_claim_id": "C3",
+            "agent_claim_id": "A4",
+            "label": "incomparable",
+            "rationale": "Agent reports improvement ratios below 1.0 against a PGFuzz baseline of 2792, not the original 8.58x comparison setup."
+          },
+          {
+            "original_claim_id": "C4",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "No bug detection metric or bug-related claim is present in the agent extraction."
+          },
+          {
+            "original_claim_id": "C5",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "No per-bug discovery or Bug 3 detection time metric is reported in the agent extraction."
+          },
+          {
+            "original_claim_id": "C6",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "No case-study misconfiguration comparison corresponding to 2,002 vs 7 is reported in the agent extraction."
+          }
+        ],
+        "metric_alignment": [
+          {
+            "original_metric": "accuracy",
+            "agent_metric": "accuracy",
+            "comparable": true,
+            "original_value": 92.0,
+            "agent_value": 91.9375,
+            "delta_abs": 0.0625,
+            "delta_rel": 0.000679,
+            "direction_vs_original_sota": "equal",
+            "rationale": "Agent accuracy was converted from fraction to percentage (0.919375 -> 91.9375%) and is effectively equal to the original 92.0%."
+          },
+          {
+            "original_metric": "misconfigurations_discovered_in_48h",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 3853.0,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Agent does not report a 48-hour total and uses a different PGFuzz baseline (2792), so the metric is not comparable."
+          },
+          {
+            "original_metric": "improvement_factor",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 8.58,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Agent improvement ratios are based on a different baseline and protocol, not the original 8.58x comparison."
+          },
+          {
+            "original_metric": "bugs_detected",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 3.0,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Agent extraction does not include a bug count metric."
+          },
+          {
+            "original_metric": "bug_detection_time_minutes",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 1.5,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Agent extraction does not include bug detection time."
+          },
+          {
+            "original_metric": "misconfigurations_discovered_case_study",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 2002.0,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Agent extraction does not include the original case-study comparison."
+          }
+        ],
+        "summary": {
+          "direction_consistency": "mixed",
+          "consistent_claim_ratio": 0.1667,
+          "has_comparable_metrics": true,
+          "sota_improvement_summary": "Only accuracy is comparable and is essentially equal; misconfiguration and bug outcomes are not comparable or missing, so no SOTA improvement can be confirmed.",
+          "overall_alignment_score": 0.4,
+          "score_rationale": "C1 accuracy is consistent, but the core effectiveness claims are missing or run under a different protocol with a seemingly conflicting baseline direction."
+        },
+        "warnings": [
+          "Accuracy was reported as a fraction and converted to percentage for comparison.",
+          "PGFuzz baseline differs between original (449) and agent (2792), so misconfiguration and improvement metrics are not directly comparable.",
+          "No bug, bug-time, or case-study metrics were reported in the agent extraction."
+        ],
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 8015,
+            "completion_tokens_details": {
+              "reasoning_tokens": 6762
+            },
+            "prompt_tokens": 4992,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 13007
+          },
+          "attempt": 0
+        }
+      },
+      "overall_alignment_score": 0.4,
+      "direction_consistency": "mixed"
+    },
+    "experiment_analysis": {
+      "run_dir": "~/ai_scientist_inputs/ISSTA-2025-002_identifying_safe_pid_parameter_ranges_fo/workspace/airesearcher_2026-09-18_07-47-13",
+      "task_dir": "~/ai_scientist_inputs/ISSTA-2025-002_identifying_safe_pid_parameter_ranges_fo",
+      "status": "ok",
+      "metrics_path": "results/metrics.json",
+      "experiment_success": {
+        "status": "ok",
+        "success": true,
+        "metrics_path": "results/metrics.json",
+        "absolute_metrics_path": "~/ai_scientist_inputs/ISSTA-2025-002_identifying_safe_pid_parameter_ranges_fo/workspace/airesearcher_2026-09-18_07-47-13/results/metrics.json",
+        "checks": {
+          "has_results_file": true,
+          "non_stub": true,
+          "numeric_leaf_count": 26,
+          "min_numeric_ok": true
+        },
+        "manifest_hints": {
+          "status": {
+            "pipeline": false,
+            "research_brief": true,
+            "instance": true,
+            "source_papers": true,
+            "metrics": true,
+            "project": true,
+            "paper": false
+          },
+          "returncode": 1,
+          "benchmark_complete": null,
+          "artifacts_metrics_flag": true
+        },
+        "warnings": [
+          "manifest.returncode=1"
+        ],
+        "suspicious_values": [],
+        "note": "success=true requires substantive results (framework-aware path) with >=3 numeric leaves. Supports metrics.json, results.json, experiment_results.txt, etc. Manifest returncode/benchmark_complete are soft warnings only."
+      },
+      "idea_code_consistency": {
+        "status": "missing_idea"
+      },
+      "setup_coverage": {
+        "status": "ok",
+        "overall_coverage": 1.0,
+        "datasets": {
+          "gold_count": 1,
+          "hit_count": 1,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "PID parameter validity benchmark"
+          ],
+          "misses": []
+        },
+        "baselines": {
+          "gold_count": 1,
+          "hit_count": 1,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "PGFuzz"
+          ],
+          "misses": []
+        },
+        "metrics": {
+          "gold_count": 2,
+          "hit_count": 2,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "Accuracy",
+            "Number of misconfigurations discovered"
+          ],
+          "misses": []
+        },
+        "agent_protocol": {},
+        "gold_protocol": {},
+        "dataset_dirs": [
+          "dataset_candidate"
+        ],
+        "flags": {
+          "weaker_baseline_suspected": false,
+          "weak_protocol": [],
+          "synthetic_data": "synthetic_allowed_by_task",
+          "gold_allows_synthetic": true
+        },
+        "gold_sources": [
+          "~/ai_scientist_inputs/ISSTA-2025-002_identifying_safe_pid_parameter_ranges_fo/task.md",
+          "~/ai_scientist_inputs/ISSTA-2025-002_identifying_safe_pid_parameter_ranges_fo/metadata.json"
+        ],
+        "note": "Coverage is name/alias matching against task.md Datasets/Baselines/Metrics. weak_protocol flags large reductions in trials/timeout vs Constraints. Synthetic corpora are not penalized when the task itself requires synthesis."
+      },
+      "ablation_significance": {
+        "status": "missing_idea"
+      },
+      "results_paper_consistency": {
+        "status": "missing_paper"
+      },
+      "scores": {
+        "experiment_success": true,
+        "idea_code_score": null,
+        "setup_coverage": 1.0,
+        "ablation_coverage_score": null,
+        "overall_ablation_ok": null,
+        "overall_significance_ok": null,
+        "results_paper_score": null,
+        "hiding_unfavorable_suspected": null
+      },
+      "notes": [
+        "Axes 1,2,3,4,6 in experiment_analysis (figures excluded).",
+        "setup_coverage matches task.md Datasets/Baselines/Metrics; weak_protocol flags reductions vs Constraints.",
+        "Axis 6: final normalized results vs paper; interim run logs not used as ground truth."
+      ]
+    },
+    "literature_review": {
+      "run_dir": "~/ai_scientist_inputs/ISSTA-2025-002_identifying_safe_pid_parameter_ranges_fo/workspace/airesearcher_2026-09-18_07-47-13",
+      "task_dir": "~/ai_scientist_inputs/ISSTA-2025-002_identifying_safe_pid_parameter_ranges_fo",
+      "status": "not_applicable",
+      "framework": "airesearcher",
+      "reason": "Framework does not produce workspace reference artifacts for fair comparison.",
+      "scores": null
+    }
+  },
+  "scores": {
+    "completeness": {
+      "complete": false,
+      "overall_score": 0.4,
+      "required_score": 0.5,
+      "bonus_score": 0.05
+    },
+    "peer_review": {
+      "status": "not_provided",
+      "optional": true,
+      "overall_score": null,
+      "score_scale": "1-5",
+      "scoring_method": null
+    },
+    "idea_generation": {
+      "status": "missing_idea",
+      "overall_score": null,
+      "dimensions": {
+        "novelty": null,
+        "feasibility": null,
+        "clarity": null
+      },
+      "novelty_category": null,
+      "solution_space_status": null
+    },
+    "alignment": {
+      "status": "ok",
+      "direction_consistency": "mixed",
+      "overall_alignment_score": 0.4
+    },
+    "literature_review": {
+      "fabrication_rate": null,
+      "coverage_recall": null,
+      "recency_ratio_3y": null,
+      "recency_ratio_5y": null
+    },
+    "experiment_analysis": {
+      "experiment_success": true,
+      "idea_code_score": null,
+      "setup_coverage": 1.0,
+      "ablation_coverage_score": null,
+      "overall_ablation_ok": null,
+      "overall_significance_ok": null,
+      "results_paper_score": null,
+      "hiding_unfavorable_suspected": null
+    }
+  },
+  "fair_scores": {
+    "applicable_axes": [
+      "completeness",
+      "alignment",
+      "experiment_analysis"
+    ],
+    "skipped_axes": [
+      {
+        "axis": "idea_generation",
+        "reason": "missing_idea"
+      },
+      {
+        "axis": "peer_review",
+        "reason": "optional_external_review"
+      },
+      {
+        "axis": "literature_review",
+        "reason": "not_applicable"
+      }
+    ],
+    "fair_mean_0_1": 0.6333,
+    "note": "fair_mean_0_1 averages only applicable axes; optional peer review and framework-inapplicable literature are excluded from the denominator."
+  },
+  "evals_root": "~/ai_scientist_evals",
+  "claims_cache": "~/ai_scientist_evals/ISSTA-2025-002_identifying_safe_pid_parameter_ranges_fo/original_claims.json",
+  "solution_space_cache": "~/ai_scientist_evals/ISSTA-2025-002_identifying_safe_pid_parameter_ranges_fo/solution_space.json"
+}

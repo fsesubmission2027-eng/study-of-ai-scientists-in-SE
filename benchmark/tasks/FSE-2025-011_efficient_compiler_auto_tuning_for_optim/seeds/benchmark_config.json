@@ -1,0 +1,31 @@
+{
+  "forbid_synthetic_pilot": true,
+  "agent_data_note": "Use the mounted PDCAT artifact at `dataset_candidate/pdcat-master/`. It bundles cBench (28 programs), PolyBench (30 kernels), author implementations of PDCAT/RIO/CFSCA/CompTuner/SRTuner, and precomputed results. Do not substitute toy C micro-benchmarks.",
+  "required_metrics": [
+    "speedup_ratio_over_O3"
+  ],
+  "benchmark_rules": [
+    "Read `dataset_candidate/dataset_paths.json` and use `$PDCAT_HOME` before experiments.",
+    "Benchmark roots: `dataset_candidate/pdcat-master/Benchmarks/cBench/` and `.../Benchmarks/polyBench/`.",
+    "Baseline reference code lives under `dataset_candidate/pdcat-master/Algorithm/overall/` (PDCAT, RIO, CFSCA, CompTuner, SRTuner).",
+    "Primary metric: speedup ratio over GCC -O3 = (time_O3 - time_selected) / time_selected × 100%. Higher is better.",
+    "Paper time budgets are 1250 / 2500 / 5000 seconds per program with 5 repeats (median reported). Subset runs with shorter budgets are acceptable when documented.",
+    "The shared mount is read-only. Write binaries, logs, and metrics under `project/` or `results/`.",
+    "Compile/run with system `gcc`/`g++` prepared by container_setup.sh (paper used GCC 13.1.0).",
+    "Do not claim full paper reproduction unless the experiment protocol and compute budget match."
+  ],
+  "non_goals": [
+    "Re-downloading cBench/PolyBench from scratch when the PDCAT artifact already bundles curated copies",
+    "Running all 58 programs × 4 baselines × 3 budgets × 5 repeats in one autonomous session",
+    "Using fabricated synthetic programs instead of the mounted benchmarks"
+  ],
+  "dataset_env": {
+    "PDCAT_HOME": "dataset_candidate/pdcat-master"
+  },
+  "exclude_from_agent": [
+    "container_setup.sh",
+    "README.md",
+    "benchmark_config.json",
+    "requirements.txt"
+  ]
+}

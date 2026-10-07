@@ -1,0 +1,1100 @@
+{
+  "run_dir": "~/ai_scientist_inputs/ICSE-2025-023_investigating_dependency_abandonment_and/workspace/deepscientist_2026-09-16_03-22-51",
+  "task_dir": "~/ai_scientist_inputs/ICSE-2025-023_investigating_dependency_abandonment_and",
+  "framework": "deepscientist",
+  "fairness_audit": [
+    {
+      "axis": "completeness",
+      "was_unfair": "Required both paper.tex AND paper.pdf; any tool missing one failed equally.",
+      "fix": "Paper gate: PDF=1.0; TeX-only=0.5; ``complete`` requires PDF."
+    },
+    {
+      "axis": "completeness",
+      "was_unfair": "``results`` counted stub/seed JSON (dataset_candidate/metrics.json).",
+      "fix": "``results`` requires substantive numeric results via results_normalize."
+    },
+    {
+      "axis": "experiment_success",
+      "was_unfair": "Only metrics.json; ignored results.json / experiment_results.txt.",
+      "fix": "Framework-ordered result candidates + normalized loaders."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Penalized tools with no bib; airesearcher has no workspace references.",
+      "fix": "literature_applicable=false → status not_applicable; excluded from fair aggregate."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "related_work.json subset as gold made recall hard to interpret.",
+      "fix": "Coverage gold is original paper REFERENCES from mineru; related_work only enriches metadata/fallback."
+    },
+    {
+      "axis": "peer_review",
+      "was_unfair": "Missing Stanford report looked like evaluation failure.",
+      "fix": "status not_provided; optional axis, never counts as tool failure."
+    },
+    {
+      "axis": "paths/find_results",
+      "was_unfair": "Picked downloads/** and sandbox noise (e.g. airesearcher LLVM tree).",
+      "fix": "Exclude downloads/, seeds/, dataset_candidate/, sandbox junk paths."
+    },
+    {
+      "axis": "paths/framework_noise",
+      "was_unfair": "DeepScientist .deepscientist_npm / runtime / skills templates counted as code/paper/results.",
+      "fix": "FRAMEWORK_NOISE_DIRS+markers; quest worktree + eval_output results; paper md drafts; reject template tex."
+    },
+    {
+      "axis": "paths/paper_tex",
+      "was_unfair": "tiny_scientist / ACL runs store paper under latex/*.tex; evaluator only looked at paper/main.tex.",
+      "fix": "latex/**/*.tex with substantive-body heuristic; find_paper_document uses same rules."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Entire custom.bib (300+ anthology entries) verified when paper had zero \\cite commands.",
+      "fix": "collect_agent_references filters bib to in-text cite keys; skips uncited bulk bib (>40 entries)."
+    },
+    {
+      "axis": "paths/ai_scientist_summaries",
+      "was_unfair": "AI Scientist can persist substantive results and paper-like drafts in *_summary.json logs rather than paper/main.tex or results/**/*.json.",
+      "fix": "Treat draft_summary/research_summary as weak paper documents and summary JSONs as result candidates."
+    },
+    {
+      "axis": "framework/ai_scientist_v2",
+      "was_unfair": "Manifest framework ``ai_scientist_v2`` fell through to profile ``unknown``, skipping AI-Scientist idea/result path priorities.",
+      "fix": "Normalize ``ai_scientist_v2`` (and common aliases) to profile key ``ai_scientist``."
+    },
+    {
+      "axis": "idea_generation",
+      "was_unfair": "plan.md/todos.md weak proxies scored same as structured idea.json.",
+      "fix": "Framework idea_priority tried first; missing idea → not_applicable where appropriate."
+    }
+  ],
+  "generated_at": "2026-10-01T14:50:06",
+  "axes": [
+    "alignment",
+    "completeness",
+    "experiment_analysis",
+    "idea_generation",
+    "literature_review",
+    "peer_review"
+  ],
+  "results": {
+    "completeness": {
+      "framework": "deepscientist",
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-023_investigating_dependency_abandonment_and/workspace/deepscientist_2026-09-16_03-22-51",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-023_investigating_dependency_abandonment_and",
+      "complete": true,
+      "required_score": 1.0,
+      "bonus_score": 0.0,
+      "overall_score": 0.83,
+      "missing": [],
+      "required": {
+        "idea": {
+          "path": "idea.md",
+          "bytes": 1751,
+          "via": "candidate"
+        },
+        "code": {
+          "count": 2,
+          "files": [
+            {
+              "path": "DeepScientist/quests/001/experiments/main/analyze.py",
+              "bytes": 17669,
+              "via": "glob"
+            },
+            {
+              "path": "project/analyze.py",
+              "bytes": 17669,
+              "via": "glob"
+            }
+          ]
+        },
+        "results": {
+          "substantive": true,
+          "normalized_path": "results/results.json",
+          "numeric_leaf_count": 168,
+          "discovered_files": [
+            {
+              "path": "DeepScientist/quests/001/experiments/main/results/results.json",
+              "bytes": 7541,
+              "via": "glob"
+            },
+            {
+              "path": "results/results.json",
+              "bytes": 7541,
+              "via": "candidate"
+            },
+            {
+              "path": "DeepScientist/quests/001/.ds/worktrees/idea-idea-e963b7cb/artifacts/reports/report-1a6365a2.json",
+              "bytes": 2738,
+              "via": "glob"
+            },
+            {
+              "path": "DeepScientist/quests/001/.ds/worktrees/idea-idea-e963b7cb/artifacts/reports/report-85af6769.json",
+              "bytes": 2747,
+              "via": "glob"
+            },
+            {
+              "path": "DeepScientist/quests/001/.ds/worktrees/idea-idea-e963b7cb/artifacts/reports/report-c636c8df.json",
+              "bytes": 2798,
+              "via": "glob"
+            }
+          ],
+          "metrics_keys_sample": [
+            "RQ1",
+            "RQ2",
+            "RQ3_logistic",
+            "RQ4_cox"
+          ]
+        },
+        "paper": {
+          "tex": null,
+          "pdf": {
+            "path": "paper/main.pdf",
+            "bytes": 56546,
+            "via": "compiled_from_md"
+          },
+          "md": {
+            "path": "paper/paper.md",
+            "bytes": 15169,
+            "via": "candidate"
+          },
+          "json": null,
+          "status": "pdf",
+          "score": 1.0
+        }
+      },
+      "bonus": {
+        "experiment_plan": null,
+        "experiment_log": null,
+        "review": null,
+        "readme": null,
+        "narrative": null,
+        "bib": null
+      },
+      "manifest_status": {
+        "launched": true
+      },
+      "gate_scores": {
+        "idea": 1.0,
+        "code": 1.0,
+        "results": 1.0,
+        "paper": 1.0
+      },
+      "fairness": {
+        "gates": [
+          "idea",
+          "code",
+          "results",
+          "paper"
+        ],
+        "paper_gate_rule": "PDF=1.0; TeX-only/md_only/json_only=0.5; complete requires PDF",
+        "results_gate_rule": "substantive numeric results via framework-aware normalize_results",
+        "audit_ref": "framework_profile.FAIRNESS_AUDIT"
+      },
+      "notes": [
+        "Required: idea, code, substantive results, paper (PDF full; TeX/markdown/JSON draft half).",
+        "Stub/seed metrics (e.g. dataset_candidate/metrics.json) do not satisfy results.",
+        "Framework noise (.deepscientist_npm, skills/templates, runtime) is excluded from code/results/paper.",
+        "Manifest status is informational; disk presence is authoritative."
+      ]
+    },
+    "idea_generation": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-023_investigating_dependency_abandonment_and/workspace/deepscientist_2026-09-16_03-22-51",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-023_investigating_dependency_abandonment_and",
+      "idea_path": "~/ai_scientist_inputs/ICSE-2025-023_investigating_dependency_abandonment_and/workspace/deepscientist_2026-09-16_03-22-51/idea.md",
+      "status": "ok",
+      "dimensions": {
+        "novelty": {
+          "score": 1.0,
+          "justification": "Idea states it will \"Faithfully reproduce the ICSE 2025 study ... with an independent Python implementation over its public replication CSVs\" and is \"explicitly not methodological novelty\". Its core method is already present in R67, which is supplementary material for understanding the response to open-source dependency abandonment in the npm ecosystem.",
+          "rubric": "Existing: the idea's core method is already clearly present or solved in the Solution Space; only tiny parameter / test-case changes.",
+          "category": "Existing",
+          "nearest_solution_space_ids": [
+            "R67"
+          ],
+          "differentiation": "No new method, data source, or analytical model; only an independent Python reimplementation of the same ICSE 2025 pipeline over its public replication CSVs plus unspecified robustness/sensitivity checks."
+        },
+        "feasibility": {
+          "score": 4.0,
+          "justification": "The method is \"Load four replication CSVs; construct removal status and time-to-response-or-censoring; compute abandonment prevalence\"; public replication data and reported results already exist, so the work is low barrier, requiring standard Python survival/regression libraries rather than large-scale mining.",
+          "rubric": "Low barrier / easy to implement: core logic can be quickly built on existing Python libraries or common ML frameworks; only small changes to a standard evaluation flow (e.g. prompt strategy tweaks or swapping metrics)."
+        },
+        "clarity": {
+          "score": 4.0,
+          "justification": "Plan is concrete: specifies RQ1-RQ4, Kaplan-Meier plus log-rank, logistic regression, Cox model, and 2PL IRT; however, exact covariates, sensitivity-analysis procedures, and software stacks are not fully detailed.",
+          "rubric": "Clear and concrete: steps are explicit with a reasonable, specific experiment design (baseline tools, metric definitions); can be turned into a solid proposal."
+        }
+      },
+      "overall_score": 2.5,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "novelty",
+        "feasibility",
+        "clarity"
+      ],
+      "solution_space": {
+        "status": "ok",
+        "paper_count": 81,
+        "entry_count": 81,
+        "cache_hit": true,
+        "source_file": "~/ai_scientist_inputs/ICSE-2025-023_investigating_dependency_abandonment_and/mineru_sections.json",
+        "stats": {
+          "papers": 81,
+          "extracted": 81,
+          "usable_abstracts": 55,
+          "citation_meta_abstracts": 0,
+          "missing_abstracts": 26,
+          "mineru_titles": 78,
+          "related_work_titles": 66,
+          "abstracts_attached": 55,
+          "related_work_extras": 3,
+          "batches": 5
+        },
+        "error": null
+      },
+      "notes": [
+        "Scores the intermediate idea artifact (not the final paper).",
+        "Dimensions: novelty, feasibility, clarity (each 1-5). Excitement removed.",
+        "Novelty is scored against a Solution Space built from mineru REFERENCES titles (+ related_work.json abstracts when matched)."
+      ],
+      "idea_via": "candidate",
+      "idea_relative": "idea.md",
+      "summary": "This is an explicitly non-novel reproduction of an existing ICSE 2025 npm dependency abandonment study using public replication CSVs, adding robustness checks. The plan is clear and feasible with standard Python survival/regression libraries, but it offers almost no new scientific contribution relative to R67. It may have replication value, but as a research idea it scores low on novelty and overall impact.",
+      "strengths": [
+        "Concrete research questions and statistical models",
+        "Uses public replication CSVs, avoiding costly data collection",
+        "Includes targeted results for prevalence, removal rates, and survival"
+      ],
+      "weaknesses": [
+        "Core method already exists in the Solution Space (R67)",
+        "Robustness/sensitivity checks are unspecified and unlikely to change conclusions",
+        "No new data, theory, or analytical approach"
+      ],
+      "llm_meta": {
+        "model": "deepseek-v4-pro-0813",
+        "base_url": "https://api-sg.umodelverse.ai/v1",
+        "usage": {
+          "completion_tokens": 2983,
+          "completion_tokens_details": {
+            "reasoning_tokens": 2485
+          },
+          "prompt_tokens": 6209,
+          "prompt_tokens_details": {
+            "cached_tokens": 4096
+          },
+          "total_tokens": 9192
+        },
+        "attempt": 0
+      }
+    },
+    "peer_review": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-023_investigating_dependency_abandonment_and/workspace/deepscientist_2026-09-16_03-22-51",
+      "review_report": "~/ai_scientist_inputs/ICSE-2025-023_investigating_dependency_abandonment_and/workspace/deepscientist_2026-09-16_03-22-51/artifacts/peer_review/stanford_apr.md",
+      "paper_pdf": "~/ai_scientist_inputs/ICSE-2025-023_investigating_dependency_abandonment_and/workspace/deepscientist_2026-09-16_03-22-51/paper/main.pdf",
+      "paper_tex": null,
+      "status": "ok",
+      "dimensions": {},
+      "overall_score": 5.0,
+      "score_scale": "1-10",
+      "dimension_order": [],
+      "notes": [
+        "Scored from paperreview.ai (Stanford APR) native ratings; benchmark 5-dimension LLM rubric skipped.",
+        "Overall scale: 1-10."
+      ],
+      "paperreview": {
+        "status": "cached",
+        "hint": "Cached APR score found; no re-upload."
+      },
+      "scoring_method": "paperreview_apr",
+      "scoring_source": "paperreview_json",
+      "apr_dimensions": {
+        "Claims_Support": 1.0,
+        "Experimental_Soundness": 0.0,
+        "Writing_Clarity": 1.0,
+        "Prior_Work_Context": 0.0,
+        "Question_Importance": 0.0,
+        "Originality": 0.0,
+        "Value_to_Community": 0.0
+      },
+      "summary": "",
+      "red_flags": []
+    },
+    "alignment": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-023_investigating_dependency_abandonment_and/workspace/deepscientist_2026-09-16_03-22-51",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-023_investigating_dependency_abandonment_and",
+      "status": "ok",
+      "original": {
+        "paper_title": "Understanding the Response to Open-Source Dependency Abandonment in the npm Ecosystem",
+        "selection": {
+          "num_blocks": 7,
+          "total_chars": 31998,
+          "inferred_roles": {
+            "abstract": 1,
+            "introduction": 1,
+            "experiment": 3,
+            "discussion": 1,
+            "conclusion": 1
+          },
+          "mineru_raw_keys": {
+            "field:abstract": 1,
+            "field:introduction": 1,
+            "other": 4,
+            "conclusion": 1
+          },
+          "infer_reasons": {
+            "top_level_field": 2,
+            "inherited": 1,
+            "body_override": 2,
+            "title": 2
+          },
+          "rescued_from_other": 4,
+          "note": "mineru key is unreliable; blocks are selected by title/body/inheritance. rescued_from_other counts sections labeled other but treated as typed roles."
+        },
+        "claims": [
+          {
+            "id": "C1",
+            "statement": "Abandonment is common among widely-used npm packages, with 15% becoming abandoned within the six-year observation window.",
+            "direction": "neutral",
+            "metric_names": [
+              "abandonment_rate"
+            ],
+            "evidence_quote": "15% of widely-used packages becoming abandoned within our sixyear observation window.",
+            "confidence": 0.95
+          },
+          {
+            "id": "C2",
+            "statement": "Most exposed projects do not remove abandoned dependencies; only 18% of directly exposed projects remove the abandoned dependency.",
+            "direction": "neutral",
+            "metric_names": [
+              "exposed_project_removal_rate"
+            ],
+            "evidence_quote": "18% of exposed projects remove the abandoned dependency",
+            "confidence": null
+          }
+        ],
+        "metrics": [],
+        "overall_conclusion": null,
+        "comparable_notes": null,
+        "cache_hit": true
+      },
+      "agent": {
+        "status": "ok",
+        "run_dir": "~/ai_scientist_inputs/ICSE-2025-023_investigating_dependency_abandonment_and/workspace/deepscientist_2026-09-16_03-22-51",
+        "claims": [
+          {
+            "id": "A1",
+            "statement": "...",
+            "direction": "improves|degrades|no_difference|mixed|neutral|unknown",
+            "metric_names": [],
+            "evidence_quote": "...",
+            "confidence": 0.0
+          }
+        ],
+        "metrics": [
+          {
+            "name": "...",
+            "value": 0.0,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "...",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "...",
+            "confidence": 0.0
+          }
+        ],
+        "overall_conclusion": "...",
+        "sources": {
+          "metrics_path": "results/results.json",
+          "paper_tex_path": "paper/paper.md"
+        },
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 5000,
+            "completion_tokens_details": {
+              "reasoning_tokens": 5000
+            },
+            "prompt_tokens": 4980,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 9980
+          },
+          "attempt": 0
+        }
+      },
+      "comparison": {
+        "status": "ok",
+        "claim_alignment": [
+          {
+            "original_claim_id": "C1",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "The agent run contains only placeholder content for A1 and does not address the npm abandonment rate claim."
+          },
+          {
+            "original_claim_id": "C2",
+            "agent_claim_id": null,
+            "label": "missing",
+            "rationale": "The agent run does not address the claim about exposed projects removing abandoned dependencies."
+          }
+        ],
+        "metric_alignment": [
+          {
+            "original_metric": "abandonment_rate",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": null,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Original claim mentions abandonment_rate, but the agent run provides no comparable measured value."
+          },
+          {
+            "original_metric": "exposed_project_removal_rate",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": null,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "Original claim mentions exposed_project_removal_rate, but the agent run provides no comparable measured value."
+          }
+        ],
+        "summary": {
+          "direction_consistency": "unknown",
+          "consistent_claim_ratio": 0.0,
+          "has_comparable_metrics": false,
+          "sota_improvement_summary": "N/A",
+          "overall_alignment_score": 0.0,
+          "score_rationale": "The agent extraction is effectively empty and does not address either original claim or provide comparable metrics, so no directional or SOTA alignment can be assessed."
+        },
+        "warnings": [
+          "Agent run claims and metrics appear to be placeholders with no substantive evidence, statements, or measured values.",
+          "No comparable metrics were available, so all metric comparisons are marked incomparable."
+        ],
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 2285,
+            "completion_tokens_details": {
+              "reasoning_tokens": 1802
+            },
+            "prompt_tokens": 1240,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 3525
+          },
+          "attempt": 0
+        }
+      },
+      "overall_alignment_score": 0.0,
+      "direction_consistency": "unknown"
+    },
+    "experiment_analysis": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-023_investigating_dependency_abandonment_and/workspace/deepscientist_2026-09-16_03-22-51",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-023_investigating_dependency_abandonment_and",
+      "status": "ok",
+      "metrics_path": "results/results.json",
+      "experiment_success": {
+        "status": "ok",
+        "success": true,
+        "metrics_path": "results/results.json",
+        "absolute_metrics_path": "~/ai_scientist_inputs/ICSE-2025-023_investigating_dependency_abandonment_and/workspace/deepscientist_2026-09-16_03-22-51/results/results.json",
+        "checks": {
+          "has_results_file": true,
+          "non_stub": true,
+          "numeric_leaf_count": 168,
+          "min_numeric_ok": true
+        },
+        "manifest_hints": {
+          "status": {
+            "launched": true
+          },
+          "returncode": 0,
+          "benchmark_complete": null,
+          "artifacts_metrics_flag": false
+        },
+        "warnings": [],
+        "suspicious_values": [],
+        "note": "success=true requires substantive results (framework-aware path) with >=3 numeric leaves. Supports metrics.json, results.json, experiment_results.txt, etc. Manifest returncode/benchmark_complete are soft warnings only."
+      },
+      "idea_code_consistency": {
+        "status": "ok",
+        "idea_path": "idea.md",
+        "code_files": [
+          "DeepScientist/quests/001/experiments/main/analyze.py",
+          "project/analyze.py"
+        ],
+        "score_scale": "1-5",
+        "score": 3.0,
+        "label": "partial",
+        "justification": "The code is clearly aimed at the stated npm dependency abandonment replication: it loads the four expected replication CSVs, constructs abandonment status, censoring/response time, event type, and detection-type mappings in an independent Python pipeline. However, the visible implementation stops during preprocessing and does not show the core RQ1 prevalence calculation, RQ2 Kaplan-Meier/log-rank survival analysis, RQ3 logistic regression, RQ4 Cox model, IRT latent score, sensitivity analysis, or results/figures output. Thus the main direction matches, but key evaluation components are absent or not demonstrated.",
+        "matched_elements": [
+          "Independent Python re-analysis of npm dependency abandonment",
+          "Loads the four replication CSVs: widely-used packages, abandonment/update/vulnerability exposed dependents",
+          "Constructs removal status and months-to-response-or-censoring for abandonment events",
+          "Maps abandonment type to ExplicitNotice vs ActivityBased detection",
+          "Targets RQ1-RQ4 as stated in the idea"
+        ],
+        "missing_or_divergent_elements": [
+          "RQ1 abandonment prevalence computation",
+          "Kaplan-Meier survival curves and log-rank tests across abandonment/update/security-patch events",
+          "Binomial logistic regression for 2-year removal likelihood",
+          "Cox proportional-hazards model for time-to-removal",
+          "2PL IRT governance-maturity latent score",
+          "Auto-updating floating dependents sensitivity analysis",
+          "Results/figures output or runnable analysis entrypoint"
+        ],
+        "rubric": "Partial alignment: main direction matches, but important components from the idea (baselines, metrics, protocol, subjects) are dropped or altered without clear mapping.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 1755,
+            "completion_tokens_details": {
+              "reasoning_tokens": 1413
+            },
+            "prompt_tokens": 2975,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 4730
+          },
+          "attempt": 0
+        }
+      },
+      "setup_coverage": {
+        "status": "ok",
+        "overall_coverage": 1.0,
+        "datasets": {
+          "gold_count": 3,
+          "hit_count": 3,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "npm package metadata and download counts",
+            "GitHub dependent projects",
+            "OSV vulnerability database"
+          ],
+          "misses": []
+        },
+        "baselines": {
+          "gold_count": 2,
+          "hit_count": 2,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "Regular package update events",
+            "Security patch events"
+          ],
+          "misses": []
+        },
+        "metrics": {
+          "gold_count": 3,
+          "hit_count": 3,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "Removal rate",
+            "Time to removal",
+            "Survival probability"
+          ],
+          "misses": []
+        },
+        "agent_protocol": {},
+        "gold_protocol": {},
+        "dataset_dirs": [
+          "dataset_candidate"
+        ],
+        "flags": {
+          "weaker_baseline_suspected": false,
+          "weak_protocol": [],
+          "synthetic_data": "synthetic_allowed_by_task",
+          "gold_allows_synthetic": true
+        },
+        "gold_sources": [
+          "~/ai_scientist_inputs/ICSE-2025-023_investigating_dependency_abandonment_and/task.md",
+          "~/ai_scientist_inputs/ICSE-2025-023_investigating_dependency_abandonment_and/metadata.json"
+        ],
+        "note": "Coverage is name/alias matching against task.md Datasets/Baselines/Metrics. weak_protocol flags large reductions in trials/timeout vs Constraints. Synthetic corpora are not penalized when the task itself requires synthesis."
+      },
+      "ablation_significance": {
+        "status": "ok",
+        "idea_path": "idea.md",
+        "significance_signals_rule_based": {
+          "signals": [
+            "paper_contains:p-value",
+            "paper_contains:significant"
+          ],
+          "artifact_paths": [],
+          "has_any_significance_artifact": true
+        },
+        "evidence_format": "raw_json",
+        "study_type": "reproduction",
+        "components": [
+          {
+            "name": "Data construction: removal status and time-to-response/censoring",
+            "role": "instrumentation",
+            "ablation_expected": false,
+            "significance_expected": false,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "Core data operationalization; removal is not meaningful as an ablation for a reproduction.",
+            "significance_status": "not_required",
+            "significance_evidence": "Descriptive data construction; no separate statistical comparison required."
+          },
+          {
+            "name": "RQ1 abandonment prevalence estimation",
+            "role": "analysis",
+            "ablation_expected": false,
+            "significance_expected": false,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "Descriptive prevalence estimate; not a modular method component requiring ablation.",
+            "significance_status": "not_required",
+            "significance_evidence": "Descriptive estimate; no hypothesis test needed."
+          },
+          {
+            "name": "RQ2 Kaplan-Meier survival and log-rank comparison of event types",
+            "role": "analysis",
+            "ablation_expected": false,
+            "significance_expected": true,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "Reproduction analysis; event-type comparison is the primary comparison, not a removable method component.",
+            "significance_status": "present",
+            "significance_evidence": "Log-rank test statistic and p-values reported with and without floating dependents; without_auto_floating logrank_p=4.12e-219."
+          },
+          {
+            "name": "Sensitivity analysis: with vs without auto-updating floating dependents",
+            "role": "sensitivity analysis",
+            "ablation_expected": true,
+            "significance_expected": false,
+            "ablation_status": "present",
+            "ablation_evidence": "metrics.json includes RQ2 with_floating and without_auto_floating, showing per-group removal rates and log-rank results.",
+            "significance_status": "not_required",
+            "significance_evidence": "Sensitivity comparison is descriptive; the underlying log-rank test is already reported for the non-floating subset."
+          },
+          {
+            "name": "RQ3 binomial logistic regression for 2-year removal",
+            "role": "model",
+            "ablation_expected": false,
+            "significance_expected": true,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "Reproduction model; removing individual covariates is not required as a method ablation.",
+            "significance_status": "present",
+            "significance_evidence": "Coefficient table includes SEs, OR 95% CIs, and p-values for all terms."
+          },
+          {
+            "name": "RQ4 Cox proportional-hazards model of time-to-removal",
+            "role": "model",
+            "ablation_expected": false,
+            "significance_expected": true,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "Reproduction model; not a modular method component requiring ablation.",
+            "significance_status": "present",
+            "significance_evidence": "Coefficient table includes SEs, HR 95% CIs, and p-values for all terms."
+          },
+          {
+            "name": "2PL IRT governance-maturity latent score",
+            "role": "instrumentation",
+            "ablation_expected": false,
+            "significance_expected": false,
+            "ablation_status": "not_applicable",
+            "ablation_evidence": "Constructed covariate used in regression; not a removable method contribution for this reproduction.",
+            "significance_status": "not_required",
+            "significance_evidence": "No direct hypothesis test for the latent score itself; it is evaluated through regression coefficients."
+          }
+        ],
+        "ablation_coverage_score": 1.0,
+        "overall_ablation_ok": true,
+        "overall_significance_ok": true,
+        "summary": "This is a reproduction/robustness study. The main analysis components are not modular method parts requiring ablation; the one expected sensitivity check, comparing results with and without auto-updating floating dependents, is present in metrics.json. Statistical evidence is adequate: log-rank p-values for survival comparisons and coefficient tables with standard errors, confidence intervals, and p-values for logistic and Cox models.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 5092,
+            "completion_tokens_details": {
+              "reasoning_tokens": 4118
+            },
+            "prompt_tokens": 5934,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 11026
+          },
+          "attempt": 0
+        }
+      },
+      "results_paper_consistency": {
+        "status": "ok",
+        "paper_tex": "paper/paper.md",
+        "paper_kind": "paper_md",
+        "results_format": "raw_json",
+        "digest_hint": {
+          "unfavorable_count": 0,
+          "trial_fail_count": 0,
+          "trial_success_count": 0,
+          "metadata": {}
+        },
+        "score_scale": "1-5",
+        "method": "Direct LLM comparison: agent's FINAL results artifact (metrics.json summary) vs paper Results/Discussion/Conclusion. Interim failed runs are NOT evidence unless still present in the final metrics file.",
+        "score": 5.0,
+        "consistency_label": "high",
+        "hiding_unfavorable_suspected": false,
+        "hiding_confidence": 0.97,
+        "justification": "The paper's headline claims closely match the final experimental results. It reports 28,100 widely-used packages and 14.62% abandonment prevalence, both matching RQ1 exactly. The abandonment removal rate of 18.31% matches the final RQ2 Abandonment group, and the security-patch removal rate of 44.59% matches the final without_auto_floating Security Patch group. Regression conclusions about lower technical lag, higher governance maturity, dependency churn, and explicit abandonment detection are supported by significant coefficient directions and p-values in the logistic and Cox models. No clear contradiction or hidden negative outcome was identified in the provided excerpt.",
+        "supported_claims": [
+          "28,100 widely-used packages were analyzed",
+          "14.62% of widely-used npm packages became abandoned",
+          "Exposed dependents removed the abandoned dependency at 18.31%",
+          "Security-patch releases prompted removal at 44.59%",
+          "Lower technical lag is associated with higher removal likelihood and faster removal",
+          "Higher governance maturity is associated with higher removal likelihood and faster removal",
+          "Explicit abandonment notice is associated with faster removal"
+        ],
+        "unsupported_or_overstated_claims": [],
+        "numeric_mismatches": [],
+        "unfavorable_in_final_results": [],
+        "unfavorable_acknowledged_in_paper": [],
+        "unfavorable_missing_from_paper": [],
+        "rubric": "Highly consistent and transparent: numbers and conclusions match metrics; failures and limitations are fairly reported.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 6756,
+            "completion_tokens_details": {
+              "reasoning_tokens": 6410
+            },
+            "prompt_tokens": 6216,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 12972
+          },
+          "attempt": 0
+        }
+      },
+      "scores": {
+        "experiment_success": true,
+        "idea_code_score": 3.0,
+        "setup_coverage": 1.0,
+        "ablation_coverage_score": 1.0,
+        "overall_ablation_ok": true,
+        "overall_significance_ok": true,
+        "results_paper_score": 5.0,
+        "hiding_unfavorable_suspected": false
+      },
+      "notes": [
+        "Axes 1,2,3,4,6 in experiment_analysis (figures excluded).",
+        "setup_coverage matches task.md Datasets/Baselines/Metrics; weak_protocol flags reductions vs Constraints.",
+        "Axis 6: final normalized results vs paper; interim run logs not used as ground truth."
+      ]
+    },
+    "literature_review": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-023_investigating_dependency_abandonment_and/workspace/deepscientist_2026-09-16_03-22-51",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-023_investigating_dependency_abandonment_and",
+      "status": "ok",
+      "as_of_year": 2026,
+      "agent_ref_count": 10,
+      "sources": [
+        {
+          "path": "~/ai_scientist_inputs/ICSE-2025-023_investigating_dependency_abandonment_and/workspace/deepscientist_2026-09-16_03-22-51/DeepScientist/quests/001/artifacts/idea/literature_survey.md",
+          "kind": "literature_survey"
+        }
+      ],
+      "collection_audit": {
+        "cited_keys_count": 0,
+        "filter_mode": "non_bib_sources",
+        "bib_total_before_filter": 0,
+        "bib_after_filter": 0,
+        "uncited_bib_skipped": 0,
+        "agent_ref_count": 10
+      },
+      "fabrication": {
+        "status": "ok",
+        "scholarly_count": 10,
+        "verified_count": 9,
+        "fake_count": 0,
+        "lookup_failed_count": 1,
+        "insufficient_metadata_count": 0,
+        "non_paper_count": 0,
+        "fabrication_rate": 0.0,
+        "items": [
+          {
+            "title": "Understanding the Response to Open-Source Dependency Abandonment in the npm Ecosystem",
+            "doi": "10.1109/icse55347.2025.00004",
+            "arxiv_id": "",
+            "year": 2025,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Understanding the Response to Open-Source Dependency Abandonment in the npm Ecosystem",
+            "resolved_year": 2025,
+            "notes": [],
+            "cache_hit": true,
+            "cite_key": "",
+            "source_kind": "literature_survey"
+          },
+          {
+            "title": "On the Evolution of Technical Lag in the npm Package Dependency Network",
+            "doi": "10.1109/icsme.2018.00050",
+            "arxiv_id": "1806.01545",
+            "year": 2018,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "On the Evolution of Technical Lag in the npm Package Dependency Network",
+            "resolved_year": 2018,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "",
+            "source_kind": "literature_survey"
+          },
+          {
+            "title": "On the impact of security vulnerabilities in the npm and RubyGems dependency networks",
+            "doi": "10.1007/s10664-022-10154-1",
+            "arxiv_id": "",
+            "year": 2022,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated."
+            ],
+            "cite_key": "",
+            "source_kind": "literature_survey"
+          },
+          {
+            "title": "On the Impact of Security Vulnerabilities in the npm Package Dependency Network",
+            "doi": "10.1145/3196398.3196401",
+            "arxiv_id": "",
+            "year": 2018,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "On the Impact of Security Vulnerabilities in the npm Package Dependency Network",
+            "resolved_year": 2018,
+            "notes": [],
+            "cache_hit": true,
+            "cite_key": "",
+            "source_kind": "literature_survey"
+          },
+          {
+            "title": "An Empirical Study of Dependency Downgrades in the npm Ecosystem",
+            "doi": "10.1109/tse.2019.2952130",
+            "arxiv_id": "",
+            "year": 2019,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "An Empirical Study of Dependency Downgrades in the npm Ecosystem",
+            "resolved_year": 2021,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "",
+            "source_kind": "literature_survey"
+          },
+          {
+            "title": "Demystifying the vulnerability propagation and its evolution via dependency trees in the npm ecosystem",
+            "doi": "10.1145/3510003.3510142",
+            "arxiv_id": "",
+            "year": 2022,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Demystifying the Vulnerability Propagation and Its Evolution via Dependency Trees in the NPM Ecosystem",
+            "resolved_year": 2022,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "",
+            "source_kind": "literature_survey"
+          },
+          {
+            "title": "Dependency-Induced Waste in Continuous Integration: An Empirical Study of Unused Dependencies in the npm Ecosystem",
+            "doi": "10.1145/3660823",
+            "arxiv_id": "",
+            "year": 2024,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Dependency-Induced Waste in Continuous Integration: An Empirical Study of Unused Dependencies in the npm Ecosystem",
+            "resolved_year": 2024,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "",
+            "source_kind": "literature_survey"
+          },
+          {
+            "title": "Why modern open source projects fail",
+            "doi": "10.1145/3106237.3106246",
+            "arxiv_id": "1707.02327",
+            "year": 2017,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Why modern open source projects fail",
+            "resolved_year": 2017,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "",
+            "source_kind": "literature_survey"
+          },
+          {
+            "title": "On the Abandonment and Survival of Open Source Projects",
+            "doi": "10.1109/esem.2019.8870181",
+            "arxiv_id": "1906.08058",
+            "year": 2019,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "On the abandonment and survival of open source projects: An empirical investigation",
+            "resolved_year": 2019,
+            "notes": [],
+            "cache_hit": true,
+            "cite_key": "",
+            "source_kind": "literature_survey"
+          },
+          {
+            "title": "Exploring factors affecting developer abandonment of open source software projects",
+            "doi": "10.1002/smr.2484",
+            "arxiv_id": "",
+            "year": 2022,
+            "status": "verified",
+            "matched_via": "s2_doi",
+            "resolved_title": "Exploring factors affecting developer abandonment of open source software projects",
+            "resolved_year": 2022,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "",
+            "source_kind": "literature_survey"
+          }
+        ],
+        "cache_path": "~/ai_scientist_evals/ICSE-2025-023_investigating_dependency_abandonment_and/reference_verify_cache.json",
+        "override_path": "~/ai_scientist_evals/ICSE-2025-023_investigating_dependency_abandonment_and/reference_verify_overrides.json",
+        "note": "fabrication_rate = fake / (verified + fake). lookup_failed (API errors) and insufficient_metadata are excluded and retried or skipped. GitHub/docs/tool URLs are non_paper and excluded from the rate. To manually correct a false negative, edit reference_verify_overrides.json (key=normalized title / doi / cite_key; value=\"verified\" or a result dict), then re-run."
+      },
+      "coverage": {
+        "status": "ok",
+        "gold_source": "~/ai_scientist_inputs/ICSE-2025-023_investigating_dependency_abandonment_and/mineru_sections.json",
+        "gold_count": 78,
+        "gold_is_original_paper_references": true,
+        "gold_is_openalex_subset": false,
+        "agent_count": 10,
+        "intersection_size": 5,
+        "recall": 0.0641025641025641,
+        "precision": 0.5,
+        "matched_gold_keys": [
+          "avelino2019abandonment",
+          "coelho2017modern",
+          "decan2018evolution",
+          "decan2018impact",
+          "liu2022demystifying"
+        ],
+        "primary_metric": "recall",
+        "note": "Primary metric is recall against the original paper bibliography (titles from mineru_sections.json REFERENCES; related_work.json used only to enrich DOI/year or as fallback if mineru titles are empty). Denominator = |original paper references|. Precision is secondary (agent may cite valid extra papers)."
+      },
+      "recency": {
+        "status": "ok",
+        "dated_count": 10,
+        "unknown_year_count": 0,
+        "year_histogram": {
+          "2017": 1,
+          "2018": 2,
+          "2019": 1,
+          "2021": 1,
+          "2022": 3,
+          "2024": 1,
+          "2025": 1
+        },
+        "windows": {
+          "3": {
+            "years": 3,
+            "cutoff_year_inclusive": 2023,
+            "recent_count": 2,
+            "recent_ratio": 0.2
+          },
+          "5": {
+            "years": 5,
+            "cutoff_year_inclusive": 2021,
+            "recent_count": 6,
+            "recent_ratio": 0.6
+          }
+        }
+      },
+      "scores": {
+        "fabrication_rate": 0.0,
+        "coverage_recall": 0.0641025641025641,
+        "coverage_precision": 0.5,
+        "recency_ratio_3y": 0.2,
+        "recency_ratio_5y": 0.6
+      }
+    }
+  },
+  "scores": {
+    "completeness": {
+      "complete": true,
+      "overall_score": 0.83,
+      "required_score": 1.0,
+      "bonus_score": 0.0
+    },
+    "peer_review": {
+      "status": "ok",
+      "optional": false,
+      "overall_score": 5.0,
+      "score_scale": "1-10",
+      "scoring_method": "paperreview_apr"
+    },
+    "idea_generation": {
+      "status": "ok",
+      "overall_score": 2.5,
+      "dimensions": {
+        "novelty": 1.0,
+        "feasibility": 4.0,
+        "clarity": 4.0
+      },
+      "novelty_category": "Existing",
+      "solution_space_status": "ok"
+    },
+    "alignment": {
+      "status": "ok",
+      "direction_consistency": "unknown",
+      "overall_alignment_score": 0.0
+    },
+    "literature_review": {
+      "fabrication_rate": 0.0,
+      "coverage_recall": 0.0641025641025641,
+      "coverage_precision": 0.5,
+      "recency_ratio_3y": 0.2,
+      "recency_ratio_5y": 0.6
+    },
+    "experiment_analysis": {
+      "experiment_success": true,
+      "idea_code_score": 3.0,
+      "setup_coverage": 1.0,
+      "ablation_coverage_score": 1.0,
+      "overall_ablation_ok": true,
+      "overall_significance_ok": true,
+      "results_paper_score": 5.0,
+      "hiding_unfavorable_suspected": false
+    }
+  },
+  "fair_scores": {
+    "applicable_axes": [
+      "completeness",
+      "idea_generation",
+      "peer_review",
+      "alignment",
+      "literature_review",
+      "experiment_analysis"
+    ],
+    "skipped_axes": [],
+    "fair_mean_0_1": 0.5536,
+    "note": "fair_mean_0_1 averages only applicable axes; optional peer review and framework-inapplicable literature are excluded from the denominator."
+  },
+  "evals_root": "~/ai_scientist_evals",
+  "claims_cache": "~/ai_scientist_evals/ICSE-2025-023_investigating_dependency_abandonment_and/original_claims.json",
+  "solution_space_cache": "~/ai_scientist_evals/ICSE-2025-023_investigating_dependency_abandonment_and/solution_space.json"
+}

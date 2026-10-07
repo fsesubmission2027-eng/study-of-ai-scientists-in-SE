@@ -1,0 +1,180 @@
+{
+  "id": "FSE-2025-005",
+  "paper_id": "912d166268ff28359e9f1617dc8db5206c1b32bf",
+  "title": "Mystique: Automated Vulnerability Patch Porting with Semantic and Syntactic-Enhanced LLM",
+  "abstract": "Branching repositories facilitates efficient software development but can also inadvertently propagate vulnerabilities. When an original branch is patched, other unfixed branches remain vulnerable unless the patch is successfully ported. However, due to inherent discrepancies between branches, many patches cannot be directly applied and require manual intervention, which is time-consuming and leads to delays in patch porting, increasing vulnerability risks. Existing automated patch porting approaches are prone to errors, as they often overlook essential semantic and syntactic context of vulnerability and fail to detect or refine faulty patches. We propose Mystique, a novel LLM-based approach to address these limitations. Mystique first slices the semantic-related statements linked to the vulnerability while ensuring syntactic correctness, allowing it to extract the signatures for both the original patched function and the target vulnerable function. Mystique then utilizes a fine-tuned LLM to generate a fixed function, which is further iteratively checked and refined to ensure successful porting. Our evaluation shows that Mystique achieved a success rate of 0.954 at function level and of 0.924 at CVE level, outperforming state-of-the-art approaches by at least 13.2% at function level and 12.3% at CVE level. Our evaluation also demonstrates Mystique’s superior generality across various projects, bugs, and programming languages. Mystique successfully ported patches for 34 real-world vulnerable branches.",
+  "year": 2025,
+  "citation_count": 5,
+  "venue": "ACM International Conference on the Foundations of Software Engineering (FSE 2025)",
+  "venue_short": "FSE 2025",
+  "authors": [
+    "Susheng Wu",
+    "Ruisi Wang",
+    "Yiheng Cao",
+    "Bihuan Chen",
+    "Zhuotong Zhou",
+    "Yiheng Huang",
+    "JunPeng Zhao",
+    "Xin Peng"
+  ],
+  "pdf_url": "",
+  "paper_url": "https://www.semanticscholar.org/paper/912d166268ff28359e9f1617dc8db5206c1b32bf",
+  "paper_type": "methodology",
+  "award": "ACM SIGSOFT Distinguished Paper Award",
+  "subfield_label": "LLM for Software Engineering",
+  "introduction": "In modern software development, branching within a single repository provides an efficient way to manage and organize feature development [23,36,38]. However, this practice can inadvertently propagate vulnerabilities. When a branch is created from another, it may inherit existing vulnerabilities from the parent branch. Even if the original branch is later fixed with a patch, the target unfixed branches within the repository remain vulnerable unless the patch is consistently applied across them [20,42]. To mitigate these risks, a straightforward and cost-effective approach is to port security patches from the original branch to target branches. However, due to the inherent discrepancies between branches [46], many patches cannot be directly applied, resulting in delays in patch porting and increasing vulnerability exposure [20,41].\n\nExisting Approaches. Various approaches have been proposed to automatically port patches for mitigating this problem. Pattern-based approaches, such as FixMorph [41] and TSBPORT [62], rely on predefined patch patterns to automatically port patches within local code hunks. FixMorph [41] primarily utilizes syntactic information to port patches. However, its heavy reliance on syntactic patterns often leads to the neglect of semantic aspects within the local hunks. Additionally, the patch generation process in FixMorph depends on compilation by Clang/LLVM, which is timeconsuming and lacks generalizability across different repositories. To address these limitations, TSBPORT [62] introduces a range of semantic hunk types to enhance the porting process but still suffers from significant limitations, i.e., if any modified hunk falls outside the predefined patterns, the entire patch may fail, and the lack of function-level semantic information can result in the introduction of unexpected patch porting errors.\n\nLLM-based approach, exemplified by PPatHF [35], leverages a fine-tuned large language model (LLM) to automate the porting of patches across forked projects at function level. This approach benefits from LLM's ability to comprehend the discrepancies of a function between the original and target branches. PPatHF attempts to simplify the patching process by removing compound blocks with no modified lines, thereby focusing on core changes. However, this approach can inadvertently strip away crucial syntactic and semantic information related to the vulnerability, potentially resulting in patches that remain vulnerable. Moreover, PPatHF relies heavily on intra-repository knowledge for LLM fine-tuning, which can lead to misalignments with the actual porting task, thereby reducing its effectiveness across different projects or languages. Additionally, LLM may generate incomplete or incorrect patches, as PPatHF often overlooks the diverse reasons for LLM porting failure, which hinders further patch adaption and leads to unsuccessful patching.\n\nBesides, there are some approaches designed for specialized vulnerability. For example, SkyPort [43] ports patches to earlier versions by matching portable constraints between modified lines and sink functions for PHP injection vulnerabilities. However, this approach requires manual curation of sink functions, limiting its applicability to certain types of vulnerabilities. PatchWeave [42] utilizes the exploitable test cases to guide patch porting. However, the vulnerability may lack exploitable test cases, limiting the practical effectiveness.\n\nChallenges. We summarize two main challenges of the existing approaches. (C1) Pattern-based approaches work at the hunk level, often missing vulnerability-relevant semantic information outside the modified code segment, and LLM-based approach, though working at a broader function level, can still overlook vulnerability relevant statements and include irrelevant ones. The underlying problem is that both approaches struggle to effectively balance porting granularity and capturing relevant context. (C2) Pattern-based approaches struggle with unexpected code variations, while LLM-based approaches often rely too heavily on generated output without thorough verification. This leads to unresolved porting failures and incomplete patches, as neither approach has a robust mechanism for detecting and refining these issues.\n\nOur Approach. We propose a novel approach, Mystiqe, for automatically porting patches across different branches at function level. To address C1, Mystiqe extracts vulnerability-relevant signatures of the patch function (including pre-patch and post-patch function) from the original branch and then identifies corresponding signature of the vulnerable function from target branch. It then uses a fine-tuned LLM to port the patch. Specifically, Mystiqe slices control-flow and datadependency related statements with the changed statements, and then further ensures the syntactic completeness for these sliced statements leveraging Abstract Syntax Tree (AST). Subsequently, Mystiqe generates the target fixed function using an LLM fine-tuned on the same task.\n\nTo address C2, Mystiqe first checks whether the vulnerable function is properly fixed, whether branch discrepancy is preserved, and whether LLM adheres to the prompt's constraints, applying heuristic rules to address these anomalies. Mystiqe then generates prompts with detailed suggestions based on these anomalies to guide LLM in refining the patches. This iterative checking-refining process ensures continuous improvement and increases the success rate of patch porting.\n\nEvaluation. We assess Mystiqe's effectiveness by comparing it against two state-of-the-art pattern-based approaches, one leading LLM-based approach, and four advanced LLMs across 694 CVEs involving 1,359 vulnerable functions. The results demonstrate that Mystiqe successfully ports 1,297 (0.954) functions and 641 (0.924) CVEs, significantly outperforming the state-of-the-art approaches by at least 13.2% and 12.3%, respectively. Additionally, we conduct an ablation study and parameter sensitivity analysis to evaluate the contribution of each critical module and parameter in Mystiqe. Furthermore, we comprehensively evaluate the generality of Mystiqe across different projects, bugs, and programming languages (e.g., Java). Mystiqe exhibits superior generality, outperforming the state-of-the-art approaches by at least 112.5%, 18.6%, and 15.4% at function level in the three generality tasks. To assess Mystiqe's practical usefulness, we apply it to successfully port 34 real-world vulnerable branches, with 29 successfully merged.\n\nContribution. This work makes the following contributions.\n\n• We propose Mystiqe, a novel LLM-based approach for porting security patches. Mystiqe extracts semantic and syntactic signatures to drive LLM in generating a fixed function. It then checks both semantic and syntactic anomalies to guide LLM in refining the fixed function. • Mystiqe outperforms the state-of-the-art approaches in patch porting success rate by at least 13.2% and 12.3% at both function and CVE levels, while also demonstrating strong generality across various scenarios, and successfully porting patches for 34 real-world vulnerable branches.",
+  "experiment": "Ground Truth. Following TSBPORT [62], we choose C projects to construct the ground truth. The ground truth is established through a rigorous four-step examination process.\n\n(1) Collecting Vulnerabilities and Patches. We collected vulnerabilities from CVE/NVD [27], along with their corresponding repository patch references (i.e., GitHub commits) between January 2014 and May 2024. Then, we filtered those vulnerabilities whose corresponding repositories are not written in C. As a result, we gathered 7,514 CVEs with their patches. (2) Expanding Vulnerabilities and Patches. To expand the vulnerabilities, we incorporated the vulnerability dataset used by TSBPORT [62]. To expand patches of each vulnerability, we leveraged the collected patches to identify additional potential patches. Specifically, for each collected commit, we scanned all commits in the corresponding repository, and expanded the patch set if they met one of the following four criteria, (a) The patch code is identical to one of the collected commits. (b) The edit distance similarity score exceeds 0.5 with at least one of the collected commits, and the commit messages are identical. (c) The commit message references the SHA value of a collected commit. (d) The commit message references a collected CVE ID. Following this augmentation, we collected a total of 7,532 CVEs with their 15,478 patches. (3) Selecting CVE Patch Pairs. Following PPatHF [35], we manually filtered commits unrelated to the vulnerability, and further refined the commits that involved files unrelated to C or modifications outside functions. After filtering, we sorted all commits by timestamp, and selected the earliest and latest commit for each vulnerability to form a CVE patch pair. The earliest commits are regarded as the original patch and the latest commits are regarded as the target patch. If the vulnerability only contains one single patch, we also excluded it. After this process, we finalized CVEs with their corresponding patch pairs. (4) Splitting CVE Patch Pairs. We used patch pairs dated after the release of CodeLLama on August 23, 2023 for patch porting task, and patch pairs dated before this release date for fine-tuning task, ensuring no data leakage between fine-tuning set and patch porting set. We then split each patch into function quadruples (𝑓 pre , 𝑓 post , 𝑓 vul , 𝑓 human-fix ) (resp., (𝑓 opre , 𝑓 opost , 𝑓 tpre , 𝑓 tpost )) for each function for the patch porting task (resp., then fine-tuning task).\n\nTwo of the authors were involved in filtering commits unrelated to the vulnerability when Selecting CVE Patch Pairs. Each author had over 5 years of experience in software security. We measured their agreement using Cohen's Kappa coefficient, which reached 0.981 for inspecting vulnerability-unrelated commits. A third author was involved in resolving disagreements. As a result, we collected 3,536 CVEs with their 5,977 patch pairs at function level across 33 different repositories, 694 CVEs with their 1,359 patch pairs at function level for the patch porting task and 2,842 CVEs with their 4,618 patch pairs at function level for the fine-tuning task.\n\nFine-Tuned LLM Selection. We use CodeLlama [26], a recent and powerful foundation large model designed for general code synthesis and understanding, to implement the porting module of Mystiqe. We download the public accessible pretrained weights (with 13B parameters and instruct-tuned) from the Hugging Face Transformer library to initialize our model.\n\nDuring the fine-tuning stage, we adopt LoRA (Low-Rank Adaptation) [14] to tune LLM. We set lora_r to 16 and lora_alpha to 32 for reducing memory requirement according to Raschka's work [37], with less time consumption and better performance. In addition, we set batch size to 8, epochs to 10 and learning rate to 3e-4, following PPatHF [35].\n\nDuring the patch porting stage, we configure the maximum context tokens to 4,096. This extended token limit accommodates the longer function and more round of refining, ensuring that input and output will not be truncated. Besides, temperature and top_p affect the consistency of outputs of the fine-tuned LLM. We choose to change temperature instead of changing both of them, following the practice in prior work [60]. Here, we set temperature to 0.5, ensuring that the model maintains consistency in patch porting while giving creative inferences.\n\nEvaluation Metrics. The metrics of Exactly Match (E-M) and Success (Succ) are used in TSB-PORT [62] to evaluate patch porting quality. E-M refers to the automatically ported patches that are identical to the manually ported patch, while Succ refers to automatically ported patches that are semantically equivalent to the manually ported patches. Both metrics are shown in the form of x (y), where x is the number of patches that are E-M or Succ, and y is the E-M rate or Succ rate. We apply both E-M and Succ to evaluate patch porting performance at the function and CVE level, providing a comprehensive assessment of porting quality. Additionally, patches that do not meet the semantically equivalence are categorized as failures (Fail), denoted in the same form of x (y), where x represents the number of failed patches and y indicates the failure rate. In addition, we introduce Code BLEU (C-B) [39] as an additional metric to quantify the difference between failed patches and the human ported patches with similarity values ranging from 0 to 1, where a higher value indicates greater similarity. We choose Code BLEU because, unlike binary metrics like E-M or Succ, it captures the degree of similarity in partially correct patches, offering a more nuanced view of how close failed patches are to the correct ones.\n\nBaselines. We include seven state-of-the-art approaches, including pattern-based approaches (FixMorph [41] and TSBPORT [62]), LLM-based approach (PPatHF [35]), the most recently closedsource LLMs, i.e., GPT-3.5 [30] and GPT-4o [31], and open-source LLMs, i.e., CodeLlama with 13 billion parameters and instruct-tuned, and StarCoder with 15.5 billion parameters used in PPatHF [35]. According to PPatHF [34], FixMorph only successfully ports about 4% of patches in the repositories other than Linux, highlighting its limited performance. Additionally, compiling data from diverse C repositories requires substantial effort. Given these constraints, we restrict our evaluation of FixMorph within fine-tuning sub-dataset from Linux repositories, referred to as FixMorph (L.). Similarly, we extract results of Mystiqe from Linux, denoted as Mystiqe (L.).\n\nRQ1 Setup. We assessed Mystiqe using the ground truth, and compared its performance with baseline approaches. We first fine-tuned Mystiqe with the fine-tuning dataset of our ground truth. PPatHF, however, was fine-tuned with the given commit message and its patch. Given the millions of commits across the 33 collected popular repositories, we sampled 5% of commits from the Linux repositories and 10% from the other 32 repositories. We then formatted the project history commits to include single-function changes between January 2014 and May 2024, aligning with our fine-tuning dataset selection. We further filtered the commits to include only those before the release time of StarCoder (i.e., July 1, 2022) to prevent data leakage. As a result, the fine-tuning dataset for PPatHF was composed of 23,561 commits from Linux and 7,913 commits from the other repositories, which was four times larger than the original dataset used for PPatHF. Overall Result. Table 4 shows the overall effectiveness results on the patch porting dataset. Mystiqe has shown superior performance across all metrics, leading in both CVE and function level. Specifically, it achieves 628 (0.905) of E-M and 641 (0.924) of Succ at CVE level and 1,283 (0.944) of E-M and 1,297 (0.954) of Succ at function level, surpassing all baselines approaches. C-B, which assesses the closeness of failed patches to the true patch, is highest for Mystiqe at 0.921, indicating that even the failed cases are more similar to the true patches compared to other approaches. Comparatively, the best state-of-the-art tool, TSBPORT has 557 (0.803) of E-M and 571 (0.823) of Succ at CVE level and 1,127 (0.829) of E-M and 1,145 (0.843) of Succ at function level, with a C-B of 0.919. Mystiqe not only improves in the Succ rate by 0.101 (12.3%) and 0.111 (13.2%) at CVE and function level, but also slightly outperforms in C-B by 0.002. The LLM-based approach PPatHF shows weaker performance with a Succ rate of 0.385 at CVE level and 0.550 at function level, and a C-B of 0.876. Mystiqe markedly outperforms it in the Succ rate at CVE and function level by 0.539 (140%) and 0.404 (73.5%), and also outperforms it in C-B by 0.045, highlighting the effectiveness of Mystiqe. The best LLM GPT-4o shows a Succ rate of 0.716 at CVE level and 0.805 at function level, with a C-B of 0.859. Mystiqe significantly surpasses GPT-4o in the Succ rate by 0.208 (29.1%) and 0.149 (18.5%) at CVE and function level, respectively, but also outperformed it in C-B by 0.062, indicating the limitation of the porting patches by LLM without any process.\n\nIn-Depth Analysis. As shown in Table 5, there are 62 functions that Mystiqe fails to patch. The majority of failures are signature-related (35 failures), primarily due to inter-procedural insensitivity, macro handling limitations, and token overflow. Moreover, tool-related issues account for 6 failures, all stemming from Joern slicing inaccuracies. LLM-related issues contribute to 19 failures, including placeholder mishandling, hallucination, and type insensitivity. Besides, branch-related issues lead to 2 failures, both caused by significant discrepancies.\n\nContextual loss during slicing is a major root cause in these failures. The most significant source is inter-procedural insensitivity (18 failures), where Mystiqe fails to capture security-critical relationships between callers and callees. Macro handling limitations further contribute to contextual loss (14 failures). Tool-specific constraints in Joern and Tree-sitter, particularly around complex pointer operations and alias analysis, account for an additional 6 failures. While static intra-procedural data/control dependency slicing and AST completion provide a solid foundation, they occasionally Overall Result. Table 6 presents the results of our ablation study. Overall, E-M and Succ decrease across the three ablated versions. Specifically, it exhibits the most significant drop in Mystiqe w/o Tuning, with E-M and Succ rate of 0.467 and 0.480 at CVE level, with E-M and Succ rate of 0.377 and 0.379 at function level, and a C-B drop of 0.038. This decline is primarily because the untuned LLM interprets sliced statements as syntactically incomplete fragments rather than meaningful semantic units, causing conflicts with Mystiqe's placeholder preservation mechanism and leading to failures. Additionally, without fine-tuning, LLM treats placeholders as standard code annotations rather than structural markers, further reducing its effectiveness. As a result, its performance falls even below that of the untrained CodeLlama in Table 4, highlighting the necessity of fine-tuning.\n\nBesides, Mystiqe w/o Signature suffers the second-largest E-M and Succ rate drop of 0.188 and 0.195 at CVE level, and 0.148 and 0.152 at function level, and a C-B drop of 0.118. Additionally, Mystiqe w/o Refine results in decreased E-M rate and Succ rate by 0.092 and 0.107 at CVE level and 0.055 and 0.062 at function level. The result indicates that all the three ablated components of Mystiqe make important contribution to its effectiveness.\n\nRQ3 Setup. Four key parameters are configurable in Mystiqe, namely the slicing depth (𝑠𝑙𝑖 𝑑𝑝 ), the over-fixing threshold (𝑡ℎ 𝑜𝑣 ), the under-fixing threshold (𝑡ℎ 𝑢𝑑 ), and the maximum session token limit (𝑡𝑘 𝑛𝑢𝑚 ). The default values for these parameters are set to 3, 0.3, 0.5, and 4,096 (4K), respectively. To assess the sensitivity of these parameters on Mystiqe's success rate, we systematically varied one parameter while keeping the other three unchanged.\n\nOverall Result. Fig. 5 presents the results of our sensitivity analysis. First, a deeper slicing depth can cause the generated fixed function to include more irrelevant statements, whereas a shallower slicing depth might miss critical statements. Mystiqe achieves the best balance with a slicing depth of 3. This threshold is crucial for detecting the appropriate degree of patch adaptation. Second, the best performance is observed when 𝑡ℎ 𝑜𝑣 and 𝑡ℎ 𝑢𝑑 are set to 0.3 and 0.5, respectively. Last, Mystiqe demonstrates a significant performance improvement at 4K tokens, with only a slight increase at 16K tokens in Succ rate at CVE level. Consequently, the maximum token length is set to 4K to reduce memory usage and computational costs associated with longer token lengths. Summary: Mystiqe achieves the optimal performance when 𝑠𝑙𝑖 𝑑𝑝 , 𝑡ℎ 𝑜𝑣 , 𝑡ℎ 𝑢𝑑 and 𝑡𝑘 𝑛𝑢𝑚 are set to 3, 0.3, 0.5 and 4,096, respectively.\n\nRQ4 Setup. To evaluate the generality of Mystiqe, we designed four generality experiments by applying Mystiqe across different LLMs, projects, bugs, and programming languages.\n\nCross-LLM Porting Evaluation. To assess the impact of different underlying large language models (LLMs) on patch porting, we conducted a cross-LLM porting evaluation by aligning the LLMs used in PPatHF and Mystiqe. We replaced CodeLLama with StarCoder in Mystiqe, and replaced Star-Coder with CodeLLama in PPatHF. All models were fine-tuned with the same hyperparameters (e.g., learning rate, and LoRA settings) across both approaches to ensure a fair comparison.\n\nCross-Project Porting Evaluation. We divided our datasets into two categories, Linux (L.) and Others (O.). Mystiqe was fine-tuned separately on L. and O., with patch porting conducted on the opposite category (i.e., fine-tuning on L., porting on O. (L./O. group) and vice versa (O./L. group)). This allows us to assess how Mystiqe generalizes across different projects by comparing against PPatHF.\n\nBug Porting Evaluation. To evaluate Mystiqe's effectiveness on general C bugs, we curated a patch porting dataset consisting of common C bugs. The dataset was constructed through a meticulous process. (1) We chose the top 100 C repositories on GitHub based on star count, ensuring active Java Vulnerability Porting Evaluation. To extend the evaluation to another programming language, we constructed a Java vulnerability patch porting dataset. Following the strategy used for C vulnerabilities and bugs, we collected and curated 61 confirmed Java vulnerability-fixing commit pairs with their 204 functions. This evaluation allows us to assess Mystiqe's ability to generalize across different programming languages. To adapt Mystiqe with Java vulnerability, we replaced Clang-tidy with a popular Java syntactic error checking tool [33].\n\nCross-LLM Porting Result. As shown in Table 7, when comparing Mystiqe-StarCoder with PPatHF-StarCoder, E-M increases from 0.365 to 0.689 at the CVE level and from 0.535 to 0.795 at the function level, while Succ rises from 0.385 to 0.710 at the CVE level and from 0.550 to 0.806 at the function level. The failure rate is significantly reduced from 0.450 to 0.194, demonstrating that Mystiqe generates fewer incorrect patches. These findings confirm that Mystiqe's methodology, including slicing, fine-tuning strategies, and iterative refinement, greatly enhances patch porting performance, independent of the underlying LLM. When replacing StarCoder with CodeLlama, both PPatHF and Mystiqe show further performance improvements. For PPatHF, switching to CodeLlama increases Succ by 0.135 at the CVE level and 0.120 at the function level. For Mystiqe, using CodeLlama leads to a more substantial boost, with Succ increasing by 0.214 at the CVE level and 0.148 at the function level. These results highlight that CodeLlama is a superior LLM for patch porting compared to StarCoder, but the most significant gains come from the combination of Mystiqe's methodology with CodeLlama, demonstrating that both the methodology and the LLM choice contribute to achieving the state-of-the-art performance.\n\nCross-Project Porting Result. The results shown in\n\nRQ6 Setup. We first extracted all C/C++ and Java vulnerabilities from CVE/NVD, along with their referenced patches, from January 1, 2020, to September 1, 2024. After extraction, we collected 810 Crelated CVEs and 368 Java-related CVEs. Next, we employed three state-of-the-art vulnerability code clone detection tools (i.e., DeepDFA [45], FIRE [10], and MVP [58]) to identify vulnerabilities that remained vulnerable across the original repository branches and related forked branches. To ensure the presence of vulnerabilities while minimizing human effort, we extracted the intersection of vulnerabilities identified by the three approaches across the branches. After manual verification, we identified a total of 16 CVEs, which included 10 CVEs with 24 vulnerable branches in C repositories and 6 CVEs with 10 vulnerable branches in Java repositories.\n\nOverall Result. Table 12 presents the results of our usefulness evaluation. Mystiqe performed automated patch porting for these CVEs and successfully ported 34 patches across the branches. We then reported the porting results through 34 pull requests (PRs) to the repository developers. Developers have accepted 29 PRs with the ported patches by Mystiqe. However, 5 PRs have not been merged in a timely manner. Among these, 1 PR was not merged because the vulnerability was considered low severity, despite the ported patch was confirmed correct by the developers. 4 PRs are still awaiting confirmation from developers.",
+  "section_quality": {
+    "has_abstract": true,
+    "has_introduction": true,
+    "has_experiment": true,
+    "intro_chars": 7179,
+    "experiment_chars": 17749
+  },
+  "introduction_source": "grobid_tei",
+  "experiment_source": "grobid_tei",
+  "background_source": "introduction",
+  "experiment_source_used": "experiment_section",
+  "task_title": "Automated Porting of Security Patches Across Divergent Repository Branches",
+  "background": "Modern software development often uses branching within repositories to manage features, but this practice can propagate vulnerabilities. When a parent branch is patched for a security flaw, other unfixed branches remain exposed unless the patch is manually ported—a slow, error-prone process due to inherent code divergences between branches. Existing automated patch porting tools either work at the hunk level, missing critical semantic context of the vulnerability, or use language models at the function level but still omit essential vulnerability-relevant statements and lack robust verification mechanisms. As a result, current approaches fail to reliably produce correct and complete patches across divergent branches, leaving vulnerabilities unmitigated.",
+  "research_question": "How can an automated system correctly port security patches from a fixed branch to an unfixed branch, even when divergences prevent the patch from being directly applied?",
+  "experiment_setup": {
+    "datasets": [
+      {
+        "name": "CVE-based C repository patch porting dataset",
+        "source": "Constructed from NVD/CVE records and public GitHub commits using a four-step process: (1) collect CVE patches for C projects, (2) expand with additional commits matching edit distance or commit messages, (3) manually filter to function-level changes and pair earliest vs. latest patches per CVE, (4) split temporally (before/after 2023-08-23) into fine-tuning and evaluation sets. Contact authors for the processed dataset.",
+        "description": "Fine-tuning set: 2,842 CVEs with 4,618 function-level patch pairs. Evaluation set: 694 CVEs with 1,359 function-level patch pairs, each containing the original branch pre-patch and post-patch functions and the target branch vulnerable function and its human-written fix.",
+        "access": "constructable"
+      }
+    ],
+    "baselines": [
+      {
+        "name": "FixMorph",
+        "reference": "FixMorph (pattern-based patch porting, K. et al., 2018)"
+      },
+      {
+        "name": "TSBPORT",
+        "reference": "TSBPORT (semantic hunk types for porting, Z. et al., 2021)"
+      },
+      {
+        "name": "PPatHF",
+        "reference": "PPatHF (LLM-based function-level porting, Y. et al., 2023)"
+      },
+      {
+        "name": "GPT-3.5",
+        "reference": "OpenAI gpt-3.5-turbo"
+      },
+      {
+        "name": "GPT-4o",
+        "reference": "OpenAI GPT-4o"
+      },
+      {
+        "name": "CodeLlama (13B instruct)",
+        "reference": "CodeLlama 13B instruct-tuned, Hugging Face"
+      },
+      {
+        "name": "StarCoder (15.5B)",
+        "reference": "StarCoder 15.5B, BigCode project"
+      }
+    ],
+    "metrics": [
+      {
+        "name": "Exactly Match (E-M)",
+        "definition": "Count and percentage of generated patches that are character-by-character identical to the human-written target fix."
+      },
+      {
+        "name": "Success (Succ)",
+        "definition": "Count and percentage of generated patches that are semantically equivalent to the human-written target fix (manual determination of functional equivalence)."
+      },
+      {
+        "name": "Failure (Fail)",
+        "definition": "Count and percentage of patches that are not semantically equivalent to the human fix."
+      },
+      {
+        "name": "Code BLEU (C-B)",
+        "definition": "A code-aware variant of BLEU that measures token-level similarity (0–1) between a generated failed patch and the human fix, capturing partial correctness."
+      }
+    ],
+    "rqs": [
+      "RQ1: How effective is the approach at porting security patches compared to existing pattern-based and LLM-based baselines, in terms of function-level and CVE-level exact match, success rate, and Code BLEU?"
+    ],
+    "target_subject": "C language open-source projects with multiple branches that contain security vulnerabilities (CVEs), e.g., Linux kernel, OpenSSL, and other widely-used C repositories.",
+    "constraints": "Only the original branch's pre-patch and post-patch functions and the target branch's vulnerable function are given as input; the ground-truth target fix is strictly for evaluation. No manual curation of sink functions, exploit test cases, or project-specific heuristics is allowed. Training and evaluation data must be split temporally (before/after August 2023) to prevent data leakage."
+  },
+  "expected_artifacts": [
+    "idea",
+    "code",
+    "experiment_results",
+    "paper"
+  ],
+  "feasibility_notes": "The dataset can be constructed from public CVE/NVD records and GitHub commits following a detailed four-step process, though it requires substantial manual filtering effort. Fine-tuning a 13B parameter LLM with LoRA on approximately 4,600 function pairs requires a GPU with at least 48GB memory (e.g., NVIDIA A100) and may take several hours. Inference evaluation is computationally lighter. A thorough comparison against seven baselines, including multiple LLMs, demands careful environment management.",
+  "difficulty": "hard",
+  "seed_papers": [
+    {
+      "title": "A Case Study of LLM for Automated Vulnerability Repair: Assessing Impact of Reasoning and Patch Validation Feedback",
+      "year": 2024,
+      "authors": [
+        "Ummay Kulsum",
+        "Haotian Zhu",
+        "Bowen Xu"
+      ],
+      "doi": "10.1145/3664646.3664770",
+      "arxiv_id": "2405.15690",
+      "pdf_url": "",
+      "citation_count": 56
+    },
+    {
+      "title": "APPATCH: Automated Adaptive Prompting Large Language Models for Real-World Software Vulnerability Patching",
+      "year": 2024,
+      "authors": [
+        "Yu Nong",
+        "Haoran Yang",
+        "Long Cheng"
+      ],
+      "doi": null,
+      "arxiv_id": "2408.13597",
+      "pdf_url": "",
+      "citation_count": 36
+    },
+    {
+      "title": "Logs In, Patches Out: Automated Vulnerability Repair via Tree-of-Thought LLM Analysis",
+      "year": 2025,
+      "authors": [
+        "Youngjoon Kim",
+        "Sunguk Shin",
+        "Hyoungshick Kim"
+      ],
+      "doi": null,
+      "arxiv_id": null,
+      "pdf_url": "",
+      "citation_count": 29
+    },
+    {
+      "title": "SoK: Automated Vulnerability Repair: Methods, Tools, and Assessments",
+      "year": 2025,
+      "authors": [
+        "Yiwei Hu",
+        "Zhen Li",
+        "Kedie Shu"
+      ],
+      "doi": "10.48550/arXiv.2506.11697",
+      "arxiv_id": "2506.11697",
+      "pdf_url": "",
+      "citation_count": 18
+    },
+    {
+      "title": "LLM4CVE: Enabling Iterative Automated Vulnerability Repair with Large Language Models",
+      "year": 2025,
+      "authors": [
+        "Mohamad Fakih",
+        "Rahul Dharmaji",
+        "Halima Bouzidi"
+      ],
+      "doi": "10.1109/DSD67783.2025.00087",
+      "arxiv_id": "2501.03446",
+      "pdf_url": "",
+      "citation_count": 13
+    }
+  ],
+  "paper_title": "Mystique: Automated Vulnerability Patch Porting with Semantic and Syntactic-Enhanced LLM"
+}

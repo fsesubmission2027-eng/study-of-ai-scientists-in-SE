@@ -1,0 +1,1554 @@
+{
+  "run_dir": "~/ai_scientist_inputs/ICSE-2025-005_impact_of_restricted_class_observability/workspace/evoscientist_2026-09-06_07-17-02",
+  "task_dir": "~/ai_scientist_inputs/ICSE-2025-005_impact_of_restricted_class_observability",
+  "framework": "evoscientist",
+  "fairness_audit": [
+    {
+      "axis": "completeness",
+      "was_unfair": "Required both paper.tex AND paper.pdf; any tool missing one failed equally.",
+      "fix": "Paper gate: PDF=1.0; TeX-only=0.5; ``complete`` requires PDF."
+    },
+    {
+      "axis": "completeness",
+      "was_unfair": "``results`` counted stub/seed JSON (dataset_candidate/metrics.json).",
+      "fix": "``results`` requires substantive numeric results via results_normalize."
+    },
+    {
+      "axis": "experiment_success",
+      "was_unfair": "Only metrics.json; ignored results.json / experiment_results.txt.",
+      "fix": "Framework-ordered result candidates + normalized loaders."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Penalized tools with no bib; airesearcher has no workspace references.",
+      "fix": "literature_applicable=false → status not_applicable; excluded from fair aggregate."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "related_work.json subset as gold made recall hard to interpret.",
+      "fix": "Coverage gold is original paper REFERENCES from mineru; related_work only enriches metadata/fallback."
+    },
+    {
+      "axis": "peer_review",
+      "was_unfair": "Missing Stanford report looked like evaluation failure.",
+      "fix": "status not_provided; optional axis, never counts as tool failure."
+    },
+    {
+      "axis": "paths/find_results",
+      "was_unfair": "Picked downloads/** and sandbox noise (e.g. airesearcher LLVM tree).",
+      "fix": "Exclude downloads/, seeds/, dataset_candidate/, sandbox junk paths."
+    },
+    {
+      "axis": "paths/framework_noise",
+      "was_unfair": "DeepScientist .deepscientist_npm / runtime / skills templates counted as code/paper/results.",
+      "fix": "FRAMEWORK_NOISE_DIRS+markers; quest worktree + eval_output results; paper md drafts; reject template tex."
+    },
+    {
+      "axis": "paths/paper_tex",
+      "was_unfair": "tiny_scientist / ACL runs store paper under latex/*.tex; evaluator only looked at paper/main.tex.",
+      "fix": "latex/**/*.tex with substantive-body heuristic; find_paper_document uses same rules."
+    },
+    {
+      "axis": "literature_review",
+      "was_unfair": "Entire custom.bib (300+ anthology entries) verified when paper had zero \\cite commands.",
+      "fix": "collect_agent_references filters bib to in-text cite keys; skips uncited bulk bib (>40 entries)."
+    },
+    {
+      "axis": "paths/ai_scientist_summaries",
+      "was_unfair": "AI Scientist can persist substantive results and paper-like drafts in *_summary.json logs rather than paper/main.tex or results/**/*.json.",
+      "fix": "Treat draft_summary/research_summary as weak paper documents and summary JSONs as result candidates."
+    },
+    {
+      "axis": "framework/ai_scientist_v2",
+      "was_unfair": "Manifest framework ``ai_scientist_v2`` fell through to profile ``unknown``, skipping AI-Scientist idea/result path priorities.",
+      "fix": "Normalize ``ai_scientist_v2`` (and common aliases) to profile key ``ai_scientist``."
+    },
+    {
+      "axis": "idea_generation",
+      "was_unfair": "plan.md/todos.md weak proxies scored same as structured idea.json.",
+      "fix": "Framework idea_priority tried first; missing idea → not_applicable where appropriate."
+    }
+  ],
+  "generated_at": "2026-10-01T13:17:32",
+  "axes": [
+    "alignment",
+    "completeness",
+    "experiment_analysis",
+    "idea_generation",
+    "literature_review",
+    "peer_review"
+  ],
+  "results": {
+    "completeness": {
+      "framework": "evoscientist",
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-005_impact_of_restricted_class_observability/workspace/evoscientist_2026-09-06_07-17-02",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-005_impact_of_restricted_class_observability",
+      "complete": true,
+      "required_score": 1.0,
+      "bonus_score": 0.09,
+      "overall_score": 0.8453,
+      "missing": [],
+      "required": {
+        "idea": {
+          "path": "todos.md",
+          "bytes": 2587,
+          "via": "candidate"
+        },
+        "code": {
+          "count": 13,
+          "files": [
+            {
+              "path": "project/analyze_final.py",
+              "bytes": 8128,
+              "via": "glob"
+            },
+            {
+              "path": "project/metrics.py",
+              "bytes": 5091,
+              "via": "glob"
+            },
+            {
+              "path": "project/plot_figures.py",
+              "bytes": 3967,
+              "via": "glob"
+            },
+            {
+              "path": "project/run_batch.py",
+              "bytes": 11760,
+              "via": "glob"
+            },
+            {
+              "path": "project/scripts/analyze.py",
+              "bytes": 4794,
+              "via": "glob"
+            },
+            {
+              "path": "project/scripts/analyze_final.py",
+              "bytes": 8128,
+              "via": "glob"
+            },
+            {
+              "path": "project/scripts/plot_figures.py",
+              "bytes": 3967,
+              "via": "glob"
+            },
+            {
+              "path": "project/scripts/run_batch.py",
+              "bytes": 11760,
+              "via": "glob"
+            },
+            {
+              "path": "project/scripts/select_classes.py",
+              "bytes": 2390,
+              "via": "glob"
+            },
+            {
+              "path": "project/scripts/smoke_test.sh",
+              "bytes": 1073,
+              "via": "glob"
+            },
+            {
+              "path": "project/select_classes.py",
+              "bytes": 2390,
+              "via": "glob"
+            },
+            {
+              "path": "project/tools/src/CycloComplexityScanner.java",
+              "bytes": 9494,
+              "via": "glob"
+            },
+            {
+              "path": "project/tools/src/ObservabilityInjector.java",
+              "bytes": 15247,
+              "via": "glob"
+            }
+          ]
+        },
+        "results": {
+          "substantive": true,
+          "normalized_path": "results/metrics.json",
+          "numeric_leaf_count": 45,
+          "discovered_files": [
+            {
+              "path": "results/metrics.json",
+              "bytes": 2107,
+              "via": "candidate"
+            },
+            {
+              "path": "results/raw/100_jgaap/jgaapGUI__baseline__1560157888921/metrics.json",
+              "bytes": 591,
+              "via": "glob"
+            },
+            {
+              "path": "results/raw/100_jgaap/jgaapGUI__baseline__2645100452462/metrics.json",
+              "bytes": 591,
+              "via": "glob"
+            },
+            {
+              "path": "results/raw/100_jgaap/jgaapGUI__baseline__2802754416809/metrics.json",
+              "bytes": 591,
+              "via": "glob"
+            },
+            {
+              "path": "results/raw/100_jgaap/jgaapGUI__baseline__2961251404189/metrics.json",
+              "bytes": 591,
+              "via": "glob"
+            },
+            {
+              "path": "results/raw/100_jgaap/jgaapGUI__baseline__3453385008862/metrics.json",
+              "bytes": 591,
+              "via": "glob"
+            },
+            {
+              "path": "results/raw/100_jgaap/jgaapGUI__baseline__5309033439831/metrics.json",
+              "bytes": 591,
+              "via": "glob"
+            },
+            {
+              "path": "results/raw/100_jgaap/jgaapGUI__combined__1560157888921/metrics.json",
+              "bytes": 591,
+              "via": "glob"
+            },
+            {
+              "path": "results/raw/100_jgaap/jgaapGUI__combined__2645100452462/metrics.json",
+              "bytes": 591,
+              "via": "glob"
+            },
+            {
+              "path": "results/raw/100_jgaap/jgaapGUI__combined__2802754416809/metrics.json",
+              "bytes": 591,
+              "via": "glob"
+            },
+            {
+              "path": "results/raw/100_jgaap/jgaapGUI__combined__2961251404189/metrics.json",
+              "bytes": 591,
+              "via": "glob"
+            },
+            {
+              "path": "results/raw/100_jgaap/jgaapGUI__combined__3453385008862/metrics.json",
+              "bytes": 591,
+              "via": "glob"
+            },
+            {
+              "path": "results/raw/100_jgaap/jgaapGUI__combined__5309033439831/metrics.json",
+              "bytes": 591,
+              "via": "glob"
+            },
+            {
+              "path": "results/raw/100_jgaap/jgaapGUI__full-getters__1560157888921/metrics.json",
+              "bytes": 595,
+              "via": "glob"
+            },
+            {
+              "path": "results/raw/100_jgaap/jgaapGUI__full-getters__2645100452462/metrics.json",
+              "bytes": 595,
+              "via": "glob"
+            },
+            {
+              "path": "results/raw/100_jgaap/jgaapGUI__full-getters__2802754416809/metrics.json",
+              "bytes": 595,
+              "via": "glob"
+            },
+            {
+              "path": "results/raw/100_jgaap/jgaapGUI__full-getters__2961251404189/metrics.json",
+              "bytes": 595,
+              "via": "glob"
+            },
+            {
+              "path": "results/raw/100_jgaap/jgaapGUI__full-getters__3453385008862/metrics.json",
+              "bytes": 595,
+              "via": "glob"
+            },
+            {
+              "path": "results/raw/100_jgaap/jgaapGUI__full-getters__5309033439831/metrics.json",
+              "bytes": 595,
+              "via": "glob"
+            },
+            {
+              "path": "results/raw/100_jgaap/jgaapGUI__recursive__1560157888921/metrics.json",
+              "bytes": 592,
+              "via": "glob"
+            }
+          ],
+          "metrics_keys_sample": [
+            "mutation_score",
+            "statement_coverage",
+            "branch_coverage",
+            "suite_coverage",
+            "vargha_delaney_a12",
+            "killed_mutants_delta",
+            "n_subjects",
+            "n_seeds_per_config",
+            "metric_note",
+            "treatments",
+            "comparison_to_baseline"
+          ]
+        },
+        "paper": {
+          "tex": {
+            "path": "paper/main.tex",
+            "bytes": 15388,
+            "via": "candidate"
+          },
+          "pdf": {
+            "path": "paper/main.pdf",
+            "bytes": 233254,
+            "via": "candidate"
+          },
+          "md": {
+            "path": "paper/paper.md",
+            "bytes": 12814,
+            "via": "candidate"
+          },
+          "json": null,
+          "status": "pdf",
+          "score": 1.0
+        }
+      },
+      "bonus": {
+        "experiment_plan": {
+          "path": "todos.md",
+          "bytes": 2587,
+          "via": "candidate"
+        },
+        "experiment_log": {
+          "path": "evoscientist_run.log",
+          "bytes": 160210,
+          "via": "glob"
+        },
+        "review": null,
+        "readme": {
+          "path": "README.md",
+          "bytes": 2830,
+          "via": "candidate"
+        },
+        "narrative": null,
+        "bib": null
+      },
+      "manifest_status": {
+        "research_request": true,
+        "plan": true,
+        "metrics": true,
+        "paper_tex": true,
+        "paper_pdf": true,
+        "readme": true
+      },
+      "gate_scores": {
+        "idea": 1.0,
+        "code": 1.0,
+        "results": 1.0,
+        "paper": 1.0
+      },
+      "fairness": {
+        "gates": [
+          "idea",
+          "code",
+          "results",
+          "paper"
+        ],
+        "paper_gate_rule": "PDF=1.0; TeX-only/md_only/json_only=0.5; complete requires PDF",
+        "results_gate_rule": "substantive numeric results via framework-aware normalize_results",
+        "audit_ref": "framework_profile.FAIRNESS_AUDIT"
+      },
+      "notes": [
+        "Required: idea, code, substantive results, paper (PDF full; TeX/markdown/JSON draft half).",
+        "Stub/seed metrics (e.g. dataset_candidate/metrics.json) do not satisfy results.",
+        "Framework noise (.deepscientist_npm, skills/templates, runtime) is excluded from code/results/paper.",
+        "Manifest status is informational; disk presence is authoritative."
+      ]
+    },
+    "idea_generation": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-005_impact_of_restricted_class_observability/workspace/evoscientist_2026-09-06_07-17-02",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-005_impact_of_restricted_class_observability",
+      "idea_path": "~/ai_scientist_inputs/ICSE-2025-005_impact_of_restricted_class_observability/workspace/evoscientist_2026-09-06_07-17-02/todos.md",
+      "status": "ok",
+      "dimensions": {
+        "novelty": {
+          "score": 3.0,
+          "justification": "The artifact states it will 'add a novel treatment: mutation-relevance-guided selective getter injection + field-level observability-gap localization' and reports 'selective ≈ full ... with 58.8% fewer getters'. Relative to [R11] code visibility effects, [R19] observability improvement, [R52] automated refactoring for testability, and [R58] observability/mutation-score correlation, this is a meaningful optimization of existing getter-injection/observability interventions, not a paradigm change.",
+          "rubric": "Incremental: a meaningful extension or optimization of prior baseline work that fixes a concrete prior limitation, but the core paradigm is unchanged.",
+          "category": "Incremental",
+          "nearest_solution_space_ids": [
+            "R11",
+            "R19",
+            "R52",
+            "R58"
+          ],
+          "differentiation": "The idea's new contribution is mutation-relevance-guided selective getter injection plus field-level observability-gap localization. Closest solution-space work studies code visibility/testability effects, general observability improvement, testability refactoring, and observability-mutation-score correlations, but not selective, mutation-guided getter injection."
+        },
+        "feasibility": {
+          "score": 3.0,
+          "justification": "The plan uses public EvoSuite and SF110, but requires nontrivial engineering: 'patch EvoSuite 1.2.0', build a 'bytecode getter injector (full/selective)', 'CC scanner', and 'batch runner', then run '14 runnable classes × 5 configs × 6 seeds' with 180 s/600 s budgets. This is standard research engineering but not low-effort.",
+          "rubric": "Moderate workload (sweet spot): needs nontrivial coding such as scripting existing open-source tools (parsers, CFG extractors) or building a custom graph-processing pipeline; standard research engineering effort."
+        },
+        "clarity": {
+          "score": 4.0,
+          "justification": "The idea gives concrete stages, success signals, metrics, and analysis: 'paired one-tailed Wilcoxon + Vargha-Delaney Â₁₂, coverage invariance, gap localization', plus anchor reproduction 'NoenFormatter 30%→52%, paper 27.9%→52%'. However, exact C0–C4 configuration details and the selective-injection algorithm are referenced rather than specified in the artifact, preventing a 5.",
+          "rubric": "Clear and concrete: steps are explicit with a reasonable, specific experiment design (baseline tools, metric definitions); can be turned into a solid proposal."
+        }
+      },
+      "overall_score": 3.3,
+      "score_scale": "1-5",
+      "dimension_order": [
+        "novelty",
+        "feasibility",
+        "clarity"
+      ],
+      "solution_space": {
+        "status": "ok",
+        "paper_count": 61,
+        "entry_count": 61,
+        "cache_hit": true,
+        "source_file": "~/ai_scientist_inputs/ICSE-2025-005_impact_of_restricted_class_observability/mineru_sections.json",
+        "stats": {
+          "papers": 61,
+          "extracted": 61,
+          "usable_abstracts": 46,
+          "citation_meta_abstracts": 0,
+          "missing_abstracts": 15,
+          "mineru_titles": 59,
+          "related_work_titles": 53,
+          "abstracts_attached": 46,
+          "related_work_extras": 2,
+          "batches": 4
+        },
+        "error": null
+      },
+      "notes": [
+        "Scores the intermediate idea artifact (not the final paper).",
+        "Dimensions: novelty, feasibility, clarity (each 1-5). Excitement removed.",
+        "Novelty is scored against a Solution Space built from mineru REFERENCES titles (+ related_work.json abstracts when matched)."
+      ],
+      "idea_via": "candidate",
+      "idea_relative": "todos.md",
+      "summary": "This is a reproduction-plus-extension study measuring how restricted class observability affects EvoSuite/DynaMOSA mutation effectiveness. It adds mutation-relevance-guided selective getter injection and observability-gap localization to existing full-getter/inspector treatments. The plan is concrete, uses public tools/data, and reports clear effect-size results, but the core remains an incremental refinement of established observability and testability work.",
+      "strengths": [
+        "Concrete experimental pipeline with explicit stages, success signals, and statistical analysis.",
+        "Uses public SF110/EvoSuite and verifies the constraint that coverage goals and mutant sets remain unchanged.",
+        "Includes a quantitative anchor reproduction aligned with prior paper results."
+      ],
+      "weaknesses": [
+        "Selective getter injection is an incremental optimization over the existing full-getter treatment.",
+        "Only 14 runnable classes may limit generalizability of the findings.",
+        "Key configuration details such as C0–C4 and the selective algorithm are not defined in this artifact."
+      ],
+      "llm_meta": {
+        "model": "deepseek-v4-pro-0813",
+        "base_url": "https://api-sg.umodelverse.ai/v1",
+        "usage": {
+          "completion_tokens": 2619,
+          "completion_tokens_details": {
+            "reasoning_tokens": 1926
+          },
+          "prompt_tokens": 6284,
+          "prompt_tokens_details": {
+            "cached_tokens": 4096
+          },
+          "total_tokens": 8903
+        },
+        "attempt": 0
+      }
+    },
+    "peer_review": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-005_impact_of_restricted_class_observability/workspace/evoscientist_2026-09-06_07-17-02",
+      "review_report": "~/ai_scientist_inputs/ICSE-2025-005_impact_of_restricted_class_observability/workspace/evoscientist_2026-09-06_07-17-02/artifacts/peer_review/stanford_apr.md",
+      "paper_pdf": "~/ai_scientist_inputs/ICSE-2025-005_impact_of_restricted_class_observability/workspace/evoscientist_2026-09-06_07-17-02/paper/main.pdf",
+      "paper_tex": "~/ai_scientist_inputs/ICSE-2025-005_impact_of_restricted_class_observability/workspace/evoscientist_2026-09-06_07-17-02/paper/main.tex",
+      "status": "ok",
+      "dimensions": {},
+      "overall_score": 5.2,
+      "score_scale": "1-10",
+      "dimension_order": [],
+      "notes": [
+        "Scored from paperreview.ai (Stanford APR) native ratings; benchmark 5-dimension LLM rubric skipped.",
+        "Overall scale: 1-10."
+      ],
+      "paperreview": {
+        "status": "fetched",
+        "token_file": "~/ai_scientist_inputs/ICSE-2025-005_impact_of_restricted_class_observability/workspace/evoscientist_2026-09-06_07-17-02/artifacts/peer_review/paperreview.token.txt",
+        "json": "~/ai_scientist_inputs/ICSE-2025-005_impact_of_restricted_class_observability/workspace/evoscientist_2026-09-06_07-17-02/artifacts/peer_review/stanford_apr.json",
+        "markdown": "~/ai_scientist_inputs/ICSE-2025-005_impact_of_restricted_class_observability/workspace/evoscientist_2026-09-06_07-17-02/artifacts/peer_review/stanford_apr.md",
+        "apr_scores": {
+          "scale": "1-10",
+          "overall": 5.2,
+          "dimensions": {}
+        },
+        "pdf_rebuild": null
+      },
+      "scoring_method": "paperreview_apr",
+      "scoring_source": "paperreview_json",
+      "apr_dimensions": {},
+      "summary": "",
+      "red_flags": []
+    },
+    "alignment": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-005_impact_of_restricted_class_observability/workspace/evoscientist_2026-09-06_07-17-02",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-005_impact_of_restricted_class_observability",
+      "status": "ok",
+      "original": {
+        "paper_title": "Increasing the Effectiveness of Automatically Generated Tests by Improving Class Observability",
+        "selection": {
+          "num_blocks": 7,
+          "total_chars": 31998,
+          "inferred_roles": {
+            "abstract": 1,
+            "introduction": 1,
+            "experiment": 4,
+            "conclusion": 1
+          },
+          "mineru_raw_keys": {
+            "field:abstract": 1,
+            "field:introduction": 1,
+            "field:experiment": 1,
+            "other": 3,
+            "conclusion": 1
+          },
+          "infer_reasons": {
+            "top_level_field": 3,
+            "body_override": 2,
+            "body": 1,
+            "title": 1
+          },
+          "rescued_from_other": 3,
+          "note": "mineru key is unreliable; blocks are selected by title/body/inheritance. rescued_from_other counts sections labeled other but treated as typed roles."
+        },
+        "claims": [
+          {
+            "id": "C1",
+            "statement": "Increasing class observability through injected public accessors and recursive assertions significantly increases generated tests' mutation scores.",
+            "direction": "improves",
+            "metric_names": [
+              "mutation_score"
+            ],
+            "evidence_quote": "our evaluation demonstrates that together these observability improvements lead to significantly increased mutation scores",
+            "confidence": 0.95
+          },
+          {
+            "id": "C2",
+            "statement": "Injecting public accessors for private/protected attributes significantly increases average mutation score in 26 of the 57 classes that use those injected getters in generated assertions.",
+            "direction": "improves",
+            "metric_names": [
+              "mutation_score"
+            ],
+            "evidence_quote": "26 of these 57 classes have a significant increase in their average mutation score when using injected getters.",
+            "confidence": 0.95
+          },
+          {
+            "id": "C3",
+            "statement": "Mutation score improvements from injected getters range from 0.13% to 49% across the 26 significantly improved classes.",
+            "direction": "improves",
+            "metric_names": [
+              "mutation_score"
+            ],
+            "evidence_quote": "improved their mutation score from 0.13% to 49%",
+            "confidence": 0.9
+          },
+          {
+            "id": "C4",
+            "statement": "Recursive assertions on composed objects add limited additional benefit beyond injected getters, with a maximum increase of 21.13% in one class and an average increase of only 0.30% among the other classes.",
+            "direction": "mixed",
+            "metric_names": [
+              "mutation_score"
+            ],
+            "evidence_quote": "the addition of recursive assertions raised the mutation score by a maximum of 21.13% in the NotificationEventComparator class. However, this addition did not increase the mutation score of the other classes, which has an average increase of 0.30% on the mutation score.",
+            "confidence": 0.85
+          },
+          {
+            "id": "C5",
+            "statement": "In the combined recursive assertions condition, 26 classes showed statistically significant mutation score improvements, with improvements ranging from 0.6% to 49%.",
+            "direction": "improves",
+            "metric_names": [
+              "mutation_score"
+            ],
+            "evidence_quote": "The increment on mutation score in these classes ranges from 0.6% to 49% and a maximum of 51 new mutants were detected.",
+            "confidence": 0.85
+          }
+        ],
+        "metrics": [
+          {
+            "name": "mutation_score",
+            "value": 26.177,
+            "unit": "mutants",
+            "higher_is_better": true,
+            "setting": "100 population classes, 26,177 total mutants generated",
+            "is_sota_or_best": false,
+            "baseline_name": "EvoSuite/DynaMOSA default",
+            "baseline_value": null,
+            "evidence_quote": "all classes under analysis contain 26,177 mutants, varying between 3 and 2,944 for each class.",
+            "confidence": 0.9
+          },
+          {
+            "name": "mutation_score",
+            "value": 26,
+            "unit": "classes",
+            "higher_is_better": true,
+            "setting": "statistically significant mutation score improvement with injected getters",
+            "is_sota_or_best": false,
+            "baseline_name": "EvoSuite/DynaMOSA default",
+            "baseline_value": null,
+            "evidence_quote": "we found that 26 of these 57 classes have a significant increase in their average mutation score when using injected getters.",
+            "confidence": 0.9
+          },
+          {
+            "name": "mutation_score",
+            "value": 0.13,
+            "unit": "percentage_points",
+            "higher_is_better": true,
+            "setting": "smallest reported mutation score improvement with injected getters",
+            "is_sota_or_best": false,
+            "baseline_name": "EvoSuite/DynaMOSA default",
+            "baseline_value": null,
+            "evidence_quote": "improved their mutation score from 0.13% to 49%",
+            "confidence": 0.85
+          },
+          {
+            "name": "mutation_score",
+            "value": 49,
+            "unit": "percentage_points",
+            "higher_is_better": true,
+            "setting": "largest reported mutation score improvement with injected getters",
+            "is_sota_or_best": false,
+            "baseline_name": "EvoSuite/DynaMOSA default",
+            "baseline_value": null,
+            "evidence_quote": "improved their mutation score from 0.13% to 49%",
+            "confidence": 0.85
+          }
+        ],
+        "overall_conclusion": "Improving class observability in EvoSuite by injecting public accessors for private/protected attributes and enabling recursive assertions on complex object state significantly improves generated tests' mutation scores for a subset of classes. The injected getters provide the main benefit, while recursive assertions add only limited further improvement.",
+        "comparable_notes": "Evaluation used 100 SF110 Java classes filtered by cyclomatic complexity threshold of 3, with EvoSuite/DynaMOSA as baseline. Test generation used 30 seeds per class, producing 12,000 test suites total. Comparison used one-tailed Wilcoxon tests at alpha=0.05 and Vargha-Delaney A12 effect sizes. Injected accessors and recursive assertions were excluded from test goals and mutation score computation. Mutation score was measured over 26,177 total generated mutants.",
+        "cache_hit": true
+      },
+      "agent": {
+        "status": "ok",
+        "run_dir": "~/ai_scientist_inputs/ICSE-2025-005_impact_of_restricted_class_observability/workspace/evoscientist_2026-09-06_07-17-02",
+        "claims": [
+          {
+            "id": "A1",
+            "statement": "Injected getters raise the mutation score on a subset of classes, up to +22 percentage points on NoenFormatter, matching the paper's 27.9% to 52%.",
+            "direction": "improves",
+            "metric_names": [
+              "mutation_score"
+            ],
+            "evidence_quote": "injected getters raise the mutation score on a subset of classes (up to +22 percentage points on NoenFormatter, matching the paper's 27.9% to 52%)",
+            "confidence": 0.9
+          },
+          {
+            "id": "A2",
+            "statement": "The full injected-getter treatment increases mean mutation score from baseline (0.2801 to 0.3176).",
+            "direction": "improves",
+            "metric_names": [
+              "mutation_score"
+            ],
+            "evidence_quote": "baseline mutation_score 0.2801; full-getters mutation_score 0.3176",
+            "confidence": 1.0
+          },
+          {
+            "id": "A3",
+            "statement": "Recursive inspector assertions alone contribute little, with Vargha-Delaney A12 0.4944 and mean delta mutation score -0.0036 relative to baseline.",
+            "direction": "no_difference",
+            "metric_names": [
+              "vargha_delaney_a12",
+              "mean_delta_mutation_score"
+            ],
+            "evidence_quote": "recursive assertions alone contribute little",
+            "confidence": 0.95
+          },
+          {
+            "id": "A4",
+            "statement": "Selective getter injection reaches mutation scores statistically indistinguishable from full injection while injecting 58.8% fewer accessors.",
+            "direction": "no_difference",
+            "metric_names": [
+              "mutation_score",
+              "selective_accessor_reduction"
+            ],
+            "evidence_quote": "selective injection reaches mutation scores statistically indistinguishable from full injection while injecting 58.8% fewer accessors",
+            "confidence": 0.75
+          },
+          {
+            "id": "A5",
+            "statement": "Selective-getters treatment achieves the highest observed mean mutation score among treatments (0.3264), with a mean delta of 0.0488 over baseline.",
+            "direction": "improves",
+            "metric_names": [
+              "mutation_score",
+              "mean_delta_mutation_score"
+            ],
+            "evidence_quote": "selective-getters mutation_score 0.3264; mean_delta_mutation_score 0.0488",
+            "confidence": 1.0
+          }
+        ],
+        "metrics": [
+          {
+            "name": "mutation_score",
+            "value": 0.2801,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "baseline",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "baseline mutation_score 0.2801",
+            "confidence": 1.0
+          },
+          {
+            "name": "statement_coverage",
+            "value": 0.8134,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "baseline",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "baseline statement_coverage 0.8134",
+            "confidence": 1.0
+          },
+          {
+            "name": "branch_coverage",
+            "value": 0.7304,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "baseline",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "baseline branch_coverage 0.7304",
+            "confidence": 1.0
+          },
+          {
+            "name": "suite_coverage",
+            "value": 0.7118,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "baseline",
+            "is_sota_or_best": false,
+            "baseline_name": null,
+            "baseline_value": null,
+            "evidence_quote": "baseline suite_coverage 0.7118",
+            "confidence": 1.0
+          },
+          {
+            "name": "mutation_score",
+            "value": 0.3176,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "full-getters",
+            "is_sota_or_best": false,
+            "baseline_name": "baseline",
+            "baseline_value": 0.2801,
+            "evidence_quote": "full-getters mutation_score 0.3176",
+            "confidence": 1.0
+          },
+          {
+            "name": "mutation_score",
+            "value": 0.2747,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "recursive",
+            "is_sota_or_best": false,
+            "baseline_name": "baseline",
+            "baseline_value": 0.2801,
+            "evidence_quote": "recursive mutation_score 0.2747",
+            "confidence": 1.0
+          },
+          {
+            "name": "mutation_score",
+            "value": 0.32,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "combined",
+            "is_sota_or_best": false,
+            "baseline_name": "baseline",
+            "baseline_value": 0.2801,
+            "evidence_quote": "combined mutation_score 0.32",
+            "confidence": 1.0
+          },
+          {
+            "name": "mutation_score",
+            "value": 0.3264,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "selective-getters",
+            "is_sota_or_best": false,
+            "baseline_name": "baseline",
+            "baseline_value": 0.2801,
+            "evidence_quote": "selective-getters mutation_score 0.3264",
+            "confidence": 1.0
+          },
+          {
+            "name": "vargha_delaney_a12",
+            "value": 0.7245,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "full-getters vs baseline",
+            "is_sota_or_best": false,
+            "baseline_name": "baseline",
+            "baseline_value": null,
+            "evidence_quote": "full-getters Vargha-Delaney A12 0.7245",
+            "confidence": 1.0
+          },
+          {
+            "name": "vargha_delaney_a12",
+            "value": 0.4944,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "recursive vs baseline",
+            "is_sota_or_best": false,
+            "baseline_name": "baseline",
+            "baseline_value": null,
+            "evidence_quote": "recursive Vargha-Delaney A12 0.4944",
+            "confidence": 1.0
+          },
+          {
+            "name": "vargha_delaney_a12",
+            "value": 0.71,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "combined vs baseline",
+            "is_sota_or_best": false,
+            "baseline_name": "baseline",
+            "baseline_value": null,
+            "evidence_quote": "combined Vargha-Delaney A12 0.71",
+            "confidence": 1.0
+          },
+          {
+            "name": "vargha_delaney_a12",
+            "value": 0.6979,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "selective-getters vs baseline",
+            "is_sota_or_best": false,
+            "baseline_name": "baseline",
+            "baseline_value": null,
+            "evidence_quote": "selective-getters Vargha-Delaney A12 0.6979",
+            "confidence": 1.0
+          },
+          {
+            "name": "mean_delta_mutation_score",
+            "value": 0.0439,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "full-getters vs baseline",
+            "is_sota_or_best": false,
+            "baseline_name": "baseline",
+            "baseline_value": null,
+            "evidence_quote": "full-getters mean_delta_mutation_score 0.0439",
+            "confidence": 1.0
+          },
+          {
+            "name": "mean_delta_mutation_score",
+            "value": -0.0036,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "recursive vs baseline",
+            "is_sota_or_best": false,
+            "baseline_name": "baseline",
+            "baseline_value": null,
+            "evidence_quote": "recursive mean_delta_mutation_score -0.0036",
+            "confidence": 1.0
+          },
+          {
+            "name": "mean_delta_mutation_score",
+            "value": 0.0441,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "combined vs baseline",
+            "is_sota_or_best": false,
+            "baseline_name": "baseline",
+            "baseline_value": null,
+            "evidence_quote": "combined mean_delta_mutation_score 0.0441",
+            "confidence": 1.0
+          },
+          {
+            "name": "mean_delta_mutation_score",
+            "value": 0.0488,
+            "unit": null,
+            "higher_is_better": true,
+            "setting": "selective-getters vs baseline",
+            "is_sota_or_best": false,
+            "baseline_name": "baseline",
+            "baseline_value": null,
+            "evidence_quote": "selective-getters mean_delta_mutation_score 0.0488",
+            "confidence": 1.0
+          },
+          {
+            "name": "selective_accessor_reduction",
+            "value": 58.8,
+            "unit": "%",
+            "higher_is_better": true,
+            "setting": "selective-getters vs full-getters",
+            "is_sota_or_best": false,
+            "baseline_name": "full-getters",
+            "baseline_value": null,
+            "evidence_quote": "selective injection reaches mutation scores statistically indistinguishable from full injection while injecting 58.8% fewer accessors",
+            "confidence": 0.8
+          }
+        ],
+        "overall_conclusion": "The reproduction confirms that injected getters improve mutation score over baseline (0.2801 to 0.3176), recursive inspector assertions alone are neutral (A12 0.4944), and selective getter injection is competitive with full injection (mutation score 0.3264) while injecting 58.8% fewer accessors.",
+        "sources": {
+          "metrics_path": "results/metrics.json",
+          "paper_tex_path": "paper/main.tex"
+        },
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 7701,
+            "completion_tokens_details": {
+              "reasoning_tokens": 5205
+            },
+            "prompt_tokens": 3064,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 10765
+          },
+          "attempt": 1
+        }
+      },
+      "comparison": {
+        "status": "ok",
+        "claim_alignment": [
+          {
+            "original_claim_id": "C1",
+            "agent_claim_id": "A2",
+            "label": "consistent",
+            "rationale": "The agent confirms the main improvement direction for injected getters and combined observability treatments, reporting full-getters mutation score above baseline, although it treats recursive assertions alone as neutral rather than contributing."
+          },
+          {
+            "original_claim_id": "C2",
+            "agent_claim_id": "A1",
+            "label": "partial",
+            "rationale": "The agent reports injected getters improve mutation score on a subset of classes and raise mean mutation score, but it does not reproduce the original 26-of-57 significant class count."
+          },
+          {
+            "original_claim_id": "C3",
+            "agent_claim_id": "A1",
+            "label": "partial",
+            "rationale": "The agent supports the same improvement direction but reports a smaller maximum of about +22 percentage points on NoenFormatter and does not reproduce the original 0.13%-49% range across 26 classes."
+          },
+          {
+            "original_claim_id": "C4",
+            "agent_claim_id": "A3",
+            "label": "partial",
+            "rationale": "The agent agrees recursive assertions add little benefit, but it evaluates recursive assertions alone versus baseline rather than the incremental effect beyond injected getters, and it does not report the original max 21.13% or average 0.30% increases."
+          },
+          {
+            "original_claim_id": "C5",
+            "agent_claim_id": null,
+            "label": "partial",
+            "rationale": "The agent observes combined treatment improvement over baseline, matching the direction, but does not report the original 26 significant classes or the 0.6%-49% combined improvement range."
+          }
+        ],
+        "metric_alignment": [
+          {
+            "original_metric": "mutation_score",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 26.177,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "The original reports total generated mutants under a mutation_score metric, while the agent reports mean mutation-score proportions, so units and protocol do not align."
+          },
+          {
+            "original_metric": "mutation_score",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 26,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "The original reports 26 significantly improved classes with injected getters; the agent does not report a comparable significant-class count."
+          },
+          {
+            "original_metric": "mutation_score",
+            "agent_metric": "mean_delta_mutation_score",
+            "comparable": false,
+            "original_value": 0.13,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "The original reports the smallest per-class percentage-point improvement, whereas the agent reports mean delta mutation score over a different or reduced protocol, so the summary statistics are not directly comparable."
+          },
+          {
+            "original_metric": "mutation_score",
+            "agent_metric": null,
+            "comparable": false,
+            "original_value": 49,
+            "agent_value": null,
+            "delta_abs": null,
+            "delta_rel": null,
+            "direction_vs_original_sota": "incomparable",
+            "rationale": "The original reports the largest per-class improvement of 49 percentage points, while the agent reports an up to +22 percentage point example under a different protocol, so direct delta comparison would be unreliable."
+          }
+        ],
+        "summary": {
+          "direction_consistency": "consistent",
+          "consistent_claim_ratio": 0.2,
+          "has_comparable_metrics": false,
+          "sota_improvement_summary": "No SOTA comparison is available; the agent reports baseline-to-full-getters mean mutation score rising from 0.2801 to 0.3176, but the original effect-size ranges are not directly comparable.",
+          "overall_alignment_score": 0.6,
+          "score_rationale": "The agent works on the same EvoSuite observability problem and supports the main injected-getter improvement direction, but it only partially reproduces the original class counts, effect-size ranges, and recursive-assertion analysis."
+        },
+        "warnings": [
+          "Original metric entries are heterogeneous: mutation_score is reported as total mutant count, significant class count, and percentage-point improvement ranges, making direct comparison with agent mean mutation score difficult.",
+          "The agent appears to use a reduced or different evaluation protocol and does not report the original 26/57 significant-class counts or the exact 0.13%-49% and 0.6%-49% improvement ranges.",
+          "No directly comparable SOTA or best-result metrics were reported in either extraction."
+        ],
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 4708,
+            "completion_tokens_details": {
+              "reasoning_tokens": 3565
+            },
+            "prompt_tokens": 5055,
+            "prompt_tokens_details": {
+              "cached_tokens": 4096
+            },
+            "total_tokens": 9763
+          },
+          "attempt": 2
+        }
+      },
+      "overall_alignment_score": 0.6,
+      "direction_consistency": "consistent"
+    },
+    "experiment_analysis": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-005_impact_of_restricted_class_observability/workspace/evoscientist_2026-09-06_07-17-02",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-005_impact_of_restricted_class_observability",
+      "status": "ok",
+      "metrics_path": "results/metrics.json",
+      "experiment_success": {
+        "status": "ok",
+        "success": true,
+        "metrics_path": "results/metrics.json",
+        "absolute_metrics_path": "~/ai_scientist_inputs/ICSE-2025-005_impact_of_restricted_class_observability/workspace/evoscientist_2026-09-06_07-17-02/results/metrics.json",
+        "checks": {
+          "has_results_file": true,
+          "non_stub": true,
+          "numeric_leaf_count": 45,
+          "min_numeric_ok": true
+        },
+        "manifest_hints": {
+          "status": {
+            "research_request": true,
+            "plan": true,
+            "metrics": true,
+            "paper_tex": true,
+            "paper_pdf": true,
+            "readme": true
+          },
+          "returncode": 0,
+          "benchmark_complete": true,
+          "artifacts_metrics_flag": false
+        },
+        "warnings": [],
+        "suspicious_values": [],
+        "note": "success=true requires substantive results (framework-aware path) with >=3 numeric leaves. Supports metrics.json, results.json, experiment_results.txt, etc. Manifest returncode/benchmark_complete are soft warnings only."
+      },
+      "idea_code_consistency": {
+        "status": "ok",
+        "idea_path": "idea.md",
+        "code_files": [
+          "project/tools/src/CycloComplexityScanner.java",
+          "project/tools/src/ObservabilityInjector.java",
+          "project/analyze_final.py",
+          "project/metrics.py"
+        ],
+        "score_scale": "1-5",
+        "score": 4.0,
+        "label": null,
+        "justification": "",
+        "matched_elements": [],
+        "missing_or_divergent_elements": [],
+        "rubric": "Strong alignment: code largely implements the idea's method and evaluation; only minor omissions or declared simplifications.",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 2000,
+            "completion_tokens_details": {
+              "reasoning_tokens": 1886
+            },
+            "prompt_tokens": 2264,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 4264
+          },
+          "attempt": 0
+        }
+      },
+      "setup_coverage": {
+        "status": "ok",
+        "overall_coverage": 1.0,
+        "datasets": {
+          "gold_count": 1,
+          "hit_count": 1,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "SF110 complex‑class subset"
+          ],
+          "misses": []
+        },
+        "baselines": {
+          "gold_count": 1,
+          "hit_count": 1,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "EvoSuite with DynaMOSA algorithm"
+          ],
+          "misses": []
+        },
+        "metrics": {
+          "gold_count": 5,
+          "hit_count": 5,
+          "miss_count": 0,
+          "coverage": 1.0,
+          "hits": [
+            "Statement coverage",
+            "Branch coverage",
+            "Overall suite coverage",
+            "Mutation score",
+            "Vargha‑Delaney A12 effect size"
+          ],
+          "misses": []
+        },
+        "agent_protocol": {},
+        "gold_protocol": {},
+        "dataset_dirs": [
+          "dataset_candidate"
+        ],
+        "flags": {
+          "weaker_baseline_suspected": false,
+          "weak_protocol": [],
+          "synthetic_data": "unexpected_synthetic_or_local_only_data",
+          "gold_allows_synthetic": false
+        },
+        "gold_sources": [
+          "~/ai_scientist_inputs/ICSE-2025-005_impact_of_restricted_class_observability/task.md",
+          "~/ai_scientist_inputs/ICSE-2025-005_impact_of_restricted_class_observability/metadata.json"
+        ],
+        "note": "Coverage is name/alias matching against task.md Datasets/Baselines/Metrics. weak_protocol flags large reductions in trials/timeout vs Constraints. Synthetic corpora are not penalized when the task itself requires synthesis."
+      },
+      "ablation_significance": {
+        "status": "ok",
+        "idea_path": "idea.md",
+        "significance_signals_rule_based": {
+          "signals": [
+            "paper_contains:p<",
+            "paper_contains:significant",
+            "paper_contains:wilcoxon"
+          ],
+          "artifact_paths": [],
+          "has_any_significance_artifact": true
+        },
+        "evidence_format": "raw_json",
+        "study_type": null,
+        "components": [],
+        "ablation_coverage_score": null,
+        "overall_ablation_ok": null,
+        "overall_significance_ok": null,
+        "summary": "",
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 3500,
+            "completion_tokens_details": {
+              "reasoning_tokens": 3500
+            },
+            "prompt_tokens": 5635,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 9135
+          },
+          "attempt": 0
+        }
+      },
+      "results_paper_consistency": {
+        "status": "ok",
+        "paper_tex": "paper/main.tex",
+        "paper_kind": "paper_tex",
+        "results_format": "raw_json",
+        "digest_hint": {
+          "unfavorable_count": 0,
+          "trial_fail_count": 0,
+          "trial_success_count": 0,
+          "metadata": {}
+        },
+        "score_scale": "1-5",
+        "method": "Direct LLM comparison: agent's FINAL results artifact (metrics.json summary) vs paper Results/Discussion/Conclusion. Interim failed runs are NOT evidence unless still present in the final metrics file.",
+        "score": null,
+        "consistency_label": null,
+        "hiding_unfavorable_suspected": false,
+        "hiding_confidence": null,
+        "justification": "",
+        "supported_claims": [],
+        "unsupported_or_overstated_claims": [],
+        "numeric_mismatches": [],
+        "unfavorable_in_final_results": [],
+        "unfavorable_acknowledged_in_paper": [],
+        "unfavorable_missing_from_paper": [],
+        "rubric": null,
+        "llm_meta": {
+          "model": "deepseek-v4-pro-0813",
+          "base_url": "https://api-sg.umodelverse.ai/v1",
+          "usage": {
+            "completion_tokens": 1857,
+            "completion_tokens_details": {
+              "reasoning_tokens": 1120
+            },
+            "prompt_tokens": 4923,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 6780
+          },
+          "attempt": 1
+        }
+      },
+      "scores": {
+        "experiment_success": true,
+        "idea_code_score": 4.0,
+        "setup_coverage": 1.0,
+        "ablation_coverage_score": null,
+        "overall_ablation_ok": null,
+        "overall_significance_ok": null,
+        "results_paper_score": null,
+        "hiding_unfavorable_suspected": false
+      },
+      "notes": [
+        "Axes 1,2,3,4,6 in experiment_analysis (figures excluded).",
+        "setup_coverage matches task.md Datasets/Baselines/Metrics; weak_protocol flags reductions vs Constraints.",
+        "Axis 6: final normalized results vs paper; interim run logs not used as ground truth."
+      ]
+    },
+    "literature_review": {
+      "run_dir": "~/ai_scientist_inputs/ICSE-2025-005_impact_of_restricted_class_observability/workspace/evoscientist_2026-09-06_07-17-02",
+      "task_dir": "~/ai_scientist_inputs/ICSE-2025-005_impact_of_restricted_class_observability",
+      "status": "ok",
+      "as_of_year": 2026,
+      "agent_ref_count": 10,
+      "sources": [
+        {
+          "path": "~/ai_scientist_inputs/ICSE-2025-005_impact_of_restricted_class_observability/workspace/evoscientist_2026-09-06_07-17-02/paper/main.tex",
+          "kind": "thebibliography"
+        }
+      ],
+      "collection_audit": {
+        "cited_keys_count": 11,
+        "filter_mode": "paper_cite_keys",
+        "bib_total_before_filter": 0,
+        "bib_after_filter": 0,
+        "uncited_bib_skipped": 0,
+        "cited_keys_sample": [
+          "arcuri17",
+          "fraser10",
+          "fraser12",
+          "gali25",
+          "harman04",
+          "just14",
+          "li11",
+          "panichella15",
+          "panichella18",
+          "schuler11",
+          "zhu21"
+        ],
+        "thebibliography_after_filter": 11,
+        "agent_ref_count": 10
+      },
+      "fabrication": {
+        "status": "ok",
+        "scholarly_count": 10,
+        "verified_count": 7,
+        "fake_count": 0,
+        "lookup_failed_count": 3,
+        "insufficient_metadata_count": 0,
+        "non_paper_count": 0,
+        "fabrication_rate": 0.0,
+        "items": [
+          {
+            "title": "Increasing the Effectiveness of Automatically Generated Tests by Improving Class Observability",
+            "doi": "10.1109/icse55347.2025.00156",
+            "arxiv_id": "",
+            "year": 2025,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Increasing the Effectiveness of Automatically Generated Tests by Improving Class Observability",
+            "resolved_year": 2025,
+            "notes": [],
+            "cache_hit": true,
+            "cite_key": "gali25",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "Mutation-Driven Generation of Unit Tests and Oracles",
+            "doi": "10.1145/1831708.1831728",
+            "arxiv_id": "",
+            "year": 2010,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Mutation-Driven Generation of Unit Tests and Oracles",
+            "resolved_year": 2010,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "fraser10",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "Assessing Oracle Quality with Checked Coverage",
+            "doi": "10.1109/icst.2011.32",
+            "arxiv_id": "",
+            "year": 2011,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Assessing Oracle Quality with Checked Coverage",
+            "resolved_year": 2011,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "schuler11",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "Reformulating Branch Coverage as a Many-Objective Optimization Problem",
+            "doi": "",
+            "arxiv_id": "",
+            "year": 2015,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated.",
+              "Saw 1 conclusive miss(es) mixed with 1 API error(s)."
+            ],
+            "cite_key": "panichella15",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "Automated Test Case Generation as a Many-Objective Optimisation Problem with Dynamic Selection of the Targets",
+            "doi": "10.1109/tse.2017.2663435",
+            "arxiv_id": "",
+            "year": 2018,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Automated Test Case Generation as a Many-Objective Optimisation Problem with Dynamic Selection of the Targets",
+            "resolved_year": 2018,
+            "notes": [],
+            "cache_hit": true,
+            "cite_key": "panichella18",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "Testability Transformation",
+            "doi": "10.1007/978-3-319-92970-5_1",
+            "arxiv_id": "",
+            "year": 2004,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "We Need a Testability Transformation Semantics",
+            "resolved_year": 2018,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "harman04",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "Bytecode Testability Transformation",
+            "doi": "",
+            "arxiv_id": "",
+            "year": 2011,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated."
+            ],
+            "cite_key": "li11",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "Private API Access and Functional Mocking in Automated Unit Test Generation",
+            "doi": "10.1109/icst.2017.19",
+            "arxiv_id": "",
+            "year": 2017,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "Private API Access and Functional Mocking in Automated Unit Test Generation",
+            "resolved_year": 2017,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "arcuri17",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "How to Kill Them All: An Exploratory Study on the Impact of Code Observability on Mutation Testing",
+            "doi": "",
+            "arxiv_id": "",
+            "year": 2021,
+            "status": "verified",
+            "matched_via": "s2_title",
+            "resolved_title": "How to Kill Them All An Exploratory Study on the Impact of Code Observability on Mutation Testing",
+            "resolved_year": 2021,
+            "cache_hit": false,
+            "notes": [],
+            "cite_key": "zhu21",
+            "source_kind": "thebibliography"
+          },
+          {
+            "title": "Are Mutants a Valid Substitute for Real Faults in Software Testing? , 2014",
+            "doi": "",
+            "arxiv_id": "",
+            "year": 2014,
+            "status": "lookup_failed",
+            "matched_via": null,
+            "resolved_title": null,
+            "resolved_year": null,
+            "cache_hit": false,
+            "notes": [
+              "API errors prevented a conclusive existence check; not counted as fabricated.",
+              "Saw 1 conclusive miss(es) mixed with 1 API error(s)."
+            ],
+            "cite_key": "just14",
+            "source_kind": "thebibliography"
+          }
+        ],
+        "cache_path": "~/ai_scientist_evals/ICSE-2025-005_impact_of_restricted_class_observability/reference_verify_cache.json",
+        "override_path": "~/ai_scientist_evals/ICSE-2025-005_impact_of_restricted_class_observability/reference_verify_overrides.json",
+        "note": "fabrication_rate = fake / (verified + fake). lookup_failed (API errors) and insufficient_metadata are excluded and retried or skipped. GitHub/docs/tool URLs are non_paper and excluded from the rate. To manually correct a false negative, edit reference_verify_overrides.json (key=normalized title / doi / cite_key; value=\"verified\" or a result dict), then re-run."
+      },
+      "coverage": {
+        "status": "ok",
+        "gold_source": "~/ai_scientist_inputs/ICSE-2025-005_impact_of_restricted_class_observability/mineru_sections.json",
+        "gold_count": 59,
+        "gold_is_original_paper_references": true,
+        "gold_is_openalex_subset": false,
+        "agent_count": 10,
+        "intersection_size": 6,
+        "recall": 0.1016949152542373,
+        "precision": 0.6,
+        "matched_gold_keys": [
+          "fraser2011mutationdriven",
+          "li2011bytecode",
+          "mcminn2009empirical",
+          "panichella2017automated",
+          "schuler2013checked",
+          "zhu2020kill"
+        ],
+        "primary_metric": "recall",
+        "note": "Primary metric is recall against the original paper bibliography (titles from mineru_sections.json REFERENCES; related_work.json used only to enrich DOI/year or as fallback if mineru titles are empty). Denominator = |original paper references|. Precision is secondary (agent may cite valid extra papers)."
+      },
+      "recency": {
+        "status": "ok",
+        "dated_count": 10,
+        "unknown_year_count": 0,
+        "year_histogram": {
+          "2010": 1,
+          "2011": 2,
+          "2014": 1,
+          "2015": 1,
+          "2017": 1,
+          "2018": 2,
+          "2021": 1,
+          "2025": 1
+        },
+        "windows": {
+          "3": {
+            "years": 3,
+            "cutoff_year_inclusive": 2023,
+            "recent_count": 1,
+            "recent_ratio": 0.1
+          },
+          "5": {
+            "years": 5,
+            "cutoff_year_inclusive": 2021,
+            "recent_count": 2,
+            "recent_ratio": 0.2
+          }
+        }
+      },
+      "scores": {
+        "fabrication_rate": 0.0,
+        "coverage_recall": 0.1016949152542373,
+        "coverage_precision": 0.6,
+        "recency_ratio_3y": 0.1,
+        "recency_ratio_5y": 0.2
+      }
+    }
+  },
+  "scores": {
+    "completeness": {
+      "complete": true,
+      "overall_score": 0.8453,
+      "required_score": 1.0,
+      "bonus_score": 0.09
+    },
+    "peer_review": {
+      "status": "ok",
+      "optional": false,
+      "overall_score": 5.2,
+      "score_scale": "1-10",
+      "scoring_method": "paperreview_apr"
+    },
+    "idea_generation": {
+      "status": "ok",
+      "overall_score": 3.3,
+      "dimensions": {
+        "novelty": 3.0,
+        "feasibility": 3.0,
+        "clarity": 4.0
+      },
+      "novelty_category": "Incremental",
+      "solution_space_status": "ok"
+    },
+    "alignment": {
+      "status": "ok",
+      "direction_consistency": "consistent",
+      "overall_alignment_score": 0.6
+    },
+    "literature_review": {
+      "fabrication_rate": 0.0,
+      "coverage_recall": 0.1016949152542373,
+      "coverage_precision": 0.6,
+      "recency_ratio_3y": 0.1,
+      "recency_ratio_5y": 0.2
+    },
+    "experiment_analysis": {
+      "experiment_success": true,
+      "idea_code_score": 4.0,
+      "setup_coverage": 1.0,
+      "ablation_coverage_score": null,
+      "overall_ablation_ok": null,
+      "overall_significance_ok": null,
+      "results_paper_score": null,
+      "hiding_unfavorable_suspected": false
+    }
+  },
+  "fair_scores": {
+    "applicable_axes": [
+      "completeness",
+      "idea_generation",
+      "peer_review",
+      "alignment",
+      "literature_review",
+      "experiment_analysis"
+    ],
+    "skipped_axes": [],
+    "fair_mean_0_1": 0.6856,
+    "note": "fair_mean_0_1 averages only applicable axes; optional peer review and framework-inapplicable literature are excluded from the denominator."
+  },
+  "evals_root": "~/ai_scientist_evals",
+  "claims_cache": "~/ai_scientist_evals/ICSE-2025-005_impact_of_restricted_class_observability/original_claims.json",
+  "solution_space_cache": "~/ai_scientist_evals/ICSE-2025-005_impact_of_restricted_class_observability/solution_space.json"
+}
